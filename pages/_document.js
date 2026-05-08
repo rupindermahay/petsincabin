@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
+        <meta name="google-site-verification" content="1bi6cDCuTHmlc1CJUSk4Z24beCQjICPtH_LlJUwv5Zg" />
         <meta name="description" content="A field guide to flying with your pet in the cabin. Real airline policies, country-by-country paperwork, and the workarounds savvy pet owners use — written by a pet mum who's done it." />
         <meta name="keywords" content="pet in cabin, fly with dog, fly with cat, pet travel, airline pet policy, pet to UK, pet to Hawaii, pet passport, in-cabin pet" />
 

@@ -1652,10 +1652,11 @@ function AirlineGrid() {
                           <div className="text-xs uppercase tracking-widest text-amber-700 mb-2">Direction matters</div>
                           {(() => {
                             const text = a.direction;
-                            const splitIdx = text.indexOf("Cabin NOT allowed:");
-                            if (splitIdx === -1) {
+                            const notAllowedMatch = text.match(/Cabin NOT allowed[^:]*:/i);
+                            if (!notAllowedMatch) {
                               return <div className="text-stone-800 text-sm">{text}</div>;
                             }
+                            const splitIdx = notAllowedMatch.index;
                             const allowedPart = text.substring(0, splitIdx).trim().replace(/\.$/, "");
                             const notAllowedPart = text.substring(splitIdx).trim();
                             return (

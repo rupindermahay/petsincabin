@@ -2105,6 +2105,7 @@ const NAV_SECTIONS = [
   { id: "destinations", label: "Difficult destinations", num: "IV" },
   { id: "quarantine", label: "Quarantine", num: "⚠" },
   { id: "timeline", label: "Timeline", num: "V" },
+  { id: "checklist", label: "Checklist", num: "✓" },
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
   { id: "stories", label: "Stories", num: "✻" },
@@ -2230,14 +2231,34 @@ function Hero({ onStart }) {
           Every airline has different rules. Every country has different paperwork. We sort through it so you and your animal arrive together — calm, prepared, and on the same flight.
         </p>
 
-        <button
-          onClick={onStart}
-          className="group inline-flex items-center gap-3 bg-stone-900 text-cream-50 px-8 py-4 hover:bg-amber-700 transition-colors duration-300"
-          style={{ color: "#faf6ed" }}
-        >
-          <span className="uppercase tracking-widest text-sm font-medium">Start the assessment</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
-        </button>
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch">
+          <button
+            onClick={onStart}
+            className="group flex items-center justify-between gap-4 bg-stone-900 text-cream-50 px-7 py-5 hover:bg-amber-700 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
+            style={{ color: "#faf6ed" }}
+          >
+            <div className="flex flex-col gap-1.5">
+              <span className="uppercase tracking-widest text-sm font-medium">Start the assessment</span>
+              <span className="text-sm leading-snug text-cream-200 normal-case tracking-normal" style={{ color: "rgba(250, 246, 237, 0.75)" }}>
+                Quick questions about your pet and route — see how tricky your trip will be.
+              </span>
+            </div>
+            <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          </button>
+
+          <a
+            href="#checklist"
+            className="group flex items-center justify-between gap-4 border-2 border-stone-900 text-stone-900 bg-transparent px-7 py-5 hover:bg-stone-900 hover:text-cream-50 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
+          >
+            <div className="flex flex-col gap-1.5">
+              <span className="uppercase tracking-widest text-sm font-medium">Get my checklist</span>
+              <span className="text-sm leading-snug text-stone-600 group-hover:text-cream-200 normal-case tracking-normal" style={{ }}>
+                Pick a departing country and destination, download a printable PDF.
+              </span>
+            </div>
+            <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+          </a>
+        </div>
 
         <div className="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-stone-300">
           {[
@@ -3208,7 +3229,9 @@ function Checklist() {
           A general timeline below — or grab the printable checklist tailored to your route.
         </p>
 
-        <ChecklistDownload />
+        <div id="checklist" className="scroll-mt-24">
+          <ChecklistDownload />
+        </div>
 
         <div className="grid md:grid-cols-2 gap-8 mt-12">
           {sections.map((s, i) => (

@@ -11,8 +11,8 @@ const AIRLINES = [
     cabin: "Cabin US domestic ✓ — limited intl (Mexico, Canada, Costa Rica)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, and Costa Rica routes. Cabin NOT allowed: most other international destinations (Alaska's network is mostly North America-focused).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no" },
     fee: "$150 each way (increased Jan 2, 2026 from $100) · $60 within Hawaii",
     weight: "No stated weight limit; pet must fit comfortably in carrier",
     carrier: "Soft: 17 × 11 × 9.5 in. Hard: 17 × 11 × 7.5 in.",
@@ -24,12 +24,12 @@ const AIRLINES = [
   {
     name: "American Airlines",
     scope: "north-america",
-    tags: ["us"],
+    tags: ["us", "caribbean"],
     cabin: "Yes — but NO transatlantic / transpacific cabin",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, Puerto Rico, Caribbean, Central America (up to 12 hour flights). Cabin NOT allowed (both directions): transatlantic flights (Europe), transpacific flights (Asia), UK, Hawaii.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     fee: "$150 each way",
     weight: "Pet + carrier max 20 lb (~9 kg) combined",
     carrier: "Soft (recommended): 18 × 11 × 11 in. Hard: 19 × 13 × 9 in",
@@ -40,12 +40,12 @@ const AIRLINES = [
   },
   {
     name: "Delta",
-    tags: ["us", "europe", "longhaul"],
+    tags: ["us", "europe", "longhaul", "caribbean"],
     cabin: "Cabin US/Canada/EU only — long banned list",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Ireland, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     fee: "$150 domestic / $200 international",
     weight: "No stated weight; must fit under seat",
     carrier: "Soft-sided with 3+ ventilation panels (4 international). ~18 × 11 × 11 in",
@@ -56,12 +56,12 @@ const AIRLINES = [
   },
   {
     name: "United",
-    tags: ["us", "europe", "longhaul"],
+    tags: ["us", "europe", "longhaul", "caribbean"],
     cabin: "Cabin allowed — but huge banned destination list",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU. Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam, French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Norway, Palau, Panama, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
     weight: "Must fit under seat in carrier",
     carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
@@ -73,17 +73,17 @@ const AIRLINES = [
   {
     name: "JetBlue",
     scope: "us-caribbean",
-    tags: ["us"],
-    cabin: "Yes — domestic + Dominican Republic only",
+    tags: ["us", "caribbean"],
+    cabin: "Yes — domestic + many Caribbean / Latin America destinations",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic US, Puerto Rico, USVI, and Dominican Republic. Cabin NOT allowed (both directions): most international flights including UK, Europe, Jamaica.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    fee: "$150 each way (increased from $125 in 2025)",
+    direction: "Cabin allowed: domestic US, Puerto Rico, USVI, plus broad Caribbean and Latin America reach via JetBlue's network. Cabin NOT allowed (both directions): UK (service dogs only), Europe (no transatlantic cabin). IMPORTANT: cabin pet eligibility depends on each destination country's own import rules — JetBlue may operate the route but the country's paperwork (and sometimes breed restrictions or rabies titer requirements) determines whether your pet qualifies. Always verify directly with JetBlue for your specific route AND check the destination's official import requirements.",
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    fee: "$125 each way (some routes higher)",
     weight: "Pet + carrier max 20 lb (strictly enforced)",
     carrier: "17 × 12.5 × 8.5 in",
-    notes: "JetPaws program. One of the strictest combined weight limits in the U.S. Pets allowed on most domestic flights and to Dominican Republic — but NOT on international flights to UK or Europe. No cargo service.",
-    intl: "Limited (DR only)",
+    notes: "JetPaws program. Strong cabin reach for North America and Latin America/Caribbean travellers. For destinations like Jamaica, Cayman Islands, Barbados — start the destination's import process 30+ days before travel (strict paperwork). Max 4 pets per flight — book early. No cargo service for pets. Confirm cabin eligibility for your specific route by calling JetBlue 800-JETBLUE.",
+    intl: "Yes (Americas — no transatlantic cabin)",
     verified: "May 2026",
     link: "https://www.jetblue.com/traveling-together/traveling-with-pets",
   },
@@ -94,8 +94,8 @@ const AIRLINES = [
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Puerto Rico, USVI only. Cabin NOT allowed: all other international routes (Southwest is a domestic-only carrier with limited Caribbean reach).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
     fee: "$125 each way",
     weight: "Pet must fit comfortably in carrier",
     carrier: "18.5 × 8.5 × 13.5 in",
@@ -107,16 +107,16 @@ const AIRLINES = [
   {
     name: "Spirit",
     scope: "us-caribbean",
-    tags: ["us"],
+    tags: ["us", "caribbean"],
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Puerto Rico, USVI, plus a few Caribbean and Latin America routes. Cabin NOT allowed: most international destinations.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes" },
     fee: "$125 each way",
     weight: "Pet + carrier max 40 lb",
     carrier: "18 × 14 × 9 in",
-    notes: "Domestic and Puerto Rico/USVI. Pets must be at least 8 weeks old.",
+    notes: "Domestic US, Puerto Rico, USVI, plus some Mexico, Central America, and select Caribbean / Latin America routes. Cabin pet eligibility varies by route and destination country rules. Pets must be at least 8 weeks old. Confirm your specific route by calling Spirit directly.",
     intl: "Limited",
     verified: "May 2026",
     link: "https://customersupport.spirit.com/en-US/category/article/KA-01066",
@@ -128,8 +128,8 @@ const AIRLINES = [
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US only. Cabin NOT allowed: all international routes (Frontier is a domestic-only carrier).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
     fee: "~$99 each way",
     weight: "Pet must fit comfortably in carrier",
     carrier: "18 × 14 × 8 in",
@@ -145,8 +145,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of Hawaii ✓ — but limited routes INTO Hawaii",
     cabinStatus: "conditional",
     direction: "Cabin allowed: inter-island Hawaii flights AND flights LEAVING Hawaii to US mainland. Cabin NOT allowed: flights INTO Hawaii from the mainland (cargo only — Hawaii's strict quarantine rules), AND no cabin to/from JFK, BOS, AUS, SLC, PPG. No international cabin at all.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "no", canada: "no", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no" },
     fee: "$35 inter-island / $100 mainland–Hawaii (decreased from $125 in Jan 2026)",
     weight: "25 lb combined (pet + carrier) — most generous in U.S.",
     carrier: "Soft: 16 × 10 × 9.5 in",
@@ -157,12 +157,12 @@ const AIRLINES = [
   },
   {
     name: "Air Canada",
-    tags: ["canada", "uk-out", "us", "longhaul"],
+    tags: ["canada", "uk-out", "us", "longhaul", "caribbean"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic, US/Canada, Europe, and OUT of UK (LHR, Edinburgh). Cabin NOT allowed: INTO UK (cargo only), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     fee: "CAD $50–$59 domestic / $100–$118 intl",
     weight: "Pet + carrier max 22 lb (10 kg)",
     carrier: "Soft-sided. Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — sometimes smaller depending on aircraft",
@@ -177,8 +177,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ (Manchester / Glasgow only)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: Canada, US, Europe, and OUT of UK from Manchester (MAN) and Glasgow (GLA) — NOT Gatwick. Cabin NOT allowed: into UK (cargo only).",
-    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
     fee: "CAD $50–$120 depending on route",
     weight: "Pet + carrier max 17.6 lb (8 kg)",
     carrier: "Soft-sided. Max 16 × 9 × 9 in (40 × 23 × 23 cm)",
@@ -193,8 +193,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK government rule). Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "~€75–€200 depending on route",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "46 × 28 × 24 cm (~18 × 11 × 9 in), soft-sided only",
@@ -209,8 +209,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Frankfurt/Munich). Cabin NOT allowed: INTO UK (cargo only — UK government rule), into Australia, NZ, Hawaii.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "€70–€110 in Europe / €110–€300 long-haul",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "55 × 40 × 23 cm (~21.7 × 15.7 × 9 in) — slightly larger than Air France",
@@ -225,8 +225,8 @@ const AIRLINES = [
     cabin: "Cabin India ↔ Europe/Asia ✓ — NOT direct to US/Canada/UK/Australia",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic India, India ↔ Europe (Frankfurt, Paris, Amsterdam, etc.), India ↔ Asia (Singapore, Hong Kong, Thailand), and outbound flights FROM UAE to many destinations. Cabin NOT allowed: direct flights to/from USA, Canada, UK, or Australia (cargo only on these routes — use a European hub airline for cabin instead). Pets entering UAE must arrive as cargo regardless of airline.",
-    originAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
     fee: "₹7,500 domestic / $140 short-haul intl / $160 Europe",
     weight: "Pet + carrier max 10 kg (22 lb) for cabin",
     carrier: "Soft-sided, max 18×18×12 in. Cargo hold uses IATA-compliant hard crates",
@@ -241,8 +241,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Warsaw",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Warsaw), India (Delhi) ↔ USA via Warsaw both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "€12 domestic · €50 Europe/Middle East · €70 USA/Canada/China/Japan",
     weight: "Pet + carrier max 8 kg (17 lb)",
     carrier: "Soft-sided. Max 55×40×20 cm (B787/B737)",
@@ -257,8 +257,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Zurich",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Zurich), India ↔ USA via Zurich both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "$60–$120 per segment depending on route",
     weight: "Pet + carrier max 8 kg (17 lb)",
     carrier: "Soft-sided, max 55×40×23 cm",
@@ -273,8 +273,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — best for UK → Portugal",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK/Ireland government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
     fee: "€75 short-haul · €200 long-haul (US, Brazil)",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "Soft-sided, max 45 × 30 × 23 cm (~18 × 12 × 9 in)",
@@ -289,8 +289,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK/India/Europe ↔ Abu Dhabi ✓ — but NOT cabin INTO the UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), and OUT of UK to Abu Dhabi (London Heathrow / Manchester). All under 8 kg combined. Cabin NOT allowed: INTO UK from Abu Dhabi (UK government rule — cargo only inbound to UK), into USA, Australia, Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
-    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
+    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
     fee: "Promo: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
     weight: "Pet + carrier max 8 kg (17.6 lb) — economy under-seat OR buy adjacent seat for bigger carrier",
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
@@ -305,8 +305,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ via Istanbul — but NOT into Dubai (UAE law)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes via Istanbul including OUT of UK (LHR/MAN → Istanbul), USA ↔ Istanbul, India ↔ Istanbul (Delhi, Mumbai, Bangalore, Hyderabad), and many Asian/African destinations. Economy class only — business class cabin pets banned from April 21, 2026 (new bookings). Cabin NOT allowed: INTO UK from Istanbul (cargo only — UK government rule), into Dubai DXB (UAE law applies regardless of airline), some Middle East destinations.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "$15 short-haul domestic · $70 starting price international (varies by route)",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "Soft-sided. Max 40 × 30 × 23 cm (L × W × H) under-seat",
@@ -321,8 +321,8 @@ const AIRLINES = [
     cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including Spain ↔ EU, Spain ↔ USA (JFK/MIA/ORD/BOS via Madrid), Spain ↔ Latin America. Cabin NOT allowed (both directions): UK (LHR, MAN, EDI, LGW — Iberia uses IAG Cargo to/from UK). Snub-nosed breeds allowed cabin only (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no" },
     fee: "€35 within Spain · €50 Europe / Africa / Middle East · €150 America / Asia",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined",
     carrier: "Soft-sided. Max 45 × 35 × 25 cm (sum of dimensions ≤105 cm)",
@@ -337,8 +337,8 @@ const AIRLINES = [
     cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic Italy (up to 12 kg combined!), Italy ↔ EU, Italy ↔ USA (JFK/MIA/ORD/LAX/BOS via Rome FCO), Italy ↔ Tokyo / Buenos Aires / Sao Paulo. Cabin NOT allowed (both directions): UK (cargo only). Snub-nosed cabin OK (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
     fee: "€73 domestic Italy · €95 Europe / North Africa · €210 N. America · €230 S. America / Japan",
     weight: "Domestic Italy: 12 kg combined. International: 8 kg combined",
     carrier: "Soft-sided. Max 55 × 40 × 23 cm international (slightly larger than most). 24 × 40 × 30 cm domestic Italy.",
@@ -419,8 +419,10 @@ const DIRECT_ROUTES = [
   { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
 
   // ═══════ FROM MIAMI ═══════
+  { from: "Miami (MIA)", to: "Nassau (NAS)", duration: "55m", note: "JetBlue, AA, Delta, Bahamasair. ✓ Cabin (under 20 lb on JetBlue). Shortest US-Caribbean route — Bahamas import permit required (apply 6–8 weeks ahead).", tags: ["us", "caribbean"] },
   { from: "Miami (MIA)", to: "New York (JFK)", duration: "3h 15m", note: "Delta, AA, United, JetBlue. ✓ Cabin all four. Domestic-equivalent route, multiple daily.", tags: ["us"] },
   { from: "Miami (MIA)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Southern US direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Miami (MIA)", to: "Santo Domingo (SDQ)", duration: "2h 30m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get Certification of US-issued Rabies Vaccination form BEFORE departure for return.", tags: ["us", "caribbean"] },
 
   // ═══════ FROM MONTREAL ═══════
   { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
@@ -578,6 +580,18 @@ const WORKAROUND_ROUTES_TABLE = [
     ],
     note: "Etihad is the only airline that allows cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. From AUH it's a 90-minute drive to Dubai. The neat thing about this route: you fly direct from Heathrow with your pet in cabin and skip a stopover entirely. Manchester also works (same Etihad cabin policy).",
     tags: ["uk-out", "dubai"],
+  },
+  // India → Dubai workaround
+  {
+    from: "Delhi / Mumbai",
+    to: "Dubai (DXB)",
+    duration: "~5h total + 90min drive",
+    legs: [
+      { route: "DEL/BOM → Abu Dhabi AUH", time: "3h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
+    ],
+    note: "No airline allows cabin pets INTO Dubai (DXB) — UAE law. The workaround: fly cabin into Abu Dhabi on Etihad (cabin from Delhi, Mumbai, Bangalore, and Chennai all permitted), then 90-minute road transfer to Dubai. Etihad cabin from Indian airports outside those four is NOT permitted (Ahmedabad, Jaipur, Kochi excluded).",
+    tags: ["india", "dubai"],
   },
   // USA → India workaround
   {
@@ -934,6 +948,143 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  dominican_republic: {
+    title: "Dominican Republic entry / exit checklist",
+    sections: [
+      {
+        title: "6–8 weeks before",
+        items: [
+          "Vet appointment for full health check",
+          "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
+          "Rabies vaccine 30 days–12 months old (after microchip)",
+          "DHPP for dogs (distemper, hepatitis, parainfluenza, parvovirus); FVRCP for cats",
+          "IMPORTANT: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
+        ],
+      },
+      {
+        title: "If returning to the US: do this BEFORE departure",
+        items: [
+          "Get Certification of U.S.-issued Rabies Vaccination form from a USDA-accredited vet (NOT a regular rabies certificate)",
+          "Form must be USDA-endorsed BEFORE your dog leaves the US — cannot be issued retroactively",
+          "USDA-endorsed export health certificates dated after July 31, 2025 are NOT accepted — use the Certification form instead",
+          "CDC Dog Import Form receipt (online) for your return entry",
+          "Plan: dog must be at least 6 months old at time of US re-entry",
+        ],
+      },
+      {
+        title: "10 days before travel to DR",
+        items: [
+          "USDA-accredited vet issues Health Certificate for export to DR (valid 10 days)",
+          "Certificate includes microchip number, rabies info, parasite treatments",
+          "Consulate endorsement NOT required for personal pets",
+          "Re-confirm cabin pet booking with airline",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring original (signed/stamped) Health Certificate",
+          "Bring Certification of U.S.-issued Rabies Vaccination (for return)",
+          "Bring CDC Dog Import Form receipt (for return)",
+          "DR inspection on arrival — typically quick if paperwork complete",
+        ],
+      },
+    ],
+  },
+  jamaica: {
+    title: "Jamaica entry / exit checklist",
+    sections: [
+      {
+        title: "6+ MONTHS before (this is a long process)",
+        items: [
+          "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
+          "Rabies vaccine administered (after microchip) — primary vaccine needs 3-month wait before entry for dogs over 12 months",
+          "FAVN rabies titer test done 30+ days after vaccination at an OIE/WHO-approved lab",
+          "Titer result must be valid (≥0.5 IU/ml) and dated 3–12 months before arrival",
+          "IMPORTANT: Jamaica only accepts pets directly from Category 1 (rabies-controlled) countries — pets from elsewhere must have lived in a Category 1 country for 6+ months first",
+        ],
+      },
+      {
+        title: "Permit application (start ASAP after titer)",
+        items: [
+          "Submit Preliminary Application Form to vsdpermits@moa.gov.jm",
+          "Attach rabies certificate + FAVN titer results",
+          "Wait for Pre-Export Treatment Schedule from Jamaica Veterinary Services Division",
+          "DO NOT start additional treatments until Preliminary Application is approved",
+          "Apply for Veterinary Import Permit (separate from preliminary application)",
+        ],
+      },
+      {
+        title: "30 days before — pre-export treatments",
+        items: [
+          "Two internal parasite treatments, 14 days apart (second within 7 days of travel)",
+          "Two external parasite treatments, 14 days apart (second within 48 hours of travel)",
+          "Additional vaccinations per Jamaica's schedule: distemper, parvovirus, leptospirosis, hepatitis, parainfluenza",
+          "Brucella Canis test for dogs; Leishmaniosis test if required",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Original Veterinary Import Permit (mandatory — no entry without it)",
+          "Government-endorsed international health certificate",
+          "All vaccination and treatment records (microchip number on every document)",
+          "Pit Bull Terriers and hybrid dogs are banned — confirm breed eligibility well in advance",
+        ],
+      },
+    ],
+  },
+  bahamas: {
+    title: "Bahamas entry / exit checklist",
+    sections: [
+      {
+        title: "8+ weeks before",
+        items: [
+          "ISO 15-digit microchip implanted FIRST",
+          "Rabies vaccine: primary doses need at least 30 days before entry; max 10 months for 1-year vaccine or 34 months for 3-year vaccine",
+          "Other vaccinations: distemper, hepatitis, leptospirosis, parvovirus, adenovirus (plus coronavirus if from high-risk rabies country)",
+          "Pet must be at least 6 months old at entry",
+        ],
+      },
+      {
+        title: "4–6 weeks before — Import Permit",
+        items: [
+          "Apply for Bahamas Import Permit via bahamaspetpermit.com or email minagriculturalmarine@bahamas.gov.bs",
+          "Standard processing: 6–8 weeks (expedited service available)",
+          "Permit fee: ~$10 USD + 12% VAT",
+          "Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier — confirm eligibility before applying",
+        ],
+      },
+      {
+        title: "48 hours before travel",
+        items: [
+          "Licensed vet completes International Veterinary Certificate (within 48 hours of arrival in Bahamas)",
+          "USDA APHIS endorsement NOT required — vet signature alone is enough",
+          "Internal parasite test (negative stool sample test) recorded on certificate",
+          "Re-confirm cabin pet booking with airline (JetBlue, AA, Delta all do cabin to Nassau)",
+        ],
+      },
+      {
+        title: "Travel day & arrival",
+        items: [
+          "Original Import Permit (mandatory)",
+          "Original Veterinary Certificate (signed within 48 hours of arrival)",
+          "Microchip and rabies records",
+          "On arrival: pet examined by Bahamian veterinary officer within 48 hours",
+          "If staying 28+ days: dog must be licensed locally within 48 hours of entry",
+        ],
+      },
+      {
+        title: "Returning to US",
+        items: [
+          "Bahamas is a CDC dog-rabies-FREE country — return is straightforward",
+          "Only the CDC Dog Import Form receipt is needed for re-entry",
+          "Dog must be 6+ months old, microchipped, healthy",
+          "No titer test or quarantine required on return",
+        ],
+      },
+    ],
+  },
 };
 
 // ---------- INTAKE FLOW ----------
@@ -1127,16 +1278,14 @@ function SectionLabel({ children, num }) {
 const NAV_SECTIONS = [
   { id: "top", label: "Home", num: "" },
   { id: "intake", label: "Assessment", num: "I" },
-  { id: "airlines", label: "Airlines", num: "III" },
-  { id: "routes", label: "Routes", num: "★" },
-  { id: "workarounds", label: "Workarounds", num: "◆" },
-  { id: "destinations", label: "Destinations", num: "IV" },
+  { id: "airlines", label: "Airlines", num: "II" },
+  { id: "routes", label: "Routes", num: "III" },
+  { id: "destinations", label: "Difficult destinations", num: "IV" },
   { id: "quarantine", label: "Quarantine", num: "⚠" },
   { id: "timeline", label: "Timeline", num: "V" },
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
   { id: "stories", label: "Stories", num: "✻" },
-  { id: "coming-soon", label: "Coming soon", num: "∞" },
   { id: "contact", label: "Contact", num: "VIII" },
 ];
 
@@ -1272,7 +1421,7 @@ function Hero({ onStart }) {
           {[
             { num: "07", label: "Quick questions" },
             { num: "21", label: "Airlines compared" },
-            { num: "09", label: "Tricky destinations" },
+            { num: "10", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i}>
               <div className="font-serif text-5xl text-stone-800">{s.num}</div>
@@ -1789,6 +1938,46 @@ const DESTINATIONS = [
     ],
     paperwork: "From UK: ISO microchip, rabies vaccine ≥21 days old, GB Animal Health Certificate (AHC) from a UK vet within 10 days of travel — valid for 4 months of EU travel and 4 months for re-entry. UK pet passports issued pre-2021 are no longer valid for outbound travel. Within EU: an EU pet passport from any EU vet replaces the AHC and is valid for the pet's lifetime (rabies vaccine staying current). Tapeworm treatment 24–120 hrs before returning to the UK or Ireland (dogs only).",
   },
+  {
+    id: "caribbean",
+    flag: "🌴",
+    name: "Caribbean (Jamaica especially)",
+    headline: "Every island has different rules — don't assume.",
+    rule: "The Caribbean is not one destination. Bahamas, Jamaica, Cayman Islands, Barbados, and St. Lucia all have strict import permits and pre-arrival paperwork (often 30+ days). Dominican Republic, Aruba, Curacao, and Bermuda are easier but still require a health certificate. Puerto Rico and USVI are US territories — no import paperwork. Jamaica is the strictest: 6+ months of prep including mandatory FAVN rabies titer. If you're from the US, Dominican Republic is on the CDC's high-risk rabies list — getting your dog BACK is the tricky part. NOTE: we cover the three most-asked-about destinations in detail below (Bahamas, Jamaica, Dominican Republic) — the Caribbean has 25+ destinations with varying rules. If yours isn't covered here, always check the destination's official Department of Agriculture site and confirm with your airline.",
+    workarounds: [
+      {
+        title: "Jamaica: 6+ months prep is mandatory",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Two-stage permit process. First submit a Preliminary Application Form (with FAVN rabies titer results 3–12 months old). Once approved, get the actual Veterinary Import Permit. Multiple parasite treatments at specific intervals before travel. Pit Bull Terriers and hybrid dogs are banned. Pets from non-Category-1 (rabies-uncontrolled) countries must reside in a Category-1 country for 6+ months first.",
+        cost: "Permit fees + FAVN titer (~$100–200) + vet treatments. Allow 6+ months.",
+      },
+      {
+        title: "Bahamas: 6–8 week import permit",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Apply via bahamaspetpermit.com at least 4 weeks before travel. International Veterinary Certificate within 48 hours of arrival. Pet examined by Bahamian vet within 48 hours of landing. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier. Good news for returning to the US: Bahamas is CDC-rabies-FREE, so re-entry is just the standard CDC Dog Import Form.",
+        cost: "Permit: ~$10 USD + 12% VAT. Vet exam on arrival ~$50–100.",
+      },
+      {
+        title: "Dominican Republic: easy in, harder out (for US visitors)",
+        icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Getting your pet INTO the DR is straightforward — microchip + rabies + vet health certificate. BUT: DR is on the CDC high-risk rabies list, which means returning to the US requires the Certification of U.S.-issued Rabies Vaccination form (NOT a regular rabies cert). This MUST be obtained from a USDA-accredited vet and USDA-endorsed BEFORE your dog leaves the US — it cannot be issued retroactively. People get caught out by this.",
+        cost: "USDA form: $50–150 endorsement fee. Plan ahead.",
+      },
+      {
+        title: "Puerto Rico and USVI: no paperwork needed",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "These are US territories. If you're flying from the US mainland, your dog or cat needs no special import paperwork — just standard rabies vaccination and the usual airline cabin booking. JetBlue, Delta, AA, United, Spirit, Frontier all offer cabin pet service. Same return.",
+        cost: "Just the airline cabin pet fee ($100–150).",
+      },
+      {
+        title: "Other Caribbean: check the specific country",
+        icon: <Compass className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Cayman Islands and Barbados both require import permits and rabies titer testing (similar to Jamaica in complexity). Antigua, Aruba, Curacao, Bermuda, St. Lucia, and Turks & Caicos are simpler — typically a health certificate within 10–14 days of arrival. Always check the destination's official Department of Agriculture site (or APHIS country page if departing from the US) before booking.",
+        cost: "Varies. Some countries: $0 fee + paperwork only. Others: $50–300 permits.",
+      },
+    ],
+    paperwork: "Universal requirements across Caribbean destinations: ISO 15-digit microchip, valid rabies vaccination, vet-issued international health certificate (usually within 10 days, sometimes 48 hours, of arrival). Jamaica + Cayman + Barbados additionally require FAVN rabies titer test 3–12 months before arrival. US travelers returning from Dominican Republic, Haiti, Cuba (all CDC high-risk) need the Certification of U.S.-issued Rabies Vaccination form endorsed by USDA before they leave the US. Carry originals (not photos) at the border.",
+  },
 ];
 
 function DifficultDestinations() {
@@ -1880,6 +2069,7 @@ function AirlineGrid() {
     { id: "europe", label: "Europe routes", flag: "🇪🇺" },
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
+    { id: "caribbean", label: "Caribbean", flag: "🌴" },
   ];
 
   const filteredAirlines = filter === "all"
@@ -1993,6 +2183,7 @@ function AirlineGrid() {
                       { code: "india", flag: "🇮🇳", label: "India" },
                       { code: "canada", flag: "🇨🇦", label: "Canada" },
                       { code: "uae", flag: "🇦🇪", label: "UAE" },
+                      { code: "caribbean", flag: "🌴", label: "Caribbean" },
                     ];
                     const renderFlag = (c, statusObj, direction) => {
                       const status = statusObj[c.code];
@@ -2010,15 +2201,19 @@ function AirlineGrid() {
                       );
                     };
                     return (
-                      <div className="space-y-1.5 mb-3 pb-3 border-b border-stone-200">
-                        <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
-                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px]">Cabin from:</span>
-                          {COUNTRIES.map((c) => renderFlag(c, a.originAllowed, "from"))}
+                      <div className="space-y-2 mb-3 pb-3 border-b border-stone-200">
+                        <div className="flex items-start gap-x-2">
+                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px] flex-shrink-0 pt-1">Cabin from:</span>
+                          <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
+                            {COUNTRIES.map((c) => renderFlag(c, a.originAllowed, "from"))}
+                          </div>
                         </div>
                         {a.destinationAllowed && (
-                          <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
-                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px]">Cabin to:</span>
-                            {COUNTRIES.map((c) => renderFlag(c, a.destinationAllowed, "to"))}
+                          <div className="flex items-start gap-x-2">
+                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px] flex-shrink-0 pt-1">Cabin to:</span>
+                            <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
+                              {COUNTRIES.map((c) => renderFlag(c, a.destinationAllowed, "to"))}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -2304,6 +2499,12 @@ function ChecklistDownload() {
             { id: "generic", label: "Universal" },
             { id: "uk", label: "🇬🇧 UK in/out" },
             { id: "usa", label: "🇺🇸 USA in/out" },
+            { id: "uae", label: "🇦🇪 UAE in/out" },
+            { id: "canada", label: "🇨🇦 Canada in/out" },
+            { id: "mexico", label: "🇲🇽 Mexico in/out" },
+            { id: "dominican_republic", label: "🇩🇴 Dominican Rep." },
+            { id: "jamaica", label: "🇯🇲 Jamaica" },
+            { id: "bahamas", label: "🇧🇸 Bahamas" },
             { id: "europe", label: "🇪🇺 Europe in/out" },
             { id: "india", label: "🇮🇳 India in/out" },
           ].map((r) => (
@@ -2328,6 +2529,12 @@ function ChecklistDownload() {
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
+
+      {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
+        <div className="mt-5 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+          <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
+        </div>
+      )}
     </div>
   );
 }
@@ -2344,6 +2551,7 @@ function Routes() {
     { id: "europe", label: "Europe routes", flag: "🇪🇺" },
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
+    { id: "caribbean", label: "Caribbean", flag: "🌴" },
   ];
 
   // Extract a clean grouping key from "City (CODE)" or "City / City" strings
@@ -2376,6 +2584,7 @@ function Routes() {
     "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
+    "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Cayman Islands"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region
@@ -2492,9 +2701,13 @@ function Routes() {
             </button>
           </div>
           <p className="text-stone-500 text-sm mt-2 italic font-serif">
-            {direction === "from"
-              ? "Routes grouped by departure city, alphabetical."
-              : "Routes grouped by destination city, alphabetical."}
+            {filter === "all"
+              ? (direction === "from"
+                ? "Cities listed alphabetically. Use a region filter above to narrow."
+                : "Cities listed alphabetically. Use a region filter above to narrow.")
+              : (direction === "from"
+                ? "Showing cities people depart FROM within the selected region, alphabetically."
+                : "Showing cities people arrive INTO within the selected region, alphabetically.")}
           </p>
         </div>
 
@@ -2867,6 +3080,20 @@ const QUARANTINE_COUNTRIES = [
     severity: "depends",
     detail: "Recent rule changes: pets from rabies-free regions (NZ, Singapore, UK, plus a few others — not USA) get no quarantine. From most other countries, 7–30 days home quarantine after arrival if paperwork is complete.",
   },
+  {
+    flag: "🇯🇲",
+    name: "Jamaica",
+    duration: "No quarantine — but 6+ months prep",
+    severity: "always",
+    detail: "Not a traditional quarantine country, but Jamaica's pet import process is one of the strictest in the Caribbean. Mandatory FAVN rabies titer 3–12 months before arrival. Two-stage permit process (Preliminary Application + Veterinary Import Permit). Multiple internal/external parasite treatments at specific intervals. Pets from non-Category-1 (rabies-uncontrolled) countries must reside in a Category-1 country for 6+ months before they qualify. Pit Bull Terriers and hybrid dogs are banned outright.",
+  },
+  {
+    flag: "🇧🇸",
+    name: "Bahamas",
+    duration: "No quarantine — but 6–8 wk permit",
+    severity: "depends",
+    detail: "Import permit takes 6–8 weeks without expedited service. Microchip + rabies + DHPP plus coronavirus vaccine if from high-rabies country. Vet exam within 48 hours of arrival. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier. Good news on return: Bahamas is CDC-rabies-FREE, so re-entry to the US is straightforward (just the CDC Dog Import Form).",
+  },
 ];
 
 function QuarantineWatch() {
@@ -3018,6 +3245,24 @@ function Documents() {
               when: "Entering Australia",
               detail: "From the Department of Agriculture. Multi-step process spanning 6+ months including pre-export tests, rabies titer (FAVN), tick treatment, and 10-day post-arrival quarantine at Mickleham.",
               link: "agriculture.gov.au",
+            },
+            {
+              title: "Jamaica Veterinary Import Permit",
+              when: "Entering Jamaica",
+              detail: "Two-stage process: Preliminary Application Form (with FAVN titer results) must be approved BEFORE you start the rest of the prep. Then Veterinary Import Permit issued. Pit Bull Terriers and hybrid dogs banned. Allow 6+ months from start to travel day.",
+              link: "moa.gov.jm",
+            },
+            {
+              title: "Bahamas Import Permit",
+              when: "Entering Bahamas",
+              detail: "Required for every pet. Apply via bahamaspetpermit.com (online) at least 4 weeks before travel — 6–8 weeks for standard processing without expedited service. ~$10 USD + 12% VAT. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier.",
+              link: "bahamaspetpermit.com",
+            },
+            {
+              title: "CDC Certification of U.S.-issued Rabies Vaccination",
+              when: "Returning to US from high-risk countries",
+              detail: "Required when returning to the US from a CDC high-risk rabies country (including Dominican Republic). Must be completed by USDA-accredited vet and endorsed by USDA BEFORE the dog leaves the US — cannot be issued retroactively. Different form from a regular rabies certificate.",
+              link: "cdc.gov/importation",
             },
           ].map((d, i) => (
             <div key={i} className="bg-stone-900 p-8">
@@ -3544,14 +3789,12 @@ export default function PetTravel() {
 
       <AirlineGrid />
       <Routes />
-      <Workarounds />
       <DifficultDestinations />
       <QuarantineWatch />
       <Checklist />
       <Documents />
       <Tips />
       <Stories />
-      <ComingSoon />
       <Contact />
       <Footer />
     </div>

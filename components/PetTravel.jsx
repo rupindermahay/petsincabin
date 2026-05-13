@@ -285,16 +285,16 @@ const AIRLINES = [
   },
   {
     name: "Etihad Airways",
-    tags: ["dubai", "india", "europe"],
-    cabin: "Cabin India/Europe ↔ Abu Dhabi only — NOT from UK or US (both directions)",
+    tags: ["dubai", "india", "europe", "uk-out"],
+    cabin: "Cabin OUT of UK/India/Europe ↔ Abu Dhabi ✓ — but NOT cabin INTO the UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai). Europe ↔ Abu Dhabi (most major cities). All under 8 kg combined. Cabin NOT allowed (BOTH directions): UK ↔ Abu Dhabi (London/Manchester explicitly banned), USA ↔ Abu Dhabi, Australia ↔ Abu Dhabi, Hong Kong ↔ Abu Dhabi, Maldives, South Africa, Bali. Also no cabin from some Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
-    originAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
+    direction: "Cabin allowed: India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), and OUT of UK to Abu Dhabi (London Heathrow / Manchester). All under 8 kg combined. Cabin NOT allowed: INTO UK from Abu Dhabi (UK government rule — cargo only inbound to UK), into USA, Australia, Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
+    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
     destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes" },
     fee: "Promo: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
     weight: "Pet + carrier max 8 kg (17.6 lb) — economy under-seat OR buy adjacent seat for bigger carrier",
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
-    notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
+    notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Cabin OUT of UK (LHR, MAN) is allowed (verified on Etihad's country restrictions page). Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
     intl: "Yes (Abu Dhabi-routed only)",
     verified: "May 2026",
     link: "https://www.etihad.com/en/plan/travel-companion/travelling-with-pets",
@@ -343,33 +343,197 @@ const NO_CABIN_AIRLINES = [
 
 // ---------- POPULAR ROUTES & TIMES ----------
 
-const ROUTES = [
-  { from: "London (LHR)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Canada direct. ✓ Cabin out of UK (under 10 kg combined). Connect onward in Toronto for cabin to most of N. America.", tags: ["uk-out", "canada"] },
-  { from: "London (LHR)", to: "Montreal (YUL)", duration: "7h 15m", note: "Air Canada direct. ✓ Cabin out of UK (under 10 kg). Theo's Mum's route — pivot via Montreal then onward US.", tags: ["uk-out", "canada"] },
-  { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat direct. ✓ Cabin out of UK (under 8 kg). Same idea as LHR-YUL.", tags: ["uk-out", "canada"] },
-  { from: "London (LHR)", to: "Lisbon (LIS)", duration: "2h 45m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg). 184 flights/week from Heathrow — most popular UK→Portugal pet route.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Paris (CDG)", duration: "1h 20m", note: "Air France. ✓ Cabin out of UK (under 8 kg). Connect at CDG for cabin onward to USA, India, almost anywhere.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin out of UK (under 8 kg). KLM hub for onward cabin flights to USA, India, etc.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg). Strong onward connections in cabin.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Zurich (ZRH)", duration: "1h 50m", note: "SWISS. ✓ Cabin out of UK (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Warsaw (WAW)", duration: "2h 25m", note: "LOT Polish. ✓ Cabin out of UK (under 8 kg). Connect for onward to USA at LOT's €70 long-haul cabin rate.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "New York via Paris", duration: "~12h with layover", note: "✓ Cabin BOTH legs: Air France LHR→CDG (1h 20m) → CDG→JFK (7h 45m). The cabin workaround for the no-direct-cabin UK→USA wall.", tags: ["uk-out", "us", "europe"] },
-  { from: "London (LHR)", to: "Miami via Montreal", duration: "~24h with overnight", note: "✓ Cabin BOTH legs: Air Canada LHR→YUL (7h 15m), overnight at dog-friendly hotel, then AC/AA/United YUL→MIA (3h 30m). Theo's Mum's actual route.", tags: ["uk-out", "us", "canada"] },
-  { from: "Paris (CDG)", to: "London (UK)", duration: "5–10h via Eurotunnel", note: "Fly cabin to CDG, drive/taxi to Calais, Eurotunnel 35min, drive to London. Pet stays with you the whole way.", tags: ["europe", "uk-out"] },
-  { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada cabin OK. Combined pet+carrier max 22 lb.", tags: ["canada"] },
-  { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United all accept cabin pets on this North America domestic-equivalent route. Combined max 22 lb (Air Canada) or 20 lb (US carriers).", tags: ["canada", "us"] },
-  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France accept cabin pets. NOT American Airlines (AA bans transatlantic cabin). Combined max 17.6 lb.", tags: ["us", "europe"] },
-  { from: "Delhi (DEL)", to: "LAX via Frankfurt", duration: "20–22h connecting", note: "✓ Cabin BOTH legs: Lufthansa Delhi→Frankfurt→LAX. Under 8 kg combined.", tags: ["india", "us", "europe"] },
-  { from: "Mumbai (BOM)", to: "NYC via Amsterdam", duration: "18–20h connecting", note: "✓ Cabin BOTH legs: KLM Mumbai→Amsterdam→JFK. Max 8 kg combined.", tags: ["india", "us", "europe"] },
-  { from: "Delhi (DEL)", to: "Chicago via Warsaw", duration: "19–21h connecting", note: "✓ Cabin BOTH legs: LOT Polish Delhi→Warsaw→ORD. €70 fee to USA. Under 8 kg.", tags: ["india", "us", "europe"] },
-  { from: "Mumbai (BOM)", to: "USA via Zurich", duration: "18–20h connecting", note: "✓ Cabin BOTH legs: SWISS Mumbai→Zurich→USA. Under 8 kg combined.", tags: ["india", "us", "europe"] },
-  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board' — cabin allowed direct (under 10 kg combined).", tags: ["india", "europe"] },
-  { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India cabin allowed OUT of UAE. Under 10 kg combined.", tags: ["dubai", "india"] },
-  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad cabin allowed (under 8 kg). The ONLY cabin entry into the UAE — Dubai is cargo-only for all airlines. Abu Dhabi is 90 min from Dubai by road.", tags: ["uk-out", "dubai"] },
-  { from: "Delhi / Mumbai (DEL/BOM)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad cabin allowed (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
-  { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. Cabin allowed (under 8 kg combined). Connect at IST for cabin onward to Europe, India, Africa, parts of Asia.", tags: ["us", "europe"] },
-  { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. Cabin allowed (under 8 kg). Strong onward connections to Europe and onwards to USA cabin via European hubs.", tags: ["india", "europe"] },
+const DIRECT_ROUTES = [
+  // UK out (cabin)
+  { from: "London (LHR)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined).", tags: ["uk-out", "canada"] },
+  { from: "London (LHR)", to: "Montreal (YUL)", duration: "7h 30m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg). Theo's Mum's first leg.", tags: ["uk-out", "canada"] },
+  { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
+  { from: "London (LHR)", to: "Lisbon (LIS)", duration: "2h 45m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). 184 flights/week from Heathrow.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Paris (CDG)", duration: "1h 20m", note: "Air France. ✓ Cabin (under 8 kg). Strong hub for onward cabin connections.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Zurich (ZRH)", duration: "1h 50m", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Warsaw (WAW)", duration: "2h 25m", note: "LOT Polish. ✓ Cabin (under 8 kg). Cheapest long-haul connection (€70 LOT onward to USA).", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Istanbul (IST)", duration: "3h 50m", note: "Turkish Airlines. ✓ Cabin (under 8 kg, economy only since April 2026).", tags: ["uk-out", "europe"] },
+
+  // Europe - back to UK by land
+  { from: "Paris (CDG)", to: "London (UK)", duration: "5–10h via Eurotunnel", note: "Fly cabin to CDG, drive/taxi to Calais, Eurotunnel (35min), drive to London. Pet stays with you the whole way — the standard cabin pets workaround to get INTO the UK.", tags: ["europe", "uk-out"] },
+
+  // Within North America (cabin)
+  { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
+  { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
+
+  // US ↔ Europe cabin
+  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "KLM. ✓ Cabin (under 8 kg). Strong onward hub for India / continental Europe.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
+  { from: "Boston (BOS)", to: "Paris (CDG)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). The shortest US east coast direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
+  { from: "Los Angeles (LAX)", to: "Paris (CDG)", duration: "11h", note: "Air France. ✓ Cabin (under 8 kg). The west coast option — longer flight, consider stopover advice.", tags: ["us", "europe"] },
+  { from: "Miami (MIA)", to: "New York (JFK)", duration: "3h 15m", note: "Delta, AA, United, JetBlue. ✓ Cabin all four. Domestic-equivalent route, multiple daily.", tags: ["us"] },
+  { from: "Miami (MIA)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Southern US direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for cabin onward to Europe, India, Africa.", tags: ["us", "europe"] },
+
+  // India out (cabin)
+  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
+  { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
+
+  // Dubai / UAE
+  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE — Abu Dhabi is 90 min from Dubai by road.", tags: ["uk-out", "dubai"] },
+  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
+  { from: "Delhi / Mumbai", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
+  { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
 ];
+
+const WORKAROUND_ROUTES_TABLE = [
+  // UK → USA via Europe (cabin all the way)
+  {
+    from: "London (LHR)",
+    to: "New York (JFK)",
+    duration: "~12h total",
+    legs: [
+      { route: "LHR → Paris CDG", time: "1h 20m", airline: "Air France ✓ Cabin" },
+      { route: "Layover at CDG", time: "2–3h", airline: "Recommended buffer for pet handover" },
+      { route: "CDG → JFK", time: "7h 45m", airline: "Air France or Delta ✓ Cabin" },
+    ],
+    note: "The cabin workaround for the no-direct-cabin UK→USA wall. Same-day connection works for an under-8 kg pet, but a longer layover (or overnight in Paris) is gentler for both of you.",
+    tags: ["uk-out", "us", "europe"],
+  },
+  {
+    from: "London (LHR)",
+    to: "Miami (MIA)",
+    duration: "~24h with overnight",
+    legs: [
+      { route: "LHR → Montreal YUL", time: "7h 30m", airline: "Air Canada ✓ Cabin" },
+      { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
+      { route: "YUL → MIA", time: "3h 30m", airline: "Air Canada / AA / United ✓ Cabin" },
+    ],
+    note: "Theo's Mum's actual route. The overnight in Montreal is what made it work — the pet recovers, you recover, then the short hop to Miami the next morning is easy.",
+    tags: ["uk-out", "us", "canada"],
+  },
+
+  // India → USA via Europe (cabin both legs)
+  {
+    from: "Delhi (DEL)",
+    to: "Los Angeles (LAX)",
+    duration: "20–22h total",
+    legs: [
+      { route: "DEL → Frankfurt FRA", time: "8h 30m", airline: "Lufthansa ✓ Cabin" },
+      { route: "Layover at FRA", time: "2–3h", airline: "Frankfurt Animal Lounge available" },
+      { route: "FRA → LAX", time: "12h", airline: "Lufthansa ✓ Cabin" },
+    ],
+    note: "Long total time — for an under-8 kg pet, a brief overnight in Frankfurt is genuinely kinder than 20+ hours in transit. Lufthansa's Animal Lounge at FRA is the world's most advanced.",
+    tags: ["india", "us", "europe"],
+  },
+  {
+    from: "Mumbai (BOM)",
+    to: "New York (JFK)",
+    duration: "18–20h total",
+    legs: [
+      { route: "BOM → Amsterdam AMS", time: "9h 15m", airline: "KLM ✓ Cabin" },
+      { route: "Layover at AMS", time: "2–3h", airline: "Recommended buffer" },
+      { route: "AMS → JFK", time: "8h", airline: "KLM ✓ Cabin" },
+    ],
+    note: "Max 8 kg combined. KLM's Amsterdam hub is well-organised for pet connections. Consider an Amsterdam overnight if your pet doesn't travel well.",
+    tags: ["india", "us", "europe"],
+  },
+  {
+    from: "Delhi (DEL)",
+    to: "Chicago (ORD)",
+    duration: "19–21h total",
+    legs: [
+      { route: "DEL → Warsaw WAW", time: "8h", airline: "LOT Polish ✓ Cabin (€50)" },
+      { route: "Layover at WAW", time: "2–3h", airline: "Recommended buffer" },
+      { route: "WAW → ORD", time: "10h", airline: "LOT Polish ✓ Cabin (€70)" },
+    ],
+    note: "Cheapest cabin route from India to USA at €120 total in pet fees. Both legs under 8 kg combined.",
+    tags: ["india", "us", "europe"],
+  },
+  {
+    from: "Mumbai (BOM)",
+    to: "USA via Zurich",
+    duration: "18–20h total",
+    legs: [
+      { route: "BOM → Zurich ZRH", time: "8h 30m", airline: "SWISS ✓ Cabin" },
+      { route: "Layover at ZRH", time: "2–3h", airline: "Recommended buffer" },
+      { route: "ZRH → USA (JFK/LAX/MIA/ORD)", time: "8–13h", airline: "SWISS ✓ Cabin" },
+    ],
+    note: "SWISS uniquely allows snub-nosed (brachycephalic) breeds in cabin where most airlines force them to cargo. Worth considering if you have a French Bulldog, Pug, etc.",
+    tags: ["india", "us", "europe"],
+  },
+  // USA → UK workaround (UK only allows entry via Eurotunnel/ferry, never cabin)
+  {
+    from: "New York (JFK)",
+    to: "London (UK)",
+    duration: "~14h total (incl. ground)",
+    legs: [
+      { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
+      { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
+      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+    ],
+    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive + Eurotunnel + drive. Eurotunnel costs £25–£60 per pet. Most UK pet importers use this exact route.",
+    tags: ["us", "uk-out", "europe"],
+  },
+  // USA → UAE (no direct cabin to UAE — go via Europe to Abu Dhabi)
+  {
+    from: "New York (JFK)",
+    to: "Abu Dhabi (AUH)",
+    duration: "20–22h total",
+    legs: [
+      { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
+      { route: "Layover at CDG", time: "3–4h", airline: "Recommended buffer for pet handover" },
+      { route: "CDG → AUH", time: "6h 45m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+    ],
+    note: "No direct US ↔ UAE cabin flight exists on any airline. The cabin route uses Paris (or Frankfurt/Amsterdam/Zurich) as the pivot, then Etihad onward to Abu Dhabi. Abu Dhabi is 90 min from Dubai by road.",
+    tags: ["us", "dubai", "europe"],
+  },
+  {
+    from: "New York (JFK)",
+    to: "Dubai (DXB)",
+    duration: "~22h total + 90min drive",
+    legs: [
+      { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
+      { route: "Layover at CDG", time: "3–4h", airline: "Recommended buffer" },
+      { route: "CDG → AUH (Abu Dhabi)", time: "6h 45m", airline: "Etihad ✓ Cabin" },
+      { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
+    ],
+    note: "Cabin entry into Dubai (DXB) is impossible on any airline (UAE law). The workaround is to fly cabin into Abu Dhabi (AUH) instead, then road transfer 90 min to Dubai. This is the only way to land in the UAE with your pet in cabin.",
+    tags: ["us", "dubai", "europe"],
+  },
+  // USA → India workaround
+  {
+    from: "Los Angeles (LAX)",
+    to: "Delhi (DEL)",
+    duration: "22–24h total",
+    legs: [
+      { route: "LAX → Frankfurt FRA", time: "11h", airline: "Lufthansa ✓ Cabin" },
+      { route: "Layover at FRA", time: "2–3h", airline: "Frankfurt Animal Lounge available" },
+      { route: "FRA → DEL", time: "8h", airline: "Lufthansa ✓ Cabin" },
+    ],
+    note: "Long total time — a brief overnight in Frankfurt is genuinely kinder than 22+ hours in transit for an under-8 kg pet. Could also route via Paris (Air France), Amsterdam (KLM), Zurich (SWISS), or Warsaw (LOT).",
+    tags: ["us", "india", "europe"],
+  },
+  {
+    from: "New York (JFK)",
+    to: "Mumbai (BOM)",
+    duration: "18–20h total",
+    legs: [
+      { route: "JFK → Amsterdam AMS", time: "7h 30m", airline: "KLM ✓ Cabin" },
+      { route: "Layover at AMS", time: "2–3h", airline: "Recommended buffer" },
+      { route: "AMS → BOM", time: "8h 30m", airline: "KLM ✓ Cabin" },
+    ],
+    note: "Max 8 kg combined on both legs. KLM's Amsterdam hub is well-organised for pet connections.",
+    tags: ["us", "india", "europe"],
+  },
+];
+
+// Combined for backward compatibility (other components reference ROUTES)
+const ROUTES = [...DIRECT_ROUTES, ...WORKAROUND_ROUTES_TABLE];
 
 // ---------- DOWNLOADABLE CHECKLISTS ----------
 
@@ -505,23 +669,23 @@ const CHECKLIST_DATA = {
     ],
   },
   europe: {
-    title: "Europe (EU) checklist",
+    title: "Europe (EU) entry / exit checklist",
     sections: [
       {
         title: "4–6 weeks before",
         items: [
           "ISO microchip implanted FIRST",
           "Rabies vaccine AFTER microchip (≥21 days before EU entry)",
-          "USDA-accredited vet appointment booked (if US-departing)",
-          "GB vet appointment booked for AHC (if UK-departing)",
+          "Official vet appointment booked for health certificate (varies by origin country)",
+          "Confirm whether your airline allows cabin pets on this leg",
         ],
       },
       {
         title: "10 days before",
         items: [
-          "Get EU Health Certificate (US) or GB AHC (UK)",
+          "Get destination-appropriate health certificate (EU Health Cert from US, GB AHC from UK, etc.)",
           "USDA APHIS endorsement (US only) — same day as vet certificate ideally",
-          "Re-confirm airline cabin booking",
+          "Re-confirm airline cabin booking by phone",
         ],
       },
       {
@@ -531,6 +695,46 @@ const CHECKLIST_DATA = {
           "Arrive 3 hours early for international",
           "Bring calming spray for long flights",
           "Window seat if possible; extra-legroom if airline allows",
+        ],
+      },
+    ],
+  },
+  usa: {
+    title: "USA entry / exit checklist",
+    sections: [
+      {
+        title: "8 weeks before",
+        items: [
+          "Vet appointment for full health check",
+          "ISO microchip implanted (if not already)",
+          "Rabies vaccine 30 days–12 months old",
+          "Check current CDC dog import rules — they updated August 2024",
+        ],
+      },
+      {
+        title: "4 weeks before",
+        items: [
+          "CDC Dog Import Form completed (online, get the receipt)",
+          "USDA-accredited vet appointment booked for health certificate",
+          "Confirm airline cabin pet space (limited per flight)",
+          "Confirm departure airport allows cabin pet check-in",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Vet visit: get USDA-accredited health certificate signed",
+          "USDA APHIS endorsement (varies by state — some same-day, some require mail-in)",
+          "Re-confirm airline cabin booking by phone",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring CDC Dog Import receipt printout",
+          "Originals only at US border, not photos",
+          "Arrive 3 hours early for international",
+          "Pet relief area available at most major US airports — but walk your dog before you enter the airport too",
         ],
       },
     ],
@@ -1511,17 +1715,9 @@ function AirlineGrid() {
           </div>
         </div>
 
-        <div className="bg-white border-l-2 border-rose-400 px-5 py-4 mb-8 max-w-3xl">
-          <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-            <div>
-              <div className="font-serif text-stone-900 mb-1">Each card shows when I last verified it.</div>
-              <p className="text-stone-600 text-sm leading-relaxed">
-                Airline pet policies change quietly and often. I review every card here once a quarter and link to the official airline page so you can double-check before you book. Spot something out of date? <a href="#contact" className="underline decoration-rose-400 underline-offset-4 hover:text-rose-600 transition-colors">Tell me</a>.
-              </p>
-            </div>
-          </div>
-        </div>
+        <p className="text-stone-500 text-xs italic font-serif mb-8 max-w-3xl">
+          Airline policies change quietly. Each card shows when I last verified it — confirm with the airline before booking. <a href="#contact" className="underline decoration-rose-400 underline-offset-4 hover:text-rose-600 transition-colors">Tell me</a> if something looks out of date.
+        </p>
 
         <div className="mb-6">
           <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Filter by route</div>
@@ -1610,23 +1806,23 @@ function AirlineGrid() {
                       return (
                         <span
                           key={c.code}
-                          className={`inline-flex items-center gap-1 text-xs ${isYes ? "text-emerald-700" : "text-stone-400 line-through"}`}
+                          className={`inline-flex items-center gap-0.5 ${isYes ? "text-emerald-700" : "text-stone-400 line-through"}`}
                           title={`${isYes ? "Cabin allowed" : "Cabin not allowed"} ${direction} ${c.label}`}
                         >
-                          <span>{c.flag}</span>
-                          <span className="font-medium">{isYes ? "✓" : "✗"}</span>
+                          <span className="text-lg leading-none">{c.flag}</span>
+                          <span className="font-medium text-xs">{isYes ? "✓" : "✗"}</span>
                         </span>
                       );
                     };
                     return (
                       <div className="space-y-1.5 mb-3 pb-3 border-b border-stone-200">
-                        <div className="flex items-center flex-wrap gap-3">
-                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[64px]">Cabin from:</span>
+                        <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
+                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px]">Cabin from:</span>
                           {COUNTRIES.map((c) => renderFlag(c, a.originAllowed, "from"))}
                         </div>
                         {a.destinationAllowed && (
-                          <div className="flex items-center flex-wrap gap-3">
-                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[64px]">Cabin to:</span>
+                          <div className="flex items-center flex-wrap gap-x-2 gap-y-1">
+                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px]">Cabin to:</span>
                             {COUNTRIES.map((c) => renderFlag(c, a.destinationAllowed, "to"))}
                           </div>
                         )}
@@ -1748,41 +1944,41 @@ function Checklist() {
         "Vet visit: confirm your pet is healthy enough to fly",
         "ISO 11784/11785 microchip implanted (if not already)",
         "Rabies vaccine administered (after microchip, if international)",
-        "Research destination country's import requirements",
-        "Book your flight and call the airline to reserve a pet spot",
+        "Research destination country's import requirements — every country differs",
+        "Book your flight and call the airline to reserve a pet spot (limited per flight)",
       ],
     },
     {
       title: "Two weeks before",
       icon: <ScrollText className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Get your airline-compliant carrier — let your pet sleep in it at home",
-        "Practice short car rides in the carrier",
-        "Schedule USDA-accredited vet visit for health certificate (if international)",
-        "Print and complete the CDC Dog Import Form (for re-entry to U.S.)",
-        "Confirm climate / temperature restrictions for your route",
+        "Get your airline-compliant carrier — let your pet sleep in it at home with a familiar blanket",
+        "Practice short car rides or trips in the carrier",
+        "Schedule government-accredited vet visit for health certificate (timing varies by destination — often within 10 days of travel)",
+        "Complete any destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, etc.)",
+        "Confirm climate / temperature restrictions and any seasonal breed restrictions",
       ],
     },
     {
       title: "The day of",
       icon: <Luggage className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Light meal 4 hours before flight; water available until departure",
-        "Walk your dog and let your cat use the box right before leaving",
+        "Light meal 3–4 hours before flight; water available until departure",
+        "Walk your dog (or let your cat use the box) right before leaving home — airport pet relief areas are often useless",
         "Pad the carrier with absorbent puppy pads",
-        "Pack: food, collapsible water bowl, leash, waste bags, vet records, comfort item",
-        "Arrive 2.5 hours early — pet check-in is in person at the counter",
+        "Pack: food, collapsible water bowl, leash, waste bags, vet records, comfort item, calming spray",
+        "Arrive 2.5–3 hours early — pet check-in is in person at the counter, not online",
       ],
     },
     {
       title: "At security & onboard",
       icon: <Plane className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "TSA: remove your pet from carrier, walk them through (or carry through) the metal detector",
+        "Security: remove your pet from carrier, walk or carry them through the metal detector",
         "Carrier goes through the X-ray machine empty",
         "Once at the gate, keep your pet in the carrier",
         "Stow under the seat in front of you — never the overhead bin",
-        "Don't open the carrier mid-flight (FAA rule, not just an airline preference)",
+        "Don't open the carrier mid-flight (most airlines and many aviation authorities require this — crew may not allow exceptions)",
       ],
     },
   ];
@@ -1912,7 +2108,8 @@ function ChecklistDownload() {
           {[
             { id: "generic", label: "Universal" },
             { id: "uk", label: "🇬🇧 UK in/out" },
-            { id: "europe", label: "🇪🇺 Europe / EU" },
+            { id: "usa", label: "🇺🇸 USA in/out" },
+            { id: "europe", label: "🇪🇺 Europe in/out" },
             { id: "india", label: "🇮🇳 India in/out" },
           ].map((r) => (
             <button
@@ -1953,9 +2150,14 @@ function Routes() {
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
   ];
 
-  const filteredRoutes = filter === "all"
-    ? ROUTES
-    : ROUTES.filter((r) => r.tags && r.tags.includes(filter));
+  const filteredDirect = filter === "all"
+    ? DIRECT_ROUTES
+    : DIRECT_ROUTES.filter((r) => r.tags && r.tags.includes(filter));
+  const filteredWorkarounds = filter === "all"
+    ? WORKAROUND_ROUTES_TABLE
+    : WORKAROUND_ROUTES_TABLE.filter((r) => r.tags && r.tags.includes(filter));
+  const totalFiltered = filteredDirect.length + filteredWorkarounds.length;
+  const totalAll = DIRECT_ROUTES.length + WORKAROUND_ROUTES_TABLE.length;
 
   return (
     <section id="routes" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300">
@@ -1970,7 +2172,7 @@ function Routes() {
           How long is the flight?
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Cabin-friendly routes only — including the multi-leg workarounds for journeys that have no direct cabin option. Pet travel often adds 2–3 hours of airport time for check-in and customs.
+          Cabin-friendly routes only. Direct cabin flights below, followed by multi-leg workarounds for journeys with no direct cabin option. Pet travel adds 2–3 hours of airport time for check-in and customs.
         </p>
 
         <div className="bg-rose-50 border-l-2 border-rose-400 px-5 py-4 mb-8 max-w-3xl">
@@ -1979,13 +2181,13 @@ function Routes() {
             <div>
               <div className="font-serif text-stone-900 mb-1">A note from Theo's Mum on long flights.</div>
               <p className="text-stone-700 text-sm leading-relaxed">
-                If your route is longer than <strong>7 hours</strong>, consider an overnight stop in a dog-friendly hotel between legs. Theo did 7h London→Montreal, slept properly, walked on grass, drank from a real bowl — then the short hop to Miami the next morning felt like nothing. Two short flights with rest in between is genuinely kinder than one long haul, both for your pet and for you.
+                If your route is longer than <strong>7–8 hours</strong>, consider a stopover at a dog-friendly hotel before the next flight. Theo did 7h 30m London→Montreal, slept properly, walked on grass, drank from a real bowl — then the short hop to Miami the next morning felt like nothing. Two short flights with rest in between is genuinely kinder than one long haul, both for your pet and for you.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-10">
           <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Filter by region</div>
           <div className="flex flex-wrap gap-2">
             {ROUTE_FILTERS.map((f) => {
@@ -2007,39 +2209,96 @@ function Routes() {
             })}
           </div>
           <p className="text-stone-500 text-sm mt-3 italic font-serif">
-            Showing {filteredRoutes.length} of {ROUTES.length} routes.
+            Showing {totalFiltered} of {totalAll} routes.
           </p>
         </div>
 
-        <div className="border border-stone-300">
-          <div className="hidden md:grid grid-cols-12 gap-4 bg-stone-100 px-6 py-4 border-b border-stone-300 text-xs uppercase tracking-widest text-stone-600 font-medium">
-            <div className="col-span-3">From</div>
-            <div className="col-span-3">To</div>
-            <div className="col-span-2">Duration</div>
-            <div className="col-span-4">Notes</div>
+        {/* DIRECT CABIN ROUTES */}
+        <div className="mb-12">
+          <div className="flex items-baseline gap-3 mb-4">
+            <span className="font-serif italic text-stone-500 text-base">→</span>
+            <h3 className="font-serif text-2xl text-stone-900">Direct cabin flights</h3>
+            <span className="text-xs uppercase tracking-widest text-stone-400">{filteredDirect.length} routes</span>
           </div>
-          {filteredRoutes.length === 0 ? (
-            <div className="px-6 py-12 text-center text-stone-500 font-serif italic">
-              No routes match this filter yet. <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Ask me</a> to add it.
+          <p className="text-stone-600 text-sm italic font-serif mb-5 max-w-2xl">
+            Single-leg flights where your pet flies in cabin with you the whole way. Simplest option when available.
+          </p>
+
+          <div className="border border-stone-300">
+            <div className="hidden md:grid grid-cols-12 gap-4 bg-stone-100 px-6 py-4 border-b border-stone-300 text-xs uppercase tracking-widest text-stone-600 font-medium text-center">
+              <div className="col-span-3">From</div>
+              <div className="col-span-3">To</div>
+              <div className="col-span-2">Flight time</div>
+              <div className="col-span-4">Notes</div>
             </div>
-          ) : (
-            filteredRoutes.map((r, i) => (
-              <div key={i} className="grid md:grid-cols-12 gap-2 md:gap-4 px-6 py-5 border-b border-stone-200 last:border-b-0 hover:bg-stone-50 transition-colors">
-                <div className="md:col-span-3 font-serif text-stone-900">{r.from}</div>
-                <div className="md:col-span-3 font-serif text-stone-900 flex items-center gap-2">
-                  <ArrowRight className="md:hidden w-3 h-3 text-stone-400" />
-                  <span className="hidden md:inline">→</span>
-                  <span className="md:hidden text-stone-500 text-xs uppercase tracking-wider">To: </span>
-                  {r.to}
-                </div>
-                <div className="md:col-span-2 text-amber-700 font-medium">{r.duration}</div>
-                <div className="md:col-span-4 text-stone-600 text-sm italic font-serif">{r.note}</div>
+            {filteredDirect.length === 0 ? (
+              <div className="px-6 py-10 text-center text-stone-500 font-serif italic">
+                No direct cabin routes match this filter. Try a workaround below or <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">ask me</a>.
               </div>
-            ))
-          )}
+            ) : (
+              filteredDirect.map((r, i) => (
+                <div key={i} className="grid md:grid-cols-12 gap-2 md:gap-4 px-6 py-5 border-b border-stone-200 last:border-b-0 hover:bg-stone-50 transition-colors items-center text-center">
+                  <div className="md:col-span-3 font-serif text-stone-900">{r.from}</div>
+                  <div className="md:col-span-3 font-serif text-stone-900 flex md:block items-center gap-2 justify-center">
+                    <ArrowRight className="md:hidden w-3 h-3 text-stone-400" />
+                    <span className="hidden md:inline mr-2">→</span>
+                    <span className="md:hidden text-stone-500 text-xs uppercase tracking-wider">To: </span>
+                    {r.to}
+                  </div>
+                  <div className="md:col-span-2 text-amber-700 font-medium">{r.duration}</div>
+                  <div className="md:col-span-4 text-stone-600 text-sm italic font-serif md:text-left">{r.note}</div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
-        <p className="text-stone-500 text-sm mt-6 italic font-serif">
+        {/* WORKAROUND ROUTES */}
+        <div className="mb-6">
+          <div className="flex items-baseline gap-3 mb-4">
+            <span className="font-serif italic text-stone-500 text-base">⤳</span>
+            <h3 className="font-serif text-2xl text-stone-900">Workaround routes</h3>
+            <span className="text-xs uppercase tracking-widest text-stone-400">{filteredWorkarounds.length} routes</span>
+          </div>
+          <p className="text-stone-600 text-sm italic font-serif mb-5 max-w-2xl">
+            Multi-leg journeys where cabin works on each leg via a hub. Often the only way to fly cabin on a long-haul route — and an overnight stop is recommended for journeys over 7 hours.
+          </p>
+
+          <div className="space-y-4">
+            {filteredWorkarounds.length === 0 ? (
+              <div className="border border-stone-300 px-6 py-10 text-center text-stone-500 font-serif italic">
+                No workaround routes match this filter. <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Ask me</a> to add one.
+              </div>
+            ) : (
+              filteredWorkarounds.map((r, i) => (
+                <div key={i} className="border border-stone-300 bg-amber-50/30 p-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4 pb-4 border-b border-stone-200">
+                    <div className="font-serif text-xl text-stone-900">
+                      {r.from} <span className="text-stone-400 mx-2">→</span> {r.to}
+                    </div>
+                    <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
+                      Total: {r.duration}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    {r.legs.map((leg, j) => (
+                      <div key={j} className="grid grid-cols-12 gap-3 text-sm items-center">
+                        <div className="col-span-12 md:col-span-5 font-medium text-stone-900">{leg.route}</div>
+                        <div className="col-span-5 md:col-span-2 text-stone-600 font-medium">{leg.time}</div>
+                        <div className="col-span-7 md:col-span-5 text-stone-700 italic font-serif">{leg.airline}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="text-stone-700 text-sm italic font-serif leading-relaxed">{r.note}</p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <p className="text-stone-500 text-sm mt-6 italic font-serif text-center">
           Don't see your route? <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Ask me</a> — I'll add it.
         </p>
       </div>
@@ -2356,47 +2615,86 @@ function Documents() {
           <div className="flex-1 h-px bg-stone-700" />
         </div>
 
-        <h2 className="font-serif text-5xl mb-12 max-w-3xl">
+        <h2 className="font-serif text-5xl mb-4 max-w-3xl">
           The documents nobody warned you about.
         </h2>
+        <p className="font-serif italic text-stone-400 text-base mb-12 max-w-2xl">
+          Every country has its own paperwork. Here are the most commonly required documents — your specific requirements depend on where you're flying FROM and TO.
+        </p>
 
         <div className="grid md:grid-cols-3 gap-px bg-stone-700">
           {[
             {
-              title: "CDC Dog Import Form",
-              when: "All dogs entering the U.S.",
-              detail: "Required for every dog entering the United States — including U.S. dogs returning home. Fill out online; the receipt is good for six months and multiple entries.",
-              link: "cdc.gov/importation/dogs",
-            },
-            {
-              title: "USDA Health Certificate",
-              when: "Most international travel",
-              detail: "An APHIS Form 7001 or country-specific form, completed by a USDA-accredited vet within 10 days of travel and endorsed by your nearest USDA office.",
-              link: "aphis.usda.gov/pet-travel",
-            },
-            {
-              title: "EU Pet Passport / Health Certificate",
-              when: "Travel to or through the EU",
-              detail: "Requires ISO microchip, rabies vaccine at least 21 days old, completed by USDA vet within 10 days of EU entry. Different from the U.S. health certificate.",
-              link: "ec.europa.eu/animals",
+              title: "Microchip certificate",
+              when: "Everywhere",
+              detail: "ISO 11784/11785 compliant 15-digit microchip — implanted BEFORE the rabies vaccine. Most countries reject pets with non-ISO chips. Keep the original implantation certificate.",
+              link: "—",
             },
             {
               title: "Rabies certificate",
               when: "Almost everywhere",
-              detail: "Original (not photocopy) signed by your vet. Should include microchip number, vaccine type, manufacturer, lot number, and expiration date.",
+              detail: "Original (not photocopy) signed by your vet. Should include microchip number, vaccine type, manufacturer, lot number, and expiration date. Many countries require the vaccine ≥21 days old and ≤12 months old at travel.",
+              link: "—",
+            },
+            {
+              title: "GB Animal Health Certificate (AHC)",
+              when: "Leaving the UK for EU / many destinations",
+              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Pre-2021 UK pet passports are no longer valid.",
+              link: "gov.uk/pet-travel",
+            },
+            {
+              title: "EU Pet Passport / EU Health Certificate",
+              when: "Entering / travelling within the EU",
+              detail: "EU pet passport issued by an EU vet (valid for lifetime). Non-EU pets need an EU Health Certificate issued by a government-accredited vet within 10 days of entry.",
+              link: "ec.europa.eu/animals",
+            },
+            {
+              title: "CDC Dog Import Form",
+              when: "All dogs entering the U.S.",
+              detail: "Required for every dog entering the United States — including US dogs returning home. Fill out online; the receipt is good for six months and multiple entries.",
+              link: "cdc.gov/importation/dogs",
+            },
+            {
+              title: "USDA Health Certificate",
+              when: "Leaving the U.S. for international travel",
+              detail: "An APHIS Form 7001 or country-specific form, completed by a USDA-accredited vet within 10 days of travel and endorsed by your nearest USDA office.",
+              link: "aphis.usda.gov/pet-travel",
+            },
+            {
+              title: "AQCS NOC (India)",
+              when: "Entering India",
+              detail: "No Objection Certificate from India's Animal Quarantine and Certification Service. Apply 1–2 weeks before. Pets can enter through Delhi, Mumbai, Chennai, Kolkata, Bengaluru, or Hyderabad only.",
+              link: "aqcs.gov.in",
+            },
+            {
+              title: "MOCCAE permit (UAE)",
+              when: "Entering UAE (Abu Dhabi or Dubai)",
+              detail: "UAE Health Certificate + release permit from the Ministry of Climate Change and Environment. Required regardless of cabin or cargo, regardless of airline. Apply via the MOCCAE portal.",
+              link: "moccae.gov.ae",
+            },
+            {
+              title: "Tapeworm treatment record",
+              when: "Entering UK, Ireland, Malta, Finland, Norway",
+              detail: "Praziquantel administered by a vet 24–120 hours before arrival, recorded in the health certificate. Required for dogs only.",
               link: "—",
             },
             {
               title: "Hawaii AQS-279",
               when: "Any pet entering Hawaii",
-              detail: "Submitted with FAVN test results, two rabies vaccines, and proof of microchip at least 30 days before arrival for the Direct Airport Release program.",
+              detail: "Submitted with FAVN rabies titer results, two rabies vaccines, and proof of microchip at least 30 days before arrival for the Direct Airport Release program.",
               link: "hdoa.hawaii.gov",
             },
             {
-              title: "Tapeworm treatment record",
-              when: "UK, Ireland, Malta, Finland, Norway",
-              detail: "Praziquantel administered by a vet 24–120 hours before arrival, recorded in the health certificate. Required for dogs only.",
+              title: "Rabies titer test (FAVN / RNATT)",
+              when: "Travel between rabies-controlled and rabies-free regions",
+              detail: "Blood test measuring rabies antibodies. Required for UK/EU entry from unlisted countries, Australia, Japan, Singapore. Often a 3-month wait period applies after the test.",
               link: "—",
+            },
+            {
+              title: "Australia Import Permit",
+              when: "Entering Australia",
+              detail: "From the Department of Agriculture. Multi-step process spanning 6+ months including pre-export tests, rabies titer (FAVN), tick treatment, and 10-day post-arrival quarantine at Mickleham.",
+              link: "agriculture.gov.au",
             },
           ].map((d, i) => (
             <div key={i} className="bg-stone-900 p-8">
@@ -2429,17 +2727,22 @@ function Tips() {
             {
               tag: "On the carrier",
               title: "Buy soft, not stiff.",
-              body: "Soft-sided carriers compress slightly to fit under tighter seats. Make sure ventilation is on at least three sides. Get one a size smaller than the airline's max — your pet should be able to stand and turn, but a snug carrier travels better.",
+              body: "Soft-sided carriers compress slightly to fit under tighter seats and feel less cage-like for your pet. Make sure ventilation is on at least three sides. IMPORTANT: each airline AND each aircraft type can have different under-seat dimensions — Air Canada in particular varies by aircraft. Always check the specific aircraft listed on your booking, not just the airline.",
             },
             {
               tag: "On the seat",
-              title: "Pick a window, not an aisle.",
-              body: "Window seats give the under-seat space slightly more depth on most aircraft and prevent your pet from being kicked or rolled-over by passing carts. Avoid bulkhead and exit rows — pets aren't allowed there.",
+              title: "Pick a window, not an aisle or middle.",
+              body: "Window seats give the under-seat space slightly more depth on most aircraft, and prevent your pet being kicked or jostled by passing carts. The middle seat means more disturbance every time the window passenger gets up. Avoid bulkhead and exit rows — pets aren't allowed there.",
             },
             {
               tag: "On food",
-              title: "Light meal, four hours out.",
-              body: "Don't fly your pet hungry, but don't fly them full either. A small meal four hours before departure is the sweet spot. Freeze water in the carrier's water dish so it melts gradually instead of spilling at takeoff.",
+              title: "Light meal, 3–4 hours out — and toilet time.",
+              body: "Don't fly your pet hungry, but don't fly them full. A small meal 3–4 hours before departure is the sweet spot. Make sure they've pooped and peed properly BEFORE you enter the airport (airport pet relief areas are often tiny patches of fake grass dogs see right through). Freeze a little water in the carrier dish so it melts gradually.",
+            },
+            {
+              tag: "On treats during the flight",
+              title: "Less is more.",
+              body: "Resist the urge to comfort-feed treats or top up water during the flight — both can trigger a toilet need you cannot deal with at 38,000 feet. Tiny amounts only, just enough for reassurance. Most well-prepared pets sleep through the flight without needing anything.",
             },
             {
               tag: "On nerves (yours)",
@@ -2491,15 +2794,15 @@ function Stories() {
           <div className="font-serif text-lg text-stone-800 leading-[1.8] space-y-6">
 
             <p>
-              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing you discover is that you can't. No commercial airline lets pets in the cabin <em>out</em> of the UK either — only assistance dogs. That's a hard wall, and it's where most pet owners I know either give up or hand their dog to a cargo service and hope for the best.
+              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing most people assume is that you can't. The hard wall is actually one-way: <strong>no airline allows cabin pets INTO the UK</strong> (UK government rule — that's the inbound restriction). But OUT of the UK is a different story. Several airlines do allow cabin pets on departing flights from Heathrow — Air Canada, Air France, KLM, Lufthansa, SWISS, LOT Polish, TAP, Etihad, Turkish, and Air Transat from Manchester. Most pet owners don't know this. It's the route nobody talks about.
             </p>
 
             <p>
-              I wasn't doing that. So I worked out a different route: <strong>fly Air Canada from Heathrow to Montreal, stay overnight at a dog-friendly hotel, then fly American Airlines from Montreal to Miami the next morning</strong>. Air Canada doesn't allow cabin pets out of the UK either, technically — but they do on the Montreal connection, and the trick is that the UK doesn't care what you do with your dog once you've left it. The exit rule is for arrivals, not departures.
+              I worked out my route: <strong>fly Air Canada from Heathrow to Montreal in cabin (Theo with me the whole way), stay overnight at a dog-friendly hotel, then fly American Airlines from Montreal to Miami in cabin the next morning</strong>. I deliberately chose Montreal over Toronto — the flight was about 30 minutes shorter, and since it was Theo's first time, I wanted every bit of caution I could get to keep us both calm.
             </p>
 
             <p>
-              I'm not going to pretend it was easy. It was a 7h 45m flight, then a hotel, then a 3h 30m flight the next day. But Theo arrived in Miami calm, fed, and walked, and we slept in our own bed that night. Here's what I learned along the way.
+              I'm not going to pretend it was easy. It was a 7h 30m flight, then a hotel, then a 3h 30m flight the next day. But Theo arrived in Miami calm, fed, and walked, and we slept in our own bed that night. Here's what I learned along the way.
             </p>
 
             {!open && (
@@ -2525,11 +2828,21 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The last hour</h3>
 
                 <p>
-                  Theo was perfect for the first six hours. Slept, mostly. Then somewhere over Newfoundland he got wingy — restless, fidgety, the start of small whining noises. <em>I was sweating.</em> I tried to remain visibly calm because dogs read you instantly, but the people next to me were watching like hawks, and I could feel the social pressure of "please don't be the dog person who ruins our flight."
+                  Theo was perfect for the first six hours. Slept, mostly. Then somewhere over Newfoundland he got wingy — restless, fidgety, the start of small whining noises. <em>I was sweating.</em> Theo actually cried for the last hour of the flight. I tried to remain visibly calm because dogs read you instantly, but the people next to me were watching like hawks, and I could feel the social pressure of "please don't be the dog person who ruins our flight."
                 </p>
 
                 <p>
-                  The cabin crew handled it brilliantly. A flight attendant came over, gave Theo a kind look, and made it clear they understood. <strong>I'd heard rumours that some crew let you take your dog out for a moment — and it turns out it's true, but it's pot luck.</strong> Depends on the crew, depends on the passengers next to you, depends on turbulence, depends on the day. I didn't ask. He calmed down enough that we got through it.
+                  I asked if I could lift Theo out for a moment to comfort him — the crew staff said no. To be fair, those are the rules: pets must stay in their carrier under the seat for the entire flight. <strong>But I've since heard real stories where crew were kind enough to allow it briefly when the passengers nearby agreed.</strong> It's genuinely down to the crew on shift, the people next to you, the conditions on the day. Worth knowing, never something to count on.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Carrier prep — the small thing that mattered most</h3>
+
+                <p>
+                  I got Theo used to his carrier in the weeks before the trip. Treats inside, naps inside, the door open at first then closed for longer stretches. By the time we flew, the carrier was familiar — not a scary new thing.
+                </p>
+
+                <p>
+                  I also put <strong>his usual nighttime blanket in there</strong> so it smelled like home. The blanket was too big and took up too much space — I cut it in half so he had maximum room to move and turn around. A small thing that probably made a real difference.
                 </p>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">What actually helped</h3>
@@ -2547,7 +2860,19 @@ function Stories() {
                 </p>
 
                 <p>
-                  For the long London-Montreal leg I deliberately picked a flight that took off mid-afternoon — close to Theo's usual nap window — so he'd sleep through most of it. <strong>Don't pick a flight where your dog will be wide awake and need a wee.</strong> Match your departure to whenever they naturally sleep, and avoid feeding them too close to take-off.
+                  I picked a late-morning departure — after his breakfast and morning walks, so he'd naturally be ready to nap and wouldn't need a pee until after we landed. <strong>Don't pick a flight where your dog will be wide awake and need a wee.</strong> Match your departure to whenever they naturally sleep, and avoid feeding them too close to take-off.
+                </p>
+
+                <p>
+                  Heathrow does have a pet relief area, but honestly it was useless for Theo — he could see right through that tiny patch of grass and wasn't going to use it. Luckily he'd had a proper pee just before we entered the airport, so I knew he'd be fine for the flight. <strong>Walk your dog properly outside before you check in.</strong> Don't rely on the airport's pet area.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  Window seat, not middle (lesson learned the hard way).
+                </p>
+
+                <p>
+                  I had booked a middle seat because I'd heard the under-seat space was bigger. In reality the carrier still had to squeeze in, and being in the middle meant constant noise and movement around Theo every time the window passenger needed the loo. <strong>Pick a window seat.</strong> Less disturbance, less distraction, and your dog spends the flight in a calmer corner of the cabin.
                 </p>
 
                 <p className="font-medium text-stone-900">
@@ -2559,11 +2884,11 @@ function Stories() {
                 </p>
 
                 <p className="font-medium text-stone-900">
-                  A backpack-style carrier.
+                  A backpack as personal item — and a wheeled pet carrier if you can.
                 </p>
 
                 <p>
-                  I had two suitcases AND Theo. A regular shoulder-strap carrier would have wrecked me. A backpack-style pet carrier — properly ventilated, airline-compliant — meant I had both hands free for my luggage and my passport. <strong>If you can find a rolling/wheeled pet carrier, even better.</strong> Most airports are huge; that walk to the gate with a dog and two cases is no joke.
+                  Theo in his airline-compliant carrier counts as your cabin luggage allowance — so I used a <strong>backpack as my personal item</strong> rather than a handbag. Backpacks hold more, distribute weight on both shoulders, and leave one hand free since the other is carrying the pet carrier. <strong>If you can find a rolling/wheeled pet carrier, even better.</strong> Most airports are huge; that walk to the gate with a dog and a personal item is no joke.
                 </p>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The Montreal stopover</h3>

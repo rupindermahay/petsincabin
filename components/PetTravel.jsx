@@ -1087,6 +1087,828 @@ const CHECKLIST_DATA = {
   },
 };
 
+// For routes where direction (departing vs arriving) genuinely changes the checklist content,
+// these overrides replace the default CHECKLIST_DATA entry for that direction.
+// Routes not in this map show the same checklist either direction.
+const DIRECTIONAL_CHECKLISTS = {
+  uk: {
+    departing: {
+      title: "Departing the UK — pet cabin checklist",
+      sections: [
+        {
+          title: "6 weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (if not already)",
+            "Rabies vaccine ≥21 days old before departure",
+            "Book GB Animal Health Certificate (AHC) appointment with an Official Veterinarian (OV)",
+            "Book cabin pet space with the airline (Air Canada, Air France/KLM, Lufthansa, SWISS, LOT, TAP, Etihad, Turkish, Iberia, ITA — economy only on most)",
+            "Tapeworm treatment timing: 24–120 hrs before arrival if destination is Ireland, Malta, Finland, or Norway (dogs only)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "GB Animal Health Certificate (AHC) signed and stamped by OV",
+            "AHC is valid 10 days from signing for outbound EU entry",
+            "Re-confirm airline cabin pet booking by phone",
+            "Pre-book Heathrow Animal Reception Centre if going cargo route",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring AHC originals (not photocopies)",
+            "Arrive 3 hours early — pet check-in is in person",
+            "Window seat preferred",
+            "Walk your dog properly outside before entering the airport (LHR's pet relief area is small)",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in the UK — important: no cabin pet flights INTO the UK",
+      restriction: "⚠ Cabin entry into the UK is not permitted on any commercial airline (UK government rule, all carriers, not the airline's choice). All inbound pets must enter as IATA-compliant cargo OR via the Eurotunnel / ferry pet-friendly land routes from Europe.",
+      sections: [
+        {
+          title: "Option 1 — The cabin workaround (Paris pivot)",
+          items: [
+            "Fly cabin into a continental EU airport (Paris CDG most common; also Amsterdam, Frankfurt, Lisbon)",
+            "Train/drive/taxi to Calais, France",
+            "Eurotunnel Le Shuttle (35 min) to Folkestone — pets stay in your car",
+            "Drive 1.5 hours to London",
+            "Pet stays with you the whole way — this is the standard cabin-pets workaround for UK entry",
+          ],
+        },
+        {
+          title: "Option 2 — Cargo via Heathrow",
+          items: [
+            "Book with an IATA-approved pet shipper (BA, Virgin, Lufthansa Cargo)",
+            "Pet enters via Heathrow Animal Reception Centre",
+            "Allow 6–8 hours for clearance after landing",
+            "Standard UK paperwork still applies: ISO microchip, rabies ≥21 days, AHC, tapeworm treatment (dogs)",
+          ],
+        },
+        {
+          title: "Universal UK entry requirements (both routes)",
+          items: [
+            "ISO 11784/11785 microchip — implanted FIRST, before rabies vaccine",
+            "Rabies vaccine ≥21 days old (no upper limit if boosters kept current)",
+            "GB Animal Health Certificate or EU Animal Health Certificate (origin-country dependent)",
+            "Tapeworm treatment 24–120 hours before UK arrival (dogs only — vet must record in AHC)",
+            "Pre-2021 UK pet passports no longer accepted",
+          ],
+        },
+      ],
+    },
+  },
+  usa: {
+    departing: {
+      title: "Departing the USA — pet cabin checklist",
+      sections: [
+        {
+          title: "6–8 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO microchip implanted (if not already; required for most destinations)",
+            "Rabies vaccine current",
+            "Research destination country's import requirements — every country differs",
+            "Book cabin pet space directly with airline by phone",
+          ],
+        },
+        {
+          title: "2–4 weeks before",
+          items: [
+            "Identify a USDA-accredited vet for the export health certificate",
+            "Confirm whether destination needs an EU Health Certificate, country-specific health cert, or both",
+            "If returning to US from CDC high-risk country: get the Certification of U.S.-issued Rabies Vaccination form endorsed by USDA BEFORE leaving (cannot be issued retroactively)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "USDA-accredited vet signs export health certificate (destination-specific)",
+            "USDA APHIS endorsement (timing varies by state — some same-day, some mail-in)",
+            "Confirm CDC Dog Import Form receipt is ready for your eventual return",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals (not photos) of all certificates",
+            "Bring Certification of U.S.-issued Rabies Vaccination form (for return)",
+            "Bring CDC Dog Import Form receipt (for return)",
+            "Walk your dog properly outside before entering the airport",
+            "Window seat preferred; extra-legroom if airline allows pets there",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in the USA — pet cabin checklist",
+      sections: [
+        {
+          title: "8 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO microchip implanted (if not already)",
+            "Rabies vaccine 30 days–12 months old",
+            "Check current CDC dog import rules — they updated August 2024 (and again for high-risk countries 2025)",
+          ],
+        },
+        {
+          title: "4 weeks before",
+          items: [
+            "CDC Dog Import Form completed online — get the receipt (valid 6 months, multiple entries)",
+            "Confirm whether origin country is on the CDC high-risk rabies list (changes the paperwork)",
+            "Book cabin pet space with airline",
+            "Confirm dog is at least 6 months old at entry (CDC requirement)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet visit: get origin-country health certificate signed and stamped by official vet",
+            "For high-risk countries: get FAVN rabies titer if not done already",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring CDC Dog Import receipt printout",
+            "All certificates as originals (not photos)",
+            "Arrive 3 hours early for international",
+            "CBP officer checks paperwork on arrival — typically fast if complete",
+          ],
+        },
+      ],
+    },
+  },
+  uae: {
+    departing: {
+      title: "Departing the UAE — pet cabin checklist",
+      sections: [
+        {
+          title: "6+ weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO 15-digit microchip verified",
+            "Rabies vaccine current (≥21 days old, ≤12 months)",
+            "Book cabin pet space (Etihad cabin OUT of AUH to many cities; Air India cabin OUT of UAE to India)",
+            "Check destination country's import rules — UAE is a rabies-controlled country but not on every country's 'safe' list",
+          ],
+        },
+        {
+          title: "4 weeks before",
+          items: [
+            "MOCCAE Export Certificate / Health Certificate application",
+            "Government-accredited vet stamps the export certificate",
+            "Confirm departure terminal at AUH or DXB",
+          ],
+        },
+        {
+          title: "5 days before",
+          items: [
+            "UAE Health Certificate signed and stamped",
+            "Email all documents to your airline (Etihad requires docs ≥72 hours before)",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of all certificates",
+            "MOCCAE inspection at departure",
+            "Arrive 3 hours early for international",
+            "Pet relief areas at AUH and DXB are limited — walk before arriving",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in the UAE — important: cabin entry ONLY into Abu Dhabi",
+      restriction: "⚠ No airline allows cabin pets into Dubai (DXB) — UAE law requires all pets entering through DXB to travel as manifested cargo. The ONLY cabin entry to the UAE is via Etihad to Abu Dhabi (AUH), then 90 minutes by road to Dubai.",
+      sections: [
+        {
+          title: "8 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO 15-digit microchip (UAE strictly requires ISO 11784/11785 compliant)",
+            "Rabies vaccine ≥21 days old, ≤12 months",
+            "Rabies titer test (FAVN) if from a rabies-controlled country — UAE requires ≥0.5 IU/ml",
+          ],
+        },
+        {
+          title: "4 weeks before",
+          items: [
+            "Apply for MOCCAE import permit via moccae.gov.ae — ~AED 200",
+            "Book Etihad cabin space for AUH (only cabin option) — submit Etihad's booking form 7+ days before",
+            "If your origin allows cabin Etihad doesn't fly from: you need to pivot via Europe (Paris/Frankfurt/Amsterdam → Etihad to AUH)",
+            "If using Dubai cargo (DXB only): arrange Dubai Kennels & Cattery (DKC) or another customs broker",
+          ],
+        },
+        {
+          title: "5 days before",
+          items: [
+            "UAE Health Certificate signed/stamped by government-accredited vet from origin",
+            "Email all documents to Etihad ≥72 hours before",
+            "If cargo: confirm pickup/drop-off times with broker",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "REMEMBER: Cabin entry only into Abu Dhabi (AUH) on Etihad — NOT Dubai",
+            "Bring originals of all certificates",
+            "Pet undergoes MOCCAE inspection after immigration at AUH (in Customs clearance)",
+            "From AUH to Dubai: 90-minute taxi (around AED 250)",
+          ],
+        },
+      ],
+    },
+  },
+  canada: {
+    departing: {
+      title: "Departing Canada — pet cabin checklist",
+      sections: [
+        {
+          title: "4–6 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO microchip verified (needed for almost all international destinations)",
+            "Rabies vaccine current — confirm validity for destination country",
+            "Book cabin pet space (Air Canada has strong cabin reach; AA, Delta, United, WestJet also)",
+            "Research destination's import rules — Canada's exit prep is simple but the destination side may need months of work (e.g. Jamaica, Australia)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "CFIA-accredited vet signs international health certificate (within 10 days of arrival)",
+            "Most destinations accept Canadian vet certificates without further endorsement",
+            "Re-confirm cabin booking by phone",
+            "If returning to Canada later: keep your rabies certificate handy for re-entry",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals (rabies + health certificate)",
+            "Arrive 3 hours early for international",
+            "Window seat preferred",
+            "Most Canadian airports have pet relief areas — but walk before entering",
+          ],
+        },
+        {
+          title: "Reminder",
+          items: [
+            "Departing Canada doesn't require an export permit for personal pets to most countries",
+            "BUT your destination's rules (microchip timing, FAVN titer, quarantine permits) often take 6+ months to satisfy",
+            "Start with the destination's official Department of Agriculture page",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Canada — pet cabin checklist",
+      sections: [
+        {
+          title: "4–6 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO microchip implanted (recommended; not strictly required by CFIA but most airlines require it)",
+            "Rabies vaccine ≥30 days old for adult dogs",
+            "Book cabin pet space with airline",
+            "Confirm your origin's exit paperwork requirements (separate from Canada's import rules)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet-issued international health certificate (CFIA recommends within 10 days of arrival)",
+            "If from US: USDA-accredited vet only — APHIS endorsement NOT required for Canada (saves time)",
+            "If from elsewhere: country-specific government health certificate",
+            "Re-confirm airline cabin pet booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring rabies vaccination certificate (original)",
+            "Bring vet-issued health certificate (original)",
+            "CBSA inspection on arrival — typically quick if paperwork is complete",
+            "Most Canadian airports have pet relief areas",
+          ],
+        },
+        {
+          title: "Important notes",
+          items: [
+            "Commercial dogs younger than 8 months from countries with high risk of dog rabies face additional requirements",
+            "Personal pets (not commercial) under 3 months old: no rabies vaccine requirement but limited destinations",
+            "Cats face fewer restrictions but still need health certificate",
+          ],
+        },
+      ],
+    },
+  },
+  mexico: {
+    departing: {
+      title: "Departing Mexico — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "Confirm your pet is microchipped (most destinations require ISO)",
+            "Rabies vaccine current",
+            "Book cabin pet space (Aeromexico, AA, Delta, United, Volaris)",
+            "Research destination's import rules — these vary significantly",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "SADER/SENASICA endorsed health certificate (if destination requires it)",
+            "Most destinations want a Mexican government-vet stamp",
+            "Standard internal/external parasite treatments documented",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring rabies certificate (original)",
+            "Bring health certificate (original)",
+            "Arrive 3 hours early for international",
+          ],
+        },
+        {
+          title: "Reminder",
+          items: [
+            "If returning to the US: CDC Dog Import Form receipt needed (online, free)",
+            "Mexico isn't on the CDC high-risk rabies list, so US re-entry is straightforward",
+            "If returning to EU: 3-month wait may apply (Mexico is unlisted third country)",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Mexico — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO microchip recommended (not strictly required by SADER)",
+            "Rabies vaccine ≥15 days old before travel",
+            "Book cabin pet space (Aeromexico, Volaris, Air Canada, AA, Delta, United)",
+            "Confirm origin country's export paperwork requirements",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet-issued health certificate stating pet is free of parasites and infectious disease",
+            "If from US: USDA APHIS endorsement is optional but recommended",
+            "Internal/external deworming and tick treatment (within 6 months for ticks, dewormer date noted)",
+            "Re-confirm airline cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring rabies vaccination certificate (original)",
+            "Bring vet health certificate (original)",
+            "SADER/SENASICA inspection at Mexican port of entry — free of charge",
+            "If paperwork is incomplete: official quarantine at owner's expense until resolved",
+          ],
+        },
+      ],
+    },
+  },
+  europe: {
+    departing: {
+      title: "Departing Europe — pet cabin checklist",
+      sections: [
+        {
+          title: "4–6 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "EU pet passport is valid for life if rabies stays current",
+            "If returning to EU later: keep the pet passport current (rabies vaccine + microchip)",
+            "Book cabin pet space (Air France, KLM, Lufthansa, SWISS, LOT, TAP, Iberia, ITA all support cabin)",
+            "Research destination's import rules — especially for UK (Eurotunnel workaround), USA (CDC Dog Import Form), UAE (MOCCAE permit)",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "If going to non-EU: EU vet issues international health certificate (destination-specific)",
+            "Some destinations require additional vet stamps from your country's agriculture ministry",
+            "Re-confirm airline cabin booking by phone",
+            "Tapeworm treatment 24–120 hrs before if going to UK or Ireland (dogs only)",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Originals of all certificates",
+            "EU pet passport + destination-specific health certificate",
+            "Arrive 3 hours early for international",
+            "Window seat preferred",
+          ],
+        },
+        {
+          title: "Reminder on destinations",
+          items: [
+            "UK: cabin not allowed INTO UK — see Eurotunnel workaround in UK arriving checklist",
+            "USA: CDC Dog Import Form receipt needed in advance",
+            "UAE: only cabin entry is via Etihad to Abu Dhabi (AUH), then road to Dubai",
+            "Always confirm the destination's specific requirements directly with their official agriculture authority",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Europe — pet cabin checklist",
+      sections: [
+        {
+          title: "4–6 weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted FIRST",
+            "Rabies vaccine AFTER microchip (≥21 days before EU entry)",
+            "Official vet appointment booked for health certificate (varies by origin country)",
+            "Confirm whether your airline allows cabin pets on this leg",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Get destination-appropriate health certificate (EU Health Cert from US, GB AHC from UK, etc.)",
+            "USDA APHIS endorsement (US only) — same day as vet certificate ideally",
+            "Re-confirm airline cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Originals required at EU border, not photos",
+            "Arrive 3 hours early for international",
+            "Bring calming spray for long flights",
+            "Window seat if possible; extra-legroom if airline allows",
+          ],
+        },
+        {
+          title: "Origin reminders",
+          items: [
+            "From UK: GB Animal Health Certificate from your UK Official Vet",
+            "From US: EU Health Certificate from USDA-accredited vet + APHIS endorsement",
+            "From India: Air India Paws on Board direct cabin to Paris; or Etihad/Lufthansa/SWISS via hub",
+            "Tapeworm treatment may also be required if you then continue to UK, Ireland, Malta, Finland, or Norway (dogs only)",
+          ],
+        },
+      ],
+    },
+  },
+  india: {
+    departing: {
+      title: "Departing India — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Apply for No Objection Certificate (NOC) from AQCS",
+            "Confirm pet's ISO microchip + rabies vaccine valid",
+            "Parvo, distemper, leptospirosis vaccines up to date",
+            "Book cabin pet space (Air India Paws on Board direct to Paris; Lufthansa/KLM/Air France via Europe; Etihad to Abu Dhabi; Turkish via Istanbul)",
+            "Confirm departure airport supports your specific airline's cabin pet booking",
+          ],
+        },
+        {
+          title: "2 weeks before",
+          items: [
+            "AQCS-stamped export health certificate from a recognised vet",
+            "Government-accredited vet stamps NOC plus health certificate",
+            "Re-confirm airline cabin booking by phone (pets approved 48 hrs prior on Air India)",
+            "Tapeworm treatment 24–120 hrs before arrival if going to UK or Ireland (dogs only)",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Have NOC printed AND digital copy",
+            "Bring all original certificates",
+            "Arrive 4 hours early for international",
+            "Confirm with airline that cabin slot still applies",
+          ],
+        },
+        {
+          title: "Reminder on destinations",
+          items: [
+            "USA from India: cabin via European hub airline (Lufthansa, KLM, Air France, SWISS, LOT) — no direct India ↔ USA cabin",
+            "UK from India: Eurotunnel workaround required (no cabin into UK)",
+            "UAE from India: Etihad direct to Abu Dhabi (Delhi/Mumbai/Bangalore/Chennai supported)",
+            "Australia from India: cargo only + mandatory quarantine",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in India — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Apply for No Objection Certificate (NOC) from AQCS (Animal Quarantine and Certification Service)",
+            "ISO microchip implanted (if not already)",
+            "Rabies vaccine 30 days–12 months before travel",
+            "Parvo, distemper, leptospirosis vaccines up to date",
+            "Confirm entry airport: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, or Hyderabad only",
+          ],
+        },
+        {
+          title: "2 weeks before",
+          items: [
+            "Book Air India cabin slot (if eligible route) OR cabin via Europe (Lufthansa, KLM, Air France, SWISS, LOT)",
+            "Get official health certificate from origin country vet",
+            "If from UK/EU: confirm tapeworm treatment timing if you'll return to UK",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Have NOC printed AND digital copy",
+            "Arrive 4 hours early for international",
+            "Confirm with airline that cabin slot still applies — pets approved 48 hrs prior on Air India",
+          ],
+        },
+        {
+          title: "Origin reminders",
+          items: [
+            "From USA: USDA APHIS endorsement on health certificate; CDC Dog Import Form for return",
+            "From UK: GB Animal Health Certificate; pre-2021 UK pet passports not accepted",
+            "From UAE: MOCCAE export certificate; Etihad/Air India cabin out of UAE allowed",
+            "From EU: EU pet passport or country-specific health certificate",
+          ],
+        },
+      ],
+    },
+  },
+  dominican_republic: {
+    departing: {
+      title: "Departing Dominican Republic — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "Confirm ISO microchip + rabies vaccine still valid",
+            "Book cabin pet space (JetBlue, AA, Delta all cabin DR routes; Spirit some)",
+            "Research destination's import rules",
+            "IMPORTANT: if returning to the US, your Certification of U.S.-issued Rabies Vaccination form (obtained before you left) is still valid — bring it",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "DR Ministry of Agriculture endorsed health certificate",
+            "Government vet stamps export certificate",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals: rabies + health certificate + (for US return) Certification of US-issued Rabies Vaccination",
+            "DR is on CDC high-risk rabies list — US return requires more paperwork than you might expect",
+            "Arrive 3 hours early",
+          ],
+        },
+        {
+          title: "Reminder for US visitors going home",
+          items: [
+            "DR → USA: dog must be at least 6 months old at re-entry",
+            "Microchipped, healthy, all paperwork in order",
+            "Certification of US-issued Rabies Vaccination MUST be from before you left the US — cannot be issued in DR",
+            "CDC Dog Import Form receipt is your other key document",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Dominican Republic — pet cabin checklist",
+      sections: [
+        {
+          title: "6–8 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
+            "Rabies vaccine 30 days–12 months old (after microchip)",
+            "DHPP for dogs (distemper, hepatitis, parainfluenza, parvovirus); FVRCP for cats",
+            "IMPORTANT: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
+          ],
+        },
+        {
+          title: "If returning to the US: do this BEFORE departure",
+          items: [
+            "Get Certification of U.S.-issued Rabies Vaccination form from a USDA-accredited vet (NOT a regular rabies certificate)",
+            "Form must be USDA-endorsed BEFORE your dog leaves the US — cannot be issued retroactively",
+            "USDA-endorsed export health certificates dated after July 31, 2025 are NOT accepted — use the Certification form instead",
+            "CDC Dog Import Form receipt (online) for your return entry",
+            "Plan: dog must be at least 6 months old at time of US re-entry",
+          ],
+        },
+        {
+          title: "10 days before travel to DR",
+          items: [
+            "USDA-accredited vet issues Health Certificate for export to DR (valid 10 days)",
+            "Certificate includes microchip number, rabies info, parasite treatments",
+            "Consulate endorsement NOT required for personal pets",
+            "Re-confirm cabin pet booking with airline",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring original (signed/stamped) Health Certificate",
+            "Bring Certification of U.S.-issued Rabies Vaccination (for return)",
+            "Bring CDC Dog Import Form receipt (for return)",
+            "DR inspection on arrival — typically quick if paperwork complete",
+          ],
+        },
+      ],
+    },
+  },
+  jamaica: {
+    departing: {
+      title: "Departing Jamaica — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "Confirm ISO microchip + rabies vaccine still valid",
+            "Book cabin pet space (JetBlue, AA, Delta serve Jamaica)",
+            "Research destination's import rules — Jamaica isn't on CDC high-risk rabies list",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Jamaica Veterinary Services Division endorsed health certificate",
+            "Government vet stamps export certificate (no parasite treatments needed for short-term return)",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals: rabies + health certificate",
+            "Jamaica isn't on the CDC high-risk list — US return is straightforward",
+            "Arrive 3 hours early",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Jamaica — pet cabin checklist",
+      restriction: "⚠ Jamaica's pet import process is one of the strictest in the Caribbean. Allow 6+ months from start to travel — there's no fast-track option.",
+      sections: [
+        {
+          title: "6+ MONTHS before (this is a long process)",
+          items: [
+            "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
+            "Rabies vaccine administered (after microchip) — primary vaccine needs 3-month wait before entry for dogs over 12 months",
+            "FAVN rabies titer test done 30+ days after vaccination at an OIE/WHO-approved lab",
+            "Titer result must be valid (≥0.5 IU/ml) and dated 3–12 months before arrival",
+            "IMPORTANT: Jamaica only accepts pets directly from Category 1 (rabies-controlled) countries — pets from elsewhere must have lived in a Category 1 country for 6+ months first",
+          ],
+        },
+        {
+          title: "Permit application (start ASAP after titer)",
+          items: [
+            "Submit Preliminary Application Form to vsdpermits@moa.gov.jm",
+            "Attach rabies certificate + FAVN titer results",
+            "Wait for Pre-Export Treatment Schedule from Jamaica Veterinary Services Division",
+            "DO NOT start additional treatments until Preliminary Application is approved",
+            "Apply for Veterinary Import Permit (separate from preliminary application)",
+          ],
+        },
+        {
+          title: "30 days before — pre-export treatments",
+          items: [
+            "Two internal parasite treatments, 14 days apart (second within 7 days of travel)",
+            "Two external parasite treatments, 14 days apart (second within 48 hours of travel)",
+            "Additional vaccinations per Jamaica's schedule: distemper, parvovirus, leptospirosis, hepatitis, parainfluenza",
+            "Brucella Canis test for dogs; Leishmaniosis test if required",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Original Veterinary Import Permit (mandatory — no entry without it)",
+            "Government-endorsed international health certificate",
+            "All vaccination and treatment records (microchip number on every document)",
+            "Pit Bull Terriers and hybrid dogs are banned — confirm breed eligibility well in advance",
+          ],
+        },
+      ],
+    },
+  },
+  bahamas: {
+    departing: {
+      title: "Departing Bahamas — pet cabin checklist",
+      sections: [
+        {
+          title: "4 weeks before",
+          items: [
+            "Vet appointment for full health check",
+            "Confirm ISO microchip + rabies vaccine still valid",
+            "Book cabin pet space (JetBlue, AA, Delta serve Nassau and other Bahamas airports)",
+            "Confirm Bahamian export documentation requirements",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Bahamas Ministry of Agriculture endorsed health certificate",
+            "Government vet stamps export certificate",
+            "Re-confirm cabin booking by phone",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals: rabies + health certificate",
+            "Bahamas is CDC-rabies-FREE — US return is among the simplest (just CDC Dog Import Form)",
+            "Arrive 3 hours early",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Bahamas — pet cabin checklist",
+      sections: [
+        {
+          title: "8+ weeks before",
+          items: [
+            "ISO 15-digit microchip implanted FIRST",
+            "Rabies vaccine: primary doses need at least 30 days before entry; max 10 months for 1-year vaccine or 34 months for 3-year vaccine",
+            "Other vaccinations: distemper, hepatitis, leptospirosis, parvovirus, adenovirus (plus coronavirus if from high-risk rabies country)",
+            "Pet must be at least 6 months old at entry",
+          ],
+        },
+        {
+          title: "4–6 weeks before — Import Permit",
+          items: [
+            "Apply for Bahamas Import Permit via bahamaspetpermit.com or email minagriculturalmarine@bahamas.gov.bs",
+            "Standard processing: 6–8 weeks (expedited service available)",
+            "Permit fee: ~$10 USD + 12% VAT",
+            "Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier — confirm eligibility before applying",
+          ],
+        },
+        {
+          title: "48 hours before travel",
+          items: [
+            "Licensed vet completes International Veterinary Certificate (within 48 hours of arrival in Bahamas)",
+            "USDA APHIS endorsement NOT required — vet signature alone is enough",
+            "Internal parasite test (negative stool sample test) recorded on certificate",
+            "Re-confirm cabin pet booking with airline (JetBlue, AA, Delta all do cabin to Nassau)",
+          ],
+        },
+        {
+          title: "Travel day & arrival",
+          items: [
+            "Original Import Permit (mandatory)",
+            "Original Veterinary Certificate (signed within 48 hours of arrival)",
+            "Microchip and rabies records",
+            "On arrival: pet examined by Bahamian veterinary officer within 48 hours",
+            "If staying 28+ days: dog must be licensed locally within 48 hours of entry",
+          ],
+        },
+        {
+          title: "Returning to US",
+          items: [
+            "Bahamas is a CDC dog-rabies-FREE country — return is straightforward",
+            "Only the CDC Dog Import Form receipt is needed for re-entry",
+            "Dog must be 6+ months old, microchipped, healthy",
+            "No titer test or quarantine required on return",
+          ],
+        },
+      ],
+    },
+  },
+};
+
+// Get the right checklist based on route + direction. Falls back to single CHECKLIST_DATA for routes
+// where direction doesn't materially change the prep.
+function getChecklist(routeId, direction) {
+  if (DIRECTIONAL_CHECKLISTS[routeId] && DIRECTIONAL_CHECKLISTS[routeId][direction]) {
+    return DIRECTIONAL_CHECKLISTS[routeId][direction];
+  }
+  return CHECKLIST_DATA[routeId] || CHECKLIST_DATA.generic;
+}
+
 // ---------- INTAKE FLOW ----------
 
 const QUESTIONS = [
@@ -2415,10 +3237,20 @@ function Checklist() {
 
 function ChecklistDownload() {
   const [route, setRoute] = useState("generic");
+  const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
+
+  // Universal checklist doesn't have a meaningful direction - lock direction for that route
+  const isUniversal = route === "generic";
+  const effectiveDirection = isUniversal ? "departing" : direction;
+
+  const data = getChecklist(route, effectiveDirection);
+  const hasDirectionalContent = !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
 
   function openPrintable() {
-    const data = CHECKLIST_DATA[route];
     if (!data) return;
+    const restrictionHtml = data.restriction
+      ? `<div style="background:#fef3c7;border-left:3px solid #d97706;padding:14px 18px;margin:24px 0;font-family:'Fraunces',serif;font-style:italic;color:#78350f;border-radius:2px;">${data.restriction}</div>`
+      : "";
 
     const html = `<!DOCTYPE html>
 <html lang="en">
@@ -2435,7 +3267,7 @@ function ChecklistDownload() {
   .brand small { margin-left: auto; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #78716c; }
   h1 { font-family: 'Fraunces', serif; font-size: 42px; line-height: 1.1; margin-bottom: 16px; color: #1c1917; }
   h1 em { color: #78716c; }
-  .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 50px; }
+  .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 30px; }
   h2 { font-family: 'Fraunces', serif; font-size: 22px; color: #1c1917; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #e7e5e4; }
   ul { list-style: none; }
   li { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px dashed #e7e5e4; }
@@ -2462,6 +3294,7 @@ function ChecklistDownload() {
     </div>
     <h1>${data.title.replace(/checklist/i, '<em>checklist</em>')}</h1>
     <p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>
+    ${restrictionHtml}
     ${data.sections.map(s => `
       <h2>${s.title}</h2>
       <ul>
@@ -2487,47 +3320,89 @@ function ChecklistDownload() {
         <div className="flex-1">
           <h3 className="font-serif text-2xl mb-2">Get a printable checklist</h3>
           <p className="text-stone-300 leading-relaxed">
-            Tailored to your route. Print it, tick things off, take it on the plane. Opens in a new tab — use your browser's print or save-as-PDF.
+            Tailored to your route + direction. Print it, tick things off, take it on the plane. Opens in a new tab — use your browser's print or save-as-PDF.
           </p>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <label className="text-xs uppercase tracking-widest text-stone-400 mr-2">Route:</label>
-        <div className="flex flex-wrap gap-2">
-          {[
-            { id: "generic", label: "Universal" },
-            { id: "uk", label: "🇬🇧 UK in/out" },
-            { id: "usa", label: "🇺🇸 USA in/out" },
-            { id: "uae", label: "🇦🇪 UAE in/out" },
-            { id: "canada", label: "🇨🇦 Canada in/out" },
-            { id: "mexico", label: "🇲🇽 Mexico in/out" },
-            { id: "dominican_republic", label: "🇩🇴 Dominican Rep." },
-            { id: "jamaica", label: "🇯🇲 Jamaica" },
-            { id: "bahamas", label: "🇧🇸 Bahamas" },
-            { id: "europe", label: "🇪🇺 Europe in/out" },
-            { id: "india", label: "🇮🇳 India in/out" },
-          ].map((r) => (
-            <button
-              key={r.id}
-              onClick={() => setRoute(r.id)}
-              className={`px-4 py-2 text-sm transition-all ${
-                route === r.id
-                  ? "bg-amber-600 text-white"
-                  : "bg-stone-800 text-stone-300 hover:bg-stone-700"
-              }`}
-            >
-              {r.label}
-            </button>
-          ))}
+      <div className="space-y-4">
+        <div>
+          <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">1. Pick your country / region</div>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: "generic", label: "Universal" },
+              { id: "uk", label: "🇬🇧 UK" },
+              { id: "usa", label: "🇺🇸 USA" },
+              { id: "uae", label: "🇦🇪 UAE" },
+              { id: "canada", label: "🇨🇦 Canada" },
+              { id: "mexico", label: "🇲🇽 Mexico" },
+              { id: "dominican_republic", label: "🇩🇴 Dominican Rep." },
+              { id: "jamaica", label: "🇯🇲 Jamaica" },
+              { id: "bahamas", label: "🇧🇸 Bahamas" },
+              { id: "europe", label: "🇪🇺 Europe" },
+              { id: "india", label: "🇮🇳 India" },
+            ].map((r) => (
+              <button
+                key={r.id}
+                onClick={() => setRoute(r.id)}
+                className={`px-4 py-2 text-sm transition-all ${
+                  route === r.id
+                    ? "bg-amber-600 text-white"
+                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                }`}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <button
-          onClick={openPrintable}
-          className="ml-auto inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 transition-colors"
-        >
-          <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+
+        {!isUniversal && (
+          <div>
+            <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">2. Direction of travel</div>
+            <div className="inline-flex border border-stone-700 bg-stone-800">
+              <button
+                onClick={() => setDirection("departing")}
+                className={`px-5 py-2 text-sm transition-all ${
+                  direction === "departing"
+                    ? "bg-amber-600 text-white"
+                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                }`}
+              >
+                ↗ Departing
+              </button>
+              <button
+                onClick={() => setDirection("arriving")}
+                className={`px-5 py-2 text-sm transition-all border-l border-stone-700 ${
+                  direction === "arriving"
+                    ? "bg-amber-600 text-white"
+                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                }`}
+              >
+                ↘ Arriving
+              </button>
+            </div>
+            {!hasDirectionalContent && (
+              <p className="text-xs italic text-stone-400 mt-2">Same prep applies in both directions for this destination.</p>
+            )}
+          </div>
+        )}
+
+        {data.restriction && (
+          <div className="bg-amber-900/30 border-l-2 border-amber-500 px-4 py-3 text-sm text-amber-100 leading-relaxed">
+            <strong className="not-italic">Important:</strong> {data.restriction}
+          </div>
+        )}
+
+        <div className="flex justify-end">
+          <button
+            onClick={openPrintable}
+            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 transition-colors"
+          >
+            <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
@@ -3321,6 +4196,16 @@ function Tips() {
               tag: "On the unexpected",
               title: "Have a Plan B.",
               body: "Save your destination's nearest 24-hour vet in your phone before you leave. Pack copies of vaccination records in a Ziploc inside the carrier. If you connect, build in at least 90 minutes — pet relief areas are a hike.",
+            },
+            {
+              tag: "On comfort items",
+              title: "Bring a piece of home.",
+              body: "Pack a small teddy or favourite toy alongside their blanket — something soft that smells of you and home. A collapsible silicone water bowl (I got mine from Amazon for under £10) takes up almost no space and is invaluable for hotel stops, layovers, and the airport. Skip glass or hard ceramic — they're heavy and ban-prone.",
+            },
+            {
+              tag: "On bringing pet food",
+              title: "Most countries restrict pet food at the border.",
+              body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly.",
             },
           ].map((t, i) => (
             <div key={i}>

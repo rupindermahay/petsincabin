@@ -315,6 +315,38 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://www.turkishairlines.com/en-int/any-questions/travelling-with-pets/",
   },
+  {
+    name: "Iberia",
+    tags: ["europe", "us", "longhaul"],
+    cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: most international routes including Spain ↔ EU, Spain ↔ USA (JFK/MIA/ORD/BOS via Madrid), Spain ↔ Latin America. Cabin NOT allowed (both directions): UK (LHR, MAN, EDI, LGW — Iberia uses IAG Cargo to/from UK). Snub-nosed breeds allowed cabin only (not hold).",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no" },
+    fee: "€35 within Spain · €50 Europe / Africa / Middle East · €150 America / Asia",
+    weight: "Pet + carrier max 8 kg (17.6 lb) combined",
+    carrier: "Soft-sided. Max 45 × 35 × 25 cm (sum of dimensions ≤105 cm)",
+    notes: "Spain's flag carrier, hub at Madrid (MAD). The most-used cabin pet airline for Spanish + Latin American routes. Book pet space via Iberia Booking Offices ≥48 hours before flight. Snub-nosed breeds are cabin-only (banned from hold). For UK travel, use a workaround via Eurotunnel + ferry.",
+    intl: "Yes (extensive)",
+    verified: "May 2026",
+    link: "https://www.iberia.com/us/fly-with-iberia/pets/",
+  },
+  {
+    name: "ITA Airways",
+    tags: ["europe", "us", "longhaul"],
+    cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Italy (up to 12 kg combined!), Italy ↔ EU, Italy ↔ USA (JFK/MIA/ORD/LAX/BOS via Rome FCO), Italy ↔ Tokyo / Buenos Aires / Sao Paulo. Cabin NOT allowed (both directions): UK (cargo only). Snub-nosed cabin OK (not hold).",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no" },
+    fee: "€73 domestic Italy · €95 Europe / North Africa · €210 N. America · €230 S. America / Japan",
+    weight: "Domestic Italy: 12 kg combined. International: 8 kg combined",
+    carrier: "Soft-sided. Max 55 × 40 × 23 cm international (slightly larger than most). 24 × 40 × 30 cm domestic Italy.",
+    notes: "Italy's flag carrier, hub at Rome Fiumicino (FCO). One of the most pet-friendly European carriers. As of 2026, ITA is piloting 'large pet-friendly' flights allowing pets up to 30 kg in cabin on selected DOMESTIC Italy routes (summer 2026 launch — extra seat purchase required). Book pet space ≥48 hours before via Customer Center.",
+    intl: "Yes",
+    verified: "May 2026",
+    link: "https://www.ita-airways.com/us/en/book-and-prepare/other-requests/travelling-with-pets",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -344,49 +376,79 @@ const NO_CABIN_AIRLINES = [
 // ---------- POPULAR ROUTES & TIMES ----------
 
 const DIRECT_ROUTES = [
-  // UK out (cabin)
-  { from: "London (LHR)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined).", tags: ["uk-out", "canada"] },
-  { from: "London (LHR)", to: "Montreal (YUL)", duration: "7h 30m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg). Theo's Mum's first leg.", tags: ["uk-out", "canada"] },
-  { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
-  { from: "London (LHR)", to: "Lisbon (LIS)", duration: "2h 45m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). 184 flights/week from Heathrow.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Paris (CDG)", duration: "1h 20m", note: "Air France. ✓ Cabin (under 8 kg). Strong hub for onward cabin connections.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Zurich (ZRH)", duration: "1h 50m", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Warsaw (WAW)", duration: "2h 25m", note: "LOT Polish. ✓ Cabin (under 8 kg). Cheapest long-haul connection (€70 LOT onward to USA).", tags: ["uk-out", "europe"] },
-  { from: "London (LHR)", to: "Istanbul (IST)", duration: "3h 50m", note: "Turkish Airlines. ✓ Cabin (under 8 kg, economy only since April 2026).", tags: ["uk-out", "europe"] },
-
-  // Europe - back to UK by land
-  { from: "Paris (CDG)", to: "London (UK)", duration: "5–10h via Eurotunnel", note: "Fly cabin to CDG, drive/taxi to Calais, Eurotunnel (35min), drive to London. Pet stays with you the whole way — the standard cabin pets workaround to get INTO the UK.", tags: ["europe", "uk-out"] },
-
-  // Within North America (cabin)
-  { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
-  { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
-
-  // US ↔ Europe cabin
-  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "KLM. ✓ Cabin (under 8 kg). Strong onward hub for India / continental Europe.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
+  // ═══════ FROM BOSTON ═══════
   { from: "Boston (BOS)", to: "Paris (CDG)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). The shortest US east coast direct cabin to Europe.", tags: ["us", "europe"] },
-  { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
+
+  // ═══════ FROM CHICAGO ═══════
   { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
+  { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
+
+  // ═══════ FROM DELHI ═══════
+  { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
+  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
+  { from: "Delhi / Mumbai", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
+
+  // ═══════ FROM DUBAI ═══════
+  { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
+
+  // ═══════ FROM LONDON ═══════
+  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE — AUH is 90 min from Dubai by road.", tags: ["uk-out", "dubai"] },
+  { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin out of UK (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Istanbul (IST)", duration: "3h 50m", note: "Turkish Airlines. ✓ Cabin out of UK (under 8 kg, economy only since April 2026).", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Lisbon (LIS)", duration: "2h 45m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg). 184 flights/week from Heathrow.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Montreal (YUL)", duration: "7h 30m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg). Theo's Mum's first leg.", tags: ["uk-out", "canada"] },
+  { from: "London (LHR)", to: "Paris (CDG)", duration: "1h 20m", note: "Air France. ✓ Cabin out of UK (under 8 kg). Strong hub for onward cabin connections.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Porto (OPO)", duration: "2h 35m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg). Northern Portugal direct.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Rome (FCO)", duration: "2h 45m", note: "ITA Airways. ✓ Cabin out of UK (under 8 kg). Italy's main cabin pet hub.", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined).", tags: ["uk-out", "canada"] },
+  { from: "London (LHR)", to: "Warsaw (WAW)", duration: "2h 25m", note: "LOT Polish. ✓ Cabin out of UK (under 8 kg). Cheapest long-haul connection (€70 LOT onward to USA).", tags: ["uk-out", "europe"] },
+  { from: "London (LHR)", to: "Zurich (ZRH)", duration: "1h 50m", note: "SWISS. ✓ Cabin out of UK (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["uk-out", "europe"] },
+
+  // ═══════ FROM LOS ANGELES ═══════
+  { from: "Los Angeles (LAX)", to: "Frankfurt (FRA)", duration: "11h", note: "Lufthansa. ✓ Cabin (under 8 kg). West coast direct to Europe — consider stopover for long flight.", tags: ["us", "europe"] },
   { from: "Los Angeles (LAX)", to: "Paris (CDG)", duration: "11h", note: "Air France. ✓ Cabin (under 8 kg). The west coast option — longer flight, consider stopover advice.", tags: ["us", "europe"] },
+
+  // ═══════ FROM MADRID ═══════
+  { from: "Madrid (MAD)", to: "Lisbon (LIS)", duration: "1h 15m", note: "Iberia. ✓ Cabin (under 8 kg, €35 within Spain → Portugal).", tags: ["europe"] },
+  { from: "Madrid (MAD)", to: "Miami (MIA)", duration: "9h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas). Strong Spain → USA cabin route.", tags: ["us", "europe"] },
+  { from: "Madrid (MAD)", to: "New York (JFK)", duration: "8h", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas).", tags: ["us", "europe"] },
+
+  // ═══════ FROM MANCHESTER ═══════
+  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
+  { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
+
+  // ═══════ FROM MIAMI ═══════
   { from: "Miami (MIA)", to: "New York (JFK)", duration: "3h 15m", note: "Delta, AA, United, JetBlue. ✓ Cabin all four. Domestic-equivalent route, multiple daily.", tags: ["us"] },
   { from: "Miami (MIA)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Southern US direct cabin to Europe.", tags: ["us", "europe"] },
+
+  // ═══════ FROM MONTREAL ═══════
+  { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
+
+  // ═══════ FROM NEW YORK ═══════
+  { from: "New York (JFK)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "KLM. ✓ Cabin (under 8 kg). Strong onward hub for India / continental Europe.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for cabin onward to Europe, India, Africa.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 45m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Connect at MAD for cabin onward to Spain / Latin America.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Rome (FCO)", duration: "9h", note: "ITA Airways. ✓ Cabin (under 8 kg, €210 fee). Plus EU pet passport hub access.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
 
-  // India out (cabin)
-  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
-  { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
+  // ═══════ FROM PARIS ═══════
+  { from: "Paris (CDG)", to: "London (UK)", duration: "5–10h via Eurotunnel", note: "Fly cabin to CDG, drive/taxi to Calais, Eurotunnel (35min), drive to London. Pet stays with you the whole way — the standard cabin pets workaround to get INTO the UK.", tags: ["europe", "uk-out"] },
 
-  // Dubai / UAE
-  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE — Abu Dhabi is 90 min from Dubai by road.", tags: ["uk-out", "dubai"] },
-  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
-  { from: "Delhi / Mumbai", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
-  { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
+  // ═══════ FROM ROME ═══════
+  { from: "Rome (FCO)", to: "New York (JFK)", duration: "9h 30m", note: "ITA Airways. ✓ Cabin (under 8 kg, €210). Italy's flagship transatlantic cabin route.", tags: ["us", "europe"] },
+  { from: "Rome (FCO)", to: "Milan (MXP)", duration: "1h 15m", note: "ITA Airways. ✓ Cabin domestic Italy (up to 12 kg!). One of EU's most generous cabin pet limits.", tags: ["europe"] },
+
+  // ═══════ FROM TORONTO ═══════
+  { from: "Toronto (YYZ)", to: "Chicago (ORD)", duration: "1h 30m", note: "Air Canada or United. ✓ Cabin both. Shortest US Midwest cabin from Canada.", tags: ["canada", "us"] },
+  { from: "Toronto (YYZ)", to: "Los Angeles (LAX)", duration: "5h 15m", note: "Air Canada. ✓ Cabin (under 22 lb combined). West coast direct.", tags: ["canada", "us"] },
+  { from: "Toronto (YYZ)", to: "Miami (MIA)", duration: "3h 22m", note: "Air Canada or American. ✓ Cabin both. Popular cabin route for Canadians wintering in Florida.", tags: ["canada", "us"] },
+  { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
+  { from: "Toronto (YYZ)", to: "New York (JFK)", duration: "1h 45m", note: "Air Canada, Delta, United, American. ✓ Cabin all four. Shortest US cabin from Canada.", tags: ["canada", "us"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -504,6 +566,18 @@ const WORKAROUND_ROUTES_TABLE = [
     ],
     note: "Cabin entry into Dubai (DXB) is impossible on any airline (UAE law). The workaround is to fly cabin into Abu Dhabi (AUH) instead, then road transfer 90 min to Dubai. This is the only way to land in the UAE with your pet in cabin.",
     tags: ["us", "dubai", "europe"],
+  },
+  // UK → Dubai workaround
+  {
+    from: "London (LHR)",
+    to: "Dubai (DXB)",
+    duration: "~9h total + 90min drive",
+    legs: [
+      { route: "LHR → Abu Dhabi AUH", time: "7h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
+    ],
+    note: "Etihad is the only airline that allows cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. From AUH it's a 90-minute drive to Dubai. The neat thing about this route: you fly direct from Heathrow with your pet in cabin and skip a stopover entirely. Manchester also works (same Etihad cabin policy).",
+    tags: ["uk-out", "dubai"],
   },
   // USA → India workaround
   {
@@ -735,6 +809,127 @@ const CHECKLIST_DATA = {
           "Originals only at US border, not photos",
           "Arrive 3 hours early for international",
           "Pet relief area available at most major US airports — but walk your dog before you enter the airport too",
+        ],
+      },
+    ],
+  },
+  uae: {
+    title: "UAE entry / exit checklist",
+    sections: [
+      {
+        title: "8 weeks before",
+        items: [
+          "Vet appointment for full health check",
+          "ISO 15-digit microchip implanted (UAE strictly requires ISO 11784/11785)",
+          "Rabies vaccine ≥21 days old, ≤12 months",
+          "Rabies titer test (FAVN) if from a rabies-controlled country — UAE requires ≥0.5 IU/ml",
+        ],
+      },
+      {
+        title: "4 weeks before",
+        items: [
+          "Apply for MOCCAE import permit (Ministry of Climate Change and Environment) via moccae.gov.ae — ~AED 200",
+          "Book cabin pet space directly with airline by phone (Etihad cabin for AUH; cargo only for DXB)",
+          "If using Dubai cargo: arrange Dubai Kennels & Cattery (DKC) or another customs broker",
+          "Confirm departure airport allows your specific carrier and aircraft",
+        ],
+      },
+      {
+        title: "5 days before",
+        items: [
+          "Vet visit: UAE Health Certificate signed and stamped by government-accredited official",
+          "Email all documents to airline (Etihad requires docs ≥72 hours before)",
+          "If cargo: confirm pickup/drop-off times with broker",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "REMEMBER: Cabin entry only into Abu Dhabi (AUH) on Etihad — NOT Dubai",
+          "Bring originals of all certificates",
+          "Submit Etihad booking form 7+ days before departure if not already",
+          "Pet undergoes MOCCAE inspection after immigration at AUH (in Customs clearance)",
+          "From AUH to Dubai: 90-minute taxi (around AED 250)",
+        ],
+      },
+    ],
+  },
+  canada: {
+    title: "Canada entry / exit checklist",
+    sections: [
+      {
+        title: "4–6 weeks before",
+        items: [
+          "Vet appointment for full health check",
+          "ISO microchip implanted (recommended; not strictly required for entry but airlines need it)",
+          "Rabies vaccine ≥30 days old (for adult dogs)",
+          "Book cabin pet space with airline (Air Canada / Air Transat from UK; AC / AA / Delta / United / WestJet within North America)",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Vet-issued international health certificate (CFIA recommends within 10 days of arrival)",
+          "If from US: USDA-accredited vet only — APHIS endorsement NOT required for Canada (saves time)",
+          "If from elsewhere: country-specific government health certificate",
+          "Re-confirm airline cabin pet booking by phone",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring rabies vaccination certificate (original)",
+          "Bring vet-issued health certificate (original)",
+          "CBSA inspection on arrival — typically quick if paperwork is complete",
+          "Most Canadian airports have pet relief areas",
+        ],
+      },
+      {
+        title: "Important note",
+        items: [
+          "Commercial dogs younger than 8 months entering from countries with high risk of dog rabies face additional requirements",
+          "Personal pets (not commercial) under 3 months old face no rabies vaccine requirement but limited destinations",
+          "Cats face fewer restrictions but still need health certificate",
+        ],
+      },
+    ],
+  },
+  mexico: {
+    title: "Mexico entry / exit checklist",
+    sections: [
+      {
+        title: "4 weeks before",
+        items: [
+          "Vet appointment for full health check",
+          "ISO microchip recommended (not strictly required)",
+          "Rabies vaccine ≥15 days old before travel",
+          "Book cabin pet space with airline (Aeromexico, Volaris, Air Canada, AA, Delta, United all offer cabin to Mexico)",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Vet-issued health certificate stating pet is free of parasites and infectious disease",
+          "If from US: USDA APHIS endorsement is optional but recommended",
+          "Internal/external deworming and tick treatment (within 6 months for ticks, dewormer date noted)",
+          "Re-confirm airline cabin booking by phone",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring rabies vaccination certificate (original)",
+          "Bring vet health certificate (original)",
+          "SADER/SENASICA inspection at Mexican port of entry — free of charge",
+          "If paperwork is incomplete: official quarantine at owner's expense until resolved",
+        ],
+      },
+      {
+        title: "Returning to home country",
+        items: [
+          "Returning to US: CDC Dog Import Form receipt required for dogs",
+          "Returning to Canada: standard rabies + health certificate",
+          "Returning to EU: EU Health Certificate or pet passport — Mexico is an unlisted third country so 3-month wait may apply",
         ],
       },
     ],
@@ -1076,7 +1271,7 @@ function Hero({ onStart }) {
         <div className="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-stone-300">
           {[
             { num: "07", label: "Quick questions" },
-            { num: "19", label: "Airlines compared" },
+            { num: "21", label: "Airlines compared" },
             { num: "09", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i}>
@@ -1697,7 +1892,7 @@ function AirlineGrid() {
         <SectionLabel num="III.">Airline policies</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
-          The nineteen carriers most pet owners book.
+          The twenty-one carriers most pet owners book.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
           Tap any airline to see fees, weight rules, carrier dimensions, and the fine print most travelers miss.
@@ -2139,6 +2334,7 @@ function ChecklistDownload() {
 
 function Routes() {
   const [filter, setFilter] = useState("all");
+  const [direction, setDirection] = useState("from"); // "from" or "to"
 
   const ROUTE_FILTERS = [
     { id: "all", label: "All routes", flag: "" },
@@ -2150,14 +2346,72 @@ function Routes() {
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
   ];
 
-  const filteredDirect = filter === "all"
-    ? DIRECT_ROUTES
-    : DIRECT_ROUTES.filter((r) => r.tags && r.tags.includes(filter));
-  const filteredWorkarounds = filter === "all"
-    ? WORKAROUND_ROUTES_TABLE
-    : WORKAROUND_ROUTES_TABLE.filter((r) => r.tags && r.tags.includes(filter));
+  // Extract a clean grouping key from "City (CODE)" or "City / City" strings
+  const getCityKey = (s) => {
+    if (!s) return "";
+    // Take first part before paren, slash, or "via"
+    return s.split(/\s*\(|\s*\/\s*|\s+via\s+/i)[0].trim();
+  };
+
+  // Group an array of routes by city (from or to depending on direction)
+  const groupByCity = (routes, dir) => {
+    const groups = {};
+    routes.forEach((r) => {
+      const key = getCityKey(dir === "from" ? r.from : r.to);
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(r);
+    });
+    return Object.keys(groups)
+      .sort()
+      .map((city) => ({ city, routes: groups[city] }));
+  };
+
+  // Region → keywords that identify cities/airports in that region.
+  // When user picks a region filter, we check whether the FROM (or TO, depending on toggle)
+  // contains one of these keywords. This way the filter respects the direction toggle.
+  const REGION_CITIES = {
+    "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "USA"],
+    "india": ["Delhi", "Mumbai", "Bangalore", "Chennai", "(DEL)", "(BOM)", "(BLR)", "(MAA)"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)"],
+    "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
+    "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
+  };
+
+  // Check whether a single field value (e.g. "London (LHR)") belongs to a region
+  const fieldMatchesRegion = (fieldValue, regionId) => {
+    if (!fieldValue || !REGION_CITIES[regionId]) return false;
+    return REGION_CITIES[regionId].some((kw) =>
+      fieldValue.toLowerCase().includes(kw.toLowerCase())
+    );
+  };
+
+  // For workarounds: check the destination of any leg, not just the top-level to/from
+  const workaroundMatchesRegion = (route, regionId, dir) => {
+    if (dir === "from") {
+      return fieldMatchesRegion(route.from, regionId);
+    }
+    return fieldMatchesRegion(route.to, regionId);
+  };
+
+  const applyFilter = (routes, isWorkaround) => {
+    if (filter === "all") return routes;
+    return routes.filter((r) => {
+      if (isWorkaround) {
+        return workaroundMatchesRegion(r, filter, direction);
+      }
+      const fieldToCheck = direction === "from" ? r.from : r.to;
+      return fieldMatchesRegion(fieldToCheck, filter);
+    });
+  };
+
+  const filteredDirect = applyFilter(DIRECT_ROUTES, false);
+  const filteredWorkarounds = applyFilter(WORKAROUND_ROUTES_TABLE, true);
   const totalFiltered = filteredDirect.length + filteredWorkarounds.length;
   const totalAll = DIRECT_ROUTES.length + WORKAROUND_ROUTES_TABLE.length;
+
+  const directGrouped = groupByCity(filteredDirect, direction);
+  const workaroundsGrouped = groupByCity(filteredWorkarounds, direction);
 
   return (
     <section id="routes" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300">
@@ -2213,6 +2467,37 @@ function Routes() {
           </p>
         </div>
 
+        <div className="mb-10">
+          <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Group by</div>
+          <div className="inline-flex border border-stone-300 bg-white">
+            <button
+              onClick={() => setDirection("from")}
+              className={`px-5 py-2 text-sm transition-all ${
+                direction === "from"
+                  ? "bg-stone-900 text-stone-50"
+                  : "bg-white text-stone-700 hover:bg-stone-50"
+              }`}
+            >
+              <span className="font-serif">↗ Departing from</span>
+            </button>
+            <button
+              onClick={() => setDirection("to")}
+              className={`px-5 py-2 text-sm transition-all border-l border-stone-300 ${
+                direction === "to"
+                  ? "bg-stone-900 text-stone-50"
+                  : "bg-white text-stone-700 hover:bg-stone-50"
+              }`}
+            >
+              <span className="font-serif">↘ Arriving into</span>
+            </button>
+          </div>
+          <p className="text-stone-500 text-sm mt-2 italic font-serif">
+            {direction === "from"
+              ? "Routes grouped by departure city, alphabetical."
+              : "Routes grouped by destination city, alphabetical."}
+          </p>
+        </div>
+
         {/* DIRECT CABIN ROUTES */}
         <div className="mb-12">
           <div className="flex items-baseline gap-3 mb-4">
@@ -2224,33 +2509,54 @@ function Routes() {
             Single-leg flights where your pet flies in cabin with you the whole way. Simplest option when available.
           </p>
 
-          <div className="border border-stone-300">
-            <div className="hidden md:grid grid-cols-12 gap-4 bg-stone-100 px-6 py-4 border-b border-stone-300 text-xs uppercase tracking-widest text-stone-600 font-medium text-center">
-              <div className="col-span-3">From</div>
-              <div className="col-span-3">To</div>
-              <div className="col-span-2">Flight time</div>
-              <div className="col-span-4">Notes</div>
+          {filteredDirect.length === 0 ? (
+            <div className="border border-stone-300 px-6 py-10 text-center text-stone-500 font-serif italic">
+              {filter === "uk-out" && direction === "to" ? (
+                <>No direct cabin flights INTO the UK exist on any airline (UK government rule). See workaround routes below — typically fly cabin into Paris/Amsterdam, then Eurotunnel.</>
+              ) : filter === "dubai" && direction === "to" ? (
+                <>No direct cabin flights INTO Dubai (DXB) exist on any airline (UAE law — cargo only into DXB). See workaround routes below — fly cabin into Abu Dhabi (AUH) via Etihad, then 90-minute road transfer to Dubai.</>
+              ) : (
+                <>No direct cabin routes match this combination. Try a workaround below or <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">ask me</a> to add one.</>
+              )}
             </div>
-            {filteredDirect.length === 0 ? (
-              <div className="px-6 py-10 text-center text-stone-500 font-serif italic">
-                No direct cabin routes match this filter. Try a workaround below or <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">ask me</a>.
-              </div>
-            ) : (
-              filteredDirect.map((r, i) => (
-                <div key={i} className="grid md:grid-cols-12 gap-2 md:gap-4 px-6 py-5 border-b border-stone-200 last:border-b-0 hover:bg-stone-50 transition-colors items-center text-center">
-                  <div className="md:col-span-3 font-serif text-stone-900">{r.from}</div>
-                  <div className="md:col-span-3 font-serif text-stone-900 flex md:block items-center gap-2 justify-center">
-                    <ArrowRight className="md:hidden w-3 h-3 text-stone-400" />
-                    <span className="hidden md:inline mr-2">→</span>
-                    <span className="md:hidden text-stone-500 text-xs uppercase tracking-wider">To: </span>
-                    {r.to}
+          ) : (
+            <div className="space-y-6">
+              {directGrouped.map((group) => (
+                <div key={group.city} className="border border-stone-300">
+                  <div className="bg-stone-900 text-stone-50 px-6 py-3 flex items-baseline justify-between">
+                    <div className="font-serif text-base">
+                      <span className="text-stone-400 text-xs uppercase tracking-widest mr-3">
+                        {direction === "from" ? "Departing from" : "Arriving into"}
+                      </span>
+                      {group.city}
+                    </div>
+                    <div className="text-xs text-stone-400 uppercase tracking-widest">
+                      {group.routes.length} {group.routes.length === 1 ? "route" : "routes"}
+                    </div>
                   </div>
-                  <div className="md:col-span-2 text-amber-700 font-medium">{r.duration}</div>
-                  <div className="md:col-span-4 text-stone-600 text-sm italic font-serif md:text-left">{r.note}</div>
+                  <div className="hidden md:grid grid-cols-12 gap-4 bg-stone-100 px-6 py-3 border-b border-stone-300 text-xs uppercase tracking-widest text-stone-600 font-medium text-center">
+                    <div className="col-span-3">From</div>
+                    <div className="col-span-3">To</div>
+                    <div className="col-span-2">Flight time</div>
+                    <div className="col-span-4">Notes</div>
+                  </div>
+                  {group.routes.map((r, i) => (
+                    <div key={i} className="grid md:grid-cols-12 gap-2 md:gap-4 px-6 py-5 border-b border-stone-200 last:border-b-0 hover:bg-stone-50 transition-colors items-center text-center">
+                      <div className="md:col-span-3 font-serif text-stone-900">{r.from}</div>
+                      <div className="md:col-span-3 font-serif text-stone-900 flex md:block items-center gap-2 justify-center">
+                        <ArrowRight className="md:hidden w-3 h-3 text-stone-400" />
+                        <span className="hidden md:inline mr-2">→</span>
+                        <span className="md:hidden text-stone-500 text-xs uppercase tracking-wider">To: </span>
+                        {r.to}
+                      </div>
+                      <div className="md:col-span-2 text-amber-700 font-medium">{r.duration}</div>
+                      <div className="md:col-span-4 text-stone-600 text-sm italic font-serif md:text-left">{r.note}</div>
+                    </div>
+                  ))}
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* WORKAROUND ROUTES */}
@@ -2264,38 +2570,55 @@ function Routes() {
             Multi-leg journeys where cabin works on each leg via a hub. Often the only way to fly cabin on a long-haul route — and an overnight stop is recommended for journeys over 7 hours.
           </p>
 
-          <div className="space-y-4">
-            {filteredWorkarounds.length === 0 ? (
-              <div className="border border-stone-300 px-6 py-10 text-center text-stone-500 font-serif italic">
-                No workaround routes match this filter. <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Ask me</a> to add one.
-              </div>
-            ) : (
-              filteredWorkarounds.map((r, i) => (
-                <div key={i} className="border border-stone-300 bg-amber-50/30 p-6">
-                  <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4 pb-4 border-b border-stone-200">
-                    <div className="font-serif text-xl text-stone-900">
-                      {r.from} <span className="text-stone-400 mx-2">→</span> {r.to}
+          {filteredWorkarounds.length === 0 ? (
+            <div className="border border-stone-300 px-6 py-10 text-center text-stone-500 font-serif italic">
+              No workaround routes match this filter. <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Ask me</a> to add one.
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {workaroundsGrouped.map((group) => (
+                <div key={group.city}>
+                  <div className="bg-stone-900 text-stone-50 px-6 py-3 flex items-baseline justify-between mb-4">
+                    <div className="font-serif text-base">
+                      <span className="text-stone-400 text-xs uppercase tracking-widest mr-3">
+                        {direction === "from" ? "Departing from" : "Arriving into"}
+                      </span>
+                      {group.city}
                     </div>
-                    <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
-                      Total: {r.duration}
+                    <div className="text-xs text-stone-400 uppercase tracking-widest">
+                      {group.routes.length} {group.routes.length === 1 ? "route" : "routes"}
                     </div>
                   </div>
+                  <div className="space-y-4">
+                    {group.routes.map((r, i) => (
+                      <div key={i} className="border border-stone-300 bg-amber-50/30 p-6">
+                        <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4 pb-4 border-b border-stone-200">
+                          <div className="font-serif text-xl text-stone-900">
+                            {r.from} <span className="text-stone-400 mx-2">→</span> {r.to}
+                          </div>
+                          <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
+                            Total: {r.duration}
+                          </div>
+                        </div>
 
-                  <div className="space-y-2 mb-4">
-                    {r.legs.map((leg, j) => (
-                      <div key={j} className="grid grid-cols-12 gap-3 text-sm items-center">
-                        <div className="col-span-12 md:col-span-5 font-medium text-stone-900">{leg.route}</div>
-                        <div className="col-span-5 md:col-span-2 text-stone-600 font-medium">{leg.time}</div>
-                        <div className="col-span-7 md:col-span-5 text-stone-700 italic font-serif">{leg.airline}</div>
+                        <div className="space-y-2 mb-4">
+                          {r.legs.map((leg, j) => (
+                            <div key={j} className="grid grid-cols-12 gap-3 text-sm items-center">
+                              <div className="col-span-12 md:col-span-5 font-medium text-stone-900">{leg.route}</div>
+                              <div className="col-span-5 md:col-span-2 text-stone-600 font-medium">{leg.time}</div>
+                              <div className="col-span-7 md:col-span-5 text-stone-700 italic font-serif">{leg.airline}</div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <p className="text-stone-700 text-sm italic font-serif leading-relaxed">{r.note}</p>
                       </div>
                     ))}
                   </div>
-
-                  <p className="text-stone-700 text-sm italic font-serif leading-relaxed">{r.note}</p>
                 </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <p className="text-stone-500 text-sm mt-6 italic font-serif text-center">

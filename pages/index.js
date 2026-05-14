@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Pet in Cabin: Airline Policies, Paperwork & Workarounds | Pets in Cabin</title>
+        <title>Travelling with Pets: Flying With Your Dog or Cat in the Cabin | Pets in Cabin</title>
       </Head>
       <PetTravel />
     </>

@@ -8,8 +8,8 @@ export default function Document() {
         <meta name="google-site-verification" content="1bi6cDCuTHmlc1CJUSk4Z24beCQjICPtH_LlJUwv5Zg" />
 
         {/* Primary SEO */}
-        <meta name="description" content="Pet in cabin guide: airline policies, weight limits, carrier sizes, and country paperwork for flying with your dog or cat. Real workarounds (including the UK pet ban) from a pet mum who's flown London-Canada-US-Paris-home." />
-        <meta name="keywords" content="pet in cabin, pets in cabin, fly with dog in cabin, fly with cat in cabin, pet travel guide, airline pet policy, fly pet to UK, pet to Hawaii, pet passport, carry on pet, in-cabin pet, dog flight, cat flight, pet to Europe, pet relocation, EU pet health certificate" />
+        <meta name="description" content="Travelling with pets? A real-world guide to flying with your dog or cat in the cabin. Pets in cabin policies for every major airline, country paperwork, cabin routes and the workarounds that actually work — for the UK, USA, Europe, India, Canada, the UAE and beyond. By Theo's Mum, who's flown it." />
+        <meta name="keywords" content="travelling with pets, travel with pets, pet flight, flying with animals, pets in cabin, pet in cabin, fly with dog in cabin, fly with cat in cabin, airline pet policy, pet travel guide, fly pet to UK, fly pet to USA, fly pet to India, pet to Europe, Dubai pet import, pet to Canada, in-cabin pet, dog flight, cat flight, pet relocation, pet quarantine countries" />
         <meta name="author" content="Theo's Mum" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
         <link rel="canonical" href="https://petsincabin.com" />
@@ -21,16 +21,16 @@ export default function Document() {
 
         {/* Open Graph (for Facebook, LinkedIn, WhatsApp shares) */}
         <meta property="og:site_name" content="Pets in Cabin" />
-        <meta property="og:title" content="Pets in Cabin — A field guide to flying with your pet, in the cabin" />
-        <meta property="og:description" content="Airline policies, country paperwork, and clever workarounds for flying with your dog or cat in the cabin. By a pet mum who's actually done it." />
+        <meta property="og:title" content="Travelling with Pets: Flying With Your Dog or Cat in the Cabin" />
+        <meta property="og:description" content="A real-world guide to flying with your dog or cat in the cabin. Pets in cabin policies for every major airline, country paperwork, and the workarounds that actually work — UK, USA, Europe, India, Canada and beyond. By Theo's Mum, who's done it." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://petsincabin.com" />
         <meta property="og:locale" content="en_GB" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Pets in Cabin — Flying with your pet, made simple" />
-        <meta name="twitter:description" content="Real airline policies, country paperwork, and workarounds (including the UK pet ban). By a pet mum who's flown the routes." />
+        <meta name="twitter:title" content="Travelling with Pets: Flying With Your Dog or Cat in the Cabin" />
+        <meta name="twitter:description" content="Airline pet policies, country paperwork, and the workarounds that actually work — by Theo's Mum, who's flown it." />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
@@ -45,7 +45,7 @@ export default function Document() {
               "name": "Pets in Cabin",
               "alternateName": "Pet in Cabin Guide",
               "url": "https://petsincabin.com",
-              "description": "A field guide to flying with your pet in the cabin. Airline policies, country paperwork, and workarounds.",
+              "description": "A real-world guide to travelling with pets and flying with animals in the cabin. Airline pet policies, country paperwork, cabin routes, and workarounds for the UK, USA, Europe, India, Canada, the UAE and beyond.",
               "author": {
                 "@type": "Person",
                 "name": "Theo's Mum"
@@ -54,6 +54,51 @@ export default function Document() {
                 "@type": "Person",
                 "name": "Theo's Mum"
               }
+            })
+          }}
+        />
+
+        {/* FAQ structured data — can produce rich-snippet answer boxes in Google search */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Can I fly with my dog or cat in the cabin?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, on many airlines — if your pet plus its carrier is under the airline's combined weight limit (usually 8–10 kg) and fits in a soft carrier under the seat. Limits, fees and allowed routes vary by airline, so always check the specific carrier and route before booking."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Can I fly with my pet in the cabin to the UK?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No commercial airline allows pets in the cabin on flights INTO the UK — it is a UK government rule, not the airline's choice. Pets must enter as manifested cargo, or you can use the common workaround: fly cabin into continental Europe (Paris, Amsterdam, Frankfurt) then cross to the UK by Eurotunnel or ferry with your pet beside you."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Which airlines allow pets in the cabin?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Many do, including Delta, United, American, Alaska, JetBlue, Air Canada, Air France, KLM, Lufthansa, SWISS, TAP Air Portugal, Iberia, ITA Airways, Turkish Airlines, Air India and Etihad (to and from Abu Dhabi). British Airways, Qatar Airways and Emirates do not — they are cargo-only for pets."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How much does it cost to fly with a pet in the cabin?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Typically USD 95–150 each way on domestic and short-haul routes, and USD 100–250 on long-haul international routes, depending on the airline. Some carriers charge per flight segment, so connecting journeys cost more."
+                  }
+                }
+              ]
             })
           }}
         />

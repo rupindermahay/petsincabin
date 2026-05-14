@@ -347,6 +347,23 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://www.ita-airways.com/us/en/book-and-prepare/other-requests/travelling-with-pets",
   },
+  {
+    name: "Lift",
+    scope: "south-africa",
+    tags: [],
+    cabin: "Cabin ✓ — small dogs, domestic South Africa only",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: small dogs (under 7 kg) on Lift's dog-friendly domestic South Africa flights only (Johannesburg, Cape Town, Durban, George). Cabin NOT allowed: cats are not accepted; no international flights — Lift only operates domestic SA routes. There is no cabin pet option in or out of South Africa internationally on any airline.",
+    originAllowed: {},
+    destinationAllowed: {},
+    fee: "Equal to the accompanying adult's fare (less taxes) — you're effectively buying the dog a blocked window seat.",
+    weight: "Dog + nothing else: max 7 kg. Carrier max 55 × 35 × 28 cm, soft-sided, well-ventilated.",
+    carrier: "Purpose-built soft-sided carrier, max 55 × 35 × 28 cm. Lined with puppy pads. Must fit fully under the window seat. Dog stays inside the carrier at all times — including in the terminal.",
+    notes: "South Africa's only in-cabin pet option — and it's domestic-only. Dogs only (no cats), one dog per adult, dog must be 10+ weeks old and rabies-vaccinated if over 3 months. IMPORTANT: don't book your flight first — submit Lift's Dog-in-Cabin Request Form at least 7 days before travel, and they confirm availability within 24 business hours, then book it for you. Window seat is blocked for the dog; you sit in the adjacent middle seat. Arrive 2 hours early. Limited dog seats per flight — request early. For international travel to/from South Africa, pets must go as manifested cargo (see the South Africa tab in Difficult Destinations).",
+    intl: "No (domestic South Africa only)",
+    verified: "May 2026",
+    link: "https://www.lift.co.za/LIFT-Extras/travelling-with-small-dogs",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -379,9 +396,18 @@ const DIRECT_ROUTES = [
   // ═══════ FROM BOSTON ═══════
   { from: "Boston (BOS)", to: "Paris (CDG)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). The shortest US east coast direct cabin to Europe.", tags: ["us", "europe"] },
 
+  // ═══════ FROM CAPE TOWN ═══════
+  { from: "Cape Town (CPT)", to: "Johannesburg (JNB)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. Domestic South Africa only. Submit Lift's Dog-in-Cabin form 7+ days ahead. No cats. International SA travel is cargo-only on all airlines.", tags: ["south-africa"] },
+  { from: "Cape Town (CPT)", to: "Durban (DUR)", duration: "1h 50m", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. Cargo-equivalent options: FlySafair's PetLounge service (climate-controlled hold).", tags: ["south-africa"] },
+
   // ═══════ FROM CHICAGO ═══════
   { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
   { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
+
+  // ═══════ FROM JOHANNESBURG ═══════
+  { from: "Johannesburg (JNB)", to: "Cape Town (CPT)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. South Africa's busiest domestic route. Submit Lift's Dog-in-Cabin form 7+ days ahead, window seat is blocked for the dog. No cats, no international.", tags: ["south-africa"] },
+  { from: "Johannesburg (JNB)", to: "Durban (DUR)", duration: "1h 5m", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. For dogs over 7 kg or cats: FlySafair PetLounge cargo, or SAA/Airlink checked baggage (domestic).", tags: ["south-africa"] },
+  { from: "Johannesburg (JNB)", to: "George (GRJ)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. Note: no airline flies cabin pets internationally in or out of South Africa — see the South Africa tab in Difficult Destinations.", tags: ["south-africa"] },
 
   // ═══════ FROM DELHI ═══════
   { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
@@ -1190,6 +1216,60 @@ const CHECKLIST_DATA = {
           "Only the CDC Dog Import Form receipt is needed for re-entry",
           "Dog must be 6+ months old, microchipped, healthy",
           "No titer test or quarantine required on return",
+        ],
+      },
+    ],
+  },
+  south_africa: {
+    title: "South Africa pet travel checklist",
+    sections: [
+      {
+        title: "First — understand the two very different cases",
+        items: [
+          "DOMESTIC within South Africa: small dogs CAN fly in the cabin — Lift is the only airline that allows it (dogs under 7 kg, no cats). The rest of this checklist's 'domestic' steps cover that.",
+          "INTERNATIONAL in or out of South Africa: there is NO cabin option on any airline — international pets travel as manifested cargo. We don't walk through cargo logistics in detail; the international section below tells you what to gather and who to contact.",
+          "Work out which case you're in before you do anything else — the prep is completely different.",
+        ],
+      },
+      {
+        title: "Domestic cabin travel (Lift) — 2+ weeks before",
+        items: [
+          "Confirm your dog is under 7 kg and a cat is not involved (Lift cabin is small dogs only)",
+          "Confirm your dog is at least 10 weeks old",
+          "Rabies vaccination up to date (legally required for all SA dogs over 3 months)",
+          "Get a purpose-built soft-sided carrier — max 55 × 35 × 28 cm — and let your dog get used to it",
+          "Consult your vet to confirm your dog is fit to fly in cabin",
+        ],
+      },
+      {
+        title: "Domestic cabin travel (Lift) — 7+ days before",
+        items: [
+          "Do NOT book your flight independently first",
+          "Submit Lift's Dog-in-Cabin Request Form at least 7 days before travel",
+          "Wait for Lift Customer Support to confirm availability (within 24 business hours)",
+          "Accept the quote — the dog's booking costs the same as the adult fare (less taxes)",
+          "Lift completes the booking for you — window seat blocked for the dog, you in the adjacent middle seat",
+        ],
+      },
+      {
+        title: "Domestic cabin travel (Lift) — travel day",
+        items: [
+          "Arrive at least 2 hours before departure",
+          "Go to the LIFT check-in counters with your dog in its carrier",
+          "Bring proof of rabies vaccination",
+          "Line the carrier with puppy training pads / absorbent sheets",
+          "Dog stays inside the carrier at all times — including in the terminal and onboard",
+        ],
+      },
+      {
+        title: "International travel (in or out of SA) — the honest version",
+        items: [
+          "No airline flies cabin pets in or out of South Africa — this will be a cargo move, full stop",
+          "Start 4–6 months ahead — international SA pet travel is slow",
+          "Into SA: State Veterinary import permit, ISO microchip, rabies vaccine 30 days–1 year old, rabies titer test (most countries), government-vet-endorsed health certificate, plus extra tests depending on origin",
+          "Out of SA: rabies titer test, State Vet health certificate, plus whatever the destination country requires (e.g. EU has a 3-month wait after a successful titer)",
+          "IMPORTANT: exact crate specs, booking process, timings and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before committing to dates",
+          "Don't rely on general guidance for a cargo move — get specifics for your exact route",
         ],
       },
     ],
@@ -2053,7 +2133,7 @@ const QUESTIONS = [
     id: "destination",
     label: "Where are you flying to?",
     type: "choice",
-    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK / Ireland", "Europe", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
+    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK", "Ireland", "Europe", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
     helper: "Pick where your pet is ARRIVING. Flying Europe → New York? Choose 'Into the USA'.",
   },
   {
@@ -2095,7 +2175,8 @@ function assess(answers) {
   // Helper: derive a contextual workaround based on destination
   const cargoOption = (() => {
     const d = answers.destination;
-    if (d === "UK / Ireland") return "Cargo into UK is possible via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Frankfurt's Animal Lounge. Allow 8+ hours at Heathrow Animal Reception Centre after landing.";
+    if (d === "UK") return "Cargo into the UK is possible via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Frankfurt's Animal Lounge. Allow 8+ hours at Heathrow Animal Reception Centre after landing.";
+    if (d === "Ireland") return "Cargo into Ireland is possible via Lufthansa Cargo, KLM Cargo, or Aer Lingus Cargo. Pets clear at Dublin Airport. Ireland's rules closely mirror the UK's.";
     if (d === "UAE / Dubai") return "Cargo into Dubai is possible — every pet entering DXB must go cargo regardless of airline. Use Emirates SkyCargo, Qatar Cargo, or Lufthansa via Europe, plus a UAE customs broker (Dubai Kennels & Cattery is the most-used).";
     if (d === "Europe") return "Cargo into the EU is available via Lufthansa Cargo (Frankfurt Animal Lounge — the world's most advanced), KLM Cargo (Amsterdam), or Air France Cargo (Paris). All accept oversize pets that don't qualify for cabin.";
     if (d === "Within the USA (domestic)") return "Domestic US cargo for pets is largely discontinued by major airlines as of 2025. Hawaiian Air Cargo still operates inter-island. For mainland US, consider a ground pet transport service (CitizenShipper, RoyalPaws) or a charter/private operator.";
@@ -2120,7 +2201,7 @@ function assess(answers) {
   const isDomestic = answers.destination === "Within the USA (domestic)";
   const isInternationalArrival = answers.destination === "Into the USA (international arrival)";
 
-  if (answers.destination === "Europe" || answers.destination === "UK / Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
+  if (answers.destination === "Europe" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
     if (answers.age === "8 weeks – 4 months") {
       flags.push({
         severity: "blocker",
@@ -2215,16 +2296,33 @@ function assess(answers) {
     });
   }
 
-  if (answers.destination === "UK / Ireland") {
+  if (answers.destination === "UK") {
     flags.push({
       severity: "impossible",
-      title: "No commercial airline allows pets in the cabin to the UK or Ireland",
-      detail: "Every flight into the UK and Ireland requires pets to travel as manifested cargo — never in the cabin. This is UK and Irish government policy, not the airlines' choice.",
-      workaround: "The cabin workaround DOES exist: fly cabin into Paris (CDG), Amsterdam (AMS), or Frankfurt (FRA) on Air France, KLM, or Lufthansa, then take Eurotunnel Le Shuttle (35 min, pet stays in your car) from Calais to Folkestone. Or take a pet-friendly ferry. See the Routes section for the LHR via Paris workaround. Alternatively: cargo via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Heathrow Animal Reception Centre.",
+      title: "No commercial airline allows pets in the cabin into the UK",
+      detail: "Every flight into the UK requires pets to travel as manifested cargo — never in the cabin. This is UK government policy, not the airlines' choice. (Flying OUT of the UK in cabin is fine — many airlines allow it.)",
+      workaround: "The cabin workaround DOES exist: fly cabin into Paris (CDG), Amsterdam (AMS), or Frankfurt (FRA) on Air France, KLM, or Lufthansa, then take Eurotunnel Le Shuttle (35 min, pet stays in your car) from Calais to Folkestone. Or take a pet-friendly ferry. See the Routes section for the USA/Canada/Europe → UK workarounds. Alternatively: cargo via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Heathrow Animal Reception Centre.",
     });
     warnings.push({
       title: "Tapeworm treatment is mandatory for dogs",
-      detail: "Dogs entering the UK or Ireland need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Without this, your dog can be refused entry or quarantined. Not required for cats.",
+      detail: "Dogs entering the UK need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Without this, your dog can be refused entry or quarantined. Not required for cats.",
+    });
+  }
+
+  if (answers.destination === "Ireland") {
+    flags.push({
+      severity: "impossible",
+      title: "No commercial airline allows pets in the cabin into Ireland",
+      detail: "Like the UK, every flight into Ireland requires pets to travel as manifested cargo — never in the cabin. This is Irish government policy, and it's why airlines list Ireland alongside the UK in their no-cabin restrictions. (Flying OUT of Ireland in cabin is generally fine.)",
+      workaround: "The cabin workaround: fly cabin into a continental EU airport (Paris CDG, Amsterdam AMS, Frankfurt FRA), then either take a pet-friendly ferry from France to Ireland (Cherbourg/Roscoff → Rosslare/Dublin on Irish Ferries or Brittany Ferries — pets stay in your vehicle or a pet-friendly cabin), or cross to the UK via Eurotunnel and take the Ireland ferry from Holyhead. The direct France → Ireland ferry avoids the UK landbridge entirely. Alternatively: cargo into Dublin via Lufthansa Cargo, KLM Cargo, or Aer Lingus Cargo.",
+    });
+    warnings.push({
+      title: "Tapeworm treatment is mandatory for dogs",
+      detail: "Dogs entering Ireland need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Same rule as the UK. Not required for cats.",
+    });
+    warnings.push({
+      title: "Ireland's rules closely mirror the UK's",
+      detail: "ISO microchip, rabies vaccine ≥21 days old, and an EU/GB pet health certificate. If you're coming from the UK, the land+ferry route is common. If from outside the EU, you'll need an EU Health Certificate. Confirm current requirements with Ireland's Department of Agriculture, Food and the Marine.",
     });
   }
 
@@ -2413,7 +2511,7 @@ function Hero({ onStart }) {
         backgroundSize: "32px 32px"
       }} />
 
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative max-w-5xl mx-auto text-center">
         <div className="flex items-center gap-2 mb-12">
           <span className="text-xs uppercase tracking-widest text-stone-500">By Theo's Mum</span>
           <div className="flex-1 h-px bg-stone-300 mx-3" />
@@ -2426,11 +2524,11 @@ function Hero({ onStart }) {
           in the cabin.
         </h1>
 
-        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl leading-relaxed mb-10">
+        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-10">
           Every airline has different rules. Every country has different paperwork. We sort through it so you and your animal arrive together — calm, prepared, and on the same flight.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-stretch">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center">
           <button
             onClick={onStart}
             className="group flex items-center justify-between gap-4 bg-stone-900 text-cream-50 px-7 py-5 hover:bg-amber-700 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
@@ -2459,10 +2557,10 @@ function Hero({ onStart }) {
           </a>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl">
+        <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl mx-auto">
           {[
             { num: "08", label: "Quick questions" },
-            { num: "21", label: "Airlines compared" },
+            { num: "22", label: "Airlines compared" },
             { num: "10", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i} className="text-center">
@@ -2472,7 +2570,7 @@ function Hero({ onStart }) {
           ))}
         </div>
 
-        <div className="mt-10 pt-8 border-t border-stone-300 text-center">
+        <div className="mt-10 pt-8 border-t border-stone-300">
           <div className="text-xs uppercase tracking-widest text-stone-500 mb-6">Routes Theo and I have actually flown</div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 font-serif text-stone-800">
             <span className="flex items-center gap-2">
@@ -2500,7 +2598,7 @@ function Hero({ onStart }) {
               <span className="text-lg italic">Home again</span>
             </span>
           </div>
-          <p className="font-serif italic text-stone-500 text-sm mt-5 mx-auto max-w-2xl leading-relaxed">
+          <p className="font-serif italic text-stone-500 text-sm mt-5 max-w-2xl mx-auto leading-relaxed">
             Including the Paris pivot — fly into CDG, drive to Calais, Eurotunnel back to the UK with Theo curled up on the back seat.
           </p>
         </div>
@@ -3351,6 +3449,7 @@ function AirlineGrid() {
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
   const filteredAirlines = filter === "all"
@@ -3700,9 +3799,10 @@ function ChecklistDownload() {
   const [route, setRoute] = useState("generic");
   const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
 
-  // Universal checklist doesn't have a meaningful direction - lock direction for that route
+  // Universal + South Africa checklists don't have a meaningful departing/arriving split — lock direction
   const isUniversal = route === "generic";
-  const effectiveDirection = isUniversal ? "departing" : direction;
+  const noDirectionToggle = isUniversal || route === "south_africa";
+  const effectiveDirection = noDirectionToggle ? "departing" : direction;
 
   const data = getChecklist(route, effectiveDirection);
   const hasDirectionalContent = !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
@@ -3802,6 +3902,7 @@ function ChecklistDownload() {
               { id: "bahamas", label: "🇧🇸 Bahamas" },
               { id: "europe", label: "🇪🇺 Europe" },
               { id: "india", label: "🇮🇳 India" },
+              { id: "south_africa", label: "🇿🇦 South Africa" },
             ].map((r) => (
               <button
                 key={r.id}
@@ -3818,7 +3919,7 @@ function ChecklistDownload() {
           </div>
         </div>
 
-        {!isUniversal && (
+        {!noDirectionToggle && (
           <div>
             <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">2. Direction of travel</div>
             <p className="text-sm text-stone-400 mb-3 leading-relaxed max-w-2xl">
@@ -3891,6 +3992,7 @@ function Routes() {
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
   // Extract a clean grouping key from "City (CODE)" or "City / City" strings
@@ -3924,6 +4026,7 @@ function Routes() {
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Cayman Islands"],
+    "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region
@@ -4119,7 +4222,7 @@ function Routes() {
             <span className="text-xs uppercase tracking-widest text-stone-400">{filteredWorkarounds.length} routes</span>
           </div>
           <p className="text-stone-600 text-sm italic font-serif mb-5 max-w-2xl">
-            Multi-leg journeys where cabin works on each leg via a hub. Often the only way to fly cabin on a long-haul route — and an overnight stop is recommended for journeys over 7 hours.
+            Multi-leg journeys where cabin works on each leg via a hub — often the only way to fly cabin on a long-haul route. These are some of the most popular and shortest options for pet comfort; there may be others that suit your specific trip. An overnight stop is recommended for journeys over 7 hours.
           </p>
 
           {filteredWorkarounds.length === 0 ? (
@@ -4294,7 +4397,7 @@ function Workarounds() {
           The clever routes,<br /><span className="italic text-stone-600">visualised.</span>
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-12 max-w-2xl">
-          When direct flights don't allow cabin pets, smart multi-leg routes do. Here are the most-used workaround journeys, with airlines, times, and fees.
+          When direct flights don't allow cabin pets, smart multi-leg routes do. These are some of the most popular and shortest workaround journeys — chosen for pet comfort — but they're not the only ones. There may be other routes that work for you, so treat these as a starting point.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">

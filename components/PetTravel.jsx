@@ -856,6 +856,234 @@ const WORKAROUND_ROUTES_TABLE = [
 // Combined for backward compatibility (other components reference ROUTES)
 const ROUTES = [...DIRECT_ROUTES, ...WORKAROUND_ROUTES_TABLE];
 
+// ---------- HUB-BASED WORKAROUND GENERATION ----------
+// The hand-written WORKAROUND_ROUTES_TABLE covers specific city pairs (e.g.
+// London → New York). But the SAME workaround structure works for London →
+// any major US city. Rather than hand-write every pair, we define the KEY
+// AIRPORTS per region and a STRATEGY per region-pair, then generate concrete
+// city-level workarounds covering every key destination airport.
+//
+// This is the "guaranteed coverage floor": for every supported region pair,
+// the journey planner returns workarounds landing at ALL the main airports —
+// not just the two cities someone happened to write up.
+
+// Key airports per region — the minimum floor the planner guarantees.
+const REGION_HUBS = {
+  "uk-out": ["London (LHR)", "London (LGW)", "Manchester (MAN)"],
+  "ireland": ["Dublin (DUB)"],
+  "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)"],
+  "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
+  "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
+  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
+  "india": ["Delhi (DEL)", "Mumbai (BOM)", "Bengaluru (BLR)", "Chennai (MAA)"],
+  "dubai": ["Dubai (DXB)", "Abu Dhabi (AUH)"],
+  "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
+  "hawaii": ["Honolulu (HNL)"],
+  "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
+};
+
+const REGION_LABELS_SHORT = {
+  "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
+  "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa",
+};
+
+// Strategy per region-pair. Each strategy is a function of (originHub, destHub)
+// that returns the leg structure + note. Only pairs that need a WORKAROUND are
+// listed — pairs with good direct cabin routes are handled by DIRECT_ROUTES.
+// Where a pair genuinely has no cabin path at all, it's deliberately omitted
+// and the planner shows the honest "no mapped route" message.
+//
+// VERIFIED FACTS THESE STRATEGIES REST ON (official sources, May 2026):
+// - No airline flies cabin pets INTO the UK or Ireland (govt rule) — must use
+//   a European hub + Eurotunnel/ferry land crossing.
+// - Cabin OUT of the UK/Ireland to Europe IS allowed (Air France, KLM, Lufthansa).
+// - Etihad: cabin OUT of Abu Dhabi to Europe allowed; cabin INTO the UAE blocked
+//   on "flights to" the UAE — Dubai (DXB) is cargo-only for all airlines.
+// - Air India: cargo-only to/from the UK; cabin allowed DEPARTING the UAE.
+// - Transatlantic cabin works between European hubs and major US cities
+//   (Air France, KLM, Lufthansa, Delta, etc.).
+const REGION_PAIR_STRATEGIES = {
+  // ----- INTO the UK (cabin into UK impossible — via Europe + Eurotunnel) -----
+  "us>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+      { route: "Layover at CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "CDG → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+    ],
+    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → Paris by cabin, then the Eurotunnel land crossing to ${d}. Works from any major US gateway with a cabin route to Paris.`,
+  }),
+  "europe>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Calais (drive/train)`, time: "varies", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
+      { route: `Folkestone → ${d}`, time: "1h 30m+", airline: "Pet stays with you" },
+    ],
+    note: `If you're already in Europe, the Eurotunnel is the easiest way into the UK — your pet stays with you the whole way. No cabin flight INTO the UK exists on any airline.`,
+  }),
+  "canada>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air France / Lufthansa ✓ Cabin" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+    ],
+    note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then the Eurotunnel land crossing into ${d}.`,
+  }),
+  "india>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+    ],
+    note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then Eurotunnel into ${d}. Confirm the long-haul leg's cabin availability before booking — if it can't be confirmed as cabin, that portion becomes cargo.`,
+  }),
+  "dubai>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+    ],
+    note: `Etihad takes cabin pets OUT of Abu Dhabi to Europe. From a European hub, the Eurotunnel brings your pet into ${d}. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
+  }),
+
+  // ----- INTO Ireland (same wall as UK — via Europe + ferry) -----
+  "us>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+      { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
+      { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `No airline flies cabin pets INTO Ireland. Cleanest route: cabin into Europe, then the direct France→Ireland ferry — skips the UK entirely.`,
+  }),
+  "europe>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Cherbourg or Roscoff (drive)`, time: "varies", airline: "Pet stays with you" },
+      { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `From Europe, the direct France→Ireland ferry is the easiest way in — your pet stays with you. No cabin flight goes INTO Ireland.`,
+  }),
+  "uk-out>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Holyhead (drive across to Wales)`, time: "4–6h", airline: "Pet stays with you" },
+      { route: `Ferry Holyhead → ${d}`, time: "3h 15m", airline: "Irish Ferries / Stena Line — pet-friendly" },
+    ],
+    note: `The short hop: drive to Holyhead in Wales, then the ferry to Dublin. Both UK and Ireland pet rules apply.`,
+  }),
+
+  // ----- INTO the UAE (cabin into UAE blocked — Dubai cargo-only) -----
+  "us>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Abu Dhabi (AUH)`, time: "12–14h", airline: "Etihad ✓ Cabin OUT of the US (under 8 kg)" },
+    ],
+    note: `Etihad accepts cabin pets OUT of the US to Abu Dhabi (the restriction is only on flights TO the US). This is close to direct — AUH is 90 min from Dubai by road. Dubai (DXB) itself is cargo-only for all airlines.`,
+  }),
+  "uk-out>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Abu Dhabi (AUH)`, time: "7–8h", airline: "Etihad ✓ Cabin OUT of the UK (under 8 kg)" },
+    ],
+    note: `Etihad takes cabin pets OUT of the UK to Abu Dhabi (only "flights to" the UK/UAE are blocked, not flights out). Near-direct — AUH is 90 min from Dubai. Avoid routing to DXB, which is cargo-only.`,
+  }),
+  "europe>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Abu Dhabi (AUH)`, time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
+    ],
+    note: `Etihad flies cabin pets from European hubs to Abu Dhabi. Near-direct. AUH is 90 min from Dubai by road; DXB is cargo-only for all airlines.`,
+  }),
+  "india>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Europe (Frankfurt / Paris)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin" },
+    ],
+    note: `Air India blocks cabin pets on flights India→UAE, so the workaround routes via Europe. Confirm the India→Europe leg's cabin availability. Alternatively this is a cargo move. Note: UAE→India in cabin IS allowed (the block is one-directional).`,
+  }),
+
+  // ----- INTO India (no direct cabin from UK; via Europe) -----
+  "uk-out>india": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+    ],
+    note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. Fly cabin OUT of the UK to a European hub, then onward toward India. Confirm the second leg's cabin availability; India also needs the AQCS NOC and entry via one of six approved airports.`,
+  }),
+  "us>india": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "7–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Air India 'Paws on Board' / confirm with operating airline" },
+    ],
+    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India. Air India flies cabin pets from Europe (e.g. CDG → Delhi). India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
+  }),
+
+  // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
+  "uk-out>us": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+    ],
+    note: `There's no direct cabin route out of the UK to the US — but flying cabin OUT of the UK to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`,
+  }),
+  "ireland>us": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 50m", airline: "Air France / KLM ✓ Cabin out of Ireland" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+    ],
+    note: `Cabin OUT of Ireland to a European hub works, then the transatlantic carriers fly cabin pets onward to ${d}.`,
+  }),
+
+  // ----- INTO the Caribbean (from UK/Europe — via the US) -----
+  "uk-out>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+      { route: "European hub → Miami (MIA) or New York (JFK)", time: "7–9h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `There's no cabin route straight from the UK to the Caribbean. The path is UK → Europe → a US gateway (Miami or New York) → ${d}, all in cabin. Each Caribbean destination has its own import permit — check the specific island. A longer US layover lets your pet rest.`,
+  }),
+  "europe>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "8–10h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `From Europe, route via a US gateway (Miami or New York), then a short cabin hop to ${d}. Each Caribbean destination has its own import permit — check the specific island.`,
+  }),
+  "canada>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Air Canada / American ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `From Canada, the simplest cabin path to the Caribbean routes through a US gateway. Some Caribbean carriers also fly direct from Toronto — check, but the US-gateway route is the reliable cabin option. Each island has its own import permit.`,
+  }),
+};
+
+// Generate concrete city-level workarounds for a region pair, covering EVERY
+// key destination airport. Returns [] if there's no strategy for the pair.
+function generateWorkarounds(origin, destination) {
+  const key = `${origin}>${destination}`;
+  const strategy = REGION_PAIR_STRATEGIES[key];
+  if (!strategy) return [];
+  const originHubs = REGION_HUBS[origin] || [];
+  const destHubs = REGION_HUBS[destination] || [];
+  if (!originHubs.length || !destHubs.length) return [];
+
+  // Use the first origin hub as the representative starting point, then
+  // generate one workaround per destination airport — that's the coverage floor.
+  const originHub = originHubs[0];
+  return destHubs.map((destHub) => {
+    const built = strategy(originHub, destHub);
+    return {
+      from: originHub,
+      to: destHub,
+      duration: "see legs",
+      legs: built.legs,
+      note: built.note,
+      generated: true,
+    };
+  });
+}
+
 // ---------- DOWNLOADABLE CHECKLISTS ----------
 
 const CHECKLIST_DATA = {
@@ -4395,11 +4623,28 @@ function JourneyPlanner() {
     return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
   });
 
-  // Workaround routes: same direction-aware check on the top-level from/to
-  const workaroundMatches = WORKAROUND_ROUTES_TABLE.filter((r) => {
+  // Workaround routes: hand-written entries first (richest detail), then
+  // GENERATED hub-based workarounds covering every key destination airport.
+  // The generator guarantees the coverage floor — e.g. UK→US returns every
+  // major US gateway, not just the cities someone hand-wrote.
+  const handWrittenWorkarounds = WORKAROUND_ROUTES_TABLE.filter((r) => {
     if (origin === destination) return false;
     return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
   });
+  const generatedWorkarounds = origin && destination && origin !== destination
+    ? generateWorkarounds(origin, destination)
+    : [];
+  // De-dupe: if a generated workaround lands at a city already covered by a
+  // hand-written one, prefer the hand-written (more detail). Match on the
+  // destination airport code.
+  const handWrittenDestCodes = handWrittenWorkarounds
+    .map((r) => (r.to.match(/\(([A-Z]{3})\)/) || [])[1])
+    .filter(Boolean);
+  const generatedFiltered = generatedWorkarounds.filter((r) => {
+    const code = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
+    return !code || !handWrittenDestCodes.includes(code);
+  });
+  const workaroundMatches = [...handWrittenWorkarounds, ...generatedFiltered];
 
   const checklistId = REGION_TO_CHECKLIST[destination];
   const impossibleNote = CABIN_IMPOSSIBLE_INBOUND[destination];
@@ -4559,7 +4804,9 @@ function JourneyPlanner() {
                         <span className="font-serif text-base text-stone-100">{r.from}</span>
                         <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
                         <span className="font-serif text-base text-stone-100">{r.to}</span>
-                        <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                        {r.duration && r.duration !== "see legs" && (
+                          <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                        )}
                       </div>
                       <div className="space-y-1 mb-2 pl-3 border-l border-stone-600">
                         {r.legs.map((leg, j) => (

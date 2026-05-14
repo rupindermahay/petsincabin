@@ -921,8 +921,19 @@ const REGION_LABELS_SHORT = {
 const AIRPORTS = [
   // United Kingdom
   { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here." },
-  { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false, note: "Manchester handles cabin-pet departures (Air Transat, Etihad, others) — handy if you're in the north." },
-  { code: "LGW", city: "London Gatwick", region: "uk-out", cabinOut: false, cabinIn: false, note: "Gatwick does NOT permit cabin pets on departing flights. For a cabin departure use Heathrow (LHR) instead — it's the same London area." },
+  { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false,
+    note: "Manchester has a couple of direct cabin routes of its own (Etihad to Abu Dhabi, Air Transat to Toronto).",
+    // driveTo with conditionalOnNoDirect: Manchester CAN do a few cabin routes,
+    // but for any destination it can't reach directly, driving to Heathrow
+    // (a normal UK domestic drive) unlocks far more direct options and is the
+    // better advice than flying the pet to Europe. The planner only surfaces
+    // this when there's no direct route from Manchester to the chosen destination.
+    driveTo: { code: "LHR", conditionalOnNoDirect: true, text: "Heathrow is a normal domestic drive from Manchester, and it's the UK's main cabin-pet departure airport — far more direct cabin routes leave from there. For destinations Manchester can't reach directly, driving to Heathrow is simpler than any multi-leg workaround." } },
+  { code: "LGW", city: "London Gatwick", region: "uk-out", cabinOut: false, cabinIn: false,
+    note: "Gatwick does NOT permit cabin pets on departing flights.",
+    // driveTo: a nearby airport that DOES work — the planner shows this as the
+    // top-priority advice (driving an hour beats flying the pet to Europe).
+    driveTo: { code: "LHR", text: "Heathrow is roughly an hour away by road — it's the same London area, and it's the UK's main cabin-pet departure airport. Driving there is far simpler than any workaround." } },
   // Ireland
   { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo." },
   // United States
@@ -959,7 +970,9 @@ const AIRPORTS = [
   { code: "HYD", city: "Hyderabad", region: "india", cabinOut: true, cabinIn: true, note: "Hyderabad is one of India's six approved pet-entry airports." },
   // UAE
   { code: "AUH", city: "Abu Dhabi", region: "dubai", cabinOut: true, cabinIn: true, note: "Abu Dhabi is the ONLY UAE airport that permits cabin pets (Etihad). It's a 90-minute drive from Dubai." },
-  { code: "DXB", city: "Dubai", region: "dubai", cabinOut: false, cabinIn: false, note: "Dubai (DXB) is cargo-only for pets under UAE law — no airline flies cabin pets in or out. Use Abu Dhabi (AUH) for a cabin route; it's 90 minutes from Dubai by road." },
+  { code: "DXB", city: "Dubai", region: "dubai", cabinOut: false, cabinIn: false,
+    note: "Dubai (DXB) is cargo-only for pets under UAE law — no airline flies cabin pets in or out.",
+    driveTo: { code: "AUH", text: "Abu Dhabi (AUH) is about a 90-minute drive from Dubai, and it's the only UAE airport that permits cabin pets (Etihad). Starting your journey from Abu Dhabi is far simpler than cargo." } },
   // Caribbean
   { code: "NAS", city: "Nassau, Bahamas", region: "caribbean", cabinOut: true, cabinIn: true, note: "Bahamas requires an import permit — apply 6–8 weeks ahead." },
   { code: "MBJ", city: "Montego Bay, Jamaica", region: "caribbean", cabinOut: true, cabinIn: true, note: "Jamaica has a strict 6+ month import process — start very early." },
@@ -1088,14 +1101,25 @@ const REGION_PAIR_STRATEGIES = {
   }),
 
   // ----- INTO India (no direct cabin from UK; via Europe) -----
-  "uk-out>india": (o, d) => ({
-    legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
-    ],
-    note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. Fly cabin OUT of the UK to a European hub, then onward toward India. Confirm the second leg's cabin availability; India also needs the AQCS NOC and entry via one of six approved airports.`,
-  }),
+  "uk-out>india": (o, d) => {
+    const isHeathrow = o.includes("(LHR)");
+    const legs = isHeathrow
+      ? [
+          { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+          { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+        ]
+      : [
+          { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+          { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+          { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+        ];
+    return {
+      legs,
+      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Confirm the second leg's cabin availability; India also needs the AQCS NOC and entry via one of six approved airports.`,
+    };
+  },
   "us>india": (o, d) => ({
     legs: [
       { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "7–9h", airline: "Lufthansa / Air France ✓ Cabin" },
@@ -1107,24 +1131,45 @@ const REGION_PAIR_STRATEGIES = {
 
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
   "uk-out>us": [
-    (o, d) => ({
-      label: "Via a European hub",
-      legs: [
-        { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
-        { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-        { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
-      ],
-      note: `There's no direct cabin route out of the UK to the US — but flying cabin OUT of the UK to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`,
-    }),
-    (o, d) => ({
-      label: "Via Montreal (Air Canada)",
-      legs: [
-        { route: `${o} → Montreal (YUL)`, time: "7h 30m", airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)" },
-        { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
-        { route: `Montreal → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
-      ],
-      note: `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of the UK (Heathrow) to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy. Note: Air Canada's UK cabin departures run from Heathrow; from Manchester, Air Transat covers Manchester→Toronto, then connect onward.`,
-    }),
+    (o, d) => {
+      // The European-hub cabin route is verified from Heathrow. If the user
+      // picked another UK airport (e.g. Manchester), route via Heathrow first
+      // rather than asserting a cabin flight we can't verify from that airport.
+      const isHeathrow = o.includes("(LHR)");
+      const legs = isHeathrow
+        ? [
+            { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+            { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+          ]
+        : [
+            { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+            { route: "LHR → Paris (CDG) or Amsterdam (AMS)", time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+            { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+          ];
+      return {
+        label: "Via a European hub",
+        legs,
+        note: isHeathrow
+          ? `There's no direct cabin route out of the UK to the US — but flying cabin OUT of Heathrow to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`
+          : `The European-hub cabin route runs from Heathrow — the UK's main cabin-pet departure airport. From ${o.split(" (")[0]}, get to Heathrow first (drive, or the cabin options from your airport are limited), then cabin to a European hub and onward to ${d}.`,
+      };
+    },
+    (o, d) => {
+      const isHeathrow = o.includes("(LHR)");
+      return {
+        label: "Via Montreal (Air Canada)",
+        legs: [
+          { route: isHeathrow ? `${o} → Montreal (YUL)` : `${o} → London Heathrow (LHR) → Montreal (YUL)`, time: "7h 30m", airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)" },
+          { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
+          { route: `Montreal → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
+        ],
+        note: isHeathrow
+          ? `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of Heathrow to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy.`
+          : `Air Canada's UK cabin departures run from Heathrow. From ${o.split(" (")[0]}, get to Heathrow first — or, from Manchester specifically, Air Transat flies Manchester→Toronto in cabin and you connect onward from there. The overnight stop in Canada is what makes the long journey gentle.`,
+      };
+    },
   ],
   "ireland>us": (o, d) => ({
     legs: [
@@ -1136,14 +1181,25 @@ const REGION_PAIR_STRATEGIES = {
   }),
 
   // ----- INTO the Caribbean (from UK/Europe — via the US) -----
-  "uk-out>caribbean": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
-      { route: "European hub → Miami (MIA) or New York (JFK)", time: "7–9h", airline: "Air France / KLM / Delta ✓ Cabin" },
-      { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
-    ],
-    note: `There's no cabin route straight from the UK to the Caribbean. The path is UK → Europe → a US gateway (Miami or New York) → ${d}, all in cabin. Each Caribbean destination has its own import permit — check the specific island. A longer US layover lets your pet rest.`,
-  }),
+  "uk-out>caribbean": (o, d) => {
+    const isHeathrow = o.includes("(LHR)");
+    const legs = isHeathrow
+      ? [
+          { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+          { route: "European hub → Miami (MIA) or New York (JFK)", time: "7–9h", airline: "Air France / KLM / Delta ✓ Cabin" },
+          { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
+        ]
+      : [
+          { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+          { route: "LHR → Paris (CDG) or Amsterdam (AMS)", time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+          { route: "European hub → Miami (MIA) or New York (JFK)", time: "7–9h", airline: "Air France / KLM / Delta ✓ Cabin" },
+          { route: `US gateway → ${d}`, time: "1–3h", airline: "JetBlue / American / Delta ✓ Cabin" },
+        ];
+    return {
+      legs,
+      note: `There's no cabin route straight from the UK to the Caribbean. The path is ${isHeathrow ? "Heathrow" : `${o.split(" (")[0]} → Heathrow`} → Europe → a US gateway (Miami or New York) → ${d}, all in cabin. Each Caribbean destination has its own import permit — check the specific island. A longer US layover lets your pet rest.`,
+    };
+  },
   "europe>caribbean": (o, d) => ({
     legs: [
       { route: `${o} → Miami (MIA) or New York (JFK)`, time: "8–10h", airline: "Air France / KLM / Delta ✓ Cabin" },
@@ -5013,42 +5069,59 @@ function JourneyPlanner() {
   const originAirport = origin ? airportByCode(origin) : null;
   const destAirport = destination ? airportByCode(destination) : null;
 
-  // EXACT airport-pair matching — accurate for precisely what the user picked.
-  const directMatches = origin && destination
-    ? directRoutesForAirportPair(origin, destination)
-    : [];
+  // DRIVE-TO logic: if the chosen origin can't reach the destination as well
+  // as a nearby qualifying airport can (Gatwick → Heathrow always; Manchester
+  // → Heathrow for destinations Manchester can't fly direct), we surface a
+  // "drive to X" option. CRUCIALLY we show BOTH paths — the drive-to option
+  // FIRST (it usually saves the pet a flight), and the routes from the
+  // originally-chosen airport AFTER, so the owner can still choose to fly from
+  // where they are if they'd rather not drive.
+  const rawDriveTo = originAirport && originAirport.driveTo ? originAirport.driveTo : null;
+  const originHasOwnDirect = origin && destination
+    ? directRoutesForAirportPair(origin, destination).length > 0
+    : false;
+  const driveTo = rawDriveTo && (!rawDriveTo.conditionalOnNoDirect || !originHasOwnDirect)
+    ? rawDriveTo
+    : null;
 
-  const handWrittenWorkarounds = origin && destination && origin !== destination
-    ? handWrittenWorkaroundsForAirportPair(origin, destination)
-    : [];
+  // Helper: assemble direct routes + de-duped workarounds for a given origin.
+  function routesFromAirport(originCode) {
+    if (!originCode || !destination || originCode === destination) {
+      return { direct: [], workarounds: [] };
+    }
+    const direct = directRoutesForAirportPair(originCode, destination);
+    const seen = new Set();
+    const workarounds = [];
+    const push = (r, kind) => {
+      const k = (r.legs || []).map((l) => l.route).join("|");
+      if (seen.has(k)) return;
+      seen.add(k);
+      workarounds.push({ ...r, _kind: kind });
+    };
+    handWrittenWorkaroundsForAirportPair(originCode, destination).forEach((r) => push(r, "exact"));
+    generateWorkaroundsForAirportPair(originCode, destination).forEach((r) => push(r, "generated"));
+    regionLevelHandWrittenWorkarounds(originCode, destination).forEach((r) => push(r, "region"));
+    return { direct, workarounds };
+  }
 
-  // ALL generated workarounds for this exact pair — every strategy (e.g. UK→US
-  // returns both the European-hub route AND the via-Montreal route).
-  const generatedWorkarounds = origin && destination && origin !== destination
-    ? generateWorkaroundsForAirportPair(origin, destination)
-    : [];
+  // PATH A — the drive-to airport (shown FIRST when a drive-to applies).
+  const driveToRoutes = driveTo ? routesFromAirport(driveTo.code) : { direct: [], workarounds: [] };
+  // PATH B — the airport the user actually picked.
+  const ownRoutes = routesFromAirport(origin);
 
-  // Hand-written workarounds from the SAME COUNTRY but a different airport —
-  // real routes worth showing (e.g. Theo's Mum's Heathrow→Montreal→Miami when
-  // the user picked Manchester). Shown with an "adapted route" note.
-  const regionLevelWorkarounds = origin && destination && origin !== destination
-    ? regionLevelHandWrittenWorkarounds(origin, destination)
-    : [];
+  // When there's a drive-to, the "primary" results are the drive-to airport's;
+  // otherwise they're the chosen airport's. The chosen airport's routes still
+  // render below as the "or fly from where you are" alternative.
+  const directMatches = driveTo ? driveToRoutes.direct : ownRoutes.direct;
+  const workaroundMatches = driveTo ? driveToRoutes.workarounds : ownRoutes.workarounds;
+  // Alternative path (only meaningful when a drive-to is in play AND the
+  // chosen airport actually has something of its own to offer).
+  const altDirect = driveTo ? ownRoutes.direct : [];
+  const altWorkarounds = driveTo ? ownRoutes.workarounds : [];
+  const hasAlternative = driveTo && (altDirect.length > 0 || altWorkarounds.length > 0);
 
-  // Assemble the full workaround list, de-duped. Exact hand-written first
-  // (richest), then generated strategies, then same-country adapted routes.
-  const seenKeys = new Set();
-  const workaroundMatches = [];
-  const pushUnique = (r, kind) => {
-    // Key on the leg structure so we don't show the same route twice.
-    const k = (r.legs || []).map((l) => l.route).join("|");
-    if (seenKeys.has(k)) return;
-    seenKeys.add(k);
-    workaroundMatches.push({ ...r, _kind: kind });
-  };
-  handWrittenWorkarounds.forEach((r) => pushUnique(r, "exact"));
-  generatedWorkarounds.forEach((r) => pushUnique(r, "generated"));
-  regionLevelWorkarounds.forEach((r) => pushUnique(r, "region"));
+  const effectiveOrigin = driveTo ? driveTo.code : origin;
+  const effectiveOriginAirport = driveTo ? airportByCode(driveTo.code) : originAirport;
 
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
 
@@ -5061,7 +5134,8 @@ function JourneyPlanner() {
     ? destAirport.note
     : null;
 
-  const hasResults = directMatches.length > 0 || workaroundMatches.length > 0;
+  const hasResults = directMatches.length > 0 || workaroundMatches.length > 0
+    || altDirect.length > 0 || altWorkarounds.length > 0;
   const hasDirect = directMatches.length > 0;
 
   function plan() {
@@ -5152,6 +5226,11 @@ function JourneyPlanner() {
             <div className="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
               <h3 className="font-serif text-2xl text-stone-50">
                 {airportLabel(origin)} <span className="text-stone-500">→</span> {airportLabel(destination)}
+                {driveTo && (
+                  <span className="block text-sm font-sans text-amber-400/90 mt-1 not-italic">
+                    Two ways to do this — driving to {airportLabel(driveTo.code)} first (shown first, saves your pet a flight), or flying from {airportLabel(origin)}.
+                  </span>
+                )}
               </h3>
               <button
                 onClick={resetPlan}
@@ -5170,8 +5249,39 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* Origin airport can't do cabin departures — accurate to the EXACT airport picked */}
-            {originCabinWarning && origin !== destination && (
+            {/* DRIVE-TO card. When the chosen origin can reach the destination
+                better via a nearby airport (Gatwick→Heathrow always; Manchester
+                →Heathrow for destinations it can't fly direct), we show that
+                path FIRST — driving usually saves the pet a flight. But the
+                routes from the originally-chosen airport still render below as
+                an alternative, so the owner can choose to fly from where they are. */}
+            {driveTo && origin !== destination && (
+              <div className="bg-amber-950/40 border-l-2 border-amber-500 p-5 mb-6">
+                <div className="flex items-start gap-3">
+                  <MapIcon className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-amber-400 mb-1">Shown first · usually saves a flight</div>
+                    <div className="font-serif text-stone-100 mb-1">
+                      Option 1 — drive to {airportLabel(driveTo.code)}, then fly
+                    </div>
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      {originAirport.note} {driveTo.text} {hasAlternative ? `If you'd rather not drive, the routes from ${airportLabel(origin)} are shown lower down as Option 2.` : `We've shown the routes from ${airportLabel(driveTo.code)} below.`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Section label for the primary (drive-to) path */}
+            {driveTo && origin !== destination && (directMatches.length > 0 || workaroundMatches.length > 0) && (
+              <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3 pb-2 border-b border-stone-700">
+                Option 1 · from {airportLabel(driveTo.code)}
+              </div>
+            )}
+
+            {/* Origin airport can't do cabin departures AND has no nearby fix —
+                a plain warning (e.g. South Africa: it's cargo, no drive-to answer). */}
+            {originCabinWarning && !driveTo && origin !== destination && (
               <div className="bg-rose-950/50 border-l-2 border-rose-500 p-5 mb-6">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
@@ -5224,7 +5334,7 @@ function JourneyPlanner() {
             {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
               <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
                 <p className="text-stone-300 text-sm leading-relaxed">
-                  <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(origin)} to {airportLabel(destination)}.</strong> But you're not stuck — here's the workaround that gets you and your pet there together, in the cabin, leg by leg.
+                  <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
                 </p>
               </div>
             )}
@@ -5249,7 +5359,7 @@ function JourneyPlanner() {
                       {/* Adapted-route note for same-country, different-airport routes */}
                       {r._kind === "region" && (
                         <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
-                          Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(origin)}.
+                          Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(effectiveOrigin)}.
                         </div>
                       )}
                       <div className="flex items-center gap-2 flex-wrap mb-2">
@@ -5275,11 +5385,91 @@ function JourneyPlanner() {
               </div>
             )}
 
+            {/* OPTION 2 — the routes from the airport the user actually picked.
+                Only shown when a drive-to is in play AND the chosen airport has
+                something of its own. The owner who'd rather not drive sees their
+                option here — it's lower because it usually means an extra flight
+                for the pet, but it's a real choice and stays visible. */}
+            {hasAlternative && (
+              <div className="mb-8 pt-2">
+                <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3 pb-2 border-b border-stone-700">
+                  Option 2 · from {airportLabel(origin)} — if you'd rather not drive
+                </div>
+                <p className="text-stone-400 text-sm leading-relaxed mb-4">
+                  These routes start from {airportLabel(origin)} directly. They usually involve an extra flight compared with driving to {airportLabel(driveTo.code)} first — gentler on your schedule, a bit more flying for your pet. Your call.
+                </p>
+
+                {altDirect.length > 0 && (
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-3 mb-3">
+                      <span className="text-emerald-400 text-base">✓</span>
+                      <h4 className="font-serif text-lg text-stone-100">Direct cabin route</h4>
+                      <span className="text-xs uppercase tracking-widest text-stone-500">{altDirect.length}</span>
+                    </div>
+                    <div className="space-y-2">
+                      {altDirect.map((r, i) => (
+                        <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                          <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                            <span className="font-serif text-base text-stone-100">{r.from}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                            <span className="font-serif text-base text-stone-100">{r.to}</span>
+                            <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                          </div>
+                          <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {altWorkarounds.length > 0 && (
+                  <div>
+                    <div className="flex items-baseline gap-3 mb-3">
+                      <span className="text-amber-400 text-base">⤳</span>
+                      <h4 className="font-serif text-lg text-stone-100">Workaround routes</h4>
+                      <span className="text-xs uppercase tracking-widest text-stone-500">{altWorkarounds.length}</span>
+                    </div>
+                    <div className="space-y-3">
+                      {altWorkarounds.map((r, i) => (
+                        <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                          {r.label && (
+                            <div className="text-xs uppercase tracking-widest text-amber-400 mb-2">{r.label}</div>
+                          )}
+                          {r._kind === "region" && (
+                            <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
+                              Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(origin)}.
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2 flex-wrap mb-2">
+                            <span className="font-serif text-base text-stone-100">{r.from}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                            <span className="font-serif text-base text-stone-100">{r.to}</span>
+                            {r.duration && r.duration !== "see legs" && (
+                              <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                            )}
+                          </div>
+                          <div className="space-y-1 mb-2 pl-3 border-l border-stone-600">
+                            {r.legs.map((leg, j) => (
+                              <div key={j} className="text-sm text-stone-300">
+                                <span className="text-stone-100">{leg.route}</span>
+                                <span className="text-stone-500"> — {leg.time} · {leg.airline}</span>
+                              </div>
+                            ))}
+                          </div>
+                          <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* No results */}
             {!hasResults && origin !== destination && (
               <div className="bg-stone-800 border border-stone-700 p-6 mb-8">
                 <p className="text-stone-300 text-sm leading-relaxed">
-                  I don't have a specific cabin route or workaround mapped for {airportLabel(origin)} → {airportLabel(destination)} yet — this guide is built from routes Theo and I have researched, and it's still growing.
+                  I don't have a specific cabin route or workaround mapped for {airportLabel(effectiveOrigin)} → {airportLabel(destination)} yet — this guide is built from routes Theo and I have researched, and it's still growing.
                   {(originCabinWarning || destCabinWarning) ? " The airport note above still applies. " : " "}
                   Check the <a href="#airlines" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">airline policies</a> and <a href="#routes" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">routes</a> sections, or <a href="#contact" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">tell me</a> the route you need and I'll look into it.
                 </p>

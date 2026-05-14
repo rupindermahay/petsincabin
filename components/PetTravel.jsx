@@ -1106,14 +1106,26 @@ const REGION_PAIR_STRATEGIES = {
   }),
 
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
-  "uk-out>us": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
-      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
-    ],
-    note: `There's no direct cabin route out of the UK to the US — but flying cabin OUT of the UK to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`,
-  }),
+  "uk-out>us": [
+    (o, d) => ({
+      label: "Via a European hub",
+      legs: [
+        { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+        { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      ],
+      note: `There's no direct cabin route out of the UK to the US — but flying cabin OUT of the UK to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`,
+    }),
+    (o, d) => ({
+      label: "Via Montreal (Air Canada)",
+      legs: [
+        { route: `${o} → Montreal (YUL)`, time: "7h 30m", airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)" },
+        { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
+        { route: `Montreal → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
+      ],
+      note: `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of the UK (Heathrow) to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy. Note: Air Canada's UK cabin departures run from Heathrow; from Manchester, Air Transat covers Manchester→Toronto, then connect onward.`,
+    }),
+  ],
   "ireland>us": (o, d) => ({
     legs: [
       { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 50m", airline: "Air France / KLM ✓ Cabin out of Ireland" },
@@ -1157,12 +1169,21 @@ const CARGO_ONLY_AIRPORTS = ["(DXB)"];
 const isCargoOnly = (airport) =>
   CARGO_ONLY_AIRPORTS.some((code) => airport.includes(code));
 
+// A region-pair can have ONE strategy (a single function) or SEVERAL (an array
+// of functions) — e.g. UK→US has both a European-hub route AND a via-Montreal
+// route. This normalises either shape to an array so callers can map over it.
+function strategiesFor(originRegion, destRegion) {
+  const v = REGION_PAIR_STRATEGIES[`${originRegion}>${destRegion}`];
+  if (!v) return [];
+  return Array.isArray(v) ? v : [v];
+}
+
 // Generate concrete city-level workarounds for a region pair, covering EVERY
-// key destination airport. Returns [] if there's no strategy for the pair.
+// key destination airport AND every strategy for the pair. Returns [] if
+// there's no strategy.
 function generateWorkarounds(origin, destination) {
-  const key = `${origin}>${destination}`;
-  const strategy = REGION_PAIR_STRATEGIES[key];
-  if (!strategy) return [];
+  const strategies = strategiesFor(origin, destination);
+  if (!strategies.length) return [];
   const originHubs = REGION_HUBS[origin] || [];
   const destHubs = REGION_HUBS[destination] || [];
   if (!originHubs.length || !destHubs.length) return [];
@@ -1170,55 +1191,62 @@ function generateWorkarounds(origin, destination) {
   // Representative origin: the first hub that ISN'T cargo-only. For the UAE
   // this resolves to Abu Dhabi (AUH), never Dubai (DXB).
   const originHub = originHubs.find((h) => !isCargoOnly(h)) || originHubs[0];
-  // Generate one workaround per destination airport — but skip cargo-only
-  // airports as destinations (e.g. don't generate a "cabin to Dubai" route).
-  return destHubs
+  // One workaround per (destination airport × strategy) — skipping cargo-only
+  // destination airports.
+  const out = [];
+  destHubs
     .filter((destHub) => !isCargoOnly(destHub))
-    .map((destHub) => {
-      const built = strategy(originHub, destHub);
-      return {
-        from: originHub,
-        to: destHub,
-        duration: "see legs",
-        legs: built.legs,
-        note: built.note,
-        generated: true,
-        tags: [origin, destination],
-      };
+    .forEach((destHub) => {
+      strategies.forEach((strategy) => {
+        const built = strategy(originHub, destHub);
+        out.push({
+          from: originHub,
+          to: destHub,
+          duration: "see legs",
+          legs: built.legs,
+          note: built.note,
+          label: built.label || null,
+          generated: true,
+          tags: [origin, destination],
+        });
+      });
     });
+  return out;
 }
 
 // Every generated workaround across all strategy pairs — used by the Routes
 // section so its workaround list has the same guaranteed coverage floor as
-// the journey planner (e.g. "arriving into the Caribbean" shows UK, Europe
-// and Canada origins, not just hand-written US routes).
+// the journey planner.
 const ALL_GENERATED_WORKAROUNDS = Object.keys(REGION_PAIR_STRATEGIES).flatMap((key) => {
   const [origin, destination] = key.split(">");
   return generateWorkarounds(origin, destination);
 });
 
 // AIRPORT-LEVEL workaround generation. Given the EXACT origin and destination
-// airport codes the user picked, build the precise workaround for that pair —
-// no regional "representative" substitution. This is what makes the planner
-// accurate for Manchester→JFK vs Heathrow→LAX, etc.
-function generateWorkaroundForAirportPair(originCode, destCode) {
+// airport codes the user picked, build EVERY applicable workaround for that
+// exact pair — no regional "representative" substitution, and all strategies
+// (e.g. UK→US returns both the Europe-hub route and the via-Montreal route).
+function generateWorkaroundsForAirportPair(originCode, destCode) {
   const oA = airportByCode(originCode);
   const dA = airportByCode(destCode);
-  if (!oA || !dA) return null;
-  const strategy = REGION_PAIR_STRATEGIES[`${oA.region}>${dA.region}`];
-  if (!strategy) return null;
-  // The strategy bakes the origin/destination strings into its legs, so we
-  // pass the EXACT airport labels the user chose.
-  const built = strategy(`${oA.city} (${oA.code})`, `${dA.city} (${dA.code})`);
-  return {
-    from: `${oA.city} (${oA.code})`,
-    to: `${dA.city} (${dA.code})`,
-    duration: "see legs",
-    legs: built.legs,
-    note: built.note,
-    generated: true,
-    tags: [oA.region, dA.region],
-  };
+  if (!oA || !dA) return [];
+  const strategies = strategiesFor(oA.region, dA.region);
+  if (!strategies.length) return [];
+  const oLabel = `${oA.city} (${oA.code})`;
+  const dLabel = `${dA.city} (${dA.code})`;
+  return strategies.map((strategy) => {
+    const built = strategy(oLabel, dLabel);
+    return {
+      from: oLabel,
+      to: dLabel,
+      duration: "see legs",
+      legs: built.legs,
+      note: built.note,
+      label: built.label || null,
+      generated: true,
+      tags: [oA.region, dA.region],
+    };
+  });
 }
 
 // Find the hand-written direct route(s) for an exact airport pair.
@@ -1239,6 +1267,39 @@ function handWrittenWorkaroundsForAirportPair(originCode, destCode) {
     const fromHasCode = r.from.includes(`(${originCode})`);
     const toHasCode = r.to.includes(`(${destCode})`);
     return fromHasCode && toHasCode;
+  });
+}
+
+// Find hand-written workarounds that match the REGION pair but NOT the exact
+// airport — these are real routes worth showing, just from a different airport
+// in the same country. The planner adapts them with a note.
+function regionLevelHandWrittenWorkarounds(originCode, destCode) {
+  const oA = airportByCode(originCode);
+  const dA = airportByCode(destCode);
+  if (!oA || !dA) return [];
+  // Which region keywords identify a route endpoint's region?
+  const regionKeywords = {
+    "uk-out": ["London", "Manchester", "(LHR)", "(MAN)", "(LGW)", "UK"],
+    "ireland": ["Dublin", "(DUB)", "Ireland"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "USA"],
+    "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
+    "mexico": ["Mexico City", "Cancún", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Rome", "Lisbon", "Zurich", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(FCO)", "(LIS)", "(ZRH)", "Europe"],
+    "india": ["Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)", "India"],
+    "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
+    "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
+    "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
+    "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
+  };
+  const inRegion = (field, region) =>
+    (regionKeywords[region] || []).some((kw) => field.includes(kw));
+
+  return WORKAROUND_ROUTES_TABLE.filter((r) => {
+    const regionMatch = inRegion(r.from, oA.region) && inRegion(r.to, dA.region);
+    if (!regionMatch) return false;
+    // Exclude ones that ALSO match the exact airport (those are already shown).
+    const exactMatch = r.from.includes(`(${originCode})`) && r.to.includes(`(${destCode})`);
+    return !exactMatch;
   });
 }
 
@@ -2743,6 +2804,77 @@ function getChecklist(routeId, direction) {
   return CHECKLIST_DATA[routeId] || CHECKLIST_DATA.generic;
 }
 
+// Map a planner REGION id to its checklist-data id.
+const REGION_TO_CHECKLIST_ID = {
+  "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
+  "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
+  "caribbean": null,        // per-island — handled specially below
+  "hawaii": null,           // uses generic + Hawaii note
+  "south-africa": "south_africa",
+};
+
+// Build ONE combined checklist for a specific route: the DEPARTING-side prep
+// for the origin country + the ARRIVING-side prep for the destination country,
+// merged into a single sectioned document. This is the planner↔checklist merge:
+// the checklist reflects the actual journey, both countries' rules at once.
+function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel) {
+  const originId = REGION_TO_CHECKLIST_ID[originRegion];
+  const destId = REGION_TO_CHECKLIST_ID[destRegion];
+
+  // Pull the departing-side checklist for the origin (falls back to base data).
+  const originChecklist = originId ? getChecklist(originId, "departing") : null;
+  // Pull the arriving-side checklist for the destination.
+  const destChecklist = destId ? getChecklist(destId, "arriving") : null;
+
+  const sections = [];
+
+  // Always start with the universal prep — it applies to every journey.
+  const generic = CHECKLIST_DATA.generic;
+  generic.sections.forEach((s) => {
+    sections.push({ ...s, title: s.title });
+  });
+
+  // Origin country's DEPARTING rules.
+  if (originChecklist) {
+    sections.push({
+      title: `— Leaving ${originLabel}: that country's rules —`,
+      items: [`These steps cover the requirements for departing ${originLabel}. Both the country you leave and the one you enter have their own rules.`],
+      divider: true,
+    });
+    originChecklist.sections.forEach((s) => {
+      sections.push({ ...s, title: `${originLabel} · ${s.title}` });
+    });
+  }
+
+  // Destination country's ARRIVING rules.
+  if (destChecklist) {
+    sections.push({
+      title: `— Entering ${destLabel}: that country's rules —`,
+      items: [`These steps cover the requirements for entering ${destLabel}.`],
+      divider: true,
+    });
+    destChecklist.sections.forEach((s) => {
+      sections.push({ ...s, title: `${destLabel} · ${s.title}` });
+    });
+  }
+
+  // Honest fallback note if one side has no dedicated checklist.
+  const missing = [];
+  if (!originChecklist) missing.push(`departing ${originLabel}`);
+  if (!destChecklist) missing.push(`entering ${destLabel}`);
+  let restriction = null;
+  if (missing.length) {
+    restriction = `We don't yet have a dedicated checklist for ${missing.join(" or ")}. The universal prep above still applies — but check the official government / customs site for ${missing.join(" and ")} for the country-specific paperwork.`;
+  }
+
+  return {
+    title: `${originLabel} → ${destLabel} pet-travel checklist`,
+    sections,
+    restriction,
+    isRouteChecklist: true,
+  };
+}
+
 // ---------- INTAKE FLOW ----------
 
 const QUESTIONS = [
@@ -3630,22 +3762,25 @@ function Assessment({ answers, onReset }) {
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Next steps</div>
             <p className="text-stone-700 leading-relaxed mb-4">
               {hasImpossible
-                ? "Read the cabin-not-possible blockers carefully — most have a workaround. Browse the routes section for cabin workaround routes (Paris Pivot for UK, Abu Dhabi for UAE, European hubs for India ↔ USA). If cargo is the only option, look at the destination tab for cargo-friendly airlines."
+                ? "Read the cabin-not-possible blockers carefully — most have a workaround. The journey planner will show you the exact cabin route or workaround for your specific airports (Paris Pivot for UK, Abu Dhabi for UAE, European hubs for India ↔ USA). If cargo is the only option, the destination tab lists cargo-friendly airlines."
                 : hasOnlyFixableFlags
-                ? "Work through the fixable blockers above first (microchip, vaccine, age). Once they're resolved, come back and re-run the assessment. In the meantime, browse the resources below to start planning."
+                ? "Work through the fixable blockers above first (microchip, vaccine, age). Once they're resolved, come back and re-run the assessment. In the meantime, use the journey planner to start mapping your route."
                 : hasWarnings
-                ? "Read the items above carefully and plan around them. The resources below cover airlines, routes, paperwork, and a downloadable checklist."
-                : "Move on to picking an airline and route. Use the resources below to plan your specific journey."}
+                ? "Read the items above carefully and plan around them. Next, use the journey planner to find your exact route, then generate a checklist for it."
+                : "You're clear to plan. Use the journey planner to find the exact cabin route for your airports, then generate a combined checklist for the whole journey."}
             </p>
             <div className="flex flex-wrap gap-3">
+              <a href="#planner" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 text-sm font-medium transition-colors">
+                ✦ Plan my journey →
+              </a>
+              <a href="#checklist" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                Get my route checklist →
+              </a>
               <a href="#airlines" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
                 Browse airlines →
               </a>
               <a href="#routes" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
                 See routes →
-              </a>
-              <a href="#checklist" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
-                Get my checklist →
               </a>
             </div>
           </div>
@@ -4502,16 +4637,59 @@ function Checklist() {
 }
 
 function ChecklistDownload() {
+  const [mode, setMode] = useState("route"); // "route" or "country"
   const [route, setRoute] = useState("generic");
   const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
+  // Route mode: airport-level origin + destination (codes)
+  const [originCode, setOriginCode] = useState("");
+  const [destCode, setDestCode] = useState("");
 
   // Universal + South Africa checklists don't have a meaningful departing/arriving split — lock direction
   const isUniversal = route === "generic";
   const noDirectionToggle = isUniversal || route === "south_africa";
   const effectiveDirection = noDirectionToggle ? "departing" : direction;
 
-  const data = getChecklist(route, effectiveDirection);
-  const hasDirectionalContent = !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
+  // Regions for grouping airports in the route-mode dropdowns.
+  const CL_REGIONS = [
+    { id: "uk-out", label: "United Kingdom", flag: "🇬🇧" },
+    { id: "ireland", label: "Ireland", flag: "🇮🇪" },
+    { id: "us", label: "United States", flag: "🇺🇸" },
+    { id: "canada", label: "Canada", flag: "🇨🇦" },
+    { id: "mexico", label: "Mexico", flag: "🇲🇽" },
+    { id: "europe", label: "Europe", flag: "🇪🇺" },
+    { id: "india", label: "India", flag: "🇮🇳" },
+    { id: "dubai", label: "UAE", flag: "🇦🇪" },
+    { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "hawaii", label: "Hawaii", flag: "🌺" },
+    { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+  ];
+  const clAirportsByRegion = CL_REGIONS.map((r) => ({
+    region: r,
+    airports: AIRPORTS.filter((a) => a.region === r.id),
+  })).filter((g) => g.airports.length > 0);
+
+  const originAirport = originCode ? airportByCode(originCode) : null;
+  const destAirport = destCode ? airportByCode(destCode) : null;
+
+  // The checklist data shown depends on the mode.
+  let data;
+  if (mode === "route") {
+    if (originAirport && destAirport) {
+      data = buildRouteChecklist(
+        originAirport.region,
+        destAirport.region,
+        REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
+        REGION_LABELS_SHORT[destAirport.region] || destAirport.region
+      );
+    } else {
+      data = null; // nothing selected yet
+    }
+  } else {
+    data = getChecklist(route, effectiveDirection);
+  }
+
+  const hasDirectionalContent = mode === "country" &&
+    !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
 
   function openPrintable() {
     if (!data) return;
@@ -4536,9 +4714,11 @@ function ChecklistDownload() {
   h1 em { color: #78716c; }
   .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 30px; }
   h2 { font-family: 'Fraunces', serif; font-size: 22px; color: #1c1917; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #e7e5e4; }
+  h2.divider { color: #b45309; border-bottom: 2px solid #d97706; font-style: italic; }
   ul { list-style: none; }
   li { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px dashed #e7e5e4; }
   li:last-child { border-bottom: none; }
+  li.note-item { border-bottom: none; font-style: italic; color: #78716c; font-family: 'Fraunces', serif; }
   .check { display: inline-block; width: 22px; height: 22px; border: 2px solid #44403c; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
   .item { flex: 1; }
   footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid #d6d3d1; font-size: 13px; color: #78716c; font-style: italic; font-family: 'Fraunces', serif; }
@@ -4563,9 +4743,11 @@ function ChecklistDownload() {
     <p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>
     ${restrictionHtml}
     ${data.sections.map(s => `
-      <h2>${s.title}</h2>
+      <h2${s.divider ? ' class="divider"' : ''}>${s.title}</h2>
       <ul>
-        ${s.items.map(item => `<li><span class="check"></span><span class="item">${item}</span></li>`).join('')}
+        ${s.items.map(item => s.divider
+          ? `<li class="note-item"><span class="item">${item}</span></li>`
+          : `<li><span class="check"></span><span class="item">${item}</span></li>`).join('')}
       </ul>
     `).join('')}
     <footer>This checklist is a starting point, not a substitute for professional advice. Always confirm with your airline, vet, and destination country before flying. Last reviewed May 2026.</footer>
@@ -4587,99 +4769,190 @@ function ChecklistDownload() {
         <div className="flex-1">
           <h3 className="font-serif text-2xl mb-2">Get a printable checklist</h3>
           <p className="text-stone-300 leading-relaxed">
-            Tailored to your route + direction. Print it, tick things off, take it on the plane. Opens in a new tab — use your browser's print or save-as-PDF.
+            Build it from your route — origin and destination — and it combines both countries' rules into one list. Or pick a single country. Opens in a new tab; use your browser's print or save-as-PDF.
           </p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">1. Pick your country / region</div>
-          <div className="flex flex-wrap gap-2">
-            {[
-              { id: "generic", label: "Universal" },
-              { id: "uk", label: "🇬🇧 UK" },
-              { id: "ireland", label: "🇮🇪 Ireland" },
-              { id: "usa", label: "🇺🇸 USA" },
-              { id: "uae", label: "🇦🇪 UAE" },
-              { id: "canada", label: "🇨🇦 Canada" },
-              { id: "mexico", label: "🇲🇽 Mexico" },
-              { id: "dominican_republic", label: "🇩🇴 Dominican Rep." },
-              { id: "jamaica", label: "🇯🇲 Jamaica" },
-              { id: "bahamas", label: "🇧🇸 Bahamas" },
-              { id: "europe", label: "🇪🇺 Europe" },
-              { id: "india", label: "🇮🇳 India" },
-              { id: "south_africa", label: "🇿🇦 South Africa" },
-            ].map((r) => (
-              <button
-                key={r.id}
-                onClick={() => setRoute(r.id)}
-                className={`px-4 py-2 text-sm transition-all ${
-                  route === r.id
-                    ? "bg-amber-600 text-white"
-                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
-                }`}
-              >
-                {r.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {!noDirectionToggle && (
-          <div>
-            <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">2. Direction of travel</div>
-            <p className="text-sm text-stone-400 mb-3 leading-relaxed max-w-2xl">
-              International travel involves <strong className="text-stone-200">two countries' rules</strong> — the one you leave AND the one you enter. Pick a direction to see that country's side. You'll want to check both before flying.
-            </p>
-            <div className="inline-flex border border-stone-700 bg-stone-800">
-              <button
-                onClick={() => setDirection("departing")}
-                className={`px-5 py-2 text-sm transition-all ${
-                  direction === "departing"
-                    ? "bg-amber-600 text-white"
-                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
-                }`}
-              >
-                ↗ Departing
-              </button>
-              <button
-                onClick={() => setDirection("arriving")}
-                className={`px-5 py-2 text-sm transition-all border-l border-stone-700 ${
-                  direction === "arriving"
-                    ? "bg-amber-600 text-white"
-                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
-                }`}
-              >
-                ↘ Arriving
-              </button>
-            </div>
-            {!hasDirectionalContent && (
-              <p className="text-xs italic text-stone-400 mt-2">Same prep applies in both directions for this destination.</p>
-            )}
-          </div>
-        )}
-
-        {data.restriction && (
-          <div className="bg-amber-900/30 border-l-2 border-amber-500 px-4 py-3 text-sm text-amber-100 leading-relaxed">
-            <strong className="not-italic">Important:</strong> {data.restriction}
-          </div>
-        )}
-
-        <div className="flex justify-end">
-          <button
-            onClick={openPrintable}
-            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 transition-colors"
-          >
-            <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+      {/* Mode toggle */}
+      <div className="inline-flex border border-stone-700 bg-stone-800 mb-6">
+        <button
+          onClick={() => setMode("route")}
+          className={`px-5 py-2 text-sm transition-all ${
+            mode === "route" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+          }`}
+        >
+          ✦ By route
+        </button>
+        <button
+          onClick={() => setMode("country")}
+          className={`px-5 py-2 text-sm transition-all border-l border-stone-700 ${
+            mode === "country" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+          }`}
+        >
+          By single country
+        </button>
       </div>
 
-      {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
-        <div className="mt-5 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
-          <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
+      {mode === "route" ? (
+        <div className="space-y-4">
+          <p className="text-sm text-stone-400 leading-relaxed max-w-2xl">
+            Pick where you're flying <strong className="text-stone-200">from and to</strong>. The checklist combines the universal prep, the rules for leaving your origin country, and the rules for entering your destination — one document for the whole journey.
+          </p>
+          <div className="grid sm:grid-cols-[1fr_auto_1fr] gap-4 items-end">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">Flying from</div>
+              <select
+                value={originCode}
+                onChange={(e) => setOriginCode(e.target.value)}
+                className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3 font-serif text-base focus:border-amber-500 focus:outline-none"
+              >
+                <option value="">Select origin airport…</option>
+                {clAirportsByRegion.map((g) => (
+                  <optgroup key={g.region.id} label={`${g.region.flag} ${g.region.label}`}>
+                    {g.airports.map((a) => (
+                      <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </div>
+            <div className="hidden sm:flex items-center justify-center pb-3">
+              <ArrowRight className="w-5 h-5 text-stone-600" strokeWidth={1.5} />
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">Flying to</div>
+              <select
+                value={destCode}
+                onChange={(e) => setDestCode(e.target.value)}
+                className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3 font-serif text-base focus:border-amber-500 focus:outline-none"
+              >
+                <option value="">Select destination airport…</option>
+                {clAirportsByRegion.map((g) => (
+                  <optgroup key={g.region.id} label={`${g.region.flag} ${g.region.label}`}>
+                    {g.airports.map((a) => (
+                      <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {data && data.restriction && (
+            <div className="bg-amber-900/30 border-l-2 border-amber-500 px-4 py-3 text-sm text-amber-100 leading-relaxed">
+              <strong className="not-italic">Note:</strong> {data.restriction}
+            </div>
+          )}
+
+          {originAirport && destAirport && originAirport.region === destAirport.region && (
+            <div className="bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+              Both airports are in the same country/region — you'll get that region's prep plus the universal checklist.
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <button
+              onClick={openPrintable}
+              disabled={!data}
+              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
+            >
+              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <div>
+            <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">1. Pick your country / region</div>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { id: "generic", label: "Universal" },
+                { id: "uk", label: "🇬🇧 UK" },
+                { id: "ireland", label: "🇮🇪 Ireland" },
+                { id: "usa", label: "🇺🇸 USA" },
+                { id: "uae", label: "🇦🇪 UAE" },
+                { id: "canada", label: "🇨🇦 Canada" },
+                { id: "mexico", label: "🇲🇽 Mexico" },
+                { id: "dominican_republic", label: "🇩🇴 Dominican Rep." },
+                { id: "jamaica", label: "🇯🇲 Jamaica" },
+                { id: "bahamas", label: "🇧🇸 Bahamas" },
+                { id: "europe", label: "🇪🇺 Europe" },
+                { id: "india", label: "🇮🇳 India" },
+                { id: "south_africa", label: "🇿🇦 South Africa" },
+              ].map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => setRoute(r.id)}
+                  className={`px-4 py-2 text-sm transition-all ${
+                    route === r.id
+                      ? "bg-amber-600 text-white"
+                      : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                  }`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {!noDirectionToggle && (
+            <div>
+              <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">2. Direction of travel</div>
+              <p className="text-sm text-stone-400 mb-3 leading-relaxed max-w-2xl">
+                International travel involves <strong className="text-stone-200">two countries' rules</strong> — the one you leave AND the one you enter. Pick a direction to see that country's side. (Tip: "By route" mode combines both sides automatically.)
+              </p>
+              <div className="inline-flex border border-stone-700 bg-stone-800">
+                <button
+                  onClick={() => setDirection("departing")}
+                  className={`px-5 py-2 text-sm transition-all ${
+                    direction === "departing"
+                      ? "bg-amber-600 text-white"
+                      : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                  }`}
+                >
+                  ↗ Departing
+                </button>
+                <button
+                  onClick={() => setDirection("arriving")}
+                  className={`px-5 py-2 text-sm transition-all border-l border-stone-700 ${
+                    direction === "arriving"
+                      ? "bg-amber-600 text-white"
+                      : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                  }`}
+                >
+                  ↘ Arriving
+                </button>
+              </div>
+              {!hasDirectionalContent && (
+                <p className="text-xs italic text-stone-400 mt-2">Same prep applies in both directions for this destination.</p>
+              )}
+            </div>
+          )}
+
+          {data && data.restriction && (
+            <div className="bg-amber-900/30 border-l-2 border-amber-500 px-4 py-3 text-sm text-amber-100 leading-relaxed">
+              <strong className="not-italic">Important:</strong> {data.restriction}
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <button
+              onClick={openPrintable}
+              disabled={!data}
+              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
+            >
+              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
+            <div className="mt-1 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+              <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -4693,13 +4966,25 @@ function JourneyPlanner() {
   const sectionRef = useRef(null);
 
   // When results appear, scroll back to the top of the planner section.
+  // Double requestAnimationFrame waits for the results DOM to actually lay
+  // out before measuring — without this, getBoundingClientRect reads the
+  // pre-render (short) layout and the scroll lands in the wrong place.
   useEffect(() => {
     if (!planned) return;
-    const el = sectionRef.current;
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 8;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
+    let raf1, raf2;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const el = sectionRef.current;
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 8;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
   }, [planned]);
 
   // Regions — used only to GROUP airports in the dropdowns.
@@ -4737,15 +5022,33 @@ function JourneyPlanner() {
     ? handWrittenWorkaroundsForAirportPair(origin, destination)
     : [];
 
-  const generatedWorkaround = origin && destination && origin !== destination
-    ? generateWorkaroundForAirportPair(origin, destination)
-    : null;
+  // ALL generated workarounds for this exact pair — every strategy (e.g. UK→US
+  // returns both the European-hub route AND the via-Montreal route).
+  const generatedWorkarounds = origin && destination && origin !== destination
+    ? generateWorkaroundsForAirportPair(origin, destination)
+    : [];
 
-  // Use the hand-written workaround if one exists for this exact pair
-  // (richer detail); otherwise fall back to the generated one.
-  const workaroundMatches = handWrittenWorkarounds.length > 0
-    ? handWrittenWorkarounds
-    : (generatedWorkaround ? [generatedWorkaround] : []);
+  // Hand-written workarounds from the SAME COUNTRY but a different airport —
+  // real routes worth showing (e.g. Theo's Mum's Heathrow→Montreal→Miami when
+  // the user picked Manchester). Shown with an "adapted route" note.
+  const regionLevelWorkarounds = origin && destination && origin !== destination
+    ? regionLevelHandWrittenWorkarounds(origin, destination)
+    : [];
+
+  // Assemble the full workaround list, de-duped. Exact hand-written first
+  // (richest), then generated strategies, then same-country adapted routes.
+  const seenKeys = new Set();
+  const workaroundMatches = [];
+  const pushUnique = (r, kind) => {
+    // Key on the leg structure so we don't show the same route twice.
+    const k = (r.legs || []).map((l) => l.route).join("|");
+    if (seenKeys.has(k)) return;
+    seenKeys.add(k);
+    workaroundMatches.push({ ...r, _kind: kind });
+  };
+  handWrittenWorkarounds.forEach((r) => pushUnique(r, "exact"));
+  generatedWorkarounds.forEach((r) => pushUnique(r, "generated"));
+  regionLevelWorkarounds.forEach((r) => pushUnique(r, "region"));
 
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
 
@@ -4931,12 +5234,24 @@ function JourneyPlanner() {
               <div className="mb-8">
                 <div className="flex items-baseline gap-3 mb-4">
                   <span className="text-amber-400 text-base">⤳</span>
-                  <h4 className="font-serif text-xl text-stone-100">{hasDirect ? "Workaround route" : "Workaround route — your way there"}</h4>
+                  <h4 className="font-serif text-xl text-stone-100">
+                    {hasDirect ? "Workaround routes" : "Workaround routes — your way there"}
+                  </h4>
                   <span className="text-xs uppercase tracking-widest text-stone-500">{workaroundMatches.length}</span>
                 </div>
                 <div className="space-y-3">
                   {workaroundMatches.map((r, i) => (
                     <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                      {/* Strategy label, e.g. "Via Montreal (Air Canada)" */}
+                      {r.label && (
+                        <div className="text-xs uppercase tracking-widest text-amber-400 mb-2">{r.label}</div>
+                      )}
+                      {/* Adapted-route note for same-country, different-airport routes */}
+                      {r._kind === "region" && (
+                        <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
+                          Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(origin)}.
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 flex-wrap mb-2">
                         <span className="font-serif text-base text-stone-100">{r.from}</span>
                         <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />

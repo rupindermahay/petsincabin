@@ -12,7 +12,12 @@ export default function Document() {
         <meta name="keywords" content="travelling with pets, travel with pets, pet flight, flying with animals, pets in cabin, pet in cabin, fly with dog in cabin, fly with cat in cabin, airline pet policy, pet travel guide, fly pet to UK, fly pet to USA, fly pet to India, pet to Europe, Dubai pet import, pet to Canada, in-cabin pet, dog flight, cat flight, pet relocation, pet quarantine countries" />
         <meta name="author" content="Theo's Mum" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
-        <link rel="canonical" href="https://petsincabin.com" />
+        {/* NOTE: canonical tag is intentionally NOT here. _document.js wraps
+            every page, so a canonical here would tell Google that /privacy
+            (and every other page) is just an alternate of the homepage —
+            that triggers the "Alternate page with proper canonical tag"
+            flag and stops those pages indexing in their own right. Each
+            page sets its own canonical via next/head instead. */}
 
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

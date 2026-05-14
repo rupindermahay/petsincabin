@@ -3309,25 +3309,25 @@ function AirlineGrid() {
                       return (
                         <span
                           key={c.code}
-                          className={`inline-flex items-center gap-0.5 ${isYes ? "text-emerald-700" : "text-stone-400 line-through"}`}
-                          title={`${isYes ? "Cabin allowed" : "Cabin not allowed"} ${direction} ${c.label}`}
+                          className={`inline-flex items-center gap-0.5 ${isYes ? "text-emerald-700" : "text-red-600"}`}
+                          title={`${isYes ? "Cabin allowed" : "Cabin NOT allowed"} ${direction} ${c.label}`}
                         >
-                          <span className="text-lg leading-none">{c.flag}</span>
-                          <span className="font-medium text-xs">{isYes ? "✓" : "✗"}</span>
+                          <span className={`text-lg leading-none ${isYes ? "" : "grayscale"}`}>{c.flag}</span>
+                          <span className="font-bold text-xs">{isYes ? "✓" : "✗"}</span>
                         </span>
                       );
                     };
                     return (
                       <div className="space-y-2 mb-3 pb-3 border-b border-stone-200">
                         <div className="flex items-start gap-x-2">
-                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px] flex-shrink-0 pt-1">Cabin from:</span>
+                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[64px] flex-shrink-0 pt-1">Cabin from:</span>
                           <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
                             {COUNTRIES.map((c) => renderFlag(c, a.originAllowed, "from"))}
                           </div>
                         </div>
                         {a.destinationAllowed && (
                           <div className="flex items-start gap-x-2">
-                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[56px] flex-shrink-0 pt-1">Cabin to:</span>
+                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium min-w-[64px] flex-shrink-0 pt-1">Cabin to:</span>
                             <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
                               {COUNTRIES.map((c) => renderFlag(c, a.destinationAllowed, "to"))}
                             </div>

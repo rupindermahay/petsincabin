@@ -388,6 +388,15 @@ const DIRECT_ROUTES = [
   { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
   { from: "Delhi / Mumbai", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
 
+  // ═══════ FROM ABU DHABI ═══════
+  { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Paris (CDG)", duration: "7h 30m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Major Etihad hub onward to most of Europe.", tags: ["dubai", "europe"] },
+  { from: "Abu Dhabi (AUH)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Connects to KLM cabin onward.", tags: ["dubai", "europe"] },
+  { from: "Abu Dhabi (AUH)", to: "Frankfurt (FRA)", duration: "7h 15m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["dubai", "europe"] },
+  { from: "Abu Dhabi (AUH)", to: "Zurich (ZRH)", duration: "6h 50m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Snub-nosed breeds allowed in cabin via SWISS connections.", tags: ["dubai", "europe"] },
+  { from: "Abu Dhabi (AUH)", to: "Milan (MXP) / Rome (FCO)", duration: "6h", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Direct cabin to Italy.", tags: ["dubai", "europe"] },
+  // Note: Abu Dhabi → London / Manchester is cabin OUT of AUH BUT NOT cabin INTO UK on any airline. See workarounds for UK arrivals.
+
   // ═══════ FROM DUBAI ═══════
   { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
 
@@ -424,8 +433,16 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Southern US direct cabin to Europe.", tags: ["us", "europe"] },
   { from: "Miami (MIA)", to: "Santo Domingo (SDQ)", duration: "2h 30m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get Certification of US-issued Rabies Vaccination form BEFORE departure for return.", tags: ["us", "caribbean"] },
 
+  // ═══════ FROM MONTEGO BAY ═══════
+  { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
+  { from: "Montego Bay (MBJ)", to: "New York (JFK)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
+
   // ═══════ FROM MONTREAL ═══════
   { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
+
+  // ═══════ FROM NASSAU ═══════
+  { from: "Nassau (NAS)", to: "Miami (MIA)", duration: "55m", note: "JetBlue, AA, Delta, Bahamasair. ✓ Cabin. Returning to US: standard CDC Dog Import Form — Bahamas is CDC-rabies-FREE so easy return.", tags: ["caribbean", "us"] },
+  { from: "Nassau (NAS)", to: "New York (JFK)", duration: "3h", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
 
   // ═══════ FROM NEW YORK ═══════
   { from: "New York (JFK)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "KLM. ✓ Cabin (under 8 kg). Strong onward hub for India / continental Europe.", tags: ["us", "europe"] },
@@ -438,8 +455,12 @@ const DIRECT_ROUTES = [
   { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
 
+  // ═══════ FROM PUNTA CANA ═══════
+  { from: "Punta Cana (PUJ)", to: "Miami (MIA)", duration: "2h 25m", note: "JetBlue, AA, Delta, Spirit. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — US re-entry needs Certification of US-issued Rabies Vaccination form obtained BEFORE leaving the US.", tags: ["caribbean", "us"] },
+  { from: "Punta Cana (PUJ)", to: "New York (JFK)", duration: "3h 45m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
+
   // ═══════ FROM PARIS ═══════
-  { from: "Paris (CDG)", to: "London (UK)", duration: "5–10h via Eurotunnel", note: "Fly cabin to CDG, drive/taxi to Calais, Eurotunnel (35min), drive to London. Pet stays with you the whole way — the standard cabin pets workaround to get INTO the UK.", tags: ["europe", "uk-out"] },
+  // (Paris → London is a multi-leg workaround, not a direct cabin flight — see workarounds below)
 
   // ═══════ FROM ROME ═══════
   { from: "Rome (FCO)", to: "New York (JFK)", duration: "9h 30m", note: "ITA Airways. ✓ Cabin (under 8 kg, €210). Italy's flagship transatlantic cabin route.", tags: ["us", "europe"] },
@@ -531,17 +552,29 @@ const WORKAROUND_ROUTES_TABLE = [
   },
   // USA → UK workaround (UK only allows entry via Eurotunnel/ferry, never cabin)
   {
-    from: "New York (JFK)",
-    to: "London (UK)",
+    from: "USA (major airports)",
+    to: "London / UK",
     duration: "~14h total (incl. ground)",
     legs: [
-      { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
+      { route: "JFK / BOS / ORD / MIA / LAX → Paris CDG", time: "7–11h", airline: "Air France or Delta ✓ Cabin" },
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
       { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
       { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive + Eurotunnel + drive. Eurotunnel costs £25–£60 per pet. Most UK pet importers use this exact route.",
+    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive + Eurotunnel + drive. Works from any major US gateway with cabin pets to Paris (JFK, BOS, ORD, MIA, LAX). Eurotunnel costs £25–£60 per pet. Most UK pet importers use this exact route.",
     tags: ["us", "uk-out", "europe"],
+  },
+  {
+    from: "Paris (CDG)",
+    to: "London / UK",
+    duration: "4–5h total",
+    legs: [
+      { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
+      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+    ],
+    note: "If you're already in Europe (Paris, Amsterdam, Brussels) the Eurotunnel is by far the easiest way to bring your pet INTO the UK. Pet stays with you the whole way. The same workflow applies departing from AMS or BRU (just longer drive to Calais).",
+    tags: ["europe", "uk-out"],
   },
   // USA → UAE (no direct cabin to UAE — go via Europe to Abu Dhabi)
   {
@@ -618,6 +651,34 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "Max 8 kg combined on both legs. KLM's Amsterdam hub is well-organised for pet connections.",
     tags: ["us", "india", "europe"],
   },
+  // Caribbean → UK workaround (no cabin into UK from anywhere)
+  {
+    from: "Nassau / Punta Cana / Montego Bay",
+    to: "London / UK",
+    duration: "~14h total",
+    legs: [
+      { route: "Caribbean → Miami (MIA) or JFK", time: "1–4h", airline: "JetBlue, AA, Delta ✓ Cabin" },
+      { route: "Layover at MIA or JFK", time: "2–4h", airline: "Recommended buffer" },
+      { route: "MIA/JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
+      { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel + drive to London", time: "2h 5m", airline: "Pet in car" },
+    ],
+    note: "There's no cabin pet flight INTO the UK from anywhere. From the Caribbean: route via the US (Miami or JFK), then transatlantic cabin to Paris, then Eurotunnel. Long but workable. For Bahamas + Jamaica (CDC NOT high-risk), no extra US re-entry paperwork. For Dominican Republic (CDC high-risk), the Certification of US-issued Rabies Vaccination form must have been obtained BEFORE you left the US originally.",
+    tags: ["caribbean", "uk-out", "us", "europe"],
+  },
+  // Caribbean → Europe workaround
+  {
+    from: "Nassau / Punta Cana",
+    to: "Europe (Paris / Frankfurt / Amsterdam)",
+    duration: "~12h total",
+    legs: [
+      { route: "Caribbean → Miami (MIA) or JFK", time: "1–4h", airline: "JetBlue, AA, Delta ✓ Cabin" },
+      { route: "Layover at MIA or JFK", time: "2–4h", airline: "Recommended buffer" },
+      { route: "MIA/JFK → Paris/Frankfurt/Amsterdam", time: "7h 30m – 9h 30m", airline: "Air France, Lufthansa, KLM ✓ Cabin" },
+    ],
+    note: "No direct cabin Caribbean → Europe — you must route via the US. From Miami the transatlantic cabin options are Paris (Air France) and Frankfurt (Lufthansa). From JFK you have Paris, Amsterdam (KLM), Frankfurt, Zurich (SWISS), Rome (ITA), Warsaw (LOT). All accept cabin pets under 8 kg.",
+    tags: ["caribbean", "europe", "us"],
+  },
 ];
 
 // Combined for backward compatibility (other components reference ROUTES)
@@ -675,11 +736,11 @@ const CHECKLIST_DATA = {
       {
         title: "At security & onboard",
         items: [
-          "TSA: take pet OUT of carrier, walk/carry through metal detector",
+          "Security: take pet OUT of carrier, walk/carry through metal detector (most airports worldwide)",
           "Carrier goes through X-ray empty",
           "Window seat preferred — slightly more under-seat depth, away from cart traffic",
           "If airline allows extra-legroom seats with pets, BOOK THIS — life-changing",
-          "Don't open the carrier mid-flight (FAA rule)",
+          "Don't open the carrier mid-flight (most airlines + many aviation authorities require this)",
           "If pet gets stressed: calming spray works wonders; staff sometimes allow a quick lap visit",
           "On long flights: book overnight/red-eye when pets naturally sleep",
         ],
@@ -1919,6 +1980,13 @@ const QUESTIONS = [
     options: ["Dog", "Cat", "Other small pet"],
   },
   {
+    id: "petCount",
+    label: "How many pets are you travelling with?",
+    type: "choice",
+    options: ["1", "2", "3 or more"],
+    helper: "Most airlines cap cabin pets per passenger and per flight. We'll flag relevant limits.",
+  },
+  {
     id: "age",
     label: "How old is your pet?",
     type: "choice",
@@ -1966,26 +2034,45 @@ function assess(answers) {
   const warnings = [];
   const ok = [];
 
+  // Helper: derive a contextual workaround based on destination
+  const cargoOption = (() => {
+    const d = answers.destination;
+    if (d === "UK / Ireland") return "Cargo into UK is possible via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Frankfurt's Animal Lounge. Allow 8+ hours at Heathrow Animal Reception Centre after landing.";
+    if (d === "UAE / Dubai") return "Cargo into Dubai is possible — every pet entering DXB must go cargo regardless of airline. Use Emirates SkyCargo, Qatar Cargo, or Lufthansa via Europe, plus a UAE customs broker (Dubai Kennels & Cattery is the most-used).";
+    if (d === "Europe") return "Cargo into the EU is available via Lufthansa Cargo (Frankfurt Animal Lounge — the world's most advanced), KLM Cargo (Amsterdam), or Air France Cargo (Paris). All accept oversize pets that don't qualify for cabin.";
+    if (d === "Domestic (within the U.S.)") return "Domestic US cargo for pets is largely discontinued by major airlines as of 2025. Hawaiian Air Cargo still operates inter-island. For mainland US, consider a ground pet transport service (CitizenShipper, RoyalPaws) or a charter/private operator.";
+    if (d === "Hawaii") return "Hawaiian Airlines Cargo handles oversize pets to Hawaii — but the strict Direct Airport Release rabies-free programme still applies (FAVN titer, 30+ days notice). Plan 4+ months ahead.";
+    if (d === "India") return "Cargo into India is well-established via Air India Cargo, Emirates SkyCargo, Lufthansa Cargo, or KLM Cargo. NOC from AQCS still required regardless of cabin/cargo.";
+    if (d === "Canada / Mexico") return "Cargo within North America is limited — major US carriers have largely discontinued general-public cargo. WestJet Cargo and Air Canada Cargo serve Canada; Aeromexico Cargo serves Mexico.";
+    return "Cargo and pet relocation services exist for most destinations — contact a pet relocation specialist (e.g. CitizenShipper, Starwood Pet Travel) for a quote on your specific route.";
+  })();
+
   if (answers.age === "Under 8 weeks") {
     flags.push({
+      severity: "blocker",
       title: "Your pet is too young to fly",
       detail: "Almost every airline requires pets to be at least 8 weeks old for domestic travel and 16 weeks for international. Wait until your pet is older and fully weaned.",
+      workaround: "This is a 'wait' situation, not a workaround. Once your pet is 8+ weeks (domestic) or 15+ weeks (international), re-run this assessment.",
     });
   }
 
   if (answers.destination === "Europe" || answers.destination === "UK / Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international") {
     if (answers.age === "8 weeks – 4 months") {
       flags.push({
+        severity: "blocker",
         title: "Likely too young for international travel",
         detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks.",
+        workaround: "Wait until your pet is at least 15 weeks (EU minimum) or 16 weeks (most other countries). Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
       });
     }
   }
 
   if (answers.weight === "Over 25 lb") {
     flags.push({
-      title: "Likely too heavy for cabin travel",
-      detail: "Combined pet + carrier weight over 25 lb exceeds nearly every airline's cabin limit. Your pet will need to fly cargo — and most U.S. airlines have discontinued general-public cargo service. Consider a pet relocation service like CitizenShipper or specialty carriers like Hawaiian Air Cargo.",
+      severity: "impossible",
+      title: "Too heavy for cabin on any airline",
+      detail: "Combined pet + carrier weight over 25 lb exceeds every commercial airline's cabin limit. Cabin is genuinely not an option for your pet on any carrier.",
+      workaround: `Cabin isn't workable — but cargo is. ${cargoOption}`,
     });
   } else if (answers.weight === "20–25 lb") {
     warnings.push({
@@ -2005,8 +2092,10 @@ function assess(answers) {
 
   if (answers.vaccine === "Not vaccinated") {
     flags.push({
+      severity: "fixable",
       title: "Rabies vaccination required",
       detail: "Every U.S. state and country requires rabies vaccination for dogs, and most for cats. International destinations typically require the vaccine to have been administered at least 21–30 days before travel. Get this scheduled now.",
+      workaround: "Book a vet appointment to vaccinate. For international travel, ensure the microchip is implanted FIRST, then the rabies vaccine, then wait at least 21 days (EU) or 28 days (some countries) before flying.",
     });
   } else if (answers.vaccine === "Recently vaccinated (under 28 days)") {
     warnings.push({
@@ -2019,8 +2108,10 @@ function assess(answers) {
 
   if ((answers.destination !== "Domestic (within the U.S.)" && answers.destination !== "Hawaii") && answers.microchip !== "Yes") {
     flags.push({
+      severity: "fixable",
       title: "ISO microchip required for international travel",
       detail: "The EU, UK, Japan, Australia, and most other countries require an ISO 11784/11785 compliant microchip implanted before the rabies vaccine. If your pet was microchipped after their rabies shot, they may need to be re-vaccinated. Confirm with your vet.",
+      workaround: "Book a vet appointment to implant an ISO 11784/11785 microchip. If your pet is already rabies-vaccinated, you may need to re-vaccinate AFTER the chip — confirm with your vet.",
     });
   }
 
@@ -2044,8 +2135,10 @@ function assess(answers) {
 
   if (answers.destination === "UK / Ireland") {
     flags.push({
+      severity: "impossible",
       title: "No commercial airline allows pets in the cabin to the UK or Ireland",
-      detail: "Every flight into the UK and Ireland requires pets to travel as manifested cargo — never in the cabin. The most common workaround is the 'Paris pivot': fly cabin into a continental EU airport (CDG, AMS, FRA), then drive or train across via Eurotunnel or ferry. See the UK destination tab for details.",
+      detail: "Every flight into the UK and Ireland requires pets to travel as manifested cargo — never in the cabin. This is UK and Irish government policy, not the airlines' choice.",
+      workaround: "The cabin workaround DOES exist: fly cabin into Paris (CDG), Amsterdam (AMS), or Frankfurt (FRA) on Air France, KLM, or Lufthansa, then take Eurotunnel Le Shuttle (35 min, pet stays in your car) from Calais to Folkestone. Or take a pet-friendly ferry. See the Routes section for the LHR via Paris workaround. Alternatively: cargo via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Heathrow Animal Reception Centre.",
     });
     warnings.push({
       title: "Tapeworm treatment is mandatory for dogs",
@@ -2066,8 +2159,10 @@ function assess(answers) {
 
   if (answers.destination === "UAE / Dubai") {
     flags.push({
-      title: "No cabin entry to Dubai — cargo only",
-      detail: "Every pet entering Dubai must arrive as manifested cargo, regardless of airline. The only cabin entry to the UAE is via Etihad to Abu Dhabi (under 8 kg), then ground transport (~90 min) to Dubai. If your trip is one-way to Dubai, plan cargo + a customs broker like Dubai Kennels & Cattery.",
+      severity: "impossible",
+      title: "No cabin entry to Dubai — cargo only into DXB",
+      detail: "Every pet entering Dubai (DXB) must arrive as manifested cargo, regardless of airline. This is UAE federal law applying to all carriers.",
+      workaround: "The cabin workaround DOES exist via Abu Dhabi: Etihad accepts cabin pets under 8 kg into Abu Dhabi (AUH) — the only airline that does. Promo fee currently $399/segment through May 2026 (down from $1,500). From AUH, it's a 90-minute taxi (around AED 250) to Dubai. See the LHR/Mumbai/JFK → Abu Dhabi routes. For larger pets: cargo into DXB via Emirates SkyCargo + Dubai Kennels & Cattery (DKC) as broker.",
     });
     warnings.push({
       title: "MOCCAE permit valid only 30 days",
@@ -2079,6 +2174,21 @@ function assess(answers) {
     warnings.push({
       title: "Limited airline acceptance",
       detail: "Most U.S. airlines accept only cats and dogs in cabin. Frontier and a few others allow rabbits, guinea pigs, hamsters, and small household birds. Check directly with your airline before booking — and note that many countries restrict or quarantine non-cat/dog imports.",
+    });
+  }
+
+  // Multi-pet considerations
+  if (answers.petCount === "2") {
+    warnings.push({
+      title: "Travelling with two pets needs careful planning",
+      detail: "Most airlines allow only 1 pet per passenger in the cabin — so 2 pets typically means 2 passengers, or one passenger travelling with 2 carriers (rarely permitted). A few airlines (Delta, United, Lufthansa) allow 2 puppies/kittens of the same species in 1 carrier IF combined weight is under the airline limit AND they're young enough to fit comfortably. Most international destinations also have per-passenger pet import caps. Call your airline directly — these bookings cannot be made online.",
+    });
+  } else if (answers.petCount === "3 or more") {
+    flags.push({
+      severity: "fixable",
+      title: "3+ pets exceeds most airlines' cabin limits per passenger",
+      detail: "No major airline allows more than 1 pet per passenger in the cabin (rare exception: 2 young same-species pets in 1 carrier on Delta/United/Lufthansa). Carrying 3+ pets typically requires 3 passengers, multiple bookings, OR sending some via cargo. Many destinations also cap personal pet imports at 2 per traveller — beyond that you need commercial import permits.",
+      workaround: "Options: split across multiple passengers each carrying 1 pet (most realistic for families), use cargo for some pets (Lufthansa Animal Lounge handles multi-pet cargo well), or contact a pet relocation specialist for a coordinated multi-pet move. Call airlines directly — these bookings need phone arrangement.",
     });
   }
 
@@ -2144,18 +2254,18 @@ function NavBar({ onStartIntake }) {
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-stone-50/95 backdrop-blur-md border-b border-stone-300 shadow-sm"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-stone-50/98 backdrop-blur-md border-b-2 border-stone-300 shadow-md"
+          : "bg-stone-50/80 backdrop-blur-sm border-b border-stone-200"
       }`}
-      style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.95)" : "transparent" }}
+      style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.8)" }}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
         <button
           onClick={() => go("top")}
           className="flex items-center gap-2 group"
         >
-          <PawPrint className="w-5 h-5 text-stone-700 group-hover:text-amber-700 transition-colors" strokeWidth={1.5} />
-          <span className="font-serif italic text-stone-700 group-hover:text-amber-700 transition-colors">
+          <PawPrint className="w-5 h-5 text-stone-700 group-hover:text-amber-700 transition-colors" strokeWidth={1.75} />
+          <span className="font-serif italic font-semibold text-stone-800 group-hover:text-amber-700 transition-colors">
             Pets in Cabin
           </span>
         </button>
@@ -2166,11 +2276,11 @@ function NavBar({ onStartIntake }) {
             <button
               key={s.id}
               onClick={() => go(s.id)}
-              className="px-3 py-2 text-sm text-stone-600 hover:text-stone-900 transition-colors relative group"
+              className="px-3 py-2 text-sm font-medium text-stone-700 hover:text-amber-700 hover:bg-amber-50 transition-colors relative group rounded-sm"
             >
-              <span className="font-serif italic text-stone-400 text-xs mr-1.5">{s.num}.</span>
+              <span className="font-serif italic text-amber-700/70 text-xs mr-1.5">{s.num}.</span>
               {s.label}
-              <span className="absolute bottom-1 left-3 right-3 h-px bg-stone-900 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </button>
           ))}
         </div>
@@ -2178,24 +2288,24 @@ function NavBar({ onStartIntake }) {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-stone-700"
+          className="md:hidden p-2 text-stone-800 hover:text-amber-700 transition-colors"
           aria-label="Menu"
         >
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {open ? <X className="w-6 h-6" strokeWidth={2} /> : <Menu className="w-6 h-6" strokeWidth={2} />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-stone-50 border-t border-stone-300 animate-fadeIn">
+        <div className="md:hidden bg-stone-50 border-t-2 border-stone-300 animate-fadeIn shadow-lg">
           <div className="px-6 py-4 space-y-1">
             {NAV_SECTIONS.slice(1).map((s) => (
               <button
                 key={s.id}
                 onClick={() => go(s.id)}
-                className="w-full text-left px-3 py-3 hover:bg-stone-100 transition-colors flex items-baseline gap-3 border-b border-stone-200 last:border-0"
+                className="w-full text-left px-3 py-3.5 hover:bg-amber-50 hover:text-amber-700 transition-colors flex items-baseline gap-3 border-b border-stone-200 last:border-0 font-medium text-stone-800"
               >
-                <span className="font-serif italic text-stone-400 text-sm w-8">{s.num}.</span>
+                <span className="font-serif italic text-amber-700/70 text-sm w-8">{s.num}.</span>
                 <span className="font-serif text-lg text-stone-900">{s.label}</span>
               </button>
             ))}
@@ -2208,7 +2318,7 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-20 pb-24 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-8 pb-24 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
@@ -2260,22 +2370,22 @@ function Hero({ onStart }) {
           </a>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-stone-300">
+        <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl">
           {[
-            { num: "07", label: "Quick questions" },
+            { num: "08", label: "Quick questions" },
             { num: "21", label: "Airlines compared" },
             { num: "10", label: "Tricky destinations" },
           ].map((s, i) => (
-            <div key={i}>
+            <div key={i} className="text-center">
               <div className="font-serif text-5xl text-stone-800">{s.num}</div>
               <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{s.label}</div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 pt-10 border-t border-stone-300">
+        <div className="mt-10 pt-8 border-t border-stone-300 text-center">
           <div className="text-xs uppercase tracking-widest text-stone-500 mb-6">Routes Theo and I have actually flown</div>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-4 font-serif text-stone-800">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 font-serif text-stone-800">
             <span className="flex items-center gap-2">
               <span className="text-2xl">🇬🇧</span>
               <span className="text-lg">London</span>
@@ -2301,7 +2411,7 @@ function Hero({ onStart }) {
               <span className="text-lg italic">Home again</span>
             </span>
           </div>
-          <p className="font-serif italic text-stone-500 text-sm mt-5 max-w-2xl leading-relaxed">
+          <p className="font-serif italic text-stone-500 text-sm mt-5 mx-auto max-w-2xl leading-relaxed">
             Including the Paris pivot — fly into CDG, drive to Calais, Eurotunnel back to the UK with Theo curled up on the back seat.
           </p>
         </div>
@@ -2326,7 +2436,8 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   }
 
   return (
-    <section id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
+    <section id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
+      <div id="assessment" className="scroll-mt-24" />
       <div className="max-w-3xl mx-auto">
         <SectionLabel num="I.">Intake</SectionLabel>
 
@@ -2402,18 +2513,66 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
 function Assessment({ answers, onReset }) {
   const result = useMemo(() => assess(answers), [answers]);
   const hasFlags = result.flags.length > 0;
+  const hasWarnings = result.warnings.length > 0;
+  const hasOks = result.ok.length > 0;
+  const hasImpossible = result.flags.some((f) => f.severity === "impossible");
+  const hasOnlyFixableFlags = hasFlags && !hasImpossible;
+
+  // Auto-scroll to the assessment when it renders
+  useEffect(() => {
+    const el = document.getElementById("assessment-result");
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
+  }, []);
+
+  // Determine top-level verdict
+  let verdictColor, verdictBg, verdictBorder, verdictIcon, verdictHeadline, verdictSummary;
+  if (hasImpossible) {
+    verdictColor = "text-red-800";
+    verdictBg = "bg-red-50";
+    verdictBorder = "border-red-800";
+    verdictIcon = <AlertTriangle className="w-7 h-7 text-red-800" strokeWidth={1.75} />;
+    verdictHeadline = "This route isn't possible in cabin";
+    const impossibleCount = result.flags.filter((f) => f.severity === "impossible").length;
+    verdictSummary = `${impossibleCount === 1 ? "There's a fundamental block" : `There are ${impossibleCount} fundamental blocks`} that cabin travel can't resolve on its own — but most have workarounds. Read each blocker below carefully: where a cabin workaround exists (e.g. Paris Pivot for UK, Abu Dhabi for UAE), we've noted it. Where cabin is genuinely off the table, we've suggested cargo or pet-relocation options.`;
+  } else if (hasOnlyFixableFlags) {
+    verdictColor = "text-orange-700";
+    verdictBg = "bg-orange-50";
+    verdictBorder = "border-orange-700";
+    verdictIcon = <AlertTriangle className="w-7 h-7 text-orange-700" strokeWidth={1.75} />;
+    verdictHeadline = "Not yet — but the blockers are fixable";
+    verdictSummary = `${result.flags.length === 1 ? "There's 1 item" : `There are ${result.flags.length} items`} blocking cabin travel right now — but ${result.flags.length === 1 ? "it's" : "they're"} all addressable (microchip, vaccine timing, age). Work through them, then come back. ${hasWarnings ? `${result.warnings.length} other thing${result.warnings.length === 1 ? "" : "s"} to plan for too.` : ""}`;
+  } else if (hasWarnings) {
+    verdictColor = "text-amber-700";
+    verdictBg = "bg-amber-50";
+    verdictBorder = "border-amber-700";
+    verdictIcon = <Info className="w-7 h-7 text-amber-700" strokeWidth={1.75} />;
+    verdictHeadline = "Looks workable — with a few things to plan for";
+    verdictSummary = `Nothing critical, but there ${result.warnings.length === 1 ? "is 1 thing" : `are ${result.warnings.length} things`} worth knowing before you book. Read them below and plan accordingly.`;
+  } else {
+    verdictColor = "text-emerald-700";
+    verdictBg = "bg-emerald-50";
+    verdictBorder = "border-emerald-700";
+    verdictIcon = <Check className="w-7 h-7 text-emerald-700" strokeWidth={1.75} />;
+    verdictHeadline = "Looks good — no major blockers";
+    verdictSummary = "Based on what you've told us, your pet should be eligible to fly cabin. Confirm details directly with your airline and destination country before booking.";
+  }
 
   return (
-    <section className="py-20 px-6 md:px-12">
+    <section id="assessment-result" className="py-20 px-6 md:px-12 scroll-mt-24">
       <div className="max-w-4xl mx-auto">
         <SectionLabel num="II.">Your assessment</SectionLabel>
 
-        <div className="bg-stone-50 border border-stone-300 p-8 md:p-12 mb-12">
-          <div className="flex items-start justify-between gap-6 mb-8 pb-8 border-b border-stone-300">
+        <div className="bg-stone-50 border border-stone-300 mb-12">
+          {/* TOP: Trip summary + restart */}
+          <div className="flex items-start justify-between gap-6 p-8 md:p-10 pb-6 border-b border-stone-300">
             <div>
               <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">Your trip</div>
               <div className="font-serif text-2xl text-stone-900">
-                {answers.species} · {answers.weight} · {answers.destination}
+                {answers.petCount === "1" ? answers.species : `${answers.petCount} ${answers.species.toLowerCase()}s`} · {answers.weight} · {answers.destination}
               </div>
             </div>
             <button
@@ -2425,59 +2584,174 @@ function Assessment({ answers, onReset }) {
             </button>
           </div>
 
-          {hasFlags && (
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-5">
-                <AlertTriangle className="w-5 h-5 text-red-700" strokeWidth={1.75} />
-                <h3 className="uppercase tracking-widest text-xs text-red-700 font-medium">
-                  Hold on — address these first
+          {/* VERDICT: Top-line result */}
+          <div className={`${verdictBg} border-l-4 ${verdictBorder} p-8 md:p-10`}>
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 mt-1">{verdictIcon}</div>
+              <div className="flex-1">
+                <div className={`text-xs uppercase tracking-widest ${verdictColor} font-medium mb-2`}>
+                  Verdict
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
+                  {verdictHeadline}
                 </h3>
-              </div>
-              <div className="space-y-5">
-                {result.flags.map((f, i) => (
-                  <div key={i} className="border-l-2 border-red-700 pl-5 py-1">
-                    <div className="font-serif text-xl text-stone-900 mb-1">{f.title}</div>
-                    <p className="text-stone-700 leading-relaxed">{f.detail}</p>
-                  </div>
-                ))}
+                <p className="text-stone-700 leading-relaxed">
+                  {verdictSummary}
+                </p>
+                <div className="flex flex-wrap gap-3 mt-5 text-xs uppercase tracking-widest">
+                  {hasImpossible && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-200 text-red-900 font-medium">
+                      <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
+                      {result.flags.filter((f) => f.severity === "impossible").length} cabin-impossible
+                    </span>
+                  )}
+                  {hasOnlyFixableFlags && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-100 text-orange-800 font-medium">
+                      <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
+                      {result.flags.length} fixable blocker{result.flags.length === 1 ? "" : "s"}
+                    </span>
+                  )}
+                  {hasWarnings && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 text-amber-800 font-medium">
+                      <Info className="w-3 h-3" strokeWidth={2.5} />
+                      {result.warnings.length} to plan for
+                    </span>
+                  )}
+                  {hasOks && (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-800 font-medium">
+                      <Check className="w-3 h-3" strokeWidth={2.5} />
+                      {result.ok.length} looking good
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          )}
+          </div>
 
-          {result.warnings.length > 0 && (
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-5">
-                <Info className="w-5 h-5 text-amber-700" strokeWidth={1.75} />
-                <h3 className="uppercase tracking-widest text-xs text-amber-700 font-medium">
-                  Worth knowing
-                </h3>
+          {/* DETAIL SECTIONS */}
+          <div className="p-8 md:p-10 space-y-10">
+            {hasFlags && (
+              <div>
+                <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-red-700">
+                  <AlertTriangle className="w-5 h-5 text-red-700" strokeWidth={1.75} />
+                  <h3 className="uppercase tracking-widest text-sm text-red-700 font-medium">
+                    {result.flags.length === 1 ? "Blocker to address" : `${result.flags.length} blockers to address`}
+                  </h3>
+                </div>
+                <p className="text-sm text-stone-600 italic font-serif mb-5">
+                  Where a workaround exists, we've spelled it out under each blocker.
+                </p>
+                <div className="space-y-5">
+                  {result.flags.map((f, i) => {
+                    const isImpossible = f.severity === "impossible";
+                    return (
+                      <div
+                        key={i}
+                        className={`border-l-2 pl-5 pr-4 py-4 ${
+                          isImpossible
+                            ? "bg-red-50/70 border-red-800"
+                            : "bg-orange-50/70 border-orange-700"
+                        }`}
+                      >
+                        <div className="flex items-baseline gap-2 mb-2">
+                          <span
+                            className={`text-xs uppercase tracking-widest font-medium px-2 py-0.5 ${
+                              isImpossible ? "bg-red-200 text-red-900" : "bg-orange-200 text-orange-900"
+                            }`}
+                          >
+                            {isImpossible ? "Cabin not possible" : "Fixable"}
+                          </span>
+                          <div className="font-serif text-xl text-stone-900">
+                            {f.title}
+                          </div>
+                        </div>
+                        <p className="text-stone-700 leading-relaxed mb-3">{f.detail}</p>
+                        {f.workaround && (
+                          <div className="mt-3 pt-3 border-t border-stone-200">
+                            <div className="text-xs uppercase tracking-widest text-stone-500 font-medium mb-1.5">
+                              {isImpossible ? "Suggested alternative" : "How to fix it"}
+                            </div>
+                            <p className="text-stone-700 leading-relaxed text-sm">{f.workaround}</p>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="space-y-5">
-                {result.warnings.map((w, i) => (
-                  <div key={i} className="border-l-2 border-amber-700 pl-5 py-1">
-                    <div className="font-serif text-xl text-stone-900 mb-1">{w.title}</div>
-                    <p className="text-stone-700 leading-relaxed">{w.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            )}
 
-          {result.ok.length > 0 && (
-            <div>
-              <div className="flex items-center gap-3 mb-5">
-                <Check className="w-5 h-5 text-emerald-700" strokeWidth={1.75} />
-                <h3 className="uppercase tracking-widest text-xs text-emerald-700 font-medium">
-                  Looking good
-                </h3>
+            {hasWarnings && (
+              <div>
+                <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-amber-700">
+                  <Info className="w-5 h-5 text-amber-700" strokeWidth={1.75} />
+                  <h3 className="uppercase tracking-widest text-sm text-amber-700 font-medium">
+                    {result.warnings.length === 1 ? "Thing to plan for" : `${result.warnings.length} things to plan for`}
+                  </h3>
+                </div>
+                <p className="text-sm text-stone-600 italic font-serif mb-5">
+                  Not blockers, but you'll want to plan around these before booking.
+                </p>
+                <div className="space-y-5">
+                  {result.warnings.map((w, i) => (
+                    <div key={i} className="bg-amber-50/50 border-l-2 border-amber-700 pl-5 pr-4 py-4">
+                      <div className="font-serif text-xl text-stone-900 mb-2">
+                        <span className="text-amber-700 mr-2">{i + 1}.</span>{w.title}
+                      </div>
+                      <p className="text-stone-700 leading-relaxed">{w.detail}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <ul className="space-y-2">
-                {result.ok.map((o, i) => (
-                  <li key={i} className="text-stone-700 leading-relaxed">— {o}</li>
-                ))}
-              </ul>
+            )}
+
+            {hasOks && (
+              <div>
+                <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-emerald-700">
+                  <Check className="w-5 h-5 text-emerald-700" strokeWidth={1.75} />
+                  <h3 className="uppercase tracking-widest text-sm text-emerald-700 font-medium">
+                    {result.ok.length === 1 ? "Looking good" : `${result.ok.length} looking good`}
+                  </h3>
+                </div>
+                <p className="text-sm text-stone-600 italic font-serif mb-5">
+                  Already sorted — nothing to worry about here.
+                </p>
+                <ul className="space-y-3">
+                  {result.ok.map((o, i) => (
+                    <li key={i} className="flex items-start gap-3 text-stone-700 leading-relaxed">
+                      <Check className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-1" strokeWidth={2} />
+                      <span>{o}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* NEXT STEPS FOOTER */}
+          <div className="border-t border-stone-300 bg-stone-100 p-8 md:p-10">
+            <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Next steps</div>
+            <p className="text-stone-700 leading-relaxed mb-4">
+              {hasImpossible
+                ? "Read the cabin-not-possible blockers carefully — most have a workaround. Browse the routes section for cabin workaround routes (Paris Pivot for UK, Abu Dhabi for UAE, European hubs for India ↔ USA). If cargo is the only option, look at the destination tab for cargo-friendly airlines."
+                : hasOnlyFixableFlags
+                ? "Work through the fixable blockers above first (microchip, vaccine, age). Once they're resolved, come back and re-run the assessment. In the meantime, browse the resources below to start planning."
+                : hasWarnings
+                ? "Read the items above carefully and plan around them. The resources below cover airlines, routes, paperwork, and a downloadable checklist."
+                : "Move on to picking an airline and route. Use the resources below to plan your specific journey."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#airlines" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                Browse airlines →
+              </a>
+              <a href="#routes" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                See routes →
+              </a>
+              <a href="#checklist" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                Get my checklist →
+              </a>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </section>
@@ -3383,6 +3657,9 @@ function ChecklistDownload() {
         {!isUniversal && (
           <div>
             <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">2. Direction of travel</div>
+            <p className="text-sm text-stone-400 mb-3 leading-relaxed max-w-2xl">
+              International travel involves <strong className="text-stone-200">two countries' rules</strong> — the one you leave AND the one you enter. Pick a direction to see that country's side. You'll want to check both before flying.
+            </p>
             <div className="inline-flex border border-stone-700 bg-stone-800">
               <button
                 onClick={() => setDirection("departing")}
@@ -3623,7 +3900,7 @@ function Routes() {
           {filteredDirect.length === 0 ? (
             <div className="border border-stone-300 px-6 py-10 text-center text-stone-500 font-serif italic">
               {filter === "uk-out" && direction === "to" ? (
-                <>No direct cabin flights INTO the UK exist on any airline (UK government rule). See workaround routes below — typically fly cabin into Paris/Amsterdam, then Eurotunnel.</>
+                <><strong className="text-stone-800 not-italic">The UK government doesn't allow cabin pets on any inbound flight.</strong> No commercial airline can do it. The workaround route — fly cabin into Paris/Amsterdam, then Eurotunnel — is shown below.</>
               ) : filter === "dubai" && direction === "to" ? (
                 <>No direct cabin flights INTO Dubai (DXB) exist on any airline (UAE law — cargo only into DXB). See workaround routes below — fly cabin into Abu Dhabi (AUH) via Etihad, then 90-minute road transfer to Dubai.</>
               ) : (
@@ -4198,7 +4475,7 @@ function Tips() {
             {
               tag: "On the seat",
               title: "Pick a window, not an aisle or middle.",
-              body: "Window seats give the under-seat space slightly more depth on most aircraft, and prevent your pet being kicked or jostled by passing carts. The middle seat means more disturbance every time the window passenger gets up. Avoid bulkhead and exit rows — pets aren't allowed there.",
+              body: "Window seats give the under-seat space slightly more depth on most aircraft, and prevent your pet being kicked or jostled by passing carts. The middle seat means more disturbance every time the window passenger gets up. Avoid bulkhead and exit rows — pets aren't allowed there. EXTRA-LEGROOM SEATS: where the airline permits pets in extra-legroom rows, book one — it's transformative for long-haul. Where extra-legroom seats are banned for pets (Delta, JetBlue, several others restrict this), consider buying an extra adjacent seat in regular economy if your budget allows. The extra room for the carrier and your own knees can make a long flight bearable.",
             },
             {
               tag: "On food",

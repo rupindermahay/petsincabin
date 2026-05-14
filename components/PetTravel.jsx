@@ -2397,6 +2397,7 @@ function SectionLabel({ children, num }) {
 const NAV_SECTIONS = [
   { id: "top", label: "Home", num: "" },
   { id: "intake", label: "Assessment", num: "I" },
+  { id: "planner", label: "Journey planner", num: "✦" },
   { id: "airlines", label: "Airlines", num: "II" },
   { id: "routes", label: "Routes", num: "III" },
   { id: "destinations", label: "Difficult destinations", num: "IV" },
@@ -2612,6 +2613,21 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   const isFirst = step === 0;
   const isLast = step === QUESTIONS.length - 1;
   const current = answers[q.id];
+  const sectionRef = useRef(null);
+
+  // Scroll to the top of the question whenever the step changes.
+  // Questions have very different heights (destination has 12 options,
+  // breed has 3) — without this, advancing from a tall question to a
+  // short one leaves the user scrolled into dead space below the section.
+  // We skip step 0 because entering the intake is handled separately.
+  useEffect(() => {
+    if (step === 0) return;
+    const el = sectionRef.current;
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, [step]);
 
   // A question is multiselect if it declares multiWhen and that condition is met
   const isMulti = q.multiWhen && answers[q.multiWhen.field] &&
@@ -2642,7 +2658,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   }
 
   return (
-    <section id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
+    <section ref={sectionRef} id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
       <div id="assessment" className="scroll-mt-24" />
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="I.">Intake</SectionLabel>
@@ -3998,6 +4014,294 @@ function ChecklistDownload() {
   );
 }
 
+function JourneyPlanner() {
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [planned, setPlanned] = useState(false);
+
+  // The regions the planner understands. IDs match the tags used across
+  // DIRECT_ROUTES and WORKAROUND_ROUTES_TABLE.
+  const REGIONS = [
+    { id: "uk-out", label: "United Kingdom", flag: "🇬🇧" },
+    { id: "us", label: "United States", flag: "🇺🇸" },
+    { id: "canada", label: "Canada", flag: "🇨🇦" },
+    { id: "europe", label: "Europe", flag: "🇪🇺" },
+    { id: "india", label: "India", flag: "🇮🇳" },
+    { id: "dubai", label: "UAE / Dubai", flag: "🇦🇪" },
+    { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+  ];
+
+  // Destinations where NO airline allows cabin pets inbound (government / infrastructure rules)
+  const CABIN_IMPOSSIBLE_INBOUND = {
+    "uk-out": "No airline allows cabin pets on flights INTO the UK — it's a UK government rule. You'll need a workaround (cabin into Europe, then Eurotunnel or ferry) or cargo.",
+    "south-africa": "No airline allows cabin pets in or out of South Africa internationally — pets travel as manifested cargo. Cabin is only possible on DOMESTIC South African flights (Lift, small dogs).",
+  };
+
+  // Map a region to its checklist tab id (used to point users at the checklist)
+  const REGION_TO_CHECKLIST = {
+    "uk-out": "uk",
+    "us": "usa",
+    "canada": "canada",
+    "europe": "europe",
+    "india": "india",
+    "dubai": "uae",
+    "caribbean": null, // Caribbean has per-island checklists, no single one
+    "south-africa": "south_africa",
+  };
+
+  const regionLabel = (id) => {
+    const r = REGIONS.find((x) => x.id === id);
+    return r ? `${r.flag} ${r.label}` : id;
+  };
+
+  // Keywords that identify which region a "City (CODE)" string belongs to.
+  // Used to check route DIRECTION — not just whether both regions are tagged.
+  const REGION_CITIES = {
+    "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "USA"],
+    "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "India"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Munich", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(MUC)", "Europe"],
+    "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
+    "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
+    "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Caribbean"],
+    "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
+  };
+
+  // Does a "City (CODE)" string belong to a region?
+  const fieldInRegion = (field, regionId) => {
+    if (!field || !REGION_CITIES[regionId]) return false;
+    const f = field.toLowerCase();
+    return REGION_CITIES[regionId].some((kw) => f.includes(kw.toLowerCase()));
+  };
+
+  // Direct routes: the route's FROM must be in the origin region AND
+  // its TO must be in the destination region. This respects direction —
+  // a US→London route will NOT show for a UK→US search.
+  const directMatches = DIRECT_ROUTES.filter((r) => {
+    if (origin === destination) {
+      // Domestic: both endpoints in the same region
+      return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
+    }
+    return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
+  });
+
+  // Workaround routes: same direction-aware check on the top-level from/to
+  const workaroundMatches = WORKAROUND_ROUTES_TABLE.filter((r) => {
+    if (origin === destination) return false;
+    return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
+  });
+
+  const checklistId = REGION_TO_CHECKLIST[destination];
+  const impossibleNote = CABIN_IMPOSSIBLE_INBOUND[destination];
+  const hasResults = directMatches.length > 0 || workaroundMatches.length > 0;
+  const hasDirect = directMatches.length > 0;
+
+  function plan() {
+    if (origin && destination) setPlanned(true);
+  }
+  function resetPlan() {
+    setOrigin("");
+    setDestination("");
+    setPlanned(false);
+  }
+
+  return (
+    <section id="planner" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-serif italic text-amber-400/70 text-lg">✦</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-400">Journey planner</span>
+          <div className="flex-1 h-px bg-stone-700" />
+        </div>
+
+        <h2 className="font-serif text-5xl text-stone-50 mb-4 max-w-3xl">
+          Where are you<br /><span className="italic text-stone-400">flying from and to?</span>
+        </h2>
+        <p className="font-serif italic text-stone-400 text-lg mb-10 max-w-2xl">
+          Pick your start and end points. I'll show the cabin routes, the workarounds, and the checklist you'll need — all in one place.
+        </p>
+
+        {/* Dropdowns */}
+        <div className="grid sm:grid-cols-[1fr_auto_1fr_auto] gap-4 items-end mb-8">
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying from</label>
+            <select
+              value={origin}
+              onChange={(e) => { setOrigin(e.target.value); setPlanned(false); }}
+              className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"
+            >
+              <option value="">Select origin…</option>
+              {REGIONS.map((r) => (
+                <option key={r.id} value={r.id}>{r.flag} {r.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="hidden sm:flex items-center justify-center pb-3.5">
+            <ArrowRight className="w-6 h-6 text-stone-600" strokeWidth={1.5} />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying to</label>
+            <select
+              value={destination}
+              onChange={(e) => { setDestination(e.target.value); setPlanned(false); }}
+              className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"
+            >
+              <option value="">Select destination…</option>
+              {REGIONS.map((r) => (
+                <option key={r.id} value={r.id}>{r.flag} {r.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            onClick={plan}
+            disabled={!origin || !destination}
+            className="bg-amber-600 text-white px-7 py-3.5 uppercase tracking-widest text-xs font-medium hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+          >
+            Plan my journey
+          </button>
+        </div>
+
+        {/* Results */}
+        {planned && (
+          <div className="border-t border-stone-700 pt-8 animate-fadeIn">
+            <div className="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
+              <h3 className="font-serif text-2xl text-stone-50">
+                {regionLabel(origin)} <span className="text-stone-500">→</span> {regionLabel(destination)}
+              </h3>
+              <button
+                onClick={resetPlan}
+                className="text-xs uppercase tracking-widest text-stone-400 hover:text-amber-400 transition-colors"
+              >
+                Start over
+              </button>
+            </div>
+
+            {/* Same region selected */}
+            {origin === destination && (
+              <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
+                <p className="text-stone-300 text-sm leading-relaxed">
+                  You've picked the same region for both. If you're flying <strong className="text-stone-100">domestically within {regionLabel(destination)}</strong>, the direct routes below (if any) cover it. Otherwise, pick two different regions.
+                </p>
+              </div>
+            )}
+
+            {/* Cabin-impossible inbound warning */}
+            {impossibleNote && (
+              <div className="bg-rose-950/50 border-l-2 border-rose-500 p-5 mb-6">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <div>
+                    <div className="font-serif text-stone-100 mb-1">Heads up — cabin into {regionLabel(destination)} isn't straightforward.</div>
+                    <p className="text-stone-300 text-sm leading-relaxed">{impossibleNote}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Direct routes */}
+            {directMatches.length > 0 && (
+              <div className="mb-8">
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span className="text-emerald-400 text-base">✓</span>
+                  <h4 className="font-serif text-xl text-stone-100">Direct cabin routes</h4>
+                  <span className="text-xs uppercase tracking-widest text-stone-500">{directMatches.length}</span>
+                </div>
+                <div className="space-y-2">
+                  {directMatches.map((r, i) => (
+                    <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                      <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                        <span className="font-serif text-base text-stone-100">{r.from}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                        <span className="font-serif text-base text-stone-100">{r.to}</span>
+                        <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                      </div>
+                      <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* No direct route, but workarounds exist — explain it clearly */}
+            {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
+              <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
+                <p className="text-stone-300 text-sm leading-relaxed">
+                  <strong className="text-stone-100">There's no direct cabin route for your pet from {regionLabel(origin)} to {regionLabel(destination)}.</strong> But you're not stuck — here are the workaround routes that get you and your pet there together, in the cabin, leg by leg.
+                </p>
+              </div>
+            )}
+
+            {/* Workaround routes */}
+            {workaroundMatches.length > 0 && (
+              <div className="mb-8">
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span className="text-amber-400 text-base">⤳</span>
+                  <h4 className="font-serif text-xl text-stone-100">{hasDirect ? "Workaround routes" : "Workaround routes — your way there"}</h4>
+                  <span className="text-xs uppercase tracking-widest text-stone-500">{workaroundMatches.length}</span>
+                </div>
+                <div className="space-y-3">
+                  {workaroundMatches.map((r, i) => (
+                    <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                      <div className="flex items-center gap-2 flex-wrap mb-2">
+                        <span className="font-serif text-base text-stone-100">{r.from}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                        <span className="font-serif text-base text-stone-100">{r.to}</span>
+                        <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                      </div>
+                      <div className="space-y-1 mb-2 pl-3 border-l border-stone-600">
+                        {r.legs.map((leg, j) => (
+                          <div key={j} className="text-sm text-stone-300">
+                            <span className="text-stone-100">{leg.route}</span>
+                            <span className="text-stone-500"> — {leg.time} · {leg.airline}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* No results */}
+            {!hasResults && origin !== destination && (
+              <div className="bg-stone-800 border border-stone-700 p-6 mb-8">
+                <p className="text-stone-300 text-sm leading-relaxed">
+                  I don't have specific {regionLabel(origin)} → {regionLabel(destination)} routes mapped yet — this guide is built from routes Theo and I have researched, and it's still growing. {impossibleNote ? "The cabin-into-destination note above still applies. " : ""}
+                  Check the <a href="#airlines" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">airline policies</a> and <a href="#routes" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">routes</a> sections, or <a href="#contact" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">tell me</a> the route you need and I'll look into it.
+                </p>
+              </div>
+            )}
+
+            {/* Checklist link */}
+            <div className="bg-amber-950/40 border border-amber-800/50 p-5">
+              <div className="flex items-start gap-3">
+                <FileCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                <div>
+                  <div className="font-serif text-stone-100 mb-1">Your next step: the checklist</div>
+                  {checklistId ? (
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      Once you've picked a route, head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and select <strong className="text-stone-100">{regionLabel(destination)}</strong> for a printable prep list. Remember: both the country you leave AND the one you enter have rules — check both.
+                    </p>
+                  ) : (
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      The Caribbean has different rules per island — head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and pick your specific island (Bahamas, Jamaica, Dominican Republic) for a printable prep list.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function Routes() {
   const [filter, setFilter] = useState("all");
   const [direction, setDirection] = useState("from"); // "from" or "to"
@@ -5192,6 +5496,38 @@ export default function PetTravel() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
 
+  // Handle deep links like /#assessment or /#checklist.
+  // In-app browsers (Instagram, Facebook, etc.) often strip or mishandle the
+  // native anchor jump, landing the user on the hero. This reads the hash
+  // after the app is interactive and scrolls there with JS, which works
+  // where the browser's built-in behaviour doesn't.
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+    const id = hash.slice(1); // drop the "#"
+
+    // "assessment" deep link should open the intake flow, not just scroll
+    if (id === "assessment") {
+      setPhase("intake");
+      setStep(0);
+    }
+
+    // Wait for layout to settle, then scroll. Retry a couple of times
+    // because in-app browsers can be slow to finish first paint.
+    let attempts = 0;
+    const tryScroll = () => {
+      attempts += 1;
+      const el = document.getElementById(id) || document.getElementById(id === "assessment" ? "intake-anchor" : id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      } else if (attempts < 5) {
+        setTimeout(tryScroll, 200);
+      }
+    };
+    setTimeout(tryScroll, 250);
+  }, []);
+
   function startIntake() {
     setPhase("intake");
     setStep(0);
@@ -5256,6 +5592,7 @@ export default function PetTravel() {
         </>
       )}
 
+      <JourneyPlanner />
       <AirlineGrid />
       <Routes />
       <DifficultDestinations />

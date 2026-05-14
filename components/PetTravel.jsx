@@ -1974,17 +1974,18 @@ function getChecklist(routeId, direction) {
 
 const QUESTIONS = [
   {
-    id: "species",
-    label: "What kind of pet are you flying with?",
-    type: "choice",
-    options: ["Dog", "Cat", "Other small pet"],
-  },
-  {
     id: "petCount",
     label: "How many pets are you travelling with?",
     type: "choice",
     options: ["1", "2", "3 or more"],
     helper: "Most airlines cap cabin pets per passenger and per flight. We'll flag relevant limits.",
+  },
+  {
+    id: "species",
+    label: "What kind of pet are you flying with?",
+    type: "choice",
+    options: ["Dog", "Cat", "Other small pet"],
+    helper: "Travelling with more than one pet? Answer for your primary pet — we'll note multi-pet rules in your results.",
   },
   {
     id: "age",
@@ -2001,9 +2002,10 @@ const QUESTIONS = [
   },
   {
     id: "destination",
-    label: "Where are you flying?",
+    label: "Where are you flying to?",
     type: "choice",
-    options: ["Domestic (within the U.S.)", "Hawaii", "Canada / Mexico", "UK / Ireland", "Europe", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
+    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK / Ireland", "Europe", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
+    helper: "Pick where your pet is ARRIVING. Flying Europe → New York? Choose 'Into the USA'.",
   },
   {
     id: "breed",
@@ -2040,10 +2042,13 @@ function assess(answers) {
     if (d === "UK / Ireland") return "Cargo into UK is possible via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Frankfurt's Animal Lounge. Allow 8+ hours at Heathrow Animal Reception Centre after landing.";
     if (d === "UAE / Dubai") return "Cargo into Dubai is possible — every pet entering DXB must go cargo regardless of airline. Use Emirates SkyCargo, Qatar Cargo, or Lufthansa via Europe, plus a UAE customs broker (Dubai Kennels & Cattery is the most-used).";
     if (d === "Europe") return "Cargo into the EU is available via Lufthansa Cargo (Frankfurt Animal Lounge — the world's most advanced), KLM Cargo (Amsterdam), or Air France Cargo (Paris). All accept oversize pets that don't qualify for cabin.";
-    if (d === "Domestic (within the U.S.)") return "Domestic US cargo for pets is largely discontinued by major airlines as of 2025. Hawaiian Air Cargo still operates inter-island. For mainland US, consider a ground pet transport service (CitizenShipper, RoyalPaws) or a charter/private operator.";
+    if (d === "Within the USA (domestic)") return "Domestic US cargo for pets is largely discontinued by major airlines as of 2025. Hawaiian Air Cargo still operates inter-island. For mainland US, consider a ground pet transport service (CitizenShipper, RoyalPaws) or a charter/private operator.";
+    if (d === "Into the USA (international arrival)") return "Cargo into the US is available via Lufthansa Cargo, KLM Cargo, and several others. The CDC Dog Import Form is still required, and dogs from high-risk rabies countries face extra paperwork.";
     if (d === "Hawaii") return "Hawaiian Airlines Cargo handles oversize pets to Hawaii — but the strict Direct Airport Release rabies-free programme still applies (FAVN titer, 30+ days notice). Plan 4+ months ahead.";
     if (d === "India") return "Cargo into India is well-established via Air India Cargo, Emirates SkyCargo, Lufthansa Cargo, or KLM Cargo. NOC from AQCS still required regardless of cabin/cargo.";
-    if (d === "Canada / Mexico") return "Cargo within North America is limited — major US carriers have largely discontinued general-public cargo. WestJet Cargo and Air Canada Cargo serve Canada; Aeromexico Cargo serves Mexico.";
+    if (d === "Canada") return "Cargo into Canada is available via Air Canada Cargo and WestJet Cargo. Major US carriers have largely discontinued general-public pet cargo.";
+    if (d === "Mexico") return "Cargo into Mexico is available via Aeromexico Cargo. Major US carriers have largely discontinued general-public pet cargo.";
+    if (d === "Caribbean") return "Cargo to the Caribbean varies by island and airline — Bahamasair, Caribbean Airlines, and American Airlines Cargo serve various islands. Check the specific island's import rules first.";
     return "Cargo and pet relocation services exist for most destinations — contact a pet relocation specialist (e.g. CitizenShipper, Starwood Pet Travel) for a quote on your specific route.";
   })();
 
@@ -2056,13 +2061,16 @@ function assess(answers) {
     });
   }
 
-  if (answers.destination === "Europe" || answers.destination === "UK / Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international") {
+  const isDomestic = answers.destination === "Within the USA (domestic)";
+  const isInternationalArrival = answers.destination === "Into the USA (international arrival)";
+
+  if (answers.destination === "Europe" || answers.destination === "UK / Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
     if (answers.age === "8 weeks – 4 months") {
       flags.push({
         severity: "blocker",
         title: "Likely too young for international travel",
-        detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks.",
-        workaround: "Wait until your pet is at least 15 weeks (EU minimum) or 16 weeks (most other countries). Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
+        detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks. The US requires dogs to be at least 6 months old to enter.",
+        workaround: "Wait until your pet is at least 15 weeks (EU minimum), 16 weeks (most other countries), or 6 months (entering the US). Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
       });
     }
   }
@@ -2106,7 +2114,7 @@ function assess(answers) {
     ok.push("Rabies vaccination is current.");
   }
 
-  if ((answers.destination !== "Domestic (within the U.S.)" && answers.destination !== "Hawaii") && answers.microchip !== "Yes") {
+  if (!isDomestic && answers.destination !== "Hawaii" && answers.microchip !== "Yes") {
     flags.push({
       severity: "fixable",
       title: "ISO microchip required for international travel",
@@ -2129,8 +2137,26 @@ function assess(answers) {
     });
   }
 
-  if (answers.destination === "Canada / Mexico") {
-    ok.push("Canada and Mexico are among the easier international destinations: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. Confirm details with the receiving country before travel.");
+  if (answers.destination === "Canada") {
+    ok.push("Canada is among the easier international destinations: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No APHIS endorsement required from the US. Confirm details with the CFIA before travel.");
+  }
+
+  if (answers.destination === "Mexico") {
+    ok.push("Mexico is a relatively easy destination: a vet health certificate plus current rabies vaccine is usually all that's required. SADER/SENASICA inspect pets on arrival, free of charge. Internal/external parasite treatment should be documented.");
+  }
+
+  if (answers.destination === "Caribbean") {
+    warnings.push({
+      title: "Caribbean rules vary enormously by island",
+      detail: "There's no single 'Caribbean' rule. Puerto Rico and USVI are US territories (no import paperwork). Dominican Republic and Aruba are relatively easy. Bahamas needs a 6–8 week import permit. Jamaica, Cayman, and Barbados are among the strictest — Jamaica needs 6+ months of prep including a FAVN rabies titer. Check your specific island's Department of Agriculture before booking. Note: Dominican Republic is on the CDC high-risk rabies list, which complicates US return.",
+    });
+  }
+
+  if (isInternationalArrival) {
+    warnings.push({
+      title: "Entering the USA — CDC Dog Import Form required for all dogs",
+      detail: "Every dog entering the US (including US dogs returning home) needs a completed CDC Dog Import Form — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
+    });
   }
 
   if (answers.destination === "UK / Ireland") {
@@ -2324,7 +2350,7 @@ function Hero({ onStart }) {
         backgroundSize: "32px 32px"
       }} />
 
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative max-w-6xl mx-auto">
         <div className="flex items-center gap-2 mb-12">
           <span className="text-xs uppercase tracking-widest text-stone-500">By Theo's Mum</span>
           <div className="flex-1 h-px bg-stone-300 mx-3" />
@@ -2438,7 +2464,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   return (
     <section id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
       <div id="assessment" className="scroll-mt-24" />
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <SectionLabel num="I.">Intake</SectionLabel>
 
         <div className="flex items-center gap-2 mb-10">
@@ -2522,9 +2548,10 @@ function Assessment({ answers, onReset }) {
   useEffect(() => {
     const el = document.getElementById("assessment-result");
     if (el) {
+      // Slightly longer delay ensures the section is fully rendered before scrolling
       setTimeout(() => {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 50);
+      }, 120);
     }
   }, []);
 
@@ -2563,7 +2590,7 @@ function Assessment({ answers, onReset }) {
 
   return (
     <section id="assessment-result" className="py-20 px-6 md:px-12 scroll-mt-24">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <SectionLabel num="II.">Your assessment</SectionLabel>
 
         <div className="bg-stone-50 border border-stone-300 mb-12">
@@ -3312,7 +3339,7 @@ function AirlineGrid() {
                           className={`inline-flex items-center gap-0.5 ${isYes ? "text-emerald-700" : "text-red-600"}`}
                           title={`${isYes ? "Cabin allowed" : "Cabin NOT allowed"} ${direction} ${c.label}`}
                         >
-                          <span className={`text-lg leading-none ${isYes ? "" : "grayscale"}`}>{c.flag}</span>
+                          <span className="text-lg leading-none">{c.flag}</span>
                           <span className="font-bold text-xs">{isYes ? "✓" : "✗"}</span>
                         </span>
                       );
@@ -4916,9 +4943,7 @@ export default function PetTravel() {
 
   function completeIntake() {
     setPhase("results");
-    setTimeout(() => {
-      document.getElementById("results-anchor")?.scrollIntoView({ behavior: "smooth" });
-    }, 50);
+    // Assessment component handles its own scroll-into-view on mount
   }
 
   function reset() {

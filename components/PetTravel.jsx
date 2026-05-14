@@ -353,14 +353,14 @@ const AIRLINES = [
     tags: [],
     cabin: "Cabin ✓ — small dogs, domestic South Africa only",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: small dogs (under 7 kg) on Lift's dog-friendly domestic South Africa flights only (Johannesburg, Cape Town, Durban, George). Cabin NOT allowed: cats are not accepted; no international flights — Lift only operates domestic SA routes. There is no cabin pet option in or out of South Africa internationally on any airline.",
+    direction: "Cabin allowed: small dogs (under 7 kg) on Lift's dog-friendly domestic South Africa flights only — Johannesburg (JNB), Cape Town (CPT), Durban (DUR), George (GRJ). Cabin NOT allowed: cats are not accepted at all; no international flights — Lift only operates domestic SA routes. There is no cabin pet option in or out of South Africa internationally on any airline; international pets travel as manifested cargo.",
     originAllowed: {},
     destinationAllowed: {},
-    fee: "Equal to the accompanying adult's fare (less taxes) — you're effectively buying the dog a blocked window seat.",
-    weight: "Dog + nothing else: max 7 kg. Carrier max 55 × 35 × 28 cm, soft-sided, well-ventilated.",
+    fee: "Same as an adult fare (less taxes) — you book the dog its own blocked window seat.",
+    weight: "Dog max 7 kg. Carrier max 55 × 35 × 28 cm, soft-sided, well-ventilated.",
     carrier: "Purpose-built soft-sided carrier, max 55 × 35 × 28 cm. Lined with puppy pads. Must fit fully under the window seat. Dog stays inside the carrier at all times — including in the terminal.",
-    notes: "South Africa's only in-cabin pet option — and it's domestic-only. Dogs only (no cats), one dog per adult, dog must be 10+ weeks old and rabies-vaccinated if over 3 months. IMPORTANT: don't book your flight first — submit Lift's Dog-in-Cabin Request Form at least 7 days before travel, and they confirm availability within 24 business hours, then book it for you. Window seat is blocked for the dog; you sit in the adjacent middle seat. Arrive 2 hours early. Limited dog seats per flight — request early. For international travel to/from South Africa, pets must go as manifested cargo (see the South Africa tab in Difficult Destinations).",
-    intl: "No (domestic South Africa only)",
+    notes: "South Africa's only in-cabin pet option — and it's domestic-only. Dogs only (no cats), one dog per adult passenger, dog must be 10+ weeks old and rabies-vaccinated if over 3 months. IMPORTANT: don't book your flight first — submit Lift's Dog-in-Cabin Request Form at least 7 days before travel; they confirm availability within 24 business hours, then book it for you. The window seat is blocked for the dog and you sit in the adjacent middle seat. Arrive 2 hours early. Dog seats per flight are limited — request early. For international travel to or from South Africa, pets must travel as manifested cargo (see the South Africa tab in Difficult Destinations).",
+    intl: "No — domestic South Africa only",
     verified: "May 2026",
     link: "https://www.lift.co.za/LIFT-Extras/travelling-with-small-dogs",
   },
@@ -3558,8 +3558,13 @@ function AirlineGrid() {
                         🌺 Hawaii routes only
                       </span>
                     )}
+                    {a.scope === "south-africa" && (
+                      <span className="inline-block px-2.5 py-1 text-xs uppercase tracking-widest font-medium border bg-stone-100 text-stone-700 border-stone-300">
+                        🇿🇦 South Africa · domestic only
+                      </span>
+                    )}
                   </div>
-                  {a.originAllowed && (() => {
+                  {a.originAllowed && Object.keys(a.originAllowed).length > 0 && (() => {
                     const COUNTRIES = [
                       { code: "uk", flag: "🇬🇧", label: "UK" },
                       { code: "us", flag: "🇺🇸", label: "US" },
@@ -3603,6 +3608,16 @@ function AirlineGrid() {
                       </div>
                     );
                   })()}
+                  {a.scope === "south-africa" && (
+                    <div className="mb-3 pb-3 border-b border-stone-200">
+                      <div className="flex items-start gap-2 text-sm text-stone-600">
+                        <Info className="w-4 h-4 text-stone-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                        <span>
+                          <strong className="text-stone-800">Domestic South Africa only.</strong> Small dogs under 7&nbsp;kg, in cabin, on Lift's dog-friendly routes (JNB · CPT · DUR · GRJ). No cats. There is <strong className="text-stone-800">no cabin option in or out of South Africa internationally</strong> on any airline — international pets travel as cargo.
+                        </span>
+                      </div>
+                    </div>
+                  )}
                   <div className="text-stone-600 text-sm">
                     <span className="font-medium text-stone-800">{a.fee}</span>
                   </div>

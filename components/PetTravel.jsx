@@ -426,6 +426,11 @@ const DIRECT_ROUTES = [
   // ═══════ FROM DUBAI ═══════
   { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
 
+  // ═══════ FROM DUBLIN ═══════
+  { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward — it's only flights INTO Ireland that ban cabin pets. Connects onward across Europe.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin OUT of Ireland (under 8 kg). Onward connections across Europe and beyond.", tags: ["europe"] },
+
   // ═══════ FROM LONDON ═══════
   { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg) — Etihad's restrictions block 'flights to London/Manchester' (inbound), not flights out. Promo $399 per segment through May 2026. The cabin route into the UAE — AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.", tags: ["uk-out", "dubai"] },
   { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin out of UK (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
@@ -443,6 +448,12 @@ const DIRECT_ROUTES = [
   // ═══════ FROM LOS ANGELES ═══════
   { from: "Los Angeles (LAX)", to: "Frankfurt (FRA)", duration: "11h", note: "Lufthansa. ✓ Cabin (under 8 kg). West coast direct to Europe — consider stopover for long flight.", tags: ["us", "europe"] },
   { from: "Los Angeles (LAX)", to: "Paris (CDG)", duration: "11h", note: "Air France. ✓ Cabin (under 8 kg). The west coast option — longer flight, consider stopover advice.", tags: ["us", "europe"] },
+  { from: "Los Angeles (LAX)", to: "Mexico City (MEX)", duration: "4h", note: "Aeromexico, Delta, American. ✓ Cabin. The main west-coast cabin route into Mexico.", tags: ["us", "mexico"] },
+  { from: "Los Angeles (LAX)", to: "Honolulu (HNL)", duration: "6h", note: "Hawaiian Airlines, Alaska, Delta, United, American. ✓ Cabin on most. Cabin access is the easy part — Hawaii's rabies-free import programme is the real work: ISO microchip, two rabies vaccines, FAVN titer, paperwork to HDOA 10+ days ahead. Start 4+ months out. HNL is the only animal port of entry.", tags: ["us", "hawaii"] },
+
+  // ═══════ FROM HONOLULU ═══════
+  { from: "Honolulu (HNL)", to: "Los Angeles (LAX)", duration: "5h 40m", note: "Hawaiian Airlines, Alaska, Delta, United, American. ✓ Cabin on most. Leaving Hawaii is far simpler than arriving — standard mainland cabin pet rules apply.", tags: ["hawaii", "us"] },
+  { from: "Honolulu (HNL)", to: "Kahului — Maui (OGG)", duration: "40m", note: "Hawaiian Airlines. ✓ Cabin inter-island. If your final stop is Maui or Kauai you still clear animal inspection at Honolulu first, then take the inter-island hop.", tags: ["hawaii"] },
 
   // ═══════ FROM MADRID ═══════
   { from: "Madrid (MAD)", to: "Lisbon (LIS)", duration: "1h 15m", note: "Iberia. ✓ Cabin (under 8 kg, €35 within Spain → Portugal).", tags: ["europe"] },
@@ -458,10 +469,21 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "New York (JFK)", duration: "3h 15m", note: "Delta, AA, United, JetBlue. ✓ Cabin all four. Domestic-equivalent route, multiple daily.", tags: ["us"] },
   { from: "Miami (MIA)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Southern US direct cabin to Europe.", tags: ["us", "europe"] },
   { from: "Miami (MIA)", to: "Santo Domingo (SDQ)", duration: "2h 30m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get Certification of US-issued Rabies Vaccination form BEFORE departure for return.", tags: ["us", "caribbean"] },
+  { from: "Miami (MIA)", to: "Mexico City (MEX)", duration: "3h 30m", note: "American, Aeromexico. ✓ Cabin. Mexico is an easy cabin destination — vet health certificate + rabies is the core requirement.", tags: ["us", "mexico"] },
+  { from: "Miami (MIA)", to: "Cancún (CUN)", duration: "1h 50m", note: "American, Delta, JetBlue. ✓ Cabin. The shortest US → Mexico cabin route.", tags: ["us", "mexico"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
   { from: "Montego Bay (MBJ)", to: "New York (JFK)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
+
+  // ═══════ FROM MEXICO CITY ═══════
+  { from: "Mexico City (MEX)", to: "Miami (MIA)", duration: "3h 30m", note: "Aeromexico, American. ✓ Cabin (under 10 kg combined). Returning to the US with a dog still needs the CDC Dog Import Form receipt; cats don't.", tags: ["mexico", "us"] },
+  { from: "Mexico City (MEX)", to: "Los Angeles (LAX)", duration: "4h", note: "Aeromexico, Delta, American. ✓ Cabin. Popular cabin route — book early, pet space is per-flight limited.", tags: ["mexico", "us"] },
+  { from: "Mexico City (MEX)", to: "Toronto (YYZ)", duration: "5h", note: "Air Canada or Aeromexico. ✓ Cabin (Air Canada ≤10 kg combined).", tags: ["mexico", "canada"] },
+
+  // ═══════ FROM CANCUN ═══════
+  { from: "Cancún (CUN)", to: "Miami (MIA)", duration: "1h 50m", note: "American, Delta, JetBlue. ✓ Cabin. Short hop — one of the easiest US ↔ Mexico cabin routes.", tags: ["mexico", "us"] },
+  { from: "Cancún (CUN)", to: "New York (JFK)", duration: "4h", note: "JetBlue, Delta, American. ✓ Cabin (under 20 lb on JetBlue).", tags: ["mexico", "us"] },
 
   // ═══════ FROM MONTREAL ═══════
   { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
@@ -816,6 +838,19 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "This one is close to direct: Air India's official policy allows cabin pets on flights DEPARTING the UAE (the restriction is only on flights departing India and arriving in the UAE — that reverse direction is blocked). So UAE → India can be a single cabin flight. You still need India's AQCS NOC and entry via one of the six approved airports. Confirm the specific route and cabin space with Air India when booking.",
     tags: ["dubai", "india"],
   },
+  // USA / Europe → Ireland (no cabin into Ireland — same as UK)
+  {
+    from: "USA or Europe",
+    to: "Dublin / Ireland",
+    duration: "varies — allow a full day",
+    legs: [
+      { route: "Fly cabin into a continental EU hub (Paris / Amsterdam / Frankfurt)", time: "1h 30m – 9h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+      { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
+      { route: "Ferry to Rosslare or Dublin", time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
+    ],
+    note: "No commercial airline flies cabin pets INTO Ireland — same government-rule wall as the UK. The cleanest workaround is the direct France→Ireland ferry, which skips the UK landbridge entirely. From the US, fly cabin to a European hub first, then pick up the ferry route. The crossing is long but your pet is with you. Alternative: Eurotunnel into the UK, then the short Holyhead→Dublin ferry.",
+    tags: ["us", "europe", "ireland"],
+  },
 ];
 
 // Combined for backward compatibility (other components reference ROUTES)
@@ -941,6 +976,56 @@ const CHECKLIST_DATA = {
           "No cabin into the UK applies to cats too — you'll still do the Paris pivot or cargo",
           "On the Eurotunnel crossing the cat stays in its carrier in the car — bring a familiar-smelling blanket",
           "Use Feliway (cat pheromone) in the carrier, never Adaptil — and keep a harness on for the Pet Reception checks",
+        ],
+      },
+    ],
+  },
+  ireland: {
+    title: "Ireland entry / exit checklist",
+    sections: [
+      {
+        title: "6 weeks before",
+        items: [
+          "ISO 11784/11785 microchip implanted (must be before the rabies vaccine)",
+          "Rabies vaccination — must be ≥21 days before entry to Ireland",
+          "If inbound to Ireland: pets cannot fly in cabin — plan the France→Ireland ferry, the UK landbridge, or cargo",
+          "If outbound from Ireland: book your cabin pet slot with Aer Lingus or an EU carrier",
+          "Book your ferry (Irish Ferries / Brittany Ferries) well in advance — pet cabins sell out",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Get the EU Animal Health Certificate from an accredited vet (or EU pet passport if you have one)",
+          "If coming from the UK: a GB Animal Health Certificate covers the trip",
+          "Confirm ferry or cargo booking",
+          "Re-confirm any cabin pet booking for the fly-out or fly-to-Europe leg",
+        ],
+      },
+      {
+        title: "24–120 hours before Ireland arrival",
+        items: [
+          "Tapeworm treatment by a vet — REQUIRED for dogs only (not cats)",
+          "Treatment must be recorded in the health certificate or pet passport",
+          "Without it, your dog can be refused entry or detained",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Carry all original documents (not just phone photos) for border checks",
+          "Allow extra time at the ferry pet check-in",
+          "Bring water, a familiar blanket, and comfort items for the long crossing",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats skip the tapeworm treatment — that's a dogs-only rule for Ireland (same as the UK)",
+          "Everything else is identical: ISO microchip, rabies ≥21 days before entry, EU health certificate",
+          "The no-cabin-into-Ireland rule applies to cats too — you'll still take the ferry or cargo route in",
+          "On the ferry the cat stays in its carrier in the vehicle or a pet-friendly cabin — bring a familiar blanket",
+          "Feliway in a covered carrier, harness fitted for the ferry check-in",
         ],
       },
     ],
@@ -3319,23 +3404,41 @@ const DESTINATIONS = [
     id: "ireland",
     flag: "🇮🇪",
     name: "Ireland",
-    headline: "Same cabin ban as the UK.",
-    rule: "Ireland follows similar rules to the UK — no pets in cabin on commercial flights into the country. Pets must arrive via approved cargo or via approved sea routes. Tapeworm treatment is required for dogs.",
+    headline: "Same cabin ban as the UK — but a cleaner ferry route in.",
+    rule: "Ireland follows the same core rule as the UK: no commercial airline allows pets in the cabin on flights INTO Ireland. Pets must arrive as manifested cargo, or via an approved pet-friendly sea route. Flying OUT of Ireland in the cabin is generally fine on the EU carriers. Tapeworm treatment is required for dogs (not cats) 24–120 hours before arrival, the same as the UK. The upside: Ireland has direct France→Ireland ferries, so you can skip the UK landbridge entirely.",
     workarounds: [
       {
-        title: "Fly to Paris, ferry from Cherbourg",
+        title: "France → Ireland direct ferry (the cleanest route)",
         icon: <Ship className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Same logic as the UK pivot: fly cabin into a continental EU airport, drive to a French port, and take a pet-friendly ferry directly to Rosslare or Dublin. Brittany Ferries and Irish Ferries both run this route with pet-friendly cabins.",
-        cost: "Ferry: €60–€250 per pet.",
+        body: "Fly cabin into a continental EU hub (Paris CDG, Amsterdam, Frankfurt), drive to Cherbourg or Roscoff, and take a pet-friendly ferry directly to Rosslare or Dublin. Irish Ferries and Brittany Ferries both run this with pet-friendly cabins or pet-stays-in-vehicle options. This avoids the UK entirely — no UK landbridge, no second border. The crossing is long (14–18h) but your pet is with you or in your vehicle the whole way.",
+        cost: "Ferry: €60–€250 per pet depending on route and cabin type.",
       },
       {
-        title: "Cargo from a U.S. hub",
+        title: "UK landbridge: Eurotunnel + Holyhead ferry",
+        icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
+        body: "The alternative: fly cabin into Paris, Eurotunnel into the UK, drive across to Holyhead in Wales, then the short ferry (Irish Ferries / Stena Line) to Dublin. More legs than the direct France route, but the individual crossings are shorter and there are more daily sailings. Note you transit the UK, so UK pet rules apply on that leg too.",
+        cost: "Eurotunnel £25–£60 + Holyhead–Dublin ferry €40–€120 per pet.",
+      },
+      {
+        title: "Cabin OUT of Ireland is straightforward",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aer Lingus and a few partner airlines accept pets as cargo direct from select U.S. cities. Less comfortable than the ferry route, but faster.",
-        cost: "$1,200–$3,000 depending on size.",
+        body: "Leaving Ireland is much easier than arriving. Aer Lingus and the EU flag carriers (Lufthansa, Air France, KLM) accept cabin pets on flights departing Dublin to continental Europe — under 8 kg combined. From a European hub you can connect onward. The cabin ban is specifically about flights INTO Ireland.",
+        cost: "Cabin pet fee €50–€150 per leg with EU carriers.",
+      },
+      {
+        title: "Cargo into Dublin",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "If the ferry routes don't suit, pets can fly into Dublin as manifested cargo. Aer Lingus, Lufthansa Cargo and KLM Cargo all handle this. Less comfortable than the ferry — your pet is in the hold, separate from you — but it's faster than the multi-leg land routes. Use a pet relocation agent if you're not confident handling cargo paperwork.",
+        cost: "Cargo: $1,200–$3,000+ depending on origin and pet size.",
+      },
+      {
+        title: "Don't forget: it's a two-country problem",
+        icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Whatever route you pick, both the country you leave AND Ireland have rules. From the US you'll need an EU Health Certificate (USDA-endorsed). From the UK you'll need a GB Animal Health Certificate or pet passport. From within the EU, an EU pet passport covers it. Ireland-specific: ISO microchip, rabies ≥21 days old, and tapeworm treatment for dogs 24–120 hours before arrival.",
+        cost: "—",
       },
     ],
-    paperwork: "ISO microchip, rabies vaccine ≥21 days old, EU Animal Health Certificate, tapeworm treatment 24–120 hours pre-arrival.",
+    paperwork: "ISO microchip (implanted before rabies vaccine), rabies vaccine ≥21 days old, EU Animal Health Certificate or EU pet passport (or GB AHC if coming from the UK), tapeworm treatment by a vet 24–120 hours before arrival (dogs only). Confirm current requirements with Ireland's Department of Agriculture, Food and the Marine before you travel.",
   },
   {
     id: "india",
@@ -4110,6 +4213,7 @@ function ChecklistDownload() {
             {[
               { id: "generic", label: "Universal" },
               { id: "uk", label: "🇬🇧 UK" },
+              { id: "ireland", label: "🇮🇪 Ireland" },
               { id: "usa", label: "🇺🇸 USA" },
               { id: "uae", label: "🇦🇪 UAE" },
               { id: "canada", label: "🇨🇦 Canada" },
@@ -4218,30 +4322,37 @@ function JourneyPlanner() {
   // DIRECT_ROUTES and WORKAROUND_ROUTES_TABLE.
   const REGIONS = [
     { id: "uk-out", label: "United Kingdom", flag: "🇬🇧" },
+    { id: "ireland", label: "Ireland", flag: "🇮🇪" },
     { id: "us", label: "United States", flag: "🇺🇸" },
     { id: "canada", label: "Canada", flag: "🇨🇦" },
+    { id: "mexico", label: "Mexico", flag: "🇲🇽" },
     { id: "europe", label: "Europe", flag: "🇪🇺" },
     { id: "india", label: "India", flag: "🇮🇳" },
     { id: "dubai", label: "UAE / Dubai", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
   // Destinations where NO airline allows cabin pets inbound (government / infrastructure rules)
   const CABIN_IMPOSSIBLE_INBOUND = {
     "uk-out": "No airline allows cabin pets on flights INTO the UK — it's a UK government rule. You'll need a workaround (cabin into Europe, then Eurotunnel or ferry) or cargo.",
+    "ireland": "No airline allows cabin pets on flights INTO Ireland — the same government-rule wall as the UK. You'll need the France→Ireland ferry, the UK landbridge, or cargo. Flying OUT of Ireland in cabin is fine.",
     "south-africa": "No airline allows cabin pets in or out of South Africa internationally — pets travel as manifested cargo. Cabin is only possible on DOMESTIC South African flights (Lift, small dogs).",
   };
 
   // Map a region to its checklist tab id (used to point users at the checklist)
   const REGION_TO_CHECKLIST = {
     "uk-out": "uk",
+    "ireland": "ireland",
     "us": "usa",
     "canada": "canada",
+    "mexico": "mexico",
     "europe": "europe",
     "india": "india",
     "dubai": "uae",
     "caribbean": null, // Caribbean has per-island checklists, no single one
+    "hawaii": null, // Hawaii uses the Hawaii difficult-destination tab
     "south-africa": "south_africa",
   };
 
@@ -4254,12 +4365,15 @@ function JourneyPlanner() {
   // Used to check route DIRECTION — not just whether both regions are tagged.
   const REGION_CITIES = {
     "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
+    "ireland": ["Dublin", "Cork", "Shannon", "Rosslare", "(DUB)", "(ORK)", "(SNN)", "Ireland"],
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "USA"],
     "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "India"],
     "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Munich", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(MUC)", "Europe"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
+    "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Caribbean"],
+    "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
   };
 
@@ -4508,8 +4622,10 @@ function Routes() {
     { id: "india", label: "India routes", flag: "🇮🇳" },
     { id: "europe", label: "Europe routes", flag: "🇪🇺" },
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
+    { id: "mexico", label: "Mexico", flag: "🇲🇽" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
@@ -4544,6 +4660,8 @@ function Routes() {
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Cayman Islands"],
+    "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
+    "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
   };
 

@@ -1073,25 +1073,14 @@ const REGION_PAIR_STRATEGIES = {
     note: `The short hop: drive to Holyhead in Wales, then the ferry to Dublin. Both UK and Ireland pet rules apply.`,
   }),
 
-  // ----- INTO the UAE (cabin into UAE blocked — Dubai cargo-only) -----
-  "us>dubai": (o, d) => ({
-    legs: [
-      { route: `${o} → Abu Dhabi (AUH)`, time: "12–14h", airline: "Etihad ✓ Cabin OUT of the US (under 8 kg)" },
-    ],
-    note: `Etihad accepts cabin pets OUT of the US to Abu Dhabi (the restriction is only on flights TO the US). This is close to direct — AUH is 90 min from Dubai by road. Dubai (DXB) itself is cargo-only for all airlines.`,
-  }),
-  "uk-out>dubai": (o, d) => ({
-    legs: [
-      { route: `${o} → Abu Dhabi (AUH)`, time: "7–8h", airline: "Etihad ✓ Cabin OUT of the UK (under 8 kg)" },
-    ],
-    note: `Etihad takes cabin pets OUT of the UK to Abu Dhabi (only "flights to" the UK/UAE are blocked, not flights out). Near-direct — AUH is 90 min from Dubai. Avoid routing to DXB, which is cargo-only.`,
-  }),
-  "europe>dubai": (o, d) => ({
-    legs: [
-      { route: `${o} → Abu Dhabi (AUH)`, time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
-    ],
-    note: `Etihad flies cabin pets from European hubs to Abu Dhabi. Near-direct. AUH is 90 min from Dubai by road; DXB is cargo-only for all airlines.`,
-  }),
+  // ----- INTO the UAE -----
+  // NOTE: there are NO workaround strategies for *>dubai here. The cabin route
+  // into the UAE is a DIRECT Etihad flight to Abu Dhabi (AUH) — those live in
+  // DIRECT_ROUTES (LHR→AUH, MAN→AUH, JFK→AUH, European hubs→AUH). A "workaround"
+  // that's just "fly Etihad to Abu Dhabi" isn't a workaround, it's the direct
+  // route restated — including it created duplicate cards. If a specific origin
+  // airport has no direct AUH route, the honest answer is the drive-to-a-
+  // qualifying-airport logic, not a fake one-leg workaround.
   "india>dubai": (o, d) => ({
     legs: [
       { route: `${o} → Europe (Frankfurt / Paris)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
@@ -1326,15 +1315,18 @@ function handWrittenWorkaroundsForAirportPair(originCode, destCode) {
   });
 }
 
-// Find hand-written workarounds that match the REGION pair but NOT the exact
-// airport — these are real routes worth showing, just from a different airport
-// in the same country. The planner adapts them with a note.
+// Find hand-written workarounds that go to the EXACT destination airport but
+// depart from a DIFFERENT airport in the same origin country. These are real
+// routes worth showing (e.g. a hand-written Heathrow→Montreal→Miami when the
+// user picked Manchester→Miami) — but ONLY when the destination matches, and
+// ONLY when the origin genuinely differs. This prevents two bugs:
+//   1. Suggesting "London→New York" when the user asked for Miami.
+//   2. Offering to "adapt the route" when the origin already matches exactly.
 function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   const oA = airportByCode(originCode);
   const dA = airportByCode(destCode);
   if (!oA || !dA) return [];
-  // Which region keywords identify a route endpoint's region?
-  const regionKeywords = {
+  const originRegionKeywords = {
     "uk-out": ["London", "Manchester", "(LHR)", "(MAN)", "(LGW)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "USA"],
@@ -1347,15 +1339,18 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
   };
-  const inRegion = (field, region) =>
-    (regionKeywords[region] || []).some((kw) => field.includes(kw));
+  const fromInOriginRegion = (field) =>
+    (originRegionKeywords[oA.region] || []).some((kw) => field.includes(kw));
 
   return WORKAROUND_ROUTES_TABLE.filter((r) => {
-    const regionMatch = inRegion(r.from, oA.region) && inRegion(r.to, dA.region);
-    if (!regionMatch) return false;
-    // Exclude ones that ALSO match the exact airport (those are already shown).
-    const exactMatch = r.from.includes(`(${originCode})`) && r.to.includes(`(${destCode})`);
-    return !exactMatch;
+    // Destination MUST be the exact airport the user picked.
+    const toMatchesExactDest = r.to.includes(`(${destCode})`);
+    if (!toMatchesExactDest) return false;
+    // Origin must be in the same country...
+    if (!fromInOriginRegion(r.from)) return false;
+    // ...but must NOT be the exact same airport (that's already shown as "exact").
+    const sameOriginAirport = r.from.includes(`(${originCode})`);
+    return !sameOriginAirport;
   });
 }
 
@@ -5092,8 +5087,32 @@ function JourneyPlanner() {
     const direct = directRoutesForAirportPair(originCode, destination);
     const seen = new Set();
     const workarounds = [];
+    // De-dupe by the SEQUENCE OF AIRPORT CODES in the legs — not the exact
+    // leg strings. A hand-written "LHR → Montreal YUL" and a generated
+    // "London Heathrow (LHR) → Montreal (YUL)" are the SAME route. We match on
+    // codes — catching BOTH "(YUL)" and bare "YUL" — so inconsistent data
+    // formatting doesn't produce duplicate cards.
+    const KNOWN_CODES = AIRPORTS.map((a) => a.code).concat(["YUL", "YYZ", "YVR", "MXP", "CCU", "HYD"]);
+    const dedupeKey = (r) => {
+      const codes = [];
+      (r.legs || []).forEach((l) => {
+        // Parenthesised codes first
+        const paren = (l.route.match(/\(([A-Z]{3})\)/g) || []).map((c) => c.replace(/[()]/g, ""));
+        paren.forEach((c) => codes.push(c));
+        // Bare 3-letter codes that are known airports
+        const bare = (l.route.match(/\b[A-Z]{3}\b/g) || []).filter((c) => KNOWN_CODES.includes(c));
+        bare.forEach((c) => { if (!codes.includes(c)) codes.push(c); });
+      });
+      if (codes.length === 0) {
+        const f = (r.from.match(/\(([A-Z]{3})\)/) || [])[1];
+        const t = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
+        return [f, t].filter(Boolean).join(">");
+      }
+      // Sort-stable: keep order but collapse consecutive dupes
+      return codes.join(">");
+    };
     const push = (r, kind) => {
-      const k = (r.legs || []).map((l) => l.route).join("|");
+      const k = dedupeKey(r);
       if (seen.has(k)) return;
       seen.add(k);
       workarounds.push({ ...r, _kind: kind });

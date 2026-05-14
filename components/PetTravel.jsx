@@ -3454,18 +3454,20 @@ function AirlineGrid() {
 
   const filteredAirlines = filter === "all"
     ? AIRLINES
-    : AIRLINES.filter((a) => a.tags && a.tags.includes(filter));
+    : AIRLINES.filter((a) =>
+        (a.tags && a.tags.includes(filter)) || a.scope === filter
+      );
 
   return (
     <section id="airlines" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="III.">Airline policies</SectionLabel>
+        <SectionLabel num="III.">Airline pet policies</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
-          The twenty-one carriers most pet owners book.
+          Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Tap any airline to see fees, weight rules, carrier dimensions, and the fine print most travelers miss.
+          Twenty-two airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -3525,7 +3527,9 @@ function AirlineGrid() {
                   className="w-full text-left p-6 hover:bg-white transition-colors"
                 >
                   <div className="flex items-baseline justify-between gap-4 mb-3">
-                    <h3 className="font-serif text-2xl text-stone-900">{a.name}</h3>
+                    <h3 className="font-serif text-2xl text-stone-900">
+                      {a.name}<span className="text-stone-400 text-lg"> — pets in cabin</span>
+                    </h3>
                     <span className="text-xs uppercase tracking-widest text-stone-500">
                       {open ? "Close" : "Details"}
                     </span>

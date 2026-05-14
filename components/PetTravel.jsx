@@ -753,6 +753,69 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "This one is actually a DIRECT cabin route, not a workaround — Air Canada flies Toronto → Delhi and India isn't on their no-cabin list. Included here as a reminder: you still need India's AQCS No Objection Certificate for the import side, and entry is only via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad. From Montreal/Vancouver, connect via Toronto. Always confirm cabin space with Air Canada when booking.",
     tags: ["canada", "india"],
   },
+  // UK → India (no direct cabin — Air India is cargo-only for the UK)
+  {
+    from: "London (LHR)",
+    to: "Delhi / Mumbai (India)",
+    duration: "~16h+ with layover",
+    legs: [
+      { route: "LHR → Frankfurt FRA (or Paris CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin (out of UK)" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer for pet handover" },
+      { route: "FRA/CDG → Delhi or Mumbai", time: "8–9h", airline: "Confirm cabin pet acceptance with the operating airline before booking" },
+    ],
+    note: "Air India's own policy confirms pets are CARGO-ONLY to and from the UK — there is no direct UK↔India cabin route. Flying cabin OUT of the UK to a European hub is allowed, and from Europe you continue toward India. The second leg's cabin availability varies by airline and aircraft, so confirm it directly before you book — and remember the India side still needs the AQCS NOC and entry via one of the six approved airports. If a fully-cabin second leg can't be confirmed, this becomes a cargo move for the long-haul portion.",
+    tags: ["uk-out", "india", "europe"],
+  },
+  // India → UK (reverse — cabin into the UK is never allowed)
+  {
+    from: "Delhi / Mumbai (India)",
+    to: "London / UK",
+    duration: "~16h+ with layover",
+    legs: [
+      { route: "Delhi/Mumbai → Frankfurt FRA (or Paris CDG)", time: "8–9h", airline: "Confirm cabin pet acceptance with the operating airline" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer" },
+      { route: "FRA/CDG → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+    ],
+    note: "Two walls here: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK from anywhere (UK government rule). So the route is India → continental Europe, then the Eurotunnel land crossing into the UK. Confirm the India→Europe leg's cabin availability before booking; if it can't be confirmed as cabin, the long-haul portion becomes cargo, but the Europe→UK Eurotunnel leg always keeps your pet with you.",
+    tags: ["india", "uk-out", "europe"],
+  },
+  // UAE → UK (outbound from UAE; cabin into UK never allowed)
+  {
+    from: "Abu Dhabi (AUH)",
+    to: "London / UK",
+    duration: "~12h+ with layover",
+    legs: [
+      { route: "Abu Dhabi → European hub (Paris / Frankfurt / Amsterdam)", time: "7–8h", airline: "Etihad ✓ Cabin (under 8 kg) out of AUH" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+    ],
+    note: "Etihad accepts cabin pets OUT of Abu Dhabi to Europe (under 8 kg). From a European hub, the Eurotunnel land crossing brings your pet into the UK with you — since no airline flies cabin pets into the UK directly. Start the journey at Abu Dhabi (AUH), not Dubai (DXB), which is cargo-only for all airlines.",
+    tags: ["dubai", "uk-out", "europe"],
+  },
+  // UAE → USA (outbound from UAE)
+  {
+    from: "Abu Dhabi (AUH)",
+    to: "New York / US East Coast",
+    duration: "~16h+ with layover",
+    legs: [
+      { route: "Abu Dhabi → European hub (Paris / Frankfurt / Amsterdam)", time: "7–8h", airline: "Etihad ✓ Cabin (under 8 kg) out of AUH" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer" },
+      { route: "Hub → New York / Boston / Chicago", time: "8–9h", airline: "Air France / Lufthansa / KLM ✓ Cabin (under 8 kg)" },
+    ],
+    note: "Etihad's restrictions block cabin pets on 'flights to the USA' — inbound to the US — but flying cabin OUT of Abu Dhabi to Europe is permitted. From a European hub, the transatlantic carriers (Air France, Lufthansa, KLM) take cabin pets onward to the US. Keep the pet + carrier within 8 kg for the whole journey. Start at Abu Dhabi (AUH), not Dubai.",
+    tags: ["dubai", "us", "europe"],
+  },
+  // UAE → India (outbound from UAE — Air India cabin works this direction)
+  {
+    from: "Abu Dhabi / Dubai (UAE)",
+    to: "Delhi / Mumbai (India)",
+    duration: "3–4h direct",
+    legs: [
+      { route: "UAE → Delhi / Mumbai", time: "3–4h", airline: "Air India ✓ Cabin OUT of the UAE (under 10 kg)" },
+    ],
+    note: "This one is close to direct: Air India's official policy allows cabin pets on flights DEPARTING the UAE (the restriction is only on flights departing India and arriving in the UAE — that reverse direction is blocked). So UAE → India can be a single cabin flight. You still need India's AQCS NOC and entry via one of the six approved airports. Confirm the specific route and cabin space with Air India when booking.",
+    tags: ["dubai", "india"],
+  },
 ];
 
 // Combined for backward compatibility (other components reference ROUTES)
@@ -870,6 +933,16 @@ const CHECKLIST_DATA = {
           "Bring water, treats, and a familiar blanket for the crossing",
         ],
       },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Good news: cats do NOT need the tapeworm treatment — that's a dogs-only UK/Ireland requirement",
+          "Everything else is the same: ISO microchip, rabies ≥21 days before entry, health certificate",
+          "No cabin into the UK applies to cats too — you'll still do the Paris pivot or cargo",
+          "On the Eurotunnel crossing the cat stays in its carrier in the car — bring a familiar-smelling blanket",
+          "Use Feliway (cat pheromone) in the carrier, never Adaptil — and keep a harness on for the Pet Reception checks",
+        ],
+      },
     ],
   },
   india: {
@@ -901,6 +974,16 @@ const CHECKLIST_DATA = {
           "Confirm with Air India that cabin slot still applies — pets approved 48 hrs prior",
         ],
       },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "The AQCS NOC is required for cats too — same process, apply 4 weeks ahead",
+          "Same microchip + rabies + vaccination requirements as dogs",
+          "The six-airport entry rule applies to cats as well (Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad)",
+          "Air India accepts cats in cabin on eligible routes — confirm your cat + carrier is within the weight limit",
+          "Long-haul to India is a long time in a carrier for a cat — book a covered carrier, use Feliway, and pick an overnight flight",
+        ],
+      },
     ],
   },
   europe: {
@@ -930,6 +1013,15 @@ const CHECKLIST_DATA = {
           "Arrive 3 hours early for international",
           "Bring calming spray for long flights",
           "Window seat if possible; extra-legroom if airline allows",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats follow the same EU rules: ISO microchip first, then rabies ≥21 days before entry, then the EU Health Certificate or EU Pet Passport",
+          "No tapeworm treatment needed for cats (that's a dogs-only rule, and only for the UK, Ireland, Malta, Finland, Norway anyway)",
+          "EU flag carriers that take cabin dogs take cabin cats too — same 8 kg combined limit",
+          "Use Feliway in the carrier (not Adaptil), keep it covered/ventilated, and fit a harness for the security check where the cat must come out",
         ],
       },
     ],
@@ -970,6 +1062,16 @@ const CHECKLIST_DATA = {
           "Originals only at US border, not photos",
           "Arrive 3 hours early for international",
           "Pet relief area available at most major US airports — but walk your dog before you enter the airport too",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats do NOT need the CDC Dog Import Form — that's dogs only",
+          "Under current federal rules cats aren't required to show proof of rabies vaccination to enter the US — but your airline will likely still want a current rabies certificate, and some states (notably Hawaii) have their own rules",
+          "Cats are inspected on arrival and must appear healthy",
+          "You can't walk a cat before the airport — instead give litter tray access right up until you leave, and don't feed within ~4 hours of departure",
+          "At the US security check the cat must come out of the carrier — a harness is essential",
         ],
       },
     ],
@@ -1013,6 +1115,16 @@ const CHECKLIST_DATA = {
           "From AUH to Dubai: 90-minute taxi (around AED 250)",
         ],
       },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats need the same MOCCAE import permit, ISO microchip, rabies vaccine and FAVN titer as dogs — no shortcut",
+          "Etihad accepts cats in cabin to/from Abu Dhabi on the same terms as dogs (8 kg combined limit)",
+          "The Dubai cargo-only rule applies to cats too — there is no cabin entry to DXB for any pet",
+          "Some of the breed-specific bans are dog-only, but the import process itself is identical for cats",
+          "Long flight to the Gulf — covered carrier, Feliway, overnight flight, and a harness for the AUH inspection",
+        ],
+      },
     ],
   },
   canada: {
@@ -1053,6 +1165,16 @@ const CHECKLIST_DATA = {
           "Cats face fewer restrictions but still need health certificate",
         ],
       },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Canada is one of the easier destinations for cats: a rabies certificate from your vet is the core requirement (cats over 3 months)",
+          "No CDC-style import form, no APHIS endorsement needed from the US",
+          "Air Canada and the US carriers take cabin cats on the same terms as dogs (≤10 kg combined on Air Canada)",
+          "Cats can't be walked before the flight — litter tray access until you leave, no food within ~4 hours of departure",
+          "Feliway in a covered carrier, harness on for the security check",
+        ],
+      },
     ],
   },
   mexico: {
@@ -1091,6 +1213,16 @@ const CHECKLIST_DATA = {
           "Returning to US: CDC Dog Import Form receipt required for dogs",
           "Returning to Canada: standard rabies + health certificate",
           "Returning to EU: EU Health Certificate or pet passport — Mexico is an unlisted third country so 3-month wait may apply",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Mexico is straightforward for cats: vet health certificate + current rabies vaccine is the core requirement",
+          "SADER/SENASICA inspect cats on arrival the same way as dogs — free of charge",
+          "Returning to the US with a cat: no CDC Dog Import Form needed (that's dogs only)",
+          "Internal/external parasite treatment should still be documented for a cat",
+          "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
         ],
       },
     ],
@@ -1136,6 +1268,16 @@ const CHECKLIST_DATA = {
           "DR inspection on arrival — typically quick if paperwork complete",
         ],
       },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Getting a cat INTO the DR is straightforward: microchip, rabies, FVRCP, vet health certificate",
+          "The CDC high-risk-rabies complication is about DOGS returning to the US — cats returning from the DR do NOT need the CDC Dog Import Form or the Certification of U.S.-issued Rabies Vaccination",
+          "That makes the round trip noticeably simpler for a cat than for a dog",
+          "Still bring originals of the cat's microchip, rabies and health certificate",
+          "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
+        ],
+      },
     ],
   },
   jamaica: {
@@ -1177,6 +1319,16 @@ const CHECKLIST_DATA = {
           "Government-endorsed international health certificate",
           "All vaccination and treatment records (microchip number on every document)",
           "Pit Bull Terriers and hybrid dogs are banned — confirm breed eligibility well in advance",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Jamaica's strict process applies to cats too — microchip, rabies, FAVN titer, import permit, the 6+ month timeline. It is not quicker for a cat.",
+          "The Category 1 country rule applies to cats as well (must travel from, or have lived 6+ months in, a rabies-controlled country)",
+          "The parasite-treatment schedule applies to cats — confirm the exact schedule with Jamaica Veterinary Services",
+          "Brucella Canis testing is dog-only; the breed bans are dog-only — but every other step is the same for a cat",
+          "Because of the long lead time, a covered carrier and Feliway acclimation over those months is easy to build in — start early",
         ],
       },
     ],
@@ -1228,6 +1380,16 @@ const CHECKLIST_DATA = {
           "Only the CDC Dog Import Form receipt is needed for re-entry",
           "Dog must be 6+ months old, microchipped, healthy",
           "No titer test or quarantine required on return",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats need the same Bahamas Import Permit — apply via bahamaspetpermit.com 6–8 weeks ahead",
+          "Microchip, rabies, and the International Veterinary Certificate (within 48 hours of arrival) all apply to cats",
+          "The breed bans are dog-only — but the permit and paperwork process is identical for a cat",
+          "Returning to the US with a cat: no CDC Dog Import Form needed (dogs only) — Bahamas being rabies-free makes the cat round trip very simple",
+          "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
         ],
       },
     ],
@@ -4047,7 +4209,7 @@ function JourneyPlanner() {
     if (!planned) return;
     const el = sectionRef.current;
     if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      const top = el.getBoundingClientRect().top + window.scrollY - 8;
       window.scrollTo({ top, behavior: "smooth" });
     }
   }, [planned]);

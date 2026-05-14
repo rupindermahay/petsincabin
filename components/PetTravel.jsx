@@ -439,6 +439,8 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM MONTREAL ═══════
   { from: "Montreal (YUL)", to: "Miami (MIA)", duration: "3h 30m", note: "Air Canada, American, or United. ✓ Cabin all three (22 lb AC / 20 lb US carriers).", tags: ["canada", "us"] },
+  { from: "Montreal (YUL)", to: "Paris (CDG)", duration: "7h 15m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Montreal's most popular direct cabin route to Europe — Paris connects onward across the EU.", tags: ["canada", "europe"] },
+  { from: "Montreal (YUL)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Frankfurt is a strong onward hub for the rest of Europe and India.", tags: ["canada", "europe"] },
 
   // ═══════ FROM NASSAU ═══════
   { from: "Nassau (NAS)", to: "Miami (MIA)", duration: "55m", note: "JetBlue, AA, Delta, Bahamasair. ✓ Cabin. Returning to US: standard CDC Dog Import Form — Bahamas is CDC-rabies-FREE so easy return.", tags: ["caribbean", "us"] },
@@ -468,10 +470,17 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM TORONTO ═══════
   { from: "Toronto (YYZ)", to: "Chicago (ORD)", duration: "1h 30m", note: "Air Canada or United. ✓ Cabin both. Shortest US Midwest cabin from Canada.", tags: ["canada", "us"] },
+  { from: "Toronto (YYZ)", to: "Delhi (DEL)", duration: "14h", note: "Air Canada. ✓ Cabin (under 10 kg combined). India isn't on Air Canada's no-cabin list — but you'll need India's AQCS NOC for the import side. One of the very few direct cabin options Canada ↔ India. Confirm with Air Canada when booking.", tags: ["canada", "india"] },
+  { from: "Toronto (YYZ)", to: "Frankfurt (FRA)", duration: "8h 15m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Frankfurt is a strong onward cabin hub for the rest of Europe and India.", tags: ["canada", "europe"] },
   { from: "Toronto (YYZ)", to: "Los Angeles (LAX)", duration: "5h 15m", note: "Air Canada. ✓ Cabin (under 22 lb combined). West coast direct.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Miami (MIA)", duration: "3h 22m", note: "Air Canada or American. ✓ Cabin both. Popular cabin route for Canadians wintering in Florida.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
   { from: "Toronto (YYZ)", to: "New York (JFK)", duration: "1h 45m", note: "Air Canada, Delta, United, American. ✓ Cabin all four. Shortest US cabin from Canada.", tags: ["canada", "us"] },
+  { from: "Toronto (YYZ)", to: "Paris (CDG)", duration: "7h 30m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Direct cabin Canada → Europe — Paris connects onward cabin-friendly across the EU.", tags: ["canada", "europe"] },
+
+  // ═══════ FROM VANCOUVER ═══════
+  { from: "Vancouver (YVR)", to: "Frankfurt (FRA)", duration: "9h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). West-coast Canada direct cabin to Europe.", tags: ["canada", "europe"] },
+  { from: "Vancouver (YVR)", to: "Toronto (YYZ)", duration: "4h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined). Connect at YYZ for onward cabin routes.", tags: ["canada"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -678,6 +687,45 @@ const WORKAROUND_ROUTES_TABLE = [
     ],
     note: "No direct cabin Caribbean → Europe — you must route via the US. From Miami the transatlantic cabin options are Paris (Air France) and Frankfurt (Lufthansa). From JFK you have Paris, Amsterdam (KLM), Frankfurt, Zurich (SWISS), Rome (ITA), Warsaw (LOT). All accept cabin pets under 8 kg.",
     tags: ["caribbean", "europe", "us"],
+  },
+  // Canada → UK workaround (no cabin into UK from anywhere)
+  {
+    from: "Toronto / Montreal / Vancouver",
+    to: "London / UK",
+    duration: "~12h total",
+    legs: [
+      { route: "Canada → Paris CDG (or Frankfurt)", time: "7h 15m – 9h 45m", airline: "Air Canada ✓ Cabin (under 10 kg)" },
+      { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
+      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+    ],
+    note: "Air Canada does NOT allow cabin pets on flights to the UK (UK is on their no-cabin list, like the UK government rule for all airlines). The workaround: fly cabin Canada → Paris on Air Canada, then Eurotunnel into the UK. Pet stays with you from Paris onward. Eurotunnel costs £25–£60 per pet.",
+    tags: ["canada", "uk-out", "europe"],
+  },
+  // Canada → UAE workaround
+  {
+    from: "Toronto / Montreal",
+    to: "Abu Dhabi / Dubai (UAE)",
+    duration: "~16h total",
+    legs: [
+      { route: "Canada → Paris CDG or Frankfurt", time: "7h 15m – 8h 15m", airline: "Air Canada ✓ Cabin (under 10 kg)" },
+      { route: "Layover at CDG / FRA", time: "2–4h", airline: "Recommended buffer" },
+      { route: "Paris/Frankfurt → Abu Dhabi (AUH)", time: "6h 30m – 7h 30m", airline: "Etihad ✓ Cabin (under 8 kg)" },
+      { route: "AUH → Dubai (if needed)", time: "90 min", airline: "Taxi — pet stays with you" },
+    ],
+    note: "Air Canada doesn't fly cabin pets to the UAE directly. Route via a European hub: Air Canada cabin to Paris or Frankfurt, then Etihad cabin onward to Abu Dhabi. Note the carrier weight DROPS from Air Canada's 10 kg to Etihad's 8 kg limit — your pet + carrier must meet the stricter 8 kg for the whole journey. Abu Dhabi is the only cabin entry to the UAE; Dubai (DXB) is cargo-only for all airlines.",
+    tags: ["canada", "dubai", "europe"],
+  },
+  // Canada → India direct note (Air Canada flies it cabin)
+  {
+    from: "Toronto (YYZ)",
+    to: "Delhi / Mumbai (India)",
+    duration: "14h direct",
+    legs: [
+      { route: "Toronto → Delhi", time: "14h", airline: "Air Canada ✓ Cabin (under 10 kg) — direct" },
+    ],
+    note: "This one is actually a DIRECT cabin route, not a workaround — Air Canada flies Toronto → Delhi and India isn't on their no-cabin list. Included here as a reminder: you still need India's AQCS No Objection Certificate for the import side, and entry is only via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad. From Montreal/Vancouver, connect via Toronto. Always confirm cabin space with Air Canada when booking.",
+    tags: ["canada", "india"],
   },
 ];
 
@@ -3209,7 +3257,7 @@ const DESTINATIONS = [
         cost: "Titer test: £80–£200. Import permit: free–R200.",
       },
     ],
-    paperwork: "Into South Africa: State Veterinary import permit (apply 2–4 weeks ahead), ISO microchip, rabies vaccine 30 days–1 year old, rabies titer test for most countries, veterinary health certificate endorsed by the origin country's government vet, and additional tests (e.g. for ticks, biliary) depending on origin. Out of South Africa: rabies titer test, State Vet health certificate, plus whatever the destination country requires. All international pets travel as manifested cargo. Confirm everything with a relocation agent or the SA Department of Agriculture.",
+    paperwork: "Into South Africa: State Veterinary import permit (apply 2–4 weeks ahead), ISO microchip, rabies vaccine 30 days–1 year old, rabies titer test for most countries, veterinary health certificate endorsed by the origin country's government vet, and additional tests (e.g. for ticks, biliary) depending on origin. Out of South Africa: rabies titer test, State Vet health certificate, plus whatever the destination country requires. All international pets travel as manifested cargo. IMPORTANT: because South Africa is cargo-only internationally, the exact crate specs, booking process, timings, and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before you commit to dates. Don't rely on general guidance for a cargo move; get specifics for your exact route.",
   },
 ];
 

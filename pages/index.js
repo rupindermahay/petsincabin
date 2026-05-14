@@ -6,6 +6,8 @@ export default function Home() {
     <>
       <Head>
         <title>Travelling with Pets: Flying With Your Dog or Cat in the Cabin | Pets in Cabin</title>
+        {/* This page's own canonical — the homepage is canonical to itself. */}
+        <link rel="canonical" href="https://petsincabin.com" />
       </Head>
       <PetTravel />
     </>

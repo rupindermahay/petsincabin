@@ -504,6 +504,9 @@ const DIRECT_ROUTES = [
   { from: "New York (JFK)", to: "Rome (FCO)", duration: "9h", note: "ITA Airways. ✓ Cabin (under 8 kg, €210 fee). Plus EU pet passport hub access.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Nassau (NAS)", duration: "3h", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Bahamas import permit required — apply 6–8 weeks ahead. Bahamas is CDC-rabies-FREE so US re-entry is straightforward.", tags: ["us", "caribbean"] },
+  { from: "New York (JFK)", to: "Montego Bay (MBJ)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Jamaica has a strict 6+ month import process — start very early. Jamaica is NOT on the CDC high-risk list, so US re-entry is the standard form.", tags: ["us", "caribbean"] },
+  { from: "New York (JFK)", to: "Punta Cana (PUJ)", duration: "3h 45m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get the Certification of US-issued Rabies Vaccination form BEFORE leaving the US for the return.", tags: ["us", "caribbean"] },
 
   // ═══════ FROM PUNTA CANA ═══════
   { from: "Punta Cana (PUJ)", to: "Miami (MIA)", duration: "2h 25m", note: "JetBlue, AA, Delta, Spirit. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — US re-entry needs Certification of US-issued Rabies Vaccination form obtained BEFORE leaving the US.", tags: ["caribbean", "us"] },
@@ -1080,9 +1083,19 @@ function generateWorkarounds(origin, destination) {
       legs: built.legs,
       note: built.note,
       generated: true,
+      tags: [origin, destination],
     };
   });
 }
+
+// Every generated workaround across all strategy pairs — used by the Routes
+// section so its workaround list has the same guaranteed coverage floor as
+// the journey planner (e.g. "arriving into the Caribbean" shows UK, Europe
+// and Canada origins, not just hand-written US routes).
+const ALL_GENERATED_WORKAROUNDS = Object.keys(REGION_PAIR_STRATEGIES).flatMap((key) => {
+  const [origin, destination] = key.split(">");
+  return generateWorkarounds(origin, destination);
+});
 
 // ---------- DOWNLOADABLE CHECKLISTS ----------
 
@@ -4940,9 +4953,20 @@ function Routes() {
   };
 
   const filteredDirect = applyFilter(DIRECT_ROUTES, false);
-  const filteredWorkarounds = applyFilter(WORKAROUND_ROUTES_TABLE, true);
+  // Combine hand-written + generated workarounds so the Routes section has the
+  // same coverage floor as the journey planner. De-dupe generated entries
+  // whose destination airport is already covered by a hand-written workaround.
+  const handWrittenDestCodes = WORKAROUND_ROUTES_TABLE
+    .map((r) => (r.to.match(/\(([A-Z]{3})\)/) || [])[1])
+    .filter(Boolean);
+  const dedupedGenerated = ALL_GENERATED_WORKAROUNDS.filter((r) => {
+    const code = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
+    return !code || !handWrittenDestCodes.includes(code);
+  });
+  const allWorkarounds = [...WORKAROUND_ROUTES_TABLE, ...dedupedGenerated];
+  const filteredWorkarounds = applyFilter(allWorkarounds, true);
   const totalFiltered = filteredDirect.length + filteredWorkarounds.length;
-  const totalAll = DIRECT_ROUTES.length + WORKAROUND_ROUTES_TABLE.length;
+  const totalAll = DIRECT_ROUTES.length + allWorkarounds.length;
 
   const directGrouped = groupByCity(filteredDirect, direction);
   const workaroundsGrouped = groupByCity(filteredWorkarounds, direction);
@@ -5134,9 +5158,11 @@ function Routes() {
                           <div className="font-serif text-xl text-stone-900">
                             {r.from} <span className="text-stone-400 mx-2">→</span> {r.to}
                           </div>
-                          <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
-                            Total: {r.duration}
-                          </div>
+                          {r.duration && r.duration !== "see legs" && (
+                            <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
+                              Total: {r.duration}
+                            </div>
+                          )}
                         </div>
 
                         <div className="space-y-2 mb-4">

@@ -819,6 +819,18 @@ const CHECKLIST_DATA = {
           "On long flights: book overnight/red-eye when pets naturally sleep",
         ],
       },
+      {
+        title: "If you're flying with a cat — extra notes",
+        items: [
+          "You can't walk a cat tired — instead give full litter tray access right up until you leave home",
+          "Start carrier acclimation WEEKS ahead — leave it out as a normal den, not a thing that appears on travel day",
+          "Use Feliway (the cat pheromone spray), not Adaptil (that's for dogs) — spray the carrier 15 min before, never the cat",
+          "Fit a well-adjusted harness and practise it at home — a startled cat loose in an airport is a real risk at the security check",
+          "Cats go quiet and still when stressed rather than vocal — check gently, don't assume silence means calm",
+          "A carrier with solid sides or a ventilated blanket cover helps a cat settle — they cope better not seeing the chaos",
+          "Don't feed within ~4 hours of departure — cats are prone to travel-sickness and accidents",
+        ],
+      },
     ],
   },
   uk: {
@@ -2206,8 +2218,8 @@ function assess(answers) {
       flags.push({
         severity: "blocker",
         title: "Likely too young for international travel",
-        detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks. The US requires dogs to be at least 6 months old to enter.",
-        workaround: "Wait until your pet is at least 15 weeks (EU minimum), 16 weeks (most other countries), or 6 months (entering the US). Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
+        detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks. The US requires dogs (not cats) to be at least 6 months old to enter.",
+        workaround: "Wait until your pet is at least 15 weeks (EU minimum), 16 weeks (most other countries), or — for a dog entering the US — 6 months. Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
       });
     }
   }
@@ -2290,10 +2302,18 @@ function assess(answers) {
   }
 
   if (isInternationalArrival) {
-    warnings.push({
-      title: "Entering the USA — CDC Dog Import Form required for all dogs",
-      detail: "Every dog entering the US (including US dogs returning home) needs a completed CDC Dog Import Form — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
-    });
+    if (hasSpecies("Dog")) {
+      warnings.push({
+        title: "Entering the USA — CDC Dog Import Form required for all dogs",
+        detail: "Every dog entering the US (including US dogs returning home) needs a completed CDC Dog Import Form — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
+      });
+    }
+    if (hasSpecies("Cat")) {
+      warnings.push({
+        title: "Entering the USA — cats have lighter rules than dogs",
+        detail: "Cats do NOT need the CDC Dog Import Form (that's dogs only). Cats aren't required to have proof of rabies vaccination for US entry under federal rules — though your airline will likely still want a current rabies certificate, and your origin country and some US states (e.g. Hawaii) have their own requirements. Cats are inspected on arrival and must appear healthy. Always confirm with your airline and your specific origin/destination.",
+      });
+    }
   }
 
   if (answers.destination === "UK") {
@@ -4018,6 +4038,19 @@ function JourneyPlanner() {
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [planned, setPlanned] = useState(false);
+  const sectionRef = useRef(null);
+
+  // When results appear, scroll back to the top of the planner section —
+  // otherwise the results render below the fold and the user is left
+  // looking at the bottom, having to scroll up to see the results header.
+  useEffect(() => {
+    if (!planned) return;
+    const el = sectionRef.current;
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  }, [planned]);
 
   // The regions the planner understands. IDs match the tags used across
   // DIRECT_ROUTES and WORKAROUND_ROUTES_TABLE.
@@ -4107,7 +4140,7 @@ function JourneyPlanner() {
   }
 
   return (
-    <section id="planner" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
+    <section ref={sectionRef} id="planner" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-amber-400/70 text-lg">✦</span>
@@ -5096,6 +5129,16 @@ function Tips() {
               tag: "On bringing pet food",
               title: "Most countries restrict pet food at the border.",
               body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly.",
+            },
+            {
+              tag: "For cat owners",
+              title: "A cat can't be walked tired — plan differently.",
+              body: "Most pre-flight advice assumes you can walk a dog to burn off energy and get the toilet trip done. You can't do that with a cat. Instead: give your cat full access to a litter tray right up until you leave for the airport, keep them in a carrier they already see as a safe den (weeks of leaving it out at home, not days), and don't feed within about 4 hours of departure to reduce the chance of an accident. Cats also tend to go quiet and still when stressed rather than vocal — silence isn't always calm, so check on them gently without opening the carrier.",
+            },
+            {
+              tag: "For cat owners",
+              title: "Feliway, not Adaptil — and a covered carrier.",
+              body: "The calming pheromone products are species-specific: Feliway is the cat one (Adaptil is for dogs) — spray it in the carrier 15 minutes before, not on your cat. Cats settle better when they can't see the chaos around them, so a carrier with solid sides or a light blanket draped over (still ventilated) often works better than a fully mesh one. At security, where you have to take your cat out of the carrier, a well-fitted harness is essential — a startled cat in a busy airport is a genuine flight risk. Practise the harness at home first.",
             },
           ].map((t, i) => (
             <div key={i}>

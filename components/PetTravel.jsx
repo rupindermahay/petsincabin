@@ -182,7 +182,7 @@ const AIRLINES = [
     fee: "CAD $50–$120 depending on route",
     weight: "Pet + carrier max 17.6 lb (8 kg)",
     carrier: "Soft-sided. Max 16 × 9 × 9 in (40 × 23 × 23 cm)",
-    notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Does NOT work from Gatwick (GLA only). Like Air Canada, pets can't fly cabin into the UK on return.",
+    notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Air Transat operates this from Manchester (MAN) and Glasgow (GLA) only — NOT Gatwick. Like Air Canada, pets can't fly cabin into the UK on return.",
     intl: "Yes (transatlantic)",
     verified: "May 2026",
     link: "https://www.airtransat.com/en/travel-info/baggage/special-baggage/pets",
@@ -872,14 +872,24 @@ const ROUTES = [...DIRECT_ROUTES, ...WORKAROUND_ROUTES_TABLE];
 
 // Key airports per region — the minimum floor the planner guarantees.
 const REGION_HUBS = {
-  "uk-out": ["London (LHR)", "London (LGW)", "Manchester (MAN)"],
+  // UK cabin-out hubs: Heathrow and Manchester ONLY. Gatwick (LGW) is
+  // deliberately excluded — the carriers that fly cabin pets out of the UK
+  // (Air France, KLM, Lufthansa, SWISS, TAP, Etihad, Turkish, Air Transat)
+  // operate that service from LHR and MAN, NOT Gatwick. Including LGW here
+  // would generate workarounds implying a cabin route that doesn't exist.
+  "uk-out": ["London (LHR)", "Manchester (MAN)"],
   "ireland": ["Dublin (DUB)"],
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
   "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
   "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
   "india": ["Delhi (DEL)", "Mumbai (BOM)", "Bengaluru (BLR)", "Chennai (MAA)"],
-  "dubai": ["Dubai (DXB)", "Abu Dhabi (AUH)"],
+  // UAE cabin hub order matters: Abu Dhabi (AUH) is FIRST because it's the
+  // only UAE airport where cabin pets are permitted (Etihad). Dubai (DXB) is
+  // cargo-only for ALL airlines under UAE law — it stays in the list so DXB
+  // routes still match the UAE region, but AUH must be the generation origin
+  // so "from UAE" workarounds never imply a cabin departure from Dubai.
+  "dubai": ["Abu Dhabi (AUH)", "Dubai (DXB)"],
   "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
@@ -889,6 +899,83 @@ const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
   "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa",
+};
+
+// ---------- AIRPORT-LEVEL MASTER LIST ----------
+// Every key airport the journey planner offers, with its region and — crucially
+// — per-airport cabin facts. This is what makes the planner ACCURATE for the
+// specific airport selected, instead of substituting a regional "representative".
+//
+//   cabinOut: can a pet fly OUT of this airport in the cabin (on at least one
+//             airline, to at least one destination)?
+//   cabinIn:  can a pet fly INTO this airport in the cabin?
+//   note:     airport-specific caveat shown when this airport is selected.
+//
+// VERIFIED (official sources, May 2026):
+// - London Gatwick (LGW): carriers that fly cabin pets out of the UK use
+//   Heathrow / Manchester — NOT Gatwick. cabinOut: false.
+// - All UK/Ireland airports: cabinIn false (government rule, every airline).
+// - Dubai (DXB): cargo-only both directions under UAE law. Abu Dhabi (AUH) is
+//   the only UAE cabin airport (Etihad).
+// - India: cabin pets may only enter via DEL, BOM, MAA, CCU, BLR, HYD.
+const AIRPORTS = [
+  // United Kingdom
+  { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here." },
+  { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false, note: "Manchester handles cabin-pet departures (Air Transat, Etihad, others) — handy if you're in the north." },
+  { code: "LGW", city: "London Gatwick", region: "uk-out", cabinOut: false, cabinIn: false, note: "Gatwick does NOT permit cabin pets on departing flights. For a cabin departure use Heathrow (LHR) instead — it's the same London area." },
+  // Ireland
+  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo." },
+  // United States
+  { code: "JFK", city: "New York JFK", region: "us", cabinOut: true, cabinIn: true },
+  { code: "EWR", city: "Newark", region: "us", cabinOut: true, cabinIn: true },
+  { code: "BOS", city: "Boston", region: "us", cabinOut: true, cabinIn: true },
+  { code: "ORD", city: "Chicago O'Hare", region: "us", cabinOut: true, cabinIn: true },
+  { code: "MIA", city: "Miami", region: "us", cabinOut: true, cabinIn: true },
+  { code: "LAX", city: "Los Angeles", region: "us", cabinOut: true, cabinIn: true },
+  { code: "IAD", city: "Washington Dulles", region: "us", cabinOut: true, cabinIn: true },
+  { code: "SFO", city: "San Francisco", region: "us", cabinOut: true, cabinIn: true },
+  // Canada
+  { code: "YYZ", city: "Toronto", region: "canada", cabinOut: true, cabinIn: true },
+  { code: "YUL", city: "Montreal", region: "canada", cabinOut: true, cabinIn: true },
+  { code: "YVR", city: "Vancouver", region: "canada", cabinOut: true, cabinIn: true },
+  // Mexico
+  { code: "MEX", city: "Mexico City", region: "mexico", cabinOut: true, cabinIn: true },
+  { code: "CUN", city: "Cancún", region: "mexico", cabinOut: true, cabinIn: true },
+  { code: "GDL", city: "Guadalajara", region: "mexico", cabinOut: true, cabinIn: true },
+  // Europe
+  { code: "CDG", city: "Paris CDG", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "AMS", city: "Amsterdam", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "FRA", city: "Frankfurt", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "MAD", city: "Madrid", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "FCO", city: "Rome", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "LIS", city: "Lisbon", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "ZRH", city: "Zurich", region: "europe", cabinOut: true, cabinIn: true },
+  // India
+  { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
+  { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
+  { code: "BLR", city: "Bengaluru", region: "india", cabinOut: true, cabinIn: true, note: "Bengaluru is one of India's six approved pet-entry airports." },
+  { code: "MAA", city: "Chennai", region: "india", cabinOut: true, cabinIn: true, note: "Chennai is one of India's six approved pet-entry airports." },
+  { code: "CCU", city: "Kolkata", region: "india", cabinOut: true, cabinIn: true, note: "Kolkata is one of India's six approved pet-entry airports." },
+  { code: "HYD", city: "Hyderabad", region: "india", cabinOut: true, cabinIn: true, note: "Hyderabad is one of India's six approved pet-entry airports." },
+  // UAE
+  { code: "AUH", city: "Abu Dhabi", region: "dubai", cabinOut: true, cabinIn: true, note: "Abu Dhabi is the ONLY UAE airport that permits cabin pets (Etihad). It's a 90-minute drive from Dubai." },
+  { code: "DXB", city: "Dubai", region: "dubai", cabinOut: false, cabinIn: false, note: "Dubai (DXB) is cargo-only for pets under UAE law — no airline flies cabin pets in or out. Use Abu Dhabi (AUH) for a cabin route; it's 90 minutes from Dubai by road." },
+  // Caribbean
+  { code: "NAS", city: "Nassau, Bahamas", region: "caribbean", cabinOut: true, cabinIn: true, note: "Bahamas requires an import permit — apply 6–8 weeks ahead." },
+  { code: "MBJ", city: "Montego Bay, Jamaica", region: "caribbean", cabinOut: true, cabinIn: true, note: "Jamaica has a strict 6+ month import process — start very early." },
+  { code: "PUJ", city: "Punta Cana, Dominican Republic", region: "caribbean", cabinOut: true, cabinIn: true, note: "The DR is on the CDC high-risk rabies list — US travellers must prepare the return paperwork BEFORE leaving the US." },
+  { code: "SDQ", city: "Santo Domingo, Dominican Republic", region: "caribbean", cabinOut: true, cabinIn: true, note: "The DR is on the CDC high-risk rabies list — US travellers must prepare the return paperwork BEFORE leaving the US." },
+  // Hawaii
+  { code: "HNL", city: "Honolulu", region: "hawaii", cabinOut: true, cabinIn: true, note: "Honolulu is the only animal port of entry for Hawaii. Hawaii's rabies-free import programme needs 4+ months of prep." },
+  // South Africa
+  { code: "JNB", city: "Johannesburg", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+  { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+];
+
+const airportByCode = (code) => AIRPORTS.find((a) => a.code === code);
+const airportLabel = (code) => {
+  const a = airportByCode(code);
+  return a ? `${a.city} (${a.code})` : code;
 };
 
 // Strategy per region-pair. Each strategy is a function of (originHub, destHub)
@@ -1061,6 +1148,15 @@ const REGION_PAIR_STRATEGIES = {
   }),
 };
 
+// Airports that are CARGO-ONLY for pets — no airline flies cabin pets in or
+// out of them. They stay in REGION_HUBS so routes touching them still match
+// the right region, but the generator must NOT use them as a cabin origin or
+// a cabin destination (doing so would imply a cabin route that can't exist).
+// Dubai (DXB): UAE law requires cargo into DXB for all airlines.
+const CARGO_ONLY_AIRPORTS = ["(DXB)"];
+const isCargoOnly = (airport) =>
+  CARGO_ONLY_AIRPORTS.some((code) => airport.includes(code));
+
 // Generate concrete city-level workarounds for a region pair, covering EVERY
 // key destination airport. Returns [] if there's no strategy for the pair.
 function generateWorkarounds(origin, destination) {
@@ -1071,21 +1167,25 @@ function generateWorkarounds(origin, destination) {
   const destHubs = REGION_HUBS[destination] || [];
   if (!originHubs.length || !destHubs.length) return [];
 
-  // Use the first origin hub as the representative starting point, then
-  // generate one workaround per destination airport — that's the coverage floor.
-  const originHub = originHubs[0];
-  return destHubs.map((destHub) => {
-    const built = strategy(originHub, destHub);
-    return {
-      from: originHub,
-      to: destHub,
-      duration: "see legs",
-      legs: built.legs,
-      note: built.note,
-      generated: true,
-      tags: [origin, destination],
-    };
-  });
+  // Representative origin: the first hub that ISN'T cargo-only. For the UAE
+  // this resolves to Abu Dhabi (AUH), never Dubai (DXB).
+  const originHub = originHubs.find((h) => !isCargoOnly(h)) || originHubs[0];
+  // Generate one workaround per destination airport — but skip cargo-only
+  // airports as destinations (e.g. don't generate a "cabin to Dubai" route).
+  return destHubs
+    .filter((destHub) => !isCargoOnly(destHub))
+    .map((destHub) => {
+      const built = strategy(originHub, destHub);
+      return {
+        from: originHub,
+        to: destHub,
+        duration: "see legs",
+        legs: built.legs,
+        note: built.note,
+        generated: true,
+        tags: [origin, destination],
+      };
+    });
 }
 
 // Every generated workaround across all strategy pairs — used by the Routes
@@ -1096,6 +1196,51 @@ const ALL_GENERATED_WORKAROUNDS = Object.keys(REGION_PAIR_STRATEGIES).flatMap((k
   const [origin, destination] = key.split(">");
   return generateWorkarounds(origin, destination);
 });
+
+// AIRPORT-LEVEL workaround generation. Given the EXACT origin and destination
+// airport codes the user picked, build the precise workaround for that pair —
+// no regional "representative" substitution. This is what makes the planner
+// accurate for Manchester→JFK vs Heathrow→LAX, etc.
+function generateWorkaroundForAirportPair(originCode, destCode) {
+  const oA = airportByCode(originCode);
+  const dA = airportByCode(destCode);
+  if (!oA || !dA) return null;
+  const strategy = REGION_PAIR_STRATEGIES[`${oA.region}>${dA.region}`];
+  if (!strategy) return null;
+  // The strategy bakes the origin/destination strings into its legs, so we
+  // pass the EXACT airport labels the user chose.
+  const built = strategy(`${oA.city} (${oA.code})`, `${dA.city} (${dA.code})`);
+  return {
+    from: `${oA.city} (${oA.code})`,
+    to: `${dA.city} (${dA.code})`,
+    duration: "see legs",
+    legs: built.legs,
+    note: built.note,
+    generated: true,
+    tags: [oA.region, dA.region],
+  };
+}
+
+// Find the hand-written direct route(s) for an exact airport pair.
+function directRoutesForAirportPair(originCode, destCode) {
+  const oA = airportByCode(originCode);
+  const dA = airportByCode(destCode);
+  if (!oA || !dA) return [];
+  return DIRECT_ROUTES.filter((r) => {
+    const fromHasCode = r.from.includes(`(${originCode})`);
+    const toHasCode = r.to.includes(`(${destCode})`);
+    return fromHasCode && toHasCode;
+  });
+}
+
+// Find hand-written workaround(s) for an exact airport pair.
+function handWrittenWorkaroundsForAirportPair(originCode, destCode) {
+  return WORKAROUND_ROUTES_TABLE.filter((r) => {
+    const fromHasCode = r.from.includes(`(${originCode})`);
+    const toHasCode = r.to.includes(`(${destCode})`);
+    return fromHasCode && toHasCode;
+  });
+}
 
 // ---------- DOWNLOADABLE CHECKLISTS ----------
 
@@ -4542,14 +4687,12 @@ function ChecklistDownload() {
 }
 
 function JourneyPlanner() {
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [origin, setOrigin] = useState("");      // airport CODE, e.g. "LHR"
+  const [destination, setDestination] = useState(""); // airport CODE
   const [planned, setPlanned] = useState(false);
   const sectionRef = useRef(null);
 
-  // When results appear, scroll back to the top of the planner section —
-  // otherwise the results render below the fold and the user is left
-  // looking at the bottom, having to scroll up to see the results header.
+  // When results appear, scroll back to the top of the planner section.
   useEffect(() => {
     if (!planned) return;
     const el = sectionRef.current;
@@ -4559,8 +4702,7 @@ function JourneyPlanner() {
     }
   }, [planned]);
 
-  // The regions the planner understands. IDs match the tags used across
-  // DIRECT_ROUTES and WORKAROUND_ROUTES_TABLE.
+  // Regions — used only to GROUP airports in the dropdowns.
   const REGIONS = [
     { id: "uk-out", label: "United Kingdom", flag: "🇬🇧" },
     { id: "ireland", label: "Ireland", flag: "🇮🇪" },
@@ -4569,98 +4711,53 @@ function JourneyPlanner() {
     { id: "mexico", label: "Mexico", flag: "🇲🇽" },
     { id: "europe", label: "Europe", flag: "🇪🇺" },
     { id: "india", label: "India", flag: "🇮🇳" },
-    { id: "dubai", label: "UAE / Dubai", flag: "🇦🇪" },
+    { id: "dubai", label: "UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
-  // Destinations where NO airline allows cabin pets inbound (government / infrastructure rules)
-  const CABIN_IMPOSSIBLE_INBOUND = {
-    "uk-out": "No airline allows cabin pets on flights INTO the UK — it's a UK government rule. You'll need a workaround (cabin into Europe, then Eurotunnel or ferry) or cargo.",
-    "ireland": "No airline allows cabin pets on flights INTO Ireland — the same government-rule wall as the UK. You'll need the France→Ireland ferry, the UK landbridge, or cargo. Flying OUT of Ireland in cabin is fine.",
-    "south-africa": "No airline allows cabin pets in or out of South Africa internationally — pets travel as manifested cargo. Cabin is only possible on DOMESTIC South African flights (Lift, small dogs).",
-  };
-
-  // Map a region to its checklist tab id (used to point users at the checklist)
+  // Map a region to its checklist tab id.
   const REGION_TO_CHECKLIST = {
-    "uk-out": "uk",
-    "ireland": "ireland",
-    "us": "usa",
-    "canada": "canada",
-    "mexico": "mexico",
-    "europe": "europe",
-    "india": "india",
-    "dubai": "uae",
-    "caribbean": null, // Caribbean has per-island checklists, no single one
-    "hawaii": null, // Hawaii uses the Hawaii difficult-destination tab
-    "south-africa": "south_africa",
+    "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
+    "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
+    "caribbean": null, "hawaii": null, "south-africa": "south_africa",
   };
 
-  const regionLabel = (id) => {
-    const r = REGIONS.find((x) => x.id === id);
-    return r ? `${r.flag} ${r.label}` : id;
-  };
+  // The two selected airport objects (or null until chosen).
+  const originAirport = origin ? airportByCode(origin) : null;
+  const destAirport = destination ? airportByCode(destination) : null;
 
-  // Keywords that identify which region a "City (CODE)" string belongs to.
-  // Used to check route DIRECTION — not just whether both regions are tagged.
-  const REGION_CITIES = {
-    "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
-    "ireland": ["Dublin", "Cork", "Shannon", "Rosslare", "(DUB)", "(ORK)", "(SNN)", "Ireland"],
-    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "USA"],
-    "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "India"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Munich", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(MUC)", "Europe"],
-    "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
-    "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
-    "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
-    "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Caribbean"],
-    "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
-    "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
-  };
-
-  // Does a "City (CODE)" string belong to a region?
-  const fieldInRegion = (field, regionId) => {
-    if (!field || !REGION_CITIES[regionId]) return false;
-    const f = field.toLowerCase();
-    return REGION_CITIES[regionId].some((kw) => f.includes(kw.toLowerCase()));
-  };
-
-  // Direct routes: the route's FROM must be in the origin region AND
-  // its TO must be in the destination region. This respects direction —
-  // a US→London route will NOT show for a UK→US search.
-  const directMatches = DIRECT_ROUTES.filter((r) => {
-    if (origin === destination) {
-      // Domestic: both endpoints in the same region
-      return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
-    }
-    return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
-  });
-
-  // Workaround routes: hand-written entries first (richest detail), then
-  // GENERATED hub-based workarounds covering every key destination airport.
-  // The generator guarantees the coverage floor — e.g. UK→US returns every
-  // major US gateway, not just the cities someone hand-wrote.
-  const handWrittenWorkarounds = WORKAROUND_ROUTES_TABLE.filter((r) => {
-    if (origin === destination) return false;
-    return fieldInRegion(r.from, origin) && fieldInRegion(r.to, destination);
-  });
-  const generatedWorkarounds = origin && destination && origin !== destination
-    ? generateWorkarounds(origin, destination)
+  // EXACT airport-pair matching — accurate for precisely what the user picked.
+  const directMatches = origin && destination
+    ? directRoutesForAirportPair(origin, destination)
     : [];
-  // De-dupe: if a generated workaround lands at a city already covered by a
-  // hand-written one, prefer the hand-written (more detail). Match on the
-  // destination airport code.
-  const handWrittenDestCodes = handWrittenWorkarounds
-    .map((r) => (r.to.match(/\(([A-Z]{3})\)/) || [])[1])
-    .filter(Boolean);
-  const generatedFiltered = generatedWorkarounds.filter((r) => {
-    const code = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
-    return !code || !handWrittenDestCodes.includes(code);
-  });
-  const workaroundMatches = [...handWrittenWorkarounds, ...generatedFiltered];
 
-  const checklistId = REGION_TO_CHECKLIST[destination];
-  const impossibleNote = CABIN_IMPOSSIBLE_INBOUND[destination];
+  const handWrittenWorkarounds = origin && destination && origin !== destination
+    ? handWrittenWorkaroundsForAirportPair(origin, destination)
+    : [];
+
+  const generatedWorkaround = origin && destination && origin !== destination
+    ? generateWorkaroundForAirportPair(origin, destination)
+    : null;
+
+  // Use the hand-written workaround if one exists for this exact pair
+  // (richer detail); otherwise fall back to the generated one.
+  const workaroundMatches = handWrittenWorkarounds.length > 0
+    ? handWrittenWorkarounds
+    : (generatedWorkaround ? [generatedWorkaround] : []);
+
+  const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
+
+  // Airport-specific cabin warnings — accurate to the EXACT airport chosen.
+  // e.g. picking Gatwick or Dubai tells you precisely why that airport won't work.
+  const originCabinWarning = originAirport && !originAirport.cabinOut
+    ? originAirport.note
+    : null;
+  const destCabinWarning = destAirport && !destAirport.cabinIn
+    ? destAirport.note
+    : null;
+
   const hasResults = directMatches.length > 0 || workaroundMatches.length > 0;
   const hasDirect = directMatches.length > 0;
 
@@ -4672,6 +4769,12 @@ function JourneyPlanner() {
     setDestination("");
     setPlanned(false);
   }
+
+  // Airports grouped by region, for the dropdown <optgroup>s.
+  const airportsByRegion = REGIONS.map((r) => ({
+    region: r,
+    airports: AIRPORTS.filter((a) => a.region === r.id),
+  })).filter((g) => g.airports.length > 0);
 
   return (
     <section ref={sectionRef} id="planner" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
@@ -4689,7 +4792,7 @@ function JourneyPlanner() {
           Pick your start and end points. I'll show the cabin routes, the workarounds, and the checklist you'll need — all in one place.
         </p>
 
-        {/* Dropdowns */}
+        {/* Dropdowns — airport-level, grouped by region */}
         <div className="grid sm:grid-cols-[1fr_auto_1fr_auto] gap-4 items-end mb-8">
           <div>
             <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying from</label>
@@ -4698,9 +4801,13 @@ function JourneyPlanner() {
               onChange={(e) => { setOrigin(e.target.value); setPlanned(false); }}
               className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"
             >
-              <option value="">Select origin…</option>
-              {REGIONS.map((r) => (
-                <option key={r.id} value={r.id}>{r.flag} {r.label}</option>
+              <option value="">Select origin airport…</option>
+              {airportsByRegion.map((g) => (
+                <optgroup key={g.region.id} label={`${g.region.flag} ${g.region.label}`}>
+                  {g.airports.map((a) => (
+                    <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
@@ -4716,9 +4823,13 @@ function JourneyPlanner() {
               onChange={(e) => { setDestination(e.target.value); setPlanned(false); }}
               className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"
             >
-              <option value="">Select destination…</option>
-              {REGIONS.map((r) => (
-                <option key={r.id} value={r.id}>{r.flag} {r.label}</option>
+              <option value="">Select destination airport…</option>
+              {airportsByRegion.map((g) => (
+                <optgroup key={g.region.id} label={`${g.region.flag} ${g.region.label}`}>
+                  {g.airports.map((a) => (
+                    <option key={a.code} value={a.code}>{a.city} ({a.code})</option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
@@ -4737,7 +4848,7 @@ function JourneyPlanner() {
           <div className="border-t border-stone-700 pt-8 animate-fadeIn">
             <div className="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
               <h3 className="font-serif text-2xl text-stone-50">
-                {regionLabel(origin)} <span className="text-stone-500">→</span> {regionLabel(destination)}
+                {airportLabel(origin)} <span className="text-stone-500">→</span> {airportLabel(destination)}
               </h3>
               <button
                 onClick={resetPlan}
@@ -4747,23 +4858,36 @@ function JourneyPlanner() {
               </button>
             </div>
 
-            {/* Same region selected */}
+            {/* Same airport selected */}
             {origin === destination && (
               <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
                 <p className="text-stone-300 text-sm leading-relaxed">
-                  You've picked the same region for both. If you're flying <strong className="text-stone-100">domestically within {regionLabel(destination)}</strong>, the direct routes below (if any) cover it. Otherwise, pick two different regions.
+                  You've picked the same airport for both ends. Choose a different origin and destination to plan a journey.
                 </p>
               </div>
             )}
 
-            {/* Cabin-impossible inbound warning */}
-            {impossibleNote && (
+            {/* Origin airport can't do cabin departures — accurate to the EXACT airport picked */}
+            {originCabinWarning && origin !== destination && (
               <div className="bg-rose-950/50 border-l-2 border-rose-500 p-5 mb-6">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
                   <div>
-                    <div className="font-serif text-stone-100 mb-1">Heads up — cabin into {regionLabel(destination)} isn't straightforward.</div>
-                    <p className="text-stone-300 text-sm leading-relaxed">{impossibleNote}</p>
+                    <div className="font-serif text-stone-100 mb-1">About departing from {airportLabel(origin)}</div>
+                    <p className="text-stone-300 text-sm leading-relaxed">{originCabinWarning}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Destination airport can't receive cabin pets — accurate to the EXACT airport picked */}
+            {destCabinWarning && origin !== destination && (
+              <div className="bg-rose-950/50 border-l-2 border-rose-500 p-5 mb-6">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <div>
+                    <div className="font-serif text-stone-100 mb-1">About arriving into {airportLabel(destination)}</div>
+                    <p className="text-stone-300 text-sm leading-relaxed">{destCabinWarning}</p>
                   </div>
                 </div>
               </div>
@@ -4774,7 +4898,7 @@ function JourneyPlanner() {
               <div className="mb-8">
                 <div className="flex items-baseline gap-3 mb-4">
                   <span className="text-emerald-400 text-base">✓</span>
-                  <h4 className="font-serif text-xl text-stone-100">Direct cabin routes</h4>
+                  <h4 className="font-serif text-xl text-stone-100">Direct cabin route</h4>
                   <span className="text-xs uppercase tracking-widest text-stone-500">{directMatches.length}</span>
                 </div>
                 <div className="space-y-2">
@@ -4793,11 +4917,11 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* No direct route, but workarounds exist — explain it clearly */}
+            {/* No direct route, but a workaround exists — explain it clearly */}
             {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
               <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
                 <p className="text-stone-300 text-sm leading-relaxed">
-                  <strong className="text-stone-100">There's no direct cabin route for your pet from {regionLabel(origin)} to {regionLabel(destination)}.</strong> But you're not stuck — here are the workaround routes that get you and your pet there together, in the cabin, leg by leg.
+                  <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(origin)} to {airportLabel(destination)}.</strong> But you're not stuck — here's the workaround that gets you and your pet there together, in the cabin, leg by leg.
                 </p>
               </div>
             )}
@@ -4807,7 +4931,7 @@ function JourneyPlanner() {
               <div className="mb-8">
                 <div className="flex items-baseline gap-3 mb-4">
                   <span className="text-amber-400 text-base">⤳</span>
-                  <h4 className="font-serif text-xl text-stone-100">{hasDirect ? "Workaround routes" : "Workaround routes — your way there"}</h4>
+                  <h4 className="font-serif text-xl text-stone-100">{hasDirect ? "Workaround route" : "Workaround route — your way there"}</h4>
                   <span className="text-xs uppercase tracking-widest text-stone-500">{workaroundMatches.length}</span>
                 </div>
                 <div className="space-y-3">
@@ -4840,30 +4964,33 @@ function JourneyPlanner() {
             {!hasResults && origin !== destination && (
               <div className="bg-stone-800 border border-stone-700 p-6 mb-8">
                 <p className="text-stone-300 text-sm leading-relaxed">
-                  I don't have specific {regionLabel(origin)} → {regionLabel(destination)} routes mapped yet — this guide is built from routes Theo and I have researched, and it's still growing. {impossibleNote ? "The cabin-into-destination note above still applies. " : ""}
+                  I don't have a specific cabin route or workaround mapped for {airportLabel(origin)} → {airportLabel(destination)} yet — this guide is built from routes Theo and I have researched, and it's still growing.
+                  {(originCabinWarning || destCabinWarning) ? " The airport note above still applies. " : " "}
                   Check the <a href="#airlines" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">airline policies</a> and <a href="#routes" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">routes</a> sections, or <a href="#contact" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">tell me</a> the route you need and I'll look into it.
                 </p>
               </div>
             )}
 
             {/* Checklist link */}
-            <div className="bg-amber-950/40 border border-amber-800/50 p-5">
-              <div className="flex items-start gap-3">
-                <FileCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-                <div>
-                  <div className="font-serif text-stone-100 mb-1">Your next step: the checklist</div>
-                  {checklistId ? (
-                    <p className="text-stone-300 text-sm leading-relaxed">
-                      Once you've picked a route, head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and select <strong className="text-stone-100">{regionLabel(destination)}</strong> for a printable prep list. Remember: both the country you leave AND the one you enter have rules — check both.
-                    </p>
-                  ) : (
-                    <p className="text-stone-300 text-sm leading-relaxed">
-                      The Caribbean has different rules per island — head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and pick your specific island (Bahamas, Jamaica, Dominican Republic) for a printable prep list.
-                    </p>
-                  )}
+            {origin !== destination && (
+              <div className="bg-amber-950/40 border border-amber-800/50 p-5">
+                <div className="flex items-start gap-3">
+                  <FileCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                  <div>
+                    <div className="font-serif text-stone-100 mb-1">Your next step: the checklist</div>
+                    {checklistId ? (
+                      <p className="text-stone-300 text-sm leading-relaxed">
+                        Head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and select <strong className="text-stone-100">{destAirport ? REGION_LABELS_SHORT[destAirport.region] : "your destination"}</strong> for a printable prep list. Remember: both the country you leave ({originAirport ? REGION_LABELS_SHORT[originAirport.region] : "your origin"}) AND the one you enter have rules — check both.
+                      </p>
+                    ) : (
+                      <p className="text-stone-300 text-sm leading-relaxed">
+                        Head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> for a printable prep list. {destAirport && destAirport.region === "caribbean" ? "The Caribbean has different rules per island — pick your specific island (Bahamas, Jamaica, Dominican Republic)." : ""} Remember: both the country you leave AND the one you enter have rules.
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
       </div>

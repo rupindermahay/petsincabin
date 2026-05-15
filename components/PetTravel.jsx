@@ -3244,6 +3244,7 @@ const NAV_SECTIONS = [
   { id: "tips", label: "Tips", num: "VII" },
   { id: "stories", label: "Stories", num: "✻" },
   { id: "contact", label: "Contact", num: "VIII" },
+  { id: "about", label: "About", num: "✦" },
 ];
 
 function NavBar({ onStartIntake }) {
@@ -3268,6 +3269,10 @@ function NavBar({ onStartIntake }) {
       onStartIntake();
       return;
     }
+    if (id === "about") {
+      window.location.href = "/about";
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3283,44 +3288,53 @@ function NavBar({ onStartIntake }) {
       }`}
       style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.8)" }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-        <button
-          onClick={() => go("top")}
-          className="flex items-center gap-2.5 group"
-        >
-          <img
-            src="/logo.png"
-            alt="Pets in Cabin logo"
-            className="w-9 h-9 rounded-full object-cover group-hover:opacity-80 transition-opacity"
-          />
-          <span className="font-serif italic font-semibold text-stone-800 group-hover:text-amber-700 transition-colors">
-            Pets in Cabin
-          </span>
-        </button>
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Logo row — logo + wordmark centred above everything on mobile, left on desktop */}
+        <div className="flex items-center justify-between py-3 md:py-0">
+          <button
+            onClick={() => go("top")}
+            className="flex flex-col items-start group"
+          >
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/logo.png"
+                alt="Pets in Cabin logo"
+                className="w-8 h-8 rounded-full object-cover group-hover:opacity-80 transition-opacity flex-shrink-0"
+              />
+              <span className="font-serif italic font-semibold text-stone-800 group-hover:text-amber-700 transition-colors text-base">
+                Pets in Cabin
+              </span>
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 pl-10 leading-none hidden md:block">
+              by Theo's Mum
+            </span>
+          </button>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden p-2 text-stone-800 hover:text-amber-700 transition-colors"
+            aria-label="Menu"
+          >
+            {open ? <X className="w-6 h-6" strokeWidth={2} /> : <Menu className="w-6 h-6" strokeWidth={2} />}
+          </button>
+        </div>
+
+        {/* Desktop nav — sits on its own row below the logo, separated by a hairline */}
+        <div className="hidden md:flex items-center gap-0.5 py-1.5 border-t border-stone-200 flex-wrap">
           {NAV_SECTIONS.slice(1).map((s) => (
             <button
               key={s.id}
               onClick={() => go(s.id)}
-              className="px-3 py-2 text-sm font-medium text-stone-700 hover:text-amber-700 hover:bg-amber-50 transition-colors relative group rounded-sm"
+              className="px-2.5 py-1.5 text-xs font-medium text-stone-600 hover:text-amber-700 hover:bg-amber-50 transition-colors relative group rounded-sm whitespace-nowrap"
             >
-              <span className="font-serif italic text-amber-700/70 text-xs mr-1.5">{s.num}.</span>
+              <span className="font-serif italic text-amber-700/60 text-[10px] mr-1">{s.num}.</span>
               {s.label}
-              <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              <span className="absolute bottom-1 left-2.5 right-2.5 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </button>
           ))}
         </div>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-stone-800 hover:text-amber-700 transition-colors"
-          aria-label="Menu"
-        >
-          {open ? <X className="w-6 h-6" strokeWidth={2} /> : <Menu className="w-6 h-6" strokeWidth={2} />}
-        </button>
       </div>
 
       {/* Mobile menu */}
@@ -3331,10 +3345,10 @@ function NavBar({ onStartIntake }) {
               <button
                 key={s.id}
                 onClick={() => go(s.id)}
-                className="w-full text-left px-3 py-3.5 hover:bg-amber-50 hover:text-amber-700 transition-colors flex items-baseline gap-3 border-b border-stone-200 last:border-0 font-medium text-stone-800"
+                className="w-full text-left px-3 py-3 hover:bg-amber-50 hover:text-amber-700 transition-colors flex items-baseline gap-3 border-b border-stone-200 last:border-0 font-medium text-stone-800"
               >
-                <span className="font-serif italic text-amber-700/70 text-sm w-8">{s.num}.</span>
-                <span className="font-serif text-lg text-stone-900">{s.label}</span>
+                <span className="font-serif italic text-amber-700/70 text-sm w-8 flex-shrink-0">{s.num}.</span>
+                <span className="font-serif text-base text-stone-900">{s.label}</span>
               </button>
             ))}
           </div>
@@ -3498,12 +3512,12 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   }
 
   return (
-    <section ref={sectionRef} id="intake" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
+    <section ref={sectionRef} id="intake" className="py-10 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
       <div id="assessment" className="scroll-mt-24" />
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="I.">Intake</SectionLabel>
 
-        <div className="flex items-center gap-2 mb-10">
+        <div className="flex items-center gap-2 mb-5">
           {QUESTIONS.map((_, i) => (
             <div
               key={i}
@@ -3514,39 +3528,39 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
           ))}
         </div>
 
-        <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">
+        <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">
           Question {step + 1} of {QUESTIONS.length}
         </div>
 
-        <h2 className="font-serif text-4xl md:text-5xl text-stone-900 leading-tight mb-4">
+        <h2 className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-2">
           {q.label}
         </h2>
 
         {q.helper && (
-          <p className="text-stone-600 italic mb-8 max-w-xl">{q.helper}</p>
+          <p className="text-stone-600 italic mb-3 text-sm max-w-xl">{q.helper}</p>
         )}
 
         {isMulti && (
-          <div className="text-xs uppercase tracking-widest text-amber-700 mb-4 -mt-4">
+          <div className="text-xs uppercase tracking-widest text-amber-700 mb-2">
             Select all that apply
           </div>
         )}
 
-        <div className="grid gap-3 mb-12 mt-8">
+        <div className="grid gap-2 mb-6 mt-4">
           {q.options.map((opt) => {
             const selected = isMulti ? selectedValues.includes(opt) : current === opt;
             return (
               <button
                 key={opt}
                 onClick={() => pick(opt)}
-                className={`group text-left px-6 py-5 border transition-all duration-200 flex items-center justify-between ${
+                className={`group text-left px-4 py-3 border transition-all duration-200 flex items-center justify-between ${
                   selected
                     ? "border-stone-900 bg-stone-900 text-stone-50"
                     : "border-stone-300 bg-white hover:border-stone-900 hover:-translate-y-0.5"
                 }`}
               >
-                <span className="font-serif text-xl">{opt}</span>
-                {selected && <Check className="w-5 h-5" strokeWidth={1.5} />}
+                <span className="font-serif text-base">{opt}</span>
+                {selected && <Check className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />}
               </button>
             );
           })}
@@ -6405,16 +6419,21 @@ function Stories() {
               I'm not going to pretend it was easy. It was a 7h 30m flight, then a hotel, then a 3h 30m flight the next day. But Theo arrived in Miami calm, fed, and walked, and we slept in our own bed that night. Here's what I learned along the way.
             </p>
 
-            <figure className="my-10 -mx-2">
-              <img
-                src="/theo-carrier-seat.jpg"
-                alt="Theo asleep in his carrier under the airplane seat, with his Union Jack name toy"
-                className="w-full rounded-sm"
-              />
-              <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
-                Theo, asleep under the seat — Union Jack bone toy from home for the smell
-              </figcaption>
-            </figure>
+            {/* Three photos in a row — compact, not full-bleed */}
+            <div className="grid grid-cols-3 gap-3 my-8">
+              <figure className="m-0">
+                <img src="/theo-carrier-seat.jpg" alt="Theo asleep in his carrier under the airplane seat" className="w-full h-48 object-cover rounded-sm" />
+                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Under the seat, LHR→YUL</figcaption>
+              </figure>
+              <figure className="m-0">
+                <img src="/theo-gate.jpg" alt="Theo in his carrier at the departure gate" className="w-full h-48 object-cover rounded-sm" />
+                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Past the turn-around test</figcaption>
+              </figure>
+              <figure className="m-0">
+                <img src="/theo-balcony.jpg" alt="Theo relaxing on the Miami balcony" className="w-full h-48 object-cover rounded-sm" />
+                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Settled in Miami</figcaption>
+              </figure>
+            </div>
 
             {!open && (
               <div className="pt-4">
@@ -6435,17 +6454,6 @@ function Stories() {
                 <p>
                   At check-in, the Air Canada staff do a "turn-around test" — your dog has to be able to stand up and turn around inside the carrier. Theo wasn't listening. He just sat there looking pleased with himself while I tried to coax him to swivel. After a few attempts the staff member sighed, looked at the carrier, looked at Theo, decided he was clearly comfortable and within the size limit, and waved us through. <em>It is genuinely down to whoever is on shift.</em> Don't argue, don't make a fuss — be nice, be prepared, and if the carrier is right and the dog looks happy, most check-in staff will use their judgment.
                 </p>
-
-                <figure className="my-10 -mx-2">
-                  <img
-                    src="/theo-gate.jpg"
-                    alt="Theo sitting in his carrier at the departure gate, plane reflected in the window"
-                    className="w-full rounded-sm"
-                  />
-                  <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
-                    Waiting at the gate — past the turn-around test, plane in the window
-                  </figcaption>
-                </figure>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The last hour</h3>
 
@@ -6488,17 +6496,6 @@ function Stories() {
                 <p>
                   Heathrow does have a pet relief area, but honestly it was useless for Theo — he could see right through that tiny patch of grass and wasn't going to use it. Luckily he'd had a proper pee just before we entered the airport, so I knew he'd be fine for the flight. <strong>Walk your dog properly outside before you check in.</strong> Don't rely on the airport's pet area.
                 </p>
-
-                <figure className="my-10 -mx-2">
-                  <img
-                    src="/theo-balcony.jpg"
-                    alt="Theo relaxing on a Miami balcony beside a patch of fake grass, city skyline behind"
-                    className="w-full rounded-sm"
-                  />
-                  <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
-                    Settled in Miami — and yes, he eventually accepted the fake grass at home, even if not at the airport
-                  </figcaption>
-                </figure>
 
                 <p className="font-medium text-stone-900">
                   Window seat, not middle (lesson learned the hard way).

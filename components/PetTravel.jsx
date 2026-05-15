@@ -9397,13 +9397,8 @@ function Tips() {
             },
             {
               tag: "On the carrier",
-              title: "Buy soft, not stiff.",
-              body: "Soft-sided carriers compress slightly to fit under tighter seats and feel less cage-like for your pet. Make sure ventilation is on at least three sides. IMPORTANT: each airline AND each aircraft type can have different under-seat dimensions — Air Canada in particular varies by aircraft. Always check the specific aircraft listed on your booking, not just the airline.",
-            },
-            {
-              tag: "On carrier sizes across airlines",
-              title: "Different airline, different carrier.",
-              body: "On a multi-airline route, carrier dimensions can — and often DO — differ between the airlines you're flying. One airline might allow more length but less height; another might be the opposite. Check each airline's published carrier specs as soon as your route is booked, and buy for the strictest one — as long as your pet is genuinely comfortable in it. If the strictest airline's box would force your pet into something cramped, bring a second carrier for the more generous leg instead. The journey planner pulls each airline's specs into your checklist so you can compare them side by side.",
+              title: "Soft, not stiff — and check every airline.",
+              body: "Soft-sided carriers compress slightly to fit under tighter seats and feel less cage-like for your pet. Make sure ventilation is on at least three sides. On a multi-airline route, dimensions can differ between airlines — one might allow more length but less height, another the opposite. Check each airline's published specs as soon as your route is booked, and buy for the strictest one IF your pet is genuinely comfortable in it. Otherwise bring a second carrier for the more generous leg. The journey planner pulls each airline's specs into your checklist side by side.",
             },
             {
               tag: "On the seat",

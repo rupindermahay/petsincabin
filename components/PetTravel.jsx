@@ -4116,7 +4116,7 @@ function Hero({ onStart }) {
             <div className="flex flex-col gap-1.5">
               <span className="uppercase tracking-widest text-sm font-medium">Plan my journey</span>
               <span className="text-sm leading-snug normal-case tracking-normal" style={{ color: "rgba(250, 246, 237, 0.8)" }}>
-                Pick your origin and destination airports — get direct cabin routes, or the workaround if there isn't one.
+                Pick your origin and destination — get the cabin route (or the workaround) plus a combined prep checklist for both countries.
               </span>
             </div>
           </div>

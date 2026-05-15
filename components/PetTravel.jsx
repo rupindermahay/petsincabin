@@ -3286,9 +3286,13 @@ function NavBar({ onStartIntake }) {
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
         <button
           onClick={() => go("top")}
-          className="flex items-center gap-2 group"
+          className="flex items-center gap-2.5 group"
         >
-          <PawPrint className="w-5 h-5 text-stone-700 group-hover:text-amber-700 transition-colors" strokeWidth={1.75} />
+          <img
+            src="/logo.png"
+            alt="Pets in Cabin logo"
+            className="w-9 h-9 rounded-full object-cover group-hover:opacity-80 transition-opacity"
+          />
           <span className="font-serif italic font-semibold text-stone-800 group-hover:text-amber-700 transition-colors">
             Pets in Cabin
           </span>
@@ -4758,9 +4762,11 @@ function ChecklistDownload() {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c1917; padding: 60px 40px; line-height: 1.6; }
   .container { max-width: 720px; margin: 0 auto; }
-  .brand { display: flex; align-items: center; gap: 8px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #d6d3d1; }
-  .brand span { font-family: 'Fraunces', serif; font-style: italic; color: #57534e; }
-  .brand small { margin-left: auto; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #78716c; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #d6d3d1; }
+  .brand img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+  .brand .brand-text { font-family: 'Fraunces', serif; font-style: italic; color: #57534e; font-size: 18px; }
+  .brand .brand-tag { font-family: 'Fraunces', serif; font-style: italic; color: #a8a29e; font-size: 12px; }
+  .brand small { margin-left: auto; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #78716c; align-self: flex-start; }
   h1 { font-family: 'Fraunces', serif; font-size: 42px; line-height: 1.1; margin-bottom: 16px; color: #1c1917; }
   h1 em { color: #78716c; }
   .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 30px; }
@@ -4787,7 +4793,11 @@ function ChecklistDownload() {
   <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
   <div class="container">
     <div class="brand">
-      <span>🐾 Pets in Cabin</span>
+      <img src="https://petsincabin.com/logo.png" alt="Pets in Cabin" />
+      <div>
+        <div class="brand-text">Pets in Cabin</div>
+        <div class="brand-tag">Travel together, stay together</div>
+      </div>
       <small>By Theo's Mum</small>
     </div>
     <h1>${data.title.replace(/checklist/i, '<em>checklist</em>')}</h1>
@@ -6395,6 +6405,17 @@ function Stories() {
               I'm not going to pretend it was easy. It was a 7h 30m flight, then a hotel, then a 3h 30m flight the next day. But Theo arrived in Miami calm, fed, and walked, and we slept in our own bed that night. Here's what I learned along the way.
             </p>
 
+            <figure className="my-10 -mx-2">
+              <img
+                src="/theo-carrier-seat.jpg"
+                alt="Theo asleep in his carrier under the airplane seat, with his Union Jack name toy"
+                className="w-full rounded-sm"
+              />
+              <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
+                Theo, asleep under the seat — Union Jack bone toy from home for the smell
+              </figcaption>
+            </figure>
+
             {!open && (
               <div className="pt-4">
                 <button
@@ -6414,6 +6435,17 @@ function Stories() {
                 <p>
                   At check-in, the Air Canada staff do a "turn-around test" — your dog has to be able to stand up and turn around inside the carrier. Theo wasn't listening. He just sat there looking pleased with himself while I tried to coax him to swivel. After a few attempts the staff member sighed, looked at the carrier, looked at Theo, decided he was clearly comfortable and within the size limit, and waved us through. <em>It is genuinely down to whoever is on shift.</em> Don't argue, don't make a fuss — be nice, be prepared, and if the carrier is right and the dog looks happy, most check-in staff will use their judgment.
                 </p>
+
+                <figure className="my-10 -mx-2">
+                  <img
+                    src="/theo-gate.jpg"
+                    alt="Theo sitting in his carrier at the departure gate, plane reflected in the window"
+                    className="w-full rounded-sm"
+                  />
+                  <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
+                    Waiting at the gate — past the turn-around test, plane in the window
+                  </figcaption>
+                </figure>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The last hour</h3>
 
@@ -6456,6 +6488,17 @@ function Stories() {
                 <p>
                   Heathrow does have a pet relief area, but honestly it was useless for Theo — he could see right through that tiny patch of grass and wasn't going to use it. Luckily he'd had a proper pee just before we entered the airport, so I knew he'd be fine for the flight. <strong>Walk your dog properly outside before you check in.</strong> Don't rely on the airport's pet area.
                 </p>
+
+                <figure className="my-10 -mx-2">
+                  <img
+                    src="/theo-balcony.jpg"
+                    alt="Theo relaxing on a Miami balcony beside a patch of fake grass, city skyline behind"
+                    className="w-full rounded-sm"
+                  />
+                  <figcaption className="font-sans text-xs uppercase tracking-widest text-stone-500 mt-3 text-center">
+                    Settled in Miami — and yes, he eventually accepted the fake grass at home, even if not at the airport
+                  </figcaption>
+                </figure>
 
                 <p className="font-medium text-stone-900">
                   Window seat, not middle (lesson learned the hard way).
@@ -6715,9 +6758,16 @@ function Footer() {
   return (
     <footer className="py-16 px-6 md:px-12 bg-stone-900 text-stone-400 border-t border-stone-800">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-2 mb-8">
-          <PawPrint className="w-5 h-5 text-amber-500" strokeWidth={1.5} />
-          <span className="font-serif italic text-stone-300">Pets in Cabin · A guide by Theo's Mum</span>
+        <div className="flex items-center gap-4 mb-8">
+          <img
+            src="/logo.png"
+            alt="Pets in Cabin logo"
+            className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+          />
+          <div>
+            <div className="font-serif italic text-stone-200 text-lg">Pets in Cabin</div>
+            <div className="font-serif italic text-stone-400 text-sm">Travel together, stay together · A guide by Theo's Mum</div>
+          </div>
         </div>
         <p className="font-serif text-stone-400 max-w-2xl mb-8 leading-relaxed">
           A reference, not a substitute for veterinary advice or the airline's official policy. Rules change frequently; always confirm directly with your airline and the receiving country before you fly.

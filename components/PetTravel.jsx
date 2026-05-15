@@ -6303,21 +6303,78 @@ function JourneyPlanner() {
             {/* Checklist link */}
             {origin !== destination && (
               <div className="bg-amber-950/40 border border-amber-800/50 p-5">
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 mb-4">
                   <FileCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-                  <div>
-                    <div className="font-serif text-stone-100 mb-1">Your next step: the checklist</div>
-                    {checklistId ? (
-                      <p className="text-stone-300 text-sm leading-relaxed">
-                        Head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> and select <strong className="text-stone-100">{destAirport ? REGION_LABELS_SHORT[destAirport.region] : "your destination"}</strong> for a printable prep list. Remember: both the country you leave ({originAirport ? REGION_LABELS_SHORT[originAirport.region] : "your origin"}) AND the one you enter have rules — check both.
-                      </p>
-                    ) : (
-                      <p className="text-stone-300 text-sm leading-relaxed">
-                        Head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist generator</a> for a printable prep list. {destAirport && destAirport.region === "caribbean" ? "The Caribbean has different rules per island — pick your specific island (Bahamas, Jamaica, Dominican Republic)." : ""} Remember: both the country you leave AND the one you enter have rules.
-                      </p>
-                    )}
+                  <div className="flex-1">
+                    <div className="font-serif text-stone-100 mb-1">Your combined prep checklist</div>
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      Both the country you leave AND the one you enter have rules. Below is the prep for {originAirport ? <strong className="text-stone-100">{REGION_LABELS_SHORT[originAirport.region] || originAirport.region}</strong> : "your origin"} → {destAirport ? <strong className="text-stone-100">{REGION_LABELS_SHORT[destAirport.region] || destAirport.region}</strong> : "your destination"}, merged into one list. For the printable version, head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist section</a>.
+                    </p>
                   </div>
                 </div>
+
+                {/* Inline combined checklist — origin departure + destination arrival */}
+                {(() => {
+                  if (!originAirport || !destAirport) return null;
+                  const combined = buildRouteChecklist(
+                    originAirport.region,
+                    destAirport.region,
+                    REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
+                    REGION_LABELS_SHORT[destAirport.region] || destAirport.region
+                  );
+                  // Skip the universal/generic sections in the inline preview —
+                  // those are shown elsewhere; here we want the country-specific
+                  // sections so the user immediately sees the differential prep.
+                  const countrySections = combined.sections.filter(
+                    (s) => s.divider || s.title.includes("·")
+                  );
+                  if (countrySections.length === 0) {
+                    return (
+                      <p className="text-stone-400 text-sm italic">
+                        Country-specific prep isn't yet wired for this exact route — use the checklist section below for the closest match.
+                      </p>
+                    );
+                  }
+                  return (
+                    <div className="space-y-4 mt-2">
+                      {countrySections.map((s, i) => (
+                        <div key={i}>
+                          {s.divider ? (
+                            <div className="text-xs uppercase tracking-widest text-amber-400 mt-4 mb-2 pt-3 border-t border-amber-800/40">
+                              {s.title.replace(/^—\s*|\s*—$/g, "")}
+                            </div>
+                          ) : (
+                            <>
+                              <div className="font-serif italic text-stone-200 text-sm mb-2">{s.title}</div>
+                              <ul className="space-y-1.5">
+                                {s.items.slice(0, 5).map((item, j) => (
+                                  <li key={j} className="flex gap-2 text-stone-300 text-sm leading-snug">
+                                    <span className="text-amber-500 flex-shrink-0">✓</span>
+                                    <span>{item}</span>
+                                  </li>
+                                ))}
+                                {s.items.length > 5 && (
+                                  <li className="text-stone-500 text-xs italic ml-5">
+                                    + {s.items.length - 5} more in the full checklist
+                                  </li>
+                                )}
+                              </ul>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                      <div className="pt-4 mt-4 border-t border-amber-800/40">
+                        <a
+                          href="#checklist"
+                          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-4 py-2 text-xs uppercase tracking-widest font-medium transition-colors"
+                        >
+                          <FileCheck className="w-3.5 h-3.5" strokeWidth={2} />
+                          Open the full printable checklist
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             )}
           </div>

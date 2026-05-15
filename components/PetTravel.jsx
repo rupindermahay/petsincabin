@@ -2493,7 +2493,7 @@ const CHECKLIST_DATA = {
           "Vet visit — confirm pet is healthy enough to fly",
           "ISO 11784/11785 microchip implanted (if not already)",
           "Rabies vaccine administered (must be AFTER microchip for international)",
-          "Research destination country's import requirements",
+          "Research destination country's import requirements (USDA APHIS has a <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">country-by-country page</a> for US-origin pets)",
           "Book your flight AND call airline to reserve a pet spot — limited per flight",
           "Order your airline-compliant carrier (soft-sided recommended)",
         ],
@@ -2503,8 +2503,8 @@ const CHECKLIST_DATA = {
         items: [
           "Let pet sleep in the carrier at home to get used to it",
           "Practice short car rides in the carrier",
-          "Book USDA-accredited vet appointment for health certificate (international)",
-          "Print and complete the CDC Dog Import Form (if entering U.S.)",
+          "Book USDA-accredited vet appointment for health certificate (international) — <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov</a>",
+          "Print and complete the <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> (if entering U.S.)",
           "Confirm climate / temperature restrictions for your route",
           "Buy: collapsible water bowl, leash, waste bags, calming spray (recommended)",
         ],
@@ -2565,16 +2565,16 @@ const CHECKLIST_DATA = {
         items: [
           "ISO 11784/11785 microchip implanted (if not already)",
           "Rabies vaccination (must be ≥21 days before entry to UK)",
-          "If outbound from UK: GB Animal Health Certificate (AHC) booking with vet",
-          "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot",
-          "Book Eurotunnel / ferry well in advance if doing land crossing",
+          "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet",
+          "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
+          "Book <a href=\"https://www.eurotunnel.com/uk/passengers/pets/\" target=\"_blank\" rel=\"noopener noreferrer\">Eurotunnel</a> / ferry well in advance if doing land crossing",
         ],
       },
       {
         title: "10 days before",
         items: [
-          "Get GB Animal Health Certificate from official vet (UK departing)",
-          "Or get EU Animal Health Certificate from USDA-accredited vet (US departing)",
+          "Get <a href=\"https://www.gov.uk/take-pet-abroad/animal-health-certificate\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate</a> from official vet (UK departing)",
+          "Or get <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Animal Health Certificate</a> from USDA-accredited vet (US departing)",
           "Confirm Eurotunnel/ferry booking",
         ],
       },
@@ -2662,8 +2662,8 @@ const CHECKLIST_DATA = {
       {
         title: "2 months before",
         items: [
-          "Check residency status: import as accompanied baggage (NOC only, no DGFT license) requires 2+ years continuous stay outside India. Less than 2 years means you also need a DGFT import authorization — apply early.",
-          "If returning to India (re-import), locate your previous AQCS export certificate — it's required as proof of identity.",
+          "Check residency status: import as accompanied baggage (NOC only, no DGFT license) requires 2+ years continuous stay outside India. Less than 2 years means you also need a <a href=\"https://www.dgft.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\">DGFT</a> import authorization — apply early.",
+          "If returning to India (re-import), locate your previous <a href=\"https://aqcsindia.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\">AQCS</a> export certificate — it's required as proof of identity.",
           "Identify your entry airport — pets can ONLY enter India through six approved airports: Delhi (DEL), Mumbai (BOM), Chennai (MAA), Kolkata (CCU), Bengaluru (BLR), or Hyderabad (HYD).",
         ],
       },
@@ -2674,17 +2674,17 @@ const CHECKLIST_DATA = {
           "Rabies vaccine 30 days – 12 months before travel.",
           "Parvo, distemper, leptospirosis vaccines up to date.",
           "Health certificate from origin country vet — must include vaccination history and microchip number.",
-          "If from the USA, get USDA APHIS endorsement of the health certificate.",
-          "If from Canada, get CFIA endorsement.",
-          "If from the UK/EU, the EU pet passport plus accredited vet certificate works.",
+          "If from the USA, get <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement of the health certificate.",
+          "If from Canada, get <a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/exports/pets/eng\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> endorsement.",
+          "If from the UK/EU, the <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU pet passport</a> plus accredited vet certificate works.",
         ],
       },
       {
         title: "2 weeks before",
         items: [
-          "Apply for NOC (No Objection Certificate) from AQCS — submit advance copies of all docs (health cert, vaccine records, microchip cert, passport copy, ticket copy, 2 postcard photos of pet) by email or fax to the entry-port AQCS office. Processing fee Rs 1000 per application.",
+          "Apply for <a href=\"https://aqcsindia.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\">NOC (No Objection Certificate)</a> from AQCS — submit advance copies of all docs (health cert, vaccine records, microchip cert, passport copy, ticket copy, 2 postcard photos of pet) by email or fax to the entry-port AQCS office. Processing fee Rs 1000 per application.",
           "Advance NOC can be issued within 7 days before arrival — don't apply too early, certificate has limited validity.",
-          "Book Air India cabin slot (if eligible route) — Air India Paws on Board allows pets up to 10 kg combined on most India routes.",
+          "Book <a href=\"https://www.airindia.com/in/en/travel-information/baggage-information/travelling-with-pets.html\" target=\"_blank\" rel=\"noopener noreferrer\">Air India Paws on Board</a> cabin slot (if eligible route) — pets up to 10 kg combined on most India routes.",
           "Book a representative or agent at the entry airport if you don't have one (highly recommended, especially at Delhi).",
           "Confirm 48 hours before — Air India requires 48 hrs minimum notice for pet bookings.",
         ],
@@ -2737,15 +2737,15 @@ const CHECKLIST_DATA = {
         items: [
           "ISO microchip implanted FIRST",
           "Rabies vaccine AFTER microchip (≥21 days before EU entry)",
-          "Official vet appointment booked for health certificate (varies by origin country)",
+          "Official vet appointment booked for <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Certificate</a> (varies by origin country)",
           "Confirm whether your airline allows cabin pets on this leg",
         ],
       },
       {
         title: "10 days before",
         items: [
-          "Get destination-appropriate health certificate (EU Health Cert from US, GB AHC from UK, etc.)",
-          "USDA APHIS endorsement (US only) — same day as vet certificate ideally",
+          "Get destination-appropriate health certificate (<a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Cert</a> from US, <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB AHC</a> from UK, etc.)",
+          "<a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement (US only) — same day as vet certificate ideally",
           "Re-confirm airline cabin booking by phone",
         ],
       },
@@ -2778,14 +2778,14 @@ const CHECKLIST_DATA = {
           "Vet appointment for full health check",
           "ISO microchip implanted (if not already)",
           "Rabies vaccine 30 days–12 months old",
-          "Check current CDC dog import rules — they updated August 2024",
+          "Check current <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC dog import rules</a> — they updated August 2024",
         ],
       },
       {
         title: "4 weeks before",
         items: [
-          "CDC Dog Import Form completed (online, get the receipt)",
-          "USDA-accredited vet appointment booked for health certificate",
+          "<a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> completed (online, get the receipt)",
+          "<a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA-accredited vet</a> appointment booked for health certificate",
           "Confirm airline cabin pet space (limited per flight)",
           "Confirm departure airport allows cabin pet check-in",
         ],
@@ -2794,7 +2794,7 @@ const CHECKLIST_DATA = {
         title: "10 days before",
         items: [
           "Vet visit: get USDA-accredited health certificate signed",
-          "USDA APHIS endorsement (varies by state — some same-day, some require mail-in)",
+          "<a href=\"https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/sa_pet_travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement (varies by state — some same-day, some require mail-in)",
           "Re-confirm airline cabin booking by phone",
         ],
       },
@@ -2834,8 +2834,8 @@ const CHECKLIST_DATA = {
       {
         title: "4 weeks before",
         items: [
-          "Apply for MOCCAE import permit (Ministry of Climate Change and Environment) via moccae.gov.ae — ~AED 200",
-          "Book cabin pet space directly with airline by phone (Etihad cabin for AUH; cargo only for DXB)",
+          "Apply for <a href=\"https://www.moccae.gov.ae/en/services/registration-pet.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">MOCCAE import permit</a> (Ministry of Climate Change and Environment) — ~AED 200",
+          "Book cabin pet space directly with <a href=\"https://www.etihad.com/en/help/baggage/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">Etihad</a> by phone (cabin for AUH; cargo only for DXB)",
           "If using Dubai cargo: arrange Dubai Kennels & Cattery (DKC) or another customs broker",
           "Confirm departure airport allows your specific carrier and aircraft",
         ],
@@ -2885,7 +2885,7 @@ const CHECKLIST_DATA = {
       {
         title: "10 days before",
         items: [
-          "Vet-issued international health certificate (CFIA recommends within 10 days of arrival)",
+          "Vet-issued international health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> recommends within 10 days of arrival)",
           "If from US: USDA-accredited vet only — APHIS endorsement NOT required for Canada (saves time)",
           "If from elsewhere: country-specific government health certificate",
           "Re-confirm airline cabin pet booking by phone",
@@ -2946,16 +2946,16 @@ const CHECKLIST_DATA = {
         items: [
           "Bring rabies vaccination certificate (original)",
           "Bring vet health certificate (original)",
-          "SADER/SENASICA inspection at Mexican port of entry — free of charge",
+          "<a href=\"https://www.gob.mx/senasica\" target=\"_blank\" rel=\"noopener noreferrer\">SADER/SENASICA</a> inspection at Mexican port of entry — free of charge",
           "If paperwork is incomplete: official quarantine at owner's expense until resolved",
         ],
       },
       {
         title: "Returning to home country",
         items: [
-          "Returning to US: CDC Dog Import Form receipt required for dogs",
-          "Returning to Canada: standard rabies + health certificate",
-          "Returning to EU: EU Health Certificate or pet passport — Mexico is an unlisted third country so 3-month wait may apply",
+          "Returning to US: <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> receipt required for dogs",
+          "Returning to Canada: standard rabies + health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/exports/pets/eng\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a>)",
+          "Returning to EU: <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Certificate</a> or pet passport — Mexico is an unlisted third country so 3-month wait may apply",
         ],
       },
       {
@@ -3283,7 +3283,7 @@ const CHECKLIST_DATA = {
       {
         title: "40+ days before arrival",
         items: [
-          "Submit Advance Notification Form to the AQS office at your intended port of arrival — by mail or fax. Forms differ for dogs vs cats.",
+          "Submit <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">Advance Notification Form</a> to the AQS office at your intended port of arrival — by mail or fax. Forms differ for dogs vs cats.",
           "Notification includes: microchip number, vaccination dates and vaccine details, blood draw date and titer result, pet's physical measurements (length and height), home address, destination address in Japan, copy of passport.",
           "Submissions less than 40 days before arrival are generally not accepted — this can block entry entirely regardless of other paperwork.",
           "AQS reviews and issues 'Approval of Import Inspection' — required for boarding.",
@@ -5011,7 +5011,7 @@ function assess(answers) {
   if (answers.destination === "Hawaii") {
     warnings.push({
       title: "Hawaii has a strict rabies-free program",
-      detail: "Hawaii is rabies-free and treats arriving pets like an international entry. The 'Direct Airport Release' program requires: ISO microchip, two rabies vaccines (most recent at least 30 days before arrival), a FAVN/OIE rabies blood test from an approved lab at least 30 days before arrival, and submission of paperwork to the Animal Industry Division. Plan 4+ months ahead.",
+      detail: "Hawaii is rabies-free and treats arriving pets like an international entry. The <a href=\"https://hdoa.hawaii.gov/ai/aqs/aqs-info/\" target=\"_blank\" rel=\"noopener noreferrer\">'Direct Airport Release' program</a> requires: ISO microchip, two rabies vaccines (most recent at least 30 days before arrival), a FAVN/OIE rabies blood test from an approved lab at least 30 days before arrival, and submission of paperwork to the Animal Industry Division. Plan 4+ months ahead.",
     });
   }
 
@@ -5019,17 +5019,17 @@ function assess(answers) {
     warnings.push({
       title: answers.destination === "Spain" ? "Spain requires an EU Health Certificate" : "EU requires an EU Health Certificate",
       detail: answers.destination === "Spain"
-        ? "Spain follows EU pet import rules: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. You'll need an EU Health Certificate issued by an accredited vet within 10 days of travel. Good news: cabin is straightforward from most origins — Iberia and Vueling both fly cabin pets, and Spain has three solid pet-friendly airports (Madrid, Barcelona, Valencia)."
-        : "Issued by a USDA-accredited vet within 10 days of travel, then endorsed by your nearest USDA APHIS office. ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. Some countries (UK, Ireland, Malta, Finland, Norway) also require a tapeworm treatment for dogs, given 24–120 hours before arrival.",
+        ? "Spain follows EU pet import rules: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. You'll need an <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Certificate</a> issued by an accredited vet within 10 days of travel. Good news: cabin is straightforward from most origins — Iberia and Vueling both fly cabin pets, and Spain has three solid pet-friendly airports (Madrid, Barcelona, Valencia)."
+        : "Issued by a <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA-accredited vet</a> within 10 days of travel, then endorsed by your nearest <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> office. ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. Some countries (UK, Ireland, Malta, Finland, Norway) also require a tapeworm treatment for dogs, given 24–120 hours before arrival.",
     });
   }
 
   if (answers.destination === "Canada") {
-    ok.push("Canada is among the easier international destinations: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No APHIS endorsement required from the US. Confirm details with the CFIA before travel.");
+    ok.push("Canada is among the easier international destinations: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No APHIS endorsement required from the US. Confirm details with the <a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> before travel.");
   }
 
   if (answers.destination === "Mexico") {
-    ok.push("Mexico is a relatively easy destination: a vet health certificate plus current rabies vaccine is usually all that's required. SADER/SENASICA inspect pets on arrival, free of charge. Internal/external parasite treatment should be documented.");
+    ok.push("Mexico is a relatively easy destination: a vet health certificate plus current rabies vaccine is usually all that's required. <a href=\"https://www.gob.mx/senasica\" target=\"_blank\" rel=\"noopener noreferrer\">SADER/SENASICA</a> inspect pets on arrival, free of charge. Internal/external parasite treatment should be documented.");
   }
 
   if (answers.destination === "Caribbean") {
@@ -5054,8 +5054,8 @@ function assess(answers) {
     flags.push({
       severity: "fixable",
       title: "Japan: 180-day rabies titer wait is non-negotiable",
-      detail: "Japan requires: ISO microchip implanted FIRST, then two rabies vaccinations 30+ days apart, then a FAVN rabies antibody titer test ≥0.5 IU/ml from an MAFF-approved lab, then a 180-day waiting period from the titer blood draw date. Plus AQS Advance Notification submitted at least 40 days before arrival. Get any of this wrong and your pet is detained up to 180 days at your expense.",
-      workaround: "Start preparation 7+ months before your arrival date. Microchip → wait → rabies #1 → wait 30 days → rabies #2 → wait 30 days → FAVN blood draw → wait 180 days → travel. Then file the Advance Notification with Japan's Animal Quarantine Service 40+ days before arrival.",
+      detail: "Japan requires: ISO microchip implanted FIRST, then two rabies vaccinations 30+ days apart, then a FAVN rabies antibody titer test ≥0.5 IU/ml from an <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">MAFF-approved lab</a>, then a 180-day waiting period from the titer blood draw date. Plus <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">AQS Advance Notification</a> submitted at least 40 days before arrival. Get any of this wrong and your pet is detained up to 180 days at your expense.",
+      workaround: "Start preparation 7+ months before your arrival date. Microchip → wait → rabies #1 → wait 30 days → rabies #2 → wait 30 days → FAVN blood draw → wait 180 days → travel. Then file the <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">Advance Notification with Japan's Animal Quarantine Service</a> 40+ days before arrival.",
     });
     warnings.push({
       title: "Cabin pet options into Japan are limited",
@@ -5067,7 +5067,7 @@ function assess(answers) {
     if (hasSpecies("Dog")) {
       warnings.push({
         title: "Entering the USA — CDC Dog Import Form required for all dogs",
-        detail: "Every dog entering the US (including US dogs returning home) needs a completed CDC Dog Import Form — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
+        detail: "Every dog entering the US (including US dogs returning home) needs a completed <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
       });
     }
     if (hasSpecies("Cat")) {
@@ -5104,14 +5104,14 @@ function assess(answers) {
     });
     warnings.push({
       title: "Ireland's rules closely mirror the UK's",
-      detail: "ISO microchip, rabies vaccine ≥21 days old, and an EU/GB pet health certificate. If you're coming from the UK, the land+ferry route is common. If from outside the EU, you'll need an EU Health Certificate. Confirm current requirements with Ireland's Department of Agriculture, Food and the Marine.",
+      detail: "ISO microchip, rabies vaccine ≥21 days old, and an EU/GB pet health certificate. If you're coming from the UK, the land+ferry route is common. If from outside the EU, you'll need an <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Certificate</a>. Confirm current requirements with <a href=\"https://www.gov.ie/en/organisation/department-of-agriculture-food-and-the-marine/\" target=\"_blank\" rel=\"noopener noreferrer\">Ireland's Department of Agriculture, Food and the Marine</a>.",
     });
   }
 
   if (answers.destination === "India") {
     warnings.push({
       title: "India requires an NOC (No Objection Certificate)",
-      detail: "Apply to the Animal Quarantine and Certification Service (AQCS) at least 1–2 weeks before arrival. Pets can only enter India through six airports: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, or Hyderabad. Returning Indian residents can bring up to 2 pets without a full import license, but the NOC is still required.",
+      detail: "Apply to the <a href=\"https://aqcsindia.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\">Animal Quarantine and Certification Service (AQCS)</a> at least 1–2 weeks before arrival. Pets can only enter India through six airports: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, or Hyderabad. Returning Indian residents can bring up to 2 pets without a full import license, but the NOC is still required.",
     });
     warnings.push({
       title: "No direct cabin to USA, Canada, UK, or Australia",
@@ -5128,7 +5128,7 @@ function assess(answers) {
     });
     warnings.push({
       title: "MOCCAE permit valid only 30 days",
-      detail: "Apply to the Ministry of Climate Change and Environment (MOCCAE) for an import permit — it's only valid for 30 days from issue, so time it carefully. Several breeds are banned entirely (Pit Bull, Rottweiler, Dogo Argentino, Tosa, Mastiff types, wolf-dog hybrids).",
+      detail: "Apply to the <a href=\"https://www.moccae.gov.ae/en/services/registration-pet.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">Ministry of Climate Change and Environment (MOCCAE)</a> for an import permit — it's only valid for 30 days from issue, so time it carefully. Several breeds are banned entirely (Pit Bull, Rottweiler, Dogo Argentino, Tosa, Mastiff types, wolf-dog hybrids).",
     });
   }
 
@@ -5461,6 +5461,14 @@ function Hero({ onStart }) {
             href="https://petition.parliament.uk/petitions/750817"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && window.gtag) {
+                window.gtag("event", "petition_click", {
+                  event_category: "outbound",
+                  event_label: "UK Parliament petition 750817",
+                });
+              }
+            }}
             className="group block max-w-2xl mx-auto bg-stone-50 border-2 border-amber-700 hover:border-amber-600 hover:bg-amber-50 transition-colors duration-200 p-5"
           >
             <div className="flex items-start gap-4">
@@ -5837,13 +5845,13 @@ function Assessment({ answers, onReset }) {
                             {f.title}
                           </div>
                         </div>
-                        <p className="text-stone-700 leading-relaxed mb-3">{f.detail}</p>
+                        <p className="text-stone-700 leading-relaxed mb-3 [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.detail }} />
                         {f.workaround && (
                           <div className="mt-3 pt-3 border-t border-stone-200">
                             <div className="text-xs uppercase tracking-widest text-stone-500 font-medium mb-1.5">
                               {isImpossible ? "Suggested alternative" : "How to fix it"}
                             </div>
-                            <p className="text-stone-700 leading-relaxed text-sm">{f.workaround}</p>
+                            <p className="text-stone-700 leading-relaxed text-sm [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.workaround }} />
                           </div>
                         )}
                       </div>
@@ -5870,7 +5878,7 @@ function Assessment({ answers, onReset }) {
                       <div className="font-serif text-xl text-stone-900 mb-2">
                         <span className="text-amber-700 mr-2">{i + 1}.</span>{w.title}
                       </div>
-                      <p className="text-stone-700 leading-relaxed">{w.detail}</p>
+                      <p className="text-stone-700 leading-relaxed [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: w.detail }} />
                     </div>
                   ))}
                 </div>
@@ -6969,7 +6977,7 @@ function Checklist() {
                 {s.items.map((item, j) => (
                   <li key={j} className="flex gap-3 text-stone-700">
                     <span className="font-serif italic text-stone-400 text-sm pt-1">{String(j + 1).padStart(2, "0")}</span>
-                    <span className="leading-relaxed">{item}</span>
+                    <span className="leading-relaxed [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800 [&_a:hover]:decoration-amber-700" dangerouslySetInnerHTML={{ __html: item }} />
                   </li>
                 ))}
               </ul>
@@ -7962,7 +7970,7 @@ function JourneyPlanner() {
                               {s.items.slice(0, inTipsBlock ? 8 : 8).map((item, j) => (
                                 <li key={j} className={itemStyle}>
                                   <span className={inTipsBlock ? "text-stone-500 flex-shrink-0 mt-0.5" : "text-amber-500 flex-shrink-0 mt-0.5"}>{inTipsBlock ? "·" : "✓"}</span>
-                                  <span dangerouslySetInnerHTML={{ __html: item }} />
+                                  <span className="[&_a]:text-amber-400 [&_a]:underline [&_a]:decoration-amber-500/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-300" dangerouslySetInnerHTML={{ __html: item }} />
                                 </li>
                               ))}
                               {s.items.length > 8 && (

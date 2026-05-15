@@ -6257,6 +6257,8 @@ function AirlineGrid() {
     { id: "canada", label: "Canada routes", flag: "🇨🇦" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-america", label: "South America", flag: "🌎" },
+    { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 

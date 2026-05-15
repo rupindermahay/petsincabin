@@ -104,7 +104,7 @@ export default function SouthAmericaPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Long-haul connections via Europe and US</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  From Europe: Iberia (Madrid is the main hub), Air France (CDG), LATAM-operated long-haul (MAD, FRA, FCO, LIS). From the US: American Airlines and Delta serve major SA hubs from Miami and New York, with cabin pets under their normal US carrier limits.
+                  From Europe: Iberia (Madrid is the main hub), Air France (CDG), LATAM-operated long-haul (MAD, FRA, FCO, LIS). From the US: this is more limited than you might expect. American Airlines and Delta do NOT accept cabin pets to/from Brazil, Colombia, Argentina, Chile, Bolivia, Uruguay, or Venezuela — those are cargo-only (American PetEmbark). LATAM is the main cabin US-South America option, but as of May 2026 has suspended cabin service on US ↔ Brazil, Colombia, Peru, Bolivia, and Ecuador routes pending CDC dog-import rule updates. So for US→SA cabin in 2026, your realistic options narrow to: LATAM to Chile or Argentina (still active), or Avianca via Colombia connections (also affected by US-Colombia suspension on direct routes).
                 </p>
               </div>
             </div>

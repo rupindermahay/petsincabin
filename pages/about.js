@@ -39,8 +39,8 @@ export default function About() {
 
           {/* Photo strip — three photos, compact and horizontal */}
           <div className="grid grid-cols-3 gap-3 mb-10">
-            <img src="/theo-gate.jpg" alt="Theo in his carrier at the departure gate" className="w-full h-40 object-cover rounded-sm" style={{ objectPosition: "center 30%" }} />
-            <img src="/theo-carrier-seat.jpg" alt="Theo asleep under the airplane seat" className="w-full h-40 object-cover rounded-sm" style={{ objectPosition: "center 40%" }} />
+            <img src="/theo-gate.jpg" alt="Theo in his carrier at the departure gate" className="w-full h-40 object-cover rounded-sm" style={{ objectPosition: "center 65%" }} />
+            <img src="/theo-carrier-seat.jpg" alt="Theo asleep under the airplane seat" className="w-full h-40 object-cover rounded-sm" style={{ objectPosition: "center 70%" }} />
             <img src="/theo-balcony.jpg" alt="Theo on the Miami balcony" className="w-full h-40 object-cover rounded-sm" style={{ objectPosition: "center 60%" }} />
           </div>
           <p className="font-sans text-[10px] uppercase tracking-widest text-stone-400 -mt-8 mb-10 text-center">

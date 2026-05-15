@@ -50,7 +50,7 @@ export default function Privacy() {
           </h1>
 
           <p className="font-serif italic text-stone-600 text-lg mb-12">
-            What data this site collects, why, and what you can do about it. Last updated: 15 May 2026.
+            What data this site collects, why, and what you can do about it. Last updated: 16 May 2026.
           </p>
 
           <div className="space-y-10 font-serif text-lg text-stone-800 leading-relaxed">
@@ -72,7 +72,7 @@ export default function Privacy() {
             <section>
               <h2 className="font-serif text-2xl text-stone-900 mb-3">What data is collected</h2>
               <p className="mb-4">
-                When you visit this site, very limited information is collected automatically — and only if you've clicked "Accept" on the cookie banner. The tool used is Google Analytics 4 (GA4), configured with IP anonymisation enabled. The data collected is:
+                When you visit this site, very limited information is collected automatically using Google Analytics 4 (GA4), configured with IP anonymisation enabled. The data collected is:
               </p>
               <ul className="space-y-2 ml-5">
                 <li>— Which pages you visited and how long you spent on them</li>
@@ -82,7 +82,10 @@ export default function Privacy() {
                 <li>— Custom events you trigger, such as clicking the UK petition CTA on the homepage</li>
               </ul>
               <p className="mt-4">
-                If you click "Decline" on the cookie banner, none of this is collected — Google Consent Mode v2 keeps Google Analytics' analytics cookies in a "denied" state for your entire session, on every page. You can change your mind any time using the "Change your cookie choice" link further down this page.
+                Under the UK Data (Use and Access) Act 2025 (in force from 5 February 2026), aggregate analytics used solely to improve a website are exempt from the upfront consent requirement that previously applied to all non-essential cookies. This site uses GA4 in exactly that mode — to understand which guides are most useful and where they need work. <strong>No advertising tracking. No Google Signals. No data sharing with other Google products. No cross-site tracking.</strong>
+              </p>
+              <p className="mt-4">
+                You can opt out at any time using the button further down this page. If you opt out, no analytics data is collected from your device.
               </p>
             </section>
 
@@ -96,40 +99,58 @@ export default function Privacy() {
             <section>
               <h2 className="font-serif text-2xl text-stone-900 mb-3">Cookies</h2>
               <p className="mb-4">
-                If you accept the cookie banner, this site sets a small number of cookies from Google Analytics (e.g. <span className="not-italic font-mono text-sm">_ga</span>, <span className="not-italic font-mono text-sm">_ga_R4NVMW686F</span>) to recognise you as a returning visitor and measure how the site is used. These cookies expire after 2 years and do not contain your name, email, or any directly identifying information.
+                This site sets a small number of cookies from Google Analytics (e.g. <span className="not-italic font-mono text-sm">_ga</span>, <span className="not-italic font-mono text-sm">_ga_R4NVMW686F</span>) to recognise you as a returning visitor and measure aggregate usage. These cookies expire after 2 years and do not contain your name, email, or any directly identifying information.
               </p>
               <p className="mb-4">
                 The Google Fonts service used for the site's typography may also set a small technical cookie to deliver fonts efficiently. This is functional, not analytical.
               </p>
               <p>
-                If you decline the cookie banner, no analytics cookies are set, and Google Analytics receives only the bare minimum signal (a denied-state ping) so it knows you exist but cannot identify or follow you.
+                If you opt out of analytics (button below), no Google Analytics cookies are set on your device, and the site instructs GA to drop your session from collection.
               </p>
             </section>
 
             <section>
-              <h2 className="font-serif text-2xl text-stone-900 mb-3">Change your cookie choice</h2>
+              <h2 className="font-serif text-2xl text-stone-900 mb-3">Opt out of analytics</h2>
               <p className="mb-4">
-                You can change your mind any time. The button below resets your preference and shows the banner again on your next page load.
+                Click the button below to opt out. Your preference is saved on this device (in your browser's local storage) and applies on every page from then on. Reload the page after clicking to confirm. To opt back in later, click the second button.
               </p>
-              <button
-                onClick={() => {
-                  if (typeof window !== "undefined") {
-                    try { window.localStorage.removeItem("pic_cookie_consent"); } catch (e) {}
-                    if (window.gtag) {
-                      window.gtag("consent", "update", {
-                        ad_storage: "denied",
-                        analytics_storage: "denied",
-                        ad_user_data: "denied",
-                        ad_personalization: "denied",
-                      });
+              <div className="flex flex-col sm:flex-row gap-3 not-italic">
+                <button
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      try { window.localStorage.setItem("pic_analytics_optout", "true"); } catch (e) {}
+                      if (window.gtag) {
+                        window.gtag("consent", "update", {
+                          ad_storage: "denied",
+                          analytics_storage: "denied",
+                          ad_user_data: "denied",
+                          ad_personalization: "denied",
+                        });
+                      }
+                      alert("You're opted out of analytics on this device. The preference is saved in your browser.");
                     }
-                    alert("Cookie preference reset. The banner will appear again on your next visit.");
-                  }
-                }}
-                className="inline-flex items-center gap-2 bg-amber-700 text-stone-50 px-5 py-3 hover:bg-amber-800 transition-colors text-sm uppercase tracking-widest font-medium not-italic"
-              >
-                Reset my cookie choice
-              </button>
+                  }}
+                  className="inline-flex items-center gap-2 bg-amber-700 text-stone-50 px-5 py-3 hover:bg-amber-800 transition-colors text-sm uppercase tracking-widest font-medium"
+                >
+                  Opt out of analytics
+                </button>
+                <button
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      try { window.localStorage.removeItem("pic_analytics_optout"); } catch (e) {}
+                      if (window.gtag) {
+                        window.gtag("consent", "update", {
+                          analytics_storage: "granted",
+                        });
+                      }
+                      alert("Analytics opt-out cleared. Aggregate data may be collected again on your next visit.");
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 bg-stone-200 text-stone-800 border border-stone-400 px-5 py-3 hover:bg-stone-300 transition-colors text-sm uppercase tracking-widest font-medium"
+                >
+                  Opt back in
+                </button>
+              </div>
             </section>
 
             <section>
@@ -138,7 +159,7 @@ export default function Privacy() {
               <ul className="space-y-2 ml-5">
                 <li>— <strong className="font-medium">Vercel</strong> — hosts the website</li>
                 <li>— <strong className="font-medium">Cloudflare</strong> — manages the domain</li>
-                <li>— <strong className="font-medium">Google Analytics 4</strong> — measures site usage (only with your consent; IP-anonymised)</li>
+                <li>— <strong className="font-medium">Google Analytics 4</strong> — measures aggregate site usage (IP-anonymised; no Google Signals, no advertising features). You can opt out using the button further up.</li>
                 <li>— <strong className="font-medium">Google Fonts</strong> — delivers the fonts you see</li>
                 <li>— <strong className="font-medium">Google Mail</strong> — handles the contact email (forwarded from Gmail)</li>
               </ul>

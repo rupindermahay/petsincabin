@@ -40,13 +40,16 @@ export default function Document() {
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
 
-        {/* Google Consent Mode v2 — sets all four signals to "denied" by
-            default BEFORE the Google tag loads. This is required for UK/EU
-            GDPR compliance. Once a user clicks "Accept" on the cookie banner
-            (in PetTravel.jsx), CookieBanner calls gtag('consent', 'update',
-            { ... granted ... }) which upgrades the signals. Until then, GA
-            sends only anonymous cookieless pings.
-            Note: this script MUST run before the gtag/js script below. */}
+        {/* Google Consent Mode v2 — defaults set BEFORE the Google tag loads.
+            We operate under the UK DUAA 2025 statistical analytics exemption
+            (5 Feb 2026), so analytics_storage is GRANTED by default — no
+            upfront consent banner needed for aggregate site-improvement
+            analytics. Ad-related signals are denied by default as a defensive
+            posture (we don't run ads, but this confirms it to Google's tag).
+
+            If a visitor has clicked the opt-out button on /privacy, the
+            AnalyticsOptOutListener component will flip analytics_storage
+            to denied on page load. Until then GA collects normally. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -54,22 +57,17 @@ export default function Document() {
               function gtag(){dataLayer.push(arguments);}
               gtag('consent', 'default', {
                 ad_storage: 'denied',
-                analytics_storage: 'denied',
+                analytics_storage: 'granted',
                 ad_user_data: 'denied',
                 ad_personalization: 'denied',
                 functionality_storage: 'granted',
-                security_storage: 'granted',
-                wait_for_update: 500
+                security_storage: 'granted'
               });
-              // Restore prior consent decision (if any) BEFORE gtag.js loads
+              // Honour an existing opt-out BEFORE gtag.js loads.
               try {
-                var stored = localStorage.getItem('pic_cookie_consent');
-                if (stored === 'granted') {
+                if (localStorage.getItem('pic_analytics_optout') === 'true') {
                   gtag('consent', 'update', {
-                    ad_storage: 'granted',
-                    analytics_storage: 'granted',
-                    ad_user_data: 'granted',
-                    ad_personalization: 'granted'
+                    analytics_storage: 'denied'
                   });
                 }
               } catch (e) {}
@@ -81,7 +79,13 @@ export default function Document() {
             Measurement ID: G-R4NVMW686F (live).
             Pageviews are tracked automatically. Custom events (like the
             "petition_click" event fired from the UK petition CTA in
-            PetTravel.jsx) show up under Reports → Engagement → Events. */}
+            PetTravel.jsx) show up under Reports → Engagement → Events.
+
+            Configuration notes (verify in GA4 admin → Data Streams):
+            - Google Signals: OFF (required for DUAA statistical exemption)
+            - Data sharing with other Google products: OFF
+            - No Google Ads linking, no remarketing, no audience export
+            - IP anonymisation: ON (anonymize_ip below) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4NVMW686F"></script>
         <script
           dangerouslySetInnerHTML={{

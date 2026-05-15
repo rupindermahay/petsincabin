@@ -393,8 +393,59 @@ const NO_CABIN_AIRLINES = [
 // ---------- POPULAR ROUTES & TIMES ----------
 
 const DIRECT_ROUTES = [
+  // ═══════ FROM AMSTERDAM ═══════
+  { from: "Amsterdam (AMS)", to: "New York (JFK)", duration: "7h 50m", note: "KLM. ✓ Cabin (under 8 kg). KLM's flagship transatlantic — one of the most reliable cabin pet options.", tags: ["europe", "us"] },
+  { from: "Amsterdam (AMS)", to: "Newark (EWR)", duration: "7h 50m", note: "KLM / United. ✓ Cabin (under 8 kg). Newark is the NJ/CT alternative to JFK — same distance from AMS.", tags: ["europe", "us"] },
+  { from: "Amsterdam (AMS)", to: "Miami (MIA)", duration: "9h 30m", note: "KLM. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Amsterdam (AMS)", to: "London (LHR)", duration: "1h 10m", note: "KLM. ✓ Cabin OUT of Europe (remember: cabin INTO the UK is not possible — this route works as the last leg out of UK using AMS as a hub, not the return).", tags: ["europe", "uk-out"] },
+
+  // ═══════ FROM FRANKFURT ═══════
+  { from: "Frankfurt (FRA)", to: "New York (JFK)", duration: "8h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt has the world's most advanced Animal Lounge for cargo layovers — but for cabin, Lufthansa is the reliable choice.", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "Newark (EWR)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark is a strong US East Coast alternative.", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "Boston (BOS)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "Washington (IAD)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "San Francisco (SFO)", duration: "11h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Long flight — consider an overnight in Frankfurt before returning.", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "Vancouver (YVR)", duration: "9h 45m", note: "Air Canada / Lufthansa. ✓ Cabin.", tags: ["europe", "canada"] },
+  { from: "Frankfurt (FRA)", to: "Miami (MIA)", duration: "10h", note: "Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Frankfurt (FRA)", to: "Delhi (DEL)", duration: "8h", note: "Lufthansa / Air India. ✓ Cabin (under 8 kg Lufthansa / under 10 kg Air India). Frankfurt is one of the best hubs for Europe→India cabin travel.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Mumbai (BOM)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Mumbai is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Bengaluru (BLR)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Chennai (MAA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Kolkata (CCU)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Hyderabad (HYD)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Frankfurt (FRA)", to: "Valencia (VLC)", duration: "2h 30m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg). Frankfurt→Valencia direct cabin.", tags: ["europe"] },
+
+  // ═══════ FROM PARIS ═══════
+  { from: "Paris (CDG)", to: "New York (JFK)", duration: "7h 45m", note: "Air France / Delta. ✓ Cabin (under 8 kg). Paris is the central hub for the UK→USA cabin workaround — fly cabin out of the UK to CDG, then onward.", tags: ["europe", "us"] },
+  { from: "Paris (CDG)", to: "Boston (BOS)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). Shortest transatlantic cabin from Europe.", tags: ["europe", "us"] },
+  { from: "Paris (CDG)", to: "Miami (MIA)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Paris (CDG)", to: "Delhi (DEL)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Paris→India is a strong cabin route — Air France accepts cabin pets and connects to the India AQCS NOC system.", tags: ["europe", "india"] },
+  { from: "Paris (CDG)", to: "Vancouver (YVR)", duration: "10h", note: "Air France / Air Canada. ✓ Cabin.", tags: ["europe", "canada"] },
+  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France / Aeromexico. ✓ Cabin (under 8 kg).", tags: ["europe", "mexico"] },
+
+  // ═══════ FROM LISBON ═══════
+  { from: "Lisbon (LIS)", to: "New York (JFK)", duration: "7h 30m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). TAP is one of the better cabin-pet airlines for transatlantic — more flexibility than some US carriers.", tags: ["europe", "us"] },
+  { from: "Lisbon (LIS)", to: "Miami (MIA)", duration: "8h 45m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+
+  // ═══════ FROM ZURICH ═══════
+  { from: "Zurich (ZRH)", to: "New York (JFK)", duration: "9h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds are permitted in cabin on SWISS — one of the few that explicitly allows brachycephalic pets.", tags: ["europe", "us"] },
+  { from: "Zurich (ZRH)", to: "Miami (MIA)", duration: "10h 30m", note: "SWISS. ✓ Cabin (under 8 kg). Brachycephalic breeds also allowed.", tags: ["europe", "us"] },
+
   // ═══════ FROM BOSTON ═══════
   { from: "Boston (BOS)", to: "Paris (CDG)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). The shortest US east coast direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Boston (BOS)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+
+  // ═══════ FROM NEWARK ═══════
+  { from: "Newark (EWR)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark's main direct cabin to Europe — good alternative to JFK for NJ/CT pet owners.", tags: ["us", "europe"] },
+  { from: "Newark (EWR)", to: "Paris (CDG)", duration: "7h 30m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+
+  // ═══════ FROM WASHINGTON DULLES ═══════
+  { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Washington (IAD)", to: "Paris (CDG)", duration: "7h 45m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+
+  // ═══════ FROM SAN FRANCISCO ═══════
+  { from: "San Francisco (SFO)", to: "Frankfurt (FRA)", duration: "11h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). West coast to Europe direct — long flight, consider an overnight in Europe before onward connections.", tags: ["us", "europe"] },
+  { from: "San Francisco (SFO)", to: "Paris (CDG)", duration: "11h", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
 
   // ═══════ FROM CAPE TOWN ═══════
   { from: "Cape Town (CPT)", to: "Johannesburg (JNB)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. Domestic South Africa only. Submit Lift's Dog-in-Cabin form 7+ days ahead. No cats. International SA travel is cargo-only on all airlines.", tags: ["south-africa"] },
@@ -412,15 +463,43 @@ const DIRECT_ROUTES = [
   // ═══════ FROM DELHI ═══════
   { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
   { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
-  { from: "Delhi / Mumbai", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Promo $399 per segment through May 2026. The cabin route into the UAE.", tags: ["india", "dubai"] },
+  { from: "Delhi (DEL)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin route from Delhi to Abu Dhabi.", tags: ["india", "dubai"] },
+  { from: "Delhi (DEL)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / Air India. ✓ Cabin. Delhi→Frankfurt is one of the main India→Europe cabin routes.", tags: ["india", "europe"] },
+
+  // ═══════ FROM MUMBAI ═══════
+  { from: "Mumbai (BOM)", to: "Frankfurt (FRA)", duration: "9h", note: "Lufthansa / Air India. ✓ Cabin (under 8 kg Lufthansa / under 10 kg Air India). Mumbai is one of India's six approved pet-entry airports — works for both departures and arrivals.", tags: ["india", "europe"] },
+  { from: "Mumbai (BOM)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
+  { from: "Mumbai (BOM)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France / Air India. ✓ Cabin.", tags: ["india", "europe"] },
+
+  // ═══════ FROM BENGALURU ═══════
+  { from: "Bengaluru (BLR)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
+  { from: "Bengaluru (BLR)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
+
+  // ═══════ FROM CHENNAI ═══════
+  { from: "Chennai (MAA)", to: "Frankfurt (FRA)", duration: "10h", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
+  { from: "Chennai (MAA)", to: "Abu Dhabi (AUH)", duration: "3h 45m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
+
+  // ═══════ FROM KOLKATA ═══════
+  { from: "Kolkata (CCU)", to: "Frankfurt (FRA)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
+
+  // ═══════ FROM HYDERABAD ═══════
+  { from: "Hyderabad (HYD)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
+  { from: "Hyderabad (HYD)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
 
   // ═══════ FROM ABU DHABI ═══════
   { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Delhi (DEL)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Delhi.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Mumbai (BOM)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Mumbai.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Bengaluru (BLR)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Chennai (MAA)", duration: "3h 45m", note: "Etihad. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Kolkata (CCU)", duration: "4h", note: "Etihad. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Hyderabad (HYD)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Paris (CDG)", duration: "7h 30m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Major Etihad hub onward to most of Europe.", tags: ["dubai", "europe"] },
   { from: "Abu Dhabi (AUH)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Connects to KLM cabin onward.", tags: ["dubai", "europe"] },
   { from: "Abu Dhabi (AUH)", to: "Frankfurt (FRA)", duration: "7h 15m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["dubai", "europe"] },
   { from: "Abu Dhabi (AUH)", to: "Zurich (ZRH)", duration: "6h 50m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Snub-nosed breeds allowed in cabin via SWISS connections.", tags: ["dubai", "europe"] },
   { from: "Abu Dhabi (AUH)", to: "Milan (MXP) / Rome (FCO)", duration: "6h", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Direct cabin to Italy.", tags: ["dubai", "europe"] },
+  { from: "Abu Dhabi (AUH)", to: "Valencia (VLC)", duration: "6h 30m", note: "Etihad. ✓ Cabin out of UAE (under 8 kg). Etihad flies to Spain direct.", tags: ["dubai", "europe"] },
   // Note: Abu Dhabi → London / Manchester is cabin OUT of AUH BUT NOT cabin INTO UK on any airline. See workarounds for UK arrivals.
 
   // ═══════ FROM DUBAI ═══════
@@ -479,6 +558,16 @@ const DIRECT_ROUTES = [
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
   { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
 
+  // ═══════ FROM VANCOUVER ═══════
+  { from: "Vancouver (YVR)", to: "Frankfurt (FRA)", duration: "9h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). West-coast Canada direct cabin to Europe.", tags: ["canada", "europe"] },
+  { from: "Vancouver (YVR)", to: "Toronto (YYZ)", duration: "4h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined). Connect at YYZ for onward cabin routes.", tags: ["canada"] },
+  { from: "Vancouver (YVR)", to: "Los Angeles (LAX)", duration: "2h 45m", note: "Air Canada, Alaska, United. ✓ Cabin. Short Pacific coast hop.", tags: ["canada", "us"] },
+  { from: "Vancouver (YVR)", to: "New York (JFK)", duration: "5h 30m", note: "Air Canada / United. ✓ Cabin (under 22 lb AC).", tags: ["canada", "us"] },
+
+  // ═══════ FROM GUADALAJARA ═══════
+  { from: "Guadalajara (GDL)", to: "Mexico City (MEX)", duration: "1h", note: "Aeromexico / Volaris. ✓ Cabin within Mexico (under 10 kg). Short domestic hop connecting to international cabin routes.", tags: ["mexico"] },
+  { from: "Guadalajara (GDL)", to: "Los Angeles (LAX)", duration: "3h 30m", note: "Aeromexico / Alaska. ✓ Cabin. Guadalajara's main cross-border cabin route to the US.", tags: ["mexico", "us"] },
+
   // ═══════ FROM MIAMI ═══════
   { from: "Miami (MIA)", to: "Nassau (NAS)", duration: "55m", note: "JetBlue, AA, Delta, Bahamasair. ✓ Cabin (under 20 lb on JetBlue). Shortest US-Caribbean route — Bahamas import permit required (apply 6–8 weeks ahead).", tags: ["us", "caribbean"] },
   { from: "Miami (MIA)", to: "New York (JFK)", duration: "3h 15m", note: "Delta, AA, United, JetBlue. ✓ Cabin all four. Domestic-equivalent route, multiple daily.", tags: ["us"] },
@@ -529,8 +618,9 @@ const DIRECT_ROUTES = [
   { from: "Punta Cana (PUJ)", to: "Miami (MIA)", duration: "2h 25m", note: "JetBlue, AA, Delta, Spirit. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — US re-entry needs Certification of US-issued Rabies Vaccination form obtained BEFORE leaving the US.", tags: ["caribbean", "us"] },
   { from: "Punta Cana (PUJ)", to: "New York (JFK)", duration: "3h 45m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
 
-  // ═══════ FROM PARIS ═══════
-  // (Paris → London is a multi-leg workaround, not a direct cabin flight — see workarounds below)
+  // ═══════ FROM SANTO DOMINGO ═══════
+  { from: "Santo Domingo (SDQ)", to: "Miami (MIA)", duration: "2h 30m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb). DR is CDC high-risk — the Certification of US-issued Rabies Vaccination form must be prepared BEFORE you leave the US. Return trips: originals only.", tags: ["caribbean", "us"] },
+  { from: "Santo Domingo (SDQ)", to: "New York (JFK)", duration: "3h 30m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb). Same CDC high-risk rules apply on return.", tags: ["caribbean", "us"] },
 
   // ═══════ FROM ROME ═══════
   { from: "Rome (FCO)", to: "New York (JFK)", duration: "9h 30m", note: "ITA Airways. ✓ Cabin (under 8 kg, €210). Italy's flagship transatlantic cabin route.", tags: ["us", "europe"] },
@@ -545,10 +635,7 @@ const DIRECT_ROUTES = [
   { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
   { from: "Toronto (YYZ)", to: "New York (JFK)", duration: "1h 45m", note: "Air Canada, Delta, United, American. ✓ Cabin all four. Shortest US cabin from Canada.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Paris (CDG)", duration: "7h 30m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Direct cabin Canada → Europe — Paris connects onward cabin-friendly across the EU.", tags: ["canada", "europe"] },
-
-  // ═══════ FROM VANCOUVER ═══════
-  { from: "Vancouver (YVR)", to: "Frankfurt (FRA)", duration: "9h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). West-coast Canada direct cabin to Europe.", tags: ["canada", "europe"] },
-  { from: "Vancouver (YVR)", to: "Toronto (YYZ)", duration: "4h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined). Connect at YYZ for onward cabin routes.", tags: ["canada"] },
+  { from: "Toronto (YYZ)", to: "Madrid (MAD)", duration: "8h 30m", note: "Air Canada / Iberia. ✓ Cabin. Toronto→Spain cabin option.", tags: ["canada", "europe"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -2979,8 +3066,8 @@ const QUESTIONS = [
   {
     id: "destination",
     label: "Where are you flying to?",
-    type: "choice",
-    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK", "Ireland", "Europe", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
+    type: "dropdown",
+    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK", "Ireland", "Europe", "Spain", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
     helper: "Pick where your pet is ARRIVING. Flying Europe → New York? Choose 'Into the USA'.",
   },
   {
@@ -3048,7 +3135,7 @@ function assess(answers) {
   const isDomestic = answers.destination === "Within the USA (domestic)";
   const isInternationalArrival = answers.destination === "Into the USA (international arrival)";
 
-  if (answers.destination === "Europe" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
+  if (answers.destination === "Europe" || answers.destination === "Spain" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
     if (answers.age === "8 weeks – 4 months") {
       flags.push({
         severity: "blocker",
@@ -3114,10 +3201,12 @@ function assess(answers) {
     });
   }
 
-  if (answers.destination === "Europe") {
+  if (answers.destination === "Europe" || answers.destination === "Spain") {
     warnings.push({
-      title: "EU requires an EU Health Certificate",
-      detail: "Issued by a USDA-accredited vet within 10 days of travel, then endorsed by your nearest USDA APHIS office. ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. Some countries (UK, Ireland, Malta, Finland, Norway) also require a tapeworm treatment for dogs, given 24–120 hours before arrival.",
+      title: answers.destination === "Spain" ? "Spain requires an EU Health Certificate" : "EU requires an EU Health Certificate",
+      detail: answers.destination === "Spain"
+        ? "Spain follows EU pet import rules: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. You'll need an EU Health Certificate issued by an accredited vet within 10 days of travel. Good news: cabin is straightforward from most origins — Iberia and Vueling both fly cabin pets, and Spain has three solid pet-friendly airports (Madrid, Barcelona, Valencia)."
+        : "Issued by a USDA-accredited vet within 10 days of travel, then endorsed by your nearest USDA APHIS office. ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. Some countries (UK, Ireland, Malta, Finland, Norway) also require a tapeworm treatment for dogs, given 24–120 hours before arrival.",
     });
   }
 
@@ -3303,7 +3392,7 @@ function NavBar({ onStartIntake }) {
               className="w-10 h-10 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity"
             />
             <div className="flex flex-col items-start">
-              <span className="font-serif italic font-semibold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight text-lg">
+              <span className="font-serif font-semibold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight text-lg tracking-tight">
                 Pets in Cabin
               </span>
               <span className="text-[10px] uppercase tracking-[0.22em] text-stone-400 leading-none">
@@ -3323,13 +3412,13 @@ function NavBar({ onStartIntake }) {
           </button>
         </div>
 
-        {/* ROW 2: Desktop nav — full width under the logo, separated by a rule */}
-        <div className="hidden md:flex items-center border-t border-stone-200 py-1 gap-0 overflow-x-auto scrollbar-none">
+        {/* ROW 2: Desktop nav — wraps naturally to two lines, items spread full width */}
+        <div className="hidden md:flex items-center border-t border-stone-200 py-1 flex-wrap justify-between">
           {NAV_SECTIONS.slice(1).map((s) => (
             <button
               key={s.id}
               onClick={() => go(s.id)}
-              className="relative group flex items-baseline gap-1 px-3 py-2 whitespace-nowrap transition-colors hover:text-amber-700"
+              className="relative group flex items-baseline gap-1 px-2 py-2 whitespace-nowrap transition-colors hover:text-amber-700 flex-shrink-0"
             >
               {s.num && (
                 <span className="font-serif italic text-amber-600/70 text-[10px] flex-shrink-0">{s.num}</span>
@@ -3337,8 +3426,7 @@ function NavBar({ onStartIntake }) {
               <span className="font-serif text-sm font-semibold text-stone-800 group-hover:text-amber-700 transition-colors tracking-tight">
                 {s.label}
               </span>
-              {/* Animated underline */}
-              <span className="absolute bottom-0.5 left-3 right-3 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              <span className="absolute bottom-0.5 left-2 right-2 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </button>
           ))}
         </div>
@@ -3559,25 +3647,42 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
           </div>
         )}
 
-        <div className="grid gap-2 mb-6 mt-4">
-          {q.options.map((opt) => {
-            const selected = isMulti ? selectedValues.includes(opt) : current === opt;
-            return (
-              <button
-                key={opt}
-                onClick={() => pick(opt)}
-                className={`group text-left px-4 py-3 border transition-all duration-200 flex items-center justify-between ${
-                  selected
-                    ? "border-stone-900 bg-stone-900 text-stone-50"
-                    : "border-stone-300 bg-white hover:border-stone-900 hover:-translate-y-0.5"
-                }`}
-              >
-                <span className="font-serif text-base">{opt}</span>
-                {selected && <Check className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />}
-              </button>
-            );
-          })}
-        </div>
+        {q.type === "dropdown" ? (
+          /* Dropdown for questions with many options (e.g. destination — 14 options) */
+          <div className="mt-4 mb-6">
+            <select
+              value={current || ""}
+              onChange={(e) => pick(e.target.value)}
+              className="w-full bg-white border-2 border-stone-300 focus:border-stone-900 focus:outline-none px-4 py-4 font-serif text-xl text-stone-900 transition-colors"
+            >
+              <option value="" disabled>Select a destination…</option>
+              {q.options.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          /* Button grid for standard choice questions */
+          <div className="grid gap-2 mb-6 mt-4">
+            {q.options.map((opt) => {
+              const selected = isMulti ? selectedValues.includes(opt) : current === opt;
+              return (
+                <button
+                  key={opt}
+                  onClick={() => pick(opt)}
+                  className={`group text-left px-4 py-3 border transition-all duration-200 flex items-center justify-between ${
+                    selected
+                      ? "border-stone-900 bg-stone-900 text-stone-50"
+                      : "border-stone-300 bg-white hover:border-stone-900 hover:-translate-y-0.5"
+                  }`}
+                >
+                  <span className="font-serif text-base">{opt}</span>
+                  {selected && <Check className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <button
@@ -5362,29 +5467,53 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* Direct routes */}
-            {directMatches.length > 0 && (
-              <div className="mb-8">
-                <div className="flex items-baseline gap-3 mb-4">
-                  <span className="text-emerald-400 text-base">✓</span>
-                  <h4 className="font-serif text-xl text-stone-100">Direct cabin route</h4>
-                  <span className="text-xs uppercase tracking-widest text-stone-500">{directMatches.length}</span>
-                </div>
-                <div className="space-y-2">
-                  {directMatches.map((r, i) => (
-                    <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                      <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                        <span className="font-serif text-base text-stone-100">{r.from}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                        <span className="font-serif text-base text-stone-100">{r.to}</span>
-                        <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+            {/* Direct routes — grouped by city pair so multiple airlines show together */}
+            {directMatches.length > 0 && (() => {
+              // Group routes by from→to pair
+              const grouped = [];
+              const seen = new Map();
+              directMatches.forEach((r) => {
+                const key = `${r.from}|||${r.to}`;
+                if (seen.has(key)) {
+                  seen.get(key).routes.push(r);
+                } else {
+                  const g = { key, from: r.from, to: r.to, duration: r.duration, routes: [r] };
+                  seen.set(key, g);
+                  grouped.push(g);
+                }
+              });
+              return (
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-3 mb-4">
+                    <span className="text-emerald-400 text-base">✓</span>
+                    <h4 className="font-serif text-xl text-stone-100">
+                      Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}
+                    </h4>
+                  </div>
+                  <div className="space-y-3">
+                    {grouped.map((g, i) => (
+                      <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                        <div className="flex items-center gap-2 flex-wrap mb-2">
+                          <span className="font-serif text-base text-stone-100">{g.from}</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                          <span className="font-serif text-base text-stone-100">{g.to}</span>
+                          <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                        </div>
+                        {g.routes.length === 1 ? (
+                          <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                        ) : (
+                          <div className="space-y-2">
+                            {g.routes.map((r, j) => (
+                              <p key={j} className="text-stone-400 text-sm leading-relaxed border-l border-stone-600 pl-3">{r.note}</p>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* No direct route, but a workaround exists — explain it clearly */}
             {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
@@ -5455,28 +5584,42 @@ function JourneyPlanner() {
                   These routes start from {airportLabel(origin)} directly. They usually involve an extra flight compared with driving to {airportLabel(driveTo.code)} first — gentler on your schedule, a bit more flying for your pet. Your call.
                 </p>
 
-                {altDirect.length > 0 && (
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-3 mb-3">
-                      <span className="text-emerald-400 text-base">✓</span>
-                      <h4 className="font-serif text-lg text-stone-100">Direct cabin route</h4>
-                      <span className="text-xs uppercase tracking-widest text-stone-500">{altDirect.length}</span>
-                    </div>
-                    <div className="space-y-2">
-                      {altDirect.map((r, i) => (
-                        <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                          <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                            <span className="font-serif text-base text-stone-100">{r.from}</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                            <span className="font-serif text-base text-stone-100">{r.to}</span>
-                            <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                {altDirect.length > 0 && (() => {
+                  const grouped = [];
+                  const seen = new Map();
+                  altDirect.forEach((r) => {
+                    const key = `${r.from}|||${r.to}`;
+                    if (seen.has(key)) seen.get(key).routes.push(r);
+                    else { const g = { key, from: r.from, to: r.to, duration: r.duration, routes: [r] }; seen.set(key, g); grouped.push(g); }
+                  });
+                  return (
+                    <div className="mb-6">
+                      <div className="flex items-baseline gap-3 mb-3">
+                        <span className="text-emerald-400 text-base">✓</span>
+                        <h4 className="font-serif text-lg text-stone-100">Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}</h4>
+                      </div>
+                      <div className="space-y-2">
+                        {grouped.map((g, i) => (
+                          <div key={i} className="bg-stone-800 border border-stone-700 p-4">
+                            <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                              <span className="font-serif text-base text-stone-100">{g.from}</span>
+                              <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                              <span className="font-serif text-base text-stone-100">{g.to}</span>
+                              <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                            </div>
+                            {g.routes.length === 1 ? (
+                              <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                            ) : (
+                              <div className="space-y-2">
+                                {g.routes.map((r, j) => <p key={j} className="text-stone-400 text-sm leading-relaxed border-l border-stone-600 pl-3">{r.note}</p>)}
+                              </div>
+                            )}
                           </div>
-                          <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 {altWorkarounds.length > 0 && (
                   <div>

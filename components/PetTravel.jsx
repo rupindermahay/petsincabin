@@ -388,6 +388,7 @@ const AIRLINES = [
   },
   {
     name: "Aeromexico",
+    scope: "north-america",
     tags: ["mexico", "us"],
     cabin: "Cabin ✓ — small dogs and cats, flights 6 hours or less",
     cabinStatus: "conditional",
@@ -420,6 +421,7 @@ const AIRLINES = [
   },
   {
     name: "Volaris",
+    scope: "north-america",
     tags: ["mexico", "us"],
     cabin: "Cabin ✓ — small dogs and cats, Mexico and the Americas",
     cabinStatus: "conditional",
@@ -3946,12 +3948,13 @@ function NavBar({ onStartIntake }) {
                 Pets in Cabin
               </span>
               <span
+                role="img"
                 aria-label="by Theo's Mum"
                 className="flex justify-between w-full text-[9px] uppercase text-stone-400 leading-none font-sans"
                 style={{ letterSpacing: "0" }}
               >
                 {"BY THEO'S MUM".split("").map((ch, i) => (
-                  <span key={i}>{ch === " " ? "\u00A0" : ch}</span>
+                  <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
               </span>
             </div>
@@ -3989,12 +3992,13 @@ function NavBar({ onStartIntake }) {
                 Pets in Cabin
               </span>
               <span
+                role="img"
                 aria-label="by Theo's Mum"
                 className="flex justify-between w-full text-[9px] uppercase text-stone-400 leading-none font-sans"
                 style={{ letterSpacing: "0" }}
               >
                 {"BY THEO'S MUM".split("").map((ch, i) => (
-                  <span key={i}>{ch === " " ? "\u00A0" : ch}</span>
+                  <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
               </span>
             </div>
@@ -5549,7 +5553,7 @@ function ChecklistDownload() {
           : `<li><span class="check"></span><span class="item">${item}</span></li>`).join('')}
       </ul>
     `).join('')}
-    <footer>This checklist is a starting point, not a substitute for professional advice. Always confirm with your airline, vet, and destination country before flying. Last reviewed May 2026.</footer>
+    <footer>This checklist is a starting point, not a substitute for professional advice. Always confirm with your airline, vet, and destination country before flying. Updated ${LAST_UPDATED}.</footer>
   </div>
 </body>
 </html>`;
@@ -7509,7 +7513,7 @@ function Footer() {
             className="w-16 h-16 rounded-full object-cover flex-shrink-0"
           />
           <div>
-            <div className="font-serif italic text-stone-200 text-lg">Pets in Cabin</div>
+            <div className="font-serif text-stone-200 text-xl" style={{ fontWeight: 600, letterSpacing: "-0.02em" }}>Pets in Cabin</div>
             <div className="font-serif italic text-stone-400 text-sm">Travel together, stay together · A guide by Theo's Mum</div>
           </div>
         </div>

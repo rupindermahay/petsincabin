@@ -5844,7 +5844,7 @@ const DESTINATIONS = [
       },
       {
         title: "Seven dog breeds are banned in Norway",
-        icon: <AlertCircle className="w-4 h-4" strokeWidth={1.75} />,
+        icon: <AlertTriangle className="w-4 h-4" strokeWidth={1.75} />,
         body: "Banned: Pit Bull Terrier, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, and all wolf-dog hybrids — pure-bred or mixed. If your dog resembles any of these breeds, you may be asked for documentation proving otherwise. The Norwegian Food Safety Authority (Mattilsynet) handles import regulations; check with them directly before booking if there's any doubt.",
         cost: "Verification: free if you have it; rehoming if not.",
       },

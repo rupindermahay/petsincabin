@@ -31,7 +31,7 @@ const AIRLINES = [
   {
     name: "American Airlines",
     scope: "north-america",
-    tags: ["us", "caribbean", "mexico"],
+    tags: ["us", "caribbean", "mexico", "korea"],
     cabin: "Yes — but NO transatlantic / transpacific cabin",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, Puerto Rico, Caribbean, Central America (up to 12 hour flights). Cabin NOT allowed (both directions): transatlantic flights (Europe), transpacific flights (Asia), UK, Hawaii.",
@@ -47,7 +47,7 @@ const AIRLINES = [
   },
   {
     name: "Delta",
-    tags: ["us", "europe", "longhaul", "caribbean", "mexico"],
+    tags: ["us", "europe", "longhaul", "caribbean", "mexico", "korea"],
     cabin: "Cabin US/Canada/EU only — long banned list",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Ireland, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
@@ -63,7 +63,7 @@ const AIRLINES = [
   },
   {
     name: "United",
-    tags: ["us", "europe", "longhaul", "caribbean", "japan", "mexico"],
+    tags: ["us", "europe", "longhaul", "caribbean", "japan", "mexico", "korea"],
     cabin: "Cabin allowed — including US ↔ Japan direct (one of very few)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU, and notably US ↔ Japan (SFO/ORD ↔ NRT/HND/KIX, with new routes launching Sept-Oct 2026). Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam (one-way exception: cabin OK from Guam to Tokyo-Narita but not back), French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Palau, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
@@ -148,7 +148,7 @@ const AIRLINES = [
   {
     name: "Hawaiian Airlines",
     scope: "hawaii-only",
-    tags: ["us"],
+    tags: ["us", "korea"],
     cabin: "Cabin OUT of Hawaii ✓ — but limited routes INTO Hawaii",
     cabinStatus: "conditional",
     direction: "Cabin allowed: inter-island Hawaii flights AND flights LEAVING Hawaii to US mainland. Cabin NOT allowed: flights INTO Hawaii from the mainland (cargo only — Hawaii's strict quarantine rules), AND no cabin to/from JFK, BOS, AUS, SLC, PPG. No international cabin at all.",
@@ -164,7 +164,7 @@ const AIRLINES = [
   },
   {
     name: "Air Canada",
-    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico"],
+    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic, US/Canada, Europe, and OUT of UK (LHR, Edinburgh). Cabin NOT allowed: INTO UK (cargo only), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados.",
@@ -196,7 +196,7 @@ const AIRLINES = [
   },
   {
     name: "Air France / KLM",
-    tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico"],
+    tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK government rule). Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
@@ -212,7 +212,7 @@ const AIRLINES = [
   },
   {
     name: "Lufthansa",
-    tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico"],
+    tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Frankfurt/Munich). Cabin NOT allowed: INTO UK (cargo only — UK government rule), into Australia, NZ, Hawaii.",
@@ -228,7 +228,7 @@ const AIRLINES = [
   },
   {
     name: "Air India",
-    tags: ["india", "europe", "us", "canada", "longhaul"],
+    tags: ["india", "europe", "us", "canada", "longhaul", "korea"],
     cabin: "Cabin India ↔ USA / Europe / Asia ✓ — NOT to UK / Australia",
     cabinStatus: "yes",
     direction: "Air India's 2026 'Paws on Board' programme allows cabin pets up to 10 kg (combined with carrier) on 80+ domestic and international routes. Cabin allowed: domestic India, India ↔ USA (direct: DEL/BOM/BLR/HYD/MAA ↔ JFK/SFO/IAD/ORD), India ↔ Europe (Frankfurt, Paris, Amsterdam, London cargo-only), India ↔ Asia. Cabin NOT allowed: India ↔ UK (cargo hold only — UK government embargo), India ↔ UAE (departing India, pets must go cargo; arriving in India from UAE has cabin options).",
@@ -244,7 +244,7 @@ const AIRLINES = [
   },
   {
     name: "LOT Polish Airlines",
-    tags: ["uk-out", "europe", "india", "us", "longhaul"],
+    tags: ["uk-out", "europe", "india", "us", "longhaul", "korea"],
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Warsaw",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Warsaw), India (Delhi) ↔ USA via Warsaw both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
@@ -260,7 +260,7 @@ const AIRLINES = [
   },
   {
     name: "SWISS",
-    tags: ["uk-out", "europe", "india", "us", "longhaul"],
+    tags: ["uk-out", "europe", "india", "us", "longhaul", "korea"],
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Zurich",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Zurich), India ↔ USA via Zurich both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
@@ -292,7 +292,7 @@ const AIRLINES = [
   },
   {
     name: "Etihad Airways",
-    tags: ["dubai", "india", "europe", "uk-out", "us"],
+    tags: ["dubai", "india", "europe", "uk-out", "us", "korea"],
     cabin: "Cabin OUT of UK / US / India / Europe → Abu Dhabi ✓ — but NOT cabin INTO the UK or US",
     cabinStatus: "conditional",
     direction: "Cabin allowed: OUT of the UK (London Heathrow, Manchester) to Abu Dhabi, OUT of the USA to Abu Dhabi, India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), Canada ↔ Abu Dhabi. All under 8 kg combined. Cabin NOT allowed: INTO the UK (London, Manchester) and INTO the USA — Etihad's country-restrictions page lists these as 'flights to' only, meaning the inbound direction is blocked while flying OUT to Abu Dhabi is permitted. Also no cabin to/from Australia (Sydney), Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
@@ -308,7 +308,7 @@ const AIRLINES = [
   },
   {
     name: "Turkish Airlines",
-    tags: ["uk-out", "europe", "india", "us"],
+    tags: ["uk-out", "europe", "india", "us", "korea"],
     cabin: "Cabin OUT of UK ✓ via Istanbul — but NOT into Dubai (UAE law)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes via Istanbul including OUT of UK (LHR/MAN → Istanbul), USA ↔ Istanbul, India ↔ Istanbul (Delhi, Mumbai, Bangalore, Hyderabad), and many Asian/African destinations. Economy class only — business class cabin pets banned from April 21, 2026 (new bookings). Cabin NOT allowed: INTO UK from Istanbul (cargo only — UK government rule), into Dubai DXB (UAE law applies regardless of airline), some Middle East destinations.",
@@ -486,7 +486,7 @@ const AIRLINES = [
   },
   {
     name: "Korean Air",
-    tags: ["japan", "us", "europe", "india", "longhaul"],
+    tags: ["japan", "us", "europe", "india", "longhaul", "korea"],
     cabin: "Cabin ✓ — including Japan ↔ Korea and onward to US/Europe/India",
     cabinStatus: "yes",
     direction: "Cabin allowed: 30+ countries including Japan, US, France, Germany, Italy, Netherlands, Spain, Switzerland, India, Singapore, Thailand. Korea ↔ Japan is one of the best cabin pet paths to/from Japan. Cabin NOT allowed: UK and UAE (cargo only). Brachycephalic breeds only allowed in cabin, never cargo. Fierce-breed bans: Tosa, Pit Bull, Rottweiler, Mastiff, Laika, Ovcharka, Kangal, Wolfdog.",
@@ -502,7 +502,7 @@ const AIRLINES = [
   },
   {
     name: "T'Way Air",
-    tags: ["japan", "europe"],
+    tags: ["japan", "europe", "korea"],
     cabin: "Cabin ✓ — domestic Korea + select international (Japan, Asia, Croatia)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic Korea, plus select international routes including Japan, Vietnam, Taiwan, Hong Kong, Thailand, and Zagreb (Croatia — newer European route). Cabin NOT allowed: no UK/US/Australia. Business Saver zone seats don't permit pets. No pets carried in the hold.",
@@ -518,7 +518,7 @@ const AIRLINES = [
   },
   {
     name: "Aeromexico",
-    tags: ["mexico", "us", "japan", "south-america", "longhaul"],
+    tags: ["mexico", "us", "japan", "south-america", "longhaul", "korea"],
     cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
@@ -6520,6 +6520,7 @@ function AirlineGrid() {
     { id: "south-america", label: "South America", flag: "🇧🇷" },
     { id: "central-america", label: "Central America", flag: "🇵🇦" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 
@@ -6657,11 +6658,13 @@ function AirlineGrid() {
                       return (
                         <span
                           key={c.code}
-                          className={`inline-flex items-center gap-0.5 cursor-help ${isYes ? "text-emerald-700" : "text-red-600"}`}
-                          title={`${c.label}: cabin ${isYes ? "allowed" : "NOT allowed"} ${direction === "from" ? "departing from" : "arriving to"} ${c.label}`}
+                          className={`relative inline-flex items-center gap-0.5 cursor-help group/flag ${isYes ? "text-emerald-700" : "text-red-600"}`}
                         >
                           <span className="text-lg leading-none">{c.flag}</span>
                           <span className="font-bold text-xs">{isYes ? "✓" : "✗"}</span>
+                          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-50 text-[10px] font-medium uppercase tracking-wider px-2 py-1 rounded-sm whitespace-nowrap opacity-0 group-hover/flag:opacity-100 transition-opacity duration-75 z-10">
+                            {c.label}
+                          </span>
                         </span>
                       );
                     };
@@ -8735,7 +8738,7 @@ function Tips() {
             {
               tag: "For cat owners",
               title: "Bring a piece of unwashed bedding from home.",
-              body: "Cats orient by smell more than sight — and familiar scent settles them faster than anything else you can pack. Line the carrier with a piece of bedding from home that already smells like them and their territory. Resist the temptation to wash it fresh before travel day: the slightly used blanket is the point. Pair this with their favourite small toy if they have one. The combination of familiar smell, familiar texture, and the carrier they've already been sleeping in for weeks turns the carrier from 'unknown box on travel day' into 'my known place that happens to be moving today'. Cats who already see the carrier as a den, lined with their own scent, often sleep through the entire flight — even long-haul. The work happens in the weeks before, not on the day.",
+              body: "Cats orient by smell more than sight — familiar scent settles them faster than anything else you can pack. Line the carrier with a piece of bedding that already smells like them and their territory. Resist the urge to wash it fresh before travel day: the slightly used blanket is the point. Pair it with their favourite small toy if they have one. A carrier they've slept in for weeks, lined with their own scent, turns 'unknown box' into 'my known place that happens to be moving today' — and many cats sleep through the entire flight as a result.",
             },
           ].map((t, i) => (
             <div key={i}>

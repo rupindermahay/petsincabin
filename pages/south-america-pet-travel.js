@@ -96,6 +96,12 @@ export default function SouthAmericaPetTravel() {
                 </p>
               </div>
               <div>
+                <h3 className="font-serif text-lg text-stone-900 mb-1.5">Copa Airlines</h3>
+                <p className="font-serif text-stone-700 leading-relaxed">
+                  Often overlooked, but essential for deeper South America. Panama City (PTY) is Copa's hub, and Copa is the cabin pet route to Uruguay (Montevideo), Paraguay (Asunción), and Bolivia — countries with no direct US cabin connections. Cabin weight 10 kg combined, max carrier 45 × 27 × 27 cm soft-sided only. $125 international, $25 domestic. Network covers all of South America plus Central America, the Caribbean, Mexico, US, and Canada. Brachycephalic dogs accepted in cabin (never cargo).
+                </p>
+              </div>
+              <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Aeromexico</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
                   Links Mexico City to São Paulo, Buenos Aires, Santiago, Bogotá, and Lima with cabin pets (9 kg combined). Useful if you're connecting through Mexico from the US or beyond. Snub-nosed breeds welcome in cabin.
@@ -134,19 +140,25 @@ export default function SouthAmericaPetTravel() {
                 </p>
               </div>
               <div className="bg-white border border-stone-200 rounded-sm p-5">
-                <h3 className="font-serif text-lg text-stone-900 mb-1">3. Peru 🇵🇪 — Moderate</h3>
+                <h3 className="font-serif text-lg text-stone-900 mb-1">3. Uruguay 🇺🇾 — Easy, but only via connection</h3>
+                <p className="font-serif text-stone-700 leading-relaxed">
+                  ISO microchip + rabies 30+ days + MGAP-recognised health certificate from origin country's official veterinary authority. No direct US cabin pet route to Montevideo (MVD) — connect via Copa (through Panama City), Avianca (through Bogotá), or LATAM (through São Paulo or Buenos Aires). The 1-hour Buenos Aires → Montevideo hop is the shortest cabin entry to Uruguay.
+                </p>
+              </div>
+              <div className="bg-white border border-stone-200 rounded-sm p-5">
+                <h3 className="font-serif text-lg text-stone-900 mb-1">4. Peru 🇵🇪 — Moderate</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
                   ISO microchip + rabies 30+ days + SENASA import permit (apply 30+ days ahead) + health certificate from origin country's official authority.
                 </p>
               </div>
               <div className="bg-white border border-stone-200 rounded-sm p-5">
-                <h3 className="font-serif text-lg text-stone-900 mb-1">4. Colombia 🇨🇴 — Moderate but with breed bans</h3>
+                <h3 className="font-serif text-lg text-stone-900 mb-1">5. Colombia 🇨🇴 — Moderate but with breed bans</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
                   Standard paperwork (microchip recommended, rabies 30+ days, health certificate). The complication: Pit Bull, American Staffordshire, and Staffordshire Bull Terrier imports are banned by law. ICA inspection on arrival.
                 </p>
               </div>
               <div className="bg-white border border-stone-200 rounded-sm p-5">
-                <h3 className="font-serif text-lg text-stone-900 mb-1">5. Chile 🇨🇱 — Strictest</h3>
+                <h3 className="font-serif text-lg text-stone-900 mb-1">6. Chile 🇨🇱 — Strictest</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
                   ISO microchip mandatory. Rabies 30+ days. SAG import permit MUST be pre-arranged 30+ days ahead. Without the permit, your pet is detained at SCL on arrival. SAG is rigorous about paperwork accuracy.
                 </p>

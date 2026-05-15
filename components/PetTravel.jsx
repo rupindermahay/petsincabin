@@ -459,6 +459,21 @@ const DIRECT_ROUTES = [
   { from: "Madrid (MAD)", to: "Lisbon (LIS)", duration: "1h 15m", note: "Iberia. ✓ Cabin (under 8 kg, €35 within Spain → Portugal).", tags: ["europe"] },
   { from: "Madrid (MAD)", to: "Miami (MIA)", duration: "9h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas). Strong Spain → USA cabin route.", tags: ["us", "europe"] },
   { from: "Madrid (MAD)", to: "New York (JFK)", duration: "8h", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas).", tags: ["us", "europe"] },
+  { from: "Madrid (MAD)", to: "Barcelona (BCN)", duration: "1h 10m", note: "Iberia / Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain). Multiple daily. Quickest Spain domestic cabin hop.", tags: ["europe"] },
+
+  // ═══════ FROM BARCELONA ═══════
+  { from: "Barcelona (BCN)", to: "Madrid (MAD)", duration: "1h 10m", note: "Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain).", tags: ["europe"] },
+  { from: "Barcelona (BCN)", to: "Paris (CDG)", duration: "1h 55m", note: "Vueling / Air France. ✓ Cabin (under 8 kg). BCN is a strong Vueling hub — one of the best European cabin options.", tags: ["europe"] },
+  { from: "Barcelona (BCN)", to: "Amsterdam (AMS)", duration: "2h 20m", note: "Vueling / KLM. ✓ Cabin (under 8 kg).", tags: ["europe"] },
+  { from: "Barcelona (BCN)", to: "Frankfurt (FRA)", duration: "2h 20m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe"] },
+  { from: "Barcelona (BCN)", to: "New York (JFK)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150 to Americas). Barcelona's own transatlantic cabin route — a good alternative to Madrid for US-bound travel.", tags: ["us", "europe"] },
+  { from: "Barcelona (BCN)", to: "Miami (MIA)", duration: "10h", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150). Check Level's pet policy when booking — always call to confirm a pet space, not just select online.", tags: ["us", "europe"] },
+  { from: "Barcelona (BCN)", to: "London (LHR)", duration: "2h 15m", note: "Iberia / Vueling / BA. ✓ Cabin OUT of Spain — note cabin INTO the UK is not possible on any airline (UK government rule). This route works as the first leg of a Paris Pivot workaround.", tags: ["uk-out", "europe"] },
+
+  // ═══════ FROM VALENCIA ═══════
+  { from: "Valencia (VLC)", to: "Madrid (MAD)", duration: "1h", note: "Iberia / Air Nostrum. ✓ Cabin (under 8 kg, €35 within Spain). Short domestic hop.", tags: ["europe"] },
+  { from: "Valencia (VLC)", to: "Barcelona (BCN)", duration: "1h 5m", note: "Vueling / Air Nostrum. ✓ Cabin (under 8 kg, €35). Barcelona connects onward to Europe and the US.", tags: ["europe"] },
+  { from: "Valencia (VLC)", to: "Paris (CDG)", duration: "2h 10m", note: "Vueling / Air France. ✓ Cabin (under 8 kg). Good direct cabin route for Valencia pet owners heading to France/onward Europe.", tags: ["europe"] },
 
   // ═══════ FROM MANCHESTER ═══════
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
@@ -471,6 +486,7 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "Santo Domingo (SDQ)", duration: "2h 30m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get Certification of US-issued Rabies Vaccination form BEFORE departure for return.", tags: ["us", "caribbean"] },
   { from: "Miami (MIA)", to: "Mexico City (MEX)", duration: "3h 30m", note: "American, Aeromexico. ✓ Cabin. Mexico is an easy cabin destination — vet health certificate + rabies is the core requirement.", tags: ["us", "mexico"] },
   { from: "Miami (MIA)", to: "Cancún (CUN)", duration: "1h 50m", note: "American, Delta, JetBlue. ✓ Cabin. The shortest US → Mexico cabin route.", tags: ["us", "mexico"] },
+  { from: "Miami (MIA)", to: "Madrid (MAD)", duration: "8h 45m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Iberia's MIA→MAD route is a solid cabin option for Florida pet owners heading to Spain.", tags: ["us", "europe"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -499,11 +515,12 @@ const DIRECT_ROUTES = [
   { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for cabin onward to Europe, India, Africa.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 45m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Connect at MAD for cabin onward to Spain / Latin America.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Direct cabin route to Spain — Iberia's flagship transatlantic. Call to reserve pet space ahead.", tags: ["us", "europe"] },  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Rome (FCO)", duration: "9h", note: "ITA Airways. ✓ Cabin (under 8 kg, €210 fee). Plus EU pet passport hub access.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Direct cabin route to Spain — Iberia's flagship transatlantic. Call to reserve pet space ahead.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Barcelona (BCN)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg). Barcelona's own transatlantic cabin option — less known than the Madrid route but worth checking.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Nassau (NAS)", duration: "3h", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Bahamas import permit required — apply 6–8 weeks ahead. Bahamas is CDC-rabies-FREE so US re-entry is straightforward.", tags: ["us", "caribbean"] },
   { from: "New York (JFK)", to: "Montego Bay (MBJ)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Jamaica has a strict 6+ month import process — start very early. Jamaica is NOT on the CDC high-risk list, so US re-entry is the standard form.", tags: ["us", "caribbean"] },
   { from: "New York (JFK)", to: "Punta Cana (PUJ)", duration: "3h 45m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). NOTE: DR is CDC high-risk — get the Certification of US-issued Rabies Vaccination form BEFORE leaving the US for the return.", tags: ["us", "caribbean"] },
@@ -882,7 +899,7 @@ const REGION_HUBS = {
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
   "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
-  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
+  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
   "india": ["Delhi (DEL)", "Mumbai (BOM)", "Bengaluru (BLR)", "Chennai (MAA)"],
   // UAE cabin hub order matters: Abu Dhabi (AUH) is FIRST because it's the
   // only UAE airport where cabin pets are permitted (Etihad). Dubai (DXB) is
@@ -957,7 +974,9 @@ const AIRPORTS = [
   { code: "CDG", city: "Paris CDG", region: "europe", cabinOut: true, cabinIn: true },
   { code: "AMS", city: "Amsterdam", region: "europe", cabinOut: true, cabinIn: true },
   { code: "FRA", city: "Frankfurt", region: "europe", cabinOut: true, cabinIn: true },
-  { code: "MAD", city: "Madrid", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "MAD", city: "Madrid", region: "europe", cabinOut: true, cabinIn: true, note: "Iberia hub — main cabin-pet departure for Spain. Flights to the US, Latin America, Europe and within Spain." },
+  { code: "BCN", city: "Barcelona", region: "europe", cabinOut: true, cabinIn: true, note: "Spain's second-busiest airport. Iberia Express, Vueling, and connecting Iberia flights take cabin pets on eligible routes." },
+  { code: "VLC", city: "Valencia", region: "europe", cabinOut: true, cabinIn: true, note: "Spain's third city. Iberia and Vueling serve cabin pets on Spanish domestic and EU routes from Valencia." },
   { code: "FCO", city: "Rome", region: "europe", cabinOut: true, cabinIn: true },
   { code: "LIS", city: "Lisbon", region: "europe", cabinOut: true, cabinIn: true },
   { code: "ZRH", city: "Zurich", region: "europe", cabinOut: true, cabinIn: true },
@@ -1332,7 +1351,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
     "mexico": ["Mexico City", "Cancún", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Rome", "Lisbon", "Zurich", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(FCO)", "(LIS)", "(ZRH)", "Europe"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "Europe"],
     "india": ["Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)", "India"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
@@ -3252,105 +3271,99 @@ function NavBar({ onStartIntake }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 60);
-    }
+    function onScroll() { setScrolled(window.scrollY > 60); }
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   function go(id) {
     setOpen(false);
-    if (id === "top") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    if (id === "intake") {
-      onStartIntake();
-      return;
-    }
-    if (id === "about") {
-      window.location.href = "/about";
-      return;
-    }
+    if (id === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (id === "intake") { onStartIntake(); return; }
+    if (id === "about") { window.location.href = "/about"; return; }
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-stone-50/98 backdrop-blur-md border-b-2 border-stone-300 shadow-md"
-          : "bg-stone-50/80 backdrop-blur-sm border-b border-stone-200"
+        scrolled ? "shadow-md border-b-2 border-stone-300" : "border-b border-stone-200"
       }`}
-      style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.8)" }}
+      style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.92)", backdropFilter: "blur(8px)" }}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
-        {/* Logo row — logo + wordmark centred above everything on mobile, left on desktop */}
-        <div className="flex items-center justify-between py-3 md:py-0">
-          <button
-            onClick={() => go("top")}
-            className="flex flex-col items-start group"
-          >
-            <div className="flex items-center gap-2.5">
-              <img
-                src="/logo.png"
-                alt="Pets in Cabin logo"
-                className="w-8 h-8 rounded-full object-cover group-hover:opacity-80 transition-opacity flex-shrink-0"
-              />
-              <span className="font-serif italic font-semibold text-stone-800 group-hover:text-amber-700 transition-colors text-base">
+        {/* ROW 1: Logo + wordmark + mobile toggle */}
+        <div className="flex items-center justify-between py-3">
+          <button onClick={() => go("top")} className="flex items-center gap-3 group">
+            <img
+              src="/logo.png"
+              alt="Pets in Cabin"
+              className="w-10 h-10 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity"
+            />
+            <div className="flex flex-col items-start">
+              <span className="font-serif italic font-semibold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight text-lg">
                 Pets in Cabin
               </span>
+              <span className="text-[10px] uppercase tracking-[0.22em] text-stone-400 leading-none">
+                by Theo's Mum
+              </span>
             </div>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 pl-10 leading-none hidden md:block">
-              by Theo's Mum
-            </span>
           </button>
 
-          {/* Mobile hamburger */}
+          {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-stone-800 hover:text-amber-700 transition-colors"
+            className="md:hidden flex items-center gap-2 px-3 py-2 text-stone-700 hover:text-amber-700 transition-colors border border-stone-300 hover:border-amber-400"
             aria-label="Menu"
           >
-            {open ? <X className="w-6 h-6" strokeWidth={2} /> : <Menu className="w-6 h-6" strokeWidth={2} />}
+            {open ? <X className="w-4 h-4" strokeWidth={2} /> : <Menu className="w-4 h-4" strokeWidth={2} />}
+            <span className="text-[10px] uppercase tracking-widest font-medium">{open ? "Close" : "Menu"}</span>
           </button>
         </div>
 
-        {/* Desktop nav — sits on its own row below the logo, separated by a hairline */}
-        <div className="hidden md:flex items-center gap-0.5 py-1.5 border-t border-stone-200 flex-wrap">
+        {/* ROW 2: Desktop nav — full width under the logo, separated by a rule */}
+        <div className="hidden md:flex items-center border-t border-stone-200 py-1 gap-0 overflow-x-auto scrollbar-none">
           {NAV_SECTIONS.slice(1).map((s) => (
             <button
               key={s.id}
               onClick={() => go(s.id)}
-              className="px-2.5 py-1.5 text-xs font-medium text-stone-600 hover:text-amber-700 hover:bg-amber-50 transition-colors relative group rounded-sm whitespace-nowrap"
+              className="relative group flex items-baseline gap-1 px-3 py-2 whitespace-nowrap transition-colors hover:text-amber-700"
             >
-              <span className="font-serif italic text-amber-700/60 text-[10px] mr-1">{s.num}.</span>
-              {s.label}
-              <span className="absolute bottom-1 left-2.5 right-2.5 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              {s.num && (
+                <span className="font-serif italic text-amber-600/70 text-[10px] flex-shrink-0">{s.num}</span>
+              )}
+              <span className="font-serif text-sm font-semibold text-stone-800 group-hover:text-amber-700 transition-colors tracking-tight">
+                {s.label}
+              </span>
+              {/* Animated underline */}
+              <span className="absolute bottom-0.5 left-3 right-3 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
             </button>
           ))}
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — full screen, editorial style */}
       {open && (
-        <div className="md:hidden bg-stone-50 border-t-2 border-stone-300 animate-fadeIn shadow-lg">
-          <div className="px-6 py-4 space-y-1">
-            {NAV_SECTIONS.slice(1).map((s) => (
-              <button
-                key={s.id}
-                onClick={() => go(s.id)}
-                className="w-full text-left px-3 py-3 hover:bg-amber-50 hover:text-amber-700 transition-colors flex items-baseline gap-3 border-b border-stone-200 last:border-0 font-medium text-stone-800"
-              >
-                <span className="font-serif italic text-amber-700/70 text-sm w-8 flex-shrink-0">{s.num}.</span>
-                <span className="font-serif text-base text-stone-900">{s.label}</span>
-              </button>
-            ))}
+        <div className="md:hidden border-t-2 border-stone-900 animate-fadeIn" style={{ backgroundColor: "rgba(250, 246, 237, 0.99)" }}>
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-0">
+              {NAV_SECTIONS.slice(1).map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => go(s.id)}
+                  className="flex items-baseline gap-2 py-3 border-b border-stone-200 text-left hover:text-amber-700 transition-colors group"
+                >
+                  {s.num && (
+                    <span className="font-serif italic text-amber-600/60 text-xs w-6 flex-shrink-0">{s.num}</span>
+                  )}
+                  <span className="font-serif text-lg font-semibold text-stone-900 group-hover:text-amber-700 transition-colors">
+                    {s.label}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}

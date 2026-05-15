@@ -3936,17 +3936,26 @@ function NavBar({ onStartIntake }) {
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-14 h-14 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-16 h-16 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
-            <div className="flex flex-col items-start gap-0.5">
+            <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "22px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "23px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
-              <span className="text-[10px] uppercase tracking-[0.28em] text-stone-400 leading-none font-sans pl-[2px]">
-                by Theo's Mum
+              {/* Tagline stretched to the exact width of the wordmark above it.
+                  flex + justify-between spreads the letters edge-to-edge so the
+                  baseline reads as the same width as "Pets in Cabin". */}
+              <span
+                aria-label="by Theo's Mum"
+                className="flex justify-between w-full text-[9px] uppercase text-stone-400 leading-none font-sans"
+                style={{ letterSpacing: "0" }}
+              >
+                {"BY THEO'S MUM".split("").map((ch, i) => (
+                  <span key={i}>{ch === " " ? "\u00A0" : ch}</span>
+                ))}
               </span>
             </div>
           </button>
@@ -4059,10 +4068,30 @@ function Hero({ onStart }) {
           </a>
         </div>
 
+        {/* Journey planner — full-width band beneath the two main CTAs.
+            It's the most powerful tool on the site, so it gets its own
+            emphasis line rather than being squeezed into a third column. */}
+        <a
+          href="#planner"
+          className="group mt-4 flex items-center justify-between gap-4 bg-amber-700 text-cream-50 px-7 py-5 hover:bg-stone-900 transition-colors duration-300 text-left w-full max-w-[696px] mx-auto"
+          style={{ color: "#faf6ed" }}
+        >
+          <div className="flex items-center gap-3">
+            <Compass className="w-6 h-6 flex-shrink-0" strokeWidth={1.75} />
+            <div className="flex flex-col gap-1.5">
+              <span className="uppercase tracking-widest text-sm font-medium">Plan my journey</span>
+              <span className="text-sm leading-snug normal-case tracking-normal" style={{ color: "rgba(250, 246, 237, 0.8)" }}>
+                Pick your origin and destination airports — get direct cabin routes, or the workaround if there isn't one.
+              </span>
+            </div>
+          </div>
+          <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
+        </a>
+
         <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl mx-auto">
           {[
             { num: "08", label: "Quick questions" },
-            { num: "22", label: "Airlines compared" },
+            { num: "26", label: "Airlines compared" },
             { num: "10", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i} className="text-center">
@@ -7121,22 +7150,6 @@ function Stories() {
             <p>
               I'm not going to pretend it was easy. It was a 7h 30m flight, then a hotel, then a 3h 30m flight the next day. But Theo arrived in Miami calm, fed, and walked, and we slept in our own bed that night. Here's what I learned along the way.
             </p>
-
-            {/* Three photos in a row — compact, not full-bleed */}
-            <div className="grid grid-cols-3 gap-3 my-8">
-              <figure className="m-0">
-                <img src="/theo-carrier-seat.jpg" alt="Theo asleep in his carrier under the airplane seat" className="w-full h-48 object-cover rounded-sm" />
-                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Under the seat, LHR→YUL</figcaption>
-              </figure>
-              <figure className="m-0">
-                <img src="/theo-gate.jpg" alt="Theo in his carrier at the departure gate" className="w-full h-48 object-cover rounded-sm" />
-                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Past the turn-around test</figcaption>
-              </figure>
-              <figure className="m-0">
-                <img src="/theo-balcony.jpg" alt="Theo relaxing on the Miami balcony" className="w-full h-48 object-cover rounded-sm" />
-                <figcaption className="font-sans text-[10px] uppercase tracking-widest text-stone-400 mt-2 text-center leading-tight">Settled in Miami</figcaption>
-              </figure>
-            </div>
 
             {!open && (
               <div className="pt-4">

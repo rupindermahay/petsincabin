@@ -63,16 +63,16 @@ const AIRLINES = [
   },
   {
     name: "United",
-    tags: ["us", "europe", "longhaul", "caribbean"],
-    cabin: "Cabin allowed — but huge banned destination list",
+    tags: ["us", "europe", "longhaul", "caribbean", "japan"],
+    cabin: "Cabin allowed — including US ↔ Japan direct (one of very few)",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU. Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam, French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Norway, Palau, Panama, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
+    direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU, and notably US ↔ Japan (SFO/ORD ↔ NRT/HND/KIX, with new routes launching Sept-Oct 2026). Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam (one-way exception: cabin OK from Guam to Tokyo-Narita but not back), French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Palau, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
     originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
     fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
-    weight: "Must fit under seat in carrier",
+    weight: "No weight limit — pet must fit in carrier under the seat",
     carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
-    notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
+    notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. United is one of very few airlines accepting cabin pets US↔Japan direct (no weight limit). Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
     intl: "Yes (restricted)",
     verified: "May 2026",
     link: "https://www.united.com/en-us/travel-information/special-needs/travel-with-pets",
@@ -469,6 +469,54 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://www.norwegian.com/en/travel-info/baggage/travelling-with-pets/",
   },
+  {
+    name: "Korean Air",
+    tags: ["japan", "us", "europe", "india", "longhaul"],
+    cabin: "Cabin ✓ — including Japan ↔ Korea and onward to US/Europe/India",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: 30+ countries including Japan, US, France, Germany, Italy, Netherlands, Spain, Switzerland, India, Singapore, Thailand. Korea ↔ Japan is one of the best cabin pet paths to/from Japan. Cabin NOT allowed: UK and UAE (cargo only). Brachycephalic breeds only allowed in cabin, never cargo. Fierce-breed bans: Tosa, Pit Bull, Rottweiler, Mastiff, Laika, Ovcharka, Kangal, Wolfdog.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
+    weight: "Pet + carrier max 7 kg (15 lb) for cabin. Some sources cite 5 kg — confirm by phone.",
+    carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
+    notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo.",
+    intl: "Yes (extensive network)",
+    verified: "May 2026",
+    link: "https://www.koreanair.com/us/en/airport/assistance/travel-with-pet/checklist",
+  },
+  {
+    name: "T'Way Air",
+    tags: ["japan", "europe"],
+    cabin: "Cabin ✓ — domestic Korea + select international (Japan, Asia, Croatia)",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Korea, plus select international routes including Japan, Vietnam, Taiwan, Hong Kong, Thailand, and Zagreb (Croatia — newer European route). Cabin NOT allowed: no UK/US/Australia. Business Saver zone seats don't permit pets. No pets carried in the hold.",
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes" },
+    fee: "Domestic Korea: 30,000 KRW (~$23). International: 100,000–200,000 KRW (~$75–150).",
+    weight: "Pet + carrier max 9 kg (20 lb) — the most generous limit among Korean cabin-pet airlines",
+    carrier: "Hard: max 37 cm wide × 23 cm tall. Soft: up to 26 cm tall. T'carriers can be purchased at check-in from Korean airports.",
+    notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point.",
+    intl: "Yes (limited Asia routes + ZAG)",
+    verified: "May 2026",
+    link: "https://www.twayair.com/app/serviceInfo/contents/1148",
+  },
+  {
+    name: "Aeromexico",
+    tags: ["mexico", "us", "japan", "longhaul"],
+    cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    fee: "Mexico domestic: $35. Mexico ↔ US: $125. International long-haul: $200–250.",
+    weight: "Pet + carrier max 9 kg (20 lb)",
+    carrier: "Soft: max 40 × 30 × 21 cm. Hard: max 40 × 28 × 22 cm. Must fit under the seat.",
+    notes: "Aeromexico is one of the very few airlines that allows cabin pets on flights to Japan (alongside United for US routes and Korean carriers for Korea routes). MEX ↔ NRT direct is the Pacific cabin pet route via Mexico. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo.",
+    intl: "Yes",
+    verified: "May 2026",
+    link: "https://aeromexico.com/en-us/help-center/general-questions/special-traveler/pets",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -553,10 +601,6 @@ const DIRECT_ROUTES = [
   { from: "Newark (EWR)", to: "Oslo (OSL)", duration: "8h", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Direct US east coast → Norway cabin route. Tapeworm treatment for dogs required 24–120 hrs before arrival.", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Newark direct to Mumbai.", tags: ["us", "india"] },
 
-  // ═══════ FROM WASHINGTON DULLES ═══════
-  { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
-  { from: "Washington (IAD)", to: "Paris (CDG)", duration: "7h 45m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
-
   // ═══════ FROM SAN FRANCISCO ═══════
   { from: "San Francisco (SFO)", to: "Frankfurt (FRA)", duration: "11h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). West coast to Europe direct — long flight, consider an overnight in Europe before onward connections.", tags: ["us", "europe"] },
   { from: "San Francisco (SFO)", to: "Paris (CDG)", duration: "11h", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
@@ -564,6 +608,9 @@ const DIRECT_ROUTES = [
   { from: "San Francisco (SFO)", to: "Mumbai (BOM)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Mumbai.", tags: ["us", "india"] },
   { from: "San Francisco (SFO)", to: "Bengaluru (BLR)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). One of the few direct cabin options to South India.", tags: ["us", "india"] },
   { from: "San Francisco (SFO)", to: "Hyderabad (HYD)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Hyderabad.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Tokyo (NRT)", duration: "11h", note: "United. ✓ Cabin direct (no weight limit, carrier-bound, $150). One of very few cabin pet routes to Japan — JAL and ANA don't carry cabin pets. New SFO↔Haneda daily service launches Sept 2026.", tags: ["us", "japan"] },
+  { from: "San Francisco (SFO)", to: "Tokyo (HND)", duration: "11h", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026 on 787-10. Haneda is closer to central Tokyo than Narita.", tags: ["us", "japan"] },
+  { from: "San Francisco (SFO)", to: "Osaka (KIX)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). 5 weekly flights from Oct 2026 — direct to Osaka Kansai, an approved pet entry port.", tags: ["us", "japan"] },
 
   // ═══════ FROM SEATTLE ═══════
   { from: "Seattle (SEA)", to: "San Francisco (SFO)", duration: "2h 20m", note: "Alaska Airlines / Delta. ✓ Cabin ($100 each way). The crucial domestic leg for Seattle travellers heading to India — connect at SFO to Air India's direct cabin route to DEL/BOM/BLR/HYD. Same-airline booking preferred to avoid re-check.", tags: ["us"] },
@@ -576,19 +623,20 @@ const DIRECT_ROUTES = [
   { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). East coast → India direct.", tags: ["us", "india"] },
   { from: "New York (JFK)", to: "Mumbai (BOM)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). JFK→Mumbai direct cabin.", tags: ["us", "india"] },
 
-  // ═══════ FROM CHICAGO ═══════ (existing routes preserved, India added)
+  // ═══════ FROM CHICAGO ═══════
+  { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
+  { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
   { from: "Chicago (ORD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Midwest direct to India.", tags: ["us", "india"] },
+  { from: "Chicago (ORD)", to: "Tokyo (NRT)", duration: "13h", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026 on Boeing 787-9. One of very few cabin pet paths Chicago→Japan.", tags: ["us", "japan"] },
 
-  // ═══════ FROM WASHINGTON DULLES ═══════ (existing routes preserved, India added)
+  // ═══════ FROM WASHINGTON DULLES ═══════
+  { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
+  { from: "Washington (IAD)", to: "Paris (CDG)", duration: "7h 45m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
   { from: "Washington (IAD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Dulles direct to India.", tags: ["us", "india"] },
 
   // ═══════ FROM CAPE TOWN ═══════
   { from: "Cape Town (CPT)", to: "Johannesburg (JNB)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. Domestic South Africa only. Submit Lift's Dog-in-Cabin form 7+ days ahead. No cats. International SA travel is cargo-only on all airlines.", tags: ["south-africa"] },
   { from: "Cape Town (CPT)", to: "Durban (DUR)", duration: "1h 50m", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. Cargo-equivalent options: FlySafair's PetLounge service (climate-controlled hold).", tags: ["south-africa"] },
-
-  // ═══════ FROM CHICAGO ═══════
-  { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
-  { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
 
   // ═══════ FROM JOHANNESBURG ═══════
   { from: "Johannesburg (JNB)", to: "Cape Town (CPT)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. South Africa's busiest domestic route. Submit Lift's Dog-in-Cabin form 7+ days ahead, window seat is blocked for the dog. No cats, no international.", tags: ["south-africa"] },
@@ -630,6 +678,29 @@ const DIRECT_ROUTES = [
   { from: "Hyderabad (HYD)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
   { from: "Hyderabad (HYD)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
   { from: "Hyderabad (HYD)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Hyderabad has a direct US west coast cabin route via Air India.", tags: ["india", "us"] },
+
+  // ═══════ FROM TOKYO (NARITA) ═══════
+  { from: "Tokyo (NRT)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). One of the very few cabin pet routes OUT of Japan. JAL and ANA don't carry cabin pets at all.", tags: ["japan", "us"] },
+  { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026.", tags: ["japan", "us"] },
+  { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan"] },
+  { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). One of very few cabin pet routes out of Japan — Aeromexico flies Tokyo↔Mexico City directly with cabin pets accepted.", tags: ["japan", "mexico"] },
+
+  // ═══════ FROM TOKYO (HANEDA) ═══════
+  { from: "Tokyo (HND)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026. Haneda is closer to central Tokyo than Narita.", tags: ["japan", "us"] },
+  { from: "Tokyo (HND)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Shortest Japan↔Korea cabin route from central Tokyo.", tags: ["japan"] },
+
+  // ═══════ FROM OSAKA (KANSAI) ═══════
+  { from: "Osaka (KIX)", to: "San Francisco (SFO)", duration: "10h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). 5 weekly flights from Oct 2026. Osaka is an approved pet entry port.", tags: ["japan", "us"] },
+  { from: "Osaka (KIX)", to: "Seoul (ICN)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Direct Korea cabin connection from Osaka.", tags: ["japan"] },
+
+  // ═══════ FROM SEOUL ═══════
+  { from: "Seoul (ICN)", to: "Tokyo (NRT)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Reverse of the Japan→Korea cabin route. Onward Korean Air connects to 30+ countries in cabin.", tags: ["japan"] },
+  { from: "Seoul (ICN)", to: "Tokyo (HND)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Direct to Tokyo's closer-to-city airport.", tags: ["japan"] },
+  { from: "Seoul (ICN)", to: "Osaka (KIX)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin.", tags: ["japan"] },
+  { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us"] },
+
+  // ═══════ FROM MEXICO CITY ═══════
+  { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). The Mexico→Japan cabin route — rare and useful for Latin American travellers heading to Japan.", tags: ["mexico", "japan"] },
 
   // ═══════ FROM ABU DHABI ═══════
   { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
@@ -714,6 +785,7 @@ const DIRECT_ROUTES = [
   { from: "Stockholm (ARN)", to: "Oslo (OSL)", duration: "1h", note: "SAS / Norwegian. ✓ Cabin (under 8 kg). Norway↔Sweden specifically does NOT require rabies vaccine — but still need microchip and pet passport. Tapeworm treatment still required for dogs.", tags: ["europe"] },
   { from: "Paris (CDG)", to: "Oslo (OSL)", duration: "2h 15m", note: "SAS / Air France / Norwegian. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival in Norway.", tags: ["europe"] },
   { from: "Madrid (MAD)", to: "Oslo (OSL)", duration: "3h 20m", note: "SAS / Iberia / Norwegian. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival in Norway.", tags: ["europe"] },
+  { from: "Tokyo (NRT)", to: "Oslo (OSL)", duration: "11h 30m", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Reverse of the OSL→NRT cabin route. Tapeworm treatment for dogs required before Norway entry. SAS is one of the very few airlines offering cabin pets Tokyo→Europe direct.", tags: ["japan", "europe"] },
 
   // ═══════ FROM MANCHESTER ═══════
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
@@ -1158,7 +1230,7 @@ const REGION_HUBS = {
   "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
-  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)"],
+  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
 };
 
 const REGION_LABELS_SHORT = {
@@ -1265,6 +1337,11 @@ const AIRPORTS = [
   { code: "KIX", city: "Osaka Kansai", region: "japan", cabinOut: true, cabinIn: true, note: "Osaka's main international airport, one of 11 approved pet entry ports. Cabin pets via Korean carriers and select international routes." },
   { code: "NGO", city: "Nagoya Chubu", region: "japan", cabinOut: true, cabinIn: true, note: "Nagoya Chubu Centrair is an approved pet entry port. Limited international cabin options." },
   { code: "FUK", city: "Fukuoka", region: "japan", cabinOut: true, cabinIn: true, note: "Fukuoka is southern Japan's main international gateway. Star Flyer (cabin pets, domestic only) is based here. Approved pet entry port." },
+  // Seoul Incheon is technically in Korea, not Japan — but in the context of cabin
+  // pet travel its main relevance is as the hub for Korean carriers (Korean Air,
+  // T'Way, Air Premia) that fly cabin pets to/from Japan when JAL/ANA won't. Listed
+  // under japan region so it surfaces when planning Japan-related cabin routes.
+  { code: "ICN", city: "Seoul Incheon", region: "japan", cabinOut: true, cabinIn: true, note: "Seoul Incheon is Korean Air's hub. Listed in the Japan region tag for cabin pet planning purposes — Korea ↔ Japan via Korean carriers (Korean Air, T'Way Air, Air Premia) is one of the main cabin paths to/from Japan, since JAL and ANA don't carry cabin pets. Note T'Way does not permit pet transit in Korea — Japan-Korea must be point-to-point, not a connection." },
 ];
 
 const airportByCode = (code) => AIRPORTS.find((a) => a.code === code);
@@ -1999,7 +2076,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
   };
   const fromInOriginRegion = (field) =>
     (originRegionKeywords[oA.region] || []).some((kw) => field.includes(kw));
@@ -5452,23 +5529,41 @@ const DESTINATIONS = [
     id: "japan",
     flag: "🇯🇵",
     name: "Japan",
-    headline: "In-cabin allowed. 180-day rabies wait is the killer.",
-    rule: "Japan does allow pets in cabin on some carriers (ANA, JAL accept them on certain routes), but the import process is brutal: you need a 180-day waiting period after a rabies titer test before your pet can enter. Plan a year ahead for a permanent move.",
+    headline: "Strict import rules + JAL/ANA cargo-only. Three cabin paths exist.",
+    rule: "Japan's two flag carriers — JAL and ANA — DO NOT carry pets in cabin on any flight (international or domestic). Pets are cargo only on both. Cabin pets to/from Japan exist on just three paths: United (US ↔ Japan direct, no weight limit), Korean Air / T'Way / Air Premia (Japan ↔ Korea cabin, then onward via Korean Air's wider cabin network), and Aeromexico (Mexico City ↔ Tokyo direct). Plus: Japan's pet import process is one of the strictest in the world — 180-day wait after a passing rabies titer test, plus a 40-day AQS Advance Notification deadline. Get any step wrong and your pet faces up to 180 days quarantine at your expense. Plan 7+ months ahead.",
     workarounds: [
       {
-        title: "Start the clock at least 7 months out",
-        icon: <ScrollText className="w-4 h-4" strokeWidth={1.75} />,
-        body: "The 180-day clock starts the day blood is drawn for the rabies titer. Two rabies vaccines must come before the test. Notify Japan's Animal Quarantine Service (AQS) at least 40 days before arrival. There is no expedited path.",
-        cost: "Tests, paperwork, vet visits: $500–$1,500.",
+        title: "US ↔ Japan: United direct (the cleanest cabin path)",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "United is one of very few airlines accepting cabin pets US ↔ Japan direct. No weight limit (carrier-size-bound), $150 each way. Routes from SFO to NRT/HND/KIX (new Sept-Oct 2026 schedule), Chicago ORD to NRT (twice weekly from Sept 2026). For Seattle travellers, connect SEA→SFO on Alaska/Delta first, then United SFO→Tokyo.",
+        cost: "$150 each way + a $150 layover fee for stopovers >4 hours.",
       },
       {
-        title: "If you arrive without the wait",
+        title: "Anywhere else ↔ Japan: via Seoul on Korean carriers",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Korean Air, T'Way Air, and Air Premia all fly cabin pets Japan ↔ Korea direct, then onward via Korean Air's 30+ country cabin network (US, Europe, India, SE Asia). Korean Air's max cabin weight is 7 kg; T'Way's is 9 kg. Important: T'Way doesn't permit pet transit through Korea — must be point-to-point. For onward travel through Korea, use Korean Air both legs and book as a single through-ticket.",
+        cost: "Japan↔Korea on Korean Air: $100. Korea↔elsewhere: $150–$200.",
+      },
+      {
+        title: "Mexico/Latin America ↔ Japan: Aeromexico direct",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Aeromexico flies cabin pets MEX ↔ NRT direct — one of the few Pacific cabin pet routes. Combined pet+carrier weight 9 kg. Snub-nosed breeds welcome in cabin. Useful for Latin American travellers OR as a routing option for US travellers who can position to Mexico City cheaply.",
+        cost: "$200–$250 each way long-haul international.",
+      },
+      {
+        title: "Start the import clock at least 7 months out",
+        icon: <ScrollText className="w-4 h-4" strokeWidth={1.75} />,
+        body: "The 180-day clock starts the day blood is drawn for the rabies titer test (FAVN ≥0.5 IU/ml). Before that: ISO microchip (must be implanted BEFORE the first rabies vaccine), two rabies vaccines. After the titer passes: wait 180 days. Submit AQS Advance Notification ≥40 days before arrival. Vet exam and Form AC within 10 days of boarding, USDA-endorsed. The single most common mistake is arriving before Day 180 — your pet gets quarantined for the missing days at your expense.",
+        cost: "Tests, paperwork, vet visits: $500–$1,500. Detention quarantine: about ¥3,500/day ($25/day) for up to 180 days.",
+      },
+      {
+        title: "Arrive at one of 11 approved pet entry ports",
         icon: <AlertTriangle className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Your pet will be quarantined for up to 180 days at the airport quarantine facility — at your expense. This is the single most common mistake people make with Japan. Don't book until your paperwork is bulletproof.",
-        cost: "Quarantine: ~¥3,500/day = up to ¥630,000 ($4,000+).",
+        body: "Japan's airports approved for pet entry: New Chitose (CTS), Narita (NRT), Haneda (HND), Chubu/Nagoya (NGO), Kansai/Osaka (KIX), Itami (ITM), Kobe (UKB), Kitakyushu (KKJ), Fukuoka (FUK), Kagoshima (KOJ), Naha (OKA). Anywhere else and your pet is refused entry. Land at an approved port before 5 PM — pets arriving after 5 PM can't be released from their crate until customs reopens the next morning.",
+        cost: "Domestic onward to non-entry airports is fine after clearance.",
       },
     ],
-    paperwork: "ISO microchip, two rabies vaccines, FAVN/RNATT titer test, 180-day waiting period, AQS advance notification, USDA-endorsed Form A/C.",
+    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Most international airlines are cargo-only into Japan (JAL, ANA, Lufthansa, KLM, BA, Singapore) — cabin options are limited to United (from US), Korean carriers (from/via Korea), and Aeromexico (from Mexico).",
   },
   {
     id: "ireland",
@@ -5874,6 +5969,20 @@ function DifficultDestinations() {
                     </p>
                   </a>
                 )}
+                {dest.id === "japan" && (
+                  <a
+                    href="/japan-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete Japan pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, three cabin pet paths (United, Korean carriers, Aeromexico), and 11 approved entry ports — all on one page.
+                    </p>
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -5914,7 +6023,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Twenty-eight airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Thirty-one airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -7241,7 +7350,7 @@ function Routes() {
     "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region

@@ -404,6 +404,22 @@ const AIRLINES = [
     link: "https://www.avianca.com/en/information-and-help/pet-transport/",
   },
   {
+    name: "Copa Airlines",
+    tags: ["south-america", "us", "caribbean", "mexico", "central-america"],
+    cabin: "Cabin ✓ — Panama hub, strong Americas coverage including Uruguay",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: dogs and cats up to 10 kg (20 lb) combined on most Copa-operated routes. Panama City (PTY) is the hub — Copa serves Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Peru, Paraguay, Uruguay (Montevideo), Venezuela, plus the Caribbean, Central America, Mexico, US and Canada. Useful for deeper South American destinations (Montevideo, Asunción) that lack direct US cabin connections. Cabin NOT allowed: connecting flights with airlines other than Copa (no codeshare pets). Pets are not permitted on flights to Armenia (AXM) on weekends due to closed quarantine offices.",
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    fee: "Cabin: $125 international, $25 domestic Panama. Cargo: varies by route.",
+    weight: "Pet + carrier max 10 kg (20 lb) combined for cabin. Minimum age 16 weeks for cabin (8 weeks for cargo).",
+    carrier: "Soft-sided only for cabin, max 45 × 27 × 27 cm (18 × 11 × 11 in). Well-ventilated, leak-proof, must fit under the seat with the pet able to stand and turn around. Hard-sided not permitted for cabin.",
+    notes: "Copa is THE cabin pet route to deeper South America — especially useful for Montevideo (Uruguay), Asunción (Paraguay), and Santa Cruz (Bolivia), all of which lack direct US cabin routes. Typical routing: US → Panama City (PTY) → onward South American hub. Max 3 cabin pets per flight (book 48+ hours ahead). Pets not allowed in Business Class (seat configuration). Brachycephalic dogs accepted in cabin only — never in cargo (Copa specifically restricts upper-airway-obstruction breeds from the hold). Banned cargo breeds: Pit Bull Terrier, American Staffordshire Terrier, English Bulldog, Canary Catch Dog, Argentine Dogo, Cane Corso, Brasilian Fila. Health certificate and rabies vaccination required for international cabin pets.",
+    intl: "Yes — Americas-wide (US, Canada, Mexico, Central America, Caribbean, all of South America)",
+    verified: "May 2026",
+    link: "https://www.copaair.com/en-us/travel-information/special-assistance/traveling-with-pets/",
+  },
+  {
     name: "Vueling",
     tags: ["europe"],
     cabin: "Cabin ✓ — small dogs and cats across Europe",
@@ -915,6 +931,24 @@ const DIRECT_ROUTES = [
   { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg).", tags: ["us", "south-america"] },
+
+  // ═══════ COPA AIRLINES VIA PANAMA — deeper South America cabin routes ═══════
+  { from: "Miami (MIA)", to: "Panama City (PTY)", duration: "2h 50m", note: "Copa Airlines. ✓ Cabin (under 10 kg, $125 international). Copa's main US gateway — best onward connections to deeper South America (Uruguay, Paraguay, Bolivia, Ecuador).", tags: ["us", "central-america"] },
+  { from: "New York (JFK)", to: "Panama City (PTY)", duration: "5h 30m", note: "Copa Airlines. ✓ Cabin (under 10 kg). Strong NYC → deeper South America hub via Panama.", tags: ["us", "central-america"] },
+  { from: "Los Angeles (LAX)", to: "Panama City (PTY)", duration: "7h", note: "Copa Airlines. ✓ Cabin. West Coast → deeper South America via Panama.", tags: ["us", "central-america"] },
+  { from: "Panama City (PTY)", to: "Montevideo (MVD)", duration: "7h 30m", note: "Copa Airlines. ✓ Cabin (under 10 kg). One of the few cabin pet routes to Uruguay. Total US→MVD via PTY is realistic in cabin (Copa-only itinerary required, no codeshares).", tags: ["central-america", "south-america"] },
+  { from: "Panama City (PTY)", to: "Buenos Aires (EZE)", duration: "7h", note: "Copa Airlines. ✓ Cabin. Alternative to LATAM direct via PTY hub.", tags: ["central-america", "south-america"] },
+  { from: "Panama City (PTY)", to: "Santiago (SCL)", duration: "7h 30m", note: "Copa Airlines. ✓ Cabin. Alternative to LATAM direct.", tags: ["central-america", "south-america"] },
+  { from: "Panama City (PTY)", to: "São Paulo (GRU)", duration: "7h", note: "Copa Airlines. ✓ Cabin (under 10 kg). Useful if LATAM cabin US-Brazil suspension is still active.", tags: ["central-america", "south-america"] },
+  { from: "Panama City (PTY)", to: "Lima (LIM)", duration: "3h 30m", note: "Copa Airlines. ✓ Cabin.", tags: ["central-america", "south-america"] },
+  { from: "Panama City (PTY)", to: "Bogotá (BOG)", duration: "1h 30m", note: "Copa Airlines. ✓ Cabin. Short hop — Copa or Avianca both work.", tags: ["central-america", "south-america"] },
+  // ═══════ MONTEVIDEO connections ═══════
+  { from: "Bogotá (BOG)", to: "Montevideo (MVD)", duration: "6h 30m", note: "Avianca. ✓ Cabin (under 10 kg). The Avianca cabin pet route to Uruguay — useful if you're routing via Colombia.", tags: ["south-america"] },
+  { from: "São Paulo (GRU)", to: "Montevideo (MVD)", duration: "2h 30m", note: "LATAM. ✓ Cabin (under 7 kg). Short Brazil ↔ Uruguay hop.", tags: ["south-america"] },
+  { from: "Buenos Aires (EZE)", to: "Montevideo (MVD)", duration: "1h", note: "LATAM, Aerolineas Argentinas. ✓ Cabin. The shortest cabin pet flight to Uruguay — Buenos Aires sits just across the Rio de la Plata.", tags: ["south-america"] },
+  { from: "Montevideo (MVD)", to: "Bogotá (BOG)", duration: "6h 30m", note: "Avianca. ✓ Cabin (under 10 kg). Reverse of BOG→MVD.", tags: ["south-america"] },
+  { from: "Montevideo (MVD)", to: "Panama City (PTY)", duration: "7h 30m", note: "Copa Airlines. ✓ Cabin (under 10 kg). Reverse of PTY→MVD.", tags: ["south-america", "central-america"] },
+  { from: "Montevideo (MVD)", to: "Buenos Aires (EZE)", duration: "1h", note: "LATAM, Aerolineas Argentinas. ✓ Cabin. Short cross-river hop.", tags: ["south-america"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -1276,7 +1310,7 @@ const REGION_HUBS = {
   "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
-  "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)"],
+  "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)", "Montevideo (MVD)"],
   "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
 };
 
@@ -1381,6 +1415,8 @@ const AIRPORTS = [
   { code: "SCL", city: "Santiago", region: "south-america", cabinOut: true, cabinIn: true, note: "Santiago Arturo Merino Benítez (SCL) is LATAM's home base — best cabin pet connectivity in South America. Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on documentation." },
   { code: "BOG", city: "Bogotá El Dorado", region: "south-america", cabinOut: true, cabinIn: true, note: "Bogotá El Dorado (BOG) is Avianca's main hub. Avianca cabin pets (10 kg) connect across the Americas. Colombia bans the import of Pit Bull, Staffordshire Terrier, and American Staffordshire Terrier breeds by law (Article 108-E)." },
   { code: "LIM", city: "Lima", region: "south-america", cabinOut: true, cabinIn: true, note: "Lima Jorge Chávez (LIM) is Peru's main international airport. LATAM Peru and Avianca serve cabin pets. Peru requires SENASA import permit and health certificate from origin country's official authority." },
+  { code: "MVD", city: "Montevideo", region: "south-america", cabinOut: true, cabinIn: true, note: "Montevideo (MVD) is Uruguay's main airport. No direct US cabin pet route — connect through Panama (Copa), Bogotá (Avianca), or São Paulo (LATAM). Uruguay requires ISO microchip, rabies vaccine 30+ days old, MGAP-recognised health certificate from origin country's official veterinary authority, and an import declaration. Generally treated similarly to Argentina." },
+  { code: "PTY", city: "Panama City", region: "central-america", cabinOut: true, cabinIn: true, note: "Panama City Tocumen (PTY) is Copa Airlines' hub and the key cabin pet transit point for deeper South American destinations like Montevideo, Asunción, and La Paz. Copa is the dominant operator; pets transit through the airport on Copa-operated itineraries without needing to enter Panama formally." },
   // Japan — pets can enter at 11 designated ports; we list the major five.
   // Critical note: JAL and ANA do NOT carry cabin pets on any route. Cabin
   // routes in/out of Japan exist on United (US ↔ Japan), Korean carriers
@@ -2145,7 +2181,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
-    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru"],
+    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Uruguay"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
   };
   const fromInOriginRegion = (field) =>
@@ -6210,7 +6246,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Thirty-one airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Thirty-two airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -7538,7 +7574,7 @@ function Routes() {
     "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
-    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador"],
+    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador", "Uruguay"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
   };
 

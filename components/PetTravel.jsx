@@ -364,6 +364,22 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://www.lift.co.za/LIFT-Extras/travelling-with-small-dogs",
   },
+  {
+    name: "LATAM Airlines",
+    tags: ["caribbean", "us"],
+    cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Covers South America domestics and regionals, and select international routes. Cabin TEMPORARILY SUSPENDED on some US routes (US↔Bolivia, Brazil, Ecuador, Peru, Colombia) due to CDC dog import rules — confirm before booking.",
+    originAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (via Iberia codeshare — LATAM-operated only)", india: "no", caribbean: "yes", uae: "no" },
+    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no" },
+    fee: "~$250 international · ~$100 regional South America · Varies for domestic Brazil/Chile/Colombia/Peru/Ecuador",
+    weight: "Pet + carrier combined max 7 kg. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm.",
+    carrier: "Soft-sided carrier (max 40 × 28 × 25 cm) or hard kennel (max 36 × 33 × 19 cm). No wheels. Must be leak-proof and well-ventilated. Pet must be able to stand, turn and move without touching walls or ceiling.",
+    notes: "LATAM is the main cabin-pet carrier for South America, and a solid option for US↔South America routes where available. Key restrictions: LATAM-operated flights ONLY — no codeshares, no connections to/from other airlines. Minimum 16 weeks old (6 months for US travel). Brachycephalic breeds not accepted in the hold but CAN travel in cabin if they meet size requirements. Dangerous breeds banned from cabin. Must book through LATAM Contact Center — not online. Arrive 4 hours early for international.",
+    intl: "Yes — South America, select US and international routes",
+    verified: "May 2026",
+    link: "https://www.latamairlines.com/us/en/experience/prepare-your-trip/pets-transportation/cabin",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -387,6 +403,11 @@ const NO_CABIN_AIRLINES = [
     name: "Japan Airlines (JAL) / ANA",
     detail: "Neither Japanese flag carrier accepts cabin pets on international flights — assistance dogs only. (So 'India → Tokyo → USA in cabin' is a myth — it's not a real route.)",
     link: "https://www.ana.co.jp/en/us/travel-information/pet-policy/",
+  },
+  {
+    name: "Icelandair",
+    detail: "No cabin pets on any route — service and assistance dogs only. As of November 2024, pets are no longer accepted as checked baggage either. The only option is cargo-only freighter aircraft operated by Icelandair Cargo (flying out of LAX and Liège, Belgium). Iceland itself requires 4 weeks quarantine for all pets entering the country.",
+    link: "https://www.icelandair.com/support/special-assistance/animal-transportation/",
   },
 ];
 
@@ -1309,6 +1330,65 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `From Canada, the simplest cabin path to the Caribbean routes through a US gateway. Some Caribbean carriers also fly direct from Toronto — check, but the US-gateway route is the reliable cabin option. Each island has its own import permit.`,
   }),
+
+  // ----- CARIBBEAN outbound -----
+  "caribbean>us": (o, d) => ({
+    legs: [
+      { route: `${o} → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `Most Caribbean islands have direct cabin routes to major US gateways — this is straightforward. The complexity is on the RETURN: the Dominican Republic is CDC high-risk, so if you're flying dogs back to the US from there, you need the Certification of US-issued Rabies Vaccination prepared BEFORE you left the US. Bahamas is CDC-rabies-free, so re-entry is simple.`,
+  }),
+  "caribbean>canada": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "3–4h", airline: "Air Canada / American / United ✓ Cabin" },
+    ],
+    note: `No direct Caribbean→Canada cabin routes — route via a US gateway (Miami or New York). The connection is simple since Canada doesn't have the complex CDC dog-import requirements the US has for Caribbean returns.`,
+  }),
+  "caribbean>europe": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "7–10h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+    ],
+    note: `Caribbean→Europe routes via a US gateway. The transatlantic leg carries cabin pets. Note: if you're flying a dog that originated in the Dominican Republic, the CDC high-risk rules mean you need the US-issued Rabies Certification prepared before you left for the Caribbean — confirm this with your vet before the trip.`,
+  }),
+  "caribbean>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+    ],
+    note: `Caribbean to the UK is a three-leg journey — no airline flies cabin pets INTO the UK directly. The route is Caribbean → US gateway → European hub → Eurotunnel land crossing into the UK. Long but fully in cabin and with you at every step. Build in at least one overnight stop.`,
+  }),
+
+  // ----- MEXICO outbound -----
+  "mexico>us": (o, d) => ({
+    legs: [
+      { route: `${o} → ${d}`, time: "2–4h", airline: "Aeromexico / American / Delta / United ✓ Cabin" },
+    ],
+    note: `Mexico→US is one of the easiest cross-border cabin routes. The complication is on return: dogs returning to the US from Mexico need the CDC Dog Import Form (Mexico is not on the high-risk list for dogs, so it's the standard form, no titer required). Cats don't need it.`,
+  }),
+  "mexico>europe": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "8–10h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+    ],
+    note: `Mexico→Europe via a US gateway. Both legs in cabin. The transatlantic carrier takes cabin pets onward from Miami or New York.`,
+  }),
+  "mexico>canada": (o, d) => ({
+    legs: [
+      { route: `${o} → ${d}`, time: "5–6h", airline: "Air Canada / Aeromexico ✓ Cabin" },
+    ],
+    note: `Mexico→Canada is relatively direct. Air Canada and Aeromexico serve the main pairs in cabin. Canada is one of the easier destinations: current rabies certificate is the core requirement.`,
+  }),
+  "mexico>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
+      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+    ],
+    note: `Mexico to the UK is three legs — no airline flies cabin pets into the UK. Route via the US, then a European hub, then the Eurotunnel land crossing. Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
+  }),
 };
 
 // Airports that are CARGO-ONLY for pets — no airline flies cabin pets in or
@@ -2175,6 +2255,17 @@ const DIRECTIONAL_CHECKLISTS = {
             "Walk your dog properly outside before entering the airport (LHR's pet relief area is small)",
           ],
         },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats skip the tapeworm treatment — that's a dogs-only requirement (for UK, Ireland, Malta, Finland, Norway destinations)",
+            "AHC, microchip and rabies requirements are identical for cats — same process, same paperwork",
+            "You can't walk a cat before the airport — give full litter tray access right up until you leave home, and don't feed within ~4 hours of departure",
+            "Use Feliway (cat pheromone spray) in the carrier 15 minutes before, never on the cat",
+            "Fit a harness and practise it at home — at security the cat must come out of the carrier",
+            "LHR is one of the better airports for cabin cat departures — most UK-out cabin carriers (Air France, KLM, Lufthansa) accept cats on the same terms as dogs",
+          ],
+        },
       ],
     },
     arriving: {
@@ -2291,6 +2382,17 @@ const DIRECTIONAL_CHECKLISTS = {
             "All certificates as originals (not photos)",
             "Arrive 3 hours early for international",
             "CBP officer checks paperwork on arrival — typically fast if complete",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats do NOT need the CDC Dog Import Form — that's dogs only",
+            "No federal requirement for cats to show proof of rabies vaccination to enter the US, but your airline will likely want a current rabies certificate",
+            "Some US states (notably Hawaii) have their own stricter rules — check your specific destination state",
+            "Cats are inspected on arrival and must appear healthy",
+            "At US security the cat must come out of the carrier — a harness is essential, practise it at home",
+            "You can't walk a cat before the flight — give litter tray access until you leave home, no food within ~4 hours of departure",
           ],
         },
       ],
@@ -4501,7 +4603,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Twenty-two airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Twenty-three airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">

@@ -535,7 +535,6 @@ const DIRECT_ROUTES = [
   { from: "Seattle (SEA)", to: "Amsterdam (AMS)", duration: "9h 45m", note: "Delta / KLM. ✓ Cabin (under 8 kg). Seattle's direct to Amsterdam — onward KLM cabin to most major Indian cities.", tags: ["us", "europe"] },
   { from: "Seattle (SEA)", to: "Paris (CDG)", duration: "10h", note: "Delta / Air France. ✓ Cabin (under 8 kg). Direct to Paris — onward Air France cabin to Delhi/Mumbai.", tags: ["us", "europe"] },
   { from: "Seattle (SEA)", to: "Vancouver (YVR)", duration: "1h", note: "Alaska Airlines. ✓ Cabin ($100 each way). Short domestic-style hop to Canada.", tags: ["us", "canada"] },
-  { from: "Seattle (SEA)", to: "Tokyo (NRT)", duration: "10h 30m", note: "Alaska / JAL / ANA. ✓ Cabin on select aircraft — confirm with airline. Direct Pacific cabin route.", tags: ["us"] },
 
   // ═══════ FROM JFK ═══════
   { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). East coast → India direct.", tags: ["us", "india"] },
@@ -717,11 +716,11 @@ const DIRECT_ROUTES = [
   { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for cabin onward to Europe, India, Africa.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Direct cabin route to Spain — Iberia's flagship transatlantic. Call to reserve pet space ahead.", tags: ["us", "europe"] },  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Direct cabin route to Spain — Iberia's flagship transatlantic. Call to reserve pet space ahead.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Paris (CDG)", duration: "7h 45m", note: "Delta and Air France. ✓ Cabin (under 8 kg). NOT American Airlines (AA bans transatlantic cabin).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Rome (FCO)", duration: "9h", note: "ITA Airways. ✓ Cabin (under 8 kg, €210 fee). Plus EU pet passport hub access.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Warsaw (WAW)", duration: "9h", note: "LOT Polish. ✓ Cabin (under 8 kg, €70 fee). Cheapest long-haul cabin fee on the market.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Zurich (ZRH)", duration: "8h", note: "SWISS. ✓ Cabin (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["us", "europe"] },
-  { from: "New York (JFK)", to: "Madrid (MAD)", duration: "7h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Direct cabin route to Spain — Iberia's flagship transatlantic. Call to reserve pet space ahead.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Barcelona (BCN)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg). Barcelona's own transatlantic cabin option — less known than the Madrid route but worth checking.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Nassau (NAS)", duration: "3h", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Bahamas import permit required — apply 6–8 weeks ahead. Bahamas is CDC-rabies-FREE so US re-entry is straightforward.", tags: ["us", "caribbean"] },
   { from: "New York (JFK)", to: "Montego Bay (MBJ)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb on JetBlue). Jamaica has a strict 6+ month import process — start very early. Jamaica is NOT on the CDC high-risk list, so US re-entry is the standard form.", tags: ["us", "caribbean"] },
@@ -1096,7 +1095,7 @@ const REGION_HUBS = {
   // would generate workarounds implying a cabin route that doesn't exist.
   "uk-out": ["London (LHR)", "Manchester (MAN)"],
   "ireland": ["Dublin (DUB)"],
-  "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)"],
+  "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)", "Seattle (SEA)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
   "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
   "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
@@ -1913,7 +1912,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   const originRegionKeywords = {
     "uk-out": ["London", "Manchester", "(LHR)", "(MAN)", "(LGW)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],
-    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "USA"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "(SEA)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
     "mexico": ["Mexico City", "Cancún", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "Europe"],
@@ -5295,7 +5294,6 @@ const DESTINATIONS = [
     name: "India",
     headline: "Cabin to/from India — easier than ever in 2026.",
     rule: "India is now one of the better destinations for cabin pet travel. Air India's 2026 'Paws on Board' programme accepts cabin pets up to 10 kg on direct flights between India and the USA (DEL/BOM/BLR/HYD ↔ JFK/SFO/IAD/ORD/EWR), Europe, and Canada. The exceptions: cabin NOT allowed to/from the UK (cargo only — UK government embargo) or departing India to UAE. Six approved entry airports for pets only: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad. AQCS NOC is required for every entry.",
-    fullGuideLink: "/india-pet-travel",
     workarounds: [
       {
         title: "India → USA: now direct via Air India",
@@ -5589,6 +5587,20 @@ function DifficultDestinations() {
                     </h4>
                     <p className="text-amber-50/90 leading-relaxed text-sm">
                       Why pets can't fly cabin into the UK, every workaround route explained in full, what it costs, and the exact paperwork — all on one page.
+                    </p>
+                  </a>
+                )}
+                {dest.id === "india" && (
+                  <a
+                    href="/india-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete India pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      The AQCS NOC process, the 2-year residency rule, six approved entry airports, Air India Paws on Board cabin routes, and the CDC high-risk paperwork for the US — all on one page.
                     </p>
                   </a>
                 )}
@@ -6950,8 +6962,8 @@ function Routes() {
   // contains one of these keywords. This way the filter respects the direction toggle.
   const REGION_CITIES = {
     "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
-    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "USA"],
-    "india": ["Delhi", "Mumbai", "Bangalore", "Chennai", "(DEL)", "(BOM)", "(BLR)", "(MAA)"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "Newark", "Seattle", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "(SEA)", "USA"],
+    "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)"],
     "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],

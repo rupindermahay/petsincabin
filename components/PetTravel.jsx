@@ -830,6 +830,36 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "Santiago (SCL)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — Chile is not on the LATAM US suspension list, so cabin is available. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Chile routes. Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on paperwork.", tags: ["us", "south-america"] },
   { from: "Miami (MIA)", to: "Buenos Aires (EZE)", duration: "9h", note: "LATAM cabin (under 7 kg) — Argentina is not on the LATAM US suspension list, so cabin is available. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Argentina routes. Argentina requires SENASA-endorsed health certificate and ISO microchip.", tags: ["us", "south-america"] },
 
+  // ═══════ FROM NEW YORK (JFK) TO SOUTH AMERICA ═══════
+  { from: "New York (JFK)", to: "Bogotá (BOG)", duration: "5h 30m – 7h", note: "Avianca. ✓ Cabin (under 10 kg combined). The cabin pet route to Colombia from the US east coast — Avianca runs direct from JFK, MIA, LAX, IAH, BOS, ORD, MCO. LATAM cabin currently suspended US ↔ Colombia (CDC dog rules). American Airlines: cargo only on US-Colombia routes. Colombia bans Pit Bull, AmStaff, and Staffordshire breeds from import by law.", tags: ["us", "south-america"] },
+  { from: "New York (JFK)", to: "Lima (LIM)", duration: "7h 30m", note: "LATAM. ✓ Cabin (under 7 kg) where not suspended. Avianca via Bogotá is the reliable cabin alternative. Peru requires SENASA pre-arranged import permit — apply 30+ days ahead.", tags: ["us", "south-america"] },
+  { from: "New York (JFK)", to: "Santiago (SCL)", duration: "11h", note: "LATAM. ✓ Cabin (under 7 kg). Chile is NOT on LATAM's US suspension list — cabin is available. American Airlines: cargo only. Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old.", tags: ["us", "south-america"] },
+  { from: "New York (JFK)", to: "Buenos Aires (EZE)", duration: "10h 30m", note: "LATAM. ✓ Cabin (under 7 kg). Argentina is not on LATAM's US suspension list. American Airlines: cargo only. SENASA-endorsed health certificate and ISO microchip required.", tags: ["us", "south-america"] },
+
+  // ═══════ FROM LOS ANGELES (LAX) TO SOUTH AMERICA ═══════
+  { from: "Los Angeles (LAX)", to: "Bogotá (BOG)", duration: "8h", note: "Avianca. ✓ Cabin (under 10 kg combined). The US west coast cabin pet route to Colombia. Pit Bull/AmStaff/Staffordshire breeds banned from import to Colombia.", tags: ["us", "south-america"] },
+  { from: "Los Angeles (LAX)", to: "Lima (LIM)", duration: "8h 30m", note: "LATAM. ✓ Cabin (under 7 kg) where not suspended. Avianca via BOG is the cabin alternative. SENASA import permit required for Peru.", tags: ["us", "south-america"] },
+  { from: "Los Angeles (LAX)", to: "Santiago (SCL)", duration: "11h", note: "LATAM. ✓ Cabin (under 7 kg). SAG advance authorization required for Chile.", tags: ["us", "south-america"] },
+
+  // ═══════ FROM HOUSTON (IAH) TO SOUTH AMERICA ═══════
+  { from: "Houston (IAH)", to: "Bogotá (BOG)", duration: "5h", note: "Avianca. ✓ Cabin (under 10 kg). United also serves this route but cabin pet acceptance varies — verify.", tags: ["us", "south-america"] },
+
+  // ═══════ EUROPE → SOUTH AMERICA cabin routes ═══════
+  { from: "London (LHR)", to: "Bogotá (BOG)", duration: "11h 30m", note: "Avianca. ✓ Cabin (under 10 kg combined) OUT of the UK. Pet cabin departures from the UK are fine — only INBOUND to the UK is blocked. Colombia bans Pit Bull/AmStaff breeds by law.", tags: ["uk-out", "south-america"] },
+  { from: "London (LHR)", to: "São Paulo (GRU)", duration: "11h 30m", note: "British Airways: cargo only. LATAM cabin (under 7 kg) where operated. Otherwise via Madrid (Iberia) or Frankfurt (Lufthansa) cabin connection.", tags: ["uk-out", "south-america"] },
+  { from: "Madrid (MAD)", to: "Lima (LIM)", duration: "12h", note: "Iberia, LATAM. ✓ Cabin (under 7-8 kg). Spanish gateway to Peru.", tags: ["europe", "south-america"] },
+  { from: "Madrid (MAD)", to: "Santiago (SCL)", duration: "13h", note: "Iberia, LATAM. ✓ Cabin (under 7-8 kg). Spain ↔ Chile direct cabin.", tags: ["europe", "south-america"] },
+  { from: "Madrid (MAD)", to: "Montevideo (MVD)", duration: "13h", note: "Iberia. ✓ Cabin (under 8 kg). The European direct cabin route to Uruguay — Iberia is the only carrier doing this directly.", tags: ["europe", "south-america"] },
+  { from: "Frankfurt (FRA)", to: "São Paulo (GRU)", duration: "11h 30m", note: "Lufthansa, LATAM. ✓ Cabin (Lufthansa under 8 kg, LATAM under 7 kg). German gateway to Brazil.", tags: ["europe", "south-america"] },
+  { from: "Frankfurt (FRA)", to: "Buenos Aires (EZE)", duration: "13h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe", "south-america"] },
+  { from: "Paris (CDG)", to: "São Paulo (GRU)", duration: "11h 30m", note: "Air France. ✓ Cabin (under 8 kg combined). Strong Europe → Brazil cabin route.", tags: ["europe", "south-america"] },
+  { from: "Paris (CDG)", to: "Buenos Aires (EZE)", duration: "13h 30m", note: "Air France. ✓ Cabin (under 8 kg). The Paris → Argentina direct cabin route.", tags: ["europe", "south-america"] },
+  { from: "Amsterdam (AMS)", to: "Lima (LIM)", duration: "12h 30m", note: "KLM. ✓ Cabin (under 8 kg). Dutch gateway to Peru.", tags: ["europe", "south-america"] },
+
+  // ═══════ MEXICO → SOUTH AMERICA cabin ═══════
+  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "Aeromexico. ✓ Cabin (under 9 kg).", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "Aeromexico, LATAM. ✓ Cabin (under 7-9 kg).", tags: ["mexico", "south-america"] },
+
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
   { from: "Montego Bay (MBJ)", to: "New York (JFK)", duration: "3h 50m", note: "JetBlue, Delta. ✓ Cabin (under 20 lb).", tags: ["caribbean", "us"] },
@@ -7289,10 +7319,48 @@ function JourneyPlanner() {
       // Sort-stable: keep order but collapse consecutive dupes
       return codes.join(">");
     };
+    // Track airport-pair keys for already-known direct routes so we don't add
+    // a "workaround" that's actually the same direct route restated.
+    const directKeys = new Set();
+    direct.forEach((r) => {
+      const fCode = (r.from.match(/\(([A-Z]{3})\)/) || [])[1];
+      const tCode = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
+      if (fCode && tCode) directKeys.add(`${fCode}>${tCode}`);
+    });
+    // Helper to determine if a route is genuinely single-leg (one actual flight,
+    // no transit legs). Transit legs include layovers, drives, ferries.
+    const isTransit = (legRoute) => /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended|At |Wait )/i.test(legRoute || "");
+    const isSingleFlight = (r) => {
+      if (!r.legs || r.legs.length === 0) return false;
+      const flightLegs = r.legs.filter((l) => !isTransit(l.route));
+      return flightLegs.length === 1;
+    };
     const push = (r, kind) => {
       const k = dedupeKey(r);
       if (seen.has(k)) return;
       seen.add(k);
+      // If this "workaround" is actually a single-flight route from origin
+      // to destination AND we don't already have a direct for this airport
+      // pair, promote it to the direct list. This prevents the "no direct
+      // route" message from showing alongside a 1-flight workaround card.
+      const fCode = (r.from.match(/\(([A-Z]{3})\)/) || [])[1] ||
+                    (r.legs && r.legs[0] ? (r.legs[0].route.match(/\(([A-Z]{3})\)/) || [])[1] : null);
+      const tCode = (r.to.match(/\(([A-Z]{3})\)/) || [])[1];
+      const pairKey = fCode && tCode ? `${fCode}>${tCode}` : null;
+      if (isSingleFlight(r) && pairKey && !directKeys.has(pairKey)) {
+        directKeys.add(pairKey);
+        // Convert leg structure into a DIRECT-route shaped object so the
+        // direct-routes renderer can show it cleanly.
+        const flightLeg = r.legs.find((l) => !isTransit(l.route)) || r.legs[0];
+        direct.push({
+          from: r.from,
+          to: r.to,
+          duration: flightLeg.time || r.duration || "",
+          note: r.note,
+          _airlineFromLeg: flightLeg.airline,
+        });
+        return;
+      }
       workarounds.push({ ...r, _kind: kind });
     };
     handWrittenWorkaroundsForAirportPair(originCode, destination).forEach((r) => push(r, "exact"));
@@ -7561,11 +7629,21 @@ function JourneyPlanner() {
                           <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
                         </div>
                         {g.routes.length === 1 ? (
-                          <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                          <>
+                            {g.routes[0]._airlineFromLeg && (
+                              <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
+                            )}
+                            <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                          </>
                         ) : (
                           <div className="space-y-2">
                             {g.routes.map((r, j) => (
-                              <p key={j} className="text-stone-400 text-sm leading-relaxed border-l border-stone-600 pl-3">{r.note}</p>
+                              <div key={j} className="border-l border-stone-600 pl-3">
+                                {r._airlineFromLeg && (
+                                  <p className="text-stone-300 text-sm mb-1 font-medium">{r._airlineFromLeg}</p>
+                                )}
+                                <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                              </div>
                             ))}
                           </div>
                         )}

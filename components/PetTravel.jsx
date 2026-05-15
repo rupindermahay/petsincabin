@@ -1351,6 +1351,64 @@ const REGION_LABELS_SHORT = {
   "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan",
 };
 
+// Reverse-index: 3-letter airport code → region, built from REGION_HUBS.
+// We use this to infer which regions a workaround's legs actually transit
+// through, even when the strategy didn't include that region in its tags.
+// e.g. a US→UK workaround that goes via "Paris (CDG)" should pick up
+// "europe" as a transit region — so France's pet rules show up in the
+// generated checklist.
+//
+// Tokens we look for: parenthesised 3-letter airport codes like "(CDG)" AND
+// city names mentioned in the leg routes/notes (Calais, Eurotunnel for the
+// UK pivot routes). City detection is for transit-relevant places that
+// aren't airports (e.g. "Calais → Eurotunnel" implies europe transit).
+const HUB_CODE_TO_REGION = (() => {
+  const m = {};
+  Object.entries(REGION_HUBS).forEach(([region, hubs]) => {
+    hubs.forEach((hub) => {
+      const code = (hub.match(/\(([A-Z]{3})\)/) || [])[1];
+      if (code) m[code] = region;
+    });
+  });
+  return m;
+})();
+
+// City-name → region map, for transit-only places (no airport code).
+// Kept narrow on purpose: only places mentioned in our workaround strategies
+// that DON'T already match by hub code.
+const HUB_CITY_TO_REGION = {
+  "calais": "europe",
+  "eurotunnel": "europe",
+  "folkestone": "uk-out",
+};
+
+// Given a route's legs, return the set of region IDs the pet actually
+// transits through (excluding origin and destination, which the caller
+// handles). Each leg.route is scanned for hub airport codes AND a small
+// list of transit-only city names.
+function inferTransitRegionsFromLegs(legs, originRegion, destRegion) {
+  if (!legs || legs.length === 0) return [];
+  const found = new Set();
+  legs.forEach((leg) => {
+    const text = (leg.route || "") + " " + (leg.airline || "");
+    // 3-letter airport codes in parentheses
+    const codes = (text.match(/\(([A-Z]{3})\)/g) || []).map((c) => c.replace(/[()]/g, ""));
+    codes.forEach((c) => {
+      const r = HUB_CODE_TO_REGION[c];
+      if (r) found.add(r);
+    });
+    // Known transit-only city names (lowercased match)
+    const lower = text.toLowerCase();
+    Object.entries(HUB_CITY_TO_REGION).forEach(([city, region]) => {
+      if (lower.includes(city)) found.add(region);
+    });
+  });
+  // Exclude origin & destination — caller already covers those.
+  found.delete(originRegion);
+  found.delete(destRegion);
+  return [...found];
+}
+
 // ---------- AIRPORT-LEVEL MASTER LIST ----------
 // Every key airport the journey planner offers, with its region and — crucially
 // — per-airport cabin facts. This is what makes the planner ACCURATE for the
@@ -2368,6 +2426,10 @@ function generateWorkarounds(origin, destination) {
     .forEach((destHub) => {
       strategies.forEach((strategy) => {
         const built = strategy(originHub, destHub);
+        // Infer transit regions from the leg routes so the per-route
+        // checklist picks up transit-country paperwork (e.g. France's EU
+        // rules for a US→UK route that pivots through Paris).
+        const transitRegions = inferTransitRegionsFromLegs(built.legs, origin, destination);
         out.push({
           from: originHub,
           to: destHub,
@@ -2376,7 +2438,7 @@ function generateWorkarounds(origin, destination) {
           note: built.note,
           label: built.label || null,
           generated: true,
-          tags: [origin, destination],
+          tags: [origin, destination, ...transitRegions],
         });
       });
     });
@@ -2405,6 +2467,7 @@ function generateWorkaroundsForAirportPair(originCode, destCode) {
   const dLabel = `${dA.city} (${dA.code})`;
   return strategies.map((strategy) => {
     const built = strategy(oLabel, dLabel);
+    const transitRegions = inferTransitRegionsFromLegs(built.legs, oA.region, dA.region);
     return {
       from: oLabel,
       to: dLabel,
@@ -2413,7 +2476,7 @@ function generateWorkaroundsForAirportPair(originCode, destCode) {
       note: built.note,
       label: built.label || null,
       generated: true,
-      tags: [oA.region, dA.region],
+      tags: [oA.region, dA.region, ...transitRegions],
     };
   });
 }
@@ -7770,21 +7833,27 @@ function JourneyPlanner() {
                     </h4>
                   </div>
                   {selectableRoutes.length > 1 && (
-                    <p className="text-stone-400 text-sm italic mb-4">
-                      Tap the route you want — we'll build your tailored checklist below.
-                    </p>
+                    <div className="flex items-center gap-2 mb-4 bg-amber-900/30 border-l-2 border-amber-500 px-3 py-2">
+                      <span className="text-amber-400 text-base">👇</span>
+                      <p className="text-amber-100 text-sm font-medium">
+                        Tap a route below to build your tailored checklist.
+                      </p>
+                    </div>
                   )}
                   <div className="space-y-3">
                     {grouped.map((g, i) => {
                       const routeId = `direct:${i}`;
                       const isSelected = selectedRouteId === routeId;
                       return (
-                        <div
+                        <button
                           key={i}
-                          className={`p-4 transition-colors ${
+                          onClick={() => !isSelected && selectRoute(routeId)}
+                          disabled={isSelected}
+                          aria-pressed={isSelected}
+                          className={`w-full text-left p-4 transition-all duration-150 block ${
                             isSelected
-                              ? "bg-emerald-950/40 border-2 border-emerald-500"
-                              : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                              ? "bg-emerald-950/50 border-2 border-emerald-400 ring-2 ring-emerald-500/30 cursor-default"
+                              : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-emerald-500 hover:ring-2 hover:ring-emerald-500/30 cursor-pointer"
                           }`}
                         >
                           <div className="flex items-center gap-2 flex-wrap mb-2">
@@ -7793,8 +7862,8 @@ function JourneyPlanner() {
                             <span className="font-serif text-base text-stone-100">{g.to}</span>
                             <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
                             {isSelected && (
-                              <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-medium">
-                                <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                              <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
+                                <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
                               </span>
                             )}
                           </div>
@@ -7818,15 +7887,12 @@ function JourneyPlanner() {
                             </div>
                           )}
                           {!isSelected && (
-                            <button
-                              onClick={() => selectRoute(routeId)}
-                              className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 hover:border-emerald-500 px-3 py-1.5 transition-colors"
-                            >
-                              Use this route
-                              <ArrowRight className="w-3 h-3" strokeWidth={2} />
-                            </button>
+                            <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-emerald-300 bg-emerald-900/50 border border-emerald-700 px-3 py-1.5">
+                              <Check className="w-3 h-3" strokeWidth={2.5} />
+                              Tap to use this route
+                            </span>
                           )}
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
@@ -7854,21 +7920,27 @@ function JourneyPlanner() {
                   <span className="text-xs uppercase tracking-widest text-stone-500">{workaroundMatches.length}</span>
                 </div>
                 {selectableRoutes.length > 1 && !hasDirect && (
-                  <p className="text-stone-400 text-sm italic mb-4">
-                    Tap the route you want — we'll build your tailored checklist below.
-                  </p>
+                  <div className="flex items-center gap-2 mb-4 bg-amber-900/30 border-l-2 border-amber-500 px-3 py-2">
+                    <span className="text-amber-400 text-base">👇</span>
+                    <p className="text-amber-100 text-sm font-medium">
+                      Tap a route below to build your tailored checklist.
+                    </p>
+                  </div>
                 )}
                 <div className="space-y-3">
                   {workaroundMatches.map((r, i) => {
                     const routeId = `workaround:${i}`;
                     const isSelected = selectedRouteId === routeId;
                     return (
-                      <div
+                      <button
                         key={i}
-                        className={`p-4 transition-colors ${
+                        onClick={() => !isSelected && selectRoute(routeId)}
+                        disabled={isSelected}
+                        aria-pressed={isSelected}
+                        className={`w-full text-left p-4 transition-all duration-150 block ${
                           isSelected
-                            ? "bg-amber-950/40 border-2 border-amber-500"
-                            : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                            ? "bg-amber-950/50 border-2 border-amber-400 ring-2 ring-amber-500/30 cursor-default"
+                            : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-amber-500 hover:ring-2 hover:ring-amber-500/30 cursor-pointer"
                         }`}
                       >
                         {/* Strategy label, e.g. "Via Montreal (Air Canada)" */}
@@ -7877,8 +7949,8 @@ function JourneyPlanner() {
                             <div className="text-xs uppercase tracking-widest text-amber-400">{r.label}</div>
                           ) : <span />}
                           {isSelected && (
-                            <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-medium flex-shrink-0">
-                              <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                            <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-bold flex-shrink-0">
+                              <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
                             </span>
                           )}
                         </div>
@@ -7923,15 +7995,12 @@ function JourneyPlanner() {
                         </div>
                         <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                         {!isSelected && (
-                          <button
-                            onClick={() => selectRoute(routeId)}
-                            className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-amber-400 hover:text-amber-300 border border-amber-700/60 hover:border-amber-500 px-3 py-1.5 transition-colors"
-                          >
-                            Use this route
-                            <ArrowRight className="w-3 h-3" strokeWidth={2} />
-                          </button>
+                          <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-amber-300 bg-amber-900/50 border border-amber-700 px-3 py-1.5">
+                            <Check className="w-3 h-3" strokeWidth={2.5} />
+                            Tap to use this route
+                          </span>
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -7971,12 +8040,15 @@ function JourneyPlanner() {
                           const routeId = `altDirect:${i}`;
                           const isSelected = selectedRouteId === routeId;
                           return (
-                            <div
+                            <button
                               key={i}
-                              className={`p-4 transition-colors ${
+                              onClick={() => !isSelected && selectRoute(routeId)}
+                              disabled={isSelected}
+                              aria-pressed={isSelected}
+                              className={`w-full text-left p-4 transition-all duration-150 block ${
                                 isSelected
-                                  ? "bg-emerald-950/40 border-2 border-emerald-500"
-                                  : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                                  ? "bg-emerald-950/50 border-2 border-emerald-400 ring-2 ring-emerald-500/30 cursor-default"
+                                  : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-emerald-500 hover:ring-2 hover:ring-emerald-500/30 cursor-pointer"
                               }`}
                             >
                               <div className="flex items-center gap-2 flex-wrap mb-1.5">
@@ -7985,8 +8057,8 @@ function JourneyPlanner() {
                                 <span className="font-serif text-base text-stone-100">{g.to}</span>
                                 <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
                                 {isSelected && (
-                                  <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-medium">
-                                    <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                                  <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
+                                    <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
                                   </span>
                                 )}
                               </div>
@@ -7998,15 +8070,12 @@ function JourneyPlanner() {
                                 </div>
                               )}
                               {!isSelected && (
-                                <button
-                                  onClick={() => selectRoute(routeId)}
-                                  className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 hover:border-emerald-500 px-3 py-1.5 transition-colors"
-                                >
-                                  Use this route
-                                  <ArrowRight className="w-3 h-3" strokeWidth={2} />
-                                </button>
+                                <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-emerald-300 bg-emerald-900/50 border border-emerald-700 px-3 py-1.5">
+                                  <Check className="w-3 h-3" strokeWidth={2.5} />
+                                  Tap to use this route
+                                </span>
                               )}
-                            </div>
+                            </button>
                           );
                         })}
                       </div>
@@ -8026,12 +8095,15 @@ function JourneyPlanner() {
                         const routeId = `altWorkaround:${i}`;
                         const isSelected = selectedRouteId === routeId;
                         return (
-                          <div
+                          <button
                             key={i}
-                            className={`p-4 transition-colors ${
+                            onClick={() => !isSelected && selectRoute(routeId)}
+                            disabled={isSelected}
+                            aria-pressed={isSelected}
+                            className={`w-full text-left p-4 transition-all duration-150 block ${
                               isSelected
-                                ? "bg-amber-950/40 border-2 border-amber-500"
-                                : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                                ? "bg-amber-950/50 border-2 border-amber-400 ring-2 ring-amber-500/30 cursor-default"
+                                : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-amber-500 hover:ring-2 hover:ring-amber-500/30 cursor-pointer"
                             }`}
                           >
                             <div className="flex items-start justify-between gap-2 mb-2">
@@ -8039,8 +8111,8 @@ function JourneyPlanner() {
                                 <div className="text-xs uppercase tracking-widest text-amber-400">{r.label}</div>
                               ) : <span />}
                               {isSelected && (
-                                <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-medium flex-shrink-0">
-                                  <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                                <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-bold flex-shrink-0">
+                                  <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
                                 </span>
                               )}
                             </div>
@@ -8084,15 +8156,12 @@ function JourneyPlanner() {
                             </div>
                             <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                             {!isSelected && (
-                              <button
-                                onClick={() => selectRoute(routeId)}
-                                className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-amber-400 hover:text-amber-300 border border-amber-700/60 hover:border-amber-500 px-3 py-1.5 transition-colors"
-                              >
-                                Use this route
-                                <ArrowRight className="w-3 h-3" strokeWidth={2} />
-                              </button>
+                              <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-amber-300 bg-amber-900/50 border border-amber-700 px-3 py-1.5">
+                                <Check className="w-3 h-3" strokeWidth={2.5} />
+                                Tap to use this route
+                              </span>
                             )}
-                          </div>
+                          </button>
                         );
                       })}
                     </div>

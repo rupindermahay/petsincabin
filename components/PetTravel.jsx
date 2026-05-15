@@ -7256,6 +7256,15 @@ function JourneyPlanner() {
   const [destination, setDestination] = useState(""); // airport CODE
   const [petType, setPetType] = useState("dog"); // "dog" | "cat" | "both" — filters checklist items
   const [planned, setPlanned] = useState(false);
+  // Which route the user has chosen — gates the tailored checklist render.
+  // Format: "direct:0", "workaround:2", "altDirect:0", "altWorkaround:1".
+  // Reset whenever origin/destination/petType changes so the user
+  // re-selects against the new options.
+  const [selectedRouteId, setSelectedRouteId] = useState(null);
+  // Per-section expanded sections in the inline checklist preview. Each
+  // section is collapsed to 2 items by default; clicking the toggle reveals
+  // the rest. Stored as a Set of section indices.
+  const [expandedSections, setExpandedSections] = useState(() => new Set());
   const sectionRef = useRef(null);
 
   // When results appear, scroll back to the top of the planner section.
@@ -7279,6 +7288,15 @@ function JourneyPlanner() {
       cancelAnimationFrame(raf2);
     };
   }, [planned]);
+
+  // Reset the route selection (and per-section expansion state) whenever the
+  // user changes origin, destination, pet type, or starts a new plan. Without
+  // this, the previous selection would carry over and look incoherent against
+  // the new route list.
+  useEffect(() => {
+    setSelectedRouteId(null);
+    setExpandedSections(new Set());
+  }, [origin, destination, petType, planned]);
 
   // Regions — used only to GROUP airports in the dropdowns.
   const REGIONS = [
@@ -7440,6 +7458,100 @@ function JourneyPlanner() {
   const hasResults = directMatches.length > 0 || workaroundMatches.length > 0
     || altDirect.length > 0 || altWorkarounds.length > 0;
   const hasDirect = directMatches.length > 0;
+
+  // Build the unified list of selectable routes.
+  // A "selectable route" is either:
+  //  - A direct from→to pair (multiple airlines on the same pair are one card)
+  //  - A workaround route (each entry is its own option, since the leg sequence varies)
+  //  - Same for "altDirect" and "altWorkarounds" — the secondary path used
+  //    when a drive-to airport is in play and the user's own airport also
+  //    has options. Each gets its own ID prefix so selection can identify
+  //    which path it belongs to.
+  // Each gets a stable ID we use for selection state and tracking.
+  const selectableRoutes = (() => {
+    const items = [];
+    // Helper: group + push direct routes from a list
+    const pushDirects = (routes, prefix) => {
+      const groupedDirects = [];
+      const groupSeen = new Map();
+      routes.forEach((r) => {
+        const key = `${r.from}|||${r.to}`;
+        if (groupSeen.has(key)) {
+          groupSeen.get(key).routes.push(r);
+        } else {
+          const g = { key, from: r.from, to: r.to, duration: r.duration, routes: [r] };
+          groupSeen.set(key, g);
+          groupedDirects.push(g);
+        }
+      });
+      groupedDirects.forEach((g, i) => {
+        items.push({
+          id: `${prefix}:${i}`,
+          kind: "direct",
+          group: g,
+          from: g.from,
+          to: g.to,
+          tags: [],
+        });
+      });
+    };
+    const pushWorkarounds = (routes, prefix) => {
+      routes.forEach((r, i) => {
+        items.push({
+          id: `${prefix}:${i}`,
+          kind: "workaround",
+          route: r,
+          from: r.from,
+          to: r.to,
+          tags: r.tags || [],
+        });
+      });
+    };
+    pushDirects(directMatches, "direct");
+    pushWorkarounds(workaroundMatches, "workaround");
+    pushDirects(altDirect, "altDirect");
+    pushWorkarounds(altWorkarounds, "altWorkaround");
+    return items;
+  })();
+
+  // Auto-select when there's exactly one option — no friction for simple
+  // cases like "JFK → BOG" where only Avianca direct exists.
+  useEffect(() => {
+    if (!planned) return;
+    if (selectedRouteId) return;
+    if (selectableRoutes.length === 1) {
+      setSelectedRouteId(selectableRoutes[0].id);
+    }
+  }, [planned, selectableRoutes.length, selectedRouteId]);
+
+  // Resolve the currently-selected route object. Null until the user picks
+  // (or until auto-selection fires).
+  const selectedRoute = selectedRouteId
+    ? selectableRoutes.find((r) => r.id === selectedRouteId) || null
+    : null;
+
+  // GA4: track route selection so we know which options people pick most.
+  function selectRoute(id) {
+    setSelectedRouteId(id);
+    setExpandedSections(new Set()); // reset section expansion on new selection
+    const route = selectableRoutes.find((r) => r.id === id);
+    if (typeof window !== "undefined" && window.gtag && route) {
+      window.gtag("event", "route_selected", {
+        event_category: "journey_planner",
+        route_kind: route.kind,
+        route_from: route.from,
+        route_to: route.to,
+      });
+    }
+    // After selecting, scroll smoothly to the checklist anchor (set below).
+    setTimeout(() => {
+      const el = document.getElementById("planner-checklist-anchor");
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }, 100);
+  }
 
   function plan() {
     if (origin && destination) setPlanned(true);
@@ -7651,42 +7763,72 @@ function JourneyPlanner() {
               });
               return (
                 <div className="mb-8">
-                  <div className="flex items-baseline gap-3 mb-4">
+                  <div className="flex items-baseline gap-3 mb-2">
                     <span className="text-emerald-400 text-base">✓</span>
                     <h4 className="font-serif text-xl text-stone-100">
                       Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}
                     </h4>
                   </div>
+                  {selectableRoutes.length > 1 && (
+                    <p className="text-stone-400 text-sm italic mb-4">
+                      Tap the route you want — we'll build your tailored checklist below.
+                    </p>
+                  )}
                   <div className="space-y-3">
-                    {grouped.map((g, i) => (
-                      <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                        <div className="flex items-center gap-2 flex-wrap mb-2">
-                          <span className="font-serif text-base text-stone-100">{g.from}</span>
-                          <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                          <span className="font-serif text-base text-stone-100">{g.to}</span>
-                          <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
-                        </div>
-                        {g.routes.length === 1 ? (
-                          <>
-                            {g.routes[0]._airlineFromLeg && (
-                              <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
+                    {grouped.map((g, i) => {
+                      const routeId = `direct:${i}`;
+                      const isSelected = selectedRouteId === routeId;
+                      return (
+                        <div
+                          key={i}
+                          className={`p-4 transition-colors ${
+                            isSelected
+                              ? "bg-emerald-950/40 border-2 border-emerald-500"
+                              : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 flex-wrap mb-2">
+                            <span className="font-serif text-base text-stone-100">{g.from}</span>
+                            <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                            <span className="font-serif text-base text-stone-100">{g.to}</span>
+                            <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                            {isSelected && (
+                              <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-medium">
+                                <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                              </span>
                             )}
-                            <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
-                          </>
-                        ) : (
-                          <div className="space-y-2">
-                            {g.routes.map((r, j) => (
-                              <div key={j} className="border-l border-stone-600 pl-3">
-                                {r._airlineFromLeg && (
-                                  <p className="text-stone-300 text-sm mb-1 font-medium">{r._airlineFromLeg}</p>
-                                )}
-                                <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
-                              </div>
-                            ))}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                          {g.routes.length === 1 ? (
+                            <>
+                              {g.routes[0]._airlineFromLeg && (
+                                <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
+                              )}
+                              <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                            </>
+                          ) : (
+                            <div className="space-y-2">
+                              {g.routes.map((r, j) => (
+                                <div key={j} className="border-l border-stone-600 pl-3">
+                                  {r._airlineFromLeg && (
+                                    <p className="text-stone-300 text-sm mb-1 font-medium">{r._airlineFromLeg}</p>
+                                  )}
+                                  <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          {!isSelected && (
+                            <button
+                              onClick={() => selectRoute(routeId)}
+                              className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 hover:border-emerald-500 px-3 py-1.5 transition-colors"
+                            >
+                              Use this route
+                              <ArrowRight className="w-3 h-3" strokeWidth={2} />
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );
@@ -7704,62 +7846,94 @@ function JourneyPlanner() {
             {/* Workaround routes */}
             {workaroundMatches.length > 0 && (
               <div className="mb-8">
-                <div className="flex items-baseline gap-3 mb-4">
+                <div className="flex items-baseline gap-3 mb-2">
                   <span className="text-amber-400 text-base">⤳</span>
                   <h4 className="font-serif text-xl text-stone-100">
                     {hasDirect ? "Workaround routes" : "Workaround routes — your way there"}
                   </h4>
                   <span className="text-xs uppercase tracking-widest text-stone-500">{workaroundMatches.length}</span>
                 </div>
+                {selectableRoutes.length > 1 && !hasDirect && (
+                  <p className="text-stone-400 text-sm italic mb-4">
+                    Tap the route you want — we'll build your tailored checklist below.
+                  </p>
+                )}
                 <div className="space-y-3">
-                  {workaroundMatches.map((r, i) => (
-                    <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                      {/* Strategy label, e.g. "Via Montreal (Air Canada)" */}
-                      {r.label && (
-                        <div className="text-xs uppercase tracking-widest text-amber-400 mb-2">{r.label}</div>
-                      )}
-                      {/* Adapted-route note for same-country, different-airport routes */}
-                      {r._kind === "region" && (
-                        <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
-                          Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(effectiveOrigin)}.
+                  {workaroundMatches.map((r, i) => {
+                    const routeId = `workaround:${i}`;
+                    const isSelected = selectedRouteId === routeId;
+                    return (
+                      <div
+                        key={i}
+                        className={`p-4 transition-colors ${
+                          isSelected
+                            ? "bg-amber-950/40 border-2 border-amber-500"
+                            : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                        }`}
+                      >
+                        {/* Strategy label, e.g. "Via Montreal (Air Canada)" */}
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          {r.label ? (
+                            <div className="text-xs uppercase tracking-widest text-amber-400">{r.label}</div>
+                          ) : <span />}
+                          {isSelected && (
+                            <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-medium flex-shrink-0">
+                              <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                            </span>
+                          )}
                         </div>
-                      )}
-                      <div className="flex items-center gap-2 flex-wrap mb-2">
-                        <span className="font-serif text-base text-stone-100">{r.from}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                        <span className="font-serif text-base text-stone-100">{r.to}</span>
-                        {r.duration && r.duration !== "see legs" && (
-                          <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                        {/* Adapted-route note for same-country, different-airport routes */}
+                        {r._kind === "region" && (
+                          <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
+                            Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(effectiveOrigin)}.
+                          </div>
                         )}
-                        {r.legs && r.legs.length > 1 && (
-                          <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
-                            {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
-                          </span>
-                        )}
-                      </div>
-                      <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
-                        {r.legs.map((leg, j) => {
-                          const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
-                          const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
-                          const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
-                          return (
-                            <div key={j} className="text-sm">
-                              <div className="flex items-baseline gap-2">
-                                <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
-                                  {isTransit ? "transit" : `Leg ${flightIdx}`}
-                                </span>
-                                <div className="flex-1">
-                                  <div className="text-stone-100">{leg.route}</div>
-                                  <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                        <div className="flex items-center gap-2 flex-wrap mb-2">
+                          <span className="font-serif text-base text-stone-100">{r.from}</span>
+                          <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                          <span className="font-serif text-base text-stone-100">{r.to}</span>
+                          {r.duration && r.duration !== "see legs" && (
+                            <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                          )}
+                          {r.legs && r.legs.length > 1 && (
+                            <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                              {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                            </span>
+                          )}
+                        </div>
+                        <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                          {r.legs.map((leg, j) => {
+                            const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
+                            const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                            const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                            return (
+                              <div key={j} className="text-sm">
+                                <div className="flex items-baseline gap-2">
+                                  <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
+                                    {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                  </span>
+                                  <div className="flex-1">
+                                    <div className="text-stone-100">{leg.route}</div>
+                                    <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
+                        </div>
+                        <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                        {!isSelected && (
+                          <button
+                            onClick={() => selectRoute(routeId)}
+                            className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-amber-400 hover:text-amber-300 border border-amber-700/60 hover:border-amber-500 px-3 py-1.5 transition-colors"
+                          >
+                            Use this route
+                            <ArrowRight className="w-3 h-3" strokeWidth={2} />
+                          </button>
+                        )}
                       </div>
-                      <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -7793,23 +7967,48 @@ function JourneyPlanner() {
                         <h4 className="font-serif text-lg text-stone-100">Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}</h4>
                       </div>
                       <div className="space-y-2">
-                        {grouped.map((g, i) => (
-                          <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                            <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                              <span className="font-serif text-base text-stone-100">{g.from}</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                              <span className="font-serif text-base text-stone-100">{g.to}</span>
-                              <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
-                            </div>
-                            {g.routes.length === 1 ? (
-                              <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
-                            ) : (
-                              <div className="space-y-2">
-                                {g.routes.map((r, j) => <p key={j} className="text-stone-400 text-sm leading-relaxed border-l border-stone-600 pl-3">{r.note}</p>)}
+                        {grouped.map((g, i) => {
+                          const routeId = `altDirect:${i}`;
+                          const isSelected = selectedRouteId === routeId;
+                          return (
+                            <div
+                              key={i}
+                              className={`p-4 transition-colors ${
+                                isSelected
+                                  ? "bg-emerald-950/40 border-2 border-emerald-500"
+                                  : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                              }`}
+                            >
+                              <div className="flex items-center gap-2 flex-wrap mb-1.5">
+                                <span className="font-serif text-base text-stone-100">{g.from}</span>
+                                <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                                <span className="font-serif text-base text-stone-100">{g.to}</span>
+                                <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                                {isSelected && (
+                                  <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-medium">
+                                    <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                                  </span>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        ))}
+                              {g.routes.length === 1 ? (
+                                <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                              ) : (
+                                <div className="space-y-2">
+                                  {g.routes.map((r, j) => <p key={j} className="text-stone-400 text-sm leading-relaxed border-l border-stone-600 pl-3">{r.note}</p>)}
+                                </div>
+                              )}
+                              {!isSelected && (
+                                <button
+                                  onClick={() => selectRoute(routeId)}
+                                  className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-700/60 hover:border-emerald-500 px-3 py-1.5 transition-colors"
+                                >
+                                  Use this route
+                                  <ArrowRight className="w-3 h-3" strokeWidth={2} />
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   );
@@ -7823,52 +8022,79 @@ function JourneyPlanner() {
                       <span className="text-xs uppercase tracking-widest text-stone-500">{altWorkarounds.length}</span>
                     </div>
                     <div className="space-y-3">
-                      {altWorkarounds.map((r, i) => (
-                        <div key={i} className="bg-stone-800 border border-stone-700 p-4">
-                          {r.label && (
-                            <div className="text-xs uppercase tracking-widest text-amber-400 mb-2">{r.label}</div>
-                          )}
-                          {r._kind === "region" && (
-                            <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
-                              Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(origin)}.
+                      {altWorkarounds.map((r, i) => {
+                        const routeId = `altWorkaround:${i}`;
+                        const isSelected = selectedRouteId === routeId;
+                        return (
+                          <div
+                            key={i}
+                            className={`p-4 transition-colors ${
+                              isSelected
+                                ? "bg-amber-950/40 border-2 border-amber-500"
+                                : "bg-stone-800 border border-stone-700 hover:border-stone-500"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                              {r.label ? (
+                                <div className="text-xs uppercase tracking-widest text-amber-400">{r.label}</div>
+                              ) : <span />}
+                              {isSelected && (
+                                <span className="inline-flex items-center gap-1 text-xs uppercase tracking-widest text-amber-400 font-medium flex-shrink-0">
+                                  <Check className="w-3 h-3" strokeWidth={2.5} /> Selected
+                                </span>
+                              )}
                             </div>
-                          )}
-                          <div className="flex items-center gap-2 flex-wrap mb-2">
-                            <span className="font-serif text-base text-stone-100">{r.from}</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
-                            <span className="font-serif text-base text-stone-100">{r.to}</span>
-                            {r.duration && r.duration !== "see legs" && (
-                              <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                            {r._kind === "region" && (
+                              <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
+                                Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(origin)}.
+                              </div>
                             )}
-                            {r.legs && r.legs.length > 1 && (
-                              <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
-                                {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
-                              </span>
-                            )}
-                          </div>
-                          <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
-                            {r.legs.map((leg, j) => {
-                              const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
-                              const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
-                              const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
-                              return (
-                                <div key={j} className="text-sm">
-                                  <div className="flex items-baseline gap-2">
-                                    <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
-                                      {isTransit ? "transit" : `Leg ${flightIdx}`}
-                                    </span>
-                                    <div className="flex-1">
-                                      <div className="text-stone-100">{leg.route}</div>
-                                      <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                            <div className="flex items-center gap-2 flex-wrap mb-2">
+                              <span className="font-serif text-base text-stone-100">{r.from}</span>
+                              <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
+                              <span className="font-serif text-base text-stone-100">{r.to}</span>
+                              {r.duration && r.duration !== "see legs" && (
+                                <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
+                              )}
+                              {r.legs && r.legs.length > 1 && (
+                                <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                                  {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                                </span>
+                              )}
+                            </div>
+                            <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                              {r.legs.map((leg, j) => {
+                                const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
+                                const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                                const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                                return (
+                                  <div key={j} className="text-sm">
+                                    <div className="flex items-baseline gap-2">
+                                      <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
+                                        {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                      </span>
+                                      <div className="flex-1">
+                                        <div className="text-stone-100">{leg.route}</div>
+                                        <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            })}
+                                );
+                              })}
+                            </div>
+                            <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
+                            {!isSelected && (
+                              <button
+                                onClick={() => selectRoute(routeId)}
+                                className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-amber-400 hover:text-amber-300 border border-amber-700/60 hover:border-amber-500 px-3 py-1.5 transition-colors"
+                              >
+                                Use this route
+                                <ArrowRight className="w-3 h-3" strokeWidth={2} />
+                              </button>
+                            )}
                           </div>
-                          <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -7886,32 +8112,29 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* Checklist link */}
+            {/* Checklist anchor — used for smooth-scroll target after route selection */}
             {origin !== destination && (
-              <div className="bg-amber-950/40 border border-amber-800/50 p-5">
-                <div className="flex items-start gap-3 mb-4">
-                  <FileCheck className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-                  <div className="flex-1">
-                    <div className="font-serif text-stone-100 mb-1">Your combined prep checklist</div>
-                    <p className="text-stone-300 text-sm leading-relaxed">
-                      Every country your pet legally enters — origin, any transit countries, destination — with its own chapter. Each chapter keeps its own timeline. We've worked out the specific paperwork for your exact route, so there's no "research this" guesswork.
+              <div id="planner-checklist-anchor" className="scroll-mt-24">
+                {/* No route selected yet — gentle prompt */}
+                {!selectedRoute && hasResults && (
+                  <div className="bg-stone-800 border border-dashed border-stone-600 p-6 text-center">
+                    <FileCheck className="w-6 h-6 text-stone-500 mx-auto mb-2" strokeWidth={1.5} />
+                    <p className="font-serif text-stone-200 text-lg mb-1">Pick a route above</p>
+                    <p className="text-stone-400 text-sm leading-relaxed max-w-md mx-auto">
+                      Once you've chosen the route you want to fly, we'll build a tailored prep checklist for just that journey — covering every country your pet legally enters.
                     </p>
                   </div>
-                </div>
+                )}
 
-                {/* Inline combined checklist — two chapters (origin departure +
-                    destination arrival), each with its own timeline, plus
-                    a separate tips section at the end. */}
-                {(() => {
+                {/* Selected route → tailored checklist */}
+                {selectedRoute && (() => {
                   if (!originAirport || !destAirport) return null;
-                  // Extract transit regions from any workaround routes for this
-                  // journey. Tags on a workaround entry are the regions the
-                  // route touches — origin and destination are filtered out so
-                  // we only keep genuine transit countries.
-                  const allWorkarounds = [...workaroundMatches, ...altWorkarounds];
-                  const transitRegions = [...new Set(
-                    allWorkarounds.flatMap((w) => w.tags || [])
-                  )].filter((t) => t !== originAirport.region && t !== destAirport.region);
+                  // Transit regions are ONLY those from the chosen route — not
+                  // every workaround. This is what makes the checklist properly
+                  // tailored: pick "via Paris" and you get France paperwork;
+                  // pick a direct route and you skip transit entirely.
+                  const transitRegions = (selectedRoute.tags || [])
+                    .filter((t) => t !== originAirport.region && t !== destAirport.region);
 
                   const combined = buildRouteChecklist(
                     originAirport.region,
@@ -7923,76 +8146,159 @@ function JourneyPlanner() {
                   );
                   if (!combined.sections || combined.sections.length === 0) {
                     return (
-                      <p className="text-stone-400 text-sm italic">
-                        Country-specific prep isn't yet wired for this exact route — use the checklist section below for the closest match.
-                      </p>
+                      <div className="bg-amber-950/40 border border-amber-800/50 p-5">
+                        <p className="text-stone-400 text-sm italic">
+                          Country-specific prep isn't yet wired for this exact route — use the checklist section below for the closest match.
+                        </p>
+                      </div>
                     );
                   }
-                  // Detect when we cross into the tips block — render that one
-                  // visually demoted (smaller, less prominent).
+
+                  // Count total items (excluding divider sections) for the
+                  // download-CTA copy.
+                  const totalItems = combined.sections
+                    .filter((s) => !s.divider)
+                    .reduce((sum, s) => sum + s.items.length, 0);
+                  const sectionCount = combined.sections.filter((s) => !s.divider).length;
+                  const PREVIEW_ITEMS = 2; // items shown per section before "show all"
+
                   let inTipsBlock = false;
                   return (
-                    <div className="space-y-5 mt-2">
-                      {combined.sections.map((s, i) => {
-                        // Chapter dividers — render as prominent header bands.
-                        if (s.divider) {
-                          // Detect the tips divider — switch to demoted styling.
-                          const isTipsChapter = s.title.toLowerCase().includes("tips");
-                          if (isTipsChapter) inTipsBlock = true;
-                          return (
-                            <div key={i} className={isTipsChapter ? "mt-6 pt-4 border-t border-stone-700" : "mt-6"}>
-                              <div className={isTipsChapter
-                                ? "text-xs uppercase tracking-widest text-stone-500 mb-1"
-                                : "font-serif text-stone-50 text-lg bg-stone-900 -mx-5 px-5 py-3 mb-3"}>
-                                {s.title}
+                    <div className="bg-amber-950/40 border-2 border-amber-700 p-5 md:p-6">
+                      {/* HEADER — explains what this is + download CTA at the TOP */}
+                      <div className="flex items-start gap-3 mb-4">
+                        <FileCheck className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" strokeWidth={1.75} />
+                        <div className="flex-1">
+                          <div className="text-xs uppercase tracking-widest text-amber-400 mb-1">Your tailored checklist</div>
+                          <div className="font-serif text-stone-100 text-xl mb-1">
+                            {airportLabel(selectedRoute.from || origin)} → {airportLabel(selectedRoute.to || destination)}
+                          </div>
+                          <p className="text-stone-300 text-sm leading-relaxed">
+                            {totalItems} items across {sectionCount} stages, covering every country your pet legally enters on this route.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* DOWNLOAD CTA — at the top, where people actually look */}
+                      <div className="bg-amber-900/40 border border-amber-700/60 p-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-3">
+                        <button
+                          onClick={() => {
+                            if (typeof window !== "undefined" && window.gtag) {
+                              window.gtag("event", "checklist_download", {
+                                event_category: "journey_planner",
+                                route_kind: selectedRoute.kind,
+                                route_from: selectedRoute.from,
+                                route_to: selectedRoute.to,
+                              });
+                            }
+                            openChecklistPrintable(combined);
+                          }}
+                          className="inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-5 py-3 text-sm uppercase tracking-widest font-medium transition-colors flex-shrink-0"
+                        >
+                          <FileCheck className="w-4 h-4" strokeWidth={2} />
+                          Download printable PDF
+                        </button>
+                        <p className="text-stone-300 text-xs leading-relaxed sm:flex-1">
+                          Opens in a new tab — use your browser's "Print / Save as PDF" from there. The PDF has everything; what you see below is a preview.
+                        </p>
+                      </div>
+
+                      {/* CHANGE ROUTE link */}
+                      {selectableRoutes.length > 1 && (
+                        <button
+                          onClick={() => {
+                            setSelectedRouteId(null);
+                            setExpandedSections(new Set());
+                          }}
+                          className="text-xs text-stone-400 hover:text-stone-200 mb-4 underline decoration-stone-600 underline-offset-2 hover:decoration-stone-300"
+                        >
+                          ← Change route
+                        </button>
+                      )}
+
+                      {/* PREVIEW — sections truncated to 2 items each */}
+                      <div className="space-y-5">
+                        {combined.sections.map((s, i) => {
+                          // Chapter dividers — render as prominent header bands.
+                          if (s.divider) {
+                            const isTipsChapter = s.title.toLowerCase().includes("tips");
+                            if (isTipsChapter) inTipsBlock = true;
+                            return (
+                              <div key={i} className={isTipsChapter ? "mt-6 pt-4 border-t border-stone-700" : "mt-6"}>
+                                <div className={isTipsChapter
+                                  ? "text-xs uppercase tracking-widest text-stone-500 mb-1"
+                                  : "font-serif text-stone-50 text-lg bg-stone-900 -mx-5 px-5 py-3 mb-3"}>
+                                  {s.title}
+                                </div>
+                                {s.items[0] && (
+                                  <p className={isTipsChapter
+                                    ? "text-stone-500 text-xs italic mb-2"
+                                    : "text-stone-400 text-xs italic mb-3"}>
+                                    {s.items[0]}
+                                  </p>
+                                )}
                               </div>
-                              {s.items[0] && (
-                                <p className={isTipsChapter
-                                  ? "text-stone-500 text-xs italic mb-2"
-                                  : "text-stone-400 text-xs italic mb-3"}>
-                                  {s.items[0]}
-                                </p>
+                            );
+                          }
+                          const sectionStyle = inTipsBlock
+                            ? "text-xs uppercase tracking-widest text-stone-500 mb-2"
+                            : "text-xs uppercase tracking-widest text-amber-400 mb-2 pb-1.5 border-b border-amber-800/40";
+                          const itemStyle = inTipsBlock
+                            ? "flex gap-2 text-stone-400 text-xs leading-snug italic"
+                            : "flex gap-2 text-stone-300 text-sm leading-snug";
+                          const isExpanded = expandedSections.has(i);
+                          const visibleItems = isExpanded ? s.items : s.items.slice(0, PREVIEW_ITEMS);
+                          const hiddenCount = s.items.length - PREVIEW_ITEMS;
+                          return (
+                            <div key={i}>
+                              <div className={sectionStyle}>{s.title}</div>
+                              <ul className="space-y-1.5">
+                                {visibleItems.map((item, j) => (
+                                  <li key={j} className={itemStyle}>
+                                    <span className={inTipsBlock ? "text-stone-500 flex-shrink-0 mt-0.5" : "text-amber-500 flex-shrink-0 mt-0.5"}>{inTipsBlock ? "·" : "✓"}</span>
+                                    <span className="[&_a]:text-amber-400 [&_a]:underline [&_a]:decoration-amber-500/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-300" dangerouslySetInnerHTML={{ __html: item }} />
+                                  </li>
+                                ))}
+                              </ul>
+                              {hiddenCount > 0 && (
+                                <button
+                                  onClick={() => {
+                                    setExpandedSections((prev) => {
+                                      const next = new Set(prev);
+                                      if (next.has(i)) next.delete(i); else next.add(i);
+                                      return next;
+                                    });
+                                  }}
+                                  className="mt-2 ml-5 text-xs uppercase tracking-widest text-amber-400/80 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
+                                >
+                                  {isExpanded ? `Show less ↑` : `Show all ${s.items.length} items ↓`}
+                                </button>
                               )}
                             </div>
                           );
-                        }
-                        // Regular timeline section.
-                        const sectionStyle = inTipsBlock
-                          ? "text-xs uppercase tracking-widest text-stone-500 mb-2"
-                          : "text-xs uppercase tracking-widest text-amber-400 mb-2 pb-1.5 border-b border-amber-800/40";
-                        const itemStyle = inTipsBlock
-                          ? "flex gap-2 text-stone-400 text-xs leading-snug italic"
-                          : "flex gap-2 text-stone-300 text-sm leading-snug";
-                        return (
-                          <div key={i}>
-                            <div className={sectionStyle}>{s.title}</div>
-                            <ul className="space-y-1.5">
-                              {s.items.slice(0, inTipsBlock ? 8 : 8).map((item, j) => (
-                                <li key={j} className={itemStyle}>
-                                  <span className={inTipsBlock ? "text-stone-500 flex-shrink-0 mt-0.5" : "text-amber-500 flex-shrink-0 mt-0.5"}>{inTipsBlock ? "·" : "✓"}</span>
-                                  <span className="[&_a]:text-amber-400 [&_a]:underline [&_a]:decoration-amber-500/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-300" dangerouslySetInnerHTML={{ __html: item }} />
-                                </li>
-                              ))}
-                              {s.items.length > 8 && (
-                                <li className="text-stone-500 text-xs italic ml-5">
-                                  + {s.items.length - 8} more in this stage
-                                </li>
-                              )}
-                            </ul>
-                          </div>
-                        );
-                      })}
-                      <div className="pt-4 mt-4 border-t border-amber-800/40">
+                        })}
+                      </div>
+
+                      {/* SECONDARY DOWNLOAD CTA at the bottom too */}
+                      <div className="pt-5 mt-6 border-t border-amber-800/40 text-center">
                         <button
-                          onClick={() => openChecklistPrintable(combined)}
-                          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-4 py-2.5 text-xs uppercase tracking-widest font-medium transition-colors"
+                          onClick={() => {
+                            if (typeof window !== "undefined" && window.gtag) {
+                              window.gtag("event", "checklist_download", {
+                                event_category: "journey_planner",
+                                route_kind: selectedRoute.kind,
+                                route_from: selectedRoute.from,
+                                route_to: selectedRoute.to,
+                                position: "bottom",
+                              });
+                            }
+                            openChecklistPrintable(combined);
+                          }}
+                          className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-medium underline decoration-amber-700 underline-offset-4 hover:decoration-amber-400"
                         >
-                          <FileCheck className="w-3.5 h-3.5" strokeWidth={2} />
-                          Download printable PDF
+                          <FileCheck className="w-4 h-4" strokeWidth={2} />
+                          Download the full checklist as a printable PDF
                         </button>
-                        <p className="text-stone-500 text-xs mt-2">
-                          Opens in a new tab. Use your browser's "Print / Save as PDF" from there.
-                        </p>
                       </div>
                     </div>
                   );

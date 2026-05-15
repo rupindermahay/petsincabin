@@ -18,8 +18,8 @@ const AIRLINES = [
     cabin: "Cabin US domestic ✓ — limited intl (Mexico, Canada, Costa Rica)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, and Costa Rica routes. Cabin NOT allowed: most other international destinations (Alaska's network is mostly North America-focused).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "$100 each way cabin / $200 each way checked baggage (increased from $150 on Jan 2, 2026)",
     weight: "No stated weight limit; pet must fit comfortably in carrier (under 17 × 11 × 9.5 in soft / 17 × 11 × 7.5 in hard)",
     carrier: "Soft: 17 × 11 × 9.5 in. Hard: 17 × 11 × 7.5 in.",
@@ -35,8 +35,8 @@ const AIRLINES = [
     cabin: "Yes — but NO transatlantic / transpacific cabin",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, Puerto Rico, Caribbean, Central America (up to 12 hour flights). Cabin NOT allowed (both directions): transatlantic flights (Europe), transpacific flights (Asia), UK, Hawaii.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
     fee: "$150 each way",
     weight: "Pet + carrier max 20 lb (~9 kg) combined",
     carrier: "Soft (recommended): 18 × 11 × 11 in. Hard: 19 × 13 × 9 in",
@@ -51,8 +51,8 @@ const AIRLINES = [
     cabin: "Cabin US/Canada/EU only — long banned list",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Ireland, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
     fee: "$150 domestic / $200 international",
     weight: "No stated weight; must fit under seat",
     carrier: "Soft-sided with 3+ ventilation panels (4 international). ~18 × 11 × 11 in",
@@ -67,8 +67,8 @@ const AIRLINES = [
     cabin: "Cabin allowed — including US ↔ Japan direct (one of very few)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU, and notably US ↔ Japan (SFO/ORD ↔ NRT/HND/KIX, with new routes launching Sept-Oct 2026). Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam (one-way exception: cabin OK from Guam to Tokyo-Narita but not back), French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Palau, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes", korea: "yes" },
     fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
     weight: "No weight limit — pet must fit in carrier under the seat",
     carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
@@ -84,8 +84,8 @@ const AIRLINES = [
     cabin: "Yes — domestic + many Caribbean / Latin America destinations",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Puerto Rico, USVI, plus broad Caribbean and Latin America reach via JetBlue's network. Cabin NOT allowed (both directions): UK (service dogs only), Europe (no transatlantic cabin). IMPORTANT: cabin pet eligibility depends on each destination country's own import rules — JetBlue may operate the route but the country's paperwork (and sometimes breed restrictions or rabies titer requirements) determines whether your pet qualifies. Always verify directly with JetBlue for your specific route AND check the destination's official import requirements.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "$125 each way (some routes higher)",
     weight: "Pet + carrier max 20 lb (strictly enforced)",
     carrier: "17 × 12.5 × 8.5 in",
@@ -101,8 +101,8 @@ const AIRLINES = [
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Puerto Rico, USVI only. Cabin NOT allowed: all other international routes (Southwest is a domestic-only carrier with limited Caribbean reach).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "$125 each way",
     weight: "Pet must fit comfortably in carrier",
     carrier: "18.5 × 8.5 × 13.5 in",
@@ -118,8 +118,8 @@ const AIRLINES = [
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US, Puerto Rico, USVI, plus a few Caribbean and Latin America routes. Cabin NOT allowed: most international destinations.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "$125 each way",
     weight: "Pet + carrier max 40 lb",
     carrier: "18 × 14 × 9 in",
@@ -135,8 +135,8 @@ const AIRLINES = [
     cabin: "Yes — domestic only",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic US only. Cabin NOT allowed: all international routes (Frontier is a domestic-only carrier).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "~$99 each way",
     weight: "Pet must fit comfortably in carrier",
     carrier: "18 × 14 × 8 in",
@@ -152,8 +152,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of Hawaii ✓ — but limited routes INTO Hawaii",
     cabinStatus: "conditional",
     direction: "Cabin allowed: inter-island Hawaii flights AND flights LEAVING Hawaii to US mainland. Cabin NOT allowed: flights INTO Hawaii from the mainland (cargo only — Hawaii's strict quarantine rules), AND no cabin to/from JFK, BOS, AUS, SLC, PPG. No international cabin at all.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "$35 inter-island / $100 mainland–Hawaii (decreased from $125 in Jan 2026)",
     weight: "25 lb combined (pet + carrier) — most generous in U.S.",
     carrier: "Soft: 16 × 10 × 9.5 in",
@@ -168,8 +168,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic, US/Canada, Europe, and OUT of UK (LHR, Edinburgh). Cabin NOT allowed: INTO UK (cargo only), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "CAD $50–$59 domestic / $100–$118 intl",
     weight: "Pet + carrier max 22 lb (10 kg)",
     carrier: "Soft-sided. Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — sometimes smaller depending on aircraft",
@@ -184,8 +184,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ (Manchester / Glasgow only)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: Canada, US, Europe, and OUT of UK from Manchester (MAN) and Glasgow (GLA) — NOT Gatwick. Cabin NOT allowed: into UK (cargo only).",
-    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "CAD $50–$120 depending on route",
     weight: "Pet + carrier max 17.6 lb (8 kg)",
     carrier: "Soft-sided. Max 16 × 9 × 9 in (40 × 23 × 23 cm)",
@@ -200,8 +200,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK government rule). Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "~€75–€200 depending on route",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "46 × 28 × 24 cm (~18 × 11 × 9 in), soft-sided only",
@@ -216,8 +216,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Frankfurt/Munich). Cabin NOT allowed: INTO UK (cargo only — UK government rule), into Australia, NZ, Hawaii.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "€70–€110 in Europe / €110–€300 long-haul",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "55 × 40 × 23 cm (~21.7 × 15.7 × 9 in) — slightly larger than Air France",
@@ -232,8 +232,8 @@ const AIRLINES = [
     cabin: "Cabin India ↔ USA / Europe / Asia ✓ — NOT to UK / Australia",
     cabinStatus: "yes",
     direction: "Air India's 2026 'Paws on Board' programme allows cabin pets up to 10 kg (combined with carrier) on 80+ domestic and international routes. Cabin allowed: domestic India, India ↔ USA (direct: DEL/BOM/BLR/HYD/MAA ↔ JFK/SFO/IAD/ORD), India ↔ Europe (Frankfurt, Paris, Amsterdam, London cargo-only), India ↔ Asia. Cabin NOT allowed: India ↔ UK (cargo hold only — UK government embargo), India ↔ UAE (departing India, pets must go cargo; arriving in India from UAE has cabin options).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "₹7,500 domestic India / $140 short-haul international / $160 medium-haul / non-refundable",
     weight: "Pet + carrier max 10 kg (22 lb) for cabin — generous compared to most carriers' 8 kg",
     carrier: "Soft-sided only in cabin, max 17 × 10 × 9 in (43 × 25 × 23 cm), ventilated on 3 sides, leakproof. IATA-compliant hard crates required for cargo hold (10–32 kg pets).",
@@ -248,8 +248,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Warsaw",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Warsaw), India (Delhi) ↔ USA via Warsaw both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "€12 domestic · €50 Europe/Middle East · €70 USA/Canada/China/Japan",
     weight: "Pet + carrier max 8 kg (17 lb)",
     carrier: "Soft-sided. Max 55×40×20 cm (B787/B737)",
@@ -264,8 +264,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Zurich",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Zurich), India ↔ USA via Zurich both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "$60–$120 per segment depending on route",
     weight: "Pet + carrier max 8 kg (17 lb)",
     carrier: "Soft-sided, max 55×40×23 cm",
@@ -280,8 +280,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ — best for UK → Portugal",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK/Ireland government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     fee: "€75 short-haul · €200 long-haul (US, Brazil)",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "Soft-sided, max 45 × 30 × 23 cm (~18 × 12 × 9 in)",
@@ -296,8 +296,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK / US / India / Europe → Abu Dhabi ✓ — but NOT cabin INTO the UK or US",
     cabinStatus: "conditional",
     direction: "Cabin allowed: OUT of the UK (London Heathrow, Manchester) to Abu Dhabi, OUT of the USA to Abu Dhabi, India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), Canada ↔ Abu Dhabi. All under 8 kg combined. Cabin NOT allowed: INTO the UK (London, Manchester) and INTO the USA — Etihad's country-restrictions page lists these as 'flights to' only, meaning the inbound direction is blocked while flying OUT to Abu Dhabi is permitted. Also no cabin to/from Australia (Sydney), Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "Promo: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
     weight: "Pet + carrier max 8 kg (17.6 lb) — economy under-seat OR buy adjacent seat for bigger carrier",
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
@@ -312,8 +312,8 @@ const AIRLINES = [
     cabin: "Cabin OUT of UK ✓ via Istanbul — but NOT into Dubai (UAE law)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes via Istanbul including OUT of UK (LHR/MAN → Istanbul), USA ↔ Istanbul, India ↔ Istanbul (Delhi, Mumbai, Bangalore, Hyderabad), and many Asian/African destinations. Economy class only — business class cabin pets banned from April 21, 2026 (new bookings). Cabin NOT allowed: INTO UK from Istanbul (cargo only — UK government rule), into Dubai DXB (UAE law applies regardless of airline), some Middle East destinations.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "$15 short-haul domestic · $70 starting price international (varies by route)",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "Soft-sided. Max 40 × 30 × 23 cm (L × W × H) under-seat",
@@ -328,8 +328,8 @@ const AIRLINES = [
     cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: most international routes including Spain ↔ EU, Spain ↔ USA (JFK/MIA/ORD/BOS via Madrid), Spain ↔ Latin America. Cabin NOT allowed (both directions): UK (LHR, MAN, EDI, LGW — Iberia uses IAG Cargo to/from UK). Snub-nosed breeds allowed cabin only (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "no" },
     fee: "€35 within Spain · €50 Europe / Africa / Middle East · €150 America / Asia",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined",
     carrier: "Soft-sided. Max 45 × 35 × 25 cm (sum of dimensions ≤105 cm)",
@@ -344,8 +344,8 @@ const AIRLINES = [
     cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic Italy (up to 12 kg combined!), Italy ↔ EU, Italy ↔ USA (JFK/MIA/ORD/LAX/BOS via Rome FCO), Italy ↔ Tokyo / Buenos Aires / Sao Paulo. Cabin NOT allowed (both directions): UK (cargo only). Snub-nosed cabin OK (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "no" },
     fee: "€73 domestic Italy · €95 Europe / North Africa · €210 N. America · €230 S. America / Japan",
     weight: "Domestic Italy: 12 kg combined. International: 8 kg combined",
     carrier: "Soft-sided. Max 55 × 40 × 23 cm international (slightly larger than most). 24 × 40 × 30 cm domestic Italy.",
@@ -377,8 +377,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
     cabinStatus: "conditional",
     direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). Cabin TEMPORARILY SUSPENDED on US↔Brazil, Bolivia, Ecuador, Peru and Colombia due to CDC dog import rules. NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
-    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no" },
-    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no" },
+    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Cabin: BRL 200 domestic Brazil · ~USD 200 regional South America · ~USD 250 long-haul (to Europe). Hold fees are separate and weight-banded.",
     weight: "Pet + carrier combined max 7 kg for cabin. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm. Cabin pets carried on A319/A320/A321/A350 and B777 aircraft.",
     carrier: "Soft-sided carrier (max 40 × 28 × 25 cm) or hard kennel (max 36 × 33 × 19 cm). No wheels. Must be leak-proof and well-ventilated. Pet must be able to stand, turn and move without touching walls or ceiling.",
@@ -393,8 +393,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — Colombia hub, strong South / Central America coverage",
     cabinStatus: "yes",
     direction: "Cabin allowed: dogs and cats up to 10 kg combined on most international and domestic routes. Strong network: Colombia, Peru, Ecuador, Costa Rica, El Salvador, plus connections to Brazil, Argentina, Chile, Mexico, US, Canada, Spain. Cabin NOT allowed: UK (cargo only — Animal Reception Centre rules), Galapagos Islands (live animal transport prohibited), Aruba and Curaçao (except permanent moves to Curaçao). Brachycephalic dog and cat breeds: cabin only — never accepted in the hold due to breathing risk.",
-    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Cabin: ~USD 19–29 domestic Colombia (COP 75,000–115,000) · ~USD 160 to/from North America · USD 180–200 to/from Europe. Hold: ~USD 50–70 domestic / USD 225–245 international depending on route.",
     weight: "Pet + carrier max 10 kg (22 lb) combined for cabin. Up to 70 kg combined in the hold (size restrictions apply). Minimum age 4 months (2 months for domestic Colombia routes).",
     carrier: "Soft-sided only for cabin, max 56 × 36 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
@@ -409,8 +409,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — Panama hub, strong Americas coverage including Uruguay",
     cabinStatus: "yes",
     direction: "Cabin allowed: dogs and cats up to 10 kg (20 lb) combined on most Copa-operated routes. Panama City (PTY) is the hub — Copa serves Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Peru, Paraguay, Uruguay (Montevideo), Venezuela, plus the Caribbean, Central America, Mexico, US and Canada. Useful for deeper South American destinations (Montevideo, Asunción) that lack direct US cabin connections. Cabin NOT allowed: connecting flights with airlines other than Copa (no codeshare pets). Pets are not permitted on flights to Armenia (AXM) on weekends due to closed quarantine offices.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Cabin: $125 international, $25 domestic Panama. Cargo: varies by route.",
     weight: "Pet + carrier max 10 kg (20 lb) combined for cabin. Minimum age 16 weeks for cabin (8 weeks for cargo).",
     carrier: "Soft-sided only for cabin, max 45 × 27 × 27 cm (18 × 11 × 11 in). Well-ventilated, leak-proof, must fit under the seat with the pet able to stand and turn around. Hard-sided not permitted for cabin.",
@@ -425,8 +425,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — small dogs and cats across Europe",
     cabinStatus: "yes",
     direction: "Cabin allowed: dogs, cats, birds (not birds of prey) and turtles across Vueling's European network — Spain domestics, and routes between Spain and the rest of Europe. Cabin NOT allowed: flights to/from the UK and Iceland (Vueling does not carry pets on those routes at all). Vueling has no hold or cargo option — cabin is the only way, so larger pets can't fly Vueling.",
-    originAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no" },
-    destinationAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no" },
+    originAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
     fee: "~€50 domestic Spain · ~€60 international and Canary Islands",
     weight: "Pet + carrier combined max 10 kg (8 kg on Iberia-operated flights). Soft carrier max 45 × 39 × 21 cm.",
     carrier: "Soft-sided, non-rigid carrier only, max 45 × 39 × 21 cm. Must have ventilation holes and a waterproof base. Goes under the seat in front. Homemade carriers not accepted. Up to 2 cats or dogs of the same species/litter may share one carrier if within the weight limit.",
@@ -442,8 +442,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — small dogs and cats, Mexico and the Americas",
     cabinStatus: "conditional",
     direction: "Cabin allowed: small dogs and cats across Volaris's network — domestic Mexico, Mexico↔US, and Mexico↔Central America (Guatemala, El Salvador, Costa Rica, Honduras) and Colombia. Cabin NOT allowed: a long list of breeds is banned outright, including all brachycephalic dogs and cats — this is stricter than Aeromexico, which allows flat-faced breeds in cabin.",
-    originAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
-    destinationAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no" },
+    originAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Varies by route — typically ~$150 USD per kennel each way · lower for domestic Mexico",
     weight: "Pet + carrier combined max ~12 kg. Carrier max 44 × 30 × 19 cm.",
     carrier: "Max 44 × 30 × 19 cm, must fit under the seat. For dogs the carrier may be soft or rigid; for cats it MUST be rigid plastic. Fully enclosed, no perforated floor, no wheels. Secured with a plastic strap provided at the airport. Pet stays inside the whole flight.",
@@ -458,8 +458,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — strong network covering Nordics, Europe, US, Asia",
     cabinStatus: "yes",
     direction: "Cabin allowed: SAS allows small cats and dogs in cabin on flights to 25+ countries including the US, China, Japan, Morocco, Turkey, and across Europe. Three hubs: Copenhagen (CPH), Stockholm (ARN), and Oslo (OSL). Cabin NOT allowed: brachycephalic-breed restrictions apply per destination; pets to Iceland and Svalbard have separate rules (Svalbard dogs only, requires permit; no cats to Svalbard).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
     fee: "€55 domestic / €70–149 international depending on route (highest fees to China and long-haul Asia)",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined for cabin",
     carrier: "Soft-sided, max 40 × 25 × 23 cm (15.7 × 9.8 × 9 in). Counts as your carry-on bag.",
@@ -474,8 +474,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — within Schengen / EU only",
     cabinStatus: "conditional",
     direction: "Cabin allowed: small cats and dogs on flights within the Schengen area and EU. Cabin NOT allowed: flights to/from Iceland; cats not permitted on Madeira routes; UK cabin not permitted (UK embargo); cats not permitted on Svalbard routes (dogs only, with permit). No transatlantic cabin pets — Norwegian's long-haul subsidiary (Norse Atlantic) does not accept pets at all.",
-    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no" },
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
     fee: "€55–75 each way (online) / €60–85 each way (at airport)",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined",
     carrier: "Sherpa-style soft carrier, max 43 × 31 × 20 cm (17 × 12 × 8 in) — must compress to these dimensions if soft.",
@@ -490,8 +490,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — including Japan ↔ Korea and onward to US/Europe/India",
     cabinStatus: "yes",
     direction: "Cabin allowed: 30+ countries including Japan, US, France, Germany, Italy, Netherlands, Spain, Switzerland, India, Singapore, Thailand. Korea ↔ Japan is one of the best cabin pet paths to/from Japan. Cabin NOT allowed: UK and UAE (cargo only). Brachycephalic breeds only allowed in cabin, never cargo. Fierce-breed bans: Tosa, Pit Bull, Rottweiler, Mastiff, Laika, Ovcharka, Kangal, Wolfdog.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no", korea: "yes" },
     fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
     weight: "Pet + carrier max 7 kg (15.4 lb) for cabin. Verified against Korean Air's official Travel With Pets policy May 2026.",
     carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
@@ -506,8 +506,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — domestic Korea + select international (Japan, Asia, Croatia)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic Korea, plus select international routes including Japan, Vietnam, Taiwan, Hong Kong, Thailand, and Zagreb (Croatia — newer European route). Cabin NOT allowed: no UK/US/Australia. Business Saver zone seats don't permit pets. No pets carried in the hold.",
-    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no" },
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", japan: "yes", mexico: "no", "south-america": "no", "central-america": "no", korea: "yes" },
     fee: "Domestic Korea: 30,000 KRW (~$23). International: 100,000–200,000 KRW (~$75–150).",
     weight: "Pet + carrier max 9 kg (20 lb) — the most generous limit among Korean cabin-pet airlines",
     carrier: "Hard: max 37 cm wide × 23 cm tall. Soft: up to 26 cm tall. T'carriers can be purchased at check-in from Korean airports.",
@@ -522,8 +522,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
     fee: "Mexico domestic: $35. Mexico ↔ US: $125. International long-haul: $200–250.",
     weight: "Pet + carrier max 9 kg (20 lb)",
     carrier: "Soft: max 40 × 30 × 21 cm. Hard: max 40 × 28 × 22 cm. Must fit under the seat.",
@@ -960,7 +960,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "LHR → Paris CDG", time: "1h 20m", airline: "Air France ✓ Cabin" },
       { route: "Layover at CDG", time: "2–3h", airline: "Recommended buffer for pet handover" },
-      { route: "CDG → JFK", time: "7h 45m", airline: "Air France or Delta ✓ Cabin" },
+      { route: "Paris CDG → New York JFK", time: "7h 45m", airline: "Air France or Delta ✓ Cabin" },
     ],
     note: "The cabin workaround for the no-direct-cabin UK→USA wall. Same-day connection works for an under-8 kg pet, but a longer layover (or overnight in Paris) is gentler for both of you.",
     tags: ["uk-out", "us", "europe"],
@@ -972,7 +972,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "LHR → Montreal YUL", time: "7h 30m", airline: "Air Canada ✓ Cabin" },
       { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
-      { route: "YUL → MIA", time: "3h 30m", airline: "Air Canada / AA / United ✓ Cabin" },
+      { route: "Montreal YUL → Miami MIA", time: "3h 30m", airline: "Air Canada / AA / United ✓ Cabin" },
     ],
     note: "Theo's Mum's actual route. The overnight in Montreal is what made it work — the pet recovers, you recover, then the short hop to Miami the next morning is easy.",
     tags: ["uk-out", "us", "canada"],
@@ -986,7 +986,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "DEL → Frankfurt FRA", time: "8h 30m", airline: "Lufthansa ✓ Cabin" },
       { route: "Layover at FRA", time: "2–3h", airline: "Frankfurt Animal Lounge available" },
-      { route: "FRA → LAX", time: "12h", airline: "Lufthansa ✓ Cabin" },
+      { route: "Frankfurt FRA → Los Angeles LAX", time: "12h", airline: "Lufthansa ✓ Cabin" },
     ],
     note: "Long total time — for an under-8 kg pet, a brief overnight in Frankfurt is genuinely kinder than 20+ hours in transit. Lufthansa's Animal Lounge at FRA is the world's most advanced.",
     tags: ["india", "us", "europe"],
@@ -998,7 +998,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "BOM → Amsterdam AMS", time: "9h 15m", airline: "KLM ✓ Cabin" },
       { route: "Layover at AMS", time: "2–3h", airline: "Recommended buffer" },
-      { route: "AMS → JFK", time: "8h", airline: "KLM ✓ Cabin" },
+      { route: "Amsterdam AMS → New York JFK", time: "8h", airline: "KLM ✓ Cabin" },
     ],
     note: "Max 8 kg combined. KLM's Amsterdam hub is well-organised for pet connections. Consider an Amsterdam overnight if your pet doesn't travel well.",
     tags: ["india", "us", "europe"],
@@ -1010,7 +1010,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "DEL → Warsaw WAW", time: "8h", airline: "LOT Polish ✓ Cabin (€50)" },
       { route: "Layover at WAW", time: "2–3h", airline: "Recommended buffer" },
-      { route: "WAW → ORD", time: "10h", airline: "LOT Polish ✓ Cabin (€70)" },
+      { route: "Warsaw WAW → Chicago ORD", time: "10h", airline: "LOT Polish ✓ Cabin (€70)" },
     ],
     note: "Cheapest cabin route from India to USA at €120 total in pet fees. Both legs under 8 kg combined.",
     tags: ["india", "us", "europe"],
@@ -1061,7 +1061,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
       { route: "Layover at CDG", time: "3–4h", airline: "Recommended buffer for pet handover" },
-      { route: "CDG → AUH", time: "6h 45m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "Paris CDG → Abu Dhabi AUH", time: "6h 45m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
     ],
     note: "No direct US ↔ UAE cabin flight exists on any airline. The cabin route uses Paris (or Frankfurt/Amsterdam/Zurich) as the pivot, then Etihad onward to Abu Dhabi. Abu Dhabi is 90 min from Dubai by road.",
     tags: ["us", "dubai", "europe"],
@@ -1111,7 +1111,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "LAX → Frankfurt FRA", time: "11h", airline: "Lufthansa ✓ Cabin" },
       { route: "Layover at FRA", time: "2–3h", airline: "Frankfurt Animal Lounge available" },
-      { route: "FRA → DEL", time: "8h", airline: "Lufthansa ✓ Cabin" },
+      { route: "Frankfurt FRA → Delhi DEL", time: "8h", airline: "Lufthansa ✓ Cabin" },
     ],
     note: "Long total time — a brief overnight in Frankfurt is genuinely kinder than 22+ hours in transit for an under-8 kg pet. Could also route via Paris (Air France), Amsterdam (KLM), Zurich (SWISS), or Warsaw (LOT).",
     tags: ["us", "india", "europe"],
@@ -1123,7 +1123,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "JFK → Amsterdam AMS", time: "7h 30m", airline: "KLM ✓ Cabin" },
       { route: "Layover at AMS", time: "2–3h", airline: "Recommended buffer" },
-      { route: "AMS → BOM", time: "8h 30m", airline: "KLM ✓ Cabin" },
+      { route: "Amsterdam AMS → Mumbai BOM", time: "8h 30m", airline: "KLM ✓ Cabin" },
     ],
     note: "Max 8 kg combined on both legs. KLM's Amsterdam hub is well-organised for pet connections.",
     tags: ["us", "india", "europe"],
@@ -2017,12 +2017,46 @@ const FALLBACK_STRATEGIES = {
     note: `Leaving Hawaii is simpler than arriving — fly cabin to a US mainland gateway, then connect onward. From the mainland, follow the normal routing for your destination region. No special Hawaii exit paperwork beyond the standard requirements for your destination country.`,
   }),
   // Any destination = South America
-  "south-america": (o, d) => ({
-    legs: [
-      { route: `${o} → São Paulo (GRU) / Santiago (SCL) / Bogotá (BOG) / Buenos Aires (EZE) / Lima (LIM) / Montevideo (MVD)`, time: "varies — long-haul", airline: "Cabin: LATAM (7 kg), Avianca (10 kg), Copa via Panama City (10 kg), Aeromexico (9 kg). From the US: AA and Delta are cargo-only to most of SA — for US → SA cabin, your options are LATAM, Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to GRU/EZE/SCL." },
-    ],
-    note: `South America is a generally cabin-friendly region for pets under 10 kg. LATAM is the largest carrier (cabin pets 7-10 kg depending on aircraft), Avianca covers the northern part of the continent (10 kg cabin), and Copa Airlines via Panama City is the route to Uruguay (Montevideo), Paraguay (Asunción), and Bolivia. Each country has its own import rules: Brazil is the most lenient (rabies vaccine 21+ days, USDA health certificate, no microchip required). Argentina, Chile, Peru, and Uruguay require ISO microchips, rabies vaccine 30+ days, and (for Chile/Peru) pre-arranged import permits. Colombia bans Pit Bull, Staffordshire, and American Staffordshire breeds by law. Pit Bulls are also restricted in Rio de Janeiro, Brazil. Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
-  }),
+  "south-america": (o, d) => {
+    // Determine specific SA destination from the destination string
+    const dLower = (d || "").toLowerCase();
+    let cabinAirline, hubDescription, importNote;
+    if (dLower.includes("bogot") || dLower.includes("bog")) {
+      cabinAirline = "Avianca ✓ Cabin (10 kg combined)";
+      hubDescription = "Avianca direct from Miami/JFK/LAX, or via Madrid from Europe";
+      importNote = "Colombia: ISO microchip + rabies 30+ days + USDA-endorsed health certificate. Pit Bull, Staffordshire, and American Staffordshire breeds are BANNED from import by law.";
+    } else if (dLower.includes("são paulo") || dLower.includes("sao paulo") || dLower.includes("gru") || dLower.includes("rio")) {
+      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
+      hubDescription = "LATAM direct from Miami/JFK/LAX (note: US↔Brazil cabin routes currently suspended due to CDC dog rules — verify before booking). Otherwise via Madrid (Iberia) or Panama City (Copa).";
+      importNote = "Brazil: the EASIEST South American entry — rabies 21+ days, USDA health certificate, microchip NOT required. Pit Bulls restricted in Rio de Janeiro specifically.";
+    } else if (dLower.includes("buenos aires") || dLower.includes("eze")) {
+      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
+      hubDescription = "LATAM direct from JFK/MIA, or via São Paulo. Aerolíneas Argentinas codeshares but cargo only.";
+      importNote = "Argentina: ISO microchip + rabies 30+ days + SENASA health certificate (USDA-endorsed for US origin). No quarantine.";
+    } else if (dLower.includes("santiago") || dLower.includes("scl")) {
+      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
+      hubDescription = "LATAM direct from JFK/MIA/LAX, or via Lima. Copa via Panama City also works.";
+      importNote = "Chile: ISO microchip + rabies 30+ days + SAG import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
+    } else if (dLower.includes("lima") || dLower.includes("lim")) {
+      cabinAirline = "LATAM or Avianca ✓ Cabin";
+      hubDescription = "LATAM direct from Miami, or Avianca via Bogotá. Copa via Panama also serves Lima.";
+      importNote = "Peru: ISO microchip + rabies 30+ days + SENASA import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
+    } else if (dLower.includes("montevideo") || dLower.includes("mvd")) {
+      cabinAirline = "Copa ✓ Cabin (10 kg combined) via Panama City";
+      hubDescription = "Copa Airlines is the ONLY practical cabin route to Montevideo. Route: your origin → Panama City (PTY) → Montevideo (MVD), all on Copa. LATAM via São Paulo is cargo only to MVD.";
+      importNote = "Uruguay: ISO microchip + rabies 30+ days + MGAP health certificate (USDA-endorsed for US origin). Reach Uruguay via Panama City on Copa.";
+    } else {
+      cabinAirline = "LATAM (7 kg), Avianca (10 kg), or Copa via Panama (10 kg)";
+      hubDescription = "From the US: LATAM direct, Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to major SA hubs.";
+      importNote = "Each South American country has its own paperwork. Brazil is the most lenient; Argentina, Chile, Peru, Uruguay all need ISO microchips and 30+ day rabies waits.";
+    }
+    return {
+      legs: [
+        { route: `${o} → ${d}`, time: "varies — long-haul", airline: cabinAirline },
+      ],
+      note: `${hubDescription}. ${importNote} Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
+    };
+  },
   // Any origin = South America
   "south-america-out": (o, d) => ({
     legs: [
@@ -6430,6 +6464,7 @@ function AirlineGrid() {
                       { code: "india", flag: "🇮🇳", label: "India" },
                       { code: "uae", flag: "🇦🇪", label: "UAE" },
                       { code: "japan", flag: "🇯🇵", label: "Japan" },
+                      { code: "korea", flag: "🇰🇷", label: "South Korea" },
                     ];
                     const renderFlag = (c, statusObj, direction) => {
                       const status = statusObj[c.code];
@@ -6587,44 +6622,72 @@ function Checklist() {
       title: "Six weeks before",
       icon: <Stethoscope className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Vet visit: confirm your pet is healthy enough to fly",
-        "ISO 11784/11785 microchip implanted (if not already)",
-        "Rabies vaccine administered (after microchip, if international)",
-        "Research destination country's import requirements — every country differs",
-        "Book your flight and call the airline to reserve a pet spot (limited per flight)",
+        "Vet visit: confirm your pet is healthy enough to fly — and ask about breed-specific airline restrictions before you book anything",
+        "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies shot for international, or you may have to start over",
+        "Rabies vaccine administered — most countries need a 21-30 day wait after the shot, the UK and EU specifically require 21 days minimum",
+        "Research the destination country's rules — every country differs, some need 3-6 months lead time (Japan, Hawaii, Australia, Jamaica)",
+        "Book your flight AND phone the airline to reserve a pet spot — most cap at 2-7 pets per cabin, fills fast on popular routes",
+        "If snub-nosed (Frenchie, Pug, Bulldog, Persian cat) — start looking at airlines NOW, summer embargoes are wide and many cargo holds are off-limits",
       ],
     },
     {
       title: "Two weeks before",
       icon: <ScrollText className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Get your airline-compliant carrier — let your pet sleep in it at home with a familiar blanket",
-        "Practice short car rides or trips in the carrier",
-        "Schedule government-accredited vet visit for health certificate (timing varies by destination — often within 10 days of travel)",
-        "Complete any destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, etc.)",
-        "Confirm climate / temperature restrictions and any seasonal breed restrictions",
+        "Buy the airline-compliant carrier (soft-sided is usually better) — let your pet sleep in it at home with a familiar blanket so it smells like them",
+        "Practice short car rides or trips in the carrier — calm carrier-day is built weeks earlier, not on the morning of",
+        "Schedule the government-accredited vet visit for the health certificate — timing varies, usually within 10 days of travel, sometimes 48 hours",
+        "Complete destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, MGAP for Uruguay, AQS Form for Japan, etc.)",
+        "Confirm climate / temperature embargoes — many airlines refuse pets above 85°F or below 20°F, and brachy breeds face wider seasonal bans",
+        "Double-check carrier dimensions against your specific airline AND specific aircraft — the under-seat space varies by plane type, not just airline",
       ],
     },
     {
       title: "The day of",
       icon: <Luggage className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Light meal 3–4 hours before flight; water available until departure",
-        "Walk your dog (or let your cat use the box) right before leaving home — airport pet relief areas are often useless",
-        "Pad the carrier with absorbent puppy pads",
-        "Pack: food, collapsible water bowl, leash, waste bags, vet records, comfort item, calming spray",
-        "Arrive 2.5–3 hours early — pet check-in is in person at the counter, not online",
+        "Light meal 3–4 hours before flight; water available right up until departure — empty stomachs cause anxiety, full ones cause accidents at altitude",
+        "Walk your dog or let your cat use the box right before leaving home — airport pet relief areas are often hidden, dirty, or non-existent",
+        "Pad the carrier with absorbent puppy pads — bring 3-4 spares and change them at the gate if needed, no shame in that",
+        "Pack: food, collapsible water bowl, leash, waste bags, vet records (originals + photocopies), comfort item, calming spray, treats",
+        "Arrive 2.5–3 hours early — pet check-in is in person at the counter, never online, and the turn-around test always takes longer than expected",
+        "Charge your phone fully and bring a portable battery — you'll be juggling paperwork, carrier, and luggage with both hands full",
       ],
     },
     {
       title: "At security & onboard",
       icon: <Plane className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Security: remove your pet from carrier, walk or carry them through the metal detector",
-        "Carrier goes through the X-ray machine empty",
-        "Once at the gate, keep your pet in the carrier",
-        "Stow under the seat in front of you — never the overhead bin",
-        "Don't open the carrier mid-flight (most airlines and many aviation authorities require this — crew may not allow exceptions)",
+        "Security: remove your pet from carrier, carry them through the metal detector — keep a firm grip, this is the single riskiest 30 seconds of the day",
+        "Carrier goes through the X-ray machine empty — your pet absolutely does not go through X-ray",
+        "Once at the gate, keep your pet in the carrier — most airlines let you take a quick visit on your lap if they're stressed at the gate, but not in flight",
+        "Stow the carrier under the seat in front of you — never the overhead bin, never on your lap mid-flight",
+        "Don't open the carrier in flight — most airlines and many aviation authorities require this; crew often can't bend the rule even if your pet is whining",
+        "Window seat preferred — slightly more under-seat depth, away from cart traffic, and you can control the light through the window",
+      ],
+    },
+    {
+      title: "If you're flying with a dog",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Walk them properly 2-3 hours before leaving — a tired dog in a carrier is a sleeping dog; a fresh one is an anxious one stuck in a small space",
+        "Adaptil pheromone spray on the carrier (never on the dog) 15 minutes before you head out — it actually works, vets aren't selling snake oil here",
+        "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
+        "Practice the turn-around test at home: dog must stand up, turn around, lie down inside the carrier without touching walls or ceiling",
+        "If your dog is over 20 lb combined with the carrier — most US airlines are out. Lufthansa, Air Canada, and Iberia are your friends",
+        "Bring poop bags AND a small bottle of water for cleanup — accidents happen, and you'll want to handle it discreetly without making a scene at the gate",
+      ],
+    },
+    {
+      title: "If you're flying with a cat",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Start carrier acclimation WEEKS ahead — leave it out as a normal den, never something that appears only on travel day, that ship sails fast with cats",
+        "Feliway pheromone spray (the cat version of Adaptil) on the carrier 15 minutes before you leave — never directly on the cat, they'll hate you for it",
+        "Line the carrier with unwashed bedding from home — cats orient by smell, and familiar scent settles them faster than literally anything else",
+        "Fit a well-adjusted harness BEFORE travel day and practise it — a loose cat in airport security is the scariest moment imaginable, prevent it",
+        "Don't feed within 4 hours of departure — cats are particularly prone to travel-sickness, and an empty carrier on landing is a much better outcome",
+        "Cats go quiet and still when stressed, not vocal — check on them gently through the carrier mesh, but don't assume silence means everything's fine",
       ],
     },
   ];
@@ -6646,7 +6709,7 @@ function Checklist() {
           <ChecklistDownload />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {sections.map((s, i) => (
             <div key={i} className="border border-stone-300 p-8 bg-stone-50 hover:shadow-lg transition-shadow">
               <div className="flex items-center gap-3 mb-6">
@@ -7365,14 +7428,31 @@ function JourneyPlanner() {
                         {r.duration && r.duration !== "see legs" && (
                           <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
                         )}
+                        {r.legs && r.legs.length > 1 && (
+                          <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                            {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                          </span>
+                        )}
                       </div>
-                      <div className="space-y-1 mb-2 pl-3 border-l border-stone-600">
-                        {r.legs.map((leg, j) => (
-                          <div key={j} className="text-sm text-stone-300">
-                            <span className="text-stone-100">{leg.route}</span>
-                            <span className="text-stone-500"> — {leg.time} · {leg.airline}</span>
-                          </div>
-                        ))}
+                      <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                        {r.legs.map((leg, j) => {
+                          const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
+                          const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                          const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                          return (
+                            <div key={j} className="text-sm">
+                              <div className="flex items-baseline gap-2">
+                                <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
+                                  {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                </span>
+                                <div className="flex-1">
+                                  <div className="text-stone-100">{leg.route}</div>
+                                  <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                       <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                     </div>
@@ -7457,14 +7537,31 @@ function JourneyPlanner() {
                             {r.duration && r.duration !== "see legs" && (
                               <span className="text-xs text-stone-500 ml-1">· {r.duration}</span>
                             )}
+                            {r.legs && r.legs.length > 1 && (
+                              <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                                {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                              </span>
+                            )}
                           </div>
-                          <div className="space-y-1 mb-2 pl-3 border-l border-stone-600">
-                            {r.legs.map((leg, j) => (
-                              <div key={j} className="text-sm text-stone-300">
-                                <span className="text-stone-100">{leg.route}</span>
-                                <span className="text-stone-500"> — {leg.time} · {leg.airline}</span>
-                              </div>
-                            ))}
+                          <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                            {r.legs.map((leg, j) => {
+                              const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
+                              const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                              const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                              return (
+                                <div key={j} className="text-sm">
+                                  <div className="flex items-baseline gap-2">
+                                    <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
+                                      {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                    </span>
+                                    <div className="flex-1">
+                                      <div className="text-stone-100">{leg.route}</div>
+                                      <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
                           </div>
                           <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                         </div>
@@ -7893,8 +7990,13 @@ function Routes() {
                     {group.routes.map((r, i) => (
                       <div key={i} className="border border-stone-300 bg-amber-50/30 p-6">
                         <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4 pb-4 border-b border-stone-200">
-                          <div className="font-serif text-xl text-stone-900">
-                            {r.from} <span className="text-stone-400 mx-2">→</span> {r.to}
+                          <div className="font-serif text-xl text-stone-900 flex items-baseline gap-3 flex-wrap">
+                            <span>{r.from} <span className="text-stone-400 mx-2">→</span> {r.to}</span>
+                            {r.legs && r.legs.length > 1 && (
+                              <span className="text-xs uppercase tracking-widest text-amber-700 px-2 py-0.5 border border-amber-600/40 rounded-sm font-sans not-italic">
+                                {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                              </span>
+                            )}
                           </div>
                           {r.duration && r.duration !== "see legs" && (
                             <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
@@ -7903,14 +8005,29 @@ function Routes() {
                           )}
                         </div>
 
+                        <div className="hidden md:grid grid-cols-12 gap-3 text-[10px] uppercase tracking-widest text-stone-500 font-medium mb-2 pb-1 border-b border-stone-200">
+                          <div className="col-span-1">Leg</div>
+                          <div className="col-span-4">Route</div>
+                          <div className="col-span-2">Time</div>
+                          <div className="col-span-5">Airline / notes</div>
+                        </div>
+
                         <div className="space-y-2 mb-4">
-                          {r.legs.map((leg, j) => (
-                            <div key={j} className="grid grid-cols-12 gap-3 text-sm items-center">
-                              <div className="col-span-12 md:col-span-5 font-medium text-stone-900">{leg.route}</div>
-                              <div className="col-span-5 md:col-span-2 text-stone-600 font-medium">{leg.time}</div>
-                              <div className="col-span-7 md:col-span-5 text-stone-700 italic font-serif">{leg.airline}</div>
-                            </div>
-                          ))}
+                          {r.legs.map((leg, j) => {
+                            const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
+                            const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                            const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                            return (
+                              <div key={j} className={`grid grid-cols-12 gap-3 text-sm items-center ${isTransit ? "bg-stone-50/60 py-1.5 px-2 -mx-2 rounded-sm" : ""}`}>
+                                <div className={`col-span-2 md:col-span-1 font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-700"}`}>
+                                  {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                </div>
+                                <div className="col-span-10 md:col-span-4 font-medium text-stone-900">{leg.route}</div>
+                                <div className="col-span-5 md:col-span-2 text-stone-600 font-medium">{leg.time}</div>
+                                <div className="col-span-7 md:col-span-5 text-stone-700 italic font-serif">{leg.airline}</div>
+                              </div>
+                            );
+                          })}
                         </div>
 
                         <p className="text-stone-700 text-sm italic font-serif leading-relaxed">{r.note}</p>
@@ -8379,7 +8496,7 @@ function Tips() {
             {
               tag: "On sedation",
               title: "Don't.",
-              body: "Most vets and the AVMA advise against sedating pets for air travel. At altitude, sedatives can cause respiratory and cardiovascular issues. If your pet is anxious, talk to your vet about non-sedating calming options like Adaptil/Feliway or a thunder shirt.",
+              body: "Most vets and the AVMA advise against sedating pets for air travel. At altitude, sedatives can cause respiratory and cardiovascular issues — pressurized cabins still aren't sea level, and a sedated pet can't shift positions, regulate body temperature, or signal distress the way an alert one would. The flying-while-sedated risk is real enough that most major airlines explicitly refuse pets who appear drugged at check-in. If your pet is anxious, talk to your vet about non-sedating calming options like Adaptil/Feliway pheromone sprays (apply to the carrier, never the pet) or a snug-fitting Thundershirt. CBD treats marketed as 'calming' are not the answer — most aren't standardised, and several have failed independent purity testing.",
             },
             {
               tag: "On the carrier",
@@ -8399,17 +8516,17 @@ function Tips() {
             {
               tag: "On treats during the flight",
               title: "Less is more.",
-              body: "Resist the urge to comfort-feed treats or top up water during the flight — both can trigger a toilet need you cannot deal with at 38,000 feet. Tiny amounts only, just enough for reassurance. Most well-prepared pets sleep through the flight without needing anything.",
+              body: "Resist the urge to comfort-feed treats or top up the water bowl during the flight — both can trigger a toilet need you cannot deal with at 38,000 feet. Tiny amounts only, just enough for reassurance during turbulence or take-off. Most well-prepared pets sleep through the entire flight without needing anything. If you must offer water, freeze a small ice cube in the carrier dish before boarding — it melts slowly into a manageable trickle rather than sloshing around. Same logic with treats: a single freeze-dried liver morsel goes further than a handful of biscuits, and won't crumble all over the carrier.",
             },
             {
               tag: "On nerves (yours)",
               title: "Your pet reads you.",
-              body: "Dogs and cats track your stress level closely. Pre-flight rituals matter: don't fuss, don't apologize to them, don't keep checking the carrier mid-flight. Calm handler, calm animal.",
+              body: "Dogs and cats are extraordinarily good at reading their owners' stress level — your heart rate, your breathing, the tightness in your voice, the way you handle the carrier. If you're frantic, they're frantic. Pre-flight rituals matter: don't fuss over them at the gate, don't apologize to them through the carrier mesh, don't keep checking on them mid-flight (which signals to them that something IS wrong). A calm handler builds a calm animal. The hour before departure is yours to manage your own nerves — coffee, breathwork, a phone call to someone who'll talk you down, whatever works. Your pet will mirror whatever state you arrive in.",
             },
             {
               tag: "On the unexpected",
               title: "Have a Plan B.",
-              body: "Save your destination's nearest 24-hour vet in your phone before you leave. Pack copies of vaccination records in a Ziploc inside the carrier. If you connect, build in at least 90 minutes — pet relief areas are a hike.",
+              body: "Save your destination's nearest 24-hour vet in your phone before you leave — and the one near your origin airport too, in case of a same-day issue at check-in. Pack copies of vaccination records in a clear Ziploc inside the carrier (not buried in your suitcase), and have photos of everything on your phone. If you're connecting, build in at least 90 minutes between flights — pet relief areas are usually a long hike from gates, and pet check-in counters at connection hubs are often unstaffed or shared with oversized baggage. The single most useful thing on a delayed travel day: a pre-packed pouch with two days' worth of pet food in a sealed bag, in case checked baggage is rerouted while you stay with your pet.",
             },
             {
               tag: "On comfort items",
@@ -8430,6 +8547,11 @@ function Tips() {
               tag: "For cat owners",
               title: "Feliway, not Adaptil — and a covered carrier.",
               body: "The calming pheromone products are species-specific: Feliway is the cat one (Adaptil is for dogs) — spray it in the carrier 15 minutes before, not on your cat. Cats settle better when they can't see the chaos around them, so a carrier with solid sides or a light blanket draped over (still ventilated) often works better than a fully mesh one. At security, where you have to take your cat out of the carrier, a well-fitted harness is essential — a startled cat in a busy airport is a genuine flight risk. Practise the harness at home first.",
+            },
+            {
+              tag: "For cat owners",
+              title: "Bring a piece of unwashed bedding from home.",
+              body: "Cats orient by smell more than sight — and familiar scent settles them faster than anything else you can pack. Line the carrier with a piece of bedding from home that already smells like them and their territory. Resist the temptation to wash it fresh before travel day: the slightly used blanket is the point. Pair this with their favourite small toy if they have one. The combination of familiar smell, familiar texture, and the carrier they've already been sleeping in for weeks turns the carrier from 'unknown box on travel day' into 'my known place that happens to be moving today'. Cats who already see the carrier as a den, lined with their own scent, often sleep through the entire flight — even long-haul. The work happens in the weeks before, not on the day.",
             },
           ].map((t, i) => (
             <div key={i}>

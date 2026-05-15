@@ -1311,13 +1311,14 @@ const REGION_HUBS = {
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
   "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)", "Montevideo (MVD)"],
+  "central-america": ["Panama City (PTY)"],
   "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "japan": "Japan",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan",
 };
 
 // ---------- AIRPORT-LEVEL MASTER LIST ----------
@@ -2018,16 +2019,30 @@ const FALLBACK_STRATEGIES = {
   // Any destination = South America
   "south-america": (o, d) => ({
     legs: [
-      { route: `${o} → São Paulo (GRU) / Santiago (SCL) / Bogotá (BOG) / Buenos Aires (EZE) / Lima (LIM)`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Aeromexico (10 kg combined). From the US: American, Delta, United also serve cabin pets to SA hubs. From Europe: Iberia, Air France, KLM, Lufthansa cabin to GRU/EZE/SCL." },
+      { route: `${o} → São Paulo (GRU) / Santiago (SCL) / Bogotá (BOG) / Buenos Aires (EZE) / Lima (LIM) / Montevideo (MVD)`, time: "varies — long-haul", airline: "Cabin: LATAM (7 kg), Avianca (10 kg), Copa via Panama City (10 kg), Aeromexico (9 kg). From the US: AA and Delta are cargo-only to most of SA — for US → SA cabin, your options are LATAM, Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to GRU/EZE/SCL." },
     ],
-    note: `South America is a generally cabin-friendly region for pets under 10 kg. LATAM is the largest carrier (cabin pets 7-10 kg depending on aircraft) and Avianca covers the northern part of the continent (10 kg cabin). Each country has its own import rules: Brazil is the most lenient (rabies vaccine 21+ days, USDA health certificate, no microchip required). Argentina, Chile, and Peru require ISO microchips, rabies vaccine 30+ days, and import permits (SENASA Argentina/Peru, SAG Chile). Colombia bans Pit Bull, Staffordshire, and American Staffordshire breeds by law. Pit Bulls are also restricted in Rio de Janeiro, Brazil. Brachycephalic dogs cannot fly cargo on LATAM or Avianca — cabin only.`,
+    note: `South America is a generally cabin-friendly region for pets under 10 kg. LATAM is the largest carrier (cabin pets 7-10 kg depending on aircraft), Avianca covers the northern part of the continent (10 kg cabin), and Copa Airlines via Panama City is the route to Uruguay (Montevideo), Paraguay (Asunción), and Bolivia. Each country has its own import rules: Brazil is the most lenient (rabies vaccine 21+ days, USDA health certificate, no microchip required). Argentina, Chile, Peru, and Uruguay require ISO microchips, rabies vaccine 30+ days, and (for Chile/Peru) pre-arranged import permits. Colombia bans Pit Bull, Staffordshire, and American Staffordshire breeds by law. Pit Bulls are also restricted in Rio de Janeiro, Brazil. Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
   }),
   // Any origin = South America
   "south-america-out": (o, d) => ({
     legs: [
-      { route: `São Paulo / Santiago / Bogotá / Buenos Aires / Lima → ${d}`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Aeromexico for routes to the Americas. For Europe: LATAM cabin to MAD; Avianca cabin to MAD/CDG/LHR (cargo to LHR). For Asia: cargo only — no cabin routes." },
+      { route: `São Paulo / Santiago / Bogotá / Buenos Aires / Lima / Montevideo → ${d}`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Copa (via Panama), Aeromexico for routes to the Americas. For Europe: LATAM cabin to MAD; Avianca cabin to MAD/CDG/LHR (cargo to LHR). For Asia: cargo only — no cabin routes." },
     ],
-    note: `Leaving South America: cabin pet routes exist comfortably to North America and Europe. LATAM and Avianca both serve key transatlantic and North American hubs. Important: Avianca does NOT fly cabin pets to the UK, Galapagos, Aruba, or Curaçao. Azul Brazilian Airlines does not currently accept US-bound dogs due to CDC rabies-region restrictions. Brazil → US needs a rabies-vaccinated dog with USDA-accepted documentation; Argentina/Chile → US is more flexible (those are not on the CDC high-risk list). Check destination requirements early — paperwork can take 30+ days.`,
+    note: `Leaving South America: cabin pet routes exist comfortably to North America and Europe. LATAM, Avianca, and Copa all serve key transatlantic and North American hubs. Important: Avianca does NOT fly cabin pets to the UK, Galapagos, Aruba, or Curaçao. Azul Brazilian Airlines does not currently accept US-bound dogs due to CDC rabies-region restrictions. Brazil → US needs a rabies-vaccinated dog with USDA-accepted documentation; Argentina/Chile → US is more flexible (those are not on the CDC high-risk list). Check destination requirements early — paperwork can take 30+ days.`,
+  }),
+  // Any destination = Central America (Panama)
+  "central-america": (o, d) => ({
+    legs: [
+      { route: `${o} → Panama City (PTY)`, time: "varies", airline: "Copa Airlines is the dominant cabin pet carrier (10 kg combined, $125 international). Also: American, Delta, United and Avianca serve Panama with cabin pets from the US." },
+    ],
+    note: `Panama is primarily used as a transit hub for cabin pet travel to deeper South America (Uruguay, Paraguay, Bolivia) via Copa Airlines, but it's also a destination in its own right. For entry to Panama: rabies vaccine 30+ days old, ISO microchip recommended, health certificate from origin country's official authority within 10 days. Pets transiting Panama on the same Copa-operated itinerary don't formally enter the country. Panama is not on the CDC high-risk list for rabies (April 2026).`,
+  }),
+  // Any origin = Central America
+  "central-america-out": (o, d) => ({
+    legs: [
+      { route: `Panama City (PTY) → ${d}`, time: "varies", airline: "Copa Airlines is the main cabin pet carrier from Panama. From PTY: cabin to all major SA hubs, US, Mexico, Canada, Caribbean and Central America." },
+    ],
+    note: `Leaving Panama with a pet: Copa's network covers nearly all of the Americas with cabin pets under 10 kg. Useful onward connections: PTY → Montevideo (Uruguay), PTY → Buenos Aires, PTY → Santiago, PTY → São Paulo, PTY → Lima, PTY → Bogotá. The destination country's import paperwork applies normally.`,
   }),
   // Any destination = Japan
   "japan": (o, d) => ({
@@ -2059,10 +2074,12 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
   if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
+  if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
+  if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   return [];
 }
 
@@ -2182,6 +2199,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Uruguay"],
+    "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
   };
   const fromInOriginRegion = (field) =>
@@ -3116,19 +3134,20 @@ const CHECKLIST_DATA = {
       {
         title: "First — understand",
         items: [
-          "Each South American country has its own rules. Brazil is the most lenient (no microchip required, no titer, 21-day post-rabies wait). Argentina, Chile, Peru, and Colombia require ISO microchips and import permits.",
-          "All major airlines flying cabin pets in South America cap at 10 kg combined (LATAM 7 kg on some aircraft, Avianca 10 kg). Brachycephalic dogs can fly cabin but NOT cargo on LATAM/Avianca.",
+          "Each South American country has its own rules. Brazil is the most lenient (no microchip required, no titer, 21-day post-rabies wait). Argentina, Uruguay, Chile, Peru, and Colombia require ISO microchips and import permits.",
+          "All major airlines flying cabin pets in South America cap at 10 kg combined (LATAM 7 kg on some aircraft, Avianca 10 kg, Copa 10 kg). Brachycephalic dogs can fly cabin but NOT cargo on LATAM, Avianca, or Copa.",
           "Colombia bans the import of Pit Bull, American Staffordshire Terrier, Staffordshire Terrier, and crosses by law (Article 108-E). These breeds CANNOT enter Colombia regardless of paperwork.",
+          "Uruguay has no direct US cabin pet route — connect via Copa (Panama City), Avianca (Bogotá), or LATAM (São Paulo / Buenos Aires).",
           "Brazil → US: dogs must be at least 6 months old at entry, microchipped before rabies vaccine, and on the standard (not high-risk) CDC track. Brazil itself isn't on CDC's high-risk list as of 2026 — but always verify before travel.",
         ],
       },
       {
         title: "4+ weeks before",
         items: [
-          "ISO 11784/11785 microchip implanted (required for Argentina, Chile, Peru, Colombia; recommended for Brazil even though not required).",
-          "Rabies vaccine: at least 21 days before travel for Brazil; at least 30 days for Argentina, Chile, Peru, Colombia.",
-          "Apply for the destination country's import permit if required: Chile (SAG) and Peru (SENASA) need pre-trip permits — apply 30+ days ahead. Argentina (SENASA) issues at the airport but documentation must be in order.",
-          "Book your LATAM or Avianca cabin pet spot — call the Contact Center, not online. Both airlines require LATAM-only / Avianca-only itineraries (no codeshare partners).",
+          "ISO 11784/11785 microchip implanted (required for Argentina, Uruguay, Chile, Peru, Colombia; recommended for Brazil even though not required).",
+          "Rabies vaccine: at least 21 days before travel for Brazil; at least 30 days for Argentina, Uruguay, Chile, Peru, Colombia.",
+          "Apply for the destination country's import permit if required: Chile (SAG) and Peru (SENASA) need pre-trip permits — apply 30+ days ahead. Argentina (SENASA) and Uruguay (MGAP) verify at the airport but documentation must be in order.",
+          "Book your LATAM, Avianca, or Copa cabin pet spot — call the Contact Center, not online. All three airlines require their own metal (no codeshare partners).",
         ],
       },
       {
@@ -3138,6 +3157,7 @@ const CHECKLIST_DATA = {
           "Health certificate must be issued within 10 days of travel and confirm the pet is free of infectious and parasitic diseases.",
           "Internal and external parasite treatment (typically Drontal + Frontline) administered shortly before travel — record on the health certificate.",
           "For Brazil: confirm with your vet that vaccinations are on the standard list (Distemper, Hepatitis, Parvovirus, Leptospirosis, Parainfluenza for dogs; FVRCP for cats).",
+          "For Uruguay: MGAP requires the health certificate to be endorsed by the official veterinary authority of the origin country.",
         ],
       },
       {
@@ -3145,7 +3165,7 @@ const CHECKLIST_DATA = {
         items: [
           "Bring originals of: health certificate (USDA-endorsed or equivalent), rabies vaccine certificate, microchip implant records, import permit (Chile/Peru), and parasite treatment record.",
           "Arrive 3+ hours early for international departures — pet check-in is a separate counter at most South American hubs.",
-          "Confirm cabin pet booking by phone with LATAM/Avianca 24–48 hours before departure (space is limited per flight).",
+          "Confirm cabin pet booking by phone with LATAM/Avianca/Copa 24–48 hours before departure (space is limited per flight).",
         ],
       },
       {
@@ -3153,6 +3173,7 @@ const CHECKLIST_DATA = {
         items: [
           "Brazil: present documents at the customs (Receita Federal) and agriculture (MAPA/VIGIAGRO) counter on arrival. No quarantine if documents are in order.",
           "Argentina: SENASA inspection at EZE — present documentation, inspection typically 15–30 minutes.",
+          "Uruguay: MGAP inspection at MVD on arrival. No quarantine if documents are in order.",
           "Chile: SAG inspection mandatory; documentation strict. If your import permit isn't pre-arranged, your pet will be detained.",
           "Colombia: ICA inspection; banned breed verification on arrival.",
           "Peru: SENASA inspection at LIM. Health certificate from origin country must be present.",
@@ -4031,6 +4052,7 @@ const REGION_TO_CHECKLIST_ID = {
   "hawaii": null,           // uses generic + Hawaii note
   "south-africa": "south_africa",
   "south-america": "south_america",
+  "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
   "japan": "japan",
 };
 
@@ -4051,6 +4073,7 @@ const ROUTE_FACTS = {
   "hawaii":      { name: "Hawaii", cdcHighRisk: false, euMember: false, ukOrIreland: false, isUS: true, isRabiesFree: true },
   "south-africa": { name: "South Africa", cdcHighRisk: false, euMember: false, ukOrIreland: false },
   "south-america": { name: "South America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
+  "central-america": { name: "Central America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "japan":       { name: "Japan", cdcHighRisk: false, euMember: false, ukOrIreland: false, isRabiesFree: true, strictImport: true },
 };
 
@@ -6037,7 +6060,7 @@ const DESTINATIONS = [
     flag: "🌎",
     name: "South America",
     headline: "Cabin-friendly continent — different rules per country.",
-    rule: "South America is one of the more cabin-pet-friendly continents in the world. LATAM (Chile-based, 7-10 kg cabin) and Avianca (Colombia-based, 10 kg cabin) serve almost every major city. The catch: each country has its own import paperwork. Brazil is easiest (rabies vaccine + health certificate, no microchip required). Argentina, Chile, Peru, and Colombia all require ISO microchips, rabies vaccine 30+ days old, and pre-arranged import permits. Colombia bans Pit Bull, Staffordshire, and American Staffordshire imports by law. Brachycephalic dogs can travel cabin on LATAM/Avianca but never in cargo.",
+    rule: "South America is one of the more cabin-pet-friendly continents in the world. LATAM (Chile-based, 7-10 kg cabin), Avianca (Colombia-based, 10 kg cabin), and Copa (Panama-based, 10 kg cabin) cover almost every major city. The catch: each country has its own import paperwork. Brazil is easiest (rabies vaccine + health certificate, no microchip required). Argentina, Uruguay, Chile, Peru, and Colombia all require ISO microchips and rabies vaccine 30+ days old; Chile and Peru also need pre-arranged import permits. Colombia bans Pit Bull, Staffordshire, and American Staffordshire imports by law. Brachycephalic dogs can travel cabin on LATAM/Avianca/Copa but never in cargo.",
     workarounds: [
       {
         title: "LATAM cabin pets — South America's workhorse",
@@ -6048,8 +6071,14 @@ const DESTINATIONS = [
       {
         title: "Avianca cabin pets — northern South America specialist",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Avianca's hub is Bogotá (BOG). Cabin weight 10 kg combined — the most generous Latin American limit. Strong network across Colombia, Peru, Ecuador, Costa Rica, plus connections to Brazil, Argentina, Chile, Mexico, US, and Spain. Cabin NOT allowed to UK (cargo only), Galapagos (live animals prohibited), Aruba/Curaçao (except permanent moves). Brachycephalic dogs cabin-only — never in cargo.",
+        body: "Avianca's hub is Bogotá (BOG). Cabin weight 10 kg combined — the most generous Latin American limit. Strong network across Colombia, Peru, Ecuador, Costa Rica, plus connections to Brazil, Argentina, Chile, Uruguay (BOG → MVD direct), Mexico, US, and Spain. Cabin NOT allowed to UK (cargo only), Galapagos (live animals prohibited), Aruba/Curaçao (except permanent moves). Brachycephalic dogs cabin-only — never in cargo.",
         cost: "USD 160 to/from North America · USD 180–200 to/from Europe · COP 75,000–115,000 (~$19-29) domestic Colombia.",
+      },
+      {
+        title: "Copa Airlines — Panama hub for deeper South America",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Copa is the essential cabin pet route to deeper South American destinations — Uruguay (Montevideo), Paraguay (Asunción), and Bolivia — that lack direct US cabin connections. Cabin weight 10 kg combined. Hub at Panama City (PTY). Typical routing: US → PTY → Montevideo / Buenos Aires / Santiago / São Paulo. Brachycephalic dogs accepted in cabin (never cargo). Copa-operated itineraries only (no codeshare partners).",
+        cost: "USD 125 international · USD 25 domestic Panama.",
       },
       {
         title: "Aeromexico Mexico ↔ South America cabin direct",
@@ -6060,11 +6089,11 @@ const DESTINATIONS = [
       {
         title: "Country-specific paperwork timing",
         icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Brazil: rabies 21+ days before travel, USDA-endorsed health certificate within 10 days, no microchip required (but recommended). Argentina: ISO microchip, rabies 30+ days, SENASA import permit. Chile: most rigorous — SAG import permit must be pre-arranged 30+ days ahead, ISO microchip mandatory. Peru: SENASA import permit + health certificate. Colombia: ICA inspection on arrival, banned breed check (Pit Bull / AmStaff / Staffordshire all refused).",
+        body: "Brazil: rabies 21+ days before travel, USDA-endorsed health certificate within 10 days, no microchip required (but recommended). Argentina: ISO microchip, rabies 30+ days, SENASA-endorsed health certificate (no pre-trip permit). Uruguay: ISO microchip, rabies 30+ days, MGAP-recognised health certificate. Chile: most rigorous — SAG import permit must be pre-arranged 30+ days ahead, ISO microchip mandatory. Peru: SENASA import permit + health certificate. Colombia: ICA inspection on arrival, banned breed check (Pit Bull / AmStaff / Staffordshire all refused).",
         cost: "Vet visits + USDA/origin endorsement: $200–$500 depending on country. Import permits: typically free or $20–50.",
       },
     ],
-    paperwork: "Brazil: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, parasite treatment, additional vaccines (Distemper/Hepatitis/Parvovirus/Leptospirosis for dogs; FVRCP for cats). No microchip required. Argentina/Chile/Peru: ISO microchip, rabies 30+ days, SENASA/SAG/SENASA import permit (apply 30+ days ahead), health certificate from origin country's official authority. Colombia: ICA inspection on arrival, ISO microchip recommended, banned breeds (Pit Bull, Staffordshire, American Staffordshire) refused entry by law. All countries: pets must be 4+ months old for international cabin travel. Returning to the US: standard CDC Dog Import Form for dogs (Brazil/Argentina/Chile/Peru/Colombia NOT on CDC high-risk list as of 2026).",
+    paperwork: "Brazil: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, parasite treatment, additional vaccines (Distemper/Hepatitis/Parvovirus/Leptospirosis for dogs; FVRCP for cats). No microchip required. Argentina/Uruguay/Chile/Peru: ISO microchip, rabies 30+ days, official veterinary authority health certificate (SENASA-endorsed for Argentina/Peru, MGAP-recognised for Uruguay, SAG import permit pre-arranged 30+ days ahead for Chile). Colombia: ICA inspection on arrival, ISO microchip recommended, banned breeds (Pit Bull, Staffordshire, American Staffordshire) refused entry by law. All countries: pets must be 4+ months old for international cabin travel. Returning to the US: standard CDC Dog Import Form for dogs (Brazil/Argentina/Uruguay/Chile/Peru/Colombia NOT on CDC high-risk list as of 2026).",
   },
 ];
 
@@ -6901,7 +6930,7 @@ function JourneyPlanner() {
     "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
     "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
     "caribbean": null, "hawaii": null, "south-africa": "south_africa",
-    "south-america": "south_america", "japan": "japan",
+    "south-america": "south_america", "central-america": null, "japan": "japan",
   };
 
   // The two selected airport objects (or null until chosen).
@@ -7575,6 +7604,7 @@ function Routes() {
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador", "Uruguay"],
+    "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
   };
 

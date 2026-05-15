@@ -4094,9 +4094,9 @@ function Hero({ onStart }) {
             className="group flex items-center justify-between gap-4 border-2 border-stone-900 text-stone-900 bg-transparent px-7 py-5 hover:bg-stone-900 hover:text-cream-50 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
           >
             <div className="flex flex-col gap-1.5">
-              <span className="uppercase tracking-widest text-sm font-medium">Get my checklist</span>
+              <span className="uppercase tracking-widest text-sm font-medium">What paperwork do I need?</span>
               <span className="text-sm leading-snug text-stone-600 group-hover:text-cream-200 normal-case tracking-normal" style={{ }}>
-                Pick a departing country and destination, download a printable PDF.
+                Pick your origin and destination — download a printable, country-specific checklist.
               </span>
             </div>
             <ArrowRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-1 transition-transform" strokeWidth={2} />

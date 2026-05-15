@@ -3930,7 +3930,7 @@ function NavBar({ onStartIntake }) {
         borderBottom: "1px solid rgba(68,64,60,0.15)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <div className="max-w-7xl mx-auto px-6 md:pl-5 md:pr-10">
 
         {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}
         <div className="flex md:hidden items-center justify-between py-3">
@@ -4051,14 +4051,14 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-16 md:pt-20 pb-24 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-6 md:pt-8 pb-24 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
       }} />
 
       <div className="relative max-w-5xl mx-auto text-center">
-        <div className="flex items-center gap-2 mb-12">
+        <div className="flex items-center gap-2 mb-7">
           <span className="text-xs uppercase tracking-widest text-stone-500">By Theo's Mum</span>
           <div className="flex-1 h-px bg-stone-300 mx-3" />
           <span className="text-xs uppercase tracking-widest text-stone-500">Vol. I · 2026</span>

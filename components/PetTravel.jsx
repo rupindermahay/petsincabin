@@ -67,9 +67,8 @@ const AIRLINES = [
     cabin: "Cabin allowed — including US ↔ Japan direct (one of very few)",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU, and notably US ↔ Japan (SFO/ORD ↔ NRT/HND/KIX, with new routes launching Sept-Oct 2026). Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam (one-way exception: cabin OK from Guam to Tokyo-Narita but not back), French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Palau, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes" },
-    fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes" },
     weight: "No weight limit — pet must fit in carrier under the seat",
     carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
     notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. United is one of very few airlines accepting cabin pets US↔Japan direct (no weight limit). Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
@@ -377,8 +376,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
     cabinStatus: "conditional",
     direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). Cabin TEMPORARILY SUSPENDED on US↔Brazil, Bolivia, Ecuador, Peru and Colombia due to CDC dog import rules. NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
-    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no" },
-    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no" },
+    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes" },
+    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes" },
     fee: "Cabin: BRL 200 domestic Brazil · ~USD 200 regional South America · ~USD 250 long-haul (to Europe). Hold fees are separate and weight-banded.",
     weight: "Pet + carrier combined max 7 kg for cabin. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm. Cabin pets carried on A319/A320/A321/A350 and B777 aircraft.",
     carrier: "Soft-sided carrier (max 40 × 28 × 25 cm) or hard kennel (max 36 × 33 × 19 cm). No wheels. Must be leak-proof and well-ventilated. Pet must be able to stand, turn and move without touching walls or ceiling.",
@@ -393,8 +392,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — Colombia hub, strong South / Central America coverage",
     cabinStatus: "yes",
     direction: "Cabin allowed: dogs and cats up to 10 kg combined on most international and domestic routes. Strong network: Colombia, Peru, Ecuador, Costa Rica, El Salvador, plus connections to Brazil, Argentina, Chile, Mexico, US, Canada, Spain. Cabin NOT allowed: UK (cargo only — Animal Reception Centre rules), Galapagos Islands (live animal transport prohibited), Aruba and Curaçao (except permanent moves to Curaçao). Brachycephalic dog and cat breeds: cabin only — never accepted in the hold due to breathing risk.",
-    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
-    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes" },
+    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes" },
     fee: "Cabin: ~USD 19–29 domestic Colombia (COP 75,000–115,000) · ~USD 160 to/from North America · USD 180–200 to/from Europe. Hold: ~USD 50–70 domestic / USD 225–245 international depending on route.",
     weight: "Pet + carrier max 10 kg (22 lb) combined for cabin. Up to 70 kg combined in the hold (size restrictions apply). Minimum age 4 months (2 months for domestic Colombia routes).",
     carrier: "Soft-sided only for cabin, max 56 × 36 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
@@ -409,8 +408,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — Panama hub, strong Americas coverage including Uruguay",
     cabinStatus: "yes",
     direction: "Cabin allowed: dogs and cats up to 10 kg (20 lb) combined on most Copa-operated routes. Panama City (PTY) is the hub — Copa serves Argentina, Bolivia, Brazil, Chile, Colombia, Ecuador, Peru, Paraguay, Uruguay (Montevideo), Venezuela, plus the Caribbean, Central America, Mexico, US and Canada. Useful for deeper South American destinations (Montevideo, Asunción) that lack direct US cabin connections. Cabin NOT allowed: connecting flights with airlines other than Copa (no codeshare pets). Pets are not permitted on flights to Armenia (AXM) on weekends due to closed quarantine offices.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes" },
     fee: "Cabin: $125 international, $25 domestic Panama. Cargo: varies by route.",
     weight: "Pet + carrier max 10 kg (20 lb) combined for cabin. Minimum age 16 weeks for cabin (8 weeks for cargo).",
     carrier: "Soft-sided only for cabin, max 45 × 27 × 27 cm (18 × 11 × 11 in). Well-ventilated, leak-proof, must fit under the seat with the pet able to stand and turn around. Hard-sided not permitted for cabin.",
@@ -490,8 +489,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — including Japan ↔ Korea and onward to US/Europe/India",
     cabinStatus: "yes",
     direction: "Cabin allowed: 30+ countries including Japan, US, France, Germany, Italy, Netherlands, Spain, Switzerland, India, Singapore, Thailand. Korea ↔ Japan is one of the best cabin pet paths to/from Japan. Cabin NOT allowed: UK and UAE (cargo only). Brachycephalic breeds only allowed in cabin, never cargo. Fierce-breed bans: Tosa, Pit Bull, Rottweiler, Mastiff, Laika, Ovcharka, Kangal, Wolfdog.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", japan: "yes" },
     fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
     weight: "Pet + carrier max 7 kg (15.4 lb) for cabin. Verified against Korean Air's official Travel With Pets policy May 2026.",
     carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
@@ -522,8 +521,8 @@ const AIRLINES = [
     cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes" },
     fee: "Mexico domestic: $35. Mexico ↔ US: $125. International long-haul: $200–250.",
     weight: "Pet + carrier max 9 kg (20 lb)",
     carrier: "Soft: max 40 × 30 × 21 cm. Hard: max 40 × 28 × 22 cm. Must fit under the seat.",
@@ -4616,7 +4615,7 @@ const QUESTIONS = [
     id: "destination",
     label: "Where are you flying to?",
     type: "dropdown",
-    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "UK", "Ireland", "Europe", "Spain", "India", "UAE / Dubai", "Asia / Pacific", "Other international"],
+    options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "South America", "Central America", "UK", "Ireland", "Europe", "Spain", "India", "UAE / Dubai", "Japan", "Asia / Pacific", "Other international"],
     helper: "Pick where your pet is ARRIVING. Flying Europe → New York? Choose 'Into the USA'.",
   },
   {
@@ -4684,7 +4683,7 @@ function assess(answers) {
   const isDomestic = answers.destination === "Within the USA (domestic)";
   const isInternationalArrival = answers.destination === "Into the USA (international arrival)";
 
-  if (answers.destination === "Europe" || answers.destination === "Spain" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
+  if (answers.destination === "Europe" || answers.destination === "Spain" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Japan" || answers.destination === "South America" || answers.destination === "Central America" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
     if (answers.age === "8 weeks – 4 months") {
       flags.push({
         severity: "blocker",
@@ -4771,6 +4770,30 @@ function assess(answers) {
     warnings.push({
       title: "Caribbean rules vary enormously by island",
       detail: "There's no single 'Caribbean' rule. Puerto Rico and USVI are US territories (no import paperwork). Dominican Republic and Aruba are relatively easy. Bahamas needs a 6–8 week import permit. Jamaica, Cayman, and Barbados are among the strictest — Jamaica needs 6+ months of prep including a FAVN rabies titer. Check your specific island's Department of Agriculture before booking. Note: Dominican Republic is on the CDC high-risk rabies list, which complicates US return.",
+    });
+  }
+
+  if (answers.destination === "South America") {
+    warnings.push({
+      title: "South America: cabin-friendly continent, but rules differ by country",
+      detail: "LATAM, Avianca, and Copa Airlines all carry cabin pets (7–10 kg combined). Brazil is the easiest entry — no microchip required, rabies 21+ days. Argentina, Uruguay, Chile, Peru, Colombia require ISO microchips and rabies 30+ days. Chile and Peru also need pre-arranged import permits (SAG/SENASA — apply 30+ days ahead). Colombia bans Pit Bull, AmStaff, and Staffordshire imports by law. LATAM cabin pets on US↔Brazil/Bolivia/Ecuador/Peru/Colombia routes are temporarily suspended due to CDC dog rules — verify before booking. Important: American Airlines and Delta do NOT accept cabin pets to most South American destinations (cargo only via PetEmbark / Delta Cargo).",
+    });
+  }
+
+  if (answers.destination === "Central America") {
+    ok.push("Central America (especially Panama) is well-served for cabin pets via Copa Airlines (10 kg combined, hub Panama City). Useful as a transit point to deeper South America. Standard requirements: rabies 30+ days, ISO microchip recommended, vet health certificate within 10 days. Panama is not on the CDC high-risk rabies list.");
+  }
+
+  if (answers.destination === "Japan") {
+    flags.push({
+      severity: "fixable",
+      title: "Japan: 180-day rabies titer wait is non-negotiable",
+      detail: "Japan requires: ISO microchip implanted FIRST, then two rabies vaccinations 30+ days apart, then a FAVN rabies antibody titer test ≥0.5 IU/ml from an MAFF-approved lab, then a 180-day waiting period from the titer blood draw date. Plus AQS Advance Notification submitted at least 40 days before arrival. Get any of this wrong and your pet is detained up to 180 days at your expense.",
+      workaround: "Start preparation 7+ months before your arrival date. Microchip → wait → rabies #1 → wait 30 days → rabies #2 → wait 30 days → FAVN blood draw → wait 180 days → travel. Then file the Advance Notification with Japan's Animal Quarantine Service 40+ days before arrival.",
+    });
+    warnings.push({
+      title: "Cabin pet options into Japan are limited",
+      detail: "JAL and ANA do NOT carry cabin pets on any flight (cargo only). For cabin into Japan you need: United (US ↔ NRT/HND/KIX), Korean Air / Asiana / T'Way / Air Premia (via Seoul), or Aeromexico (from Mexico City). Other airlines are cargo-only.",
     });
   }
 
@@ -6258,6 +6281,7 @@ function AirlineGrid() {
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
     { id: "south-america", label: "South America", flag: "🌎" },
+    { id: "central-america", label: "Central America", flag: "🌎" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
@@ -6378,11 +6402,15 @@ function AirlineGrid() {
                     const COUNTRIES = [
                       { code: "uk", flag: "🇬🇧", label: "UK" },
                       { code: "us", flag: "🇺🇸", label: "US" },
-                      { code: "eu", flag: "🇪🇺", label: "EU" },
-                      { code: "india", flag: "🇮🇳", label: "India" },
                       { code: "canada", flag: "🇨🇦", label: "Canada" },
-                      { code: "uae", flag: "🇦🇪", label: "UAE" },
+                      { code: "eu", flag: "🇪🇺", label: "EU" },
+                      { code: "mexico", flag: "🇲🇽", label: "Mexico" },
+                      { code: "south-america", flag: "🌎", label: "South America" },
+                      { code: "central-america", flag: "🌎", label: "Central America" },
                       { code: "caribbean", flag: "🌴", label: "Caribbean" },
+                      { code: "india", flag: "🇮🇳", label: "India" },
+                      { code: "uae", flag: "🇦🇪", label: "UAE" },
+                      { code: "japan", flag: "🇯🇵", label: "Japan" },
                     ];
                     const renderFlag = (c, statusObj, direction) => {
                       const status = statusObj[c.code];
@@ -6649,6 +6677,9 @@ function ChecklistDownload() {
     { id: "dubai", label: "UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
+    { id: "south-america", label: "South America", flag: "🌎" },
+    { id: "central-america", label: "Central America", flag: "🌎" },
+    { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
   const clAirportsByRegion = CL_REGIONS.map((r) => ({
@@ -6924,6 +6955,9 @@ function JourneyPlanner() {
     { id: "dubai", label: "UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
+    { id: "south-america", label: "South America", flag: "🌎" },
+    { id: "central-america", label: "Central America", flag: "🌎" },
+    { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
 

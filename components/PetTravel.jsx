@@ -5046,6 +5046,20 @@ function DifficultDestinations() {
                     )}
                   </div>
                 ))}
+                {dest.id === "uk" && (
+                  <a
+                    href="/uk-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete UK pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      Why pets can't fly cabin into the UK, every workaround route explained in full, what it costs, and the exact paperwork — all on one page.
+                    </p>
+                  </a>
+                )}
               </div>
             </div>
           </div>

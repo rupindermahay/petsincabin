@@ -40,6 +40,23 @@ export default function Document() {
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
 
+        {/* Google Analytics (GA4) — free, unlimited custom events.
+            Measurement ID: G-R4NVMW686F (live).
+            Pageviews are tracked automatically. Custom events (like the
+            "petition_click" event fired from the UK petition CTA in
+            PetTravel.jsx) show up under Reports → Engagement → Events. */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4NVMW686F"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-R4NVMW686F', { anonymize_ip: true });
+            `,
+          }}
+        />
+
         {/* Structured data for rich snippets in Google */}
         <script
           type="application/ld+json"

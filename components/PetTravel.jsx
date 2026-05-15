@@ -397,7 +397,7 @@ const AIRLINES = [
     destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
     fee: "Cabin: ~USD 19–29 domestic Colombia (COP 75,000–115,000) · ~USD 160 to/from North America · USD 180–200 to/from Europe. Hold: ~USD 50–70 domestic / USD 225–245 international depending on route.",
     weight: "Pet + carrier max 10 kg (22 lb) combined for cabin. Up to 70 kg combined in the hold (size restrictions apply). Minimum age 4 months (2 months for domestic Colombia routes).",
-    carrier: "Soft-sided only for cabin, max 55 × 35 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
+    carrier: "Soft-sided only for cabin, max 56 × 36 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
     notes: "Avianca is the natural cabin carrier for the northern half of South America — Colombia, Peru, Ecuador, plus Central America. Hub at Bogotá El Dorado (BOG). Important: Avianca does NOT permit transit with pets on connecting flights with codeshare partners — must be Avianca-operated end to end (including TACA, Avianca Costa Rica, Avianca Peru, Avianca Ecuador). Pit Bull, American Pit Bull Terrier, Staffordshire Terrier, and American Staffordshire Terrier are banned from import to Colombia by law (Article 108-E). Avianca will refuse these breeds on Colombia-bound flights. Brachycephalic dogs can travel in cabin (signed cabin/hold form required at airport) but never in cargo. Max 1 pet per passenger in cabin, max 6 pets per flight (including ESAs). Book 48+ hours in advance through Avianca Contact Center.",
     intl: "Yes — South America, Central America, Caribbean, North America, Europe (Madrid/Barcelona)",
     verified: "May 2026",
@@ -477,7 +477,7 @@ const AIRLINES = [
     originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
     fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
-    weight: "Pet + carrier max 7 kg (15 lb) for cabin. Some sources cite 5 kg — confirm by phone.",
+    weight: "Pet + carrier max 7 kg (15.4 lb) for cabin. Verified against Korean Air's official Travel With Pets policy May 2026.",
     carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
     notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo.",
     intl: "Yes (extensive network)",
@@ -808,11 +808,11 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "Mexico City (MEX)", duration: "3h 30m", note: "American, Aeromexico. ✓ Cabin. Mexico is an easy cabin destination — vet health certificate + rabies is the core requirement.", tags: ["us", "mexico"] },
   { from: "Miami (MIA)", to: "Cancún (CUN)", duration: "1h 50m", note: "American, Delta, JetBlue. ✓ Cabin. The shortest US → Mexico cabin route.", tags: ["us", "mexico"] },
   { from: "Miami (MIA)", to: "Madrid (MAD)", duration: "8h 45m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Iberia's MIA→MAD route is a solid cabin option for Florida pet owners heading to Spain.", tags: ["us", "europe"] },
-  { from: "Miami (MIA)", to: "São Paulo (GRU)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (LATAM under 7 kg, American under 9 kg). Florida is the main US gateway to Brazil — multiple daily.", tags: ["us", "south-america"] },
-  { from: "Miami (MIA)", to: "Bogotá (BOG)", duration: "3h 30m", note: "Avianca, American. ✓ Cabin (Avianca under 10 kg). Shortest US-South America cabin route — but: Pit Bull, American Staffordshire, and Staffordshire Bull Terrier breeds banned from import to Colombia by law.", tags: ["us", "south-america"] },
-  { from: "Miami (MIA)", to: "Lima (LIM)", duration: "5h 30m", note: "LATAM, American. ✓ Cabin. Peru requires SENASA import permit — apply 30+ days ahead.", tags: ["us", "south-america"] },
-  { from: "Miami (MIA)", to: "Santiago (SCL)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (under 7 kg LATAM). Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on paperwork.", tags: ["us", "south-america"] },
-  { from: "Miami (MIA)", to: "Buenos Aires (EZE)", duration: "9h", note: "American, LATAM. ✓ Cabin. Argentina requires SENASA-endorsed health certificate and ISO microchip.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "São Paulo (GRU)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — note: LATAM has temporarily suspended cabin pet service on US ↔ Brazil routes due to CDC dog rules; check current status when booking. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Brazil routes. Florida is the main US gateway to Brazil — multiple daily.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Bogotá (BOG)", duration: "3h 30m", note: "Avianca cabin (under 10 kg). LATAM cabin currently suspended US ↔ Colombia (CDC dog rules) — verify status. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Colombia routes. NOTE: Pit Bull, American Staffordshire, and Staffordshire Bull Terrier breeds banned from import to Colombia by law.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Lima (LIM)", duration: "5h 30m", note: "LATAM cabin (under 7 kg). LATAM cabin currently suspended US ↔ Peru (CDC dog rules) — verify status. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Peru routes. Peru requires SENASA import permit — apply 30+ days ahead.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Santiago (SCL)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — Chile is not on the LATAM US suspension list, so cabin is available. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Chile routes. Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on paperwork.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Buenos Aires (EZE)", duration: "9h", note: "LATAM cabin (under 7 kg) — Argentina is not on the LATAM US suspension list, so cabin is available. American Airlines: cargo only (PetEmbark) — does NOT accept cabin pets on US-Argentina routes. Argentina requires SENASA-endorsed health certificate and ISO microchip.", tags: ["us", "south-america"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -875,7 +875,7 @@ const DIRECT_ROUTES = [
   { from: "Toronto (YYZ)", to: "Madrid (MAD)", duration: "8h 30m", note: "Air Canada / Iberia. ✓ Cabin. Toronto→Spain cabin option.", tags: ["canada", "europe"] },
 
   // ═══════ FROM SÃO PAULO ═══════
-  { from: "São Paulo (GRU)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (LATAM under 7 kg, American under 9 kg). Brazil's main US gateway — daily.", tags: ["south-america", "us"] },
+  { from: "São Paulo (GRU)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — note: cabin pet service on this route currently suspended due to CDC dog rules; verify status before booking. American Airlines: cargo only (PetEmbark). Brazil's main US gateway — daily.", tags: ["south-america", "us"] },
   { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg, ~USD 200). Direct overnight.", tags: ["south-america", "us"] },
   { from: "São Paulo (GRU)", to: "Madrid (MAD)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin. The main South America → Europe cabin route. Onward to most of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Paris (CDG)", duration: "11h 30m", note: "Air France, LATAM. ✓ Cabin. Onward to all of Europe.", tags: ["south-america", "europe"] },
@@ -884,7 +884,7 @@ const DIRECT_ROUTES = [
   { from: "São Paulo (GRU)", to: "Lisbon (LIS)", duration: "10h", note: "TAP Portugal, LATAM. ✓ Cabin. Brazil-Portugal cultural/migration corridor — busy cabin route.", tags: ["south-america", "europe"] },
 
   // ═══════ FROM BUENOS AIRES ═══════
-  { from: "Buenos Aires (EZE)", to: "Miami (MIA)", duration: "9h", note: "American, LATAM. ✓ Cabin. Direct US east coast cabin.", tags: ["south-america", "us"] },
+  { from: "Buenos Aires (EZE)", to: "Miami (MIA)", duration: "9h", note: "LATAM cabin (under 7 kg). American Airlines: cargo only — does NOT accept cabin pets on US-Argentina routes. Direct US east coast.", tags: ["south-america", "us"] },
   { from: "Buenos Aires (EZE)", to: "São Paulo (GRU)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin. Short Mercosur hop.", tags: ["south-america"] },
   { from: "Buenos Aires (EZE)", to: "Santiago (SCL)", duration: "2h", note: "LATAM, JetSmart, Sky. ✓ Cabin (LATAM under 7 kg). Trans-Andes hop, busiest South America route.", tags: ["south-america"] },
   { from: "Buenos Aires (EZE)", to: "Madrid (MAD)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. The Argentina-Spain cabin link.", tags: ["south-america", "europe"] },
@@ -892,18 +892,18 @@ const DIRECT_ROUTES = [
   // ═══════ FROM SANTIAGO ═══════
   { from: "Santiago (SCL)", to: "São Paulo (GRU)", duration: "4h 30m", note: "LATAM. ✓ Cabin (under 7 kg). LATAM's home base.", tags: ["south-america"] },
   { from: "Santiago (SCL)", to: "Buenos Aires (EZE)", duration: "2h", note: "LATAM, JetSmart, Sky. ✓ Cabin.", tags: ["south-america"] },
-  { from: "Santiago (SCL)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin. Chile's main US route.", tags: ["south-america", "us"] },
+  { from: "Santiago (SCL)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM cabin (under 7 kg). American Airlines: cargo only — does NOT accept cabin pets on US-Chile routes. Chile's main US route.", tags: ["south-america", "us"] },
   { from: "Santiago (SCL)", to: "Madrid (MAD)", duration: "13h", note: "Iberia, LATAM. ✓ Cabin. Direct LATAM-operated long-haul cabin pet route.", tags: ["south-america", "europe"] },
   { from: "Santiago (SCL)", to: "Lima (LIM)", duration: "3h 30m", note: "LATAM, Sky. ✓ Cabin.", tags: ["south-america"] },
 
   // ═══════ FROM BOGOTÁ ═══════
-  { from: "Bogotá (BOG)", to: "Miami (MIA)", duration: "3h 30m", note: "Avianca, American. ✓ Cabin (Avianca under 10 kg). Avianca's main US route. NOTE: dog breeds prohibited from import to Colombia (Pit Bull / AmStaff / Staffordshire) also affect Colombia-resident dogs of these breeds returning home.", tags: ["south-america", "us"] },
+  { from: "Bogotá (BOG)", to: "Miami (MIA)", duration: "3h 30m", note: "Avianca cabin (under 10 kg). LATAM cabin currently suspended US ↔ Colombia (CDC dog rules) — verify status. American Airlines: cargo only — does NOT accept cabin pets on US-Colombia routes. NOTE: dog breeds prohibited from import to Colombia (Pit Bull / AmStaff / Staffordshire) also affect Colombia-resident dogs of these breeds returning home.", tags: ["south-america", "us"] },
   { from: "Bogotá (BOG)", to: "Madrid (MAD)", duration: "10h", note: "Avianca, Iberia. ✓ Cabin. Colombia-Spain cabin route — Avianca's main long-haul.", tags: ["south-america", "europe"] },
   { from: "Bogotá (BOG)", to: "Mexico City (MEX)", duration: "4h 30m", note: "Avianca, Aeromexico. ✓ Cabin (both under 10 kg).", tags: ["south-america", "mexico"] },
   { from: "Bogotá (BOG)", to: "Lima (LIM)", duration: "3h", note: "Avianca, LATAM. ✓ Cabin.", tags: ["south-america"] },
 
   // ═══════ FROM LIMA ═══════
-  { from: "Lima (LIM)", to: "Miami (MIA)", duration: "5h 30m", note: "LATAM, American. ✓ Cabin.", tags: ["south-america", "us"] },
+  { from: "Lima (LIM)", to: "Miami (MIA)", duration: "5h 30m", note: "LATAM cabin (under 7 kg) — note: cabin suspension on US ↔ Peru may apply; verify. American Airlines: cargo only — does NOT accept cabin pets on US-Peru routes.", tags: ["south-america", "us"] },
   { from: "Lima (LIM)", to: "Bogotá (BOG)", duration: "3h", note: "Avianca, LATAM. ✓ Cabin.", tags: ["south-america"] },
   { from: "Lima (LIM)", to: "Madrid (MAD)", duration: "11h 30m", note: "Iberia, LATAM. ✓ Cabin. Peru-Spain direct.", tags: ["south-america", "europe"] },
   { from: "Lima (LIM)", to: "Santiago (SCL)", duration: "3h 30m", note: "LATAM, Sky. ✓ Cabin.", tags: ["south-america"] },

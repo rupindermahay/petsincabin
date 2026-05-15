@@ -262,7 +262,7 @@ export default function FlyingWithAFrenchBulldog() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Most airlines apply similar embargos.</strong> Some are explicit (temperature thresholds published); others are case-by-case (gate agent's discretion). British Airways and IAG Cargo apply seasonal restrictions May–September on many UK routes. American Airlines has a 75°F upper limit for cargo pet acceptance in summer (lower than Lufthansa's 80°F).
+              <strong>Most airlines apply similar embargos.</strong> Some are explicit (temperature thresholds published); others are case-by-case (gate agent's discretion). British Airways and IAG Cargo apply seasonal restrictions May–September on many UK routes. American Airlines refuses cargo pets when forecast temperatures exceed 85°F (29.4°C) at any point on the itinerary, with full May 1–September 30 embargos on flights through Phoenix (PHX), Tucson (TUS), Las Vegas (LAS) and Palm Springs (PSP).
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

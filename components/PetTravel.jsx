@@ -2020,50 +2020,164 @@ const FALLBACK_STRATEGIES = {
   "south-america": (o, d) => {
     // Determine specific SA destination from the destination string
     const dLower = (d || "").toLowerCase();
-    let cabinAirline, hubDescription, importNote;
+    const oLower = (o || "").toLowerCase();
+    const isFromUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta/i.test(o || "");
+    const isFromEurope = /lhr|cdg|fra|ams|mad|fco|zrh|bcn|man|edi|dub|vie|cph|arn|osl|hel|wAW|london|paris|frankfurt|amsterdam|madrid|rome|zurich|barcelona/i.test(o || "");
+
+    let legs = [], hubDescription, importNote;
+
     if (dLower.includes("bogot") || dLower.includes("bog")) {
-      cabinAirline = "Avianca ✓ Cabin (10 kg combined)";
-      hubDescription = "Avianca direct from Miami/JFK/LAX, or via Madrid from Europe";
+      if (isFromUS) {
+        legs = [{ route: `${o} → Bogotá El Dorado (BOG)`, time: "5h 30m – 7h", airline: "Avianca ✓ Cabin (under 10 kg)" }];
+        hubDescription = "Avianca runs direct cabin pet routes from JFK, MIA, LAX, IAH, BOS, ORD, MCO into Bogotá. American Airlines and LATAM are cargo only on this route — Avianca is your cabin option.";
+      } else if (isFromEurope) {
+        legs = [{ route: `${o} → Bogotá El Dorado (BOG)`, time: "10h+", airline: "Avianca or Iberia ✓ Cabin (under 10 kg)" }];
+        hubDescription = "Avianca direct from Madrid and London. Iberia direct from Madrid. Both carry cabin pets.";
+      } else {
+        legs = [
+          { route: `${o} → US gateway (MIA / JFK / IAH)`, time: "varies", airline: "Avianca ✓ Cabin or position via your own carrier" },
+          { route: "US gateway → Bogotá (BOG)", time: "5h 30m – 7h", airline: "Avianca ✓ Cabin (under 10 kg)" },
+        ];
+        hubDescription = "Best routing is via a US gateway on Avianca cabin.";
+      }
       importNote = "Colombia: ISO microchip + rabies 30+ days + USDA-endorsed health certificate. Pit Bull, Staffordshire, and American Staffordshire breeds are BANNED from import by law.";
-    } else if (dLower.includes("são paulo") || dLower.includes("sao paulo") || dLower.includes("gru") || dLower.includes("rio")) {
-      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
-      hubDescription = "LATAM direct from Miami/JFK/LAX (note: US↔Brazil cabin routes currently suspended due to CDC dog rules — verify before booking). Otherwise via Madrid (Iberia) or Panama City (Copa).";
-      importNote = "Brazil: the EASIEST South American entry — rabies 21+ days, USDA health certificate, microchip NOT required. Pit Bulls restricted in Rio de Janeiro specifically.";
+    } else if (dLower.includes("são paulo") || dLower.includes("sao paulo") || dLower.includes("gru") || dLower.includes("rio") || dLower.includes("gig")) {
+      if (isFromUS) {
+        legs = [
+          { route: `${o} → Madrid (MAD) or Panama City (PTY)`, time: "7-9h or 5-6h", airline: "Iberia cabin to MAD, or Copa cabin to PTY (under 10 kg)" },
+          { route: "Hub → São Paulo (GRU)", time: "10h or 7h", airline: "Iberia from MAD, or Copa from PTY ✓ Cabin" },
+        ];
+        hubDescription = "US ↔ Brazil cabin routes via LATAM are currently SUSPENDED due to CDC dog rules (verify before booking). American Airlines and Delta are cargo only to Brazil. The cabin workaround: via Madrid on Iberia, or via Panama City on Copa.";
+      } else if (isFromEurope) {
+        legs = [{ route: `${o} → São Paulo (GRU)`, time: "11-12h", airline: "Iberia, Air France, KLM, or Lufthansa ✓ Cabin (under 8 kg)" }];
+        hubDescription = "Europe → Brazil direct is well-served by major EU carriers with cabin pets. Madrid (Iberia), Paris (Air France), Amsterdam (KLM), and Frankfurt (Lufthansa) all run direct cabin routes to GRU.";
+      } else {
+        legs = [{ route: `${o} → São Paulo (GRU)`, time: "varies — long-haul", airline: "LATAM ✓ Cabin (under 7 kg)" }];
+        hubDescription = "LATAM is the natural carrier within South America.";
+      }
+      importNote = "Brazil: the EASIEST South American entry — rabies 21+ days, USDA-endorsed health certificate. Microchip NOT required (but strongly recommended). Pit Bulls restricted in Rio de Janeiro specifically.";
     } else if (dLower.includes("buenos aires") || dLower.includes("eze")) {
-      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
-      hubDescription = "LATAM direct from JFK/MIA, or via São Paulo. Aerolíneas Argentinas codeshares but cargo only.";
-      importNote = "Argentina: ISO microchip + rabies 30+ days + SENASA health certificate (USDA-endorsed for US origin). No quarantine.";
+      if (isFromUS) {
+        legs = [
+          { route: `${o} → Panama City (PTY)`, time: "5-6h", airline: "Copa ✓ Cabin (under 10 kg)" },
+          { route: "Panama City (PTY) → Buenos Aires (EZE)", time: "8h 30m", airline: "Copa ✓ Cabin (under 10 kg)" },
+        ];
+        hubDescription = "LATAM cabin US ↔ Argentina is currently suspended. The reliable cabin route is via Panama City on Copa Airlines, end-to-end on the same Copa-operated itinerary.";
+      } else if (isFromEurope) {
+        legs = [{ route: `${o} → Buenos Aires (EZE)`, time: "13-14h", airline: "Iberia, Air France, or Lufthansa ✓ Cabin (under 8 kg)" }];
+        hubDescription = "Madrid (Iberia), Paris (Air France), and Frankfurt (Lufthansa) all run direct cabin routes to EZE.";
+      } else {
+        legs = [{ route: `${o} → Buenos Aires (EZE)`, time: "varies", airline: "LATAM ✓ Cabin (under 7 kg)" }];
+        hubDescription = "LATAM connects most of South America to Buenos Aires in cabin.";
+      }
+      importNote = "Argentina: ISO microchip + rabies 30+ days + SENASA-accepted health certificate (USDA-endorsed for US origin). No quarantine, no breed bans.";
     } else if (dLower.includes("santiago") || dLower.includes("scl")) {
-      cabinAirline = "LATAM ✓ Cabin (7 kg combined)";
-      hubDescription = "LATAM direct from JFK/MIA/LAX, or via Lima. Copa via Panama City also works.";
-      importNote = "Chile: ISO microchip + rabies 30+ days + SAG import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
+      if (isFromUS) {
+        legs = [{ route: `${o} → Santiago (SCL)`, time: "9-11h", airline: "LATAM ✓ Cabin (under 7 kg)" }];
+        hubDescription = "LATAM runs direct cabin pet flights from JFK, MIA, LAX to Santiago. Chile is NOT on the CDC suspension list for LATAM cabin pets.";
+      } else if (isFromEurope) {
+        legs = [{ route: `${o} → Santiago (SCL)`, time: "14h+", airline: "Iberia or LATAM ✓ Cabin (under 7 kg)" }];
+        hubDescription = "Madrid (Iberia, LATAM) and Frankfurt (LATAM) run direct cabin routes to Santiago.";
+      } else {
+        legs = [{ route: `${o} → Santiago (SCL)`, time: "varies", airline: "LATAM ✓ Cabin (under 7 kg)" }];
+        hubDescription = "LATAM is the natural Chilean cabin carrier.";
+      }
+      importNote = "Chile: ISO microchip + rabies 30+ days + SAG pre-arranged import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
     } else if (dLower.includes("lima") || dLower.includes("lim")) {
-      cabinAirline = "LATAM or Avianca ✓ Cabin";
-      hubDescription = "LATAM direct from Miami, or Avianca via Bogotá. Copa via Panama also serves Lima.";
-      importNote = "Peru: ISO microchip + rabies 30+ days + SENASA import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
+      if (isFromUS) {
+        legs = [{ route: `${o} → Lima (LIM)`, time: "6-8h", airline: "LATAM or Avianca via Bogotá ✓ Cabin" }];
+        hubDescription = "LATAM direct from MIA (cabin reliable). Avianca cabin via Bogotá from JFK/LAX is the alternative. Copa via Panama also works.";
+      } else if (isFromEurope) {
+        legs = [
+          { route: `${o} → Madrid (MAD)`, time: "varies", airline: "Iberia, Air France, KLM, Lufthansa ✓ Cabin (under 8 kg)" },
+          { route: "Madrid (MAD) → Lima (LIM)", time: "12h", airline: "LATAM or Iberia ✓ Cabin" },
+        ];
+        hubDescription = "Madrid is the European cabin gateway to Lima.";
+      } else {
+        legs = [{ route: `${o} → Lima (LIM)`, time: "varies", airline: "LATAM or Avianca ✓ Cabin" }];
+        hubDescription = "LATAM and Avianca both serve Lima in cabin.";
+      }
+      importNote = "Peru: ISO microchip + rabies 30+ days + SENASA pre-arranged import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
     } else if (dLower.includes("montevideo") || dLower.includes("mvd")) {
-      cabinAirline = "Copa ✓ Cabin (10 kg combined) via Panama City";
-      hubDescription = "Copa Airlines is the ONLY practical cabin route to Montevideo. Route: your origin → Panama City (PTY) → Montevideo (MVD), all on Copa. LATAM via São Paulo is cargo only to MVD.";
-      importNote = "Uruguay: ISO microchip + rabies 30+ days + MGAP health certificate (USDA-endorsed for US origin). Reach Uruguay via Panama City on Copa.";
+      if (isFromUS) {
+        legs = [
+          { route: `${o} → Panama City (PTY)`, time: "5-6h", airline: "Copa ✓ Cabin (under 10 kg)" },
+          { route: "Panama City (PTY) → Montevideo (MVD)", time: "7h 30m", airline: "Copa ✓ Cabin (under 10 kg)" },
+        ];
+        hubDescription = "Copa Airlines via Panama City is the ONLY practical cabin route to Montevideo. Book end-to-end on the same Copa-operated itinerary — no codeshares (Copa won't transit pets through Panama on third-party tickets).";
+      } else if (isFromEurope) {
+        legs = [
+          { route: `${o} → Madrid (MAD)`, time: "varies", airline: "Iberia, Air France, KLM, Lufthansa ✓ Cabin" },
+          { route: "Madrid (MAD) → Montevideo (MVD)", time: "13h", airline: "Iberia ✓ Cabin (under 8 kg)" },
+        ];
+        hubDescription = "Iberia direct Madrid → Montevideo is the European cabin route. Or use Copa via Panama City after reaching the US.";
+      } else {
+        legs = [
+          { route: `${o} → Buenos Aires (EZE) or Panama City (PTY)`, time: "varies", airline: "LATAM or Copa ✓ Cabin" },
+          { route: "Hub → Montevideo (MVD)", time: "1h or 7h 30m", airline: "LATAM from EZE, or Copa from PTY ✓ Cabin" },
+        ];
+        hubDescription = "Buenos Aires is the closest international hub (1-hour hop), Panama City is the broader-reach option.";
+      }
+      importNote = "Uruguay: ISO microchip + rabies 30+ days + MGAP health certificate (USDA-endorsed for US origin). No quarantine.";
     } else {
-      cabinAirline = "LATAM (7 kg), Avianca (10 kg), or Copa via Panama (10 kg)";
-      hubDescription = "From the US: LATAM direct, Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to major SA hubs.";
+      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM (7 kg), Avianca (10 kg), or Copa via Panama (10 kg) ✓ Cabin" }];
+      hubDescription = "From the US: LATAM direct (where not suspended), Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to major SA hubs.";
       importNote = "Each South American country has its own paperwork. Brazil is the most lenient; Argentina, Chile, Peru, Uruguay all need ISO microchips and 30+ day rabies waits.";
     }
     return {
-      legs: [
-        { route: `${o} → ${d}`, time: "varies — long-haul", airline: cabinAirline },
-      ],
-      note: `${hubDescription}. ${importNote} Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
+      legs,
+      note: `${hubDescription} ${importNote} Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
     };
   },
   // Any origin = South America
-  "south-america-out": (o, d) => ({
-    legs: [
-      { route: `São Paulo / Santiago / Bogotá / Buenos Aires / Lima / Montevideo → ${d}`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Copa (via Panama), Aeromexico for routes to the Americas. For Europe: LATAM cabin to MAD; Avianca cabin to MAD/CDG/LHR (cargo to LHR). For Asia: cargo only — no cabin routes." },
-    ],
-    note: `Leaving South America: cabin pet routes exist comfortably to North America and Europe. LATAM, Avianca, and Copa all serve key transatlantic and North American hubs. Important: Avianca does NOT fly cabin pets to the UK, Galapagos, Aruba, or Curaçao. Azul Brazilian Airlines does not currently accept US-bound dogs due to CDC rabies-region restrictions. Brazil → US needs a rabies-vaccinated dog with USDA-accepted documentation; Argentina/Chile → US is more flexible (those are not on the CDC high-risk list). Check destination requirements early — paperwork can take 30+ days.`,
-  }),
+  "south-america-out": (o, d) => {
+    const oLower = (o || "").toLowerCase();
+    const dLower = (d || "").toLowerCase();
+    const isToUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta/i.test(d || "");
+    const isToEurope = /lhr|cdg|fra|ams|mad|fco|zrh|bcn|man|edi|dub|london|paris|frankfurt|amsterdam|madrid|rome|zurich|barcelona/i.test(d || "");
+    const isToUK = /lhr|lgw|man|edi|london|manchester|edinburgh|glasgow|birmingham/i.test(d || "");
+
+    let legs = [], note;
+
+    if (isToUK) {
+      legs = [
+        { route: `${o} → Madrid (MAD) or Paris (CDG)`, time: "10-14h", airline: "Iberia, LATAM, Air France, Avianca ✓ Cabin (under 8-10 kg)" },
+        { route: "Hub → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
+        { route: "Eurotunnel Folkestone → UK", time: "35 min", airline: "Pet stays in your vehicle ✓" },
+      ];
+      note = "No commercial airline allows pets in the cabin INTO the UK — this is UK government policy. Cabin all the way to a continental EU hub, then Eurotunnel Le Shuttle is the workaround. Tapeworm treatment 24-120 hours before UK arrival is mandatory for dogs.";
+    } else if (isToUS) {
+      if (oLower.includes("são paulo") || oLower.includes("sao paulo") || oLower.includes("gru")) {
+        legs = [
+          { route: `${o} → Madrid (MAD) or Panama City (PTY)`, time: "10h or 7h", airline: "Iberia cabin to MAD, or Copa cabin to PTY" },
+          { route: `Hub → ${d}`, time: "7-9h", airline: "Iberia, Air France, KLM, or Copa ✓ Cabin" },
+        ];
+        note = "Brazil → US cabin via LATAM is currently suspended (CDC dog rules). The cabin workaround: via Madrid on Iberia, or via Panama City on Copa. Brazil → US needs USDA-accepted documentation; check current CDC dog rules.";
+      } else if (oLower.includes("bogot") || oLower.includes("bog")) {
+        legs = [{ route: `${o} → ${d}`, time: "5-7h", airline: "Avianca ✓ Cabin (under 10 kg)" }];
+        note = "Avianca direct from Bogotá to most US gateways (JFK, MIA, LAX, IAH, BOS, ORD, MCO) in cabin. Standard US re-entry: CDC Dog Import Form online (dogs only, cats exempt). Colombia is not on the CDC high-risk list.";
+      } else if (oLower.includes("montevideo") || oLower.includes("mvd") || oLower.includes("buenos aires") || oLower.includes("eze")) {
+        legs = [
+          { route: `${o} → Panama City (PTY)`, time: "7-8h", airline: "Copa ✓ Cabin (under 10 kg)" },
+          { route: `Panama City (PTY) → ${d}`, time: "5-6h", airline: "Copa ✓ Cabin (under 10 kg)" },
+        ];
+        note = "Copa Airlines via Panama City is the cabin workaround for southern South America to the US. Single Copa itinerary end-to-end. Standard US re-entry paperwork.";
+      } else {
+        legs = [{ route: `${o} → ${d}`, time: "varies", airline: "LATAM, Avianca, or Copa via PTY ✓ Cabin" }];
+        note = "Direct cabin routes exist on LATAM (where not suspended), Avianca, or Copa via Panama. Verify current LATAM US suspension status before booking.";
+      }
+    } else if (isToEurope) {
+      legs = [{ route: `${o} → Madrid (MAD) or Paris (CDG) or Frankfurt (FRA)`, time: "11-14h", airline: "Iberia, LATAM, Air France, Lufthansa, or Avianca ✓ Cabin" }];
+      note = "South America → Europe is well-served in cabin. Madrid (Iberia, LATAM, Avianca), Paris (Air France), Frankfurt (Lufthansa, LATAM) and Amsterdam (KLM) all run direct cabin pet routes. EU Health Certificate required (issued by accredited vet, valid 10 days).";
+    } else {
+      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM, Avianca, or Copa via Panama ✓ Cabin" }];
+      note = "Leaving South America for the Americas or Europe is cabin-friendly. For Asia: cargo only — no commercial cabin pet routes from South America to Asia.";
+    }
+    return {
+      legs,
+      note: `${note} Brachycephalic dogs cannot fly cargo on LATAM, Avianca, or Copa — cabin only.`,
+    };
+  },
   // Any destination = Central America (Panama)
   "central-america": (o, d) => ({
     legs: [
@@ -2079,33 +2193,103 @@ const FALLBACK_STRATEGIES = {
     note: `Leaving Panama with a pet: Copa's network covers nearly all of the Americas with cabin pets under 10 kg. Useful onward connections: PTY → Montevideo (Uruguay), PTY → Buenos Aires, PTY → Santiago, PTY → São Paulo, PTY → Lima, PTY → Bogotá. The destination country's import paperwork applies normally.`,
   }),
   // Any destination = Mexico (generic fallback when not handled by REGION_PAIR_STRATEGIES)
-  "mexico": (o, d) => ({
-    legs: [
-      { route: `${o} → Mexico City (MEX) / Cancún (CUN) / Guadalajara (GDL)`, time: "varies", airline: "Cabin: Aeromexico (9 kg combined), Volaris (12 kg combined, but no snub-nosed breeds), American, Delta, United, Air Canada, Copa, Iberia all carry cabin pets to Mexico." },
-    ],
-    note: `Mexico is one of the easier international destinations for cabin pet travel. SENASICA Health Certificate from an accredited vet within 10 days of travel, rabies vaccine on record. No quarantine, no import permit. SADER/SENASICA inspect pets free of charge on arrival. Pets must be at least 3 months old. No microchip required for entry (though strongly recommended for return travel and identification).`,
-  }),
+  "mexico": (o, d) => {
+    const dLower = (d || "").toLowerCase();
+    let leg, hub;
+    if (dLower.includes("cancun") || dLower.includes("cancún") || dLower.includes("cun")) {
+      leg = { route: `${o} → Cancún (CUN)`, time: "varies", airline: "American, Delta, United, JetBlue, Spirit, Aeromexico, Air Canada ✓ Cabin" };
+      hub = "Cancún is one of the easiest Mexican entry points — heavy US carrier service in cabin.";
+    } else if (dLower.includes("guadalajara") || dLower.includes("gdl")) {
+      leg = { route: `${o} → Guadalajara (GDL)`, time: "varies", airline: "Aeromexico, Volaris, American, United ✓ Cabin" };
+      hub = "Guadalajara is well-served from US gateways with cabin pets.";
+    } else {
+      leg = { route: `${o} → Mexico City (MEX)`, time: "varies", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United, Air Canada, Copa, Iberia ✓ Cabin" };
+      hub = "Mexico City is the main international cabin pet hub for Mexico.";
+    }
+    return {
+      legs: [leg],
+      note: `${hub} Mexico is one of the easier international destinations for cabin pet travel. SENASICA Health Certificate from an accredited vet within 10 days of travel, rabies vaccine on record. No quarantine, no import permit. SADER/SENASICA inspect pets free of charge on arrival. Pets must be at least 3 months old. No microchip required for entry (though strongly recommended for return travel and identification).`,
+    };
+  },
   // Any origin = Mexico
-  "mexico-out": (o, d) => ({
-    legs: [
-      { route: `Mexico City (MEX) / Cancún (CUN) → ${d}`, time: "varies", airline: "Cabin: Aeromexico, Volaris (no brachy), American, Delta, United, Air Canada, Iberia, Aeromexico to Japan and Madrid. Copa onward to deeper South America." },
-    ],
-    note: `Leaving Mexico with a pet: most US, Canadian, and Latin American destinations are accessible in cabin. Aeromexico uniquely offers MEX ↔ Tokyo cabin and MEX ↔ Madrid cabin direct. Destination paperwork applies: US re-entry needs the CDC Dog Import Form for dogs (cats exempt). EU entry needs the EU Health Certificate (10 days) plus rabies 21+ days.`,
-  }),
+  "mexico-out": (o, d) => {
+    const dLower = (d || "").toLowerCase();
+    const isToUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta/i.test(d || "");
+    const isToEurope = /lhr|cdg|fra|ams|mad|fco|zrh|bcn|london|paris|frankfurt|amsterdam|madrid|rome|zurich|barcelona/i.test(d || "");
+    let leg, note;
+    if (isToUS) {
+      leg = { route: `${o} → ${d}`, time: "2-6h", airline: "American, Delta, United, Aeromexico, JetBlue, Spirit, Volaris (no brachy) ✓ Cabin" };
+      note = "Mexico → US in cabin is one of the easiest cross-border routes. CDC Dog Import Form online (dogs only, cats exempt). Mexico is NOT on the CDC high-risk rabies list.";
+    } else if (isToEurope) {
+      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Aeromexico (to MAD), Iberia, Air France, KLM ✓ Cabin" };
+      note = "Aeromexico Mexico City → Madrid is the direct cabin route. Iberia, Air France, KLM also run cabin pets MEX → Europe. EU Health Certificate (10 days) plus rabies 21+ days required.";
+    } else if (dLower.includes("tokyo") || dLower.includes("nrt") || dLower.includes("hnd")) {
+      leg = { route: `${o} → Tokyo (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
+      note = "Aeromexico MEX → NRT direct cabin is one of the very few Pacific cabin pet routes. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
+    } else {
+      leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin" };
+      note = "Aeromexico has the broadest cabin pet network from Mexico. For deeper South America, connect via Panama City on Copa. For Japan, Aeromexico direct.";
+    }
+    return { legs: [leg], note };
+  },
   // Any destination = Japan
-  "japan": (o, d) => ({
-    legs: [
-      { route: `${o} → Tokyo / Osaka / Nagoya`, time: "varies — long-haul", airline: "⚠ Most international airlines are cargo-only into Japan. Cabin exceptions: United (from US), Korean Air / Asiana / T'Way / Air Premia (from Korea), Aeromexico (from Mexico)." },
-    ],
-    note: `Japan is a strict pet-import country. The 180-day rabies-titer wait is the binding constraint — start preparation 7+ months before your arrival date. JAL and ANA do NOT carry cabin pets on any flight; for cabin, you need United (US ↔ Japan), Korean carriers (Japan ↔ Korea), or Aeromexico (Japan ↔ Mexico). Most other airlines are cargo-only. Plus: AQS Advance Notification must be submitted ≥40 days before arrival, FAVN titer ≥0.5 IU/ml, two rabies vaccines, ISO microchip implanted before the first vaccine. Get any of this wrong and your pet is detained up to 180 days at your expense.`,
-  }),
+  "japan": (o, d) => {
+    const dLower = (d || "").toLowerCase();
+    const oLower = (o || "").toLowerCase();
+    const isFromUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|sea|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta|seattle/i.test(o || "");
+    const isFromKorea = /icn|seoul/i.test(o || "");
+    const isFromMexico = /mex|mexico city|gdl|guadalajara/i.test(o || "");
+    let leg, hub;
+    let arrivalPort = "Tokyo Narita (NRT)";
+    if (dLower.includes("haneda") || dLower.includes("hnd")) arrivalPort = "Tokyo Haneda (HND)";
+    else if (dLower.includes("kansai") || dLower.includes("kix") || dLower.includes("osaka")) arrivalPort = "Osaka Kansai (KIX)";
+    else if (dLower.includes("nagoya") || dLower.includes("ngo")) arrivalPort = "Nagoya Chubu (NGO)";
+    else if (dLower.includes("fukuoka") || dLower.includes("fuk")) arrivalPort = "Fukuoka (FUK)";
+
+    if (isFromUS) {
+      leg = { route: `${o} → ${arrivalPort}`, time: "11-13h", airline: "United ✓ Cabin (no weight limit — pet must fit under seat) — one of very few US ↔ Japan cabin pet airlines" };
+      hub = "United is uniquely the only US carrier offering cabin pets to Japan direct (SFO/ORD/IAD ↔ NRT/HND/KIX). JAL and ANA are cargo-only for pets. American, Delta, Hawaiian are not approved for Japan cabin pet routing.";
+    } else if (isFromKorea) {
+      leg = { route: `${o} → ${arrivalPort}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
+      hub = "Korea ↔ Japan is one of the best cabin pet paths for Japan entry. Korean Air's max cabin weight is 7 kg, T'Way's is 9 kg.";
+    } else if (isFromMexico) {
+      leg = { route: `${o} → Tokyo Narita (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
+      hub = "Aeromexico Mexico City → NRT direct cabin is one of the very few Pacific cabin pet routes. Snub-nosed breeds welcome in cabin.";
+    } else {
+      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN), Aeromexico (from Mexico)" };
+      hub = "Route via Korea on Korean Air or via the US on United — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan.";
+    }
+    return {
+      legs: [leg],
+      note: `${hub} The 180-day rabies-titer wait is the binding constraint — start preparation 7+ months before your arrival date. AQS Advance Notification must be submitted ≥40 days before arrival, FAVN titer ≥0.5 IU/ml, two rabies vaccines, ISO microchip implanted before the first vaccine. Get any of this wrong and your pet is detained up to 180 days at your expense.`,
+    };
+  },
   // Any origin = Japan
-  "japan-out": (o, d) => ({
-    legs: [
-      { route: `Tokyo / Osaka / Nagoya → ${d}`, time: "varies — long-haul", airline: "⚠ JAL and ANA cargo-only. Cabin: United (to US), Korean carriers (to Korea), Aeromexico (to Mexico). Other destinations need a connection or cargo." },
-    ],
-    note: `Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days. Cabin options out of Japan are limited — United for US-bound, Korean carriers for Korea-bound, Aeromexico for Mexico-bound. Other destinations (UK, EU, India, etc.) require either a Korean-hub cabin connection or cargo. The destination country's import paperwork (e.g. CDC Dog Import Form for US, EU Animal Health Certificate, India's AQCS NOC) applies normally.`,
-  }),
+  "japan-out": (o, d) => {
+    const dLower = (d || "").toLowerCase();
+    const isToUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|sea|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta|seattle/i.test(d || "");
+    const isToKorea = /icn|seoul/i.test(d || "");
+    const isToMexico = /mex|mexico city/i.test(d || "");
+    let leg, note;
+    if (isToUS) {
+      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "United ✓ Cabin (no weight limit, pet under seat) — one of few US-Japan cabin pet routes" };
+      note = "United is the cabin pet option from Japan to US. JAL and ANA are cargo-only. CDC Dog Import Form online for US re-entry (dogs only).";
+    } else if (isToKorea) {
+      leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), Air Premia ✓ Cabin" };
+      note = "Japan → Korea is a short, well-served cabin route — and from Seoul you can connect onward on Korean Air's 30+ country cabin network.";
+    } else if (isToMexico) {
+      leg = { route: `${o} → Mexico City (MEX)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
+      note = "Aeromexico Japan → Mexico City direct cabin route. Mexico is one of the easier entry countries for pets.";
+    } else {
+      // For UK, EU, other destinations — need a connection via Korea or US
+      leg = { route: `${o} → Seoul (ICN) → ${d}`, time: "varies", airline: "Leg 1: Korean Air ✓ Cabin (under 7 kg). Leg 2: Korean Air cabin connection (or other carrier)" };
+      note = "Direct cabin pets Japan → UK/EU don't exist (BA, Lufthansa, AF, KLM are all cargo-only out of Japan). The cabin workaround is via Seoul on Korean Air, then onward on Korean Air's cabin network to your destination.";
+    }
+    return {
+      legs: [leg],
+      note: `${note} Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days.`,
+    };
+  },
 };
 
 // A region-pair can have ONE strategy (a single function) or SEVERAL (an array

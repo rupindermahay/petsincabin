@@ -3930,24 +3930,21 @@ function NavBar({ onStartIntake }) {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
-        {/* LOGO ROW */}
-        <div className="flex items-center justify-between py-3 border-b border-stone-200/80">
+        {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}
+        <div className="flex md:hidden items-center justify-between py-3">
           <button onClick={() => go("top")} className="flex items-center gap-3 group">
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-16 h-16 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-14 h-14 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
             <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "23px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "21px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
-              {/* Tagline stretched to the exact width of the wordmark above it.
-                  flex + justify-between spreads the letters edge-to-edge so the
-                  baseline reads as the same width as "Pets in Cabin". */}
               <span
                 aria-label="by Theo's Mum"
                 className="flex justify-between w-full text-[9px] uppercase text-stone-400 leading-none font-sans"
@@ -3960,10 +3957,9 @@ function NavBar({ onStartIntake }) {
             </div>
           </button>
 
-          {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden flex items-center gap-2 px-3 py-2 text-stone-700 hover:text-amber-700 transition-colors border border-stone-300 hover:border-amber-400 rounded-sm"
+            className="flex items-center gap-2 px-3 py-2 text-stone-700 hover:text-amber-700 transition-colors border border-stone-300 hover:border-amber-400 rounded-sm"
             aria-label="Menu"
           >
             {open ? <X className="w-4 h-4" strokeWidth={2} /> : <Menu className="w-4 h-4" strokeWidth={2} />}
@@ -3971,15 +3967,50 @@ function NavBar({ onStartIntake }) {
           </button>
         </div>
 
-        {/* NAV ROWS — two explicit rows, evenly spread */}
-        <div className="hidden md:block">
-          {/* Row 1 */}
-          <div className="flex items-center justify-between border-b border-stone-100">
-            {row1.map((s) => <NavItem key={s.id} s={s} />)}
-          </div>
-          {/* Row 2 */}
-          <div className="flex items-center justify-between">
-            {row2.map((s) => <NavItem key={s.id} s={s} />)}
+        {/* DESKTOP: logo on the left, two nav rows stacked to its right —
+            all on the same level. Collapses the old three-row nav into two,
+            which gives the hero below more vertical room. */}
+        <div className="hidden md:flex items-stretch gap-8 py-3">
+          {/* Logo + wordmark — left, vertically centred against the nav rows */}
+          <button
+            onClick={() => go("top")}
+            className="flex items-center gap-3 group flex-shrink-0 self-center"
+          >
+            <img
+              src="/logo.png"
+              alt="Pets in Cabin"
+              className="w-[72px] h-[72px] rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+            />
+            <div className="flex flex-col items-start gap-1">
+              <span
+                className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
+                style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.02em" }}
+              >
+                Pets in Cabin
+              </span>
+              <span
+                aria-label="by Theo's Mum"
+                className="flex justify-between w-full text-[9px] uppercase text-stone-400 leading-none font-sans"
+                style={{ letterSpacing: "0" }}
+              >
+                {"BY THEO'S MUM".split("").map((ch, i) => (
+                  <span key={i}>{ch === " " ? "\u00A0" : ch}</span>
+                ))}
+              </span>
+            </div>
+          </button>
+
+          {/* Hairline divider between logo and nav rows */}
+          <div className="w-px bg-stone-200 self-stretch" />
+
+          {/* Two nav rows, stacked, filling the space to the right of the logo */}
+          <div className="flex-1 flex flex-col justify-center">
+            <div className="flex items-center justify-between border-b border-stone-100">
+              {row1.map((s) => <NavItem key={s.id} s={s} />)}
+            </div>
+            <div className="flex items-center justify-between">
+              {row2.map((s) => <NavItem key={s.id} s={s} />)}
+            </div>
           </div>
         </div>
       </div>
@@ -4016,7 +4047,7 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-8 pb-24 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-16 md:pt-20 pb-24 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"

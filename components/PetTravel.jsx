@@ -1,6 +1,12 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
+// ---------- SITE META ----------
+// Update this date whenever the site content changes — it's shown in the
+// footer as "Updated on DD Month YYYY" so visitors know how current the
+// guidance is. Format: "DD Month YYYY".
+const LAST_UPDATED = "15 May 2026";
+
 // ---------- DATA ----------
 
 const AIRLINES = [
@@ -379,6 +385,38 @@ const AIRLINES = [
     intl: "Yes — South America, select US and international routes",
     verified: "May 2026",
     link: "https://www.latamairlines.com/us/en/experience/prepare-your-trip/pets-transportation/cabin",
+  },
+  {
+    name: "Aeromexico",
+    tags: ["mexico", "us"],
+    cabin: "Cabin ✓ — small dogs and cats, flights 6 hours or less",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: small cats and dogs on Aeromexico-operated flights of 6 hours or less — covers domestic Mexico, Mexico↔US, Mexico↔Canada, and Mexico↔Caribbean. Cabin NOT allowed: flights over 6 hours, and no cabin pets to London (UK). Connecting onto another airline means complying with that airline's pet rules separately.",
+    originAllowed: { us: "yes", canada: "yes", uk: "no", eu: "no (flights over 6h)", india: "no", caribbean: "yes", uae: "no", mexico: "yes" },
+    destinationAllowed: { us: "yes", canada: "yes", uk: "no", eu: "no (flights over 6h)", india: "no", caribbean: "yes", uae: "no", mexico: "yes" },
+    fee: "~$162 USD international (~$168 high season) · ~$1,350–1,700 MXN domestic Mexico",
+    weight: "Pet + carrier combined max 9 kg. Carrier max 40 × 30 × 20 cm.",
+    carrier: "Hard or soft-sided carrier, max 40 × 30 × 20 cm, must fit under the seat. Well-ventilated, with a one-piece absorbent base. Pet must be able to turn around and lie down naturally.",
+    notes: "Aeromexico is the natural cabin carrier for Mexico and short cross-border routes. The 6-hour flight limit is the key constraint — it rules out cabin travel on Aeromexico's long-haul routes (Europe, Asia, South America), but covers all the common Mexico↔US and Mexico↔Canada pairs. Brachycephalic breeds CAN fly in cabin (they're only banned from cargo). Minimum 8 weeks old (6 months for US travel). One pet per passenger. Book through Aeromexico's Customer Service — not online — and arrive 2 hours early. A $125 layover fee applies for US connections of 4+ hours.",
+    intl: "Yes — Mexico, US, Canada, Caribbean (flights 6h or less)",
+    verified: "May 2026",
+    link: "https://aeromexico.com/en-us/travel-information/flying-with-pets",
+  },
+  {
+    name: "Vueling",
+    tags: ["europe"],
+    cabin: "Cabin ✓ — small dogs and cats across Europe",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: dogs, cats, birds (not birds of prey) and turtles across Vueling's European network — Spain domestics, and routes between Spain and the rest of Europe. Cabin NOT allowed: flights to/from the UK and Iceland (Vueling does not carry pets on those routes at all). Vueling has no hold or cargo option — cabin is the only way, so larger pets can't fly Vueling.",
+    originAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no" },
+    destinationAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no" },
+    fee: "~€50 domestic Spain · ~€60 international and Canary Islands",
+    weight: "Pet + carrier combined max 10 kg (8 kg on Iberia-operated flights). Soft carrier max 45 × 39 × 21 cm.",
+    carrier: "Soft-sided, non-rigid carrier only, max 45 × 39 × 21 cm. Must have ventilation holes and a waterproof base. Goes under the seat in front. Homemade carriers not accepted. Up to 2 cats or dogs of the same species/litter may share one carrier if within the weight limit.",
+    notes: "Vueling is one of the easiest cabin-pet airlines in Europe — a key carrier for Spain (Barcelona, Madrid, Valencia) and Spain↔Europe routes. No breed restrictions, brachycephalic breeds welcome in cabin. Microchip and EU pet passport with rabies vaccine (21+ days old) required. You can book the pet online during booking via the Fly Light fare — no need to call. Max 5 pets per flight (2 on Iberia-operated flights). Selecting a pet disables seat selection — your seat is assigned at check-in. Remember: no UK or Iceland routes, and no hold option at all.",
+    intl: "Yes — across Europe (not UK or Iceland)",
+    verified: "May 2026",
+    link: "https://www.vueling.com/en/vueling-services/prepare-your-trip/pets-on-board",
   },
 ];
 
@@ -3830,7 +3868,7 @@ function NavBar({ onStartIntake }) {
               >
                 Pets in Cabin
               </span>
-              <span className="text-[10px] uppercase tracking-[0.28em] text-stone-400 leading-none font-sans">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-stone-400 leading-none font-sans pl-[2px]">
                 by Theo's Mum
               </span>
             </div>
@@ -4907,7 +4945,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Twenty-three airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Twenty-five airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -7359,7 +7397,7 @@ function Footer() {
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-xs uppercase tracking-widest text-stone-500">
           <span>Edited by Theo's Mum</span>
           <span>·</span>
-          <span>Last reviewed · May 2026</span>
+          <span className="text-stone-400">Updated on {LAST_UPDATED}</span>
           <span>·</span>
           <span>Sources: CDC, USDA APHIS, IATA, individual airline policies</span>
           <span>·</span>

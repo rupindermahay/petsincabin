@@ -2564,21 +2564,21 @@ const CHECKLIST_DATA = {
       {
         title: "2 weeks before",
         items: [
-          "Let pet sleep in the carrier at home to get used to it",
+          "Let pet sleep in the carrier at home for 2 weeks beforehand to get used to it — include some full overnights if it's a long-haul flight, so they're properly settled inside it",
           "Practice short car rides in the carrier",
           "Book USDA-accredited vet appointment for health certificate (international) — <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov</a>",
-          "Print and complete the <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> (if entering U.S.)",
+          "Book your vet's 'fit to fly' health certificate appointment — <strong>effectively all international airlines require one</strong>, typically issued within 10 days of travel (some within 72 hours). Check your airline's specific window. For US-, UK-, and EU-origin pets the destination country's required health certificate (USDA, GB AHC, EU AHC, etc.) usually doubles as the airline's fit-to-fly — but always confirm with your specific airline.",
+          "Print and complete the <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> (if entering U.S.) — note these <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">rules updated in August 2024</a> and again for high-risk countries in 2025",
           "Confirm climate / temperature restrictions for your route",
-          "Buy: collapsible water bowl, leash, waste bags, calming spray (recommended)",
+          "Buy: <strong>collapsible</strong> water bowl, leash, waste bags, calming spray (recommended)",
         ],
       },
       {
         title: "Day before",
         items: [
           "Trim your pet's nails — long nails snag on carrier mesh",
-          "Wash the carrier blanket so it smells familiar",
+          "Line the carrier with a piece of <strong>unwashed</strong> bedding from home — familiar scent settles pets faster than anything else. Don't wash it; the slightly used smell is the point.",
           "Pack vet records (originals + photocopies in a Ziploc inside the carrier)",
-          "Charge your phone — you'll be juggling a lot at security",
           "Check airline's pet check-in procedure (often a separate counter)",
         ],
       },
@@ -2586,10 +2586,11 @@ const CHECKLIST_DATA = {
         title: "Day of flight",
         items: [
           "Light meal 4 hours before flight — not too much, not none",
-          "Walk your dog / let your cat use the box right before leaving",
+          "Walk your dog / let your cat use the box right before leaving the house, and again at the airport if there's a pet-relief area before security",
           "Pad the carrier with absorbent puppy pads",
           "Arrive 2.5–3 hours early (pet check-in is always in person)",
-          "Bring: food, water bowl, leash, waste bags, vet records, calming spray, comfort item",
+          "Bring: food, <strong>collapsible</strong> water bowl, leash, waste bags, vet records, calming spray, comfort item",
+          "Tip: put some of your pet's favourite treats in a small sandwich bag and tuck them into your personal item or outerwear pocket — usually slips past security scans, and you'll be glad of them at boarding when you need to settle a fidgety pet",
           "Use a backpack-style carrier OR a rolling carrier — saves your shoulders with luggage",
         ],
       },
@@ -2600,7 +2601,6 @@ const CHECKLIST_DATA = {
           "Carrier goes through X-ray empty",
           "Window seat preferred — slightly more under-seat depth, away from cart traffic",
           "If airline allows extra-legroom seats with pets, BOOK THIS — life-changing",
-          "Don't open the carrier mid-flight (most airlines + many aviation authorities require this)",
           "If pet gets stressed: calming spray works wonders; staff sometimes allow a quick lap visit",
           "On long flights: book overnight/red-eye when pets naturally sleep",
         ],
@@ -2628,7 +2628,8 @@ const CHECKLIST_DATA = {
         items: [
           "ISO 11784/11785 microchip implanted (if not already)",
           "Rabies vaccination (must be ≥21 days before entry to UK)",
-          "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet",
+          "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet — required for EU destinations",
+          "If outbound to a NON-EU country (Canada, USA, UAE, etc.): you do NOT need the GB AHC. Instead, you need (a) your airline's required health/'fit to fly' certificate, (b) any destination country paperwork (e.g. <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> for USA), and (c) for some destinations a <a href=\"https://www.gov.uk/export-health-certificates\" target=\"_blank\" rel=\"noopener noreferrer\">DEFRA Export Health Certificate</a> — start the application early as it's processed by an OV (Official Veterinarian)",
           "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
           "Book <a href=\"https://www.eurotunnel.com/uk/passengers/pets/\" target=\"_blank\" rel=\"noopener noreferrer\">Eurotunnel</a> / ferry well in advance if doing land crossing",
         ],
@@ -2636,9 +2637,17 @@ const CHECKLIST_DATA = {
       {
         title: "10 days before",
         items: [
-          "Get <a href=\"https://www.gov.uk/take-pet-abroad/animal-health-certificate\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate</a> from official vet (UK departing)",
+          "Get <a href=\"https://www.gov.uk/take-pet-abroad/animal-health-certificate\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate</a> from official vet (UK→EU)",
           "Or get <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Animal Health Certificate</a> from USDA-accredited vet (US departing)",
           "Confirm Eurotunnel/ferry booking",
+        ],
+      },
+      {
+        title: "72 hours – 10 days before (non-EU destinations)",
+        items: [
+          "Get your vet's 'fit to fly' health certificate — most international airlines require this regardless of destination (Air Canada, KLM, Lufthansa, SWISS, etc.). Letter must confirm your pet is examined, free from contagious disease, and fit to fly",
+          "Air Canada specifically: <a href=\"https://www.aircanada.com/us/en/aco/home/plan/special-assistance/pets.html\" target=\"_blank\" rel=\"noopener noreferrer\">fit-to-fly certificate</a> issued within 10 days of travel (some sources say 72 hours — confirm with your specific vet AND airline)",
+          "For dogs flying to the USA from the UK: complete the <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> receipt (UK is on the low-risk list — no extra rabies titer needed)",
         ],
       },
       {
@@ -2856,7 +2865,7 @@ const CHECKLIST_DATA = {
       {
         title: "10 days before",
         items: [
-          "Vet visit: get USDA-accredited health certificate signed",
+          "Vet visit: get USDA-accredited health certificate signed — this confirms your pet is examined, free from contagious disease, and 'fit to fly'. <strong>Airlines require this even though the US itself doesn't ask for a government health certificate</strong> — the CDC Dog Import Form alone is not enough at airline check-in.",
           "<a href=\"https://www.aphis.usda.gov/aphis/ourfocus/animalwelfare/sa_pet_travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement (varies by state — some same-day, some require mail-in)",
           "Re-confirm airline cabin booking by phone",
         ],
@@ -2906,7 +2915,7 @@ const CHECKLIST_DATA = {
       {
         title: "5 days before",
         items: [
-          "Vet visit: UAE Health Certificate signed and stamped by government-accredited official",
+          "Vet visit: UAE Health Certificate signed and stamped by government-accredited official — this also serves as your airline 'fit to fly' confirmation",
           "Email all documents to airline (Etihad requires docs ≥72 hours before)",
           "If cargo: confirm pickup/drop-off times with broker",
         ],
@@ -2948,8 +2957,9 @@ const CHECKLIST_DATA = {
       {
         title: "10 days before",
         items: [
-          "Vet-issued international health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> recommends within 10 days of arrival)",
+          "Vet-issued international health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> recommends within 10 days of arrival). Make sure your vet confirms your pet is examined, free from contagious disease, and 'fit to fly' — this same certificate doubles as the airline's fit-to-fly requirement.",
           "If from US: USDA-accredited vet only — APHIS endorsement NOT required for Canada (saves time)",
+          "If from UK: a vet 'fit to fly' letter is what you need — there is NO Animal Health Certificate equivalent for Canada (the GB AHC is EU-only). Most airlines (Air Canada, Air Transat) want this letter issued within 10 days of travel.",
           "If from elsewhere: country-specific government health certificate",
           "Re-confirm airline cabin pet booking by phone",
         ],
@@ -2998,7 +3008,7 @@ const CHECKLIST_DATA = {
       {
         title: "10 days before",
         items: [
-          "Vet-issued health certificate stating pet is free of parasites and infectious disease",
+          "Vet-issued health certificate stating pet is free of parasites and infectious disease — also covers your airline's 'fit to fly' requirement",
           "If from US: USDA APHIS endorsement is optional but recommended",
           "Internal/external deworming and tick treatment (within 6 months for ticks, dewormer date noted)",
           "Re-confirm airline cabin booking by phone",
@@ -4744,6 +4754,60 @@ function normalizeItem(s) {
 // suppressed at destination. The transitRegions argument should be an
 // ordered array of region IDs the pet legally enters between origin and
 // destination — typically extracted from the chosen workaround's tags.
+// Resolve which airlines are used on a route's flight legs, and return their
+// carrier specs so the checklist can flag the per-airline size requirements
+// (which often DIFFER on multi-leg journeys — one airline might allow more
+// length but less height, another might be the opposite. A common gotcha
+// that nobody warns about until you're at the check-in desk).
+//
+// Heuristic match — leg.airline strings include flavor text like
+// "Air France / KLM ✓ Cabin out of the UK", and may name 2-3 carriers in
+// one slash-separated list. We split on "/", "+", ",", "or", "then" to
+// handle compound airline strings, clean each token, then look for any
+// AIRLINES.name that appears as a substring (case-insensitive).
+//
+// Returns a deduplicated array preserving leg order:
+//   [{ name, carrier, weight, link, legRouteText }]
+function resolveAirlinesFromLegs(legs) {
+  if (!Array.isArray(legs) || legs.length === 0) return [];
+  const flightLegs = legs.filter(
+    (l) => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route || "")
+  );
+  const seen = new Set();
+  const results = [];
+
+  flightLegs.forEach((leg) => {
+    const raw = (leg.airline || "").toString();
+    if (!raw) return;
+    const tokens = raw.split(/\s*(?:\/|\+|,|\bor\b|\bthen\b)\s*/i);
+    tokens.forEach((tok) => {
+      const cleaned = tok
+        .replace(/[✓✗⚠✅❌⚠️]/g, "")
+        .replace(/^\s*[—–-]\s*/, "")
+        .replace(/\s+[—–-]\s+.+$/, "")
+        .replace(/\s*\([^)]*\)\s*/g, " ")
+        .trim();
+      if (!cleaned || cleaned.length < 3) return;
+      const cleanLower = cleaned.toLowerCase();
+      const match = AIRLINES.find((a) => {
+        const an = a.name.toLowerCase();
+        return cleanLower.includes(an) || an.includes(cleanLower);
+      });
+      if (match && !seen.has(match.name)) {
+        seen.add(match.name);
+        results.push({
+          name: match.name,
+          carrier: match.carrier || null,
+          weight: match.weight || null,
+          link: match.link || null,
+          legRouteText: leg.route || "",
+        });
+      }
+    });
+  });
+  return results;
+}
+
 function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = [], legs = []) {
   const originId = REGION_TO_CHECKLIST_ID[originRegion];
   const destId = REGION_TO_CHECKLIST_ID[destRegion];
@@ -4751,6 +4815,14 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originChecklist = originId ? getChecklist(originId, "departing") : null;
   const destChecklist = destId ? getChecklist(destId, "arriving") : null;
   const generic = CHECKLIST_DATA.generic;
+
+  // Resolve airlines from the route's legs so we can flag the carrier-size
+  // specs per airline at the top of the checklist. CRITICAL for multi-leg
+  // journeys where the carriers DIFFER between airlines — one might allow
+  // more length but less height, another might be the opposite. A common
+  // gotcha that nobody warns about until you're at the check-in desk.
+  const routeAirlines = resolveAirlinesFromLegs(legs);
+  const hasMultipleAirlines = routeAirlines.length > 1;
 
   // Track items seen so we can suppress duplicates as we move from origin → transit → destination.
   const seenAtOrigin = new Set();
@@ -4822,6 +4894,40 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
 
   // Assemble: chapter divider, origin sections, chapter divider, destination sections, tips.
   const sections = [];
+
+  // CARRIERS chapter — at the TOP because the carrier dimensions are
+  // airline-specific and you need to know them BEFORE you buy a carrier.
+  // On multi-leg journeys with different airlines, you may genuinely need
+  // TWO carriers (e.g. a smaller one for Air Canada's first leg, a larger
+  // one for United's second leg). This is the single biggest practical
+  // gotcha nobody warns you about.
+  if (routeAirlines.length > 0) {
+    const carrierItems = routeAirlines.map((a) => {
+      const linkPart = a.link ? ` · <a href="${a.link}" target="_blank" rel="noopener noreferrer">official policy ↗</a>` : "";
+      const weightPart = a.weight ? ` <em>(${a.weight})</em>` : "";
+      return `<strong>${a.name}</strong> — ${a.carrier || "see airline policy"}${weightPart}${linkPart}`;
+    });
+    if (hasMultipleAirlines) {
+      carrierItems.unshift(
+        `⚠️ <strong>Multi-airline route — carriers can differ.</strong> Buy a carrier that meets the STRICTEST airline's specs and make sure your pet is comfortable in it. If a smaller airline's box would force your pet into something cramped, bring a second carrier for the more generous leg instead. Measure with your pet inside at home before travel day.`
+      );
+    } else {
+      carrierItems.unshift(
+        `Buy a carrier that meets ${routeAirlines[0].name}'s specific dimensions — measuring tape your pet inside it at home BEFORE travel day. At check-in, staff will measure both the carrier and watch your pet stand up + turn around inside.`
+      );
+    }
+    sections.push({
+      title: "Your carriers — airline-specific",
+      divider: true,
+      items: [
+        `What carrier(s) you need depends on the airline(s) on your route. We've pulled the specs for each airline you'll fly. The strictest dimensions win — pet must fit comfortably in ALL of them.`,
+      ],
+    });
+    sections.push({
+      title: "Carrier dimensions & weight limits",
+      items: carrierItems,
+    });
+  }
 
   // Origin chapter header.
   sections.push({
@@ -7413,7 +7519,13 @@ function JourneyPlanner() {
   const [expandedSections, setExpandedSections] = useState(() => new Set());
   const sectionRef = useRef(null);
 
-  // When results appear, scroll back to the top of the planner section.
+  // When results appear, scroll to the START of the results (the route
+  // header / "Your routes" area), NOT the top of the entire planner section.
+  // The whole-section approach scrolls to above the form the user just
+  // filled out, which on mobile means they then have to scroll DOWN through
+  // the form again to see the routes. Targeting the results anchor puts the
+  // route options at the top of the viewport immediately.
+  //
   // Double requestAnimationFrame waits for the results DOM to actually lay
   // out before measuring — without this, getBoundingClientRect reads the
   // pre-render (short) layout and the scroll lands in the wrong place.
@@ -7422,9 +7534,14 @@ function JourneyPlanner() {
     let raf1, raf2;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => {
-        const el = sectionRef.current;
+        // Prefer the results anchor (top of the actual route list);
+        // fall back to section top if for some reason the anchor isn't there.
+        const resultsEl = document.getElementById("planner-results-anchor");
+        const el = resultsEl || sectionRef.current;
         if (el) {
-          const top = el.getBoundingClientRect().top + window.scrollY - 8;
+          // 16px breathing room; the anchor div has scroll-mt-20 for added
+          // safety against any sticky elements on mobile.
+          const top = el.getBoundingClientRect().top + window.scrollY - 16;
           window.scrollTo({ top, behavior: "smooth" });
         }
       });
@@ -7808,7 +7925,7 @@ function JourneyPlanner() {
 
         {/* Results */}
         {planned && (
-          <div className="border-t border-stone-700 pt-8 animate-fadeIn">
+          <div id="planner-results-anchor" className="border-t border-stone-700 pt-8 animate-fadeIn scroll-mt-20">
             <div className="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
               <h3 className="font-serif text-2xl text-stone-50">
                 {airportLabel(origin)} <span className="text-stone-500">→</span> {airportLabel(destination)}
@@ -8383,7 +8500,7 @@ function JourneyPlanner() {
                             const isTipsChapter = s.title.toLowerCase().includes("tips");
                             if (isTipsChapter) inTipsBlock = true;
                             return (
-                              <div key={i} className={isTipsChapter ? "mt-6 pt-4 border-t border-stone-700" : "mt-6"}>
+                              <div key={i} className={isTipsChapter ? "mt-4 pt-3 border-t border-stone-700 -mb-3" : "mt-6"}>
                                 <div className={isTipsChapter
                                   ? "text-xs uppercase tracking-widest text-stone-500 mb-1"
                                   : "font-serif text-stone-50 text-lg bg-stone-900 -mx-5 px-5 py-3 mb-3"}>
@@ -8391,7 +8508,7 @@ function JourneyPlanner() {
                                 </div>
                                 {s.items[0] && (
                                   <p className={isTipsChapter
-                                    ? "text-stone-500 text-xs italic mb-2"
+                                    ? "text-stone-500 text-xs italic"
                                     : "text-stone-400 text-xs italic mb-3"}>
                                     {s.items[0]}
                                   </p>
@@ -9282,6 +9399,11 @@ function Tips() {
               tag: "On the carrier",
               title: "Buy soft, not stiff.",
               body: "Soft-sided carriers compress slightly to fit under tighter seats and feel less cage-like for your pet. Make sure ventilation is on at least three sides. IMPORTANT: each airline AND each aircraft type can have different under-seat dimensions — Air Canada in particular varies by aircraft. Always check the specific aircraft listed on your booking, not just the airline.",
+            },
+            {
+              tag: "On carrier sizes across airlines",
+              title: "Different airline, different carrier.",
+              body: "On a multi-airline route, carrier dimensions can — and often DO — differ between the airlines you're flying. One airline might allow more length but less height; another might be the opposite. Check each airline's published carrier specs as soon as your route is booked, and buy for the strictest one — as long as your pet is genuinely comfortable in it. If the strictest airline's box would force your pet into something cramped, bring a second carrier for the more generous leg instead. The journey planner pulls each airline's specs into your checklist so you can compare them side by side.",
             },
             {
               tag: "On the seat",

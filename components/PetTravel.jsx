@@ -5442,14 +5442,44 @@ function Hero({ onStart }) {
         <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl mx-auto">
           {[
             { num: "08", label: "Quick questions" },
-            { num: "26", label: "Airlines compared" },
-            { num: "10", label: "Tricky destinations" },
+            { num: "32", label: "Airlines compared" },
+            { num: "14", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i} className="text-center">
               <div className="font-serif text-5xl text-stone-800">{s.num}</div>
               <div className="text-xs uppercase tracking-widest text-stone-500 mt-2">{s.label}</div>
             </div>
           ))}
+        </div>
+
+        {/* UK petition CTA — visible on every page load, just above the routes
+            strip. Active parliament petition to allow small cabin pets into
+            the UK. Currently the single most-asked-about issue for our UK
+            readers. The petition closes when it hits 6 months OR its goal. */}
+        <div className="mt-8 pt-8 border-t border-stone-300">
+          <a
+            href="https://petition.parliament.uk/petitions/750817"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block max-w-2xl mx-auto bg-stone-50 border-2 border-amber-700 hover:border-amber-600 hover:bg-amber-50 transition-colors duration-200 p-5"
+          >
+            <div className="flex items-start gap-4">
+              <span className="text-3xl flex-shrink-0">🇬🇧</span>
+              <div className="flex-1 text-left">
+                <div className="text-xs uppercase tracking-widest text-amber-700 mb-1.5 font-medium">UK Parliament petition · active now</div>
+                <h3 className="font-serif text-xl text-stone-900 leading-snug mb-1.5">
+                  Sign the petition: <span className="italic">let small pets fly cabin into the UK.</span>
+                </h3>
+                <p className="text-sm text-stone-700 leading-relaxed">
+                  The UK is the only major Western country that forces all pets into cargo on arrival — even ones small enough for cabin everywhere else. 100,000 signatures forces a parliamentary debate. Takes 30 seconds, UK residents only.
+                </p>
+                <span className="inline-flex items-center gap-1.5 mt-2 text-sm font-medium text-amber-700 group-hover:text-amber-800">
+                  Sign on petition.parliament.uk
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" strokeWidth={2} />
+                </span>
+              </div>
+            </div>
+          </a>
         </div>
 
         <div className="mt-10 pt-8 border-t border-stone-300">
@@ -8649,91 +8679,91 @@ function Documents() {
               title: "Microchip certificate",
               when: "Everywhere",
               detail: "ISO 11784/11785 compliant 15-digit microchip — implanted BEFORE the rabies vaccine. Most countries reject pets with non-ISO chips. Keep the original implantation certificate.",
-              link: "—",
+              link: null,
             },
             {
               title: "Rabies certificate",
               when: "Almost everywhere",
               detail: "Original (not photocopy) signed by your vet. Should include microchip number, vaccine type, manufacturer, lot number, and expiration date. Many countries require the vaccine ≥21 days old and ≤12 months old at travel.",
-              link: "—",
+              link: null,
             },
             {
               title: "GB Animal Health Certificate (AHC)",
               when: "Leaving the UK for EU / many destinations",
               detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Pre-2021 UK pet passports are no longer valid.",
-              link: "gov.uk/pet-travel",
+              link: { url: "https://www.gov.uk/take-pet-abroad", label: "gov.uk/take-pet-abroad" },
             },
             {
               title: "EU Pet Passport / EU Health Certificate",
               when: "Entering / travelling within the EU",
               detail: "EU pet passport issued by an EU vet (valid for lifetime). Non-EU pets need an EU Health Certificate issued by a government-accredited vet within 10 days of entry.",
-              link: "ec.europa.eu/animals",
+              link: { url: "https://food.ec.europa.eu/animals/movement-pets_en", label: "EU Commission · pet movement" },
             },
             {
               title: "CDC Dog Import Form",
               when: "All dogs entering the U.S.",
               detail: "Required for every dog entering the United States — including US dogs returning home. Fill out online; the receipt is good for six months and multiple entries.",
-              link: "cdc.gov/importation/dogs",
+              link: { url: "https://www.cdc.gov/importation/dogs/index.html", label: "cdc.gov · dog import" },
             },
             {
               title: "USDA Health Certificate",
               when: "Leaving the U.S. for international travel",
               detail: "An APHIS Form 7001 or country-specific form, completed by a USDA-accredited vet within 10 days of travel and endorsed by your nearest USDA office.",
-              link: "aphis.usda.gov/pet-travel",
+              link: { url: "https://www.aphis.usda.gov/pet-travel", label: "aphis.usda.gov · pet travel" },
             },
             {
               title: "AQCS NOC (India)",
               when: "Entering India",
               detail: "No Objection Certificate from India's Animal Quarantine and Certification Service. Apply 1–2 weeks before. Pets can enter through Delhi, Mumbai, Chennai, Kolkata, Bengaluru, or Hyderabad only.",
-              link: "aqcs.gov.in",
+              link: { url: "https://aqcsindia.gov.in/", label: "aqcsindia.gov.in" },
             },
             {
               title: "MOCCAE permit (UAE)",
               when: "Entering UAE (Abu Dhabi or Dubai)",
               detail: "UAE Health Certificate + release permit from the Ministry of Climate Change and Environment. Required regardless of cabin or cargo, regardless of airline. Apply via the MOCCAE portal.",
-              link: "moccae.gov.ae",
+              link: { url: "https://www.moccae.gov.ae/en/services/registration-pet.aspx", label: "moccae.gov.ae · pet permit" },
             },
             {
               title: "Tapeworm treatment record",
               when: "Entering UK, Ireland, Malta, Finland, Norway",
               detail: "Praziquantel administered by a vet 24–120 hours before arrival, recorded in the health certificate. Required for dogs only.",
-              link: "—",
+              link: { url: "https://www.gov.uk/guidance/pet-travel-to-europe-after-brexit", label: "gov.uk · tapeworm rules" },
             },
             {
               title: "Hawaii AQS-279",
               when: "Any pet entering Hawaii",
               detail: "Submitted with FAVN rabies titer results, two rabies vaccines, and proof of microchip at least 30 days before arrival for the Direct Airport Release program.",
-              link: "hdoa.hawaii.gov",
+              link: { url: "https://hdoa.hawaii.gov/ai/aqs/aqs-info/", label: "hdoa.hawaii.gov · animal quarantine" },
             },
             {
               title: "Rabies titer test (FAVN / RNATT)",
               when: "Travel between rabies-controlled and rabies-free regions",
               detail: "Blood test measuring rabies antibodies. Required for UK/EU entry from unlisted countries, Australia, Japan, Singapore. Often a 3-month wait period applies after the test.",
-              link: "—",
+              link: { url: "https://www.aphis.usda.gov/pet-travel/by-country", label: "aphis.usda.gov · by country" },
             },
             {
               title: "Australia Import Permit",
               when: "Entering Australia",
               detail: "From the Department of Agriculture. Multi-step process spanning 6+ months including pre-export tests, rabies titer (FAVN), tick treatment, and 10-day post-arrival quarantine at Mickleham.",
-              link: "agriculture.gov.au",
+              link: { url: "https://www.agriculture.gov.au/biosecurity-trade/cats-dogs", label: "agriculture.gov.au · cats & dogs" },
             },
             {
               title: "Jamaica Veterinary Import Permit",
               when: "Entering Jamaica",
               detail: "Two-stage process: Preliminary Application Form (with FAVN titer results) must be approved BEFORE you start the rest of the prep. Then Veterinary Import Permit issued. Pit Bull Terriers and hybrid dogs banned. Allow 6+ months from start to travel day.",
-              link: "moa.gov.jm",
+              link: { url: "https://www.moa.gov.jm/Divisions/Veterinary", label: "moa.gov.jm · veterinary" },
             },
             {
               title: "Bahamas Import Permit",
               when: "Entering Bahamas",
               detail: "Required for every pet. Apply via bahamaspetpermit.com (online) at least 4 weeks before travel — 6–8 weeks for standard processing without expedited service. ~$10 USD + 12% VAT. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier.",
-              link: "bahamaspetpermit.com",
+              link: { url: "https://bahamaspetpermit.com/", label: "bahamaspetpermit.com" },
             },
             {
               title: "CDC Certification of U.S.-issued Rabies Vaccination",
               when: "Returning to US from high-risk countries",
               detail: "Required when returning to the US from a CDC high-risk rabies country (including Dominican Republic). Must be completed by USDA-accredited vet and endorsed by USDA BEFORE the dog leaves the US — cannot be issued retroactively. Different form from a regular rabies certificate.",
-              link: "cdc.gov/importation",
+              link: { url: "https://www.cdc.gov/importation/dogs/index.html", label: "cdc.gov · high-risk countries" },
             },
           ].map((d, i) => (
             <div key={i} className="bg-stone-900 p-8">
@@ -8741,7 +8771,19 @@ function Documents() {
               <div className="text-xs uppercase tracking-widest text-amber-500/80 mb-2">{d.when}</div>
               <h3 className="font-serif text-xl mb-3">{d.title}</h3>
               <p className="text-stone-400 text-sm leading-relaxed mb-4">{d.detail}</p>
-              <div className="text-xs text-stone-500 italic font-serif">{d.link}</div>
+              {d.link ? (
+                <a
+                  href={d.link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-amber-500 hover:text-amber-400 transition-colors font-medium uppercase tracking-widest"
+                >
+                  {d.link.label}
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              ) : (
+                <div className="text-xs text-stone-500 italic">no central authority — your vet issues this</div>
+              )}
             </div>
           ))}
         </div>

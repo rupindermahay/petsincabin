@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
 // ---------- SITE META ----------
@@ -19,10 +20,10 @@ const AIRLINES = [
     direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, and Costa Rica routes. Cabin NOT allowed: most other international destinations (Alaska's network is mostly North America-focused).",
     originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no" },
-    fee: "$150 each way (increased Jan 2, 2026 from $100) · $60 within Hawaii",
-    weight: "No stated weight limit; pet must fit comfortably in carrier",
+    fee: "$100 each way cabin / $200 each way checked baggage (increased from $150 on Jan 2, 2026)",
+    weight: "No stated weight limit; pet must fit comfortably in carrier (under 17 × 11 × 9.5 in soft / 17 × 11 × 7.5 in hard)",
     carrier: "Soft: 17 × 11 × 9.5 in. Hard: 17 × 11 × 7.5 in.",
-    notes: "One of the more flexible US carriers. Cabin pets allowed on domestic, some Mexico/Canada/Costa Rica routes. Hawaii routes have strict quarantine paperwork — start prep 4+ months out. Two pets per carrier allowed if same species and small.",
+    notes: "Seattle-based (SEA hub) — strongest pet-friendly network on the US west coast. Cabin pets allowed on domestic, plus Canada, Mexico, Costa Rica, Bahamas, Japan, and Hawaii (with Direct Airport Release prep — start 4+ months out). Two pets of the same species can share one carrier if both fit comfortably. Max 3 cabin pets in First, 8 in Main on each flight. No transatlantic or India routes — connect via partner airlines.",
     intl: "Yes (limited routes)",
     verified: "May 2026",
     link: "https://www.alaskaair.com/content/travel-info/policies/pets-traveling-with-pets",
@@ -227,19 +228,19 @@ const AIRLINES = [
   },
   {
     name: "Air India",
-    tags: ["india", "europe", "longhaul"],
-    cabin: "Cabin India ↔ Europe/Asia ✓ — NOT direct to US/Canada/UK/Australia",
-    cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic India, India ↔ Europe (Frankfurt, Paris, Amsterdam, etc.), India ↔ Asia (Singapore, Hong Kong, Thailand), and outbound flights FROM UAE to many destinations. Cabin NOT allowed: direct flights to/from USA, Canada, UK, or Australia (cargo only on these routes — use a European hub airline for cabin instead). Pets entering UAE must arrive as cargo regardless of airline.",
-    originAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no" },
-    fee: "₹7,500 domestic / $140 short-haul intl / $160 Europe",
-    weight: "Pet + carrier max 10 kg (22 lb) for cabin",
-    carrier: "Soft-sided, max 18×18×12 in. Cargo hold uses IATA-compliant hard crates",
-    notes: "'Paws on Board' programme. Book via customer support 48 hrs before departure. Pet sits in last aisle row, economy only. For India → USA/Canada in cabin, use a European hub airline (Lufthansa, KLM, Air France, SWISS, LOT) for the long-haul leg instead.",
-    intl: "Yes (most routes)",
+    tags: ["india", "europe", "us", "canada", "longhaul"],
+    cabin: "Cabin India ↔ USA / Europe / Asia ✓ — NOT to UK / Australia",
+    cabinStatus: "yes",
+    direction: "Air India's 2026 'Paws on Board' programme allows cabin pets up to 10 kg (combined with carrier) on 80+ domestic and international routes. Cabin allowed: domestic India, India ↔ USA (direct: DEL/BOM/BLR/HYD/MAA ↔ JFK/SFO/IAD/ORD), India ↔ Europe (Frankfurt, Paris, Amsterdam, London cargo-only), India ↔ Asia. Cabin NOT allowed: India ↔ UK (cargo hold only — UK government embargo), India ↔ UAE (departing India, pets must go cargo; arriving in India from UAE has cabin options).",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no" },
+    fee: "₹7,500 domestic India / $140 short-haul international / $160 medium-haul / non-refundable",
+    weight: "Pet + carrier max 10 kg (22 lb) for cabin — generous compared to most carriers' 8 kg",
+    carrier: "Soft-sided only in cabin, max 17 × 10 × 9 in (43 × 25 × 23 cm), ventilated on 3 sides, leakproof. IATA-compliant hard crates required for cargo hold (10–32 kg pets).",
+    notes: "Book via Air India customer support or city booking office at least 48 hours before departure (reduced from 72 hrs in 2026). Confirmation requires submitted paperwork. Pet sits in last aisle row, economy only. Max 2 pets per flight, seated 5 rows apart if both present. Brachycephalic breeds allowed in cabin but not in cargo (welfare reasons).",
+    intl: "Yes — including direct India ↔ USA cabin pet routes (rare for any carrier)",
     verified: "May 2026",
-    link: "https://www.airindia.com/in/en/travel-information/travelling-with-pets.html",
+    link: "https://www.airindia.com/in/en/frequently-asked-questions/pet-travel.html",
   },
   {
     name: "LOT Polish Airlines",
@@ -523,6 +524,31 @@ const DIRECT_ROUTES = [
   // ═══════ FROM SAN FRANCISCO ═══════
   { from: "San Francisco (SFO)", to: "Frankfurt (FRA)", duration: "11h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). West coast to Europe direct — long flight, consider an overnight in Europe before onward connections.", tags: ["us", "europe"] },
   { from: "San Francisco (SFO)", to: "Paris (CDG)", duration: "11h", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+  { from: "San Francisco (SFO)", to: "Delhi (DEL)", duration: "16h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). The shortest US west coast → India cabin route. Book via Air India customer support 48 hrs ahead; AQCS NOC must be ready before boarding.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Mumbai (BOM)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Mumbai.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Bengaluru (BLR)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). One of the few direct cabin options to South India.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Hyderabad (HYD)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Hyderabad.", tags: ["us", "india"] },
+
+  // ═══════ FROM SEATTLE ═══════
+  { from: "Seattle (SEA)", to: "San Francisco (SFO)", duration: "2h 20m", note: "Alaska Airlines / Delta. ✓ Cabin ($100 each way). The crucial domestic leg for Seattle travellers heading to India — connect at SFO to Air India's direct cabin route to DEL/BOM/BLR/HYD. Same-airline booking preferred to avoid re-check.", tags: ["us"] },
+  { from: "Seattle (SEA)", to: "Frankfurt (FRA)", duration: "10h 30m", note: "Lufthansa / Condor. ✓ Cabin (under 8 kg). Seattle's main direct cabin route to Europe — onward to India via Lufthansa (except Bangalore — Lufthansa specifically excludes BLR; use Air India SFO instead).", tags: ["us", "europe"] },
+  { from: "Seattle (SEA)", to: "Amsterdam (AMS)", duration: "9h 45m", note: "Delta / KLM. ✓ Cabin (under 8 kg). Seattle's direct to Amsterdam — onward KLM cabin to most major Indian cities.", tags: ["us", "europe"] },
+  { from: "Seattle (SEA)", to: "Paris (CDG)", duration: "10h", note: "Delta / Air France. ✓ Cabin (under 8 kg). Direct to Paris — onward Air France cabin to Delhi/Mumbai.", tags: ["us", "europe"] },
+  { from: "Seattle (SEA)", to: "Vancouver (YVR)", duration: "1h", note: "Alaska Airlines. ✓ Cabin ($100 each way). Short domestic-style hop to Canada.", tags: ["us", "canada"] },
+  { from: "Seattle (SEA)", to: "Tokyo (NRT)", duration: "10h 30m", note: "Alaska / JAL / ANA. ✓ Cabin on select aircraft — confirm with airline. Direct Pacific cabin route.", tags: ["us"] },
+
+  // ═══════ FROM JFK ═══════
+  { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). East coast → India direct.", tags: ["us", "india"] },
+  { from: "New York (JFK)", to: "Mumbai (BOM)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). JFK→Mumbai direct cabin.", tags: ["us", "india"] },
+
+  // ═══════ FROM NEWARK ═══════
+  { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Newark direct to Mumbai.", tags: ["us", "india"] },
+
+  // ═══════ FROM CHICAGO ═══════ (existing routes preserved, India added)
+  { from: "Chicago (ORD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Midwest direct to India.", tags: ["us", "india"] },
+
+  // ═══════ FROM WASHINGTON DULLES ═══════ (existing routes preserved, India added)
+  { from: "Washington (IAD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Dulles direct to India.", tags: ["us", "india"] },
 
   // ═══════ FROM CAPE TOWN ═══════
   { from: "Cape Town (CPT)", to: "Johannesburg (JNB)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. Domestic South Africa only. Submit Lift's Dog-in-Cabin form 7+ days ahead. No cats. International SA travel is cargo-only on all airlines.", tags: ["south-africa"] },
@@ -542,15 +568,24 @@ const DIRECT_ROUTES = [
   { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
   { from: "Delhi (DEL)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin route from Delhi to Abu Dhabi.", tags: ["india", "dubai"] },
   { from: "Delhi (DEL)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / Air India. ✓ Cabin. Delhi→Frankfurt is one of the main India→Europe cabin routes.", tags: ["india", "europe"] },
+  { from: "Delhi (DEL)", to: "San Francisco (SFO)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). The shortest direct India→US west coast cabin route — book via Air India customer support 48 hrs ahead. For Seattle, connect SFO→SEA on Alaska/Delta after a layover.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "New York (JFK)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct US east coast option.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Chicago (ORD)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct Midwest US option.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Washington (IAD)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct DC option.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Toronto (YYZ)", duration: "14h", note: "Air India 'Paws on Board' / Air Canada. ✓ Cabin direct (under 10 kg combined). For Canada-bound travellers — Air Canada also flies the route.", tags: ["india", "canada"] },
 
   // ═══════ FROM MUMBAI ═══════
   { from: "Mumbai (BOM)", to: "Frankfurt (FRA)", duration: "9h", note: "Lufthansa / Air India. ✓ Cabin (under 8 kg Lufthansa / under 10 kg Air India). Mumbai is one of India's six approved pet-entry airports — works for both departures and arrivals.", tags: ["india", "europe"] },
   { from: "Mumbai (BOM)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
   { from: "Mumbai (BOM)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France / Air India. ✓ Cabin.", tags: ["india", "europe"] },
+  { from: "Mumbai (BOM)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Mumbai's direct US west coast cabin route.", tags: ["india", "us"] },
+  { from: "Mumbai (BOM)", to: "New York (JFK)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Mumbai's direct US east coast cabin route.", tags: ["india", "us"] },
+  { from: "Mumbai (BOM)", to: "Newark (EWR)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Alternative US east coast option via Newark.", tags: ["india", "us"] },
 
   // ═══════ FROM BENGALURU ═══════
   { from: "Bengaluru (BLR)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
   { from: "Bengaluru (BLR)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
+  { from: "Bengaluru (BLR)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Note: Lufthansa specifically EXCLUDES Bangalore from cabin pets, but Air India's direct route is fully cabin-eligible.", tags: ["india", "us"] },
 
   // ═══════ FROM CHENNAI ═══════
   { from: "Chennai (MAA)", to: "Frankfurt (FRA)", duration: "10h", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
@@ -562,6 +597,7 @@ const DIRECT_ROUTES = [
   // ═══════ FROM HYDERABAD ═══════
   { from: "Hyderabad (HYD)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
   { from: "Hyderabad (HYD)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
+  { from: "Hyderabad (HYD)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Hyderabad has a direct US west coast cabin route via Air India.", tags: ["india", "us"] },
 
   // ═══════ FROM ABU DHABI ═══════
   { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
@@ -1126,6 +1162,8 @@ const AIRPORTS = [
   { code: "LAX", city: "Los Angeles", region: "us", cabinOut: true, cabinIn: true },
   { code: "IAD", city: "Washington Dulles", region: "us", cabinOut: true, cabinIn: true },
   { code: "SFO", city: "San Francisco", region: "us", cabinOut: true, cabinIn: true },
+  { code: "SEA", city: "Seattle", region: "us", cabinOut: true, cabinIn: true,
+    note: "Seattle-Tacoma (SEA) is Alaska Airlines' hub. Cabin pets are easy for domestic and limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). For India, Europe, or UK there's no direct cabin pet route — connect via SFO (Air India to/from India), or via FRA/AMS/CDG (Lufthansa/KLM/Air France to Europe and onward to India). The terminal has post-security pet relief areas at Concourse B and the International Arrivals Facility, plus four pre-security pet potty locations." },
   // Canada
   { code: "YYZ", city: "Toronto", region: "canada", cabinOut: true, cabinIn: true },
   { code: "YUL", city: "Montreal", region: "canada", cabinOut: true, cabinIn: true },
@@ -2078,39 +2116,71 @@ const CHECKLIST_DATA = {
     title: "India entry / exit checklist",
     sections: [
       {
+        title: "2 months before",
+        items: [
+          "Check residency status: import as accompanied baggage (NOC only, no DGFT license) requires 2+ years continuous stay outside India. Less than 2 years means you also need a DGFT import authorization — apply early.",
+          "If returning to India (re-import), locate your previous AQCS export certificate — it's required as proof of identity.",
+          "Identify your entry airport — pets can ONLY enter India through six approved airports: Delhi (DEL), Mumbai (BOM), Chennai (MAA), Kolkata (CCU), Bengaluru (BLR), or Hyderabad (HYD).",
+        ],
+      },
+      {
         title: "4 weeks before",
         items: [
-          "Apply for No Objection Certificate (NOC) from AQCS",
-          "ISO microchip implanted (if not already)",
-          "Rabies vaccine 30 days – 12 months before travel",
-          "Parvo, distemper, leptospirosis vaccines up to date",
-          "Confirm entry airport: Delhi, Mumbai, Chennai, Kolkata, or Bengaluru only",
+          "ISO microchip implanted (if not already) — must be ISO 11784/11785 compliant.",
+          "Rabies vaccine 30 days – 12 months before travel.",
+          "Parvo, distemper, leptospirosis vaccines up to date.",
+          "Health certificate from origin country vet — must include vaccination history and microchip number.",
+          "If from the USA, get USDA APHIS endorsement of the health certificate.",
+          "If from Canada, get CFIA endorsement.",
+          "If from the UK/EU, the EU pet passport plus accredited vet certificate works.",
         ],
       },
       {
         title: "2 weeks before",
         items: [
-          "Book Air India cabin slot (if eligible route) OR pet relocation specialist",
-          "Get official health certificate from origin country vet",
-          "If from UK/EU: confirm tapeworm treatment timing if also returning",
+          "Apply for NOC (No Objection Certificate) from AQCS — submit advance copies of all docs (health cert, vaccine records, microchip cert, passport copy, ticket copy, 2 postcard photos of pet) by email or fax to the entry-port AQCS office. Processing fee Rs 1000 per application.",
+          "Advance NOC can be issued within 7 days before arrival — don't apply too early, certificate has limited validity.",
+          "Book Air India cabin slot (if eligible route) — Air India Paws on Board allows pets up to 10 kg combined on most India routes.",
+          "Book a representative or agent at the entry airport if you don't have one (highly recommended, especially at Delhi).",
+          "Confirm 48 hours before — Air India requires 48 hrs minimum notice for pet bookings.",
         ],
       },
       {
         title: "Travel day",
         items: [
-          "Have NOC printed AND digital copy",
-          "Arrive 4 hours early for international",
-          "Confirm with Air India that cabin slot still applies — pets approved 48 hrs prior",
+          "Bring printed NOC AND digital copy. A duplicate copy must be fixed to the carrier exterior.",
+          "Bring ALL original documents (health certificate, vaccination records, microchip certificate, passport, tickets) plus photocopies.",
+          "Arrive 4 hours early for international flights with pet check-in.",
+          "Confirm with Air India that cabin slot still applies — pets approved 48 hrs prior can still be denied at gate if paperwork is incomplete.",
+          "Owner must be present at AQCS on arrival for clinical examination and Provisional Quarantine Clearance Certificate.",
+        ],
+      },
+      {
+        title: "On arrival in India",
+        items: [
+          "Quarantine officer examines pet and verifies documents at the AQCS station at the entry airport.",
+          "If clinically healthy and paperwork in order, pet is released with Provisional Quarantine Clearance Certificate — no 15-day quarantine for accompanied baggage pets with proper docs.",
+          "Pets brought for short trips/visits (shows, therapy, tourism with owner) are explicitly exempt from the 15-day quarantine.",
+          "If health concerns or paperwork issues, pet may be quarantined for 15 days (extendable) at owner's expense.",
+        ],
+      },
+      {
+        title: "Departing FROM India (export)",
+        items: [
+          "Visit AQCS at your departure port at least 7 days before flight with the pet and pre-appointment.",
+          "Bring: completed application form, microchip certificate, vaccination records, rabies titer test results (if destination requires), 2 postcard photos of pet, passport copy, ticket copy.",
+          "AQCS export certificate is valid for 10 days from issue.",
+          "Destination-specific requirements: USA needs CDC Dog Import Form (India IS on the CDC high-risk list — requires Certification of US-issued Rabies Vaccination OR FAVN titer); UK needs Animal Health Certificate (cabin not allowed — cargo only via continental Europe pivot); EU needs EU Animal Health Certificate + microchip + rabies 21+ days.",
         ],
       },
       {
         title: "If you're flying with a cat",
         items: [
-          "The AQCS NOC is required for cats too — same process, apply 4 weeks ahead",
-          "Same microchip + rabies + vaccination requirements as dogs",
-          "The six-airport entry rule applies to cats as well (Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad)",
-          "Air India accepts cats in cabin on eligible routes — confirm your cat + carrier is within the weight limit",
-          "Long-haul to India is a long time in a carrier for a cat — book a covered carrier, use Feliway, and pick an overnight flight",
+          "The AQCS NOC is required for cats too — same 7-day advance process, same fee.",
+          "Same microchip + rabies + vaccination requirements as dogs.",
+          "The six-airport entry rule applies to cats as well (Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad).",
+          "Air India accepts cats in cabin on eligible routes — combined cat+carrier weight under 10 kg.",
+          "Long-haul to India is a long time in a carrier for a cat — book a covered carrier, use Feliway, and pick an overnight flight if possible.",
         ],
       },
     ],
@@ -3493,48 +3563,425 @@ const REGION_TO_CHECKLIST_ID = {
   "south-africa": "south_africa",
 };
 
-// Build ONE combined checklist for a specific route: the DEPARTING-side prep
-// for the origin country + the ARRIVING-side prep for the destination country,
-// merged into a single sectioned document. This is the planner↔checklist merge:
-// the checklist reflects the actual journey, both countries' rules at once.
-function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel) {
+// ----- Item-level classification helpers for the merged route checklist -----
+
+// Per-region facts — used to rewrite generic "research this" / "confirm whether"
+// items into concrete answers. Only includes facts we have verified.
+const ROUTE_FACTS = {
+  "uk-out":      { name: "the UK", cdcHighRisk: false, euMember: false, ukOrIreland: true },
+  "ireland":     { name: "Ireland", cdcHighRisk: false, euMember: true, ukOrIreland: true },
+  "europe":      { name: "Europe", cdcHighRisk: false, euMember: true, ukOrIreland: false },
+  "us":         { name: "the US", cdcHighRisk: false, euMember: false, ukOrIreland: false, isUS: true },
+  "canada":      { name: "Canada", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "mexico":      { name: "Mexico", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "india":       { name: "India", cdcHighRisk: true,  euMember: false, ukOrIreland: false },
+  "dubai":       { name: "the UAE", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "caribbean":   { name: "the Caribbean", cdcHighRisk: "varies", euMember: false, ukOrIreland: false, perIsland: true }, // DR is high-risk; Bahamas/Jamaica are not
+  "hawaii":      { name: "Hawaii", cdcHighRisk: false, euMember: false, ukOrIreland: false, isUS: true, isRabiesFree: true },
+  "south-africa": { name: "South Africa", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+};
+
+// Transit-only essentials per region. When a workaround route briefly crosses
+// a country en route to the final destination (e.g. France for a UK arrival
+// via Paris-pivot, or Schengen Europe for a France→Ireland ferry route), the
+// pet legally enters that country before continuing. The full arrival
+// checklist for that country is overkill — what the user actually needs is
+// the transit-specific essentials. Returns null if we don't have transit
+// notes for that region.
+function getTransitNotes(region, originRegion) {
+  const origin = ROUTE_FACTS[originRegion];
+
+  if (region === "europe" || region === "ireland") {
+    // EU/Schengen transit — covered by EU pet movement rules.
+    const fromEU = origin && origin.euMember;
+    return [
+      `Pet enters the EU/Schengen area at this point — EU pet movement rules apply for the duration of the transit.`,
+      fromEU
+        ? `If you have a valid EU Pet Passport (from your origin country), no additional paperwork is needed for transit.`
+        : `If your origin isn't in the EU, you'll need an EU Animal Health Certificate from an accredited vet in your origin country, valid within 10 days of EU entry. This single certificate covers transit through any EU country.`,
+      `ISO microchip + current rabies vaccine (≥21 days old) are required for EU entry.`,
+      `Pet stays with you the whole transit — no separate booking with a transit-country airline or operator.`,
+      `Border control at first EU port of entry checks paperwork once. Subsequent EU borders are open under Schengen — no further checks.`,
+    ];
+  }
+
+  if (region === "uk-out") {
+    // UK transit is rare but possible (e.g. London → ferry to Ireland).
+    return [
+      `UK transit on the way to Ireland: ISO microchip, rabies vaccine ≥21 days old, GB Animal Health Certificate or pet passport.`,
+      `Dogs: tapeworm treatment by a vet 24–120 hours before the UK departure (required for Ireland entry too).`,
+      `Pet stays with you for the full UK→Ireland ferry crossing.`,
+    ];
+  }
+
+  if (region === "us") {
+    // US transit (e.g. Caribbean→Canada via US gateway).
+    return [
+      `US transit: CDC Dog Import Form receipt required even for short layovers if you exit the airside area.`,
+      `Origin country's CDC rabies risk status determines whether extra forms are needed (high-risk origins need Certification of US-issued Rabies Vaccination or FAVN titer).`,
+      `Pet must be 6+ months old, ISO-microchipped, healthy on arrival.`,
+    ];
+  }
+
+  if (region === "canada") {
+    return [
+      `Canada transit: current rabies certificate from your vet is usually sufficient for dogs and cats over 3 months.`,
+      `If you're connecting onwards via the US, you'll also need the CDC Dog Import Form receipt for the onward leg.`,
+    ];
+  }
+
+  // No transit notes for this region — return null so we know to skip a chapter for it.
+  return null;
+}
+
+// Phrases that mark an item as a "tip" — a suggestion, not a requirement.
+// These get demoted out of the timeline into a separate "Travel-day tips" box
+// so the timeline stays focused on the things you must do.
+const TIP_SIGNALS = [
+  "trim your pet's nails",
+  "wash the carrier",
+  "wash the blanket",
+  "charge your phone",
+  "use a backpack-style",
+  "rolling carrier",
+  "pad the carrier",
+  "comfort item",
+  "calming spray works",
+  "if pet gets stressed",
+  "book overnight",
+  "red-eye",
+  "extra-legroom seats",
+  "window seat preferred",
+  "don't open the carrier mid-flight",
+  "saves your shoulders",
+  "saves your back",
+  "life-changing",
+  "feliway",
+  "adaptil",
+  "let pet sleep in the carrier at home",
+  "practice short car rides",
+  "get used to it",
+  "feel free to bring a familiar",
+  "consider a soft",
+  "smells familiar",
+];
+
+function isTip(itemText) {
+  const t = (itemText || "").toLowerCase();
+  return TIP_SIGNALS.some((sig) => t.includes(sig));
+}
+
+// Phrases that mark an item as a "travel-day operational" instruction —
+// what to do at the airport on the day. These belong in the separate
+// "What to expect on travel day" guide, NOT in the merged prep checklist
+// (which is about paperwork and prep). Stripped from the checklist entirely.
+const TRAVEL_DAY_OPS_SIGNALS = [
+  "pack vet records",
+  "vet records (originals",
+  "ziploc inside the carrier",
+  "check airline's pet check-in procedure",
+  "separate counter",
+  "light meal 4 hours",
+  "light meal before flight",
+  "arrive 2.5",
+  "arrive 3 hours early",
+  "arrive 2 hours early",
+  "pet check-in is always in person",
+  "security: take pet out",
+  "take pet out of carrier",
+  "walk/carry through metal detector",
+  "carrier goes through x-ray",
+  "carrier through x-ray",
+  "walk your dog properly outside before",
+  "walk your pet properly outside before",
+];
+
+function isTravelDayOp(itemText) {
+  const t = (itemText || "").toLowerCase();
+  return TRAVEL_DAY_OPS_SIGNALS.some((sig) => t.includes(sig));
+}
+
+// Rewrite generic "research / confirm" items into concrete route-specific
+// answers. Returns the new text, or null if no rewrite applies (item stays as-is).
+// This is the "do the hard work for them" piece — instead of "Check if origin
+// is on CDC high-risk list", we look up the answer and state it plainly.
+function rewriteItemForRoute(itemText, originRegion, destRegion) {
+  const t = (itemText || "").toLowerCase();
+  const origin = ROUTE_FACTS[originRegion];
+  const dest = ROUTE_FACTS[destRegion];
+  if (!origin || !dest) return null;
+
+  // FAVN / rabies-titer advisories — only relevant if origin is high-risk.
+  if (t.includes("favn") || (t.includes("rabies titer") && t.includes("high-risk"))) {
+    if (origin.cdcHighRisk === true) {
+      return `Get the FAVN rabies titer test booked — required because ${origin.name} is CDC high-risk.`;
+    }
+    // Origin isn't high-risk → this advisory doesn't apply. Return empty
+    // string to signal "skip this item entirely".
+    if (origin.cdcHighRisk === false) return "";
+  }
+
+  // "if entering U.S." style conditional — when we ARE entering US, drop the conditional.
+  if (t.includes("if entering u.s") || t.includes("if entering us") || t.includes("(if entering u.s.)") || t.includes("if entering the u.s")) {
+    if (dest.isUS) {
+      // Strip the conditional clause and return the plain instruction.
+      return itemText
+        .replace(/\s*\(if entering U\.S\.?\)\s*/gi, "")
+        .replace(/\s*if entering the U\.S\.?\s*$/i, "")
+        .replace(/\s*if entering U\.S\.?\s*$/i, "")
+        .trim();
+    }
+    // Not entering US → this item doesn't apply at all.
+    return "";
+  }
+
+  // Going TO the US — resolve CDC high-risk status using the origin.
+  if (dest.isUS) {
+    if (t.includes("cdc high-risk") || t.includes("high-risk rabies list") || t.includes("high-risk list")) {
+      if (origin.cdcHighRisk === true) {
+        return `${origin.name.charAt(0).toUpperCase() + origin.name.slice(1)} IS on the CDC high-risk rabies list — you'll need the Certification of US-issued Rabies Vaccination form (filled out by a USDA-accredited vet BEFORE you leave the US) OR a foreign-vet rabies titer (FAVN) plus a reservation at a CDC-registered animal care facility. Plan ahead — these can't be done last-minute.`;
+      }
+      if (origin.cdcHighRisk === false) {
+        return `${origin.name.charAt(0).toUpperCase() + origin.name.slice(1)} is NOT on the CDC high-risk rabies list — the standard CDC Dog Import Form online is sufficient. No titer test, no extra forms required.`;
+      }
+      if (origin.cdcHighRisk === "varies") {
+        return `The Caribbean is mixed for CDC: Bahamas and Jamaica are NOT high-risk (standard CDC Dog Import Form is enough); the Dominican Republic IS high-risk (you'll need the Certification of US-issued Rabies Vaccination form OR a FAVN titer). Confirm against your specific island.`;
+      }
+    }
+  }
+
+  // Generic "research destination's import requirements" — replace with the
+  // specific things that matter for this destination.
+  if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
+    if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
+    if (destRegion === "uk-out") return `The UK doesn't allow cabin pets on any commercial flight — your pet has to fly into mainland Europe and cross by land (Eurotunnel) or sea (ferry). Paperwork: ISO microchip, rabies vaccine ≥21 days old, Animal Health Certificate from accredited vet within 10 days of entry, tapeworm treatment for dogs 24–120 hrs before arrival.`;
+    if (destRegion === "ireland") return `Ireland — like the UK — doesn't allow cabin pets on commercial flights. Use the France→Ireland ferry. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or pet passport), tapeworm treatment for dogs 24–120 hrs before arrival.`;
+    if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or valid EU pet passport).`;
+    if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
+    if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
+    if (destRegion === "canada") return `For Canada: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No USDA endorsement required if coming from the US. Confirm details with the CFIA before travel.`;
+    if (destRegion === "mexico") return `For Mexico: SENASICA Health Certificate from an accredited vet within 10 days of travel, rabies vaccine on record. No quarantine. Cats and dogs over 3 months only.`;
+    if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is required for pet entry. ISO microchip, current rabies vaccine, recent health certificate. Quarantine waived only if all paperwork is in order on arrival.`;
+    if (destRegion === "south-africa") return `For South Africa: import permit from the Department of Agriculture, ISO microchip, rabies titer test, health certificate. Pet travels as manifested cargo — no cabin option internationally.`;
+  }
+
+  // Generic "Research destination's import rules — especially for UK..." style items.
+  // Replace with the actual destination-specific note.
+  if (t.includes("import rules") && t.includes("uk") && t.includes("usa")) {
+    if (destRegion === "uk-out") return `For the UK: cabin not allowed on any airline — use the Eurotunnel/ferry workaround from mainland Europe.`;
+    if (dest.isUS) return `For the US: CDC Dog Import Form receipt is the central requirement. ${origin.cdcHighRisk ? `${origin.name} is high-risk so additional rabies forms apply.` : `${origin.name} is not on the high-risk list — the form is all you need.`}`;
+    if (destRegion === "dubai") return `For the UAE: MOCCAE permit required; only Etihad to Abu Dhabi allows cabin entry.`;
+  }
+
+  return null; // No rewrite — caller keeps the original item.
+}
+
+// Decide whether a checklist item applies to a dog, a cat, or both, based on
+// the wording of the item itself plus the parent section title. We auto-detect
+// rather than hand-tag every item, so the rule is evidence-based and survives
+// new items being added later.
+function petAppliesTo(itemText, sectionTitle) {
+  const t = (itemText || "").toLowerCase();
+  const s = (sectionTitle || "").toLowerCase();
+
+  // Section-level: if the whole section is titled "if you're flying with a cat"
+  // or similar, everything in it is cat-only (and vice versa for dog).
+  if (s.includes("flying with a cat") || s.includes("with a cat")) return "cat";
+  if (s.includes("flying with a dog") || s.includes("with a dog")) return "dog";
+
+  // Item-level keyword detection — only mark cat/dog when the item is
+  // explicitly about one or the other. Anything ambiguous defaults to "both".
+  const catSignals = ["cat carrier rigid", "litter tray", "litter box", "feliway", "harness", "cats do not", "cats don't", "for a cat", "your cat ", "cats are not", "cats follow"];
+  const dogSignals = ["tapeworm", "cdc dog import", "dog import form", "dogs only", "for a dog", "your dog ", "dogs returning", "dog must be 6", "dogs must be 6", "adaptil", "dog must be at least 6"];
+
+  if (catSignals.some((k) => t.includes(k))) return "cat";
+  if (dogSignals.some((k) => t.includes(k))) return "dog";
+
+  return "both";
+}
+
+// Map a section title to a chronological bucket. Earlier prep first.
+// Returns { order, label } so we can sort and re-label consistently.
+function timelineBucket(sectionTitle) {
+  const t = (sectionTitle || "").toLowerCase();
+
+  // Order is "weeks/months before" → smaller number = further out in time.
+  // We pick the most specific match first.
+  if (t.includes("6 months") || t.includes("5+ months") || t.includes("4+ months")) return { order: 0, label: "5–6 months before" };
+  if (t.includes("3 months") || t.includes("2 months")) return { order: 5, label: "2–3 months before" };
+  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before" };
+  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "4 weeks before" };
+  if (t.includes("2 weeks") || t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "1–2 weeks before" };
+  if (t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
+
+  // Generic guidance, "first — understand", "if you're flying with a cat" etc.
+  // Stuff that doesn't have a clear timing — bucket as "good to know".
+  if (t.includes("first") || t.includes("understand") || t.includes("flying with a")) return { order: -10, label: "Good to know" };
+
+  // Anything else gets a safe middle bucket.
+  return { order: 25, label: "Anytime / general prep" };
+}
+
+// Normalise an item string for duplicate detection across the two countries.
+// We don't want "Vet appointment for full health check" appearing twice just
+// because both countries' checklists list it. Strip parentheticals (which often
+// add technical specs), punctuation, lowercase, collapse whitespace, and also
+// strip numbers — so "ISO 11784/11785 microchip" matches "ISO microchip".
+function normalizeItem(s) {
+  return (s || "")
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, " ")           // drop parentheticals
+    .replace(/\d+[\d.\/–-]*/g, " ")        // drop number specs (11784/11785, 30 days, 4-6 weeks etc)
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Build a route-specific checklist. Multi-chapter model: "Leaving [origin]"
+// → optional "Transiting through [country]" for each transit region (in
+// journey order) → "Entering [destination]". Each chapter keeps its own
+// internal timeline. Fluffy tips are pulled out into a separate tips
+// section at the end. Items duplicating across origin/destination are
+// suppressed at destination. The transitRegions argument should be an
+// ordered array of region IDs the pet legally enters between origin and
+// destination — typically extracted from the chosen workaround's tags.
+function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = []) {
   const originId = REGION_TO_CHECKLIST_ID[originRegion];
   const destId = REGION_TO_CHECKLIST_ID[destRegion];
 
-  // Pull the departing-side checklist for the origin (falls back to base data).
   const originChecklist = originId ? getChecklist(originId, "departing") : null;
-  // Pull the arriving-side checklist for the destination.
   const destChecklist = destId ? getChecklist(destId, "arriving") : null;
+  const generic = CHECKLIST_DATA.generic;
 
+  // Track items seen so we can suppress duplicates as we move from origin → transit → destination.
+  const seenAtOrigin = new Set();
+
+  // Tips collected from any source — shown once at the end, regardless of country.
+  const tips = new Set();
+
+  // Build one chapter (origin or destination side) into a list of timeline-bucketed sections.
+  function buildChapter(checklist, side) {
+    if (!checklist) return [];
+    const buckets = new Map(); // order -> { label, items, seenKeys }
+
+    checklist.sections.forEach((sec) => {
+      const bucket = timelineBucket(sec.title);
+      sec.items.forEach((rawItem) => {
+        const text = typeof rawItem === "string" ? rawItem : rawItem.text;
+        const applies = petAppliesTo(text, sec.title);
+        // Pet-type filter.
+        if (petType === "dog" && applies === "cat") return;
+        if (petType === "cat" && applies === "dog") return;
+
+        // Tip? Demote out of the timeline into the tips box.
+        if (isTip(text)) { tips.add(text); return; }
+
+        // Travel-day operational instruction (pack vet records, arrive 2hrs
+        // early, security routine)? These belong in the separate
+        // "What to expect on travel day" guide, NOT in the prep checklist.
+        // Drop entirely.
+        if (isTravelDayOp(text)) return;
+
+        // Route-aware rewrite — "research this" → "here's the answer".
+        const rewritten = rewriteItemForRoute(text, originRegion, destRegion);
+        // Empty string means "this item doesn't apply to this route" — skip.
+        if (rewritten === "") return;
+        const finalText = rewritten || text;
+
+        // De-dupe based on the FINAL text (post-rewrite). Two different generic
+        // items can rewrite to the same concrete answer — keep one copy.
+        const key = normalizeItem(finalText);
+
+        // Origin-chapter items get recorded so destination can suppress duplicates.
+        if (side === "origin") {
+          if (seenAtOrigin.has(key)) return; // intra-origin dupe
+          seenAtOrigin.add(key);
+        } else if (seenAtOrigin.has(key)) {
+          return; // suppressed: already in origin chapter
+        }
+
+        if (!buckets.has(bucket.order)) buckets.set(bucket.order, { label: bucket.label, items: [], keys: new Set() });
+        const b = buckets.get(bucket.order);
+        if (b.keys.has(key)) return; // intra-bucket duplicate
+        b.keys.add(key);
+        b.items.push(finalText);
+      });
+    });
+
+    // Emit sections in chronological order.
+    return [...buckets.keys()].sort((a, b) => a - b).map((k) => buckets.get(k));
+  }
+
+  // Generic prep: bake it into the ORIGIN chapter (it's all pre-travel).
+  // We add it to the origin checklist's sections list virtually for the buildChapter call.
+  const originWithGeneric = originChecklist
+    ? { ...originChecklist, sections: [...generic.sections, ...originChecklist.sections] }
+    : generic;
+
+  const originSections = buildChapter(originWithGeneric, "origin");
+  const destSections = buildChapter(destChecklist, "destination");
+
+  // Assemble: chapter divider, origin sections, chapter divider, destination sections, tips.
   const sections = [];
 
-  // Always start with the universal prep — it applies to every journey.
-  const generic = CHECKLIST_DATA.generic;
-  generic.sections.forEach((s) => {
-    sections.push({ ...s, title: s.title });
+  // Origin chapter header.
+  sections.push({
+    title: `Leaving ${originLabel}`,
+    divider: true,
+    items: [`Prep for departure from ${originLabel}. Time-ordered — earliest prep first.`],
+  });
+  originSections.forEach((s) => {
+    if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
   });
 
-  // Origin country's DEPARTING rules.
-  if (originChecklist) {
+  // Transit chapters — one per region the pet legally enters between origin
+  // and destination. Each is briefer than a full arrival chapter (transit-only
+  // essentials). Filtered to exclude origin and destination themselves, and
+  // de-duplicated so the same transit region only appears once.
+  const seenTransits = new Set([originRegion, destRegion]);
+  const transitChapters = [];
+  for (const tr of transitRegions) {
+    if (seenTransits.has(tr)) continue;
+    seenTransits.add(tr);
+    const notes = getTransitNotes(tr, originRegion);
+    if (!notes) continue;
+    const transitLabel = ROUTE_FACTS[tr] ? ROUTE_FACTS[tr].name : tr;
+    transitChapters.push({ region: tr, label: transitLabel, notes });
+  }
+  transitChapters.forEach((tc) => {
     sections.push({
-      title: `— Leaving ${originLabel}: that country's rules —`,
-      items: [`These steps cover the requirements for departing ${originLabel}. Both the country you leave and the one you enter have their own rules.`],
+      title: `Transiting through ${tc.label}`,
       divider: true,
+      items: [`Your pet briefly enters ${tc.label} on the way. These are the transit-only essentials — not a full arrival workup.`],
     });
-    originChecklist.sections.forEach((s) => {
-      sections.push({ ...s, title: `${originLabel} · ${s.title}` });
+    sections.push({
+      title: `${tc.label} · transit essentials`,
+      items: tc.notes,
+    });
+  });
+
+  // Destination chapter header.
+  if (destSections.length > 0 || destChecklist) {
+    sections.push({
+      title: `Entering ${destLabel}`,
+      divider: true,
+      items: [`Prep specific to entering ${destLabel}. Duplicates from earlier chapters are not repeated.`],
+    });
+    destSections.forEach((s) => {
+      if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
     });
   }
 
-  // Destination country's ARRIVING rules.
-  if (destChecklist) {
+  // Tips — at the very end, clearly labelled as optional comfort suggestions.
+  if (tips.size > 0) {
     sections.push({
-      title: `— Entering ${destLabel}: that country's rules —`,
-      items: [`These steps cover the requirements for entering ${destLabel}.`],
+      title: "Travel-day tips & comfort suggestions",
       divider: true,
+      items: [`These aren't requirements — just things that make the day easier. Cherry-pick what's useful.`],
     });
-    destChecklist.sections.forEach((s) => {
-      sections.push({ ...s, title: `${destLabel} · ${s.title}` });
+    sections.push({
+      title: "Tips",
+      items: [...tips],
     });
   }
 
@@ -3549,10 +3996,93 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel) {
 
   return {
     title: `${originLabel} → ${destLabel} pet-travel checklist`,
+    subtitle: petType === "dog" ? "For a dog" : petType === "cat" ? "For a cat" : "For a dog and a cat",
     sections,
     restriction,
     isRouteChecklist: true,
   };
+}
+
+// Open a printable HTML window for any checklist data object.
+// Extracted out so both the dedicated Checklist section AND the inline
+// planner result can call the same code path — no detour through the UI.
+function openChecklistPrintable(data) {
+  if (!data) return;
+  const restrictionHtml = data.restriction
+    ? `<div style="background:#fef3c7;border-left:3px solid #d97706;padding:14px 18px;margin:24px 0;font-family:'Fraunces',serif;font-style:italic;color:#78350f;border-radius:2px;">${data.restriction}</div>`
+    : "";
+  const subtitleHtml = data.subtitle
+    ? `<p class="subtitle">${data.subtitle} · Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`
+    : `<p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>${data.title} — Pets in Cabin</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c1917; padding: 60px 40px; line-height: 1.6; }
+  .container { max-width: 720px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #d6d3d1; }
+  .brand img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+  .brand .brand-text { font-family: 'Fraunces', serif; font-weight: 600; color: #1c1917; font-size: 18px; letter-spacing: -0.02em; }
+  .brand .brand-tag { font-family: 'Fraunces', serif; font-style: italic; color: #a8a29e; font-size: 12px; }
+  .brand small { margin-left: auto; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #78716c; align-self: flex-start; }
+  h1 { font-family: 'Fraunces', serif; font-size: 38px; line-height: 1.1; margin-bottom: 16px; color: #1c1917; }
+  h1 em { color: #78716c; }
+  .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 30px; }
+  h2 { font-family: 'Fraunces', serif; font-size: 22px; color: #1c1917; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #e7e5e4; }
+  h2.divider { color: #faf6ed; background: #1c1917; border-bottom: none; font-style: normal; font-size: 24px; padding: 18px 24px; margin: 48px -24px 12px -24px; letter-spacing: -0.01em; }
+  ul { list-style: none; }
+  li { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px dashed #e7e5e4; }
+  li:last-child { border-bottom: none; }
+  li.note-item { border-bottom: none; font-style: italic; color: #78716c; font-family: 'Fraunces', serif; }
+  .check { display: inline-block; width: 22px; height: 22px; border: 2px solid #44403c; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+  .item { flex: 1; }
+  .item em { color: #a8a29e; font-style: normal; font-size: 11px; }
+  footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid #d6d3d1; font-size: 13px; color: #78716c; font-style: italic; font-family: 'Fraunces', serif; }
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1c1917; color: #faf6ed; padding: 12px 24px; border: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .print-btn:hover { background: #b45309; }
+  @media print {
+    body { padding: 30px; background: white; }
+    .print-btn { display: none; }
+    li { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  <div class="container">
+    <div class="brand">
+      <img src="https://petsincabin.com/logo.png" alt="Pets in Cabin" />
+      <div>
+        <div class="brand-text">Pets in Cabin</div>
+        <div class="brand-tag">Travel together, stay together</div>
+      </div>
+      <small>By Theo's Mum</small>
+    </div>
+    <h1>${data.title.replace(/checklist/i, '<em>checklist</em>')}</h1>
+    ${subtitleHtml}
+    ${restrictionHtml}
+    ${data.sections.map(s => `
+      <h2${s.divider ? ' class="divider"' : ''}>${s.title}</h2>
+      <ul>
+        ${s.items.map(item => s.divider
+          ? `<li class="note-item"><span class="item">${item}</span></li>`
+          : `<li><span class="check"></span><span class="item">${item}</span></li>`).join('')}
+      </ul>
+    `).join('')}
+    <footer>This checklist is a starting point, not a substitute for professional advice. Always confirm with your airline, vet, and destination country before flying. Updated ${LAST_UPDATED}.</footer>
+  </div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  window.open(url, "_blank");
 }
 
 // ---------- INTAKE FLOW ----------
@@ -3873,6 +4403,7 @@ const NAV_SECTIONS = [
   { id: "checklist", label: "Checklist", num: "✓" },
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
+  { id: "travel-day", label: "Airport day", num: "★" },
   { id: "stories", label: "Stories", num: "✻" },
   { id: "contact", label: "Contact", num: "VIII" },
   { id: "about", label: "About", num: "✦" },
@@ -4116,7 +4647,7 @@ function Hero({ onStart }) {
             <div className="flex flex-col gap-1.5">
               <span className="uppercase tracking-widest text-sm font-medium">Plan my journey</span>
               <span className="text-sm leading-snug normal-case tracking-normal" style={{ color: "rgba(250, 246, 237, 0.8)" }}>
-                Pick your origin and destination — get the cabin route (or the workaround) plus a combined prep checklist for both countries.
+                The cabin route or workaround for your trip, plus a full prep checklist covering every country your pet touches.
               </span>
             </div>
           </div>
@@ -4762,20 +5293,21 @@ const DESTINATIONS = [
     id: "india",
     flag: "🇮🇳",
     name: "India",
-    headline: "Cabin to/from India — yes, but route choice matters.",
-    rule: "India is one of the few major destinations where you CAN fly your pet in cabin internationally — but not on every route. Air India accepts pets in cabin on domestic India routes and many international routes EXCEPT direct flights to/from the USA, Canada, UK, and Australia (those are cargo-only). To fly India ↔ USA in cabin, you'll need a stopover via a European hub. Permits apply for entering India.",
+    headline: "Cabin to/from India — easier than ever in 2026.",
+    rule: "India is now one of the better destinations for cabin pet travel. Air India's 2026 'Paws on Board' programme accepts cabin pets up to 10 kg on direct flights between India and the USA (DEL/BOM/BLR/HYD ↔ JFK/SFO/IAD/ORD/EWR), Europe, and Canada. The exceptions: cabin NOT allowed to/from the UK (cargo only — UK government embargo) or departing India to UAE. Six approved entry airports for pets only: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad. AQCS NOC is required for every entry.",
+    fullGuideLink: "/india-pet-travel",
     workarounds: [
       {
-        title: "India → USA in cabin: 5 European-hub options",
+        title: "India → USA: now direct via Air India",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Direct India ↔ USA cabin doesn't exist on any airline. But cabin via Europe works on five carriers: Lufthansa via Frankfurt, KLM via Amsterdam, Air France via Paris, SWISS via Zurich, and LOT Polish via Warsaw. ALL of these accept cabin pets under 8 kg combined on BOTH the India leg and the US-bound leg. Book as a single through-ticket so the airline manages the connection. Allow 3+ hours at the European hub.",
-        cost: "Two-leg cabin fees combined: $200–$500. LOT Polish is the cheapest (€70 to USA).",
+        body: "Air India Paws on Board direct cabin flights to JFK, SFO, IAD, ORD, EWR from Delhi, Mumbai, Bengaluru, and Hyderabad. 10 kg combined weight limit — more generous than the 8 kg on European carriers. Book via Air India customer support 48 hours ahead. For Seattle: connect SFO → SEA on Alaska/Delta after arrival.",
+        cost: "$140 short-haul intl / $160 medium-haul / non-refundable",
       },
       {
-        title: "Air India 'Paws on Board' — the routes it works on",
+        title: "India → USA via Europe: 5 alternative cabin paths",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Air India cabin is allowed on: domestic India, India ↔ Europe (Frankfurt, Paris, Amsterdam, etc.), India ↔ Asia (Singapore, Hong Kong, Thailand), and outbound FROM UAE to many destinations. Combined pet + carrier max 10 kg. Book via customer support 48 hours before, with vaccination certificates ready.",
-        cost: "$140 short-haul intl / $160 to Europe / ₹7,500 domestic.",
+        body: "If Air India direct doesn't fit your schedule, cabin via Europe works on Lufthansa (FRA, except BLR — Lufthansa specifically excludes Bangalore), KLM (AMS), Air France (CDG), SWISS (ZRH), and LOT Polish (WAW). Both legs cabin under 8 kg. Book single through-ticket. Allow 3+ hours at the European hub.",
+        cost: "Two-leg cabin fees combined: $200–$500. LOT Polish is the cheapest (€70 to USA).",
       },
       {
         title: "India ↔ UK: cargo only (no exceptions)",
@@ -5503,78 +6035,7 @@ function ChecklistDownload() {
     !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
 
   function openPrintable() {
-    if (!data) return;
-    const restrictionHtml = data.restriction
-      ? `<div style="background:#fef3c7;border-left:3px solid #d97706;padding:14px 18px;margin:24px 0;font-family:'Fraunces',serif;font-style:italic;color:#78350f;border-radius:2px;">${data.restriction}</div>`
-      : "";
-
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>${data.title} — Pets in Cabin</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #faf6ed; color: #1c1917; padding: 60px 40px; line-height: 1.6; }
-  .container { max-width: 720px; margin: 0 auto; }
-  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #d6d3d1; }
-  .brand img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
-  .brand .brand-text { font-family: 'Fraunces', serif; font-style: italic; color: #57534e; font-size: 18px; }
-  .brand .brand-tag { font-family: 'Fraunces', serif; font-style: italic; color: #a8a29e; font-size: 12px; }
-  .brand small { margin-left: auto; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #78716c; align-self: flex-start; }
-  h1 { font-family: 'Fraunces', serif; font-size: 42px; line-height: 1.1; margin-bottom: 16px; color: #1c1917; }
-  h1 em { color: #78716c; }
-  .subtitle { font-family: 'Fraunces', serif; font-style: italic; color: #78716c; font-size: 16px; margin-bottom: 30px; }
-  h2 { font-family: 'Fraunces', serif; font-size: 22px; color: #1c1917; margin: 36px 0 16px; padding-bottom: 10px; border-bottom: 1px solid #e7e5e4; }
-  h2.divider { color: #b45309; border-bottom: 2px solid #d97706; font-style: italic; }
-  ul { list-style: none; }
-  li { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; border-bottom: 1px dashed #e7e5e4; }
-  li:last-child { border-bottom: none; }
-  li.note-item { border-bottom: none; font-style: italic; color: #78716c; font-family: 'Fraunces', serif; }
-  .check { display: inline-block; width: 22px; height: 22px; border: 2px solid #44403c; border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
-  .item { flex: 1; }
-  footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid #d6d3d1; font-size: 13px; color: #78716c; font-style: italic; font-family: 'Fraunces', serif; }
-  .print-btn { position: fixed; top: 20px; right: 20px; background: #1c1917; color: #faf6ed; padding: 12px 24px; border: none; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-family: 'Inter', sans-serif; }
-  .print-btn:hover { background: #b45309; }
-  @media print {
-    body { padding: 30px; background: white; }
-    .print-btn { display: none; }
-    li { break-inside: avoid; }
-    h2 { break-after: avoid; }
-  }
-</style>
-</head>
-<body>
-  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
-  <div class="container">
-    <div class="brand">
-      <img src="https://petsincabin.com/logo.png" alt="Pets in Cabin" />
-      <div>
-        <div class="brand-text">Pets in Cabin</div>
-        <div class="brand-tag">Travel together, stay together</div>
-      </div>
-      <small>By Theo's Mum</small>
-    </div>
-    <h1>${data.title.replace(/checklist/i, '<em>checklist</em>')}</h1>
-    <p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>
-    ${restrictionHtml}
-    ${data.sections.map(s => `
-      <h2${s.divider ? ' class="divider"' : ''}>${s.title}</h2>
-      <ul>
-        ${s.items.map(item => s.divider
-          ? `<li class="note-item"><span class="item">${item}</span></li>`
-          : `<li><span class="check"></span><span class="item">${item}</span></li>`).join('')}
-      </ul>
-    `).join('')}
-    <footer>This checklist is a starting point, not a substitute for professional advice. Always confirm with your airline, vet, and destination country before flying. Updated ${LAST_UPDATED}.</footer>
-  </div>
-</body>
-</html>`;
-
-    const blob = new Blob([html], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+    openChecklistPrintable(data);
   }
 
   return (
@@ -5586,7 +6047,7 @@ function ChecklistDownload() {
         <div className="flex-1">
           <h3 className="font-serif text-2xl mb-2">Get a printable checklist</h3>
           <p className="text-stone-300 leading-relaxed">
-            Build it from your route — origin and destination — and it combines both countries' rules into one list. Or pick a single country. Opens in a new tab; use your browser's print or save-as-PDF.
+            Build it from your route — origin and destination — and it combines every country's rules into one document, with a chapter per country. Or pick a single country. Opens in a new tab; use your browser's print or save-as-PDF.
           </p>
         </div>
       </div>
@@ -5780,6 +6241,7 @@ function ChecklistDownload() {
 function JourneyPlanner() {
   const [origin, setOrigin] = useState("");      // airport CODE, e.g. "LHR"
   const [destination, setDestination] = useState(""); // airport CODE
+  const [petType, setPetType] = useState("dog"); // "dog" | "cat" | "both" — filters checklist items
   const [planned, setPlanned] = useState(false);
   const sectionRef = useRef(null);
 
@@ -5954,6 +6416,31 @@ function JourneyPlanner() {
         <p className="font-serif italic text-stone-400 text-lg mb-10 max-w-2xl">
           Pick your start and end points. I'll show the cabin routes, the workarounds, and the checklist you'll need — all in one place.
         </p>
+
+        {/* Pet-type picker — controls which checklist items are shown.
+            "Both" shows everything; dog/cat filter out items that don't apply. */}
+        <div className="mb-6">
+          <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Travelling with</label>
+          <div className="flex gap-2">
+            {[
+              { id: "dog", label: "🐕 Dog" },
+              { id: "cat", label: "🐈 Cat" },
+              { id: "both", label: "Both" },
+            ].map((opt) => (
+              <button
+                key={opt.id}
+                onClick={() => { setPetType(opt.id); setPlanned(false); }}
+                className={`px-5 py-2.5 text-sm transition-all font-medium ${
+                  petType === opt.id
+                    ? "bg-amber-600 text-white"
+                    : "bg-stone-800 text-stone-300 hover:bg-stone-700 border border-stone-700"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Dropdowns — airport-level, grouped by region */}
         <div className="grid sm:grid-cols-[1fr_auto_1fr_auto] gap-4 items-end mb-8">
@@ -6308,69 +6795,105 @@ function JourneyPlanner() {
                   <div className="flex-1">
                     <div className="font-serif text-stone-100 mb-1">Your combined prep checklist</div>
                     <p className="text-stone-300 text-sm leading-relaxed">
-                      Both the country you leave AND the one you enter have rules. Below is the prep for {originAirport ? <strong className="text-stone-100">{REGION_LABELS_SHORT[originAirport.region] || originAirport.region}</strong> : "your origin"} → {destAirport ? <strong className="text-stone-100">{REGION_LABELS_SHORT[destAirport.region] || destAirport.region}</strong> : "your destination"}, merged into one list. For the printable version, head to the <a href="#checklist" className="text-amber-400 underline decoration-amber-700 underline-offset-4 hover:text-amber-300">checklist section</a>.
+                      Every country your pet legally enters — origin, any transit countries, destination — with its own chapter. Each chapter keeps its own timeline. We've worked out the specific paperwork for your exact route, so there's no "research this" guesswork.
                     </p>
                   </div>
                 </div>
 
-                {/* Inline combined checklist — origin departure + destination arrival */}
+                {/* Inline combined checklist — two chapters (origin departure +
+                    destination arrival), each with its own timeline, plus
+                    a separate tips section at the end. */}
                 {(() => {
                   if (!originAirport || !destAirport) return null;
+                  // Extract transit regions from any workaround routes for this
+                  // journey. Tags on a workaround entry are the regions the
+                  // route touches — origin and destination are filtered out so
+                  // we only keep genuine transit countries.
+                  const allWorkarounds = [...workaroundMatches, ...altWorkarounds];
+                  const transitRegions = [...new Set(
+                    allWorkarounds.flatMap((w) => w.tags || [])
+                  )].filter((t) => t !== originAirport.region && t !== destAirport.region);
+
                   const combined = buildRouteChecklist(
                     originAirport.region,
                     destAirport.region,
                     REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
-                    REGION_LABELS_SHORT[destAirport.region] || destAirport.region
+                    REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
+                    petType,
+                    transitRegions
                   );
-                  // Skip the universal/generic sections in the inline preview —
-                  // those are shown elsewhere; here we want the country-specific
-                  // sections so the user immediately sees the differential prep.
-                  const countrySections = combined.sections.filter(
-                    (s) => s.divider || s.title.includes("·")
-                  );
-                  if (countrySections.length === 0) {
+                  if (!combined.sections || combined.sections.length === 0) {
                     return (
                       <p className="text-stone-400 text-sm italic">
                         Country-specific prep isn't yet wired for this exact route — use the checklist section below for the closest match.
                       </p>
                     );
                   }
+                  // Detect when we cross into the tips block — render that one
+                  // visually demoted (smaller, less prominent).
+                  let inTipsBlock = false;
                   return (
-                    <div className="space-y-4 mt-2">
-                      {countrySections.map((s, i) => (
-                        <div key={i}>
-                          {s.divider ? (
-                            <div className="text-xs uppercase tracking-widest text-amber-400 mt-4 mb-2 pt-3 border-t border-amber-800/40">
-                              {s.title.replace(/^—\s*|\s*—$/g, "")}
+                    <div className="space-y-5 mt-2">
+                      {combined.sections.map((s, i) => {
+                        // Chapter dividers — render as prominent header bands.
+                        if (s.divider) {
+                          // Detect the tips divider — switch to demoted styling.
+                          const isTipsChapter = s.title.toLowerCase().includes("tips");
+                          if (isTipsChapter) inTipsBlock = true;
+                          return (
+                            <div key={i} className={isTipsChapter ? "mt-6 pt-4 border-t border-stone-700" : "mt-6"}>
+                              <div className={isTipsChapter
+                                ? "text-xs uppercase tracking-widest text-stone-500 mb-1"
+                                : "font-serif text-stone-50 text-lg bg-stone-900 -mx-5 px-5 py-3 mb-3"}>
+                                {s.title}
+                              </div>
+                              {s.items[0] && (
+                                <p className={isTipsChapter
+                                  ? "text-stone-500 text-xs italic mb-2"
+                                  : "text-stone-400 text-xs italic mb-3"}>
+                                  {s.items[0]}
+                                </p>
+                              )}
                             </div>
-                          ) : (
-                            <>
-                              <div className="font-serif italic text-stone-200 text-sm mb-2">{s.title}</div>
-                              <ul className="space-y-1.5">
-                                {s.items.slice(0, 5).map((item, j) => (
-                                  <li key={j} className="flex gap-2 text-stone-300 text-sm leading-snug">
-                                    <span className="text-amber-500 flex-shrink-0">✓</span>
-                                    <span>{item}</span>
-                                  </li>
-                                ))}
-                                {s.items.length > 5 && (
-                                  <li className="text-stone-500 text-xs italic ml-5">
-                                    + {s.items.length - 5} more in the full checklist
-                                  </li>
-                                )}
-                              </ul>
-                            </>
-                          )}
-                        </div>
-                      ))}
+                          );
+                        }
+                        // Regular timeline section.
+                        const sectionStyle = inTipsBlock
+                          ? "text-xs uppercase tracking-widest text-stone-500 mb-2"
+                          : "text-xs uppercase tracking-widest text-amber-400 mb-2 pb-1.5 border-b border-amber-800/40";
+                        const itemStyle = inTipsBlock
+                          ? "flex gap-2 text-stone-400 text-xs leading-snug italic"
+                          : "flex gap-2 text-stone-300 text-sm leading-snug";
+                        return (
+                          <div key={i}>
+                            <div className={sectionStyle}>{s.title}</div>
+                            <ul className="space-y-1.5">
+                              {s.items.slice(0, inTipsBlock ? 8 : 8).map((item, j) => (
+                                <li key={j} className={itemStyle}>
+                                  <span className={inTipsBlock ? "text-stone-500 flex-shrink-0 mt-0.5" : "text-amber-500 flex-shrink-0 mt-0.5"}>{inTipsBlock ? "·" : "✓"}</span>
+                                  <span dangerouslySetInnerHTML={{ __html: item }} />
+                                </li>
+                              ))}
+                              {s.items.length > 8 && (
+                                <li className="text-stone-500 text-xs italic ml-5">
+                                  + {s.items.length - 8} more in this stage
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+                        );
+                      })}
                       <div className="pt-4 mt-4 border-t border-amber-800/40">
-                        <a
-                          href="#checklist"
-                          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-4 py-2 text-xs uppercase tracking-widest font-medium transition-colors"
+                        <button
+                          onClick={() => openChecklistPrintable(combined)}
+                          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-4 py-2.5 text-xs uppercase tracking-widest font-medium transition-colors"
                         >
                           <FileCheck className="w-3.5 h-3.5" strokeWidth={2} />
-                          Open the full printable checklist
-                        </a>
+                          Download printable PDF
+                        </button>
+                        <p className="text-stone-500 text-xs mt-2">
+                          Opens in a new tab. Use your browser's "Print / Save as PDF" from there.
+                        </p>
                       </div>
                     </div>
                   );
@@ -7219,6 +7742,89 @@ function Tips() {
   );
 }
 
+function TravelDay() {
+  // Build a TRAVEL_DAY_GUIDE-shaped object for the printable helper —
+  // each stage becomes a section, each point becomes a checklist item.
+  function getPrintableData() {
+    const sections = [];
+    TRAVEL_DAY_GUIDE.stages.forEach((s) => {
+      sections.push({ title: `${s.kicker} — ${s.title}`, divider: true, items: [s.summary] });
+      sections.push({
+        title: s.title,
+        items: s.points.map((p) => `<strong>${p.h}.</strong> ${p.p}`),
+      });
+    });
+    return {
+      title: TRAVEL_DAY_GUIDE.title,
+      subtitle: TRAVEL_DAY_GUIDE.kicker,
+      sections,
+    };
+  }
+
+  return (
+    <section id="travel-day" className="py-20 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-serif italic text-amber-700 text-2xl">★</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">Travel day with a pet · airport guide</span>
+          <div className="flex-1 h-px bg-stone-300" />
+        </div>
+
+        <h2 className="font-serif text-5xl md:text-6xl text-stone-900 mb-6 leading-[1.0]">
+          What to expect <span className="italic text-stone-600">at the airport</span><br />
+          with your pet.
+        </h2>
+        <p className="font-serif italic text-stone-600 text-lg mb-12 max-w-3xl">
+          {TRAVEL_DAY_GUIDE.kicker}
+        </p>
+
+        {/* Eight-stage preview grid — each stage card links to that anchor on the full page */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          {TRAVEL_DAY_GUIDE.stages.map((s) => (
+            <a
+              key={s.id}
+              href={`/travel-day-with-a-pet#${s.id}`}
+              className="group bg-stone-50 border border-stone-300 p-5 hover:border-amber-600 hover:bg-amber-50 transition-colors flex flex-col"
+            >
+              <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-2">{s.kicker}</div>
+              <h3 className="font-serif text-lg text-stone-900 mb-2 leading-tight group-hover:text-amber-800 transition-colors">
+                {s.title}
+              </h3>
+              <p className="text-sm text-stone-600 leading-snug font-serif italic">{s.summary}</p>
+            </a>
+          ))}
+        </div>
+
+        {/* CTA strip — full guide + PDF download */}
+        <div className="bg-stone-900 text-stone-100 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 justify-between">
+          <div className="flex-1">
+            <h3 className="font-serif text-2xl text-stone-50 mb-2">The full walkthrough</h3>
+            <p className="text-stone-300 leading-relaxed">
+              Eight stages, hour-by-hour, from the morning at home to settling into your seat — plus arrival. Save the PDF and read it the night before you fly.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+            <a
+              href="/travel-day-with-a-pet"
+              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-50 px-5 py-3 text-xs uppercase tracking-widest font-medium transition-colors whitespace-nowrap"
+            >
+              Read the full guide
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
+            </a>
+            <button
+              onClick={() => openChecklistPrintable(getPrintableData())}
+              className="inline-flex items-center gap-2 border border-stone-600 hover:border-amber-500 hover:text-amber-400 text-stone-200 px-5 py-3 text-xs uppercase tracking-widest font-medium transition-colors whitespace-nowrap"
+            >
+              <FileCheck className="w-3.5 h-3.5" strokeWidth={2} />
+              Download as PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Stories() {
   const [open, setOpen] = useState(true);
 
@@ -7732,6 +8338,7 @@ export default function PetTravel() {
       <Checklist />
       <Documents />
       <Tips />
+      <TravelDay />
       <Stories />
       <Contact />
       <Footer />

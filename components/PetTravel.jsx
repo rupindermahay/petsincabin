@@ -373,7 +373,7 @@ const AIRLINES = [
   },
   {
     name: "LATAM Airlines",
-    tags: ["caribbean", "us"],
+    tags: ["south-america", "europe", "caribbean", "us"],
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
     cabinStatus: "conditional",
     direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). Cabin TEMPORARILY SUSPENDED on US↔Brazil, Bolivia, Ecuador, Peru and Colombia due to CDC dog import rules. NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
@@ -388,21 +388,20 @@ const AIRLINES = [
     link: "https://www.latamairlines.com/us/en/experience/prepare-your-trip/pets-transportation/cabin",
   },
   {
-    name: "Aeromexico",
-    scope: "north-america",
-    tags: ["mexico", "us"],
-    cabin: "Cabin ✓ — small dogs and cats, flights 6 hours or less",
-    cabinStatus: "conditional",
-    direction: "Cabin allowed: small cats and dogs on Aeromexico-operated flights of 6 hours or less — covers domestic Mexico, Mexico↔US, Mexico↔Canada, and Mexico↔Caribbean. Cabin NOT allowed: flights over 6 hours, and no cabin pets to London (UK). Connecting onto another airline means complying with that airline's pet rules separately.",
-    originAllowed: { us: "yes", canada: "yes", uk: "no", eu: "no (flights over 6h)", india: "no", caribbean: "yes", uae: "no", mexico: "yes" },
-    destinationAllowed: { us: "yes", canada: "yes", uk: "no", eu: "no (flights over 6h)", india: "no", caribbean: "yes", uae: "no", mexico: "yes" },
-    fee: "~$162 USD international (~$168 high season) · ~$1,350–1,700 MXN domestic Mexico",
-    weight: "Pet + carrier combined max 9 kg. Carrier max 40 × 30 × 20 cm.",
-    carrier: "Hard or soft-sided carrier, max 40 × 30 × 20 cm, must fit under the seat. Well-ventilated, with a one-piece absorbent base. Pet must be able to turn around and lie down naturally.",
-    notes: "Aeromexico is the natural cabin carrier for Mexico and short cross-border routes. The 6-hour flight limit is the key constraint — it rules out cabin travel on Aeromexico's long-haul routes (Europe, Asia, South America), but covers all the common Mexico↔US and Mexico↔Canada pairs. Brachycephalic breeds CAN fly in cabin (they're only banned from cargo). Minimum 8 weeks old (6 months for US travel). One pet per passenger. Book through Aeromexico's Customer Service — not online — and arrive 2 hours early. A $125 layover fee applies for US connections of 4+ hours.",
-    intl: "Yes — Mexico, US, Canada, Caribbean (flights 6h or less)",
+    name: "Avianca",
+    tags: ["south-america", "us", "europe", "caribbean", "mexico"],
+    cabin: "Cabin ✓ — Colombia hub, strong South / Central America coverage",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: dogs and cats up to 10 kg combined on most international and domestic routes. Strong network: Colombia, Peru, Ecuador, Costa Rica, El Salvador, plus connections to Brazil, Argentina, Chile, Mexico, US, Canada, Spain. Cabin NOT allowed: UK (cargo only — Animal Reception Centre rules), Galapagos Islands (live animal transport prohibited), Aruba and Curaçao (except permanent moves to Curaçao). Brachycephalic dog and cat breeds: cabin only — never accepted in the hold due to breathing risk.",
+    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes" },
+    fee: "Cabin: ~USD 19–29 domestic Colombia (COP 75,000–115,000) · ~USD 160 to/from North America · USD 180–200 to/from Europe. Hold: ~USD 50–70 domestic / USD 225–245 international depending on route.",
+    weight: "Pet + carrier max 10 kg (22 lb) combined for cabin. Up to 70 kg combined in the hold (size restrictions apply). Minimum age 4 months (2 months for domestic Colombia routes).",
+    carrier: "Soft-sided only for cabin, max 55 × 35 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
+    notes: "Avianca is the natural cabin carrier for the northern half of South America — Colombia, Peru, Ecuador, plus Central America. Hub at Bogotá El Dorado (BOG). Important: Avianca does NOT permit transit with pets on connecting flights with codeshare partners — must be Avianca-operated end to end (including TACA, Avianca Costa Rica, Avianca Peru, Avianca Ecuador). Pit Bull, American Pit Bull Terrier, Staffordshire Terrier, and American Staffordshire Terrier are banned from import to Colombia by law (Article 108-E). Avianca will refuse these breeds on Colombia-bound flights. Brachycephalic dogs can travel in cabin (signed cabin/hold form required at airport) but never in cargo. Max 1 pet per passenger in cabin, max 6 pets per flight (including ESAs). Book 48+ hours in advance through Avianca Contact Center.",
+    intl: "Yes — South America, Central America, Caribbean, North America, Europe (Madrid/Barcelona)",
     verified: "May 2026",
-    link: "https://aeromexico.com/en-us/travel-information/flying-with-pets",
+    link: "https://www.avianca.com/en/information-and-help/pet-transport/",
   },
   {
     name: "Vueling",
@@ -503,7 +502,7 @@ const AIRLINES = [
   },
   {
     name: "Aeromexico",
-    tags: ["mexico", "us", "japan", "longhaul"],
+    tags: ["mexico", "us", "japan", "south-america", "longhaul"],
     cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
     cabinStatus: "yes",
     direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
@@ -809,6 +808,11 @@ const DIRECT_ROUTES = [
   { from: "Miami (MIA)", to: "Mexico City (MEX)", duration: "3h 30m", note: "American, Aeromexico. ✓ Cabin. Mexico is an easy cabin destination — vet health certificate + rabies is the core requirement.", tags: ["us", "mexico"] },
   { from: "Miami (MIA)", to: "Cancún (CUN)", duration: "1h 50m", note: "American, Delta, JetBlue. ✓ Cabin. The shortest US → Mexico cabin route.", tags: ["us", "mexico"] },
   { from: "Miami (MIA)", to: "Madrid (MAD)", duration: "8h 45m", note: "Iberia. ✓ Cabin (under 8 kg, €150). Iberia's MIA→MAD route is a solid cabin option for Florida pet owners heading to Spain.", tags: ["us", "europe"] },
+  { from: "Miami (MIA)", to: "São Paulo (GRU)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (LATAM under 7 kg, American under 9 kg). Florida is the main US gateway to Brazil — multiple daily.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Bogotá (BOG)", duration: "3h 30m", note: "Avianca, American. ✓ Cabin (Avianca under 10 kg). Shortest US-South America cabin route — but: Pit Bull, American Staffordshire, and Staffordshire Bull Terrier breeds banned from import to Colombia by law.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Lima (LIM)", duration: "5h 30m", note: "LATAM, American. ✓ Cabin. Peru requires SENASA import permit — apply 30+ days ahead.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Santiago (SCL)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (under 7 kg LATAM). Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on paperwork.", tags: ["us", "south-america"] },
+  { from: "Miami (MIA)", to: "Buenos Aires (EZE)", duration: "9h", note: "American, LATAM. ✓ Cabin. Argentina requires SENASA-endorsed health certificate and ISO microchip.", tags: ["us", "south-america"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -869,6 +873,48 @@ const DIRECT_ROUTES = [
   { from: "Toronto (YYZ)", to: "New York (JFK)", duration: "1h 45m", note: "Air Canada, Delta, United, American. ✓ Cabin all four. Shortest US cabin from Canada.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Paris (CDG)", duration: "7h 30m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Direct cabin Canada → Europe — Paris connects onward cabin-friendly across the EU.", tags: ["canada", "europe"] },
   { from: "Toronto (YYZ)", to: "Madrid (MAD)", duration: "8h 30m", note: "Air Canada / Iberia. ✓ Cabin. Toronto→Spain cabin option.", tags: ["canada", "europe"] },
+
+  // ═══════ FROM SÃO PAULO ═══════
+  { from: "São Paulo (GRU)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin (LATAM under 7 kg, American under 9 kg). Brazil's main US gateway — daily.", tags: ["south-america", "us"] },
+  { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg, ~USD 200). Direct overnight.", tags: ["south-america", "us"] },
+  { from: "São Paulo (GRU)", to: "Madrid (MAD)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin. The main South America → Europe cabin route. Onward to most of Europe.", tags: ["south-america", "europe"] },
+  { from: "São Paulo (GRU)", to: "Paris (CDG)", duration: "11h 30m", note: "Air France, LATAM. ✓ Cabin. Onward to all of Europe.", tags: ["south-america", "europe"] },
+  { from: "São Paulo (GRU)", to: "Buenos Aires (EZE)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin (LATAM under 7 kg). The main intra-South-America cabin pet hop.", tags: ["south-america"] },
+  { from: "São Paulo (GRU)", to: "Santiago (SCL)", duration: "4h 30m", note: "LATAM. ✓ Cabin. Brazil ↔ Chile is the South America cabin pet workhorse.", tags: ["south-america"] },
+  { from: "São Paulo (GRU)", to: "Lisbon (LIS)", duration: "10h", note: "TAP Portugal, LATAM. ✓ Cabin. Brazil-Portugal cultural/migration corridor — busy cabin route.", tags: ["south-america", "europe"] },
+
+  // ═══════ FROM BUENOS AIRES ═══════
+  { from: "Buenos Aires (EZE)", to: "Miami (MIA)", duration: "9h", note: "American, LATAM. ✓ Cabin. Direct US east coast cabin.", tags: ["south-america", "us"] },
+  { from: "Buenos Aires (EZE)", to: "São Paulo (GRU)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin. Short Mercosur hop.", tags: ["south-america"] },
+  { from: "Buenos Aires (EZE)", to: "Santiago (SCL)", duration: "2h", note: "LATAM, JetSmart, Sky. ✓ Cabin (LATAM under 7 kg). Trans-Andes hop, busiest South America route.", tags: ["south-america"] },
+  { from: "Buenos Aires (EZE)", to: "Madrid (MAD)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. The Argentina-Spain cabin link.", tags: ["south-america", "europe"] },
+
+  // ═══════ FROM SANTIAGO ═══════
+  { from: "Santiago (SCL)", to: "São Paulo (GRU)", duration: "4h 30m", note: "LATAM. ✓ Cabin (under 7 kg). LATAM's home base.", tags: ["south-america"] },
+  { from: "Santiago (SCL)", to: "Buenos Aires (EZE)", duration: "2h", note: "LATAM, JetSmart, Sky. ✓ Cabin.", tags: ["south-america"] },
+  { from: "Santiago (SCL)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM, American. ✓ Cabin. Chile's main US route.", tags: ["south-america", "us"] },
+  { from: "Santiago (SCL)", to: "Madrid (MAD)", duration: "13h", note: "Iberia, LATAM. ✓ Cabin. Direct LATAM-operated long-haul cabin pet route.", tags: ["south-america", "europe"] },
+  { from: "Santiago (SCL)", to: "Lima (LIM)", duration: "3h 30m", note: "LATAM, Sky. ✓ Cabin.", tags: ["south-america"] },
+
+  // ═══════ FROM BOGOTÁ ═══════
+  { from: "Bogotá (BOG)", to: "Miami (MIA)", duration: "3h 30m", note: "Avianca, American. ✓ Cabin (Avianca under 10 kg). Avianca's main US route. NOTE: dog breeds prohibited from import to Colombia (Pit Bull / AmStaff / Staffordshire) also affect Colombia-resident dogs of these breeds returning home.", tags: ["south-america", "us"] },
+  { from: "Bogotá (BOG)", to: "Madrid (MAD)", duration: "10h", note: "Avianca, Iberia. ✓ Cabin. Colombia-Spain cabin route — Avianca's main long-haul.", tags: ["south-america", "europe"] },
+  { from: "Bogotá (BOG)", to: "Mexico City (MEX)", duration: "4h 30m", note: "Avianca, Aeromexico. ✓ Cabin (both under 10 kg).", tags: ["south-america", "mexico"] },
+  { from: "Bogotá (BOG)", to: "Lima (LIM)", duration: "3h", note: "Avianca, LATAM. ✓ Cabin.", tags: ["south-america"] },
+
+  // ═══════ FROM LIMA ═══════
+  { from: "Lima (LIM)", to: "Miami (MIA)", duration: "5h 30m", note: "LATAM, American. ✓ Cabin.", tags: ["south-america", "us"] },
+  { from: "Lima (LIM)", to: "Bogotá (BOG)", duration: "3h", note: "Avianca, LATAM. ✓ Cabin.", tags: ["south-america"] },
+  { from: "Lima (LIM)", to: "Madrid (MAD)", duration: "11h 30m", note: "Iberia, LATAM. ✓ Cabin. Peru-Spain direct.", tags: ["south-america", "europe"] },
+  { from: "Lima (LIM)", to: "Santiago (SCL)", duration: "3h 30m", note: "LATAM, Sky. ✓ Cabin.", tags: ["south-america"] },
+
+  // ═══════ TO SOUTH AMERICA from elsewhere ═══════
+  { from: "Mexico City (MEX)", to: "Bogotá (BOG)", duration: "4h 30m", note: "Aeromexico, Avianca. ✓ Cabin. Mexico ↔ Colombia cabin hop.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "Aeromexico, LATAM. ✓ Cabin. Mexico ↔ Brazil cabin direct.", tags: ["mexico", "south-america"] },
+  { from: "Madrid (MAD)", to: "Buenos Aires (EZE)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. Reverse of EZE→MAD — Spain is Latin America's main European gateway.", tags: ["europe", "south-america"] },
+  { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
+  { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
+  { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg).", tags: ["us", "south-america"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -1230,13 +1276,14 @@ const REGION_HUBS = {
   "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
+  "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)"],
   "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "japan": "Japan",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "japan": "Japan",
 };
 
 // ---------- AIRPORT-LEVEL MASTER LIST ----------
@@ -1328,6 +1375,12 @@ const AIRPORTS = [
   // South Africa
   { code: "JNB", city: "Johannesburg", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
   { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+  // South America — LATAM and Avianca are the primary cabin pet carriers (both 10kg combined limit, brachycephalic excluded from cargo). Aeromexico provides Mexico ↔ SA connections.
+  { code: "GRU", city: "São Paulo Guarulhos", region: "south-america", cabinOut: true, cabinIn: true, note: "São Paulo Guarulhos (GRU) is South America's largest hub. LATAM is the primary cabin pet carrier (10 kg combined). Brazil's entry rules are relatively lenient: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, no microchip or titer required for most origin countries." },
+  { code: "EZE", city: "Buenos Aires Ezeiza", region: "south-america", cabinOut: true, cabinIn: true, note: "Buenos Aires Ezeiza (EZE) is Argentina's main international airport. LATAM and Aerolineas Argentinas serve cabin pets. Argentina requires ISO microchip, rabies vaccine, SENASA-endorsed health certificate, and import permit." },
+  { code: "SCL", city: "Santiago", region: "south-america", cabinOut: true, cabinIn: true, note: "Santiago Arturo Merino Benítez (SCL) is LATAM's home base — best cabin pet connectivity in South America. Chile's SAG requires advance import authorization, ISO microchip, and rabies vaccine 30+ days old. Strict on documentation." },
+  { code: "BOG", city: "Bogotá El Dorado", region: "south-america", cabinOut: true, cabinIn: true, note: "Bogotá El Dorado (BOG) is Avianca's main hub. Avianca cabin pets (10 kg) connect across the Americas. Colombia bans the import of Pit Bull, Staffordshire Terrier, and American Staffordshire Terrier breeds by law (Article 108-E)." },
+  { code: "LIM", city: "Lima", region: "south-america", cabinOut: true, cabinIn: true, note: "Lima Jorge Chávez (LIM) is Peru's main international airport. LATAM Peru and Avianca serve cabin pets. Peru requires SENASA import permit and health certificate from origin country's official authority." },
   // Japan — pets can enter at 11 designated ports; we list the major five.
   // Critical note: JAL and ANA do NOT carry cabin pets on any route. Cabin
   // routes in/out of Japan exist on United (US ↔ Japan), Korean carriers
@@ -1926,6 +1979,20 @@ const FALLBACK_STRATEGIES = {
     ],
     note: `Leaving Hawaii is simpler than arriving — fly cabin to a US mainland gateway, then connect onward. From the mainland, follow the normal routing for your destination region. No special Hawaii exit paperwork beyond the standard requirements for your destination country.`,
   }),
+  // Any destination = South America
+  "south-america": (o, d) => ({
+    legs: [
+      { route: `${o} → São Paulo (GRU) / Santiago (SCL) / Bogotá (BOG) / Buenos Aires (EZE) / Lima (LIM)`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Aeromexico (10 kg combined). From the US: American, Delta, United also serve cabin pets to SA hubs. From Europe: Iberia, Air France, KLM, Lufthansa cabin to GRU/EZE/SCL." },
+    ],
+    note: `South America is a generally cabin-friendly region for pets under 10 kg. LATAM is the largest carrier (cabin pets 7-10 kg depending on aircraft) and Avianca covers the northern part of the continent (10 kg cabin). Each country has its own import rules: Brazil is the most lenient (rabies vaccine 21+ days, USDA health certificate, no microchip required). Argentina, Chile, and Peru require ISO microchips, rabies vaccine 30+ days, and import permits (SENASA Argentina/Peru, SAG Chile). Colombia bans Pit Bull, Staffordshire, and American Staffordshire breeds by law. Pit Bulls are also restricted in Rio de Janeiro, Brazil. Brachycephalic dogs cannot fly cargo on LATAM or Avianca — cabin only.`,
+  }),
+  // Any origin = South America
+  "south-america-out": (o, d) => ({
+    legs: [
+      { route: `São Paulo / Santiago / Bogotá / Buenos Aires / Lima → ${d}`, time: "varies — long-haul", airline: "Cabin: LATAM, Avianca, Aeromexico for routes to the Americas. For Europe: LATAM cabin to MAD; Avianca cabin to MAD/CDG/LHR (cargo to LHR). For Asia: cargo only — no cabin routes." },
+    ],
+    note: `Leaving South America: cabin pet routes exist comfortably to North America and Europe. LATAM and Avianca both serve key transatlantic and North American hubs. Important: Avianca does NOT fly cabin pets to the UK, Galapagos, Aruba, or Curaçao. Azul Brazilian Airlines does not currently accept US-bound dogs due to CDC rabies-region restrictions. Brazil → US needs a rabies-vaccinated dog with USDA-accepted documentation; Argentina/Chile → US is more flexible (those are not on the CDC high-risk list). Check destination requirements early — paperwork can take 30+ days.`,
+  }),
   // Any destination = Japan
   "japan": (o, d) => ({
     legs: [
@@ -1955,9 +2022,11 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
   if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
+  if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
+  if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   return [];
 }
 
@@ -2076,6 +2145,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
+    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
   };
   const fromInOriginRegion = (field) =>
@@ -3004,6 +3074,73 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  south_america: {
+    title: "South America entry / exit checklist",
+    sections: [
+      {
+        title: "First — understand",
+        items: [
+          "Each South American country has its own rules. Brazil is the most lenient (no microchip required, no titer, 21-day post-rabies wait). Argentina, Chile, Peru, and Colombia require ISO microchips and import permits.",
+          "All major airlines flying cabin pets in South America cap at 10 kg combined (LATAM 7 kg on some aircraft, Avianca 10 kg). Brachycephalic dogs can fly cabin but NOT cargo on LATAM/Avianca.",
+          "Colombia bans the import of Pit Bull, American Staffordshire Terrier, Staffordshire Terrier, and crosses by law (Article 108-E). These breeds CANNOT enter Colombia regardless of paperwork.",
+          "Brazil → US: dogs must be at least 6 months old at entry, microchipped before rabies vaccine, and on the standard (not high-risk) CDC track. Brazil itself isn't on CDC's high-risk list as of 2026 — but always verify before travel.",
+        ],
+      },
+      {
+        title: "4+ weeks before",
+        items: [
+          "ISO 11784/11785 microchip implanted (required for Argentina, Chile, Peru, Colombia; recommended for Brazil even though not required).",
+          "Rabies vaccine: at least 21 days before travel for Brazil; at least 30 days for Argentina, Chile, Peru, Colombia.",
+          "Apply for the destination country's import permit if required: Chile (SAG) and Peru (SENASA) need pre-trip permits — apply 30+ days ahead. Argentina (SENASA) issues at the airport but documentation must be in order.",
+          "Book your LATAM or Avianca cabin pet spot — call the Contact Center, not online. Both airlines require LATAM-only / Avianca-only itineraries (no codeshare partners).",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Veterinary health certificate from your origin country's official authority (USDA APHIS for US origins, AHC for UK origins, EU vet for EU origins).",
+          "Health certificate must be issued within 10 days of travel and confirm the pet is free of infectious and parasitic diseases.",
+          "Internal and external parasite treatment (typically Drontal + Frontline) administered shortly before travel — record on the health certificate.",
+          "For Brazil: confirm with your vet that vaccinations are on the standard list (Distemper, Hepatitis, Parvovirus, Leptospirosis, Parainfluenza for dogs; FVRCP for cats).",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring originals of: health certificate (USDA-endorsed or equivalent), rabies vaccine certificate, microchip implant records, import permit (Chile/Peru), and parasite treatment record.",
+          "Arrive 3+ hours early for international departures — pet check-in is a separate counter at most South American hubs.",
+          "Confirm cabin pet booking by phone with LATAM/Avianca 24–48 hours before departure (space is limited per flight).",
+        ],
+      },
+      {
+        title: "On arrival",
+        items: [
+          "Brazil: present documents at the customs (Receita Federal) and agriculture (MAPA/VIGIAGRO) counter on arrival. No quarantine if documents are in order.",
+          "Argentina: SENASA inspection at EZE — present documentation, inspection typically 15–30 minutes.",
+          "Chile: SAG inspection mandatory; documentation strict. If your import permit isn't pre-arranged, your pet will be detained.",
+          "Colombia: ICA inspection; banned breed verification on arrival.",
+          "Peru: SENASA inspection at LIM. Health certificate from origin country must be present.",
+        ],
+      },
+      {
+        title: "Returning to the US from South America",
+        items: [
+          "Standard CDC Dog Import Form (online, valid 6 months for multiple entries to same port).",
+          "Certification of US-Issued Rabies Vaccination form (replaces health certificate for US-vaccinated dogs as of 2025).",
+          "Dog must be 6+ months old and microchip detectable on arrival.",
+          "Cats: no CDC requirements specific to cats.",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Same paperwork as dogs (microchip, rabies, health certificate) but no breed restrictions.",
+          "Cats are exempt from CDC's US re-entry forms — easier on the return.",
+          "Brazil exempts cats under 90 days old from rabies if from a low-risk origin (Brazil itself is medium-risk).",
+        ],
+      },
+    ],
+  },
 };
 
 // For routes where direction (departing vs arriving) genuinely changes the checklist content,
@@ -3857,6 +3994,7 @@ const REGION_TO_CHECKLIST_ID = {
   "caribbean": null,        // per-island — handled specially below
   "hawaii": null,           // uses generic + Hawaii note
   "south-africa": "south_africa",
+  "south-america": "south_america",
   "japan": "japan",
 };
 
@@ -3873,9 +4011,10 @@ const ROUTE_FACTS = {
   "mexico":      { name: "Mexico", cdcHighRisk: false, euMember: false, ukOrIreland: false },
   "india":       { name: "India", cdcHighRisk: true,  euMember: false, ukOrIreland: false },
   "dubai":       { name: "the UAE", cdcHighRisk: false, euMember: false, ukOrIreland: false },
-  "caribbean":   { name: "the Caribbean", cdcHighRisk: "varies", euMember: false, ukOrIreland: false, perIsland: true }, // DR is high-risk; Bahamas/Jamaica are not
+  "caribbean":   { name: "the Caribbean", cdcHighRisk: "varies", euMember: false, ukOrIreland: false, perIsland: true },
   "hawaii":      { name: "Hawaii", cdcHighRisk: false, euMember: false, ukOrIreland: false, isUS: true, isRabiesFree: true },
   "south-africa": { name: "South Africa", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "south-america": { name: "South America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "japan":       { name: "Japan", cdcHighRisk: false, euMember: false, ukOrIreland: false, isRabiesFree: true, strictImport: true },
 };
 
@@ -5857,6 +5996,40 @@ const DESTINATIONS = [
     ],
     paperwork: "Required for all entries: ISO 11784/11785 microchip, EU-approved rabies vaccine ≥21 days old (pet must have been ≥12 weeks old when vaccinated), EU pet passport (for EU/EEA residents) or EU Health Certificate for Norway (from elsewhere) issued within 10 days of travel. Dogs: tapeworm treatment 24–120 hours before arrival, recorded in passport by a vet. From non-listed countries: rabies titer test ≥0.5 IU/ml plus 3-month wait. Exception: pets moving Norway↔Sweden specifically don't need the rabies vaccine. Banned breeds: Pit Bull, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, wolf-hybrids. Entry only at Oslo (OSL) airport or Storskog land border — follow the red customs channel on arrival.",
   },
+  {
+    id: "south-america",
+    flag: "🌎",
+    name: "South America",
+    headline: "Cabin-friendly continent — different rules per country.",
+    rule: "South America is one of the more cabin-pet-friendly continents in the world. LATAM (Chile-based, 7-10 kg cabin) and Avianca (Colombia-based, 10 kg cabin) serve almost every major city. The catch: each country has its own import paperwork. Brazil is easiest (rabies vaccine + health certificate, no microchip required). Argentina, Chile, Peru, and Colombia all require ISO microchips, rabies vaccine 30+ days old, and pre-arranged import permits. Colombia bans Pit Bull, Staffordshire, and American Staffordshire imports by law. Brachycephalic dogs can travel cabin on LATAM/Avianca but never in cargo.",
+    workarounds: [
+      {
+        title: "LATAM cabin pets — South America's workhorse",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "LATAM operates the largest cabin pet network in South America, with hubs in Santiago (SCL), São Paulo (GRU), and Lima (LIM). Cabin weight 7-10 kg combined depending on aircraft (A319/A320/A321 lower, B777/787 higher). Fee: ~USD 200 international long-haul, BRL 200 domestic Brazil. The catch: LATAM-operated flights only — no codeshares, no partner connections. Book through their Contact Center, not online. Brachycephalic breeds welcome in cabin (banned from cargo).",
+        cost: "USD 200 international · BRL 200 (~$40) domestic Brazil · LATAM Cargo separate for larger pets.",
+      },
+      {
+        title: "Avianca cabin pets — northern South America specialist",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Avianca's hub is Bogotá (BOG). Cabin weight 10 kg combined — the most generous Latin American limit. Strong network across Colombia, Peru, Ecuador, Costa Rica, plus connections to Brazil, Argentina, Chile, Mexico, US, and Spain. Cabin NOT allowed to UK (cargo only), Galapagos (live animals prohibited), Aruba/Curaçao (except permanent moves). Brachycephalic dogs cabin-only — never in cargo.",
+        cost: "USD 160 to/from North America · USD 180–200 to/from Europe · COP 75,000–115,000 (~$19-29) domestic Colombia.",
+      },
+      {
+        title: "Aeromexico Mexico ↔ South America cabin direct",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Aeromexico links Mexico City to São Paulo, Buenos Aires, Santiago, Bogotá, and Lima with cabin pets (9 kg combined). Useful for travellers connecting through Mexico from the US or Asia. Snub-nosed breeds welcome in cabin.",
+        cost: "USD 200–250 long-haul international.",
+      },
+      {
+        title: "Country-specific paperwork timing",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Brazil: rabies 21+ days before travel, USDA-endorsed health certificate within 10 days, no microchip required (but recommended). Argentina: ISO microchip, rabies 30+ days, SENASA import permit. Chile: most rigorous — SAG import permit must be pre-arranged 30+ days ahead, ISO microchip mandatory. Peru: SENASA import permit + health certificate. Colombia: ICA inspection on arrival, banned breed check (Pit Bull / AmStaff / Staffordshire all refused).",
+        cost: "Vet visits + USDA/origin endorsement: $200–$500 depending on country. Import permits: typically free or $20–50.",
+      },
+    ],
+    paperwork: "Brazil: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, parasite treatment, additional vaccines (Distemper/Hepatitis/Parvovirus/Leptospirosis for dogs; FVRCP for cats). No microchip required. Argentina/Chile/Peru: ISO microchip, rabies 30+ days, SENASA/SAG/SENASA import permit (apply 30+ days ahead), health certificate from origin country's official authority. Colombia: ICA inspection on arrival, ISO microchip recommended, banned breeds (Pit Bull, Staffordshire, American Staffordshire) refused entry by law. All countries: pets must be 4+ months old for international cabin travel. Returning to the US: standard CDC Dog Import Form for dogs (Brazil/Argentina/Chile/Peru/Colombia NOT on CDC high-risk list as of 2026).",
+  },
 ];
 
 function DifficultDestinations() {
@@ -5980,6 +6153,20 @@ function DifficultDestinations() {
                     </h4>
                     <p className="text-amber-50/90 leading-relaxed text-sm">
                       The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, three cabin pet paths (United, Korean carriers, Aeromexico), and 11 approved entry ports — all on one page.
+                    </p>
+                  </a>
+                )}
+                {dest.id === "south-america" && (
+                  <a
+                    href="/south-america-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete South America pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      Country-by-country import rules for Brazil, Argentina, Chile, Peru, and Colombia. LATAM and Avianca cabin pet networks, banned breeds, and the easy-vs-hard country ranking — all on one page.
                     </p>
                   </a>
                 )}
@@ -6678,6 +6865,7 @@ function JourneyPlanner() {
     "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
     "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
     "caribbean": null, "hawaii": null, "south-africa": "south_africa",
+    "south-america": "south_america", "japan": "japan",
   };
 
   // The two selected airport objects (or null until chosen).
@@ -7350,6 +7538,7 @@ function Routes() {
     "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
+    "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
   };
 

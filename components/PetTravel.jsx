@@ -1389,6 +1389,260 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `Mexico to the UK is three legs — no airline flies cabin pets into the UK. Route via the US, then a European hub, then the Eurotunnel land crossing. Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
   }),
+
+  // ----- IRELAND outbound (cabin OUT of Ireland is fine — Dublin to Europe) -----
+  "ireland>europe": (o, d) => ({
+    legs: [
+      { route: `${o} → ${d}`, time: "1h 30m–3h", airline: "Air France / KLM / Lufthansa ✓ Cabin out of Dublin" },
+    ],
+    note: `Cabin OUT of Ireland is straightforward — it's only flights INTO Ireland that ban cabin pets. Air France (to Paris), KLM (to Amsterdam) and Lufthansa (to Frankfurt) all take cabin pets out of Dublin. From any of those hubs you can connect onward across Europe in cabin.`,
+  }),
+  "ireland>uk-out": (o, d) => ({
+    legs: [
+      { route: `${o} → Cherbourg or Roscoff (ferry)`, time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
+      { route: "France → Calais", time: "varies", airline: "Pet stays with you" },
+      { route: "Eurotunnel → UK", time: "35m", airline: "Pet stays in car" },
+    ],
+    note: `The cleanest Ireland→UK pet route avoids flying altogether: the direct Ireland→France ferry, then drive to Calais and Eurotunnel into the UK. Alternatively the short Dublin/Rosslare → Holyhead ferry crosses straight to Wales — pets stay in your vehicle. No cabin flight into the UK exists, but the ferry routes make this an easy land+sea journey.`,
+  }),
+  "ireland>canada": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "1h 30m–2h", airline: "Air France / Lufthansa ✓ Cabin out of Dublin" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "7–9h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+    ],
+    note: `Cabin out of Ireland to a European hub, then Air Canada cabin onward to Canada. Air Canada is one of the more reliable long-haul cabin carriers. Canada is an easy destination paperwork-wise — a current rabies certificate is the core requirement.`,
+  }),
+  "ireland>india": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m–2h", airline: "Lufthansa / Air France ✓ Cabin out of Dublin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+    ],
+    note: `Ireland→India via a European hub, cabin all the way. You'll need India's AQCS NOC for the import side, and India only admits pets through six airports (Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad). Apply for the NOC 1–2 weeks ahead.`,
+  }),
+  "ireland>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "1h 30m–2h", airline: "Air France / Lufthansa / KLM ✓ Cabin out of Dublin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
+    ],
+    note: `Ireland→UAE via a European hub, then Etihad cabin into Abu Dhabi — the only UAE airport that accepts cabin pets. From AUH it's a 90-minute taxi to Dubai. Never fly into Dubai (DXB) directly with a pet: UAE law requires cargo into DXB on all airlines. MOCCAE import permit required, valid 30 days.`,
+  }),
+  "ireland>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 30m–2h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
+      { route: `European hub → Miami (MIA) or New York (JFK)`, time: "8–9h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `Ireland→Caribbean is a three-hop cabin journey via a European hub and then a US gateway. Each Caribbean island has its own import permit — check the specific island well ahead, some need 6–8 weeks of lead time.`,
+  }),
+  "ireland>mexico": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 30m–2h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "European hub → Mexico City (MEX)", time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+    ],
+    note: `Cabin out of Ireland to a European hub, then cabin onward to Mexico. A long journey — an overnight in Europe is gentler on your pet. Mexico is an easy-entry destination: a vet health certificate plus current rabies is usually all that's needed.`,
+  }),
+
+  // ----- INDIA outbound -----
+  "india>us": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "8–10h", airline: "Lufthansa / Air France / Delta ✓ Cabin" },
+    ],
+    note: `India→USA in cabin routes via a European hub — there's no direct cabin route (Air India is cargo-only to the US, and the 'India→Tokyo→US' cabin route is a myth, JAL/ANA don't take cabin pets internationally). For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
+  }),
+  "india>mexico": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Mexico City (MEX)", time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+    ],
+    note: `India→Mexico via a European hub, cabin throughout. It's a long journey — build in an overnight stop in Europe. Mexico is an easy destination: a vet health certificate plus current rabies is usually all that's needed.`,
+  }),
+  "india>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: `European hub → Miami (MIA) or New York (JFK)`, time: "8–9h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `India→Caribbean is a long three-hop cabin journey via Europe and then a US gateway. Plan for at least one overnight. Each island has its own import rules — check the specific destination, some need months of lead time.`,
+  }),
+  "india>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
+      { route: "Ferry to Ireland (Cherbourg/Roscoff → Rosslare/Dublin)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `No cabin flight goes INTO Ireland — same rule as the UK. Fly India→Europe in cabin, then take the pet-friendly ferry from France to Ireland. Your pet stays with you for the sea crossing. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, and tapeworm treatment for dogs.`,
+  }),
+
+  // ----- UAE (Abu Dhabi) outbound -----
+  "dubai>ireland": (o, d) => ({
+    legs: [
+      { route: `Abu Dhabi (AUH) → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+      { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
+      { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `Etihad cabin out of Abu Dhabi to a European hub, then the pet-friendly ferry from France into Ireland (no cabin flight goes into Ireland). If your pet is in Dubai, it's a short taxi to Abu Dhabi airport — cabin departures are only from AUH, not DXB.`,
+  }),
+  "dubai>canada": (o, d) => ({
+    legs: [
+      { route: `Abu Dhabi (AUH) → Paris / Frankfurt`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "7–9h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+    ],
+    note: `Etihad cabin out of Abu Dhabi to a European hub, then Air Canada cabin onward to Canada. If your pet is in Dubai, take the short taxi to Abu Dhabi — cabin departures are AUH only.`,
+  }),
+  "dubai>mexico": (o, d) => ({
+    legs: [
+      { route: `Abu Dhabi (AUH) → Paris / Frankfurt`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Mexico City (MEX)", time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+    ],
+    note: `Etihad cabin out of Abu Dhabi to a European hub, then cabin onward to Mexico. A long journey — an overnight in Europe is gentler. Mexico is an easy-entry destination.`,
+  }),
+  "dubai>caribbean": (o, d) => ({
+    legs: [
+      { route: `Abu Dhabi (AUH) → Paris / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+      { route: `European hub → Miami (MIA) or New York (JFK)`, time: "8–9h", airline: "Air France / KLM ✓ Cabin" },
+      { route: `US gateway → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `Etihad cabin out of Abu Dhabi, then via a European hub and a US gateway to the Caribbean. Long and multi-leg — plan overnight stops. Each island has its own import permit.`,
+  }),
+
+  // ----- MEXICO outbound (additional) -----
+  "mexico>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
+      { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `No cabin flight goes into Ireland. Route Mexico → US gateway → European hub in cabin, then the pet-friendly ferry from France into Ireland. A long journey — build in overnight stops.`,
+  }),
+  "mexico>india": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+    ],
+    note: `Mexico→India via a European hub, cabin throughout. Long-haul — an overnight in Europe is kinder to your pet. India needs the AQCS NOC and only admits pets through six airports.`,
+  }),
+  "mexico>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris / Frankfurt`, time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
+    ],
+    note: `Mexico→UAE via a European hub, then Etihad cabin into Abu Dhabi (the only UAE airport that takes cabin pets). From AUH it's a short taxi to Dubai. Never fly a pet into DXB — cargo-only by UAE law. MOCCAE permit required.`,
+  }),
+  "mexico>caribbean": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA)`, time: "1h 50m–3h", airline: "Aeromexico / American ✓ Cabin" },
+      { route: `Miami → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+    ],
+    note: `Mexico→Caribbean routes neatly through Miami — both legs in cabin. Miami is the natural connecting hub. Each Caribbean island sets its own import rules, so check your specific destination.`,
+  }),
+
+  // ----- CARIBBEAN outbound (additional) -----
+  "caribbean>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
+      { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `No cabin flight goes into Ireland. Caribbean → US gateway → European hub in cabin, then the pet-friendly ferry from France. Long and multi-leg — plan overnight stops.`,
+  }),
+  "caribbean>mexico": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `Miami → ${d}`, time: "1h 50m–3h", airline: "Aeromexico / American ✓ Cabin" },
+    ],
+    note: `Caribbean→Mexico routes through Miami — both legs in cabin. Mexico is an easy-entry destination: vet health certificate plus current rabies is usually all that's needed.`,
+  }),
+  "caribbean>india": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+      { route: `European hub → ${d}`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+    ],
+    note: `Caribbean→India is a long three-hop cabin journey via a US gateway and a European hub. Plan overnight stops. India needs the AQCS NOC and only admits pets through six airports.`,
+  }),
+  "caribbean>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `US gateway → Paris / Frankfurt / Amsterdam`, time: "8–9h", airline: "Air France / KLM / Lufthansa ✓ Cabin" },
+      { route: "European hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
+    ],
+    note: `Caribbean→UAE via a US gateway and a European hub, then Etihad cabin into Abu Dhabi. From AUH it's a short taxi to Dubai. Never fly a pet into DXB — cargo-only by UAE law.`,
+  }),
+
+  // ----- CANADA / UK additional -----
+  "canada>ireland": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+      { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
+      { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+    ],
+    note: `No cabin flight goes into Ireland. Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
+  }),
+  "canada>dubai": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris / Frankfurt`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
+    ],
+    note: `Air Canada cabin to a European hub, then Etihad cabin into Abu Dhabi — the only UAE airport that accepts cabin pets. From AUH it's a short taxi to Dubai. MOCCAE import permit required, valid 30 days.`,
+  }),
+  "uk-out>mexico": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 15m–1h 30m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "European hub → Mexico City (MEX)", time: "11–12h", airline: "Air France / Lufthansa ✓ Cabin" },
+    ],
+    note: `Cabin out of the UK to a European hub, then cabin onward to Mexico. Remember: cabin pet departures from the UK are Heathrow and Manchester only — not Gatwick. Mexico is an easy-entry destination.`,
+  }),
+
+  // ----- SOUTH AFRICA (honest answer: no cabin option exists internationally) -----
+  "us>south-africa": () => ({
+    legs: [
+      { route: "US → Johannesburg (JNB) or Cape Town (CPT)", time: "15–17h", airline: "⚠ Cargo only — no cabin option exists" },
+    ],
+    note: `There is no cabin pet route into South Africa on any airline — international pets must travel as manifested cargo. Use an IATA-registered pet shipper. South Africa requires a veterinary import permit, and dogs/cats need rabies titre testing. Lift airline offers cabin for small dogs but ONLY on domestic South African flights, never international.`,
+  }),
+  "uk-out>south-africa": () => ({
+    legs: [
+      { route: "UK → Johannesburg (JNB) or Cape Town (CPT)", time: "11–12h", airline: "⚠ Cargo only — no cabin option exists" },
+    ],
+    note: `No airline flies cabin pets into South Africa — it's cargo only, via an IATA-registered pet shipper. South Africa requires an import permit and rabies titre testing. The UK→South Africa cargo route is well-established; British Airways and others handle it via their cargo divisions.`,
+  }),
+  "europe>south-africa": () => ({
+    legs: [
+      { route: "Europe → Johannesburg (JNB) or Cape Town (CPT)", time: "10–11h", airline: "⚠ Cargo only — no cabin option exists" },
+    ],
+    note: `No cabin pet route into South Africa exists on any airline — pets travel as manifested cargo. Lufthansa Cargo and KLM Cargo both handle the Europe→South Africa route. An import permit and rabies titre test are required.`,
+  }),
+
+  // ----- HAWAII (US territory — routes via US mainland, plus strict quarantine) -----
+  "uk-out>hawaii": (o, d) => ({
+    legs: [
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 15m–1h 30m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+      { route: "European hub → US mainland gateway", time: "8–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      { route: "US mainland → Honolulu (HNL)", time: "5–6h", airline: "Hawaiian / Delta / United ✓ Cabin" },
+    ],
+    note: `Hawaii has the strictest pet import rules of any US destination — a 5-day-or-less quarantine program that requires months of pre-planning (rabies titre test, specific microchip, paperwork sent ahead). Start the Hawaii Department of Agriculture process at least 4–5 months early. The flight routing itself is cabin all the way via Europe and the US mainland.`,
+  }),
+  "europe>hawaii": (o, d) => ({
+    legs: [
+      { route: `${o} → US mainland gateway`, time: "8–11h", airline: "Air France / KLM / Lufthansa / Delta ✓ Cabin" },
+      { route: "Layover at the US gateway", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "US mainland → Honolulu (HNL)", time: "5–6h", airline: "Hawaiian / Delta / United ✓ Cabin" },
+    ],
+    note: `Europe→Hawaii is cabin all the way via a US mainland gateway. The hard part isn't the flying — it's Hawaii's strict quarantine program. Start the Hawaii Department of Agriculture "5-Day-Or-Less" process 4–5 months ahead: rabies titre test, ISO microchip, and paperwork submitted in advance.`,
+  }),
 };
 
 // Airports that are CARGO-ONLY for pets — no airline flies cabin pets in or
@@ -1400,13 +1654,63 @@ const CARGO_ONLY_AIRPORTS = ["(DXB)"];
 const isCargoOnly = (airport) =>
   CARGO_ONLY_AIRPORTS.some((code) => airport.includes(code));
 
+// Catch-all fallbacks for region pairs without an explicit strategy. These
+// cover the long-tail routes (mostly Hawaii and South Africa) where the
+// honest answer is consistent regardless of exact origin: South Africa is
+// always cargo-only internationally, and Hawaii always routes via the US
+// mainland with its strict quarantine programme. Hand-writing 30+ near-
+// identical functions adds no value — these generic builders give an
+// accurate answer for any origin.
+const FALLBACK_STRATEGIES = {
+  // Any destination = South Africa
+  "south-africa": (o, d) => ({
+    legs: [
+      { route: `${o} → Johannesburg (JNB) or Cape Town (CPT)`, time: "varies — long-haul", airline: "⚠ Cargo only — no cabin option exists on any airline" },
+    ],
+    note: `There is no cabin pet route into South Africa on any airline — international pets must travel as manifested cargo, arranged through an IATA-registered pet shipper. South Africa requires a veterinary import permit and rabies titre testing done well in advance. (Lift airline offers cabin for small dogs, but ONLY on domestic South African flights — never international.)`,
+  }),
+  // Any origin = South Africa
+  "south-africa-out": (o, d) => ({
+    legs: [
+      { route: `Johannesburg (JNB) or Cape Town (CPT) → ${d}`, time: "varies — long-haul", airline: "⚠ Cargo only — no cabin option exists on any airline" },
+    ],
+    note: `No airline flies cabin pets out of South Africa internationally — your pet travels as manifested cargo via an IATA-registered pet shipper. Plan ahead: the destination country's import paperwork (permits, health certificates, sometimes rabies titre tests) must all be in order before travel.`,
+  }),
+  // Any destination = Hawaii
+  "hawaii": (o, d) => ({
+    legs: [
+      { route: `${o} → US mainland gateway`, time: "varies", airline: "Cabin where a route exists — otherwise route via a hub first" },
+      { route: "Layover at the US gateway", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "US mainland → Honolulu (HNL)", time: "5–6h", airline: "Hawaiian / Delta / United ✓ Cabin" },
+    ],
+    note: `Hawaii routes through a US mainland gateway. The flying is the easy part — Hawaii has the strictest pet import rules of any US destination, a "5-Day-Or-Less" quarantine programme that needs 4–5 months of preparation: rabies titre test, ISO microchip, and paperwork submitted to the Hawaii Department of Agriculture in advance. Start early.`,
+  }),
+  // Any origin = Hawaii
+  "hawaii-out": (o, d) => ({
+    legs: [
+      { route: `Honolulu (HNL) → US mainland gateway`, time: "5–6h", airline: "Hawaiian / Delta / United ✓ Cabin" },
+      { route: "Layover at the US gateway", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `US mainland → ${d}`, time: "varies", airline: "Cabin where a route exists — see that region's routes" },
+    ],
+    note: `Leaving Hawaii is simpler than arriving — fly cabin to a US mainland gateway, then connect onward. From the mainland, follow the normal routing for your destination region. No special Hawaii exit paperwork beyond the standard requirements for your destination country.`,
+  }),
+};
+
 // A region-pair can have ONE strategy (a single function) or SEVERAL (an array
 // of functions) — e.g. UK→US has both a European-hub route AND a via-Montreal
 // route. This normalises either shape to an array so callers can map over it.
 function strategiesFor(originRegion, destRegion) {
   const v = REGION_PAIR_STRATEGIES[`${originRegion}>${destRegion}`];
-  if (!v) return [];
-  return Array.isArray(v) ? v : [v];
+  if (v) return Array.isArray(v) ? v : [v];
+  // No explicit strategy — try the catch-all fallbacks for the long-tail
+  // routes (Hawaii, South Africa). Destination match takes priority over
+  // origin match, since the destination's rules are usually the binding
+  // constraint (e.g. South Africa cargo-only, Hawaii quarantine).
+  if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
+  if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
+  if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
+  if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
+  return [];
 }
 
 // Generate concrete city-level workarounds for a region pair, covering EVERY

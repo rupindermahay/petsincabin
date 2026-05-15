@@ -3863,7 +3863,7 @@ function SectionLabel({ children, num }) {
 
 const NAV_SECTIONS = [
   { id: "top", label: "Home", num: "" },
-  { id: "intake", label: "Assessment", num: "I" },
+  { id: "intake", label: "Can my pet fly?", num: "I" },
   { id: "planner", label: "Journey planner", num: "✦" },
   { id: "airlines", label: "Airlines", num: "II" },
   { id: "routes", label: "Routes", num: "III" },
@@ -4081,7 +4081,7 @@ function Hero({ onStart }) {
             style={{ color: "#faf6ed" }}
           >
             <div className="flex flex-col gap-1.5">
-              <span className="uppercase tracking-widest text-sm font-medium">Start the assessment</span>
+              <span className="uppercase tracking-widest text-sm font-medium">Can my pet fly? Start here</span>
               <span className="text-sm leading-snug text-cream-200 normal-case tracking-normal" style={{ color: "rgba(250, 246, 237, 0.75)" }}>
                 Quick questions about your pet and route — see how tricky your trip will be.
               </span>
@@ -4226,7 +4226,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
     <section ref={sectionRef} id="intake" className="py-10 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
       <div id="assessment" className="scroll-mt-24" />
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="I.">Intake</SectionLabel>
+        <SectionLabel num="I.">Can my pet fly in the cabin?</SectionLabel>
 
         <div className="flex items-center gap-2 mb-5">
           {QUESTIONS.map((_, i) => (

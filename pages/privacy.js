@@ -50,7 +50,7 @@ export default function Privacy() {
           </h1>
 
           <p className="font-serif italic text-stone-600 text-lg mb-12">
-            What data this site collects, why, and what you can do about it. Last updated: May 2026.
+            What data this site collects, why, and what you can do about it. Last updated: 15 May 2026.
           </p>
 
           <div className="space-y-10 font-serif text-lg text-stone-800 leading-relaxed">
@@ -72,16 +72,17 @@ export default function Privacy() {
             <section>
               <h2 className="font-serif text-2xl text-stone-900 mb-3">What data is collected</h2>
               <p className="mb-4">
-                When you visit this site, very limited information is collected automatically through Vercel Web Analytics, a privacy-friendly analytics tool. Specifically:
+                When you visit this site, very limited information is collected automatically — and only if you've clicked "Accept" on the cookie banner. The tool used is Google Analytics 4 (GA4), configured with IP anonymisation enabled. The data collected is:
               </p>
               <ul className="space-y-2 ml-5">
                 <li>— Which pages you visited and how long you spent on them</li>
-                <li>— The country you visited from (not your exact location)</li>
+                <li>— The country and region you visited from (not your exact location — your IP is anonymised before storage)</li>
                 <li>— The type of device and browser you used</li>
                 <li>— The website you arrived from (e.g. Google, Instagram, a direct link)</li>
+                <li>— Custom events you trigger, such as clicking the UK petition CTA on the homepage</li>
               </ul>
               <p className="mt-4">
-                Vercel Analytics does <em>not</em> use cookies, does <em>not</em> track you across websites, and does <em>not</em> collect personally identifiable information like your name, email, or IP address. The data is aggregated and anonymous.
+                If you click "Decline" on the cookie banner, none of this is collected — Google Consent Mode v2 keeps Google Analytics' analytics cookies in a "denied" state for your entire session, on every page. You can change your mind any time using the "Change your cookie choice" link further down this page.
               </p>
             </section>
 
@@ -94,17 +95,50 @@ export default function Privacy() {
 
             <section>
               <h2 className="font-serif text-2xl text-stone-900 mb-3">Cookies</h2>
-              <p>
-                This site does not set any cookies of its own. The Google Fonts service used for the site's typography may set a small technical cookie to deliver fonts efficiently — this is the only third-party cookie possible during a normal visit.
+              <p className="mb-4">
+                If you accept the cookie banner, this site sets a small number of cookies from Google Analytics (e.g. <span className="not-italic font-mono text-sm">_ga</span>, <span className="not-italic font-mono text-sm">_ga_R4NVMW686F</span>) to recognise you as a returning visitor and measure how the site is used. These cookies expire after 2 years and do not contain your name, email, or any directly identifying information.
               </p>
+              <p className="mb-4">
+                The Google Fonts service used for the site's typography may also set a small technical cookie to deliver fonts efficiently. This is functional, not analytical.
+              </p>
+              <p>
+                If you decline the cookie banner, no analytics cookies are set, and Google Analytics receives only the bare minimum signal (a denied-state ping) so it knows you exist but cannot identify or follow you.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="font-serif text-2xl text-stone-900 mb-3">Change your cookie choice</h2>
+              <p className="mb-4">
+                You can change your mind any time. The button below resets your preference and shows the banner again on your next page load.
+              </p>
+              <button
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    try { window.localStorage.removeItem("pic_cookie_consent"); } catch (e) {}
+                    if (window.gtag) {
+                      window.gtag("consent", "update", {
+                        ad_storage: "denied",
+                        analytics_storage: "denied",
+                        ad_user_data: "denied",
+                        ad_personalization: "denied",
+                      });
+                    }
+                    alert("Cookie preference reset. The banner will appear again on your next visit.");
+                  }
+                }}
+                className="inline-flex items-center gap-2 bg-amber-700 text-stone-50 px-5 py-3 hover:bg-amber-800 transition-colors text-sm uppercase tracking-widest font-medium not-italic"
+              >
+                Reset my cookie choice
+              </button>
             </section>
 
             <section>
               <h2 className="font-serif text-2xl text-stone-900 mb-3">Third parties</h2>
               <p className="mb-4">The site relies on a small number of trusted services:</p>
               <ul className="space-y-2 ml-5">
-                <li>— <strong className="font-medium">Vercel</strong> — hosts the website and provides anonymous analytics</li>
+                <li>— <strong className="font-medium">Vercel</strong> — hosts the website</li>
                 <li>— <strong className="font-medium">Cloudflare</strong> — manages the domain</li>
+                <li>— <strong className="font-medium">Google Analytics 4</strong> — measures site usage (only with your consent; IP-anonymised)</li>
                 <li>— <strong className="font-medium">Google Fonts</strong> — delivers the fonts you see</li>
                 <li>— <strong className="font-medium">Google Mail</strong> — handles the contact email (forwarded from Gmail)</li>
               </ul>

@@ -40,6 +40,43 @@ export default function Document() {
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
 
+        {/* Google Consent Mode v2 — sets all four signals to "denied" by
+            default BEFORE the Google tag loads. This is required for UK/EU
+            GDPR compliance. Once a user clicks "Accept" on the cookie banner
+            (in PetTravel.jsx), CookieBanner calls gtag('consent', 'update',
+            { ... granted ... }) which upgrades the signals. Until then, GA
+            sends only anonymous cookieless pings.
+            Note: this script MUST run before the gtag/js script below. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                analytics_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                functionality_storage: 'granted',
+                security_storage: 'granted',
+                wait_for_update: 500
+              });
+              // Restore prior consent decision (if any) BEFORE gtag.js loads
+              try {
+                var stored = localStorage.getItem('pic_cookie_consent');
+                if (stored === 'granted') {
+                  gtag('consent', 'update', {
+                    ad_storage: 'granted',
+                    analytics_storage: 'granted',
+                    ad_user_data: 'granted',
+                    ad_personalization: 'granted'
+                  });
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+
         {/* Google Analytics (GA4) — free, unlimited custom events.
             Measurement ID: G-R4NVMW686F (live).
             Pageviews are tracked automatically. Custom events (like the
@@ -49,8 +86,6 @@ export default function Document() {
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-R4NVMW686F', { anonymize_ip: true });
             `,

@@ -7415,15 +7415,31 @@ export default function PetTravel() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
 
-  // Handle deep links like /#assessment or /#checklist.
-  // In-app browsers (Instagram, Facebook, etc.) often strip or mishandle the
-  // native anchor jump, landing the user on the hero. This reads the hash
-  // after the app is interactive and scrolls there with JS, which works
-  // where the browser's built-in behaviour doesn't.
+  // Handle deep links like /#assessment or /#checklist — AND the query-param
+  // form /?go=assessment or /?go=checklist.
+  //
+  // Why both: in-app browsers (Instagram especially) mangle the URL fragment —
+  // they URL-encode the "#" to "%23" or strip everything after it, so a
+  // /#checklist link from an Instagram bio just lands on the hero. Query
+  // parameters survive that processing intact, so /?go=checklist is the
+  // reliable form to put in an Instagram bio or story link. We read whichever
+  // one is present and treat them identically.
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash || hash.length < 2) return;
-    const id = hash.slice(1); // drop the "#"
+    const params = new URLSearchParams(window.location.search);
+    const goParam = params.get("go");
+    const rawHash = window.location.hash;
+    // Hash may arrive as "#checklist" OR url-encoded as "%23checklist" —
+    // decode first, then strip a leading "#" or "%23" if present.
+    let hashId = "";
+    if (rawHash && rawHash.length > 1) {
+      hashId = decodeURIComponent(rawHash).replace(/^#/, "");
+    } else if (window.location.pathname.includes("%23")) {
+      // Some in-app browsers push the fragment into the path as "%23checklist"
+      hashId = decodeURIComponent(window.location.pathname).replace(/^.*#/, "");
+    }
+
+    const id = (goParam || hashId || "").trim();
+    if (!id) return;
 
     // "assessment" deep link should open the intake flow, not just scroll
     if (id === "assessment") {

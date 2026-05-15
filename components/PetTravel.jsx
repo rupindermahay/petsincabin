@@ -9350,6 +9350,86 @@ function Footer() {
   );
 }
 
+// ---------- COOKIE CONSENT BANNER ----------
+//
+// GDPR/UK PECR compliance: non-essential cookies (analytics, advertising) need
+// PRIOR consent. _document.js sets Google Consent Mode v2 signals to denied
+// by default. This banner asks the user, and on Accept it calls
+// gtag('consent', 'update', { ... granted ... }) which flips the signals on
+// so GA4 can store its cookies and we can track properly.
+//
+// We persist the choice in localStorage as 'pic_cookie_consent' = 'granted' |
+// 'denied'. The init script in _document.js reads localStorage BEFORE gtag
+// loads, so returning visitors don't see the banner again and their consent
+// is restored at the right moment in the boot sequence.
+
+function CookieBanner() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    // Only render the banner if there's no stored decision yet
+    try {
+      const stored = localStorage.getItem("pic_cookie_consent");
+      if (!stored) setVisible(true);
+    } catch (e) {
+      // localStorage blocked (e.g. private browsing) — show banner anyway,
+      // but the decision won't persist across sessions
+      setVisible(true);
+    }
+  }, []);
+
+  function setConsent(decision) {
+    try {
+      localStorage.setItem("pic_cookie_consent", decision);
+    } catch (e) {
+      // localStorage unavailable; decision still applies this session
+    }
+    if (typeof window !== "undefined" && window.gtag) {
+      const state = decision === "granted" ? "granted" : "denied";
+      window.gtag("consent", "update", {
+        ad_storage: state,
+        analytics_storage: state,
+        ad_user_data: state,
+        ad_personalization: state,
+      });
+    }
+    setVisible(false);
+  }
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className="fixed bottom-0 left-0 right-0 z-[60] bg-stone-900 text-stone-100 border-t-2 border-amber-600 shadow-2xl"
+      role="dialog"
+      aria-label="Cookie consent"
+      aria-live="polite"
+    >
+      <div className="max-w-5xl mx-auto px-5 py-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center gap-4">
+        <div className="flex-1 text-sm leading-relaxed">
+          <span className="font-serif text-base block md:inline mb-1 md:mb-0">🍪 A quick cookie note.</span>{" "}
+          We use Google Analytics to understand which guides help people most — purely so we can write better ones. No ads, no tracking across other sites. You can accept or decline; either way the site works the same. See our{" "}
+          <a href="/privacy" className="underline decoration-amber-500/60 hover:text-amber-300 hover:decoration-amber-400">privacy policy</a>.
+        </div>
+        <div className="flex flex-row gap-2 md:gap-3 flex-shrink-0">
+          <button
+            onClick={() => setConsent("denied")}
+            className="px-4 py-2.5 text-sm border border-stone-500 text-stone-200 hover:bg-stone-800 hover:border-stone-400 transition-colors uppercase tracking-widest font-medium"
+          >
+            Decline
+          </button>
+          <button
+            onClick={() => setConsent("granted")}
+            className="px-5 py-2.5 text-sm bg-amber-600 hover:bg-amber-500 text-stone-900 transition-colors uppercase tracking-widest font-medium"
+          >
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---------- ROOT ----------
 
 export default function PetTravel() {
@@ -9481,6 +9561,7 @@ export default function PetTravel() {
       <Stories />
       <Contact />
       <Footer />
+      <CookieBanner />
     </div>
   );
 }

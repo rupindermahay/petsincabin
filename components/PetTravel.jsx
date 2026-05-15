@@ -375,14 +375,14 @@ const AIRLINES = [
     tags: ["caribbean", "us"],
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Covers South America domestics and regionals, and select international routes. Cabin TEMPORARILY SUSPENDED on some US routes (US↔Bolivia, Brazil, Ecuador, Peru, Colombia) due to CDC dog import rules — confirm before booking.",
-    originAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (via Iberia codeshare — LATAM-operated only)", india: "no", caribbean: "yes", uae: "no" },
+    direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). Cabin TEMPORARILY SUSPENDED on US↔Brazil, Bolivia, Ecuador, Peru and Colombia due to CDC dog import rules. NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
+    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no" },
     destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no" },
-    fee: "~$250 international · ~$100 regional South America · Varies for domestic Brazil/Chile/Colombia/Peru/Ecuador",
-    weight: "Pet + carrier combined max 7 kg. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm.",
+    fee: "Cabin: BRL 200 domestic Brazil · ~USD 200 regional South America · ~USD 250 long-haul (to Europe). Hold fees are separate and weight-banded.",
+    weight: "Pet + carrier combined max 7 kg for cabin. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm. Cabin pets carried on A319/A320/A321/A350 and B777 aircraft.",
     carrier: "Soft-sided carrier (max 40 × 28 × 25 cm) or hard kennel (max 36 × 33 × 19 cm). No wheels. Must be leak-proof and well-ventilated. Pet must be able to stand, turn and move without touching walls or ceiling.",
-    notes: "LATAM is the main cabin-pet carrier for South America, and a solid option for US↔South America routes where available. Key restrictions: LATAM-operated flights ONLY — no codeshares, no connections to/from other airlines. Minimum 16 weeks old (6 months for US travel). Brachycephalic breeds not accepted in the hold but CAN travel in cabin if they meet size requirements. Dangerous breeds banned from cabin. Must book through LATAM Contact Center — not online. Arrive 4 hours early for international.",
-    intl: "Yes — South America, select US and international routes",
+    notes: "LATAM is THE cabin-pet carrier for South America — if you're moving within Brazil, Chile, or between South American countries, this is the airline. Key restrictions: LATAM-operated flights ONLY — no codeshares, no connections to/from other airlines (a connection on Delta or any partner voids the pet booking). Minimum 16 weeks old (6 months for US travel). Brachycephalic breeds not accepted in the hold but CAN travel in cabin if they meet size requirements. Dangerous breeds banned from both. Book through LATAM's Contact Center or WhatsApp — not online — up to 4 hours before a cabin flight. Arrive 3 hours early for domestic Brazil, 4 hours for international. Within Brazil you need a health certificate (issued within 10 days) and proof of rabies vaccine with the 21-day waiting period observed.",
+    intl: "Yes — South America domestic and regional, plus LATAM-operated long-haul to Europe",
     verified: "May 2026",
     link: "https://www.latamairlines.com/us/en/experience/prepare-your-trip/pets-transportation/cabin",
   },
@@ -417,6 +417,22 @@ const AIRLINES = [
     intl: "Yes — across Europe (not UK or Iceland)",
     verified: "May 2026",
     link: "https://www.vueling.com/en/vueling-services/prepare-your-trip/pets-on-board",
+  },
+  {
+    name: "Volaris",
+    tags: ["mexico", "us"],
+    cabin: "Cabin ✓ — small dogs and cats, Mexico and the Americas",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: small dogs and cats across Volaris's network — domestic Mexico, Mexico↔US, and Mexico↔Central America (Guatemala, El Salvador, Costa Rica, Honduras) and Colombia. Cabin NOT allowed: a long list of breeds is banned outright, including all brachycephalic dogs and cats — this is stricter than Aeromexico, which allows flat-faced breeds in cabin.",
+    originAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes" },
+    destinationAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes" },
+    fee: "Varies by route — typically ~$150 USD per kennel each way · lower for domestic Mexico",
+    weight: "Pet + carrier combined max ~12 kg. Carrier max 44 × 30 × 19 cm.",
+    carrier: "Max 44 × 30 × 19 cm, must fit under the seat. For dogs the carrier may be soft or rigid; for cats it MUST be rigid plastic. Fully enclosed, no perforated floor, no wheels. Secured with a plastic strap provided at the airport. Pet stays inside the whole flight.",
+    notes: "Volaris is Mexico's big low-cost carrier — useful for domestic Mexico and Mexico↔US/Central America cabin travel. The key limitation versus Aeromexico: Volaris bans a long list of breeds entirely (all brachycephalic dogs and cats, plus pit bull types, mastiffs, and others) — neither cabin nor checked. Minimum 4 months old. One pet per passenger. Owner must sit in a window seat, not an exit row. Book through Volaris directly. Arrive 2 hours early domestic, 3 hours international.",
+    intl: "Yes — Mexico, US, Central America, Colombia",
+    verified: "May 2026",
+    link: "https://cms.volaris.com/en/travel-info/optional-services/fly-with-your-pet/",
   },
 ];
 
@@ -2555,6 +2571,67 @@ const CHECKLIST_DATA = {
           "Out of SA: rabies titer test, State Vet health certificate, plus whatever the destination country requires (e.g. EU has a 3-month wait after a successful titer)",
           "IMPORTANT: exact crate specs, booking process, timings and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before committing to dates",
           "Don't rely on general guidance for a cargo move — get specifics for your exact route",
+        ],
+      },
+    ],
+  },
+  hawaii: {
+    title: "Hawaii pet travel checklist",
+    sections: [
+      {
+        title: "First — understand what Hawaii is",
+        items: [
+          "Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state",
+          "The goal is the 'Direct Airport Release' (or '5-Day-Or-Less') program — without it, your pet faces up to 120 days of quarantine on arrival",
+          "This needs 4–5 MONTHS of preparation — it is the single longest lead time of any US destination",
+          "Honolulu (HNL) is the only animal port of entry — you cannot fly a pet directly into Maui, Kona, or any other island from outside Hawaii",
+        ],
+      },
+      {
+        title: "5+ months before",
+        items: [
+          "Confirm your pet has an ISO 11784/11785 compatible microchip — implanted BEFORE the rabies blood test",
+          "Ensure two rabies vaccinations are on record (two separate shots in your pet's lifetime, more than 30 days apart)",
+          "Have your vet draw blood for the FAVN/OIE rabies antibody test and send it to an approved lab",
+          "The waiting period after a successful test result must be observed — this is what drives the long timeline",
+        ],
+      },
+      {
+        title: "1–2 months before",
+        items: [
+          "Most recent rabies vaccine must be current and given at least 30 days before arrival",
+          "Submit the completed Dog & Cat Import Form (AQS-279) and the original rabies certificates to the Animal Industry Division",
+          "Pay the Direct Airport Release fee",
+          "Book your pet's cabin space — Hawaiian Airlines and others carry cabin pets OUT of Hawaii and inter-island, but routes INTO Hawaii are more limited and some are cargo-only",
+          "Arrange the flight to arrive during Airport Animal Quarantine Holding Facility inspection hours",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Vet health check — confirm your pet is fit to fly",
+          "Treat for ticks within 14 days of arrival (required) and document it",
+          "Re-confirm your pet's cabin booking by phone",
+          "Print all paperwork: import form confirmation, both rabies certificates, microchip records, FAVN test result",
+        ],
+      },
+      {
+        title: "Travel day & arrival",
+        items: [
+          "Bring ALL original documents — Hawaii inspects paperwork carefully on arrival",
+          "Your pet is inspected at the Airport Animal Quarantine Holding Facility at Honolulu (HNL)",
+          "If everything is in order, your pet is released the same day — that's the 'Direct Airport Release'",
+          "If any document is missing or wrong, your pet goes into quarantine — there is no flexibility, so triple-check everything beforehand",
+          "Inter-island onward travel is straightforward once your pet has cleared at Honolulu",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats follow the exact same Direct Airport Release program as dogs — microchip, two rabies vaccines, FAVN test, the lot",
+          "There is no shortcut or lighter process for cats entering Hawaii",
+          "At airport security on the mainland the cat must come out of the carrier — fit and practise a harness at home",
+          "Give litter tray access up until you leave home; no food within ~4 hours of departure",
         ],
       },
     ],
@@ -4945,7 +5022,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Twenty-five airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Twenty-six airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -5542,6 +5619,7 @@ function ChecklistDownload() {
                 { id: "bahamas", label: "🇧🇸 Bahamas" },
                 { id: "europe", label: "🇪🇺 Europe" },
                 { id: "india", label: "🇮🇳 India" },
+                { id: "hawaii", label: "🌺 Hawaii" },
                 { id: "south_africa", label: "🇿🇦 South Africa" },
               ].map((r) => (
                 <button

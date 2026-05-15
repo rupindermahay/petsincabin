@@ -9932,84 +9932,42 @@ function Footer() {
   );
 }
 
-// ---------- COOKIE CONSENT BANNER ----------
+// ---------- ANALYTICS OPT-OUT (no consent banner) ----------
 //
-// GDPR/UK PECR compliance: non-essential cookies (analytics, advertising) need
-// PRIOR consent. _document.js sets Google Consent Mode v2 signals to denied
-// by default. This banner asks the user, and on Accept it calls
-// gtag('consent', 'update', { ... granted ... }) which flips the signals on
-// so GA4 can store its cookies and we can track properly.
+// Petsincabin runs under the UK DUAA 2025 "statistical analytics" exemption
+// (in force from 5 February 2026), which allows aggregate analytics without
+// upfront consent provided:
+//   1. The sole purpose is aggregate stats to improve the site
+//   2. We explain it clearly (done in /privacy)
+//   3. We offer a simple, free way to opt out (this component listens for
+//      the opt-out flag from the privacy page and signals gtag accordingly)
 //
-// We persist the choice in localStorage as 'pic_cookie_consent' = 'granted' |
-// 'denied'. The init script in _document.js reads localStorage BEFORE gtag
-// loads, so returning visitors don't see the banner again and their consent
-// is restored at the right moment in the boot sequence.
+// GA4 must be configured to match: Google Signals OFF, data-sharing with
+// other Google products OFF, no advertising features. Those are GA-side
+// admin settings, not code.
+//
+// No banner is rendered. If the user has set the opt-out flag in
+// localStorage (via the privacy page button), we tell gtag to drop them
+// from analytics on every page load.
 
-function CookieBanner() {
-  const [visible, setVisible] = useState(false);
-
+function AnalyticsOptOutListener() {
   useEffect(() => {
-    // Only render the banner if there's no stored decision yet
+    if (typeof window === "undefined") return;
     try {
-      const stored = localStorage.getItem("pic_cookie_consent");
-      if (!stored) setVisible(true);
+      const optedOut = localStorage.getItem("pic_analytics_optout") === "true";
+      if (optedOut && window.gtag) {
+        window.gtag("consent", "update", {
+          analytics_storage: "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+        });
+      }
     } catch (e) {
-      // localStorage blocked (e.g. private browsing) — show banner anyway,
-      // but the decision won't persist across sessions
-      setVisible(true);
+      // localStorage blocked — fall through; default consent state applies
     }
   }, []);
-
-  function setConsent(decision) {
-    try {
-      localStorage.setItem("pic_cookie_consent", decision);
-    } catch (e) {
-      // localStorage unavailable; decision still applies this session
-    }
-    if (typeof window !== "undefined" && window.gtag) {
-      const state = decision === "granted" ? "granted" : "denied";
-      window.gtag("consent", "update", {
-        ad_storage: state,
-        analytics_storage: state,
-        ad_user_data: state,
-        ad_personalization: state,
-      });
-    }
-    setVisible(false);
-  }
-
-  if (!visible) return null;
-
-  return (
-    <div
-      className="fixed bottom-0 left-0 right-0 z-[60] bg-stone-900 text-stone-100 border-t-2 border-amber-600 shadow-2xl"
-      role="dialog"
-      aria-label="Cookie consent"
-      aria-live="polite"
-    >
-      <div className="max-w-5xl mx-auto px-5 py-5 md:px-8 md:py-5 flex flex-col md:flex-row md:items-center gap-4">
-        <div className="flex-1 text-sm leading-relaxed">
-          <span className="font-serif text-base block md:inline mb-1 md:mb-0">🍪 A quick cookie note.</span>{" "}
-          We use Google Analytics to understand which guides help people most — purely so we can write better ones. No ads, no tracking across other sites. You can accept or decline; either way the site works the same. See our{" "}
-          <a href="/privacy" className="underline decoration-amber-500/60 hover:text-amber-300 hover:decoration-amber-400">privacy policy</a>.
-        </div>
-        <div className="flex flex-row gap-2 md:gap-3 flex-shrink-0">
-          <button
-            onClick={() => setConsent("denied")}
-            className="px-4 py-2.5 text-sm border border-stone-500 text-stone-200 hover:bg-stone-800 hover:border-stone-400 transition-colors uppercase tracking-widest font-medium"
-          >
-            Decline
-          </button>
-          <button
-            onClick={() => setConsent("granted")}
-            className="px-5 py-2.5 text-sm bg-amber-600 hover:bg-amber-500 text-stone-900 transition-colors uppercase tracking-widest font-medium"
-          >
-            Accept
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 }
 
 // ---------- ROOT ----------
@@ -10143,7 +10101,7 @@ export default function PetTravel() {
       <Stories />
       <Contact />
       <Footer />
-      <CookieBanner />
+      <AnalyticsOptOutListener />
     </div>
   );
 }

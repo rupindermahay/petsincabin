@@ -4412,46 +4412,121 @@ const ROUTE_FACTS = {
 // checklist for that country is overkill — what the user actually needs is
 // the transit-specific essentials. Returns null if we don't have transit
 // notes for that region.
-function getTransitNotes(region, originRegion) {
+function getTransitNotes(region, originRegion, legs = []) {
   const origin = ROUTE_FACTS[originRegion];
 
+  // Detect the specific transit city/country from the legs, so the chapter
+  // label can be concrete (e.g. "Transiting through France (Paris)") instead
+  // of generic ("Transiting through Europe"). Falls back to generic if we
+  // can't determine the hub.
+  const legText = legs.map((l) => (l.route || "") + " " + (l.airline || "")).join(" ");
+  const TRANSIT_CITY_MAP = {
+    "(CDG)": { country: "France", city: "Paris" },
+    "Paris": { country: "France", city: "Paris" },
+    "(AMS)": { country: "the Netherlands", city: "Amsterdam" },
+    "Amsterdam": { country: "the Netherlands", city: "Amsterdam" },
+    "(FRA)": { country: "Germany", city: "Frankfurt" },
+    "Frankfurt": { country: "Germany", city: "Frankfurt" },
+    "(MAD)": { country: "Spain", city: "Madrid" },
+    "Madrid": { country: "Spain", city: "Madrid" },
+    "(BCN)": { country: "Spain", city: "Barcelona" },
+    "(FCO)": { country: "Italy", city: "Rome" },
+    "(MXP)": { country: "Italy", city: "Milan" },
+    "(LIS)": { country: "Portugal", city: "Lisbon" },
+    "(ZRH)": { country: "Switzerland", city: "Zurich" },
+    "Calais": { country: "France", city: "Calais" },
+    "Eurotunnel": { country: "France", city: "Calais" },
+  };
+  function specificEUTransit() {
+    for (const [key, val] of Object.entries(TRANSIT_CITY_MAP)) {
+      if (legText.includes(key)) return val;
+    }
+    return null;
+  }
+
   if (region === "europe" || region === "ireland") {
-    // EU/Schengen transit — covered by EU pet movement rules.
+    // EU/Schengen transit — the CORE rules ARE uniform across EU member
+    // states (microchip + rabies + EU Health Cert or Pet Passport — confirmed
+    // by Commission Delegated Regulation EU 2026/131). But some member states
+    // have breed restrictions or other gotchas that DON'T generalise, so we
+    // surface those specifically when we know which country is involved.
     const fromEU = origin && origin.euMember;
-    return [
-      `Pet enters the EU/Schengen area at this point — EU pet movement rules apply for the duration of the transit.`,
-      fromEU
-        ? `If you have a valid EU Pet Passport (from your origin country), no additional paperwork is needed for transit.`
-        : `If your origin isn't in the EU, you'll need an EU Animal Health Certificate from an accredited vet in your origin country, valid within 10 days of EU entry. This single certificate covers transit through any EU country.`,
-      `ISO microchip + current rabies vaccine (≥21 days old) are required for EU entry.`,
-      `Pet stays with you the whole transit — no separate booking with a transit-country airline or operator.`,
-      `Border control at first EU port of entry checks paperwork once. Subsequent EU borders are open under Schengen — no further checks.`,
-    ];
+    const specific = specificEUTransit();
+    const countryName = specific ? specific.country : "the EU";
+    const cityName = specific ? specific.city : null;
+
+    // Per-country gotchas — only added when the relevant country IS in transit.
+    // Sources: gov.uk/take-pet-abroad, food.ec.europa.eu, French Ministry of
+    // Agriculture (Category 1/2 system), BMLEH Germany.
+    const countryGotchas = [];
+    if (specific) {
+      if (specific.country === "France") {
+        countryGotchas.push(
+          `⚠️ France-specific: Category 1 breeds (Pit Bull / American Staffordshire Terrier without pedigree, Mastiff/Boerboel, Tosa) are <strong>banned entirely from import and transit</strong> under French law — your dog will not be allowed off the plane. Category 2 breeds (pedigreed Staffordshire Terriers, Rottweilers and lookalikes) need a permit, muzzle, civil liability insurance, and behaviour evaluation. Air France itself refuses Category 1 entirely, so a Paris-pivot route is a non-starter for these breeds.`
+        );
+      }
+      if (specific.country === "Germany") {
+        countryGotchas.push(
+          `⚠️ Germany-specific: each German state (Bundesland) has its own list of "dangerous dog" (Listenhunde) breeds with restrictions — varies by state. American Staffordshire Terrier, Staffordshire Bull Terrier, Pit Bull and Bull Terrier are restricted or banned in most Länder. <a href="https://www.bmleh.de/EN/topics/animals/pets-and-zoo-animals/pets-entry-regulation.html" target="_blank" rel="noopener noreferrer">Check the BMLEH guidance</a> for your specific transit Land before flying.`
+        );
+      }
+      if (specific.country === "Spain" || specific.country === "Italy" || specific.country === "Portugal" || specific.country === "the Netherlands" || specific.country === "Switzerland") {
+        countryGotchas.push(
+          `${specific.country} has its own national rules layered on top of EU pet movement (e.g. dangerous-breed registration, leash/muzzle laws in public). Core import paperwork is the same as anywhere in the EU — but check the airline's breed restrictions and the country's national pet rules for your specific dog.`
+        );
+      }
+    }
+
+    return {
+      // Smarter label: "France (Paris)" not just "Europe"
+      label: specific ? `${specific.country} (${specific.city})` : "Europe",
+      items: [
+        `Your pet enters ${countryName === "the EU" ? "the EU/Schengen area" : countryName + " (and the EU/Schengen area)"} at this point — <a href="https://food.ec.europa.eu/animals/movement-pets_en" target="_blank" rel="noopener noreferrer">EU pet movement rules</a> apply for the duration of the transit.`,
+        fromEU
+          ? `If you have a valid EU Pet Passport (from your origin country), no additional paperwork is needed for transit.`
+          : `From a non-EU origin, you'll need an <a href="https://food.ec.europa.eu/animals/movement-pets_en" target="_blank" rel="noopener noreferrer">EU Animal Health Certificate</a> from an accredited vet in your origin country, valid within 10 days of EU entry. This single certificate covers transit through ${countryName === "the EU" ? "any EU country" : countryName + " and any other EU country"}.`,
+        `ISO microchip + current rabies vaccine (≥21 days old) are required for EU entry — these rules ARE uniform across all EU member states.`,
+        `Pet stays with you the whole transit — no separate booking with a transit-country airline or operator.`,
+        cityName
+          ? `Border control at ${cityName} airport checks your paperwork once on arrival. Once inside the Schengen area, no further checks at other EU borders.`
+          : `Border control at the first EU port of entry checks paperwork once. Subsequent EU borders are open under Schengen — no further checks.`,
+        ...countryGotchas,
+      ],
+    };
   }
 
   if (region === "uk-out") {
     // UK transit is rare but possible (e.g. London → ferry to Ireland).
-    return [
-      `UK transit on the way to Ireland: ISO microchip, rabies vaccine ≥21 days old, GB Animal Health Certificate or pet passport.`,
-      `Dogs: tapeworm treatment by a vet 24–120 hours before the UK departure (required for Ireland entry too).`,
-      `Pet stays with you for the full UK→Ireland ferry crossing.`,
-    ];
+    return {
+      label: "the UK",
+      items: [
+        `UK transit on the way to Ireland: ISO microchip, rabies vaccine ≥21 days old, <a href="https://www.gov.uk/take-pet-abroad/animal-health-certificate" target="_blank" rel="noopener noreferrer">GB Animal Health Certificate</a> or pet passport.`,
+        `Dogs: tapeworm treatment by a vet 24–120 hours before the UK departure (required for Ireland entry too).`,
+        `Pet stays with you for the full UK→Ireland ferry crossing.`,
+      ],
+    };
   }
 
   if (region === "us") {
     // US transit (e.g. Caribbean→Canada via US gateway).
-    return [
-      `US transit: CDC Dog Import Form receipt required even for short layovers if you exit the airside area.`,
-      `Origin country's CDC rabies risk status determines whether extra forms are needed (high-risk origins need Certification of US-issued Rabies Vaccination or FAVN titer).`,
-      `Pet must be 6+ months old, ISO-microchipped, healthy on arrival.`,
-    ];
+    return {
+      label: "the US",
+      items: [
+        `US transit: <a href="https://www.cdc.gov/importation/dogs/index.html" target="_blank" rel="noopener noreferrer">CDC Dog Import Form</a> receipt required even for short layovers if you exit the airside area.`,
+        `Origin country's CDC rabies risk status determines whether extra forms are needed (high-risk origins need Certification of US-issued Rabies Vaccination or FAVN titer).`,
+        `Pet must be 6+ months old, ISO-microchipped, healthy on arrival.`,
+      ],
+    };
   }
 
   if (region === "canada") {
-    return [
-      `Canada transit: current rabies certificate from your vet is usually sufficient for dogs and cats over 3 months.`,
-      `If you're connecting onwards via the US, you'll also need the CDC Dog Import Form receipt for the onward leg.`,
-    ];
+    return {
+      label: "Canada",
+      items: [
+        `Canada transit: current rabies certificate from your vet is usually sufficient for dogs and cats over 3 months (<a href="https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578" target="_blank" rel="noopener noreferrer">CFIA</a>).`,
+        `If you're connecting onwards via the US, you'll also need the <a href="https://www.cdc.gov/importation/dogs/index.html" target="_blank" rel="noopener noreferrer">CDC Dog Import Form</a> receipt for the onward leg.`,
+      ],
+    };
   }
 
   // No transit notes for this region — return null so we know to skip a chapter for it.
@@ -4669,7 +4744,7 @@ function normalizeItem(s) {
 // suppressed at destination. The transitRegions argument should be an
 // ordered array of region IDs the pet legally enters between origin and
 // destination — typically extracted from the chosen workaround's tags.
-function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = []) {
+function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = [], legs = []) {
   const originId = REGION_TO_CHECKLIST_ID[originRegion];
   const destId = REGION_TO_CHECKLIST_ID[destRegion];
 
@@ -4762,15 +4837,23 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // and destination. Each is briefer than a full arrival chapter (transit-only
   // essentials). Filtered to exclude origin and destination themselves, and
   // de-duplicated so the same transit region only appears once.
+  //
+  // We pass the route's legs into getTransitNotes so it can tailor the chapter
+  // to the SPECIFIC transit country (e.g. "France (Paris)" vs generic "Europe")
+  // and surface country-specific gotchas (breed bans, tapeworm requirements).
   const seenTransits = new Set([originRegion, destRegion]);
   const transitChapters = [];
   for (const tr of transitRegions) {
     if (seenTransits.has(tr)) continue;
     seenTransits.add(tr);
-    const notes = getTransitNotes(tr, originRegion);
+    const notes = getTransitNotes(tr, originRegion, legs);
     if (!notes) continue;
-    const transitLabel = ROUTE_FACTS[tr] ? ROUTE_FACTS[tr].name : tr;
-    transitChapters.push({ region: tr, label: transitLabel, notes });
+    // notes is now an object: { label, items }
+    transitChapters.push({
+      region: tr,
+      label: notes.label || (ROUTE_FACTS[tr] ? ROUTE_FACTS[tr].name : tr),
+      items: notes.items,
+    });
   }
   transitChapters.forEach((tc) => {
     sections.push({
@@ -4780,7 +4863,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
     sections.push({
       title: `${tc.label} · transit essentials`,
-      items: tc.notes,
+      items: tc.items,
     });
   });
 
@@ -8205,13 +8288,20 @@ function JourneyPlanner() {
                   const transitRegions = (selectedRoute.tags || [])
                     .filter((t) => t !== originAirport.region && t !== destAirport.region);
 
+                  // Pass the route's legs so getTransitNotes can identify the
+                  // SPECIFIC transit country (e.g. France via CDG) and surface
+                  // country-specific warnings (breed bans, tapeworm reqs).
+                  // Direct routes don't have legs — pass [] in that case.
+                  const routeLegs = (selectedRoute.route && selectedRoute.route.legs) || [];
+
                   const combined = buildRouteChecklist(
                     originAirport.region,
                     destAirport.region,
                     REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
                     REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
                     petType,
-                    transitRegions
+                    transitRegions,
+                    routeLegs
                   );
                   if (!combined.sections || combined.sections.length === 0) {
                     return (

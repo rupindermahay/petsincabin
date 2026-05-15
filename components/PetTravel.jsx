@@ -3374,28 +3374,57 @@ function NavBar({ onStartIntake }) {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  // Split nav items into two even rows — gives us control over the layout
+  // so we never get 11 items on row 1 and 3 stragglers on row 2.
+  const navItems = NAV_SECTIONS.slice(1); // exclude "Home"
+  const mid = Math.ceil(navItems.length / 2);
+  const row1 = navItems.slice(0, mid);
+  const row2 = navItems.slice(mid);
+
+  const NavItem = ({ s }) => (
+    <button
+      onClick={() => go(s.id)}
+      className="relative group flex items-baseline gap-1.5 py-2 px-1 transition-colors whitespace-nowrap"
+    >
+      {s.num && (
+        <span className="font-serif italic text-amber-600/60 text-[11px]">{s.num}</span>
+      )}
+      <span className="font-serif text-[13px] text-stone-700 group-hover:text-amber-700 transition-colors">
+        {s.label}
+      </span>
+      <span className="absolute bottom-0 left-1 right-1 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+    </button>
+  );
+
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "shadow-md border-b-2 border-stone-300" : "border-b border-stone-200"
+        scrolled ? "shadow-md" : ""
       }`}
-      style={{ backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.92)", backdropFilter: "blur(8px)" }}
+      style={{
+        backgroundColor: scrolled ? "rgba(250, 246, 237, 0.98)" : "rgba(250, 246, 237, 0.94)",
+        backdropFilter: "blur(8px)",
+        borderBottom: "1px solid rgba(68,64,60,0.15)",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
 
-        {/* ROW 1: Logo + wordmark + mobile toggle */}
-        <div className="flex items-center justify-between py-3">
+        {/* LOGO ROW */}
+        <div className="flex items-center justify-between py-3 border-b border-stone-200/80">
           <button onClick={() => go("top")} className="flex items-center gap-3 group">
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-10 h-10 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity"
+              className="w-14 h-14 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
-            <div className="flex flex-col items-start">
-              <span className="font-serif font-semibold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight text-lg tracking-tight">
+            <div className="flex flex-col items-start gap-0.5">
+              <span
+                className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
+                style={{ fontSize: "22px", fontWeight: 600, letterSpacing: "-0.02em" }}
+              >
                 Pets in Cabin
               </span>
-              <span className="text-[10px] uppercase tracking-[0.22em] text-stone-400 leading-none">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-stone-400 leading-none font-sans">
                 by Theo's Mum
               </span>
             </div>
@@ -3404,7 +3433,7 @@ function NavBar({ onStartIntake }) {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden flex items-center gap-2 px-3 py-2 text-stone-700 hover:text-amber-700 transition-colors border border-stone-300 hover:border-amber-400"
+            className="md:hidden flex items-center gap-2 px-3 py-2 text-stone-700 hover:text-amber-700 transition-colors border border-stone-300 hover:border-amber-400 rounded-sm"
             aria-label="Menu"
           >
             {open ? <X className="w-4 h-4" strokeWidth={2} /> : <Menu className="w-4 h-4" strokeWidth={2} />}
@@ -3412,32 +3441,28 @@ function NavBar({ onStartIntake }) {
           </button>
         </div>
 
-        {/* ROW 2: Desktop nav — wraps naturally to two lines, items spread full width */}
-        <div className="hidden md:flex items-center border-t border-stone-200 py-1 flex-wrap justify-between">
-          {NAV_SECTIONS.slice(1).map((s) => (
-            <button
-              key={s.id}
-              onClick={() => go(s.id)}
-              className="relative group flex items-baseline gap-1 px-2 py-2 whitespace-nowrap transition-colors hover:text-amber-700 flex-shrink-0"
-            >
-              {s.num && (
-                <span className="font-serif italic text-amber-600/70 text-[10px] flex-shrink-0">{s.num}</span>
-              )}
-              <span className="font-serif text-sm font-semibold text-stone-800 group-hover:text-amber-700 transition-colors tracking-tight">
-                {s.label}
-              </span>
-              <span className="absolute bottom-0.5 left-2 right-2 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </button>
-          ))}
+        {/* NAV ROWS — two explicit rows, evenly spread */}
+        <div className="hidden md:block">
+          {/* Row 1 */}
+          <div className="flex items-center justify-between border-b border-stone-100">
+            {row1.map((s) => <NavItem key={s.id} s={s} />)}
+          </div>
+          {/* Row 2 */}
+          <div className="flex items-center justify-between">
+            {row2.map((s) => <NavItem key={s.id} s={s} />)}
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu — full screen, editorial style */}
+      {/* Mobile menu */}
       {open && (
-        <div className="md:hidden border-t-2 border-stone-900 animate-fadeIn" style={{ backgroundColor: "rgba(250, 246, 237, 0.99)" }}>
-          <div className="max-w-7xl mx-auto px-6 py-6">
-            <div className="grid grid-cols-2 gap-x-8 gap-y-0">
-              {NAV_SECTIONS.slice(1).map((s) => (
+        <div
+          className="md:hidden border-t-2 border-stone-900 animate-fadeIn"
+          style={{ backgroundColor: "rgba(250, 246, 237, 0.99)" }}
+        >
+          <div className="max-w-7xl mx-auto px-6 py-5">
+            <div className="grid grid-cols-2 gap-x-8">
+              {navItems.map((s) => (
                 <button
                   key={s.id}
                   onClick={() => go(s.id)}
@@ -3446,7 +3471,7 @@ function NavBar({ onStartIntake }) {
                   {s.num && (
                     <span className="font-serif italic text-amber-600/60 text-xs w-6 flex-shrink-0">{s.num}</span>
                   )}
-                  <span className="font-serif text-lg font-semibold text-stone-900 group-hover:text-amber-700 transition-colors">
+                  <span className="font-serif text-base text-stone-900 group-hover:text-amber-700 transition-colors">
                     {s.label}
                   </span>
                 </button>

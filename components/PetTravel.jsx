@@ -437,6 +437,38 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://cms.volaris.com/en/travel-info/optional-services/fly-with-your-pet/",
   },
+  {
+    name: "SAS Scandinavian Airlines",
+    tags: ["europe", "us", "longhaul"],
+    cabin: "Cabin ✓ — strong network covering Nordics, Europe, US, Asia",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: SAS allows small cats and dogs in cabin on flights to 25+ countries including the US, China, Japan, Morocco, Turkey, and across Europe. Three hubs: Copenhagen (CPH), Stockholm (ARN), and Oslo (OSL). Cabin NOT allowed: brachycephalic-breed restrictions apply per destination; pets to Iceland and Svalbard have separate rules (Svalbard dogs only, requires permit; no cats to Svalbard).",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    fee: "€55 domestic / €70–149 international depending on route (highest fees to China and long-haul Asia)",
+    weight: "Pet + carrier max 8 kg (17.6 lb) combined for cabin",
+    carrier: "Soft-sided, max 40 × 25 × 23 cm (15.7 × 9.8 × 9 in). Counts as your carry-on bag.",
+    notes: "Book at least 24 hours in advance — space is limited per flight. Two pets of the same species who know each other can share one carrier if combined weight stays under 8 kg. No cabin pets in exit row or bulkhead seats. SAS does NOT fly cabin pets to/from the UK (UK government embargo applies, like all airlines).",
+    intl: "Yes (extensive network)",
+    verified: "May 2026",
+    link: "https://www.flysas.com/us-en/travel-info/travel-with-pets/cabin",
+  },
+  {
+    name: "Norwegian Air Shuttle",
+    tags: ["europe"],
+    cabin: "Cabin ✓ — within Schengen / EU only",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: small cats and dogs on flights within the Schengen area and EU. Cabin NOT allowed: flights to/from Iceland; cats not permitted on Madeira routes; UK cabin not permitted (UK embargo); cats not permitted on Svalbard routes (dogs only, with permit). No transatlantic cabin pets — Norwegian's long-haul subsidiary (Norse Atlantic) does not accept pets at all.",
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no" },
+    fee: "€55–75 each way (online) / €60–85 each way (at airport)",
+    weight: "Pet + carrier max 8 kg (17.6 lb) combined",
+    carrier: "Sherpa-style soft carrier, max 43 × 31 × 20 cm (17 × 12 × 8 in) — must compress to these dimensions if soft.",
+    notes: "Up to 3 very small puppies or kittens can share one carrier as 'one animal' if combined weight is under 8 kg. Cargo hold available for larger pets on connecting flights within Norway only (Oslo Gardermoen ↔ Bergen ↔ Trondheim). Norse Atlantic (the long-haul subsidiary, US/Caribbean routes) does NOT carry pets — service dogs only.",
+    intl: "Limited to Schengen / EU",
+    verified: "May 2026",
+    link: "https://www.norwegian.com/en/travel-info/baggage/travelling-with-pets/",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -476,6 +508,7 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Newark (EWR)", duration: "7h 50m", note: "KLM / United. ✓ Cabin (under 8 kg). Newark is the NJ/CT alternative to JFK — same distance from AMS.", tags: ["europe", "us"] },
   { from: "Amsterdam (AMS)", to: "Miami (MIA)", duration: "9h 30m", note: "KLM. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Amsterdam (AMS)", to: "London (LHR)", duration: "1h 10m", note: "KLM. ✓ Cabin OUT of Europe (remember: cabin INTO the UK is not possible — this route works as the last leg out of UK using AMS as a hub, not the return).", tags: ["europe", "uk-out"] },
+  { from: "Amsterdam (AMS)", to: "Oslo (OSL)", duration: "1h 55m", note: "KLM / Norwegian / SAS. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival is required for Norway entry.", tags: ["europe"] },
 
   // ═══════ FROM FRANKFURT ═══════
   { from: "Frankfurt (FRA)", to: "New York (JFK)", duration: "8h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt has the world's most advanced Animal Lounge for cargo layovers — but for cabin, Lufthansa is the reliable choice.", tags: ["europe", "us"] },
@@ -492,6 +525,7 @@ const DIRECT_ROUTES = [
   { from: "Frankfurt (FRA)", to: "Kolkata (CCU)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Hyderabad (HYD)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Valencia (VLC)", duration: "2h 30m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg). Frankfurt→Valencia direct cabin.", tags: ["europe"] },
+  { from: "Frankfurt (FRA)", to: "Oslo (OSL)", duration: "1h 55m", note: "Lufthansa / SAS. ✓ Cabin (under 8 kg). Lufthansa connects from Asia/India onward to Oslo. Tapeworm treatment required for dogs.", tags: ["europe"] },
 
   // ═══════ FROM PARIS ═══════
   { from: "Paris (CDG)", to: "New York (JFK)", duration: "7h 45m", note: "Air France / Delta. ✓ Cabin (under 8 kg). Paris is the central hub for the UK→USA cabin workaround — fly cabin out of the UK to CDG, then onward.", tags: ["europe", "us"] },
@@ -516,6 +550,8 @@ const DIRECT_ROUTES = [
   // ═══════ FROM NEWARK ═══════
   { from: "Newark (EWR)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark's main direct cabin to Europe — good alternative to JFK for NJ/CT pet owners.", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Paris (CDG)", duration: "7h 30m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+  { from: "Newark (EWR)", to: "Oslo (OSL)", duration: "8h", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Direct US east coast → Norway cabin route. Tapeworm treatment for dogs required 24–120 hrs before arrival.", tags: ["us", "europe"] },
+  { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Newark direct to Mumbai.", tags: ["us", "india"] },
 
   // ═══════ FROM WASHINGTON DULLES ═══════
   { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
@@ -539,9 +575,6 @@ const DIRECT_ROUTES = [
   // ═══════ FROM JFK ═══════
   { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). East coast → India direct.", tags: ["us", "india"] },
   { from: "New York (JFK)", to: "Mumbai (BOM)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). JFK→Mumbai direct cabin.", tags: ["us", "india"] },
-
-  // ═══════ FROM NEWARK ═══════
-  { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Newark direct to Mumbai.", tags: ["us", "india"] },
 
   // ═══════ FROM CHICAGO ═══════ (existing routes preserved, India added)
   { from: "Chicago (ORD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Midwest direct to India.", tags: ["us", "india"] },
@@ -665,6 +698,22 @@ const DIRECT_ROUTES = [
   { from: "Valencia (VLC)", to: "Madrid (MAD)", duration: "1h", note: "Iberia / Air Nostrum. ✓ Cabin (under 8 kg, €35 within Spain). Short domestic hop.", tags: ["europe"] },
   { from: "Valencia (VLC)", to: "Barcelona (BCN)", duration: "1h 5m", note: "Vueling / Air Nostrum. ✓ Cabin (under 8 kg, €35). Barcelona connects onward to Europe and the US.", tags: ["europe"] },
   { from: "Valencia (VLC)", to: "Paris (CDG)", duration: "2h 10m", note: "Vueling / Air France. ✓ Cabin (under 8 kg). Good direct cabin route for Valencia pet owners heading to France/onward Europe.", tags: ["europe"] },
+
+  // ═══════ FROM OSLO ═══════
+  { from: "Oslo (OSL)", to: "Copenhagen (CPH)", duration: "1h 10m", note: "SAS / Norwegian. ✓ Cabin (under 8 kg, €55–75). Short Nordic hop — popular Scandinavian connection.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Stockholm (ARN)", duration: "1h", note: "SAS / Norwegian. ✓ Cabin (under 8 kg, €55–75). Important: rabies vaccine NOT required for pet movement Norway↔Sweden specifically.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Amsterdam (AMS)", duration: "1h 55m", note: "SAS / KLM / Norwegian. ✓ Cabin (under 8 kg). KLM connects onward to most of the world from Amsterdam.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Frankfurt (FRA)", duration: "1h 55m", note: "SAS / Lufthansa. ✓ Cabin (under 8 kg). Lufthansa connection onward to India, Asia.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Paris (CDG)", duration: "2h 15m", note: "SAS / Air France / Norwegian. ✓ Cabin (under 8 kg). Air France onward to most international destinations.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Madrid (MAD)", duration: "3h 20m", note: "SAS / Norwegian / Iberia. ✓ Cabin (under 8 kg). Iberia onward cabin to South America and US.", tags: ["europe"] },
+  { from: "Oslo (OSL)", to: "Newark (EWR)", duration: "8h", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Direct Oslo → US east coast cabin route.", tags: ["us", "europe"] },
+  { from: "Oslo (OSL)", to: "Tokyo (NRT)", duration: "11h 30m", note: "SAS. ✓ Cabin (under 8 kg, fee around €149). Long-haul cabin route — note Japan's strict import rules (180-day FAVN wait, AQS Advance Notification ≥40 days before).", tags: ["europe", "japan"] },
+
+  // ═══════ TO OSLO (reverse routes) ═══════
+  { from: "Copenhagen (CPH)", to: "Oslo (OSL)", duration: "1h 10m", note: "SAS / Norwegian. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival in Norway.", tags: ["europe"] },
+  { from: "Stockholm (ARN)", to: "Oslo (OSL)", duration: "1h", note: "SAS / Norwegian. ✓ Cabin (under 8 kg). Norway↔Sweden specifically does NOT require rabies vaccine — but still need microchip and pet passport. Tapeworm treatment still required for dogs.", tags: ["europe"] },
+  { from: "Paris (CDG)", to: "Oslo (OSL)", duration: "2h 15m", note: "SAS / Air France / Norwegian. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival in Norway.", tags: ["europe"] },
+  { from: "Madrid (MAD)", to: "Oslo (OSL)", duration: "3h 20m", note: "SAS / Iberia / Norwegian. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival in Norway.", tags: ["europe"] },
 
   // ═══════ FROM MANCHESTER ═══════
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
@@ -1098,7 +1147,7 @@ const REGION_HUBS = {
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)", "Seattle (SEA)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
   "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
-  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)"],
+  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)", "Oslo (OSL)"],
   "india": ["Delhi (DEL)", "Mumbai (BOM)", "Bengaluru (BLR)", "Chennai (MAA)"],
   // UAE cabin hub order matters: Abu Dhabi (AUH) is FIRST because it's the
   // only UAE airport where cabin pets are permitted (Etihad). Dubai (DXB) is
@@ -1109,12 +1158,13 @@ const REGION_HUBS = {
   "caribbean": ["Nassau (NAS)", "Montego Bay (MBJ)", "Punta Cana (PUJ)", "Santo Domingo (SDQ)"],
   "hawaii": ["Honolulu (HNL)"],
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
+  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "japan": "Japan",
 };
 
 // ---------- AIRPORT-LEVEL MASTER LIST ----------
@@ -1181,6 +1231,9 @@ const AIRPORTS = [
   { code: "FCO", city: "Rome", region: "europe", cabinOut: true, cabinIn: true },
   { code: "LIS", city: "Lisbon", region: "europe", cabinOut: true, cabinIn: true },
   { code: "ZRH", city: "Zurich", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "OSL", city: "Oslo", region: "europe", cabinOut: true, cabinIn: true, note: "Oslo Gardermoen is Norway's ONLY airport approved for pet entry (the only other pet entry point is the Storskog land border in the north). SAS hub. Norway is in the EEA — follows EU pet passport rules but with extras for dogs: tapeworm treatment 24-120 hours before entry (Echinococcus multilocularis), and seven dog breeds are banned including Pit Bull and wolf hybrids." },
+  { code: "CPH", city: "Copenhagen", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Denmark follows EU pet passport rules — no tapeworm requirement (unlike Norway/Finland/Ireland/Malta). Strong cabin pet connectivity across Europe and to the US." },
+  { code: "ARN", city: "Stockholm Arlanda", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Sweden follows EU pet passport rules. Pet movement Sweden↔Norway specifically doesn't require a rabies vaccine (bilateral arrangement)." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
@@ -1203,6 +1256,15 @@ const AIRPORTS = [
   // South Africa
   { code: "JNB", city: "Johannesburg", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
   { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+  // Japan — pets can enter at 11 designated ports; we list the major five.
+  // Critical note: JAL and ANA do NOT carry cabin pets on any route. Cabin
+  // routes in/out of Japan exist on United (US ↔ Japan), Korean carriers
+  // (Japan ↔ Korea), and Aeromexico (Japan ↔ Mexico) only.
+  { code: "NRT", city: "Tokyo Narita", region: "japan", cabinOut: true, cabinIn: true, note: "Narita is Japan's main international gateway and one of 11 approved pet entry ports. JAL and ANA do not carry cabin pets — for cabin into/out of Japan, use United (US routes), Korean carriers (Korea routes), or Aeromexico (Mexico routes). Other airlines are cargo-only." },
+  { code: "HND", city: "Tokyo Haneda", region: "japan", cabinOut: true, cabinIn: true, note: "Haneda is Tokyo's domestic-heavy airport but has growing international cabin pet support via Korean carriers and United. Approved pet entry port." },
+  { code: "KIX", city: "Osaka Kansai", region: "japan", cabinOut: true, cabinIn: true, note: "Osaka's main international airport, one of 11 approved pet entry ports. Cabin pets via Korean carriers and select international routes." },
+  { code: "NGO", city: "Nagoya Chubu", region: "japan", cabinOut: true, cabinIn: true, note: "Nagoya Chubu Centrair is an approved pet entry port. Limited international cabin options." },
+  { code: "FUK", city: "Fukuoka", region: "japan", cabinOut: true, cabinIn: true, note: "Fukuoka is southern Japan's main international gateway. Star Flyer (cabin pets, domestic only) is based here. Approved pet entry port." },
 ];
 
 const airportByCode = (code) => AIRPORTS.find((a) => a.code === code);
@@ -1787,6 +1849,20 @@ const FALLBACK_STRATEGIES = {
     ],
     note: `Leaving Hawaii is simpler than arriving — fly cabin to a US mainland gateway, then connect onward. From the mainland, follow the normal routing for your destination region. No special Hawaii exit paperwork beyond the standard requirements for your destination country.`,
   }),
+  // Any destination = Japan
+  "japan": (o, d) => ({
+    legs: [
+      { route: `${o} → Tokyo / Osaka / Nagoya`, time: "varies — long-haul", airline: "⚠ Most international airlines are cargo-only into Japan. Cabin exceptions: United (from US), Korean Air / Asiana / T'Way / Air Premia (from Korea), Aeromexico (from Mexico)." },
+    ],
+    note: `Japan is a strict pet-import country. The 180-day rabies-titer wait is the binding constraint — start preparation 7+ months before your arrival date. JAL and ANA do NOT carry cabin pets on any flight; for cabin, you need United (US ↔ Japan), Korean carriers (Japan ↔ Korea), or Aeromexico (Japan ↔ Mexico). Most other airlines are cargo-only. Plus: AQS Advance Notification must be submitted ≥40 days before arrival, FAVN titer ≥0.5 IU/ml, two rabies vaccines, ISO microchip implanted before the first vaccine. Get any of this wrong and your pet is detained up to 180 days at your expense.`,
+  }),
+  // Any origin = Japan
+  "japan-out": (o, d) => ({
+    legs: [
+      { route: `Tokyo / Osaka / Nagoya → ${d}`, time: "varies — long-haul", airline: "⚠ JAL and ANA cargo-only. Cabin: United (to US), Korean carriers (to Korea), Aeromexico (to Mexico). Other destinations need a connection or cargo." },
+    ],
+    note: `Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days. Cabin options out of Japan are limited — United for US-bound, Korean carriers for Korea-bound, Aeromexico for Mexico-bound. Other destinations (UK, EU, India, etc.) require either a Korean-hub cabin connection or cargo. The destination country's import paperwork (e.g. CDC Dog Import Form for US, EU Animal Health Certificate, India's AQCS NOC) applies normally.`,
+  }),
 };
 
 // A region-pair can have ONE strategy (a single function) or SEVERAL (an array
@@ -1801,8 +1877,10 @@ function strategiesFor(originRegion, destRegion) {
   // constraint (e.g. South Africa cargo-only, Hawaii quarantine).
   if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
+  if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
+  if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
   return [];
 }
 
@@ -1915,12 +1993,13 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "(SEA)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
     "mexico": ["Mexico City", "Cancún", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "Europe"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "(OSL)", "Europe", "Norway"],
     "india": ["Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)", "India"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "Japan"],
   };
   const fromInOriginRegion = (field) =>
     (originRegionKeywords[oA.region] || []).some((kw) => field.includes(kw));
@@ -2703,6 +2782,147 @@ const CHECKLIST_DATA = {
           "There is no shortcut or lighter process for cats entering Hawaii",
           "At airport security on the mainland the cat must come out of the carrier — fit and practise a harness at home",
           "Give litter tray access up until you leave home; no food within ~4 hours of departure",
+        ],
+      },
+    ],
+  },
+  japan: {
+    title: "Japan entry / exit checklist",
+    sections: [
+      {
+        title: "7 months before",
+        items: [
+          "Confirm your origin country's category: Japan classifies countries as 'designated' (rabies-free — Iceland, Australia, NZ, Fiji, Hawaii, Guam) or 'non-designated' (everywhere else). Non-designated requires the full 180-day process below; designated countries can skip the titer and waiting period.",
+          "Plan backwards from intended arrival date: blood draw for rabies titer must be ≥180 days before arrival in Japan, and that's the hard floor.",
+          "Identify your entry airport — Japan has 11 approved animal entry ports: New Chitose (CTS), Narita (NRT), Haneda (HND), Chubu/Nagoya (NGO), Kansai/Osaka (KIX), Itami (ITM), Kobe (UKB), Kitakyushu (KKJ), Fukuoka (FUK), Kagoshima (KOJ), Naha (OKA). Anywhere else, your pet will be refused entry.",
+        ],
+      },
+      {
+        title: "6 months before",
+        items: [
+          "ISO 11784/11785 microchip implanted — and it MUST be implanted BEFORE the first rabies vaccination or the vaccine is invalid. If your pet already has a microchip, verify it's ISO compliant; if it's not, bring a microchip reader with you.",
+          "First rabies vaccine — must be administered when the pet is at least 91 days old (12 weeks is 84 days, which is below Japan's minimum and would invalidate the timeline).",
+          "Second rabies vaccine — at least 30 days after the first.",
+        ],
+      },
+      {
+        title: "5–6 months before",
+        items: [
+          "Rabies antibody titer test (FAVN or RFFIT) — blood draw at a Japan-approved laboratory (Kansas State University Rabies Lab is the standard US destination).",
+          "Result must show antibody level ≥0.5 IU/ml. Keep the ORIGINAL lab report — required on arrival.",
+          "If titer fails: re-vaccinate, wait 30 days, re-test. The 180-day waiting clock starts only from a passing test.",
+          "180-day wait begins from the blood draw date (Day 0) — pet must arrive in Japan on Day 180 or later. Arriving even one day early triggers detention quarantine for the remaining days, owner pays.",
+        ],
+      },
+      {
+        title: "40+ days before arrival",
+        items: [
+          "Submit Advance Notification Form to the AQS office at your intended port of arrival — by mail or fax. Forms differ for dogs vs cats.",
+          "Notification includes: microchip number, vaccination dates and vaccine details, blood draw date and titer result, pet's physical measurements (length and height), home address, destination address in Japan, copy of passport.",
+          "Submissions less than 40 days before arrival are generally not accepted — this can block entry entirely regardless of other paperwork.",
+          "AQS reviews and issues 'Approval of Import Inspection' — required for boarding.",
+          "If quarantine facility at your chosen port is full on your date, AQS may direct you to change port or date.",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "USDA-accredited (or country-equivalent) vet performs final clinical inspection and completes Form A (animal info) and Form C (health certificate). Dogs: confirm free of rabies and leptospirosis symptoms. Cats: confirm free of rabies symptoms.",
+          "AQS recommends emailing a draft of the completed form for review BEFORE getting government endorsement — catches errors that would otherwise trigger detention.",
+          "USDA APHIS (or country equivalent) endorses Form AC. No erasing, no correction fluid, no pencil. Missing endorsement stamp, missing microchip number, or missing vaccine product/manufacturer details are major detention triggers.",
+          "Tick, tapeworm, nematode, and cestode treatment.",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring ALL originals: Form AC with USDA endorsement, original titer test result, vaccination records, microchip certificate, AQS Approval of Import Inspection, passport.",
+          "Book flights to arrive in Japan BEFORE 5 PM — pets arriving after 5 PM cannot be released from their crate until customs reopens the next day.",
+          "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan), Korean carriers (Japan ↔ Korea), Aeromexico (Japan ↔ Mexico).",
+        ],
+      },
+      {
+        title: "On arrival in Japan",
+        items: [
+          "Proceed to AQS at the arrival port — pets cleared in under 12 hours if paperwork is perfect (this is what AQS calls 'quarantine' but is really just inspection time).",
+          "AQS officer scans microchip, verifies it matches every document exactly, reviews titer result and Form AC.",
+          "If anything is missing or wrong, pet is detained at AQS facility for up to 180 days at owner's expense (boarding, feeding, transport, vet visits).",
+          "Once cleared, AQS issues Import Quarantine Certificate — keep this permanently.",
+          "Within 30 days of arrival, register the dog with your local municipal office and present the Import Quarantine Certificate. Dogs must receive annual rabies booster under Japan's Rabies Prevention Law.",
+        ],
+      },
+      {
+        title: "Departing FROM Japan (export)",
+        items: [
+          "Apply for export inspection from AQS — JAL and ANA recommend at least 2 weeks before flight. Cargo space must be reserved.",
+          "AQS issues Export Quarantine Certificate — valid 180 days.",
+          "Most international airlines won't carry cabin pets out of Japan. United (US-bound) and Korean carriers (Korea-bound) are the main cabin options. Otherwise cargo.",
+          "Destination country may have its own import paperwork — start that process in parallel with the Japan export side.",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats follow the same AQS process as dogs — microchip, two rabies vaccines, FAVN titer, 180-day wait, Form AC.",
+          "Cats don't have the dog-specific leptospirosis check on Form C.",
+          "Most international cabin pet options for Japan are dog-policy-led — confirm the carrier accepts cats specifically (most do, but verify).",
+          "Cats are exempt from the post-arrival municipal registration that applies to dogs.",
+        ],
+      },
+    ],
+  },
+  norway: {
+    title: "Norway entry / exit checklist",
+    sections: [
+      {
+        title: "First — understand",
+        items: [
+          "Norway is in the EEA (not the EU) but follows the EU pet passport system — same microchip + rabies vaccine baseline as any EU country.",
+          "Pets enter Norway ONLY via Oslo Airport (OSL) Gardermoen or the Storskog land border in northern Norway. Other airports turn pets away.",
+          "Norway BANS seven dog breeds outright: Pit Bull Terrier, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, and all wolf-dog hybrids. Mixed-breeds resembling these may need documentation.",
+          "Pets travelling Norway↔Sweden specifically do not need a rabies vaccine (special bilateral exemption).",
+        ],
+      },
+      {
+        title: "4+ weeks before",
+        items: [
+          "ISO 11784/11785 microchip implanted (if not already). Tattoos are accepted as ID only if applied before 3 July 2011 with continuous rabies vaccine records since.",
+          "Rabies vaccine — pet must be at least 12 weeks old when first vaccinated; ≥21 days must have passed before entry to Norway.",
+          "If coming from a 'non-listed third country' (most of the world outside EU/EEA/listed countries): rabies antibody titer test (≥0.5 IU/ml), then a 3-month wait before entry. Once passed, the titer is valid indefinitely as long as rabies boosters stay current.",
+          "EU pet passport (if you live in the EU/EEA) OR EU Health Certificate for Norway (from elsewhere) — issued by your origin country vet.",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Health certificate completed and signed by an accredited vet (EU Health Certificate template for Norway). The certificate must clearly identify your pet by microchip number.",
+          "Re-confirm SAS or Norwegian cabin booking by phone.",
+        ],
+      },
+      {
+        title: "1–5 days before (dogs only)",
+        items: [
+          "Tapeworm treatment for Echinococcus multilocularis — administered by a vet 24–120 hours (1–5 days) before arrival in Norway. Active ingredient must be praziquantel.",
+          "Treatment date and time MUST be recorded by the vet in the pet passport or health certificate.",
+          "Exemption: dogs coming directly from Finland, Malta, or Ireland do NOT need the tapeworm treatment (those countries are already Echinococcus-free).",
+          "Failure to deworm: minimum NOK 7,000 fine and 24-hour quarantine at owner's expense.",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring originals of: pet passport or EU Health Certificate, vaccination records, microchip certificate, tapeworm treatment record (dogs).",
+          "On arrival at Oslo Gardermoen, follow the RED channel in the customs area. Present the animal and documents to Norwegian Customs.",
+          "If documents are in order: cleared on the spot — no quarantine.",
+          "If anything is missing: pet may be returned to origin, quarantined until conditions are met, or in severe cases destroyed. Owner is financially liable for all rule violations.",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Cats do NOT need tapeworm treatment — that requirement is dog-only.",
+          "All other rules (microchip, rabies, EU pet passport, ≥21-day wait after vaccine) apply identically to cats.",
+          "Kittens under 12 weeks cannot be vaccinated against rabies — they can't enter Norway without the full 21-day post-vaccine wait.",
         ],
       },
     ],
@@ -3560,6 +3780,7 @@ const REGION_TO_CHECKLIST_ID = {
   "caribbean": null,        // per-island — handled specially below
   "hawaii": null,           // uses generic + Hawaii note
   "south-africa": "south_africa",
+  "japan": "japan",
 };
 
 // ----- Item-level classification helpers for the merged route checklist -----
@@ -3578,6 +3799,7 @@ const ROUTE_FACTS = {
   "caribbean":   { name: "the Caribbean", cdcHighRisk: "varies", euMember: false, ukOrIreland: false, perIsland: true }, // DR is high-risk; Bahamas/Jamaica are not
   "hawaii":      { name: "Hawaii", cdcHighRisk: false, euMember: false, ukOrIreland: false, isUS: true, isRabiesFree: true },
   "south-africa": { name: "South Africa", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "japan":       { name: "Japan", cdcHighRisk: false, euMember: false, ukOrIreland: false, isRabiesFree: true, strictImport: true },
 };
 
 // Transit-only essentials per region. When a workaround route briefly crosses
@@ -5506,6 +5728,40 @@ const DESTINATIONS = [
     ],
     paperwork: "Into South Africa: State Veterinary import permit (apply 2–4 weeks ahead), ISO microchip, rabies vaccine 30 days–1 year old, rabies titer test for most countries, veterinary health certificate endorsed by the origin country's government vet, and additional tests (e.g. for ticks, biliary) depending on origin. Out of South Africa: rabies titer test, State Vet health certificate, plus whatever the destination country requires. All international pets travel as manifested cargo. IMPORTANT: because South Africa is cargo-only internationally, the exact crate specs, booking process, timings, and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before you commit to dates. Don't rely on general guidance for a cargo move; get specifics for your exact route.",
   },
+  {
+    id: "norway",
+    flag: "🇳🇴",
+    name: "Norway",
+    headline: "EU-style entry — with two extras for dogs.",
+    rule: "Norway is in the EEA (not the EU) but follows the EU pet passport system. Microchip + EU-approved rabies vaccine ≥21 days old + EU pet passport or Health Certificate. Two Norway-specific extras: dogs need tapeworm treatment (Echinococcus multilocularis) administered 24–120 hours before arrival, and seven dog breeds are outright banned. Pets enter ONLY via Oslo Airport (OSL) or the Storskog land border. Pets coming from non-listed third countries (most of the world outside EU/EEA) need a rabies titer test with a 3-month wait.",
+    workarounds: [
+      {
+        title: "Cabin to Oslo: SAS, Norwegian, KLM, Lufthansa, Air France",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Oslo has one of Europe's strongest cabin pet airline networks. SAS allows cabin pets on routes across 25+ countries including the US (Newark direct), China, Japan, Morocco, plus all of Europe. Norwegian Air Shuttle allows cabin within Schengen/EU only. KLM (via AMS), Lufthansa (via FRA), and Air France (via CDG) connect Oslo cabin to the rest of the world. All have 8 kg combined weight limit and similar carrier dimensions.",
+        cost: "SAS: €55 domestic / €70–149 international. Norwegian: €55–85.",
+      },
+      {
+        title: "The tapeworm treatment is non-negotiable for dogs",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Norway is one of just five places (with Finland, Malta, Ireland, and Northern Ireland) that requires Echinococcus multilocularis tapeworm treatment for dogs entering. It must be administered by a vet 24–120 hours before arrival, using praziquantel as the active ingredient. Treatment date and time must be recorded in the pet passport. Exemption: dogs coming directly from Finland, Malta, or Ireland skip this (those countries are already Echinococcus-free).",
+        cost: "Vet appointment + treatment: typically £30–£60 / €35–€70. Skip it and the fine is minimum NOK 7,000 plus 24h quarantine.",
+      },
+      {
+        title: "Seven dog breeds are banned in Norway",
+        icon: <AlertCircle className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Banned: Pit Bull Terrier, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, and all wolf-dog hybrids — pure-bred or mixed. If your dog resembles any of these breeds, you may be asked for documentation proving otherwise. The Norwegian Food Safety Authority (Mattilsynet) handles import regulations; check with them directly before booking if there's any doubt.",
+        cost: "Verification: free if you have it; rehoming if not.",
+      },
+      {
+        title: "Pets from non-listed countries: rabies titer + 3-month wait",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "If you're coming from a country that's not on the EU 'listed third countries' list (most of the world outside EU/EEA/US/Canada/UK/Switzerland/Japan/Australia), you need a rabies antibody titer test (≥0.5 IU/ml) drawn at least 30 days after vaccination, then wait 3 months before entry. Once passed, the titer is valid for the pet's life as long as rabies boosters stay current.",
+        cost: "Titer test: £80–€200. Then time — the 3-month wait is the constraint.",
+      },
+    ],
+    paperwork: "Required for all entries: ISO 11784/11785 microchip, EU-approved rabies vaccine ≥21 days old (pet must have been ≥12 weeks old when vaccinated), EU pet passport (for EU/EEA residents) or EU Health Certificate for Norway (from elsewhere) issued within 10 days of travel. Dogs: tapeworm treatment 24–120 hours before arrival, recorded in passport by a vet. From non-listed countries: rabies titer test ≥0.5 IU/ml plus 3-month wait. Exception: pets moving Norway↔Sweden specifically don't need the rabies vaccine. Banned breeds: Pit Bull, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, wolf-hybrids. Entry only at Oslo (OSL) airport or Storskog land border — follow the red customs channel on arrival.",
+  },
 ];
 
 function DifficultDestinations() {
@@ -5604,6 +5860,20 @@ function DifficultDestinations() {
                     </p>
                   </a>
                 )}
+                {dest.id === "norway" && (
+                  <a
+                    href="/oslo-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete Norway pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      SAS and Norwegian cabin pets, the 24–120 hour tapeworm window, seven banned breeds, Oslo-only entry, and EEA paperwork — all on one page.
+                    </p>
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -5644,7 +5914,7 @@ function AirlineGrid() {
           Pets in cabin: the policy for every major airline.
         </h2>
         <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
-          Twenty-six airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+          Twenty-eight airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -6964,13 +7234,14 @@ function Routes() {
     "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "Newark", "Seattle", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "(SEA)", "USA"],
     "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(OSL)", "Norway"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Cayman Islands"],
     "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region

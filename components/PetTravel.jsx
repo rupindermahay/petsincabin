@@ -6873,8 +6873,12 @@ function AirlineGrid() {
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           Pets in cabin: the policy for every major airline.
         </h2>
-        <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
+        <p className="font-serif italic text-stone-600 text-lg mb-4 max-w-2xl">
           Thirty-two airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
+        </p>
+
+        <p className="font-serif italic text-stone-600 text-base mb-8 max-w-2xl">
+          Comparing carriers side by side? See the <a href="/airlines-compared" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">airline comparison table</a> — sortable by weight limit, fee, or which airlines fly cabin out of the UK.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">

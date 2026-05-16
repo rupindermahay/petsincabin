@@ -7351,8 +7351,26 @@ function AirlineGrid() {
           Airline policies change quietly. Each card shows when I last verified it — confirm with the airline before booking. <a href="#contact" className="underline decoration-rose-400 underline-offset-4 hover:text-rose-600 transition-colors">Tell me</a> if something looks out of date.
         </p>
 
-        <div className="mb-6">
-          <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Filter by route</div>
+        {/* Filter chips — sticky within the Airlines section. Because the
+            sticky element is a child of the <section>, it only sticks while
+            the user is scrolling THROUGH the airlines list and naturally
+            releases when they leave the section. top offset sits just below
+            the main sticky nav bar. z-30 keeps it under the nav and the
+            compare modal/button but above the card grid. */}
+        <div
+          className="sticky z-30 py-3 px-4 mb-6 border border-stone-300 rounded-sm shadow-sm"
+          style={{
+            top: "76px",
+            backgroundColor: "rgba(245, 245, 244, 0.98)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+            <div className="text-xs uppercase tracking-widest text-stone-500">Filter by route</div>
+            <div className="text-stone-500 text-xs italic font-serif">
+              Showing {filteredAirlines.length} of {AIRLINES.length}
+            </div>
+          </div>
           <div className="flex flex-wrap gap-2">
             {FILTERS.map((f) => {
               const isActive = filter === f.id;
@@ -7372,9 +7390,6 @@ function AirlineGrid() {
               );
             })}
           </div>
-          <p className="text-stone-500 text-sm mt-3 italic font-serif">
-            Showing {filteredAirlines.length} of {AIRLINES.length} airlines.
-          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-px bg-stone-300 border border-stone-300">
@@ -9380,8 +9395,23 @@ function Routes() {
           </div>
         </div>
 
-        <div className="mb-10">
-          <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Filter by region</div>
+        {/* Filter chips — sticky within the Routes section, same pattern as
+            the Airlines filter. Releases automatically when leaving the
+            section since the sticky element is a child of it. */}
+        <div
+          className="sticky z-30 py-3 px-4 mb-6 border border-stone-300 rounded-sm shadow-sm"
+          style={{
+            top: "76px",
+            backgroundColor: "rgba(255, 255, 255, 0.98)",
+            backdropFilter: "blur(8px)",
+          }}
+        >
+          <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+            <div className="text-xs uppercase tracking-widest text-stone-500">Filter by region</div>
+            <div className="text-stone-500 text-xs italic font-serif">
+              Showing {totalFiltered} of {totalAll}
+            </div>
+          </div>
           <div className="flex flex-wrap gap-2">
             {ROUTE_FILTERS.map((f) => {
               const isActive = filter === f.id;
@@ -9401,9 +9431,6 @@ function Routes() {
               );
             })}
           </div>
-          <p className="text-stone-500 text-sm mt-3 italic font-serif">
-            Showing {totalFiltered} of {totalAll} routes.
-          </p>
         </div>
 
         <div className="mb-10">
@@ -10633,6 +10660,37 @@ function AnalyticsOptOutListener() {
 
 // ---------- ROOT ----------
 
+// Small floating "back to top" helper. Appears after the user scrolls down
+// ~1.5 screens; clicking smooth-scrolls to the top of the page. Positioned
+// bottom-LEFT and styled in muted stone tones so it never competes with the
+// amber compare-airlines button (which lives bottom-right).
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      // Show once the user is more than ~1.5 viewport heights down.
+      setVisible(window.scrollY > window.innerHeight * 1.5);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+      className="fixed bottom-6 left-6 z-40 w-10 h-10 flex items-center justify-center bg-stone-800/90 text-stone-100 border border-stone-700 hover:bg-stone-900 hover:border-stone-500 shadow-md transition-colors rounded-full"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0)" }}
+    >
+      <span className="text-lg leading-none" aria-hidden="true">↑</span>
+    </button>
+  );
+}
+
 export default function PetTravel() {
   const [phase, setPhase] = useState("hero"); // hero | intake | results
   const [step, setStep] = useState(0);
@@ -10780,6 +10838,7 @@ export default function PetTravel() {
       <Contact />
       <Footer />
       <AnalyticsOptOutListener />
+      <BackToTop />
     </div>
   );
 }

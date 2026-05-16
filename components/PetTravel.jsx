@@ -6067,6 +6067,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
             <select
               value={currentAnswer || ""}
               onChange={(e) => pick(e.target.value)}
+              aria-label={q.label}
               className="w-full bg-white border-2 border-stone-300 focus:border-stone-900 focus:outline-none px-4 py-4 font-serif text-xl text-stone-900 transition-colors"
             >
               <option value="" disabled>Select a destination…</option>
@@ -7407,6 +7408,7 @@ function AirlineGrid() {
                     checked={isCompareSelected}
                     disabled={!isCompareSelected && !canSelectMore}
                     onChange={() => toggleCompare(a.name)}
+                    aria-label={`Compare ${a.name}`}
                     className="sr-only"
                   />
                   <span aria-hidden="true">{isCompareSelected ? "✓" : "+"}</span>
@@ -7455,57 +7457,15 @@ function AirlineGrid() {
                       </span>
                     )}
                   </div>
-                  {a.originAllowed && Object.keys(a.originAllowed).length > 0 && (() => {
-                    const COUNTRIES = [
-                      { code: "uk", flag: "🇬🇧", label: "UK" },
-                      { code: "us", flag: "🇺🇸", label: "US" },
-                      { code: "canada", flag: "🇨🇦", label: "Canada" },
-                      { code: "eu", flag: "🇪🇺", label: "EU" },
-                      { code: "mexico", flag: "🇲🇽", label: "Mexico" },
-                      { code: "south-america", flag: "🇧🇷", label: "South America" },
-                      { code: "central-america", flag: "🇵🇦", label: "Central America" },
-                      { code: "caribbean", flag: "🇧🇸", label: "Caribbean" },
-                      { code: "india", flag: "🇮🇳", label: "India" },
-                      { code: "uae", flag: "🇦🇪", label: "UAE" },
-                      { code: "japan", flag: "🇯🇵", label: "Japan" },
-                      { code: "korea", flag: "🇰🇷", label: "South Korea" },
-                    ];
-                    const renderFlag = (c, statusObj, direction) => {
-                      const status = statusObj[c.code];
-                      if (!status) return null;
-                      const isYes = status === "yes";
-                      return (
-                        <span
-                          key={c.code}
-                          className={`relative inline-flex items-center gap-0.5 cursor-help group/flag ${isYes ? "text-emerald-700" : "text-red-600"}`}
-                        >
-                          <span className="text-lg leading-none">{c.flag}</span>
-                          <span className="font-bold text-xs">{isYes ? "✓" : "✗"}</span>
-                          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-50 text-[10px] font-medium uppercase tracking-wider px-2 py-1 rounded-sm whitespace-nowrap opacity-0 group-hover/flag:opacity-100 transition-opacity duration-75 z-10">
-                            {c.label}
-                          </span>
-                        </span>
-                      );
-                    };
-                    return (
-                      <div className="space-y-2 mb-3 pb-3 border-b border-stone-200">
-                        <div className="flex items-start gap-x-2">
-                          <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium w-[72px] flex-shrink-0 pt-1">Cabin from:</span>
-                          <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
-                            {COUNTRIES.map((c) => renderFlag(c, a.originAllowed, "from"))}
-                          </div>
-                        </div>
-                        {a.destinationAllowed && (
-                          <div className="flex items-start gap-x-2">
-                            <span className="text-[10px] uppercase tracking-widest text-stone-500 font-medium w-[72px] flex-shrink-0 pt-1">Cabin to:</span>
-                            <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
-                              {COUNTRIES.map((c) => renderFlag(c, a.destinationAllowed, "to"))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })()}
+                  {/* Cabin from/to flag rows — shared CabinFlags component
+                      (also used inside the comparison modal). Wrapped in a
+                      div with the same spacing as the previous inline IIFE
+                      so the visual cadence stays identical. */}
+                  {a.originAllowed && Object.keys(a.originAllowed).length > 0 && (
+                    <div className="mb-3 pb-3 border-b border-stone-200">
+                      <CabinFlags airline={a} />
+                    </div>
+                  )}
                   {a.scope === "south-africa" && (
                     <div className="mb-3 pb-3 border-b border-stone-200">
                       <div className="flex items-start gap-2 text-sm text-stone-600">
@@ -8017,6 +7977,7 @@ function ChecklistDownload() {
               <select
                 value={originCode}
                 onChange={(e) => setOriginCode(e.target.value)}
+                aria-label="Flying from (origin airport for checklist)"
                 className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3 font-serif text-base focus:border-amber-500 focus:outline-none"
               >
                 <option value="">Select origin airport…</option>
@@ -8037,6 +7998,7 @@ function ChecklistDownload() {
               <select
                 value={destCode}
                 onChange={(e) => setDestCode(e.target.value)}
+                aria-label="Flying to (destination airport for checklist)"
                 className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3 font-serif text-base focus:border-amber-500 focus:outline-none"
               >
                 <option value="">Select destination airport…</option>
@@ -8544,8 +8506,9 @@ function JourneyPlanner() {
         {/* Dropdowns — airport-level, grouped by region */}
         <div className="grid sm:grid-cols-[1fr_auto_1fr_auto] gap-4 items-end mb-8">
           <div>
-            <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying from</label>
+            <label htmlFor="planner-from" className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying from</label>
             <select
+              id="planner-from"
               value={origin}
               onChange={(e) => { setOrigin(e.target.value); setPlanned(false); }}
               className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"
@@ -8566,8 +8529,9 @@ function JourneyPlanner() {
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying to</label>
+            <label htmlFor="planner-to" className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Flying to</label>
             <select
+              id="planner-to"
               value={destination}
               onChange={(e) => { setDestination(e.target.value); setPlanned(false); }}
               className="w-full bg-stone-800 border border-stone-700 text-stone-100 px-4 py-3.5 font-serif text-lg focus:border-amber-500 focus:outline-none"

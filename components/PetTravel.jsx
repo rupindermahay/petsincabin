@@ -2758,7 +2758,7 @@ const CHECKLIST_DATA = {
           "Health certificate from origin country vet — must include vaccination history and microchip number.",
           "If from the USA, get <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement of the health certificate.",
           "If from Canada, get <a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/exports/pets/eng\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> endorsement.",
-          "If from the UK/EU, the <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU pet passport</a> plus accredited vet certificate works.",
+          "If from the UK, the GB Animal Health Certificate from an accredited vet covers the export side (GB residents can no longer use an EU pet passport). If from the EU, an EU pet passport plus an accredited vet's health certificate works. India sets its own entry requirements either way — see the health certificate and NOC steps.",
         ],
       },
       {
@@ -3979,7 +3979,7 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "4–6 weeks before",
           items: [
             "Vet appointment for full health check",
-            "EU pet passport is valid for life if rabies stays current",
+            "EU pet passport is valid for life if rabies stays current — for EU residents (GB residents can no longer use one; they need a GB AHC)",
             "If returning to EU later: keep the pet passport current (rabies vaccine + microchip)",
             "Book cabin pet space (Air France, KLM, Lufthansa, SWISS, LOT, TAP, Iberia, ITA all support cabin)",
             "Research destination's import rules — especially for UK (Eurotunnel workaround), USA (CDC Dog Import Form), UAE (MOCCAE permit)",
@@ -4522,7 +4522,7 @@ function getTransitNotes(region, originRegion, legs = []) {
     return {
       label: "the UK",
       items: [
-        `UK transit on the way to Ireland: ISO microchip, rabies vaccine ≥21 days old, <a href="https://www.gov.uk/take-pet-abroad/animal-health-certificate" target="_blank" rel="noopener noreferrer">GB Animal Health Certificate</a> or pet passport.`,
+        `UK transit on the way to Ireland: ISO microchip, rabies vaccine ≥21 days old, <a href="https://www.gov.uk/take-pet-abroad/animal-health-certificate" target="_blank" rel="noopener noreferrer">GB Animal Health Certificate</a> (GB residents need the AHC — an EU pet passport can no longer be used for travel into the EU since April 2026).`,
         `Dogs: tapeworm treatment by a vet 24–120 hours before the UK departure (required for Ireland entry too).`,
         `Pet stays with you for the full UK→Ireland ferry crossing.`,
       ],
@@ -4676,8 +4676,8 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
   if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
     if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
     if (destRegion === "uk-out") return `The UK doesn't allow cabin pets on any commercial flight — your pet has to fly into mainland Europe and cross by land (Eurotunnel) or sea (ferry). Paperwork: ISO microchip, rabies vaccine ≥21 days old, Animal Health Certificate from accredited vet within 10 days of entry, tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "ireland") return `Ireland — like the UK — doesn't allow cabin pets on commercial flights. Use the France→Ireland ferry. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or pet passport), tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or valid EU pet passport).`;
+    if (destRegion === "ireland") return `Ireland — like the UK — doesn't allow cabin pets on commercial flights. Use the France→Ireland ferry. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC), tapeworm treatment for dogs 24–120 hrs before arrival.`;
+    if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC, not a pet passport).`;
     if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
     if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
     if (destRegion === "canada") return `For Canada: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No USDA endorsement required if coming from the US. Confirm details with the CFIA before travel.`;
@@ -6745,7 +6745,7 @@ const DESTINATIONS = [
       {
         title: "Don't forget: it's a two-country problem",
         icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Whatever route you pick, both the country you leave AND Ireland have rules. From the US you'll need an EU Health Certificate (USDA-endorsed). From the UK you'll need a GB Animal Health Certificate or pet passport. From within the EU, an EU pet passport covers it. Ireland-specific: ISO microchip, rabies ≥21 days old, and tapeworm treatment for dogs 24–120 hours before arrival.",
+        body: "Whatever route you pick, both the country you leave AND Ireland have rules. From the US you'll need an EU Health Certificate (USDA-endorsed). From the UK you'll need a GB Animal Health Certificate — since April 2026 GB residents can no longer use an EU pet passport for travel into the EU (Ireland included). From within the EU, an EU pet passport covers it. Ireland-specific: ISO microchip, rabies ≥21 days old, and tapeworm treatment for dogs 24–120 hours before arrival.",
         cost: "—",
       },
     ],
@@ -6848,7 +6848,7 @@ const DESTINATIONS = [
     flag: "🇪🇺",
     name: "UK & EU travel",
     headline: "Out of the UK, around the EU. Mostly easier than you think.",
-    rule: "Once you have an EU pet passport (issued by an EU vet) or a GB Animal Health Certificate (AHC, from a UK vet within 10 days), most internal EU travel is straightforward. Pets travel free or cheap on most trains, ferries, and short-haul flights. The friction is mostly at the UK border, not within the EU. IMPORTANT: For flying out of the UK with a pet in cabin, ALWAYS use Heathrow (LHR) — Gatwick (LGW) does NOT permit cabin pets on departing flights.",
+    rule: "Once you have the right document — a GB Animal Health Certificate (AHC, from a UK vet within 10 days) if you're a GB resident, or an EU pet passport if you're an EU resident — most internal EU travel is straightforward. Note: since 22 April 2026, GB residents can no longer use an EU pet passport for EU travel and must use the AHC. Pets travel free or cheap on most trains, ferries, and short-haul flights. The friction is mostly at the UK border, not within the EU. IMPORTANT: For flying out of the UK with a pet in cabin, ALWAYS use Heathrow (LHR) — Gatwick (LGW) does NOT permit cabin pets on departing flights.",
     workarounds: [
       {
         title: "Cabin out of Heathrow — the most overlooked UK option",
@@ -6893,7 +6893,7 @@ const DESTINATIONS = [
         cost: "£200–£600 depending on route.",
       },
     ],
-    paperwork: "From UK: ISO microchip, rabies vaccine ≥21 days old, GB Animal Health Certificate (AHC) from a UK vet within 10 days of travel — valid for 4 months of EU travel and 4 months for re-entry. UK pet passports issued pre-2021 are no longer valid for outbound travel. Within EU: an EU pet passport from any EU vet replaces the AHC and is valid for the pet's lifetime (rabies vaccine staying current). Tapeworm treatment 24–120 hrs before returning to the UK or Ireland (dogs only).",
+    paperwork: "From UK: ISO microchip, rabies vaccine ≥21 days old, GB Animal Health Certificate (AHC) from a UK vet within 10 days of travel — valid for 4 months of EU travel and 4 months for re-entry. Since 22 April 2026, GB residents can NO LONGER use an EU pet passport for travel into the EU (even an EU-issued one) — the AHC is now required for each outbound trip. EU pet passports are only issued to EU residents. GB residents can still use a pet passport for the return leg into Great Britain. Within EU (for EU residents): an EU pet passport from any EU vet replaces the AHC and is valid for the pet's lifetime (rabies vaccine staying current). Tapeworm treatment 24–120 hrs before returning to the UK or Ireland (dogs only).",
   },
   {
     id: "caribbean",
@@ -10183,13 +10183,13 @@ function Documents() {
             {
               title: "GB Animal Health Certificate (AHC)",
               when: "Leaving the UK for EU / many destinations",
-              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Pre-2021 UK pet passports are no longer valid.",
+              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Since 22 April 2026, this is the required document for GB residents travelling to the EU — an EU pet passport can no longer be used for that. A new AHC is needed for each outbound trip.",
               link: { url: "https://www.gov.uk/take-pet-abroad", label: "gov.uk/take-pet-abroad" },
             },
             {
               title: "EU Pet Passport / EU Health Certificate",
               when: "Entering / travelling within the EU",
-              detail: "EU pet passport issued by an EU vet (valid for lifetime). Non-EU pets need an EU Health Certificate issued by a government-accredited vet within 10 days of entry.",
+              detail: "EU pet passport issued by an EU vet, valid for the pet's lifetime — but only available to EU residents. Since 22 April 2026, GB residents can no longer use an EU pet passport for EU travel and must use a GB AHC instead. Non-EU pets need an EU Health Certificate issued by a government-accredited vet within 10 days of entry.",
               link: { url: "https://food.ec.europa.eu/animals/movement-pets_en", label: "EU Commission · pet movement" },
             },
             {

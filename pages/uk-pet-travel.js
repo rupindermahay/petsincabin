@@ -148,14 +148,14 @@ export default function UKPetTravel() {
           <ul className="space-y-2 font-serif text-stone-700 leading-relaxed mb-4 list-none">
             <li className="flex gap-3"><span className="text-amber-600 flex-shrink-0">·</span><span>An ISO-standard microchip, implanted before the rabies vaccine.</span></li>
             <li className="flex gap-3"><span className="text-amber-600 flex-shrink-0">·</span><span>A rabies vaccination at least 21 days old before entry.</span></li>
-            <li className="flex gap-3"><span className="text-amber-600 flex-shrink-0">·</span><span>An Animal Health Certificate (AHC) from an accredited vet, issued within 10 days of entry. A pet passport may be used instead only if it was issued in an EU country (an EU-resident's pet passport is still valid); see the note below.</span></li>
+            <li className="flex gap-3"><span className="text-amber-600 flex-shrink-0">·</span><span>An Animal Health Certificate (AHC) from an accredited vet, issued within 10 days of travel. For GB residents this has replaced the pet passport for travel into the EU — see the note below.</span></li>
             <li className="flex gap-3"><span className="text-amber-600 flex-shrink-0">·</span><span>A tapeworm treatment given by a vet 24–120 hours before arrival — dogs only.</span></li>
           </ul>
 
           <div className="bg-amber-50 border border-amber-200 rounded-sm p-5 mb-4">
             <div className="font-serif text-stone-900 mb-1">A 2026 change worth knowing</div>
             <p className="font-serif text-stone-700 text-sm leading-relaxed">
-              If you live in the UK, you can no longer use a GB-issued pet passport for travel to the EU — those stopped being valid for onward EU travel after Brexit, and the position is unchanged in 2026. UK residents now need a fresh Animal Health Certificate for each trip to the EU, valid for a single round trip within its 10-day window. A pet passport still works if it was issued in an EU country and you're an EU resident. Always confirm the current rule on the UK government's pet travel pages, as this is an area that keeps shifting.
+              From 22 April 2026, if you live in Great Britain (England, Scotland or Wales) you can no longer use an EU pet passport to travel with your pet into the EU — even one issued by an EU vet, and even if it was issued before that date. EU pet passports are now only issued to people whose main home is in the EU. GB residents travelling to the EU now need an Animal Health Certificate (AHC) instead, obtained from a vet within 10 days of travel. You still need a new AHC for each outbound trip, but once you've arrived it covers up to four months of onward travel within the EU and the return journey home, as long as the rabies vaccination stays valid. GB residents can still use an EU pet passport for the return leg back into Great Britain. Always confirm the current detail on the UK government's pet travel pages before you go.
             </p>
           </div>
 

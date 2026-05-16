@@ -227,7 +227,7 @@ export default function FlyingWithAFrenchBulldog() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Paperwork is still the same.</strong> A private jet doesn't bypass UK, EU, or US import rules. You still need the microchip, rabies vaccine, EU pet passport or UK AHC (eastbound), USDA-endorsed health certificate (westbound to US), and for the UK: tapeworm treatment for dogs 24–120 hours before arrival. K9 Jets land at smaller airports (Farnborough, Le Bourget) that still have full pet customs facilities — but you handle the documents.
+              <strong>Paperwork is still the same.</strong> A private jet doesn't bypass UK, EU, or US import rules. You still need the microchip, rabies vaccine, the right travel document for the direction (a GB AHC for travel from the UK into the EU — GB residents can no longer use an EU pet passport for that since April 2026; an EU pet passport still works for arrivals into the UK and for EU residents), USDA-endorsed health certificate (westbound to US), and for the UK: tapeworm treatment for dogs 24–120 hours before arrival. K9 Jets land at smaller airports (Farnborough, Le Bourget) that still have full pet customs facilities — but you handle the documents.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

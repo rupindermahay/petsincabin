@@ -249,6 +249,31 @@ export default function CentralAmericaPetTravel() {
               Spotted something out of date? <a href="mailto:petincabinguide@gmail.com" className="text-amber-700 underline decoration-amber-600 underline-offset-4 hover:text-amber-800">Let me know</a>.
             </p>
           </div>
+          {/* Related guides — cross-links to other country/topic pages */}
+          <div className="mt-16 pt-10 border-t border-stone-300">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">Related guides</div>
+            <h2 className="font-serif text-2xl text-stone-900 mb-6">More from the pets-in-cabin guide</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Link href="/south-america-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">South America guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Most cabin journeys through Central America connect onward to South America.</div>
+              </Link>
+
+              <Link href="/travel-day-with-a-pet" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Travel day guide guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Panama and Costa Rica airport specifics.</div>
+              </Link>
+
+              <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Some travellers transit via Panama for unusual long-haul routings.</div>
+              </Link>
+            </div>
+            <p className="text-xs text-stone-500 italic mt-6">
+              <Link href="/" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">Back to the main guide</Link> — for the airline grid, journey planner, and full destination list.
+            </p>
+          </div>
+
         </main>
       </div>
     </>

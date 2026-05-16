@@ -298,6 +298,31 @@ export default function JapanPetTravel() {
           <p className="font-sans text-xs text-stone-400 leading-relaxed mt-12 text-center">
             Verified against MAFF (Japan Ministry of Agriculture, Forestry and Fisheries), AQS, USDA APHIS, JAL, ANA, United, Korean Air, T'Way, and Aeromexico published policies as of May 2026. The Japan import process is unforgiving — always verify the latest specifics with AQS at your intended entry port before travel.
           </p>
+          {/* Related guides — cross-links to other country/topic pages */}
+          <div className="mt-16 pt-10 border-t border-stone-300">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">Related guides</div>
+            <h2 className="font-serif text-2xl text-stone-900 mb-6">More from the pets-in-cabin guide</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Link href="/seattle-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Seattle / US Pacific NW guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">United's US west coast → Japan cabin routes start here.</div>
+              </Link>
+
+              <Link href="/iceland-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Iceland guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Another country with strict titer + quarantine rules to compare.</div>
+              </Link>
+
+              <Link href="/india-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">India guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Indian residents flying to Japan often need a European hub for cabin.</div>
+              </Link>
+            </div>
+            <p className="text-xs text-stone-500 italic mt-6">
+              <Link href="/" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">Back to the main guide</Link> — for the airline grid, journey planner, and full destination list.
+            </p>
+          </div>
+
         </main>
       </div>
     </>

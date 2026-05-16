@@ -352,6 +352,31 @@ export default function SouthAmericaPetTravel() {
           <p className="font-sans text-xs text-stone-400 leading-relaxed mt-12 text-center">
             Verified against LATAM Airlines, Avianca, USDA APHIS, Brazil MAPA/VIGIAGRO, Argentina SENASA, Chile SAG, Peru SENASA, and Colombia ICA published policies as of May 2026. Pet import rules change — always confirm specifics with the destination country's veterinary authority before booking, especially for Chile (permit timing) and Colombia (breed verification).
           </p>
+          {/* Related guides — cross-links to other country/topic pages */}
+          <div className="mt-16 pt-10 border-t border-stone-300">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">Related guides</div>
+            <h2 className="font-serif text-2xl text-stone-900 mb-6">More from the pets-in-cabin guide</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Link href="/central-america-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Central America guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Panama City is the cabin transit hub for Uruguay, Paraguay, Bolivia.</div>
+              </Link>
+
+              <Link href="/travel-day-with-a-pet" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Travel day guide guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">LATAM/Avianca/Copa booking quirks on travel day.</div>
+              </Link>
+
+              <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Japan guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Aeromexico → Tokyo is a rare cabin option from Latin America.</div>
+              </Link>
+            </div>
+            <p className="text-xs text-stone-500 italic mt-6">
+              <Link href="/" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">Back to the main guide</Link> — for the airline grid, journey planner, and full destination list.
+            </p>
+          </div>
+
         </main>
       </div>
     </>

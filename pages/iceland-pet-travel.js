@@ -281,18 +281,32 @@ export default function IcelandPetTravel() {
 
           <div className="h-px bg-stone-300 mb-12" />
 
-          {/* Bottom navigation */}
-          <div className="bg-amber-50/60 border border-amber-200 rounded-sm p-6 mb-12">
-            <div className="text-xs uppercase tracking-widest text-amber-700 mb-3">More from the guide</div>
-            <p className="font-serif text-stone-800 leading-relaxed mb-4">
-              Iceland's rules sit at the strict end of the spectrum. If you're looking at other Nordic options, our <Link href="/oslo-pet-travel" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Oslo guide</Link> covers Norway (much easier, EU pet passport, cabin allowed on most flights). For UK departures see the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">UK guide</Link>.
+          {/* Related guides — cross-links to other country/topic pages */}
+          <div className="mt-16 pt-10 border-t border-stone-300">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">Related guides</div>
+            <h2 className="font-serif text-2xl text-stone-900 mb-6">More from the pets-in-cabin guide</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Link href="/oslo-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Oslo (Norway) guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Nordic neighbour but a much easier import regime — cabin IS allowed in.</div>
+              </Link>
+
+              <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Iceland's strictness sits alongside the UK's cabin ban — useful contrast.</div>
+              </Link>
+
+              <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Japan guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Similar titer + quarantine logic to compare with Iceland's.</div>
+              </Link>
+            </div>
+            <p className="text-xs text-stone-500 italic mt-6">
+              <Link href="/" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">Back to the main guide</Link> — for the airline grid, journey planner, and full destination list.
             </p>
-            <Link href="/" className="inline-flex items-center gap-2 text-sm text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">
-              ← Back to the main pet travel guide
-            </Link>
           </div>
 
-          <p className="text-xs text-stone-500 leading-relaxed">
+          <p className="text-xs text-stone-500 leading-relaxed mt-10">
             Last verified: May 2026. Iceland's pet import rules are regulated by the Icelandic Food and Veterinary Authority (MAST). Always confirm current requirements directly with MAST before relying on any third-party guide, including this one. The category list, fee structure, and approved facilities can change without notice.
           </p>
         </main>

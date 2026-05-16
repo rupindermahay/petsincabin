@@ -5605,7 +5605,7 @@ function NavBar({ onStartIntake }) {
     // routeChangeComplete in _app.js, so we don't double-fire there.
     if (typeof window !== "undefined" && window.gtag && id !== "about") {
       const sectionLabel = (NAV_SECTIONS.find((s) => s.id === id) || {}).label || id;
-      window.gtag("event", "section_view", {
+      window.gtag("event", "section_click", {
         event_category: "navigation",
         section_id: id,
         section_label: sectionLabel,
@@ -5869,7 +5869,7 @@ function Hero({ onStart }) {
             rel="noopener noreferrer"
             onClick={() => {
               if (typeof window !== "undefined" && window.gtag) {
-                window.gtag("event", "petition_click", {
+                window.gtag("event", "petition_link", {
                   event_category: "outbound",
                   event_label: "UK Parliament petition 750817",
                 });
@@ -7229,7 +7229,7 @@ function AirlineGrid() {
   function openCompare() {
     if (compareSelected.size < 2) return;
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "airline_compare_open", {
+      window.gtag("event", "airline_comparison_opened", {
         event_category: "engagement",
         airline_count: compareSelected.size,
         airlines: Array.from(compareSelected).join(", "),
@@ -7438,7 +7438,18 @@ function AirlineGrid() {
               return (
                 <button
                   key={f.id}
-                  onClick={() => setFilter(f.id)}
+                  onClick={() => {
+                    setFilter(f.id);
+                    // GA4 — track which route filter people pick in the
+                    // Airlines section.
+                    if (typeof window !== "undefined" && window.gtag) {
+                      window.gtag("event", "airline_filter_selected", {
+                        event_category: "airlines_section",
+                        filter: f.id,
+                        filter_label: f.label,
+                      });
+                    }
+                  }}
                   className={`px-4 py-2 text-sm transition-all border ${
                     isActive
                       ? "bg-stone-900 text-stone-50 border-stone-900"
@@ -8151,6 +8162,19 @@ function ChecklistDownload() {
     !!(DIRECTIONAL_CHECKLISTS[route] && DIRECTIONAL_CHECKLISTS[route][effectiveDirection]);
 
   function openPrintable() {
+    // GA4 — track downloads from the standalone Checklist tool ("what
+    // paperwork do I need"). Both "Open & print" buttons call this, so one
+    // event here covers both. Distinct from journey_checklist_downloaded,
+    // which fires for the Journey Planner's own checklist download.
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "checklist_downloaded", {
+        event_category: "tool_engagement",
+        checklist_mode: mode,
+        origin: mode === "route" ? originCode : "",
+        destination: mode === "route" ? destCode : "",
+        country: mode === "country" ? route : "",
+      });
+    }
     openChecklistPrintable(data);
   }
 
@@ -8649,7 +8673,7 @@ function JourneyPlanner() {
     setExpandedSections(new Set()); // reset section expansion on new selection
     const route = selectableRoutes.find((r) => r.id === id);
     if (typeof window !== "undefined" && window.gtag && route) {
-      window.gtag("event", "route_selected", {
+      window.gtag("event", "journey_opened", {
         event_category: "journey_planner",
         route_kind: route.kind,
         route_from: route.from,
@@ -8670,10 +8694,10 @@ function JourneyPlanner() {
     if (origin && destination) {
       setPlanned(true);
       // GA4 — track journey planner submission. Captures the airport pair
-      // the user is researching. (Different from route_selected, which fires
+      // the user is researching. (Different from journey_opened, which fires
       // when they pick one specific route from the list of options.)
       if (typeof window !== "undefined" && window.gtag) {
-        window.gtag("event", "planner_search", {
+        window.gtag("event", "journey_searched", {
           event_category: "tool_engagement",
           origin,
           destination,
@@ -9325,7 +9349,7 @@ function JourneyPlanner() {
                         <button
                           onClick={() => {
                             if (typeof window !== "undefined" && window.gtag) {
-                              window.gtag("event", "checklist_download", {
+                              window.gtag("event", "journey_checklist_downloaded", {
                                 event_category: "journey_planner",
                                 route_kind: selectedRoute.kind,
                                 route_from: selectedRoute.from,
@@ -9425,7 +9449,7 @@ function JourneyPlanner() {
                         <button
                           onClick={() => {
                             if (typeof window !== "undefined" && window.gtag) {
-                              window.gtag("event", "checklist_download", {
+                              window.gtag("event", "journey_checklist_downloaded", {
                                 event_category: "journey_planner",
                                 route_kind: selectedRoute.kind,
                                 route_from: selectedRoute.from,
@@ -9598,7 +9622,18 @@ function Routes() {
               return (
                 <button
                   key={f.id}
-                  onClick={() => setFilter(f.id)}
+                  onClick={() => {
+                    setFilter(f.id);
+                    // GA4 — track which region filter people pick in the
+                    // Routes ("How long is the flight?") section.
+                    if (typeof window !== "undefined" && window.gtag) {
+                      window.gtag("event", "route_filter_selected", {
+                        event_category: "routes_section",
+                        filter: f.id,
+                        filter_label: f.label,
+                      });
+                    }
+                  }}
                   className={`px-4 py-2 text-sm transition-all border ${
                     isActive
                       ? "bg-stone-900 text-stone-50 border-stone-900"
@@ -10955,7 +10990,7 @@ export default function PetTravel() {
     // GA4 — track entry into the assessment tool. Fires when the user clicks
     // either the hero "Start" button or the "Can my pet fly?" nav link.
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "intake_start", {
+      window.gtag("event", "can_my_pet_fly_start", {
         event_category: "tool_engagement",
       });
     }
@@ -10970,7 +11005,7 @@ export default function PetTravel() {
     // and the assessment renders. Includes destination + pet count so we can
     // see which trips people are researching.
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "intake_complete", {
+      window.gtag("event", "can_my_pet_fly_complete", {
         event_category: "tool_engagement",
         destination: answers.destination || "unknown",
         pet_count: answers.petCount || "1",

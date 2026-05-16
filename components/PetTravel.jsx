@@ -2624,14 +2624,23 @@ const CHECKLIST_DATA = {
     title: "UK entry / exit checklist",
     sections: [
       {
+        title: "First — two documents people mix up",
+        items: [
+          "<strong>The 'fit to fly' certificate and the Animal Health Certificate are NOT the same thing.</strong> They're separate documents with different jobs — you may need one, the other, or both.",
+          "<strong>Animal Health Certificate (AHC)</strong> — an official GOVERNMENT export document, issued by an Official Veterinarian (OV), valid 10 days. It proves your pet meets the <em>destination country's import rules</em> (microchip, rabies, etc.). Required for UK→EU travel. The equivalent for other destinations is the USDA-endorsed certificate (US), EU AHC, and so on.",
+          "<strong>'Fit to fly' certificate</strong> — a vet's letter confirming your pet is healthy and physically <em>fit to be on the aircraft</em>. This is an <em>airline</em> requirement, not a government one. Effectively all international airlines want one (Air Canada, KLM, Lufthansa, SWISS, etc.).",
+          "<strong>The overlap:</strong> for some routes the AHC (or the destination's health certificate) ALSO satisfies the airline's fit-to-fly requirement, so one document covers both. Other airlines insist on a separate fit-to-fly letter even when you already have an AHC. There's no universal rule — always confirm with your specific airline which documents they need.",
+        ],
+      },
+      {
         title: "6 weeks before",
         items: [
           "ISO 11784/11785 microchip implanted (if not already)",
           "Rabies vaccination (must be ≥21 days before entry to UK)",
-          "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet — required for EU destinations",
-          "If outbound to a NON-EU country (Canada, USA, UAE, etc.): you do NOT need the GB AHC. Instead, you need (a) your airline's required health/'fit to fly' certificate, (b) any destination country paperwork (e.g. <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> for USA), and (c) for some destinations a <a href=\"https://www.gov.uk/export-health-certificates\" target=\"_blank\" rel=\"noopener noreferrer\">DEFRA Export Health Certificate</a> — start the application early as it's processed by an OV (Official Veterinarian)",
+          "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet — required for EU destinations (this is the GOVERNMENT export document — see the note above on how it differs from the airline's fit-to-fly)",
+          "If outbound to a NON-EU country (Canada, USA, UAE, etc.): you do NOT need the GB AHC. Instead, you need (a) your airline's required 'fit to fly' certificate, (b) any destination country paperwork (e.g. <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> for USA), and (c) for some destinations a <a href=\"https://www.gov.uk/export-health-certificates\" target=\"_blank\" rel=\"noopener noreferrer\">DEFRA Export Health Certificate</a> — start the application early as it's processed by an OV (Official Veterinarian)",
           "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
-          "Book <a href=\"https://www.eurotunnel.com/uk/passengers/pets/\" target=\"_blank\" rel=\"noopener noreferrer\">Eurotunnel</a> / ferry well in advance if doing land crossing",
+          "Book <a href=\"https://www.leshuttle.com/uk-en/travelling-with-us/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">LeShuttle (Eurotunnel)</a> / ferry well in advance if doing land crossing",
         ],
       },
       {
@@ -2696,6 +2705,7 @@ const CHECKLIST_DATA = {
         items: [
           "Get the EU Animal Health Certificate from an accredited vet (or EU pet passport if you have one)",
           "If coming from the UK: a GB Animal Health Certificate covers the trip",
+          "<strong>Note — two separate documents:</strong> the Animal Health Certificate is the GOVERNMENT document proving your pet meets Ireland's import rules. Your airline separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. Often the AHC also satisfies the airline, but some airlines insist on a separate fit-to-fly letter — confirm with your specific airline.",
           "Confirm ferry or cargo booking",
           "Re-confirm any cabin pet booking for the fly-out or fly-to-Europe leg",
         ],
@@ -2817,6 +2827,7 @@ const CHECKLIST_DATA = {
         title: "10 days before",
         items: [
           "Get destination-appropriate health certificate (<a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Cert</a> from US, <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB AHC</a> from UK, etc.)",
+          "<strong>Note — two separate documents:</strong> the EU Health Certificate / AHC is the GOVERNMENT document proving your pet meets EU import rules. Your airline separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. The health certificate often satisfies both, but some airlines insist on a separate fit-to-fly letter — confirm with your specific airline.",
           "<a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement (US only) — same day as vet certificate ideally",
           "Re-confirm airline cabin booking by phone",
         ],
@@ -7468,22 +7479,24 @@ function AirlineGrid() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="border border-stone-200 p-4 rounded-sm">
                   <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Into the UK</div>
-                  <div className="font-serif text-base text-stone-900 mb-1">Eurotunnel Le Shuttle</div>
+                  <div className="font-serif text-base text-stone-900 mb-1">
+                    <a href="https://www.leshuttle.com/uk-en/travelling-with-us/travelling-with-pets" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">LeShuttle (Eurotunnel)</a>
+                  </div>
                   <p className="text-stone-600 text-sm leading-relaxed">
-                    Calais → Folkestone in about 35 minutes. Your pet stays in your car for the entire crossing — no carrier, no hold, no separation. Pet-friendly ferries (Dover–Calais) are the alternative.
+                    Calais → Folkestone in about 35 minutes. Your pet stays in your car for the entire crossing — no carrier, no hold, no separation. Pets travel from around £24 each way; check current fares and the pet check-in process on the official page. Pet-friendly ferries (Dover–Calais) are the alternative.
                   </p>
                 </div>
                 <div className="border border-stone-200 p-4 rounded-sm">
                   <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Into Ireland</div>
                   <div className="font-serif text-base text-stone-900 mb-1">Direct ferry from France</div>
                   <p className="text-stone-600 text-sm leading-relaxed">
-                    Cherbourg or Roscoff → Rosslare or Dublin on Irish Ferries / Brittany Ferries. Pets stay in your vehicle or a pet-friendly cabin. This avoids the UK landbridge entirely.
+                    Cherbourg or Roscoff → Rosslare or Dublin on <a href="https://www.irishferries.com/uk-en/frequently-asked-questions/pet-travel-all-routes/" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Irish Ferries</a> or <a href="https://www.brittany-ferries.ie/information/pet-travel/travelling-by-ferry-with-your-pet" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Brittany Ferries</a>. Pets stay in your vehicle or a pet-friendly cabin. This avoids the UK landbridge entirely.
                   </p>
                 </div>
               </div>
 
               <p className="text-stone-600 text-sm leading-relaxed italic font-serif">
-                Realistic timings: a continental flight plus the onward land/sea leg usually means a full travel day, sometimes with an overnight near the port. Crossing fees vary by season and how far ahead you book — check current pricing directly with Eurotunnel or the ferry operator. The detailed guides below break down the full route, paperwork order, and what to expect.
+                Realistic timings: a continental flight plus the onward land/sea leg usually means a full travel day, sometimes with an overnight near the port. Crossing fares vary by season and how far ahead you book — check current pricing directly with <a href="https://www.leshuttle.com/uk-en/travelling-with-us/travelling-with-pets" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors not-italic">LeShuttle</a> or the ferry operator. The detailed guides below break down the full route, paperwork order, and what to expect.
               </p>
 
               {/* Signpost CTAs to the detailed pages — the card is the catch,

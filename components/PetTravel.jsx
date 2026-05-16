@@ -5122,7 +5122,7 @@ const SHARED_QUESTIONS = [
     id: "petCount",
     label: "How many pets are you travelling with?",
     type: "choice",
-    options: ["1", "2", "3 or more"],
+    options: ["1", "2 or more"],
     helper: "Most airlines cap cabin pets per passenger and per flight. We'll flag relevant limits.",
   },
   {
@@ -5182,7 +5182,10 @@ const PER_PET_QUESTIONS = [
 // PER_PET_QUESTIONS for a specific pet index), or "petGate" (the "Same as
 // Pet 1?" / "Tell me about Pet N" branching screen between pets).
 function buildIntakeSteps(petCount) {
-  const n = petCount === "3 or more" ? 3 : (parseInt(petCount, 10) || 1);
+  // petCount is "1" → 1 pet, "2 or more" → 2 pets. We cap at 2 because in
+  // practice a 3rd pet introduces a passenger-split problem that the 2-pet
+  // warning already covers — the assessment doesn't need a 3rd pet card.
+  const n = petCount === "2 or more" ? 2 : (parseInt(petCount, 10) || 1);
   const steps = [];
 
   // Shared questions first
@@ -5190,7 +5193,7 @@ function buildIntakeSteps(petCount) {
 
   // Per-pet loop
   for (let i = 0; i < n; i++) {
-    // For pets 2 and 3, prepend a "same as Pet 1?" gate
+    // For pet 2, prepend a "same as Pet 1?" gate
     if (i > 0) {
       steps.push({ kind: "petGate", petIndex: i });
     }
@@ -5201,9 +5204,9 @@ function buildIntakeSteps(petCount) {
 }
 
 // Format a question label by substituting {petLabel} with "Pet 1" / "Pet 2"
-// / "Pet 3" (or just "your pet" if only one pet).
+// (or just "your pet" if only one pet).
 function formatPetLabel(petIndex, petCount) {
-  const n = petCount === "3 or more" ? 3 : (parseInt(petCount, 10) || 1);
+  const n = petCount === "2 or more" ? 2 : (parseInt(petCount, 10) || 1);
   if (n === 1) return "your pet";
   return `Pet ${petIndex + 1}`;
 }
@@ -5242,7 +5245,7 @@ function assess(answers) {
     }];
   }
 
-  const petCount = answers.petCount || (pets.length === 1 ? "1" : pets.length === 2 ? "2" : "3 or more");
+  const petCount = answers.petCount || (pets.length === 1 ? "1" : "2 or more");
   const totalPetCount = pets.length;
   const allSpecies = pets.map((p) => p.species).filter(Boolean);
   const uniqueSpecies = Array.from(new Set(allSpecies));
@@ -5513,17 +5516,14 @@ function assess(answers) {
   // weight stays under that airline's per-carrier limit (Delta, United,
   // Lufthansa for puppies/kittens). We surface these honestly without
   // inventing a combined-weight calculation airlines don't actually use.
-  if (petCount === "2" || totalPetCount === 2) {
+  //
+  // We collapsed the old "3 or more" branch into the 2+ branch because in
+  // practice the answer is the same: you split across passengers, with one
+  // adjacent-seat option, or fall back to cargo / charter services.
+  if (petCount === "2 or more" || totalPetCount >= 2) {
     warnings.push({
-      title: "Two pets: the real rule is 1 pet per passenger",
-      detail: `Most airlines allow only 1 pet per passenger in the cabin. Two pets typically means one of these setups: <strong>(1) Two passengers, one pet each in separate carriers.</strong> <strong>(2) Buy an adjacent extra seat</strong> on Alaska, JetBlue, United, or Air Canada to bring 2 carriers yourself — each pet must fit its own carrier under that airline's standard weight limit. <strong>(3) Two same-species small pets in one carrier</strong> (Delta, United, Lufthansa allow this for puppies/kittens) — only works if combined pet+carrier weight stays under the airline's single-carrier limit (~8 kg / 17 lb on most airlines) and they fit comfortably together. Many international destinations also cap personal pet imports per traveller. These bookings can't be made online — call the airline directly.`,
-    });
-  } else if (petCount === "3 or more" || totalPetCount >= 3) {
-    flags.push({
-      severity: "fixable",
-      title: "3+ pets exceeds most airlines' cabin limits per passenger",
-      detail: "No major airline lets one passenger bring 3+ pets in the cabin. The most you can do solo is 2 carriers via the extra-seat purchase option on Alaska, JetBlue, United, or Air Canada. Many destinations also cap personal pet imports at 2 per traveller — beyond that you need commercial import permits.",
-      workaround: "Realistic options: (1) Split across multiple passengers, 1 pet each — most workable for families. (2) Two passengers + one passenger with an extra-seat purchase = 3 cabin slots. (3) Send some pets via cargo (Lufthansa Animal Lounge handles multi-pet cargo well). (4) For US routes specifically: Bark Air or RetrievAir charter can take a whole household on one booking. Call airlines directly — these bookings need phone arrangement.",
+      title: "Multiple pets: the real rule is 1 pet per passenger",
+      detail: `Most airlines allow only 1 pet per passenger in the cabin. With 2+ pets you'll typically need one of these setups: <strong>(1) Multiple passengers, one pet each in separate carriers.</strong> <strong>(2) Buy an adjacent extra seat</strong> on Alaska, JetBlue, United, or Air Canada to bring 2 carriers yourself — each pet must fit its own carrier under that airline's standard weight limit. <strong>(3) Two same-species small pets in one carrier</strong> (Delta, United, Lufthansa allow this for puppies/kittens) — only works if combined pet+carrier weight stays under the airline's single-carrier limit (~8 kg / 17 lb on most airlines) and they fit comfortably together. For 3+ pets: combine these (e.g. two passengers, one with extra-seat purchase = 3 cabin slots), or send some via cargo / charter. Many international destinations also cap personal pet imports per traveller. These bookings can't be made online — call the airline directly.`,
     });
   }
 
@@ -5930,7 +5930,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   const steps = useMemo(() => buildIntakeSteps(answers.petCount), [answers.petCount]);
 
   // Clamp step in case petCount changes and shrinks the flow (e.g. user goes
-  // back, picks "1" instead of "3 or more", and we'd otherwise be past the end).
+  // back, picks "1" instead of "2 or more", and we'd otherwise be past the end).
   const safeStep = Math.min(step, Math.max(0, steps.length - 1));
   const current = steps[safeStep];
   const isFirst = safeStep === 0;
@@ -5961,7 +5961,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
       // If user just picked petCount, also ensure answers.pets is properly
       // sized so per-pet rendering doesn't try to read from undefined slots.
       if (current.q.id === "petCount") {
-        const n = option === "3 or more" ? 3 : (parseInt(option, 10) || 1);
+        const n = option === "2 or more" ? 2 : (parseInt(option, 10) || 1);
         const existing = Array.isArray(answers.pets) ? answers.pets : [];
         const newPets = [];
         for (let i = 0; i < n; i++) newPets.push(existing[i] || {});

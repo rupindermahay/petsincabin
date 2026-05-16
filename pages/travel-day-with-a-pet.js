@@ -11,7 +11,7 @@ export default function TravelDayWithAPet() {
           name="description"
           content="The full walkthrough of an airport day flying with a dog or cat in the cabin — from the morning at home, through check-in, security, the gate, the flight, and arrival. Practical, honest, no fluff."
         />
-        <link rel="canonical" href="https://petsincabin.com/travel-day-with-a-pet" />
+        <link rel="canonical" href="https://www.petsincabin.com/travel-day-with-a-pet" />
       </Head>
 
       <div

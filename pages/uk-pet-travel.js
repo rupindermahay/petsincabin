@@ -10,7 +10,7 @@ export default function UKPetTravel() {
           name="description"
           content="No airline flies pets in the cabin into the UK — it's a government rule, not an airline one. Here's why, plus the verified workaround routes (Paris pivot, ferry, pet taxi) that get your dog or cat to Britain without the cargo hold."
         />
-        <link rel="canonical" href="https://petsincabin.com/uk-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/uk-pet-travel" />
       </Head>
 
       <div

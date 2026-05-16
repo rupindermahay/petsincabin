@@ -7,7 +7,7 @@ export default function About() {
       <Head>
         <title>About — Pets in Cabin · By Theo's Mum</title>
         <meta name="description" content="The story behind Pets in Cabin — built by Theo's Mum after one too many 2am Google spirals trying to fly internationally with a small dog. A real guide for real pet parents." />
-        <link rel="canonical" href="https://petsincabin.com/about" />
+        <link rel="canonical" href="https://www.petsincabin.com/about" />
       </Head>
 
       <div className="min-h-screen" style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}>

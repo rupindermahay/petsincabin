@@ -11,7 +11,7 @@ export default function Privacy() {
         {/* This page's own canonical — /privacy is canonical to itself, NOT
             to the homepage. Without this it inherits nothing and Google may
             flag it as a duplicate. */}
-        <link rel="canonical" href="https://petsincabin.com/privacy" />
+        <link rel="canonical" href="https://www.petsincabin.com/privacy" />
       </Head>
 
       <div

@@ -10,7 +10,7 @@ export default function IndiaPetTravel() {
           name="description"
           content="Bringing your dog or cat to India, or leaving India with a pet? The full process — AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC high-risk paperwork for the US, and the 2-year residency rule. Updated for 2026."
         />
-        <link rel="canonical" href="https://petsincabin.com/india-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/india-pet-travel" />
       </Head>
 
       <div

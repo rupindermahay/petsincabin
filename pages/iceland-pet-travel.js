@@ -10,7 +10,7 @@ export default function IcelandPetTravel() {
           name="description"
           content="Bringing a dog or cat to Iceland — the realistic picture. Mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds, Keflavík-only entry, and what flying out of Iceland looks like. By a real pet mum who's done the paperwork."
         />
-        <link rel="canonical" href="https://petsincabin.com/iceland-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/iceland-pet-travel" />
       </Head>
 
       <div

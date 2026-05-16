@@ -10,7 +10,7 @@ export default function JapanPetTravel() {
           name="description"
           content="Bringing a dog or cat to Japan, or flying out with a pet? The full picture — JAL and ANA cargo reality, the three cabin pet paths (United, Korean carriers, Aeromexico), 180-day FAVN wait, AQS Advance Notification, and 11 approved entry ports."
         />
-        <link rel="canonical" href="https://petsincabin.com/japan-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/japan-pet-travel" />
       </Head>
 
       <div

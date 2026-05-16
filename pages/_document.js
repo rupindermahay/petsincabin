@@ -29,7 +29,7 @@ export default function Document() {
         <meta property="og:title" content="Travelling with Pets: Flying With Your Dog or Cat in the Cabin" />
         <meta property="og:description" content="A real-world guide to flying with your dog or cat in the cabin. Pets in cabin policies for every major airline, country paperwork, and the workarounds that actually work — UK, USA, Europe, India, Canada and beyond. By Theo's Mum, who's done it." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://petsincabin.com" />
+        <meta property="og:url" content="https://www.petsincabin.com" />
         <meta property="og:locale" content="en_GB" />
 
         {/* Twitter Card */}
@@ -105,7 +105,7 @@ export default function Document() {
               "@type": "WebSite",
               "name": "Pets in Cabin",
               "alternateName": "Pet in Cabin Guide",
-              "url": "https://petsincabin.com",
+              "url": "https://www.petsincabin.com",
               "description": "A real-world guide to travelling with pets and flying with animals in the cabin. Airline pet policies, country paperwork, cabin routes, and workarounds for the UK, USA, Europe, India, Canada, the UAE and beyond.",
               "author": {
                 "@type": "Person",

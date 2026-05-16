@@ -10,7 +10,7 @@ export default function SeattlePetTravel() {
           name="description"
           content="Flying a dog or cat from Seattle in cabin? The full picture — Alaska Airlines, Delta, the routes that work directly, and the best connections for India, Europe, UK, and Hawaii. Includes SEA airport pet relief area locations."
         />
-        <link rel="canonical" href="https://petsincabin.com/seattle-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/seattle-pet-travel" />
       </Head>
 
       <div

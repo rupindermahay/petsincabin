@@ -10,7 +10,7 @@ export default function OsloPetTravel() {
           name="description"
           content="Bringing a dog or cat to Norway, or flying out of Oslo with a pet? The full picture — SAS and Norwegian cabin pet rules, Norway's tapeworm requirement, banned dog breeds, Storskog and Oslo-only entry, and EEA paperwork."
         />
-        <link rel="canonical" href="https://petsincabin.com/oslo-pet-travel" />
+        <link rel="canonical" href="https://www.petsincabin.com/oslo-pet-travel" />
       </Head>
 
       <div

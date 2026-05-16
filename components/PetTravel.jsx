@@ -7353,6 +7353,8 @@ function AirlineGrid() {
   const FILTERS = [
     { id: "all", label: "All airlines", flag: "" },
     { id: "uk-out", label: "Out of UK", flag: "🇬🇧" },
+    { id: "into-uk-ie", label: "Into UK / Ireland", flag: "🇬🇧" },
+    { id: "into-au-nz", label: "Into Australia / NZ", flag: "🇦🇺" },
     { id: "us", label: "US routes", flag: "🇺🇸" },
     { id: "india", label: "India routes", flag: "🇮🇳" },
     { id: "europe", label: "Europe routes", flag: "🇪🇺" },
@@ -7366,6 +7368,13 @@ function AirlineGrid() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
+
+  // The "Into UK / Ireland" and "Into Australia / NZ" filters are special —
+  // no airline flies pets in cabin into any of those countries, so instead
+  // of an (empty) airline grid we show a dedicated explainer card.
+  const isIntoUkIe = filter === "into-uk-ie";
+  const isIntoAuNz = filter === "into-au-nz";
+  const isSpecialFilter = isIntoUkIe || isIntoAuNz;
 
   const filteredAirlines = filter === "all"
     ? AIRLINES
@@ -7405,9 +7414,11 @@ function AirlineGrid() {
         <div className="mb-6">
           <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
             <div className="text-xs uppercase tracking-widest text-stone-500">Filter by route</div>
-            <div className="text-stone-500 text-xs italic font-serif">
-              Showing {filteredAirlines.length} of {AIRLINES.length}
-            </div>
+            {!isSpecialFilter && (
+              <div className="text-stone-500 text-xs italic font-serif">
+                Showing {filteredAirlines.length} of {AIRLINES.length}
+              </div>
+            )}
           </div>
           <div className="flex flex-wrap gap-2">
             {FILTERS.map((f) => {
@@ -7430,6 +7441,114 @@ function AirlineGrid() {
           </div>
         </div>
 
+        {isSpecialFilter ? (
+          isIntoUkIe ? (
+          /* Special explainer card — the UK and Ireland both ban cabin pets
+             on arrival, so there are genuinely no airlines to list. Instead
+             we explain the workaround and signpost the detailed pages. */
+          <div className="bg-white border-2 border-amber-300 rounded-sm overflow-hidden">
+            <div className="bg-stone-900 text-stone-50 px-6 py-5">
+              <div className="text-xs uppercase tracking-[0.25em] text-amber-300 mb-1.5">Into the UK or Ireland</div>
+              <h3 className="font-serif text-2xl md:text-3xl leading-tight">
+                No airline flies pets in cabin into the UK or Ireland.
+              </h3>
+            </div>
+            <div className="p-6 md:p-8 space-y-5">
+              <p className="font-serif text-lg text-stone-800 leading-relaxed">
+                This isn't an airline policy you can shop around — it's a UK and Irish government rule. Every pet entering either country by air must travel as <strong>manifested cargo</strong>, never in the cabin. But there's a well-trodden cabin workaround that thousands of people use every year.
+              </p>
+
+              <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4">
+                <div className="font-serif text-xl text-stone-900 mb-2">The cabin workaround — fly to the continent, then cross by land</div>
+                <p className="text-stone-700 leading-relaxed text-sm">
+                  Fly your pet in cabin into <strong>Paris (CDG)</strong>, <strong>Amsterdam (AMS)</strong>, or <strong>Frankfurt (FRA)</strong> — Air France, KLM, and Lufthansa all take cabin pets on those routes. Then complete the journey overland, with your pet staying with you the whole way.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="border border-stone-200 p-4 rounded-sm">
+                  <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Into the UK</div>
+                  <div className="font-serif text-base text-stone-900 mb-1">Eurotunnel Le Shuttle</div>
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    Calais → Folkestone in about 35 minutes. Your pet stays in your car for the entire crossing — no carrier, no hold, no separation. Pet-friendly ferries (Dover–Calais) are the alternative.
+                  </p>
+                </div>
+                <div className="border border-stone-200 p-4 rounded-sm">
+                  <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Into Ireland</div>
+                  <div className="font-serif text-base text-stone-900 mb-1">Direct ferry from France</div>
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    Cherbourg or Roscoff → Rosslare or Dublin on Irish Ferries / Brittany Ferries. Pets stay in your vehicle or a pet-friendly cabin. This avoids the UK landbridge entirely.
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-stone-600 text-sm leading-relaxed italic font-serif">
+                Realistic timings: a continental flight plus the onward land/sea leg usually means a full travel day, sometimes with an overnight near the port. Crossing fees vary by season and how far ahead you book — check current pricing directly with Eurotunnel or the ferry operator. The detailed guides below break down the full route, paperwork order, and what to expect.
+              </p>
+
+              {/* Signpost CTAs to the detailed pages — the card is the catch,
+                  these pages carry the depth. */}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a href="/uk-pet-travel" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 text-sm font-medium transition-colors">
+                  Full UK guide →
+                </a>
+                <a href="#destinations" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                  Difficult Destinations: UK →
+                </a>
+                <a href="#planner" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                  Plan this route in the Journey Planner →
+                </a>
+              </div>
+
+              <p className="text-stone-500 text-xs leading-relaxed border-t border-stone-200 pt-4">
+                Flying <em>out</em> of the UK or Ireland? That's straightforward — many airlines take cabin pets outbound. Switch to the <button onClick={() => setFilter("uk-out")} className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">"Out of UK"</button> filter to see them.
+              </p>
+            </div>
+          </div>
+          ) : (
+          /* Australia / New Zealand — cargo-only with mandatory quarantine.
+             Unlike the UK there is genuinely NO cabin workaround, so this
+             card is an honest reality-check that signposts the detailed
+             Difficult Destinations entries rather than promising a shortcut. */
+          <div className="bg-white border-2 border-rose-300 rounded-sm overflow-hidden">
+            <div className="bg-stone-900 text-stone-50 px-6 py-5">
+              <div className="text-xs uppercase tracking-[0.25em] text-rose-300 mb-1.5">Into Australia or New Zealand</div>
+              <h3 className="font-serif text-2xl md:text-3xl leading-tight">
+                Cargo only — and there's no cabin workaround.
+              </h3>
+            </div>
+            <div className="p-6 md:p-8 space-y-5">
+              <p className="font-serif text-lg text-stone-800 leading-relaxed">
+                Australia and New Zealand treat incoming pets as biosecurity risks. Every pet must arrive as <strong>manifested cargo</strong> and complete a <strong>minimum 10-day government quarantine</strong> on arrival. There is no in-cabin option on any commercial flight — and unlike the UK, there's no clever continent-hop that gets around it. This is the hard reality, not a route to optimise.
+              </p>
+
+              <div className="bg-rose-50 border-l-2 border-rose-400 px-5 py-4">
+                <div className="font-serif text-xl text-stone-900 mb-2">What the journey actually involves</div>
+                <p className="text-stone-700 leading-relaxed text-sm">
+                  An import permit applied for <strong>months</strong> in advance, a rabies blood test (RNATT) drawn at least 180 days before arrival, multiple parasite treatments, an endorsed export certificate, and a pre-booked quarantine place. Most carriers (Qantas, Air New Zealand) won't even take a live-animal cargo booking directly from the public — you'll need an IPATA-registered pet shipper. Realistically a 6-month project.
+                </p>
+              </div>
+
+              <p className="text-stone-600 text-sm leading-relaxed italic font-serif">
+                One genuine nuance: pets that have lived in New Zealand for 6+ months can enter Australia without quarantine, and vice-versa — but that only helps actual NZ/AU residents, not as a shortcut for a move from elsewhere. The full breakdown — costs, the permit process, approved shippers — is in the Difficult Destinations section.
+              </p>
+
+              <div className="flex flex-wrap gap-3 pt-2">
+                <a href="#destinations" className="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white px-4 py-2.5 text-sm font-medium transition-colors">
+                  Difficult Destinations: Australia & NZ →
+                </a>
+                <a href="#planner" className="inline-flex items-center gap-2 text-rose-700 hover:text-rose-800 text-sm font-medium border-b border-rose-300 hover:border-rose-700 transition-colors">
+                  Plan your route →
+                </a>
+              </div>
+
+              <p className="text-stone-500 text-xs leading-relaxed border-t border-stone-200 pt-4">
+                Flying <em>out</em> of Australia or NZ? That's far simpler — switch to <button onClick={() => setFilter("all")} className="text-rose-700 underline decoration-rose-300 underline-offset-2 hover:text-rose-800 transition-colors">"All airlines"</button> and check your destination's rules instead.
+              </p>
+            </div>
+          </div>
+          )
+        ) : (
         <div className="grid md:grid-cols-2 gap-px bg-stone-300 border border-stone-300">
           {filteredAirlines.map((a, i) => {
             const open = expanded === a.name;
@@ -7596,7 +7715,9 @@ function AirlineGrid() {
             );
           })}
         </div>
+        )}
 
+        {!isSpecialFilter && (
         <div className="mt-14 pt-10 border-t border-stone-300">
           <div className="flex items-baseline gap-3 mb-4">
             <span className="font-serif italic text-stone-400">✗</span>
@@ -7626,6 +7747,7 @@ function AirlineGrid() {
             ))}
           </div>
         </div>
+        )}
 
         <p className="text-stone-500 text-sm mt-6 italic font-serif">
           Policies change. Confirm with the airline before booking. Last full review: May 2026.

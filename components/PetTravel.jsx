@@ -2752,8 +2752,8 @@ const CHECKLIST_DATA = {
       {
         title: "4 weeks before",
         items: [
-          "ISO microchip implanted (if not already) — must be ISO 11784/11785 compliant.",
-          "Rabies vaccine 30 days – 12 months before travel.",
+          "ISO microchip implanted (if not already) — must be ISO 11784/11785 compliant. Implant the microchip BEFORE the rabies vaccine — if a country en route or your destination needs a rabies titer test, a microchip implanted after the vaccine can invalidate the timeline.",
+          "Rabies vaccine 30 days – 12 months before travel (administered AFTER the microchip).",
           "Parvo, distemper, leptospirosis vaccines up to date.",
           "Health certificate from origin country vet — must include vaccination history and microchip number.",
           "If from the USA, get <a href=\"https://www.aphis.usda.gov/pet-travel\" target=\"_blank\" rel=\"noopener noreferrer\">USDA APHIS</a> endorsement of the health certificate.",
@@ -2909,8 +2909,8 @@ const CHECKLIST_DATA = {
         title: "8 weeks before",
         items: [
           "Vet appointment for full health check",
-          "ISO 15-digit microchip implanted (UAE strictly requires ISO 11784/11785)",
-          "Rabies vaccine ≥21 days old, ≤12 months",
+          "ISO 15-digit microchip implanted (UAE strictly requires ISO 11784/11785) — implant it BEFORE the rabies vaccine",
+          "Rabies vaccine ≥21 days old, ≤12 months (administered AFTER the microchip — order matters because the FAVN titer below depends on a valid vaccination record)",
           "Rabies titer test (FAVN) if from a rabies-controlled country — UAE requires ≥0.5 IU/ml",
         ],
       },
@@ -3446,6 +3446,7 @@ const CHECKLIST_DATA = {
         title: "10 days before",
         items: [
           "Health certificate completed and signed by an accredited vet (EU Health Certificate template for Norway). The certificate must clearly identify your pet by microchip number.",
+          "<strong>Note — two separate documents:</strong> the EU Health Certificate / pet passport is the GOVERNMENT document proving your pet meets Norway's import rules. Your airline (SAS, Norwegian) separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. The health certificate often satisfies both, but some airlines insist on a separate fit-to-fly letter — confirm with your specific airline.",
           "Re-confirm SAS or Norwegian cabin booking by phone.",
         ],
       },

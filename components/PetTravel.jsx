@@ -10789,6 +10789,31 @@ function Footer() {
         <p className="font-serif text-stone-400 max-w-2xl mb-8 leading-relaxed">
           A reference, not a substitute for veterinary advice or the airline's official policy. Rules change frequently; always confirm directly with your airline and the receiving country before you fly.
         </p>
+
+        {/* Ko-fi tip jar — voluntary support. Deliberately low-key: the copy
+            makes clear the guide is free and unchanged either way, so a reader
+            never feels content is held back. Fires a kofi_click GA event so we
+            can see how many people the site sends to the tip jar. */}
+        <div className="mb-8 pb-8 border-b border-stone-800 max-w-2xl">
+          <p className="font-serif text-stone-400 text-sm leading-relaxed mb-3">
+            Pets in Cabin is free and always will be. If it saved you some stress, you can buy me a coffee — entirely optional, and the guide stays exactly the same either way.
+          </p>
+          <a
+            href="https://ko-fi.com/theosmum"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              if (typeof window !== "undefined" && window.gtag) {
+                window.gtag("event", "kofi_click", { event_category: "support", location: "footer" });
+              }
+            }}
+            className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 text-sm font-medium transition-colors rounded-sm"
+          >
+            <span aria-hidden="true">☕</span>
+            Buy me a coffee
+          </a>
+        </div>
+
         <div className="flex flex-wrap gap-x-8 gap-y-3 text-xs uppercase tracking-widest text-stone-500">
           <span>Edited by Theo's Mum</span>
           <span>·</span>

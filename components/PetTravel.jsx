@@ -5099,8 +5099,25 @@ function openChecklistPrintable(data) {
 }
 
 // ---------- INTAKE FLOW ----------
+//
+// The intake collects answers across two question groups:
+//   - SHARED_QUESTIONS (asked once): petCount + destination
+//   - PER_PET_QUESTIONS (asked per pet): species, age, weight, breed, vaccine, microchip
+//
+// answers shape:
+//   {
+//     petCount: "2",
+//     destination: "UK",
+//     pets: [
+//       { species, age, weight, breed, vaccine, microchip },
+//       { species, age, weight, breed, vaccine, microchip },
+//     ],
+//   }
+//
+// For petCount > 1, each pet after Pet 1 gets a "Same as Pet 1" shortcut
+// (a single tap copies Pet 1's answers and skips that pet's 6 questions).
 
-const QUESTIONS = [
+const SHARED_QUESTIONS = [
   {
     id: "petCount",
     label: "How many pets are you travelling with?",
@@ -5109,70 +5126,132 @@ const QUESTIONS = [
     helper: "Most airlines cap cabin pets per passenger and per flight. We'll flag relevant limits.",
   },
   {
-    id: "species",
-    label: "What kind of pet are you flying with?",
-    type: "choice",
-    multiWhen: { field: "petCount", notEquals: "1" },
-    options: ["Dog", "Cat", "Other small pet"],
-    helper: "Travelling with one pet? Pick one. Travelling with more than one — say a dog AND a cat — select every type that applies, since the rules can differ.",
-  },
-  {
-    id: "age",
-    label: "How old is your pet?",
-    type: "choice",
-    options: ["Under 8 weeks", "8 weeks – 4 months", "4–6 months", "6 months or older"],
-  },
-  {
-    id: "weight",
-    label: "Combined weight of your pet plus carrier?",
-    type: "choice",
-    options: ["Under 15 lb", "15–20 lb", "20–25 lb", "Over 25 lb"],
-    helper: "Weigh both together at home — airlines weigh combined at the gate.",
-  },
-  {
     id: "destination",
     label: "Where are you flying to?",
     type: "dropdown",
     options: ["Within the USA (domestic)", "Into the USA (international arrival)", "Hawaii", "Canada", "Mexico", "Caribbean", "South America", "Central America", "UK", "Ireland", "Europe", "Spain", "India", "UAE / Dubai", "Japan", "Asia / Pacific", "Other international"],
     helper: "Pick where your pet is ARRIVING. Flying Europe → New York? Choose 'Into the USA'.",
   },
+];
+
+const PER_PET_QUESTIONS = [
+  {
+    id: "species",
+    label: "What kind of pet is {petLabel}?",
+    type: "choice",
+    options: ["Dog", "Cat", "Other small pet"],
+  },
+  {
+    id: "age",
+    label: "How old is {petLabel}?",
+    type: "choice",
+    options: ["Under 8 weeks", "8 weeks – 4 months", "4–6 months", "6 months or older"],
+  },
+  {
+    id: "weight",
+    label: "Combined weight of {petLabel} plus carrier?",
+    type: "choice",
+    options: ["Under 15 lb", "15–20 lb", "20–25 lb", "Over 25 lb"],
+    helper: "Weigh pet + carrier together at home — airlines weigh combined at the gate.",
+  },
   {
     id: "breed",
-    label: "Is your pet a snub-nosed (brachycephalic) breed?",
+    label: "Is {petLabel} a snub-nosed (brachycephalic) breed?",
     type: "choice",
     options: ["Yes", "No", "Not sure"],
     helper: "Includes pugs, bulldogs, boxers, Persian cats, Himalayans, shih tzus, Boston terriers.",
   },
   {
     id: "vaccine",
-    label: "Is your pet up to date on rabies?",
+    label: "Is {petLabel} up to date on rabies?",
     type: "choice",
     options: ["Yes, current", "Recently vaccinated (under 28 days)", "Not vaccinated", "Not sure"],
   },
   {
     id: "microchip",
-    label: "Does your pet have an ISO-compliant microchip?",
+    label: "Does {petLabel} have an ISO-compliant microchip?",
     type: "choice",
     options: ["Yes", "No", "Not sure"],
     helper: "Required for nearly all international travel. Must be ISO 11784/11785 compliant.",
   },
 ];
 
+// Build the full question flow given a petCount. Returns an ordered array of
+// "step" objects, each describing one screen the user moves through.
+// Step types: "shared" (one of SHARED_QUESTIONS), "perPet" (one of
+// PER_PET_QUESTIONS for a specific pet index), or "petGate" (the "Same as
+// Pet 1?" / "Tell me about Pet N" branching screen between pets).
+function buildIntakeSteps(petCount) {
+  const n = petCount === "3 or more" ? 3 : (parseInt(petCount, 10) || 1);
+  const steps = [];
+
+  // Shared questions first
+  SHARED_QUESTIONS.forEach((q) => steps.push({ kind: "shared", q }));
+
+  // Per-pet loop
+  for (let i = 0; i < n; i++) {
+    // For pets 2 and 3, prepend a "same as Pet 1?" gate
+    if (i > 0) {
+      steps.push({ kind: "petGate", petIndex: i });
+    }
+    PER_PET_QUESTIONS.forEach((q) => steps.push({ kind: "perPet", q, petIndex: i }));
+  }
+
+  return steps;
+}
+
+// Format a question label by substituting {petLabel} with "Pet 1" / "Pet 2"
+// / "Pet 3" (or just "your pet" if only one pet).
+function formatPetLabel(petIndex, petCount) {
+  const n = petCount === "3 or more" ? 3 : (parseInt(petCount, 10) || 1);
+  if (n === 1) return "your pet";
+  return `Pet ${petIndex + 1}`;
+}
+
+
 // ---------- ASSESSMENT LOGIC ----------
-
+//
+// Returns:
+//   {
+//     shared: { flags, warnings, ok },         // route-level (destination, multi-pet logistics)
+//     perPet: [ { petLabel, flags, warnings, ok }, ... ]  // one entry per pet
+//   }
+//
+// Backward-compatibility: the old single-pet shape stored species/age/weight/breed/vaccine/microchip
+// at the top level. We support both — if answers.pets is missing, we synthesize one from the flat fields.
 function assess(answers) {
-  const flags = [];
-  const warnings = [];
-  const ok = [];
+  // ---------- Normalise pets array ----------
+  // New shape: answers.pets = [{species, age, weight, breed, vaccine, microchip}, ...]
+  // Legacy shape: flat fields on answers (species may be string or array)
+  let pets = [];
+  if (Array.isArray(answers.pets) && answers.pets.length > 0) {
+    pets = answers.pets;
+  } else {
+    // Legacy: build a single pet from top-level fields. If species was an array
+    // (multi-species case in the old intake), we still create just one pet so
+    // logic doesn't crash; the per-pet flow is the new way to handle multiple
+    // species properly.
+    const species = Array.isArray(answers.species) ? answers.species[0] : answers.species;
+    pets = [{
+      species,
+      age: answers.age,
+      weight: answers.weight,
+      breed: answers.breed,
+      vaccine: answers.vaccine,
+      microchip: answers.microchip,
+    }];
+  }
 
-  // species can be a string (1 pet) or an array (multiple pets of different types)
-  const speciesList = Array.isArray(answers.species)
-    ? answers.species
-    : answers.species ? [answers.species] : [];
-  const hasSpecies = (s) => speciesList.includes(s);
-  const multiSpecies = speciesList.length > 1;
+  const petCount = answers.petCount || (pets.length === 1 ? "1" : pets.length === 2 ? "2" : "3 or more");
+  const totalPetCount = pets.length;
+  const allSpecies = pets.map((p) => p.species).filter(Boolean);
+  const uniqueSpecies = Array.from(new Set(allSpecies));
+  const multiSpecies = uniqueSpecies.length > 1;
+  const anyDog = uniqueSpecies.includes("Dog");
+  const anyCat = uniqueSpecies.includes("Cat");
+  const anyOther = uniqueSpecies.includes("Other small pet");
 
-  // Helper: derive a contextual workaround based on destination
+  // ---------- Route-level cargo workaround helper ----------
   const cargoOption = (() => {
     const d = answers.destination;
     if (d === "UK") return "Cargo into the UK is possible via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Frankfurt's Animal Lounge. Allow 8+ hours at Heathrow Animal Reception Centre after landing.";
@@ -5189,76 +5268,107 @@ function assess(answers) {
     return "Cargo and pet relocation services exist for most destinations — contact a pet relocation specialist (e.g. CitizenShipper, Starwood Pet Travel) for a quote on your specific route.";
   })();
 
-  if (answers.age === "Under 8 weeks") {
-    flags.push({
-      severity: "blocker",
-      title: "Your pet is too young to fly",
-      detail: "Almost every airline requires pets to be at least 8 weeks old for domestic travel and 16 weeks for international. Wait until your pet is older and fully weaned.",
-      workaround: "This is a 'wait' situation, not a workaround. Once your pet is 8+ weeks (domestic) or 15+ weeks (international), re-run this assessment.",
-    });
-  }
-
   const isDomestic = answers.destination === "Within the USA (domestic)";
   const isInternationalArrival = answers.destination === "Into the USA (international arrival)";
+  const isInternational = !isDomestic;
 
-  if (answers.destination === "Europe" || answers.destination === "Spain" || answers.destination === "UK" || answers.destination === "Ireland" || answers.destination === "India" || answers.destination === "UAE / Dubai" || answers.destination === "Asia / Pacific" || answers.destination === "Japan" || answers.destination === "South America" || answers.destination === "Central America" || answers.destination === "Other international" || answers.destination === "Caribbean" || isInternationalArrival) {
-    if (answers.age === "8 weeks – 4 months") {
-      flags.push({
+  // ---------- Per-pet checks ----------
+  // Run the same per-pet logic on each pet and return per-pet result blocks.
+  const perPet = pets.map((pet, idx) => {
+    const pFlags = [];
+    const pWarnings = [];
+    const pOk = [];
+    const petLabel = formatPetLabel(idx, petCount);
+    // Capitalised form for sentence-starts ("your pet" → "Your pet").
+    const petLabelCap = petLabel.charAt(0).toUpperCase() + petLabel.slice(1);
+
+    // Age — universal blocker for under 8 weeks; international has stricter rules.
+    if (pet.age === "Under 8 weeks") {
+      pFlags.push({
         severity: "blocker",
-        title: "Likely too young for international travel",
+        title: `${petLabelCap} is too young to fly`,
+        detail: "Almost every airline requires pets to be at least 8 weeks old for domestic travel and 16 weeks for international. Wait until your pet is older and fully weaned.",
+        workaround: "This is a 'wait' situation, not a workaround. Once your pet is 8+ weeks (domestic) or 15+ weeks (international), re-run this assessment.",
+      });
+    } else if (isInternational && pet.age === "8 weeks – 4 months") {
+      pFlags.push({
+        severity: "blocker",
+        title: `${petLabelCap} is likely too young for international travel`,
         detail: "Most countries require pets to be at least 12–16 weeks old, plus a rabies vaccine that's been in effect for 21–30 days. The EU requires a minimum age of 15 weeks. The US requires dogs (not cats) to be at least 6 months old to enter.",
         workaround: "Wait until your pet is at least 15 weeks (EU minimum), 16 weeks (most other countries), or — for a dog entering the US — 6 months. Use this time to schedule the microchip-then-rabies sequence so the 21-day post-rabies wait is built in.",
       });
     }
-  }
 
-  if (answers.weight === "Over 25 lb") {
-    flags.push({
-      severity: "impossible",
-      title: "Too heavy for cabin on any airline",
-      detail: "Combined pet + carrier weight over 25 lb exceeds every commercial airline's cabin limit. Cabin is genuinely not an option for your pet on any carrier.",
-      workaround: `Cabin isn't workable — but cargo is. ${cargoOption}`,
-    });
-  } else if (answers.weight === "20–25 lb") {
-    warnings.push({
-      title: "On the edge of cabin weight limits",
-      detail: "JetBlue caps at 20 lb combined; Air Canada at 22 lb; Air France/KLM/Lufthansa at 17.6 lb. Domestic U.S. airlines like Delta, United, and American don't publish a strict weight, but your pet must still fit comfortably in the carrier under the seat. Weigh at home with the carrier and food. If you're within a pound or two of the limit — assume you're over.",
-    });
-  } else {
-    ok.push("Your pet's weight is within typical cabin limits.");
-  }
+    // Weight
+    if (pet.weight === "Over 25 lb") {
+      pFlags.push({
+        severity: "impossible",
+        title: `${petLabelCap} is too heavy for cabin on any airline`,
+        detail: "Combined pet + carrier weight over 25 lb exceeds every commercial airline's cabin limit. Cabin is genuinely not an option for this pet on any carrier.",
+        workaround: `Cabin isn't workable — but cargo is. ${cargoOption}`,
+      });
+    } else if (pet.weight === "20–25 lb") {
+      pWarnings.push({
+        title: `${petLabelCap} is on the edge of cabin weight limits`,
+        detail: "JetBlue caps at 20 lb combined; Air Canada at 22 lb; Air France/KLM/Lufthansa at 17.6 lb. Domestic U.S. airlines like Delta, United, and American don't publish a strict weight, but your pet must still fit comfortably in the carrier under the seat. Weigh at home with the carrier and food. If you're within a pound or two of the limit — assume you're over.",
+      });
+    } else if (pet.weight) {
+      // Capitalize first letter — petLabel "your pet" lowercases at sentence start
+      const cap = petLabel.charAt(0).toUpperCase() + petLabel.slice(1);
+      pOk.push(`${cap}'s weight is within typical cabin limits.`);
+    }
 
-  if (answers.breed === "Yes") {
-    warnings.push({
-      title: "Snub-nosed breeds need extra care",
-      detail: "Brachycephalic pets are at higher risk for breathing issues at altitude. They can usually still fly in the cabin (it's pressurized at sea-level conditions), but airlines often refuse to fly them as cargo. Avoid summer travel, sedatives, and long layovers. Talk to your vet first.",
-    });
-  }
+    // Brachycephalic
+    if (pet.breed === "Yes") {
+      pWarnings.push({
+        title: `${petLabelCap} is a snub-nosed breed — extra care needed`,
+        detail: "Brachycephalic pets are at higher risk for breathing issues at altitude. They can usually still fly in the cabin (it's pressurized at sea-level conditions), but airlines often refuse to fly them as cargo. Avoid summer travel, sedatives, and long layovers. Talk to your vet first.",
+      });
+    }
 
-  if (answers.vaccine === "Not vaccinated") {
-    flags.push({
-      severity: "fixable",
-      title: "Rabies vaccination required",
-      detail: "Every U.S. state and country requires rabies vaccination for dogs, and most for cats. International destinations typically require the vaccine to have been administered at least 21–30 days before travel. Get this scheduled now.",
-      workaround: "Book a vet appointment to vaccinate. For international travel, ensure the microchip is implanted FIRST, then the rabies vaccine, then wait at least 21 days (EU) or 28 days (some countries) before flying.",
-    });
-  } else if (answers.vaccine === "Recently vaccinated (under 28 days)") {
-    warnings.push({
-      title: "Your rabies vaccine may not yet be 'in effect'",
-      detail: "For international travel, most countries (including the EU and the U.S. on re-entry from high-risk countries) require the vaccine to have been administered at least 28 days before arrival, and after the microchip was implanted. Don't book travel until this window has passed.",
-    });
-  } else if (answers.vaccine === "Yes, current") {
-    ok.push("Rabies vaccination is current.");
-  }
+    // Rabies vaccine
+    if (pet.vaccine === "Not vaccinated") {
+      pFlags.push({
+        severity: "fixable",
+        title: `${petLabelCap} needs a rabies vaccination`,
+        detail: "Every U.S. state and country requires rabies vaccination for dogs, and most for cats. International destinations typically require the vaccine to have been administered at least 21–30 days before travel. Get this scheduled now.",
+        workaround: "Book a vet appointment to vaccinate. For international travel, ensure the microchip is implanted FIRST, then the rabies vaccine, then wait at least 21 days (EU) or 28 days (some countries) before flying.",
+      });
+    } else if (pet.vaccine === "Recently vaccinated (under 28 days)") {
+      pWarnings.push({
+        title: `${petLabelCap}'s rabies vaccine may not yet be 'in effect'`,
+        detail: "For international travel, most countries (including the EU and the U.S. on re-entry from high-risk countries) require the vaccine to have been administered at least 28 days before arrival, and after the microchip was implanted. Don't book travel until this window has passed.",
+      });
+    } else if (pet.vaccine === "Yes, current") {
+      const cap = petLabel.charAt(0).toUpperCase() + petLabel.slice(1);
+      pOk.push(`${cap}'s rabies vaccination is current.`);
+    }
 
-  if (!isDomestic && answers.destination !== "Hawaii" && answers.microchip !== "Yes") {
-    flags.push({
-      severity: "fixable",
-      title: "ISO microchip required for international travel",
-      detail: "The EU, UK, Japan, Australia, and most other countries require an ISO 11784/11785 compliant microchip implanted before the rabies vaccine. If your pet was microchipped after their rabies shot, they may need to be re-vaccinated. Confirm with your vet.",
-      workaround: "Book a vet appointment to implant an ISO 11784/11785 microchip. If your pet is already rabies-vaccinated, you may need to re-vaccinate AFTER the chip — confirm with your vet.",
-    });
-  }
+    // Microchip — only required for international (Hawaii uses its own DAR programme already flagged)
+    if (isInternational && answers.destination !== "Hawaii" && pet.microchip !== "Yes") {
+      pFlags.push({
+        severity: "fixable",
+        title: `${petLabelCap} needs an ISO microchip for international travel`,
+        detail: "The EU, UK, Japan, Australia, and most other countries require an ISO 11784/11785 compliant microchip implanted before the rabies vaccine. If your pet was microchipped after their rabies shot, they may need to be re-vaccinated. Confirm with your vet.",
+        workaround: "Book a vet appointment to implant an ISO 11784/11785 microchip. If your pet is already rabies-vaccinated, you may need to re-vaccinate AFTER the chip — confirm with your vet.",
+      });
+    }
+
+    // Species: Other small pet
+    if (pet.species === "Other small pet") {
+      pWarnings.push({
+        title: `${petLabelCap} is not a cat or dog — limited airline acceptance`,
+        detail: "Most airlines accept only cats and dogs in cabin. Frontier and a few others allow rabbits, guinea pigs, hamsters, and small household birds. Check directly with your airline before booking — and note that many countries restrict or quarantine non-cat/dog imports.",
+      });
+    }
+
+    return { petLabel, flags: pFlags, warnings: pWarnings, ok: pOk };
+  });
+
+  // ---------- Shared route-level checks ----------
+  const flags = [];
+  const warnings = [];
+  const ok = [];
 
   if (answers.destination === "Hawaii") {
     warnings.push({
@@ -5306,7 +5416,7 @@ function assess(answers) {
     flags.push({
       severity: "fixable",
       title: "Japan: 180-day rabies titer wait is non-negotiable",
-      detail: "Japan requires: ISO microchip implanted FIRST, then two rabies vaccinations 30+ days apart, then a FAVN rabies antibody titer test ≥0.5 IU/ml from an <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">MAFF-approved lab</a>, then a 180-day waiting period from the titer blood draw date. Plus <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">AQS Advance Notification</a> submitted at least 40 days before arrival. Get any of this wrong and your pet is detained up to 180 days at your expense.",
+      detail: "Japan requires: ISO microchip implanted FIRST, then two rabies vaccinations 30+ days apart, then a FAVN rabies antibody titer test ≥0.5 IU/ml from an <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">MAFF-approved lab</a>, then a 180-day waiting period from the titer blood draw date. Plus <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">AQS Advance Notification</a> submitted at least 40 days before arrival. Get any of this wrong and your pet is detained up to 180 days at your expense. <strong>This applies to every pet on your booking.</strong>",
       workaround: "Start preparation 7+ months before your arrival date. Microchip → wait → rabies #1 → wait 30 days → rabies #2 → wait 30 days → FAVN blood draw → wait 180 days → travel. Then file the <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">Advance Notification with Japan's Animal Quarantine Service</a> 40+ days before arrival.",
     });
     warnings.push({
@@ -5316,13 +5426,13 @@ function assess(answers) {
   }
 
   if (isInternationalArrival) {
-    if (hasSpecies("Dog")) {
+    if (anyDog) {
       warnings.push({
         title: "Entering the USA — CDC Dog Import Form required for all dogs",
         detail: "Every dog entering the US (including US dogs returning home) needs a completed <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> — fill it out online and keep the receipt (valid 6 months, multiple entries). Dogs must be at least 6 months old, microchipped, and appear healthy. If arriving from a CDC high-risk rabies country, additional paperwork applies (rabies titer, Certification of US-issued Rabies Vaccination). Confirm whether your origin country is high-risk.",
       });
     }
-    if (hasSpecies("Cat")) {
+    if (anyCat) {
       warnings.push({
         title: "Entering the USA — cats have lighter rules than dogs",
         detail: "Cats do NOT need the CDC Dog Import Form (that's dogs only). Cats aren't required to have proof of rabies vaccination for US entry under federal rules — though your airline will likely still want a current rabies certificate, and your origin country and some US states (e.g. Hawaii) have their own requirements. Cats are inspected on arrival and must appear healthy. Always confirm with your airline and your specific origin/destination.",
@@ -5337,10 +5447,12 @@ function assess(answers) {
       detail: "Every flight into the UK requires pets to travel as manifested cargo — never in the cabin. This is UK government policy, not the airlines' choice. (Flying OUT of the UK in cabin is fine — many airlines allow it.)",
       workaround: "The cabin workaround DOES exist: fly cabin into Paris (CDG), Amsterdam (AMS), or Frankfurt (FRA) on Air France, KLM, or Lufthansa, then take Eurotunnel Le Shuttle (35 min, pet stays in your car) from Calais to Folkestone. Or take a pet-friendly ferry. See the Routes section for the USA/Canada/Europe → UK workarounds. Alternatively: cargo via IAG Cargo (BA), Virgin Cargo, or Lufthansa Cargo through Heathrow Animal Reception Centre.",
     });
-    warnings.push({
-      title: "Tapeworm treatment is mandatory for dogs",
-      detail: "Dogs entering the UK need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Without this, your dog can be refused entry or quarantined. Not required for cats.",
-    });
+    if (anyDog) {
+      warnings.push({
+        title: "Tapeworm treatment is mandatory for dogs",
+        detail: "Dogs entering the UK need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Without this, your dog can be refused entry or quarantined. Not required for cats.",
+      });
+    }
   }
 
   if (answers.destination === "Ireland") {
@@ -5350,10 +5462,12 @@ function assess(answers) {
       detail: "Like the UK, every flight into Ireland requires pets to travel as manifested cargo — never in the cabin. This is Irish government policy, and it's why airlines list Ireland alongside the UK in their no-cabin restrictions. (Flying OUT of Ireland in cabin is generally fine.)",
       workaround: "The cabin workaround: fly cabin into a continental EU airport (Paris CDG, Amsterdam AMS, Frankfurt FRA), then either take a pet-friendly ferry from France to Ireland (Cherbourg/Roscoff → Rosslare/Dublin on Irish Ferries or Brittany Ferries — pets stay in your vehicle or a pet-friendly cabin), or cross to the UK via Eurotunnel and take the Ireland ferry from Holyhead. The direct France → Ireland ferry avoids the UK landbridge entirely. Alternatively: cargo into Dublin via Lufthansa Cargo, KLM Cargo, or Aer Lingus Cargo.",
     });
-    warnings.push({
-      title: "Tapeworm treatment is mandatory for dogs",
-      detail: "Dogs entering Ireland need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Same rule as the UK. Not required for cats.",
-    });
+    if (anyDog) {
+      warnings.push({
+        title: "Tapeworm treatment is mandatory for dogs",
+        detail: "Dogs entering Ireland need a tapeworm treatment (praziquantel) administered by a vet 24–120 hours before arrival. Same rule as the UK. Not required for cats.",
+      });
+    }
     warnings.push({
       title: "Ireland's rules closely mirror the UK's",
       detail: "ISO microchip, rabies vaccine ≥21 days old, and an EU/GB pet health certificate. If you're coming from the UK, the land+ferry route is common. If from outside the EU, you'll need an <a href=\"https://food.ec.europa.eu/animals/movement-pets_en\" target=\"_blank\" rel=\"noopener noreferrer\">EU Health Certificate</a>. Confirm current requirements with <a href=\"https://www.gov.ie/en/organisation/department-of-agriculture-food-and-the-marine/\" target=\"_blank\" rel=\"noopener noreferrer\">Ireland's Department of Agriculture, Food and the Marine</a>.",
@@ -5384,27 +5498,21 @@ function assess(answers) {
     });
   }
 
-  if (hasSpecies("Other small pet")) {
-    warnings.push({
-      title: "Limited airline acceptance for non-cat/dog pets",
-      detail: "Most airlines accept only cats and dogs in cabin. Frontier and a few others allow rabbits, guinea pigs, hamsters, and small household birds. Check directly with your airline before booking — and note that many countries restrict or quarantine non-cat/dog imports.",
-    });
-  }
-
+  // Multi-species shared warning (covers per-pet differences in species rules).
   if (multiSpecies) {
     warnings.push({
       title: "Different pet types have different rules",
-      detail: `You're travelling with more than one type of pet (${speciesList.join(" + ")}). Each species has its own import paperwork, vaccination requirements, and airline carrier rules — and they don't always match. For example, dogs need tapeworm treatment for the UK/Ireland but cats don't; some countries' rabies rules differ by species. Check requirements separately for each pet, and confirm the airline can take all of them on the same booking.`,
+      detail: `You're travelling with more than one type of pet (${uniqueSpecies.join(" + ")}). Each species has its own import paperwork, vaccination requirements, and airline carrier rules — and they don't always match. For example, dogs need tapeworm treatment for the UK/Ireland but cats don't; some countries' rabies rules differ by species. The per-pet results below show each animal's own checks. Also confirm the airline can take all of them on the same booking.`,
     });
   }
 
-  // Multi-pet considerations
-  if (answers.petCount === "2") {
+  // Multi-pet logistics
+  if (petCount === "2" || totalPetCount === 2) {
     warnings.push({
       title: "Travelling with two pets needs careful planning",
       detail: "Most airlines allow only 1 pet per passenger in the cabin — so 2 pets typically means 2 passengers, or one passenger travelling with 2 carriers (rarely permitted). A few airlines (Delta, United, Lufthansa) allow 2 puppies/kittens of the same species in 1 carrier IF combined weight is under the airline limit AND they're young enough to fit comfortably. Most international destinations also have per-passenger pet import caps. Call your airline directly — these bookings cannot be made online.",
     });
-  } else if (answers.petCount === "3 or more") {
+  } else if (petCount === "3 or more" || totalPetCount >= 3) {
     flags.push({
       severity: "fixable",
       title: "3+ pets exceeds most airlines' cabin limits per passenger",
@@ -5413,8 +5521,12 @@ function assess(answers) {
     });
   }
 
-  return { flags, warnings, ok };
+  return {
+    shared: { flags, warnings, ok },
+    perPet,
+  };
 }
+
 
 // ---------- COMPONENTS ----------
 
@@ -5795,94 +5907,150 @@ function Hero({ onStart }) {
 }
 
 function Intake({ answers, setAnswers, step, setStep, onComplete }) {
-  const q = QUESTIONS[step];
-  const isFirst = step === 0;
-  const isLast = step === QUESTIONS.length - 1;
-  const current = answers[q.id];
   const sectionRef = useRef(null);
 
+  // Build the ordered step list dynamically. petCount drives how many per-pet
+  // loops we generate. Before petCount is answered, only the SHARED_QUESTIONS
+  // appear — once they pick a count, the per-pet steps are appended.
+  const steps = useMemo(() => buildIntakeSteps(answers.petCount), [answers.petCount]);
+
+  // Clamp step in case petCount changes and shrinks the flow (e.g. user goes
+  // back, picks "1" instead of "3 or more", and we'd otherwise be past the end).
+  const safeStep = Math.min(step, Math.max(0, steps.length - 1));
+  const current = steps[safeStep];
+  const isFirst = safeStep === 0;
+  const isLast = safeStep === steps.length - 1;
+
   // Scroll to the top of the question whenever the step changes.
-  // Questions have very different heights (destination has 12 options,
-  // breed has 3) — without this, advancing from a tall question to a
-  // short one leaves the user scrolled into dead space below the section.
-  // We skip step 0 because entering the intake is handled separately.
   useEffect(() => {
-    if (step === 0) return;
+    if (safeStep === 0) return;
     const el = sectionRef.current;
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: "smooth" });
     }
-  }, [step]);
+  }, [safeStep]);
 
-  // A question is multiselect if it declares multiWhen and that condition is met
-  const isMulti = q.multiWhen && answers[q.multiWhen.field] &&
-    (q.multiWhen.notEquals
-      ? answers[q.multiWhen.field] !== q.multiWhen.notEquals
-      : answers[q.multiWhen.field] === q.multiWhen.equals);
+  // Resolve the current answer for shared vs. per-pet questions.
+  function getCurrentAnswer() {
+    if (!current) return undefined;
+    if (current.kind === "shared") return answers[current.q.id];
+    if (current.kind === "perPet") return answers.pets?.[current.petIndex]?.[current.q.id];
+    return undefined;
+  }
+  const currentAnswer = getCurrentAnswer();
 
-  const selectedValues = isMulti ? (Array.isArray(current) ? current : current ? [current] : []) : [];
-
+  // Pick a value — writes to shared field or to answers.pets[petIndex][q.id].
   function pick(option) {
-    if (isMulti) {
-      const has = selectedValues.includes(option);
-      const updated = has
-        ? selectedValues.filter((v) => v !== option)
-        : [...selectedValues, option];
-      setAnswers({ ...answers, [q.id]: updated });
-    } else {
-      setAnswers({ ...answers, [q.id]: option });
+    if (current.kind === "shared") {
+      // If user just picked petCount, also ensure answers.pets is properly
+      // sized so per-pet rendering doesn't try to read from undefined slots.
+      if (current.q.id === "petCount") {
+        const n = option === "3 or more" ? 3 : (parseInt(option, 10) || 1);
+        const existing = Array.isArray(answers.pets) ? answers.pets : [];
+        const newPets = [];
+        for (let i = 0; i < n; i++) newPets.push(existing[i] || {});
+        setAnswers({ ...answers, petCount: option, pets: newPets });
+      } else {
+        setAnswers({ ...answers, [current.q.id]: option });
+      }
+    } else if (current.kind === "perPet") {
+      const existing = Array.isArray(answers.pets) ? [...answers.pets] : [];
+      while (existing.length <= current.petIndex) existing.push({});
+      existing[current.petIndex] = { ...existing[current.petIndex], [current.q.id]: option };
+      setAnswers({ ...answers, pets: existing });
     }
   }
 
-  // Whether the current question has a usable answer
-  const hasAnswer = isMulti ? selectedValues.length > 0 : !!current;
+  // Pet gate handlers: "Same as Pet 1" copies all of Pet 1's answers into
+  // this pet and skips past this pet's per-pet questions.
+  function copyFromPetOne() {
+    const existing = Array.isArray(answers.pets) ? [...answers.pets] : [];
+    while (existing.length <= current.petIndex) existing.push({});
+    existing[current.petIndex] = { ...(existing[0] || {}) };
+    setAnswers({ ...answers, pets: existing });
+    // Skip past this pet's questions — find the next step that isn't a perPet
+    // for this petIndex.
+    let nextStep = safeStep + 1;
+    while (
+      nextStep < steps.length &&
+      steps[nextStep].kind === "perPet" &&
+      steps[nextStep].petIndex === current.petIndex
+    ) {
+      nextStep++;
+    }
+    if (nextStep >= steps.length) onComplete();
+    else setStep(nextStep);
+  }
+
+  function answerSeparately() {
+    // Move to the next step — first per-pet question for this petIndex.
+    setStep(safeStep + 1);
+  }
+
+  // Whether the current step has a usable answer (for advancing).
+  const hasAnswer = current?.kind === "petGate" ? true : !!currentAnswer;
 
   function next() {
     if (isLast) onComplete();
-    else setStep(step + 1);
+    else setStep(safeStep + 1);
   }
 
-  return (
-    <section ref={sectionRef} id="intake" className="py-10 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
-      <div id="assessment" className="scroll-mt-24" />
-      <div className="max-w-5xl mx-auto">
-        <SectionLabel num="I.">Can my pet fly in the cabin?</SectionLabel>
+  // ---------- Render branches ----------
+  // Pet gate gets its own screen layout — different from a normal question.
+  const renderQuestion = () => {
+    if (!current) return null;
+    if (current.kind === "petGate") {
+      const petLabel = `Pet ${current.petIndex + 1}`;
+      return (
+        <>
+          <h2 className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-2">
+            Tell me about {petLabel}.
+          </h2>
+          <p className="text-stone-600 italic mb-6 text-sm max-w-xl">
+            Same situation as Pet 1, or different? If they share the same age, weight, breed type, vaccines, and microchip status, copy Pet 1's answers and skip ahead.
+          </p>
+          <div className="grid gap-2 mb-6 mt-4">
+            <button
+              onClick={copyFromPetOne}
+              className="text-left px-4 py-3 border border-stone-300 bg-white hover:border-stone-900 hover:-translate-y-0.5 transition-all"
+            >
+              <div className="font-serif text-base text-stone-900">Same as Pet 1 — copy and skip ahead</div>
+              <div className="text-xs text-stone-500 mt-1">Use this if both pets are the same species, age, size, vaccinated together, etc.</div>
+            </button>
+            <button
+              onClick={answerSeparately}
+              className="text-left px-4 py-3 border border-stone-300 bg-white hover:border-stone-900 hover:-translate-y-0.5 transition-all"
+            >
+              <div className="font-serif text-base text-stone-900">Different — let me answer for {petLabel}</div>
+              <div className="text-xs text-stone-500 mt-1">Different age, weight, vaccination status, etc.</div>
+            </button>
+          </div>
+        </>
+      );
+    }
 
-        <div className="flex items-center gap-2 mb-5">
-          {QUESTIONS.map((_, i) => (
-            <div
-              key={i}
-              className={`h-0.5 flex-1 transition-all duration-500 ${
-                i < step ? "bg-stone-900" : i === step ? "bg-amber-700" : "bg-stone-300"
-              }`}
-            />
-          ))}
-        </div>
+    // Shared or per-pet question
+    const q = current.q;
+    const petLabel = current.kind === "perPet"
+      ? formatPetLabel(current.petIndex, answers.petCount)
+      : null;
+    const label = petLabel ? q.label.replace("{petLabel}", petLabel) : q.label;
 
-        <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">
-          Question {step + 1} of {QUESTIONS.length}
-        </div>
-
+    return (
+      <>
         <h2 className="font-serif text-3xl md:text-4xl text-stone-900 leading-tight mb-2">
-          {q.label}
+          {label}
         </h2>
 
         {q.helper && (
           <p className="text-stone-600 italic mb-3 text-sm max-w-xl">{q.helper}</p>
         )}
 
-        {isMulti && (
-          <div className="text-xs uppercase tracking-widest text-amber-700 mb-2">
-            Select all that apply
-          </div>
-        )}
-
         {q.type === "dropdown" ? (
-          /* Dropdown for questions with many options (e.g. destination — 14 options) */
           <div className="mt-4 mb-6">
             <select
-              value={current || ""}
+              value={currentAnswer || ""}
               onChange={(e) => pick(e.target.value)}
               className="w-full bg-white border-2 border-stone-300 focus:border-stone-900 focus:outline-none px-4 py-4 font-serif text-xl text-stone-900 transition-colors"
             >
@@ -5893,10 +6061,9 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
             </select>
           </div>
         ) : (
-          /* Button grid for standard choice questions */
           <div className="grid gap-2 mb-6 mt-4">
             {q.options.map((opt) => {
-              const selected = isMulti ? selectedValues.includes(opt) : current === opt;
+              const selected = currentAnswer === opt;
               return (
                 <button
                   key={opt}
@@ -5914,28 +6081,73 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
             })}
           </div>
         )}
+      </>
+    );
+  };
 
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => setStep(Math.max(0, step - 1))}
-            disabled={isFirst}
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="uppercase tracking-widest text-xs">Back</span>
-          </button>
+  return (
+    <section ref={sectionRef} id="intake" className="py-10 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
+      <div id="assessment" className="scroll-mt-24" />
+      <div className="max-w-5xl mx-auto">
+        <SectionLabel num="I.">Can my pet fly in the cabin?</SectionLabel>
 
-          <button
-            onClick={next}
-            disabled={!hasAnswer}
-            className="group inline-flex items-center gap-3 bg-stone-900 text-stone-50 px-7 py-3.5 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-amber-700 transition-colors"
-          >
-            <span className="uppercase tracking-widest text-xs font-medium">
-              {isLast ? "See your assessment" : "Continue"}
-            </span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+        <div className="flex items-center gap-2 mb-5">
+          {steps.map((_, i) => (
+            <div
+              key={i}
+              className={`h-0.5 flex-1 transition-all duration-500 ${
+                i < safeStep ? "bg-stone-900" : i === safeStep ? "bg-amber-700" : "bg-stone-300"
+              }`}
+            />
+          ))}
         </div>
+
+        <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">
+          {current?.kind === "petGate"
+            ? `Pet ${current.petIndex + 1} of ${answers.pets?.length || 0}`
+            : `Question ${safeStep + 1} of ${steps.length}`}
+        </div>
+
+        {renderQuestion()}
+
+        {/* Show Back + Continue buttons (except for pet gates, which advance themselves). */}
+        {current?.kind !== "petGate" && (
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setStep(Math.max(0, safeStep - 1))}
+              disabled={isFirst}
+              className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="uppercase tracking-widest text-xs">Back</span>
+            </button>
+
+            <button
+              onClick={next}
+              disabled={!hasAnswer}
+              className="group inline-flex items-center gap-3 bg-stone-900 text-stone-50 px-7 py-3.5 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-amber-700 transition-colors"
+            >
+              <span className="uppercase tracking-widest text-xs font-medium">
+                {isLast ? "See your assessment" : "Continue"}
+              </span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
+
+        {/* Pet gate has its own Back button at the bottom, separately. */}
+        {current?.kind === "petGate" && (
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setStep(Math.max(0, safeStep - 1))}
+              disabled={isFirst}
+              className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="uppercase tracking-widest text-xs">Back</span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -5944,16 +6156,24 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
 function Assessment({ answers, onReset }) {
   const result = useMemo(() => assess(answers), [answers]);
   const sectionRef = useRef(null);
-  const hasFlags = result.flags.length > 0;
-  const hasWarnings = result.warnings.length > 0;
-  const hasOks = result.ok.length > 0;
-  const hasImpossible = result.flags.some((f) => f.severity === "impossible");
+
+  // Aggregate counts across shared + every pet for the top-line verdict.
+  // The new assess() returns { shared: {flags, warnings, ok}, perPet: [...] }.
+  // Defensive: if result is in the old flat shape, normalise it.
+  const shared = result.shared || { flags: result.flags || [], warnings: result.warnings || [], ok: result.ok || [] };
+  const perPet = Array.isArray(result.perPet) ? result.perPet : [];
+
+  const allFlags = [...shared.flags, ...perPet.flatMap((p) => p.flags)];
+  const allWarnings = [...shared.warnings, ...perPet.flatMap((p) => p.warnings)];
+  const allOks = [...shared.ok, ...perPet.flatMap((p) => p.ok)];
+
+  const hasFlags = allFlags.length > 0;
+  const hasWarnings = allWarnings.length > 0;
+  const hasOks = allOks.length > 0;
+  const hasImpossible = allFlags.some((f) => f.severity === "impossible");
   const hasOnlyFixableFlags = hasFlags && !hasImpossible;
 
   // Auto-scroll to the assessment when it renders.
-  // Double requestAnimationFrame ensures the browser has painted the new
-  // section before we measure its position — getElementById/timeout alone
-  // races against layout and can land on the wrong section.
   useEffect(() => {
     let raf1, raf2;
     raf1 = requestAnimationFrame(() => {
@@ -5979,7 +6199,7 @@ function Assessment({ answers, onReset }) {
     verdictBorder = "border-red-800";
     verdictIcon = <AlertTriangle className="w-7 h-7 text-red-800" strokeWidth={1.75} />;
     verdictHeadline = "This route isn't possible in cabin";
-    const impossibleCount = result.flags.filter((f) => f.severity === "impossible").length;
+    const impossibleCount = allFlags.filter((f) => f.severity === "impossible").length;
     verdictSummary = `${impossibleCount === 1 ? "There's a fundamental block" : `There are ${impossibleCount} fundamental blocks`} that cabin travel can't resolve on its own — but most have workarounds. Read each blocker below carefully: where a cabin workaround exists (e.g. Paris Pivot for UK, Abu Dhabi for UAE), we've noted it. Where cabin is genuinely off the table, we've suggested cargo or pet-relocation options.`;
   } else if (hasOnlyFixableFlags) {
     verdictColor = "text-orange-700";
@@ -5987,14 +6207,14 @@ function Assessment({ answers, onReset }) {
     verdictBorder = "border-orange-700";
     verdictIcon = <AlertTriangle className="w-7 h-7 text-orange-700" strokeWidth={1.75} />;
     verdictHeadline = "Not yet — but the blockers are fixable";
-    verdictSummary = `${result.flags.length === 1 ? "There's 1 item" : `There are ${result.flags.length} items`} blocking cabin travel right now — but ${result.flags.length === 1 ? "it's" : "they're"} all addressable (microchip, vaccine timing, age). Work through them, then come back. ${hasWarnings ? `${result.warnings.length} other thing${result.warnings.length === 1 ? "" : "s"} to plan for too.` : ""}`;
+    verdictSummary = `${allFlags.length === 1 ? "There's 1 item" : `There are ${allFlags.length} items`} blocking cabin travel right now — but ${allFlags.length === 1 ? "it's" : "they're"} all addressable (microchip, vaccine timing, age). Work through them, then come back. ${hasWarnings ? `${allWarnings.length} other thing${allWarnings.length === 1 ? "" : "s"} to plan for too.` : ""}`;
   } else if (hasWarnings) {
     verdictColor = "text-amber-700";
     verdictBg = "bg-amber-50";
     verdictBorder = "border-amber-700";
     verdictIcon = <Info className="w-7 h-7 text-amber-700" strokeWidth={1.75} />;
     verdictHeadline = "Looks workable — with a few things to plan for";
-    verdictSummary = `Nothing critical, but there ${result.warnings.length === 1 ? "is 1 thing" : `are ${result.warnings.length} things`} worth knowing before you book. Read them below and plan accordingly.`;
+    verdictSummary = `Nothing critical, but there ${allWarnings.length === 1 ? "is 1 thing" : `are ${allWarnings.length} things`} worth knowing before you book. Read them below and plan accordingly.`;
   } else {
     verdictColor = "text-emerald-700";
     verdictBg = "bg-emerald-50";
@@ -6002,6 +6222,129 @@ function Assessment({ answers, onReset }) {
     verdictIcon = <Check className="w-7 h-7 text-emerald-700" strokeWidth={1.75} />;
     verdictHeadline = "Looks good — no major blockers";
     verdictSummary = "Based on what you've told us, your pet should be eligible to fly cabin. Confirm details directly with your airline and destination country before booking.";
+  }
+
+  // Helper to render a single flag (blocker) block — used in both shared and per-pet sections.
+  const renderFlag = (f, i) => {
+    const isImpossible = f.severity === "impossible";
+    return (
+      <div
+        key={i}
+        className={`border-l-2 pl-5 pr-4 py-4 ${
+          isImpossible
+            ? "bg-red-50/70 border-red-800"
+            : "bg-orange-50/70 border-orange-700"
+        }`}
+      >
+        <div className="flex items-baseline gap-2 mb-2 flex-wrap">
+          <span
+            className={`text-xs uppercase tracking-widest font-medium px-2 py-0.5 ${
+              isImpossible ? "bg-red-200 text-red-900" : "bg-orange-200 text-orange-900"
+            }`}
+          >
+            {isImpossible ? "Cabin not possible" : "Fixable"}
+          </span>
+          <div className="font-serif text-xl text-stone-900">
+            {f.title}
+          </div>
+        </div>
+        <p className="text-stone-700 leading-relaxed mb-3 [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.detail }} />
+        {f.workaround && (
+          <div className="mt-3 pt-3 border-t border-stone-200">
+            <div className="text-xs uppercase tracking-widest text-stone-500 font-medium mb-1.5">
+              {isImpossible ? "Suggested alternative" : "How to fix it"}
+            </div>
+            <p className="text-stone-700 leading-relaxed text-sm [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.workaround }} />
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderWarning = (w, i) => (
+    <div key={i} className="bg-amber-50/50 border-l-2 border-amber-700 pl-5 pr-4 py-4">
+      <div className="font-serif text-xl text-stone-900 mb-2">
+        <span className="text-amber-700 mr-2">{i + 1}.</span>{w.title}
+      </div>
+      <p className="text-stone-700 leading-relaxed [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: w.detail }} />
+    </div>
+  );
+
+  // Renders a per-pet block — only shown when there are multiple pets.
+  // For single-pet flow we merge per-pet results into the main sections so
+  // the output looks essentially identical to the pre-rebuild version.
+  const renderPetBlock = (pet, idx) => {
+    const hasContent = pet.flags.length > 0 || pet.warnings.length > 0 || pet.ok.length > 0;
+    if (!hasContent) return null;
+    return (
+      <div key={idx} className="border border-stone-300 bg-white">
+        <div className="bg-stone-900 text-stone-50 px-6 py-4">
+          <div className="text-xs uppercase tracking-widest text-amber-300 mb-1">{pet.petLabel}</div>
+          <div className="font-serif text-xl">
+            {pet.flags.length === 0 && pet.warnings.length === 0
+              ? "✓ Looking good"
+              : pet.flags.some((f) => f.severity === "impossible")
+              ? "⚠ Cabin blockers"
+              : pet.flags.length > 0
+              ? "⚠ Fixable blockers"
+              : "ⓘ Things to plan for"}
+          </div>
+        </div>
+        <div className="p-6 space-y-4">
+          {pet.flags.length > 0 && (
+            <div className="space-y-4">
+              {pet.flags.map((f, i) => renderFlag(f, `pet${idx}-flag${i}`))}
+            </div>
+          )}
+          {pet.warnings.length > 0 && (
+            <div className="space-y-4">
+              {pet.warnings.map((w, i) => renderWarning(w, i))}
+            </div>
+          )}
+          {pet.ok.length > 0 && (
+            <ul className="space-y-2 pt-2 border-t border-stone-200">
+              {pet.ok.map((o, i) => (
+                <li key={i} className="flex items-start gap-2 text-stone-700 text-sm leading-relaxed">
+                  <Check className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-1" strokeWidth={2} />
+                  <span>{o}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // For single-pet flow, merge per-pet results into the shared sections so
+  // the rendered output is essentially identical to the pre-rebuild version
+  // (just one combined list rather than two near-identical lists).
+  const isSinglePet = perPet.length <= 1;
+  const flagsForMainSection = isSinglePet ? allFlags : shared.flags;
+  const warningsForMainSection = isSinglePet ? allWarnings : shared.warnings;
+  const okForMainSection = isSinglePet ? allOks : shared.ok;
+  const hasMainFlags = flagsForMainSection.length > 0;
+  const hasMainWarnings = warningsForMainSection.length > 0;
+  const hasMainOks = okForMainSection.length > 0;
+
+  // Trip summary header — supports both new (answers.pets) and legacy shapes.
+  function tripSummary() {
+    const pets = Array.isArray(answers.pets) ? answers.pets : null;
+    const dest = answers.destination || "—";
+    if (pets && pets.length > 0) {
+      const speciesList = pets.map((p) => p.species).filter(Boolean);
+      const uniq = Array.from(new Set(speciesList));
+      const speciesText = uniq.length > 0 ? uniq.join(" + ") : "pet";
+      if (pets.length === 1) {
+        const p = pets[0];
+        return `${speciesText}${p.weight ? " · " + p.weight : ""} · ${dest}`;
+      }
+      return `${pets.length} pets (${speciesText}) · ${dest}`;
+    }
+    // Legacy fallback
+    const sp = Array.isArray(answers.species) ? answers.species.join(" + ") : (answers.species || "pet");
+    const countLabel = answers.petCount === "1" || !answers.petCount ? sp : `${answers.petCount} pets (${sp})`;
+    return `${countLabel}${answers.weight ? " · " + answers.weight : ""} · ${dest}`;
   }
 
   return (
@@ -6015,11 +6358,7 @@ function Assessment({ answers, onReset }) {
             <div>
               <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">Your trip</div>
               <div className="font-serif text-2xl text-stone-900">
-                {(() => {
-                  const sp = Array.isArray(answers.species) ? answers.species.join(" + ") : answers.species;
-                  const countLabel = answers.petCount === "1" ? sp : `${answers.petCount} pets (${sp})`;
-                  return `${countLabel} · ${answers.weight} · ${answers.destination}`;
-                })()}
+                {tripSummary()}
               </div>
             </div>
             <button
@@ -6049,25 +6388,25 @@ function Assessment({ answers, onReset }) {
                   {hasImpossible && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-200 text-red-900 font-medium">
                       <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
-                      {result.flags.filter((f) => f.severity === "impossible").length} cabin-impossible
+                      {allFlags.filter((f) => f.severity === "impossible").length} cabin-impossible
                     </span>
                   )}
                   {hasOnlyFixableFlags && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-100 text-orange-800 font-medium">
                       <AlertTriangle className="w-3 h-3" strokeWidth={2.5} />
-                      {result.flags.length} fixable blocker{result.flags.length === 1 ? "" : "s"}
+                      {allFlags.length} fixable blocker{allFlags.length === 1 ? "" : "s"}
                     </span>
                   )}
                   {hasWarnings && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 text-amber-800 font-medium">
                       <Info className="w-3 h-3" strokeWidth={2.5} />
-                      {result.warnings.length} to plan for
+                      {allWarnings.length} to plan for
                     </span>
                   )}
                   {hasOks && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-100 text-emerald-800 font-medium">
                       <Check className="w-3 h-3" strokeWidth={2.5} />
-                      {result.ok.length} looking good
+                      {allOks.length} looking good
                     </span>
                   )}
                 </div>
@@ -6077,97 +6416,84 @@ function Assessment({ answers, onReset }) {
 
           {/* DETAIL SECTIONS */}
           <div className="p-8 md:p-10 space-y-10">
-            {hasFlags && (
+
+            {/* Per-pet blocks — only render when there are 2+ pets. For
+                single-pet flow these are merged into the main sections below. */}
+            {!isSinglePet && perPet.some((p) => p.flags.length > 0 || p.warnings.length > 0 || p.ok.length > 0) && (
+              <div>
+                <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-stone-700">
+                  <PawPrint className="w-5 h-5 text-stone-700" strokeWidth={1.75} />
+                  <h3 className="uppercase tracking-widest text-sm text-stone-700 font-medium">
+                    Per-pet checks ({perPet.length} pets)
+                  </h3>
+                </div>
+                <p className="text-sm text-stone-600 italic font-serif mb-5">
+                  Each pet's age, weight, breed, vaccine, and microchip status checked individually.
+                </p>
+                <div className="space-y-4">
+                  {perPet.map((p, idx) => renderPetBlock(p, idx))}
+                </div>
+              </div>
+            )}
+
+            {hasMainFlags && (
               <div>
                 <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-red-700">
                   <AlertTriangle className="w-5 h-5 text-red-700" strokeWidth={1.75} />
                   <h3 className="uppercase tracking-widest text-sm text-red-700 font-medium">
-                    {result.flags.length === 1 ? "Blocker to address" : `${result.flags.length} blockers to address`}
+                    {isSinglePet
+                      ? (flagsForMainSection.length === 1 ? "Blocker to address" : `${flagsForMainSection.length} blockers to address`)
+                      : (flagsForMainSection.length === 1 ? "Shared route blocker" : `${flagsForMainSection.length} shared route blockers`)}
                   </h3>
                 </div>
                 <p className="text-sm text-stone-600 italic font-serif mb-5">
-                  Where a workaround exists, we've spelled it out under each blocker.
+                  {isSinglePet
+                    ? "Where a workaround exists, we've spelled it out under each blocker."
+                    : "Route-level blockers that affect every pet on the booking (UK cabin ban, Dubai cargo-only, Japan titer, etc.)."}
                 </p>
                 <div className="space-y-5">
-                  {result.flags.map((f, i) => {
-                    const isImpossible = f.severity === "impossible";
-                    return (
-                      <div
-                        key={i}
-                        className={`border-l-2 pl-5 pr-4 py-4 ${
-                          isImpossible
-                            ? "bg-red-50/70 border-red-800"
-                            : "bg-orange-50/70 border-orange-700"
-                        }`}
-                      >
-                        <div className="flex items-baseline gap-2 mb-2">
-                          <span
-                            className={`text-xs uppercase tracking-widest font-medium px-2 py-0.5 ${
-                              isImpossible ? "bg-red-200 text-red-900" : "bg-orange-200 text-orange-900"
-                            }`}
-                          >
-                            {isImpossible ? "Cabin not possible" : "Fixable"}
-                          </span>
-                          <div className="font-serif text-xl text-stone-900">
-                            {f.title}
-                          </div>
-                        </div>
-                        <p className="text-stone-700 leading-relaxed mb-3 [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.detail }} />
-                        {f.workaround && (
-                          <div className="mt-3 pt-3 border-t border-stone-200">
-                            <div className="text-xs uppercase tracking-widest text-stone-500 font-medium mb-1.5">
-                              {isImpossible ? "Suggested alternative" : "How to fix it"}
-                            </div>
-                            <p className="text-stone-700 leading-relaxed text-sm [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: f.workaround }} />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                  {flagsForMainSection.map((f, i) => renderFlag(f, i))}
                 </div>
               </div>
             )}
 
-            {hasWarnings && (
+            {hasMainWarnings && (
               <div>
                 <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-amber-700">
                   <Info className="w-5 h-5 text-amber-700" strokeWidth={1.75} />
                   <h3 className="uppercase tracking-widest text-sm text-amber-700 font-medium">
-                    {result.warnings.length === 1 ? "Thing to plan for" : `${result.warnings.length} things to plan for`}
+                    {isSinglePet
+                      ? (warningsForMainSection.length === 1 ? "Thing to plan for" : `${warningsForMainSection.length} things to plan for`)
+                      : (warningsForMainSection.length === 1 ? "Shared route note" : `${warningsForMainSection.length} shared route notes`)}
                   </h3>
                 </div>
                 <p className="text-sm text-stone-600 italic font-serif mb-5">
-                  Not blockers, but you'll want to plan around these before booking.
+                  {isSinglePet
+                    ? "Not blockers, but you'll want to plan around these before booking."
+                    : "Route-level notes that apply to every pet on the booking."}
                 </p>
                 <div className="space-y-5">
-                  {result.warnings.map((w, i) => (
-                    <div key={i} className="bg-amber-50/50 border-l-2 border-amber-700 pl-5 pr-4 py-4">
-                      <div className="font-serif text-xl text-stone-900 mb-2">
-                        <span className="text-amber-700 mr-2">{i + 1}.</span>{w.title}
-                      </div>
-                      <p className="text-stone-700 leading-relaxed [&_a]:text-amber-700 [&_a]:underline [&_a]:decoration-amber-600/40 [&_a]:underline-offset-2 [&_a:hover]:text-amber-800" dangerouslySetInnerHTML={{ __html: w.detail }} />
-                    </div>
-                  ))}
+                  {warningsForMainSection.map((w, i) => renderWarning(w, i))}
                 </div>
               </div>
             )}
 
-            {hasOks && (
+            {hasMainOks && (
               <div>
                 <div className="flex items-center gap-3 mb-2 pb-3 border-b-2 border-emerald-700">
                   <Check className="w-5 h-5 text-emerald-700" strokeWidth={1.75} />
                   <h3 className="uppercase tracking-widest text-sm text-emerald-700 font-medium">
-                    {result.ok.length === 1 ? "Looking good" : `${result.ok.length} looking good`}
+                    {okForMainSection.length === 1 ? "Looking good" : `${okForMainSection.length} looking good`}
                   </h3>
                 </div>
                 <p className="text-sm text-stone-600 italic font-serif mb-5">
                   Already sorted — nothing to worry about here.
                 </p>
                 <ul className="space-y-3">
-                  {result.ok.map((o, i) => (
+                  {okForMainSection.map((o, i) => (
                     <li key={i} className="flex items-start gap-3 text-stone-700 leading-relaxed">
                       <Check className="w-4 h-4 text-emerald-700 flex-shrink-0 mt-1" strokeWidth={2} />
-                      <span>{o}</span>
+                      <span dangerouslySetInnerHTML={{ __html: o }} />
                     </li>
                   ))}
                 </ul>

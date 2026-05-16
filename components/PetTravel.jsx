@@ -7908,6 +7908,21 @@ function ChecklistDownload() {
   const originAirport = originCode ? airportByCode(originCode) : null;
   const destAirport = destCode ? airportByCode(destCode) : null;
 
+  // GA4 — track when a route-mode checklist is generated (both airports
+  // selected). The country-mode dropdown path is intentionally not tracked
+  // here since it's a much smaller surface; we mostly want to know how
+  // many people are actually USING the route-checklist flow.
+  useEffect(() => {
+    if (mode === "route" && originCode && destCode && typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "checklist_generated", {
+        event_category: "tool_engagement",
+        origin: originCode,
+        destination: destCode,
+        direction: effectiveDirection,
+      });
+    }
+  }, [mode, originCode, destCode, effectiveDirection]);
+
   // The checklist data shown depends on the mode.
   let data;
   if (mode === "route") {
@@ -8448,7 +8463,20 @@ function JourneyPlanner() {
   }
 
   function plan() {
-    if (origin && destination) setPlanned(true);
+    if (origin && destination) {
+      setPlanned(true);
+      // GA4 — track journey planner submission. Captures the airport pair
+      // the user is researching. (Different from route_selected, which fires
+      // when they pick one specific route from the list of options.)
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag("event", "planner_search", {
+          event_category: "tool_engagement",
+          origin,
+          destination,
+          pet_type: petType,
+        });
+      }
+    }
   }
   function resetPlan() {
     setOrigin("");
@@ -10661,6 +10689,13 @@ export default function PetTravel() {
   function startIntake() {
     setPhase("intake");
     setStep(0);
+    // GA4 — track entry into the assessment tool. Fires when the user clicks
+    // either the hero "Start" button or the "Can my pet fly?" nav link.
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "intake_start", {
+        event_category: "tool_engagement",
+      });
+    }
     setTimeout(() => {
       document.getElementById("intake-anchor")?.scrollIntoView({ behavior: "smooth" });
     }, 50);
@@ -10668,6 +10703,16 @@ export default function PetTravel() {
 
   function completeIntake() {
     setPhase("results");
+    // GA4 — track completion. Fires when all intake questions are answered
+    // and the assessment renders. Includes destination + pet count so we can
+    // see which trips people are researching.
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "intake_complete", {
+        event_category: "tool_engagement",
+        destination: answers.destination || "unknown",
+        pet_count: answers.petCount || "1",
+      });
+    }
     // Assessment component handles its own scroll-into-view on mount
   }
 

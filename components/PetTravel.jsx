@@ -6842,6 +6842,62 @@ function AirlineGrid() {
   const [expanded, setExpanded] = useState(null);
   const [filter, setFilter] = useState("all");
 
+  // Comparison feature — users can select up to 4 airlines via a checkbox
+  // in the card corner; a floating action button reveals a modal with all
+  // selected airlines rendered side-by-side. Maintained as a Set of airline
+  // names for O(1) lookup; rendering pulls from AIRLINES by name.
+  const COMPARE_MAX = 4;
+  const [compareSelected, setCompareSelected] = useState(() => new Set());
+  const [compareOpen, setCompareOpen] = useState(false);
+
+  function toggleCompare(name) {
+    setCompareSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) {
+        next.delete(name);
+      } else if (next.size < COMPARE_MAX) {
+        next.add(name);
+      }
+      return next;
+    });
+  }
+
+  function clearCompare() {
+    setCompareSelected(new Set());
+    setCompareOpen(false);
+  }
+
+  // Open the compare modal — also fires a GA4 event so we can see how
+  // often visitors use this feature and with how many airlines.
+  function openCompare() {
+    if (compareSelected.size < 2) return;
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "airline_compare_open", {
+        event_category: "engagement",
+        airline_count: compareSelected.size,
+        airlines: Array.from(compareSelected).join(", "),
+      });
+    }
+    setCompareOpen(true);
+  }
+
+  // Resolve selected airlines to full airline objects, preserving the order
+  // they were added (Set preserves insertion order in JS).
+  const compareAirlines = useMemo(
+    () => Array.from(compareSelected).map((name) => AIRLINES.find((a) => a.name === name)).filter(Boolean),
+    [compareSelected]
+  );
+
+  // Close compare modal on Escape — basic accessibility.
+  useEffect(() => {
+    if (!compareOpen) return;
+    function onKey(e) {
+      if (e.key === "Escape") setCompareOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [compareOpen]);
+
   const FILTERS = [
     { id: "all", label: "All airlines", flag: "" },
     { id: "uk-out", label: "Out of UK", flag: "🇬🇧" },
@@ -6873,12 +6929,8 @@ function AirlineGrid() {
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           Pets in cabin: the policy for every major airline.
         </h2>
-        <p className="font-serif italic text-stone-600 text-lg mb-4 max-w-2xl">
+        <p className="font-serif italic text-stone-600 text-lg mb-8 max-w-2xl">
           Thirty-two airlines, one place. Tap any carrier to see fees, weight rules, carrier dimensions, and the fine print most travellers miss.
-        </p>
-
-        <p className="font-serif italic text-stone-600 text-base mb-8 max-w-2xl">
-          Comparing carriers side by side? See the <a href="/airlines-compared" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors not-italic">airline comparison table</a> — sortable by weight limit, fee, or which airlines fly cabin out of the UK.
         </p>
 
         <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4 mb-4 max-w-3xl">
@@ -6931,13 +6983,40 @@ function AirlineGrid() {
               ? "bg-emerald-100 text-emerald-800 border-emerald-300"
               : "bg-rose-100 text-rose-800 border-rose-300";
             const badgeText = allowsCabin ? "✓ Cabin allowed" : "✗ No cabin";
+            const isCompareSelected = compareSelected.has(a.name);
+            const canSelectMore = compareSelected.size < COMPARE_MAX;
             return (
-              <div key={a.name} className="bg-stone-50">
+              <div key={a.name} className="bg-stone-50 relative">
+                {/* Compare checkbox — positioned absolutely so it doesn't
+                    sit inside the expand button. Clicking it toggles the
+                    airline in/out of the selection without expanding the
+                    card. Disabled state when 4 already selected. */}
+                <label
+                  className={`absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1 text-[10px] uppercase tracking-widest border transition-colors cursor-pointer select-none ${
+                    isCompareSelected
+                      ? "bg-amber-700 text-stone-50 border-amber-700"
+                      : canSelectMore
+                        ? "bg-white text-stone-600 border-stone-300 hover:border-amber-600 hover:text-amber-700"
+                        : "bg-stone-100 text-stone-400 border-stone-200 cursor-not-allowed"
+                  }`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isCompareSelected}
+                    disabled={!isCompareSelected && !canSelectMore}
+                    onChange={() => toggleCompare(a.name)}
+                    className="sr-only"
+                  />
+                  <span aria-hidden="true">{isCompareSelected ? "✓" : "+"}</span>
+                  <span>{isCompareSelected ? "Selected" : "Compare"}</span>
+                </label>
+
                 <button
                   onClick={() => setExpanded(open ? null : a.name)}
                   className="w-full text-left p-6 hover:bg-white transition-colors"
                 >
-                  <div className="flex items-baseline justify-between gap-4 mb-3">
+                  <div className="flex items-baseline justify-between gap-4 mb-3 pr-24">
                     <h3 className="font-serif text-2xl text-stone-900">
                       {a.name}<span className="text-stone-400 text-lg"> — pets in cabin</span>
                     </h3>
@@ -7138,6 +7217,172 @@ function AirlineGrid() {
           Policies change. Confirm with the airline before booking. Last full review: May 2026.
         </p>
       </div>
+
+      {/* Floating compare action — sticky bottom-right; appears whenever 1+
+          airlines are selected via the checkbox in each card. Mobile-safe:
+          uses fixed positioning + safe-area-inset padding so it doesn't
+          collide with the iOS home indicator. */}
+      {compareSelected.size > 0 && (
+        <div
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-3"
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0)" }}
+        >
+          <button
+            onClick={clearCompare}
+            className="bg-white text-stone-600 border border-stone-300 hover:border-stone-500 hover:text-stone-900 px-3 py-2 text-xs uppercase tracking-widest font-medium transition-colors shadow-md"
+            aria-label="Clear compare selection"
+          >
+            Clear
+          </button>
+          <button
+            onClick={openCompare}
+            disabled={compareSelected.size < 2}
+            className={`px-5 py-3 text-sm uppercase tracking-widest font-medium shadow-lg transition-colors flex items-center gap-2 ${
+              compareSelected.size < 2
+                ? "bg-stone-400 text-stone-100 cursor-not-allowed"
+                : "bg-amber-700 text-stone-50 hover:bg-amber-800"
+            }`}
+          >
+            <span>
+              {compareSelected.size < 2
+                ? `Pick 1 more to compare (${compareSelected.size}/${COMPARE_MAX})`
+                : `Compare ${compareSelected.size} airline${compareSelected.size === 1 ? "" : "s"}`}
+            </span>
+            {compareSelected.size >= 2 && <ArrowRight className="w-4 h-4" />}
+          </button>
+        </div>
+      )}
+
+      {/* Comparison modal — full-screen overlay, renders each selected
+          airline's expanded card content in a horizontally-scrollable
+          row (desktop: side-by-side; mobile: 1-up with horizontal scroll
+          across cards). Closes on backdrop click, X button, or Escape. */}
+      {compareOpen && compareAirlines.length >= 2 && (
+        <div
+          className="fixed inset-0 z-50 bg-stone-900/85 flex items-stretch md:items-center justify-center p-4 md:p-8 animate-fadeIn"
+          onClick={() => setCompareOpen(false)}
+          role="dialog"
+          aria-label="Airline comparison"
+        >
+          <div
+            className="bg-stone-50 max-w-7xl w-full max-h-[95vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal header */}
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-stone-300 flex-shrink-0">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-amber-700 mb-1">Comparing {compareAirlines.length} airlines</div>
+                <h3 className="font-serif text-2xl md:text-3xl text-stone-900">Side by side</h3>
+              </div>
+              <button
+                onClick={() => setCompareOpen(false)}
+                className="p-2 hover:bg-stone-200 transition-colors"
+                aria-label="Close comparison"
+              >
+                <X className="w-5 h-5 text-stone-700" strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Modal body — horizontal scroll on mobile, grid on desktop */}
+            <div className="flex-1 overflow-auto p-4 md:p-6">
+              <div
+                className="grid gap-4 md:gap-6"
+                style={{
+                  gridTemplateColumns: `repeat(${compareAirlines.length}, minmax(280px, 1fr))`,
+                }}
+              >
+                {compareAirlines.map((a) => {
+                  const allowsCabin = a.cabinStatus !== "no";
+                  const badgeStyle = allowsCabin
+                    ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                    : "bg-rose-100 text-rose-800 border-rose-300";
+                  const badgeText = allowsCabin ? "✓ Cabin allowed" : "✗ No cabin";
+                  return (
+                    <div key={a.name} className="bg-white border border-stone-200 p-4 md:p-5 flex flex-col">
+                      <div className="flex items-start justify-between gap-2 mb-3">
+                        <h4 className="font-serif text-xl text-stone-900 leading-tight">{a.name}</h4>
+                        <button
+                          onClick={() => toggleCompare(a.name)}
+                          className="text-[10px] uppercase tracking-widest text-stone-400 hover:text-rose-600 transition-colors flex-shrink-0"
+                          aria-label={`Remove ${a.name} from comparison`}
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <span className={`inline-block px-2.5 py-1 text-[10px] uppercase tracking-widest font-medium border self-start mb-4 ${badgeStyle}`}>
+                        {badgeText}
+                      </span>
+
+                      <div className="space-y-3 text-sm">
+                        <div>
+                          <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Weight</div>
+                          <div className="text-stone-800">{a.weight || "—"}</div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Carrier</div>
+                          <div className="text-stone-800">{a.carrier || "—"}</div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Fee</div>
+                          <div className="text-stone-800">{a.fee || "—"}</div>
+                        </div>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">International cabin</div>
+                          <div className="text-stone-800">{a.intl || "—"}</div>
+                        </div>
+                        {a.direction && (
+                          <div className="bg-amber-50 border-l-2 border-amber-400 p-3">
+                            <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Direction matters</div>
+                            <div className="text-stone-800 text-xs leading-relaxed">{a.direction}</div>
+                          </div>
+                        )}
+                        <div>
+                          <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Notes</div>
+                          <div className="text-stone-700 italic font-serif text-sm leading-relaxed">{a.notes}</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-stone-200 flex items-center justify-between gap-2">
+                        <span className="text-[10px] text-stone-500">Verified {a.verified}</span>
+                        <a
+                          href={a.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] uppercase tracking-widest text-amber-700 hover:text-amber-800 underline decoration-amber-300 underline-offset-2"
+                        >
+                          Official ↗
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Modal footer */}
+            <div className="border-t border-stone-300 p-4 md:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 flex-shrink-0">
+              <p className="text-xs text-stone-500 italic font-serif">
+                Tip: carrier dimensions can differ enough that a carrier accepted by one airline is refused by another. Buy for the strictest spec.
+              </p>
+              <div className="flex gap-2 flex-shrink-0">
+                <button
+                  onClick={clearCompare}
+                  className="px-4 py-2 text-xs uppercase tracking-widest text-stone-600 border border-stone-300 hover:border-stone-500 hover:text-stone-900 transition-colors"
+                >
+                  Clear all
+                </button>
+                <button
+                  onClick={() => setCompareOpen(false)}
+                  className="px-4 py-2 text-xs uppercase tracking-widest bg-stone-900 text-stone-50 hover:bg-stone-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

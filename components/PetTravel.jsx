@@ -5458,6 +5458,21 @@ function NavBar({ onStartIntake }) {
 
   function go(id) {
     setOpen(false);
+
+    // GA4: track which section the user navigated to, so we can see
+    // homepage engagement per section. Anchor links (/#planner etc.) don't
+    // trigger Next.js route changes, so without this event GA can't see
+    // them. The 'about' page already counts as a real page_view via
+    // routeChangeComplete in _app.js, so we don't double-fire there.
+    if (typeof window !== "undefined" && window.gtag && id !== "about") {
+      const sectionLabel = (NAV_SECTIONS.find((s) => s.id === id) || {}).label || id;
+      window.gtag("event", "section_view", {
+        event_category: "navigation",
+        section_id: id,
+        section_label: sectionLabel,
+      });
+    }
+
     if (id === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     if (id === "intake") { onStartIntake(); return; }
     if (id === "about") { window.location.href = "/about"; return; }

@@ -7191,6 +7191,9 @@ function AirlineGrid() {
   const COMPARE_MAX = 4;
   const [compareSelected, setCompareSelected] = useState(() => new Set());
   const [compareOpen, setCompareOpen] = useState(false);
+  // Sort order for the cards inside the compare modal. "picked" keeps the
+  // order the user selected them in; the others rank by weight or carrier.
+  const [compareSort, setCompareSort] = useState("picked");
 
   function toggleCompare(name) {
     setCompareSelected((prev) => {
@@ -7229,6 +7232,53 @@ function AirlineGrid() {
     () => Array.from(compareSelected).map((name) => AIRLINES.find((a) => a.name === name)).filter(Boolean),
     [compareSelected]
   );
+
+  // --- Sort helpers for the compare modal ---
+  // Parse a cabin weight limit (kg) from an airline's free-text weight field.
+  // Airlines with no published cap ("must fit carrier") return null and are
+  // sorted to the end, since their limit is judged by carrier fit not weight.
+  function parseCompareWeightKg(s) {
+    if (!s) return null;
+    if (/no stated weight|no weight limit|must fit comfortably/i.test(s)) return null;
+    const kg = s.match(/(\d+(?:\.\d+)?)\s*kg/i);
+    if (kg) return parseFloat(kg[1]);
+    const lb = s.match(/(\d+(?:\.\d+)?)\s*lb/i);
+    if (lb) return Math.round(parseFloat(lb[1]) * 0.453592 * 10) / 10;
+    return null;
+  }
+
+  // Parse the largest carrier volume (cm³) from the carrier field. We take
+  // the FIRST/standard under-seat dimension set — not buy-an-extra-seat
+  // options — by using the smallest-listed set when several appear, except
+  // we just take the first cm match which is the standard one in our data.
+  function parseCompareCarrierVol(s) {
+    if (!s) return 0;
+    const cm = s.match(/(\d+(?:\.\d+)?)\s*[×x]\s*(\d+(?:\.\d+)?)\s*[×x]\s*(\d+(?:\.\d+)?)\s*cm/i);
+    if (cm) return parseFloat(cm[1]) * parseFloat(cm[2]) * parseFloat(cm[3]);
+    const inch = s.match(/(\d+(?:\.\d+)?)\s*[×x]\s*(\d+(?:\.\d+)?)\s*[×x]\s*(\d+(?:\.\d+)?)\s*in/i);
+    if (inch) return parseFloat(inch[1]) * 2.54 * parseFloat(inch[2]) * 2.54 * parseFloat(inch[3]) * 2.54;
+    return 0;
+  }
+
+  // The cards actually rendered in the modal, in the chosen sort order.
+  const sortedCompareAirlines = useMemo(() => {
+    const list = [...compareAirlines];
+    if (compareSort === "weight") {
+      list.sort((a, b) => {
+        const wa = parseCompareWeightKg(a.weight);
+        const wb = parseCompareWeightKg(b.weight);
+        // null (no cap) sorts to the end
+        if (wa === null && wb === null) return 0;
+        if (wa === null) return 1;
+        if (wb === null) return -1;
+        return wb - wa; // heaviest first
+      });
+    } else if (compareSort === "carrier") {
+      list.sort((a, b) => parseCompareCarrierVol(b.carrier) - parseCompareCarrierVol(a.carrier));
+    }
+    // "picked" → leave in selection order
+    return list;
+  }, [compareAirlines, compareSort]);
 
   // Close compare modal on Escape — basic accessibility.
   useEffect(() => {
@@ -7351,21 +7401,9 @@ function AirlineGrid() {
           Airline policies change quietly. Each card shows when I last verified it — confirm with the airline before booking. <a href="#contact" className="underline decoration-rose-400 underline-offset-4 hover:text-rose-600 transition-colors">Tell me</a> if something looks out of date.
         </p>
 
-        {/* Filter chips — sticky within the Airlines section. Because the
-            sticky element is a child of the <section>, it only sticks while
-            the user is scrolling THROUGH the airlines list and naturally
-            releases when they leave the section. top offset sits just below
-            the main sticky nav bar. z-30 keeps it under the nav and the
-            compare modal/button but above the card grid. */}
-        <div
-          className="sticky z-30 py-3 px-4 mb-6 border border-stone-300 rounded-sm shadow-sm"
-          style={{
-            top: "76px",
-            backgroundColor: "rgba(245, 245, 244, 0.98)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+        {/* Filter chips for the airline grid. */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
             <div className="text-xs uppercase tracking-widest text-stone-500">Filter by route</div>
             <div className="text-stone-500 text-xs italic font-serif">
               Showing {filteredAirlines.length} of {AIRLINES.length}
@@ -7645,18 +7683,36 @@ function AirlineGrid() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header */}
-            <div className="flex items-center justify-between p-4 md:p-6 border-b border-stone-300 flex-shrink-0">
+            <div className="flex items-start justify-between gap-4 p-4 md:p-6 border-b border-stone-300 flex-shrink-0 flex-wrap">
               <div>
                 <div className="text-xs uppercase tracking-widest text-amber-700 mb-1">Comparing {compareAirlines.length} airlines</div>
                 <h3 className="font-serif text-2xl md:text-3xl text-stone-900">Side by side</h3>
               </div>
-              <button
-                onClick={() => setCompareOpen(false)}
-                className="p-2 hover:bg-stone-200 transition-colors"
-                aria-label="Close comparison"
-              >
-                <X className="w-5 h-5 text-stone-700" strokeWidth={2} />
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Sort control — re-orders the cards within the modal. Useful
+                    for the "is my dog too big?" question: sort by weight limit
+                    or carrier size to see which of your picks is roomiest. */}
+                <div className="flex items-center gap-1.5">
+                  <label htmlFor="compare-sort" className="text-[10px] uppercase tracking-widest text-stone-500">Sort</label>
+                  <select
+                    id="compare-sort"
+                    value={compareSort}
+                    onChange={(e) => setCompareSort(e.target.value)}
+                    className="text-xs bg-white border border-stone-300 px-2 py-1.5 text-stone-700 focus:border-amber-600 focus:outline-none"
+                  >
+                    <option value="picked">As selected</option>
+                    <option value="weight">Heaviest pet allowed</option>
+                    <option value="carrier">Largest carrier</option>
+                  </select>
+                </div>
+                <button
+                  onClick={() => setCompareOpen(false)}
+                  className="p-2 hover:bg-stone-200 transition-colors"
+                  aria-label="Close comparison"
+                >
+                  <X className="w-5 h-5 text-stone-700" strokeWidth={2} />
+                </button>
+              </div>
             </div>
 
             {/* Modal body — horizontal scroll on mobile, grid on desktop */}
@@ -7664,10 +7720,10 @@ function AirlineGrid() {
               <div
                 className="grid gap-4 md:gap-6"
                 style={{
-                  gridTemplateColumns: `repeat(${compareAirlines.length}, minmax(280px, 1fr))`,
+                  gridTemplateColumns: `repeat(${sortedCompareAirlines.length}, minmax(280px, 1fr))`,
                 }}
               >
-                {compareAirlines.map((a) => {
+                {sortedCompareAirlines.map((a) => {
                   const allowsCabin = a.cabinStatus !== "no";
                   const badgeStyle = allowsCabin
                     ? "bg-emerald-100 text-emerald-800 border-emerald-300"
@@ -9395,18 +9451,9 @@ function Routes() {
           </div>
         </div>
 
-        {/* Filter chips — sticky within the Routes section, same pattern as
-            the Airlines filter. Releases automatically when leaving the
-            section since the sticky element is a child of it. */}
-        <div
-          className="sticky z-30 py-3 px-4 mb-6 border border-stone-300 rounded-sm shadow-sm"
-          style={{
-            top: "76px",
-            backgroundColor: "rgba(255, 255, 255, 0.98)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+        {/* Filter chips for the routes list. */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
             <div className="text-xs uppercase tracking-widest text-stone-500">Filter by region</div>
             <div className="text-stone-500 text-xs italic font-serif">
               Showing {totalFiltered} of {totalAll}
@@ -10683,10 +10730,10 @@ function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
-      className="fixed bottom-6 left-6 z-40 w-10 h-10 flex items-center justify-center bg-stone-800/90 text-stone-100 border border-stone-700 hover:bg-stone-900 hover:border-stone-500 shadow-md transition-colors rounded-full"
-      style={{ paddingBottom: "env(safe-area-inset-bottom, 0)" }}
+      className="fixed left-5 z-40 w-11 h-11 flex items-center justify-center bg-stone-800 text-stone-100 border border-stone-600 hover:bg-stone-900 hover:border-stone-400 shadow-lg transition-colors rounded-full"
+      style={{ bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
     >
-      <span className="text-lg leading-none" aria-hidden="true">↑</span>
+      <span className="text-xl leading-none -mt-0.5" aria-hidden="true">↑</span>
     </button>
   );
 }

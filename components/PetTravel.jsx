@@ -8384,25 +8384,22 @@ function JourneyPlanner() {
   // pre-render (short) layout and the scroll lands in the wrong place.
   useEffect(() => {
     if (!planned) return;
-    let raf1, raf2;
-    raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        // Prefer the results anchor (top of the actual route list);
-        // fall back to section top if for some reason the anchor isn't there.
-        const resultsEl = document.getElementById("planner-results-anchor");
-        const el = resultsEl || sectionRef.current;
-        if (el) {
-          // 16px breathing room; the anchor div has scroll-mt-20 for added
-          // safety against any sticky elements on mobile.
-          const top = el.getBoundingClientRect().top + window.scrollY - 16;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-      });
-    });
-    return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
-    };
+    // Wait for the results content (route cards / checklist, which use a
+    // fadeIn animation) to actually render and settle before scrolling.
+    // Measuring getBoundingClientRect() too early — while layout is still
+    // shifting — caused the scroll to overshoot, badly so when the result
+    // was short (0 or 1 routes). scrollIntoView is recalculated by the
+    // browser as layout settles, and a short timeout lets the content mount.
+    const t = setTimeout(() => {
+      const resultsEl = document.getElementById("planner-results-anchor");
+      const el = resultsEl || sectionRef.current;
+      if (el) {
+        // block:"start" aligns the anchor to the top of the viewport; the
+        // anchor div carries scroll-mt-20 so it isn't tucked under the nav.
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 120);
+    return () => clearTimeout(t);
   }, [planned]);
 
   // Reset the route selection (and per-section expansion state) whenever the

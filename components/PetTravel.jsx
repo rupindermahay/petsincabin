@@ -7474,7 +7474,7 @@ function AirlineGrid() {
                 >
                   <div className="flex items-baseline justify-between gap-4 mb-3 pr-24">
                     <h3 className="font-serif text-2xl text-stone-900">
-                      {a.name}<span className="text-stone-400 text-lg"> — pets in cabin</span>
+                      {a.name}
                     </h3>
                     <span className="text-xs uppercase tracking-widest text-stone-500">
                       {open ? "Close" : "Details"}

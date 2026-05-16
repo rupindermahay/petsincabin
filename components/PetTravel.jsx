@@ -3281,7 +3281,7 @@ const CHECKLIST_DATA = {
       {
         title: "First — understand what Hawaii is",
         items: [
-          "Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state",
+          "Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state. The official authority is Hawaii's Department of Agriculture & Biosecurity — see their <a href=\"https://dab.hawaii.gov/ai/aqs/aqs-info/\" target=\"_blank\" rel=\"noopener noreferrer\">Animal Quarantine Information page</a> for forms and current requirements.",
           "The goal is the 'Direct Airport Release' (or '5-Day-Or-Less') program — without it, your pet faces up to 120 days of quarantine on arrival",
           "This needs 4–5 MONTHS of preparation — it is the single longest lead time of any US destination",
           "Honolulu (HNL) is the only animal port of entry — you cannot fly a pet directly into Maui, Kona, or any other island from outside Hawaii",
@@ -3427,7 +3427,7 @@ const CHECKLIST_DATA = {
       {
         title: "First — understand",
         items: [
-          "Norway is in the EEA (not the EU) but follows the EU pet passport system — same microchip + rabies vaccine baseline as any EU country.",
+          "Norway is in the EEA (not the EU) but follows the EU pet passport system — same microchip + rabies vaccine baseline as any EU country. Norway's official authority is the Norwegian Food Safety Authority (Mattilsynet) — see their <a href=\"https://www.mattilsynet.no/en/animals/guide-travelling-with-pets-to-norway\" target=\"_blank\" rel=\"noopener noreferrer\">official guide to travelling with pets to Norway</a>.",
           "Pets enter Norway ONLY via Oslo Airport (OSL) Gardermoen or the Storskog land border in northern Norway. Other airports turn pets away.",
           "Norway BANS seven dog breeds outright: Pit Bull Terrier, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, and all wolf-dog hybrids. Mixed-breeds resembling these may need documentation.",
           "Pets travelling Norway↔Sweden specifically do not need a rabies vaccine (special bilateral exemption).",

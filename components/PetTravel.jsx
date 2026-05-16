@@ -6898,6 +6898,66 @@ function AirlineGrid() {
     return () => window.removeEventListener("keydown", onKey);
   }, [compareOpen]);
 
+  // Cabin from/to flag rows — shared between the airline card and the
+  // compare modal so visitors get consistent visual cues in both places.
+  // CABIN_COUNTRIES is the ordered list of regions we surface; CabinFlags
+  // draws one flag per region with a ✓ or ✗ and a tooltip on hover.
+  const CABIN_COUNTRIES = [
+    { code: "uk", flag: "🇬🇧", label: "UK" },
+    { code: "us", flag: "🇺🇸", label: "US" },
+    { code: "canada", flag: "🇨🇦", label: "Canada" },
+    { code: "eu", flag: "🇪🇺", label: "EU" },
+    { code: "mexico", flag: "🇲🇽", label: "Mexico" },
+    { code: "south-america", flag: "🇧🇷", label: "South America" },
+    { code: "central-america", flag: "🇵🇦", label: "Central America" },
+    { code: "caribbean", flag: "🇧🇸", label: "Caribbean" },
+    { code: "india", flag: "🇮🇳", label: "India" },
+    { code: "uae", flag: "🇦🇪", label: "UAE" },
+    { code: "japan", flag: "🇯🇵", label: "Japan" },
+    { code: "korea", flag: "🇰🇷", label: "South Korea" },
+  ];
+
+  function CabinFlags({ airline, compact = false }) {
+    if (!airline.originAllowed || Object.keys(airline.originAllowed).length === 0) return null;
+    const labelW = compact ? "w-[60px]" : "w-[72px]";
+    const flagSize = compact ? "text-base" : "text-lg";
+    const renderFlag = (c, statusObj) => {
+      const status = statusObj[c.code];
+      if (!status) return null;
+      const isYes = status === "yes";
+      return (
+        <span
+          key={c.code}
+          className={`relative inline-flex items-center gap-0.5 cursor-help group/flag ${isYes ? "text-emerald-700" : "text-red-600"}`}
+        >
+          <span className={`${flagSize} leading-none`}>{c.flag}</span>
+          <span className="font-bold text-xs">{isYes ? "✓" : "✗"}</span>
+          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 bg-stone-900 text-stone-50 text-[10px] font-medium uppercase tracking-wider px-2 py-1 rounded-sm whitespace-nowrap opacity-0 group-hover/flag:opacity-100 transition-opacity duration-75 z-10">
+            {c.label}
+          </span>
+        </span>
+      );
+    };
+    return (
+      <div className="space-y-2">
+        <div className="flex items-start gap-x-2">
+          <span className={`text-[10px] uppercase tracking-widest text-stone-500 font-medium ${labelW} flex-shrink-0 pt-1`}>Cabin from:</span>
+          <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
+            {CABIN_COUNTRIES.map((c) => renderFlag(c, airline.originAllowed))}
+          </div>
+        </div>
+        {airline.destinationAllowed && (
+          <div className="flex items-start gap-x-2">
+            <span className={`text-[10px] uppercase tracking-widest text-stone-500 font-medium ${labelW} flex-shrink-0 pt-1`}>Cabin to:</span>
+            <div className="flex flex-wrap gap-x-2.5 gap-y-1 flex-1">
+              {CABIN_COUNTRIES.map((c) => renderFlag(c, airline.destinationAllowed))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   const FILTERS = [
     { id: "all", label: "All airlines", flag: "" },
     { id: "uk-out", label: "Out of UK", flag: "🇬🇧" },
@@ -7315,7 +7375,11 @@ function AirlineGrid() {
                       </span>
 
                       <div className="space-y-3 text-sm">
-                        <div>
+                        {/* Cabin from/to flag rows — same visual as on the
+                            homepage airline cards. Compact spacing for the
+                            tighter modal column width. */}
+                        <CabinFlags airline={a} compact />
+                        <div className="border-t border-stone-200 pt-3">
                           <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Weight</div>
                           <div className="text-stone-800">{a.weight || "—"}</div>
                         </div>

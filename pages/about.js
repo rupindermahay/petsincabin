@@ -84,6 +84,29 @@ export default function About() {
               Got a route that's not covered, found an error, or just want to share how your trip went? <Link href="/#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-600">Get in touch</Link> — I genuinely read everything.
             </p>
 
+            {/* Ko-fi tip jar — warmer, more personal placement than the
+                sitewide footer button. Same trust-protecting framing. */}
+            <div className="mt-8 bg-amber-50 border border-amber-200 rounded-sm p-6">
+              <div className="font-serif text-xl text-stone-900 mb-2">If this site helped you</div>
+              <p className="text-base text-stone-600 mb-4 leading-relaxed">
+                Pets in Cabin is free, and it's a one-person project — I research the airlines, check the country rules, and keep it all up to date myself. There are no ads and nothing behind a paywall. If the guide saved you some stress or a wrong turn, you can buy me a coffee. It's entirely optional, and the guide stays exactly the same either way — but it's a lovely thing to receive, and it helps keep everything maintained and accurate.
+              </p>
+              <a
+                href="https://ko-fi.com/theosmum"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.gtag) {
+                    window.gtag("event", "kofi_click", { event_category: "support", location: "about_page" });
+                  }
+                }}
+                className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 text-sm font-medium transition-colors rounded-sm"
+              >
+                <span aria-hidden="true">☕</span>
+                Buy me a coffee
+              </a>
+            </div>
+
           </div>
         </main>
 

@@ -5506,18 +5506,33 @@ function assess(answers) {
     });
   }
 
-  // Multi-pet logistics
+  // Multi-pet logistics — the real rule across the industry is "1 pet per
+  // passenger" with two well-documented exceptions: (a) buy an extra adjacent
+  // seat to bring a second carrier (Alaska, JetBlue, United, Air Canada) and
+  // (b) two same-species small pets sharing a single carrier IF their combined
+  // weight stays under that airline's per-carrier limit (Delta, United,
+  // Lufthansa for puppies/kittens). We surface these honestly without
+  // inventing a combined-weight calculation airlines don't actually use.
   if (petCount === "2" || totalPetCount === 2) {
     warnings.push({
-      title: "Travelling with two pets needs careful planning",
-      detail: "Most airlines allow only 1 pet per passenger in the cabin — so 2 pets typically means 2 passengers, or one passenger travelling with 2 carriers (rarely permitted). A few airlines (Delta, United, Lufthansa) allow 2 puppies/kittens of the same species in 1 carrier IF combined weight is under the airline limit AND they're young enough to fit comfortably. Most international destinations also have per-passenger pet import caps. Call your airline directly — these bookings cannot be made online.",
+      title: "Two pets: the real rule is 1 pet per passenger",
+      detail: `Most airlines allow only 1 pet per passenger in the cabin. Two pets typically means one of these setups: <strong>(1) Two passengers, one pet each in separate carriers.</strong> <strong>(2) Buy an adjacent extra seat</strong> on Alaska, JetBlue, United, or Air Canada to bring 2 carriers yourself — each pet must fit its own carrier under that airline's standard weight limit. <strong>(3) Two same-species small pets in one carrier</strong> (Delta, United, Lufthansa allow this for puppies/kittens) — only works if combined pet+carrier weight stays under the airline's single-carrier limit (~8 kg / 17 lb on most airlines) and they fit comfortably together. Many international destinations also cap personal pet imports per traveller. These bookings can't be made online — call the airline directly.`,
     });
   } else if (petCount === "3 or more" || totalPetCount >= 3) {
     flags.push({
       severity: "fixable",
       title: "3+ pets exceeds most airlines' cabin limits per passenger",
-      detail: "No major airline allows more than 1 pet per passenger in the cabin (rare exception: 2 young same-species pets in 1 carrier on Delta/United/Lufthansa). Carrying 3+ pets typically requires 3 passengers, multiple bookings, OR sending some via cargo. Many destinations also cap personal pet imports at 2 per traveller — beyond that you need commercial import permits.",
-      workaround: "Options: split across multiple passengers each carrying 1 pet (most realistic for families), use cargo for some pets (Lufthansa Animal Lounge handles multi-pet cargo well), or contact a pet relocation specialist for a coordinated multi-pet move. Call airlines directly — these bookings need phone arrangement.",
+      detail: "No major airline lets one passenger bring 3+ pets in the cabin. The most you can do solo is 2 carriers via the extra-seat purchase option on Alaska, JetBlue, United, or Air Canada. Many destinations also cap personal pet imports at 2 per traveller — beyond that you need commercial import permits.",
+      workaround: "Realistic options: (1) Split across multiple passengers, 1 pet each — most workable for families. (2) Two passengers + one passenger with an extra-seat purchase = 3 cabin slots. (3) Send some pets via cargo (Lufthansa Animal Lounge handles multi-pet cargo well). (4) For US routes specifically: Bark Air or RetrievAir charter can take a whole household on one booking. Call airlines directly — these bookings need phone arrangement.",
+    });
+  }
+
+  // For any multi-pet booking, flag the per-flight cap separately — this is
+  // genuinely useful and not the same as the per-passenger rule above.
+  if (totalPetCount >= 2) {
+    warnings.push({
+      title: "Book early — most airlines cap total cabin pets per flight",
+      detail: "Beyond the per-passenger limit, airlines also limit total cabin pets per flight — typically 4–8 across the whole plane. With multiple pets on one booking you're using more of that quota, so book as far ahead as possible. Many airlines won't confirm pet slots until they've manually verified availability with the flight crew — expect a phone call, not an instant online confirmation.",
     });
   }
 
@@ -8486,18 +8501,18 @@ function JourneyPlanner() {
   })).filter((g) => g.airports.length > 0);
 
   return (
-    <section ref={sectionRef} id="planner" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
+    <section ref={sectionRef} id="planner" className="py-12 md:py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-baseline gap-3 mb-6">
+        <div className="flex items-baseline gap-3 mb-4">
           <span className="font-serif italic text-amber-400/70 text-lg">✦</span>
           <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-400">Journey planner</span>
           <div className="flex-1 h-px bg-stone-700" />
         </div>
 
-        <h2 className="font-serif text-5xl text-stone-50 mb-4 max-w-3xl">
-          Where are you<br /><span className="italic text-stone-400">flying from and to?</span>
+        <h2 className="font-serif text-3xl md:text-5xl text-stone-50 mb-3 max-w-3xl leading-tight">
+          Where are you <span className="italic text-stone-400">flying from and to?</span>
         </h2>
-        <p className="font-serif italic text-stone-400 text-lg mb-10 max-w-2xl">
+        <p className="font-serif italic text-stone-400 text-base md:text-lg mb-6 max-w-2xl">
           Pick your start and end points. I'll show the cabin routes, the workarounds, and the checklist you'll need — all in one place.
         </p>
 

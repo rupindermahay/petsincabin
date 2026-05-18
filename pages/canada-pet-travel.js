@@ -48,15 +48,7 @@ export default function CanadaPetTravel() {
             Flying with a pet <span className="italic text-stone-600">to and from Canada</span>.
           </h1>
 
-          <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-8">
-            After the strict-import countries, Canada is a relief. There is no rabies titer test, no quarantine, and no import permit for a personal pet dog or cat — the core requirement is a valid rabies vaccination certificate. The bigger decisions are practical ones: which airline takes your pet in the cabin, which Canadian airport to fly into, and getting the paperwork right for your specific origin country.
-          </p>
-
-          <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
-            Verified against the Canadian Food Inspection Agency (CFIA), the Canada Border Services Agency (CBSA), and current Air Canada and Air Transat policies as of May 2026. Rules change — confirm directly before booking.
-          </p>
-
-          <div className="bg-white border border-stone-200 rounded-sm p-5 mb-12">
+          <div className="bg-white border border-stone-200 rounded-sm p-5 mb-8">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">In this guide</div>
             <div className="flex flex-wrap gap-2 text-sm">
               <a href="#the-short-answer" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The short answer</a>
@@ -67,6 +59,14 @@ export default function CanadaPetTravel() {
               <a href="#arrival" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Arrival &amp; CBSA</a>
             </div>
           </div>
+
+          <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-8">
+            After the strict-import countries, Canada is a relief. There is no rabies titer test, no quarantine, and no import permit for a personal pet dog or cat — the core requirement is a valid rabies vaccination certificate. The bigger decisions are practical ones: which airline takes your pet in the cabin, which Canadian airport to fly into, and getting the paperwork right for your specific origin country.
+          </p>
+
+          <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
+            Verified against the Canadian Food Inspection Agency (CFIA), the Canada Border Services Agency (CBSA), and current Air Canada and Air Transat policies as of May 2026. Rules change — confirm directly before booking.
+          </p>
 
           <div className="h-px bg-stone-300 mb-12" />
 

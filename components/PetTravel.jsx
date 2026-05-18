@@ -8183,20 +8183,40 @@ function twCountryForAirport(code) {
   return TW_AIRPORT_TO_COUNTRY[code] || null;
 }
 
-function TapewormWindow({ destKey = null, onResult = null }) {
+function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, stopoverOptions = null, onAddToChecklist = null, addedToChecklist = false }) {
   const presetDest = TW_DEST_COUNTRIES.find((c) => c.key === destKey);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [dest, setDest] = useState(presetDest ? presetDest.key : "UK");
   const [origin, setOrigin] = useState("US-ET");
   const [stopover, setStopover] = useState("");
   const [arrival, setArrival] = useState("");
   const [treatLoc, setTreatLoc] = useState("US-ET");
 
+  // Follow defaultOpen if the parent flips it (e.g. "Plan & calculate").
+  useEffect(() => {
+    if (defaultOpen) setOpen(true);
+  }, [defaultOpen]);
+
   // If a preset destination changes (planner re-search), follow it.
   useEffect(() => {
     if (presetDest && presetDest.key !== dest) setDest(presetDest.key);
   }, [presetDest, dest]);
+
+  // The stopover dropdown options. When the parent passes route-specific
+  // stopoverOptions (the actual workaround hubs for this route), use those;
+  // otherwise fall back to the full country list.
+  const stopoverChoices = stopoverOptions && stopoverOptions.length > 0
+    ? stopoverOptions
+    : TW_TRIP_COUNTRIES;
+
+  // If the available stopover choices change and the current pick is no
+  // longer valid, clear it.
+  useEffect(() => {
+    if (stopover && !stopoverChoices.some((c) => c.key === stopover)) {
+      setStopover("");
+    }
+  }, [stopoverChoices, stopover]);
 
   const vetOptions = useMemo(() => {
     const keys = [origin];
@@ -8229,9 +8249,13 @@ function TapewormWindow({ destKey = null, onResult = null }) {
   }, [arrival, dest, treatLoc]);
 
   // Hand the result up so the parent (planner / checklist) can auto-fill.
+  // Intentionally depends only on `result` — `onResult` is a notify-up
+  // callback and including it would loop if the parent passes an inline fn.
+  const onResultRef = useRef(onResult);
+  onResultRef.current = onResult;
   useEffect(() => {
-    if (onResult) onResult(result);
-  }, [result, onResult]);
+    if (onResultRef.current) onResultRef.current(result);
+  }, [result]);
 
   // Analytics: fire one GA4 event per real calculation. Debounced so
   // typing into the date field doesn't spam events; a ref guards repeats.
@@ -8252,26 +8276,26 @@ function TapewormWindow({ destKey = null, onResult = null }) {
   }, [result, dest, arrival]);
 
   return (
-    <div className="border border-amber-200 bg-amber-50/50 rounded-sm overflow-hidden">
+    <div className="border-2 border-amber-400 bg-amber-100 rounded-sm overflow-hidden shadow-sm">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left hover:bg-amber-50 transition-colors"
+        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left hover:bg-amber-200/70 transition-colors"
       >
         <div>
           <div className="font-serif text-stone-900 text-lg">
             Tapeworm treatment timing
           </div>
-          <div className="text-sm text-stone-600">
+          <div className="text-sm text-stone-700">
             Dogs entering {presetDest ? presetDest.name : "the UK, Ireland, Norway, Malta or Finland"} need a vet-recorded treatment in a strict time window. Work out yours.
           </div>
         </div>
-        <span className="text-amber-700 text-xl flex-shrink-0" aria-hidden="true">
+        <span className="text-amber-800 text-2xl flex-shrink-0 font-medium" aria-hidden="true">
           {open ? "−" : "+"}
         </span>
       </button>
 
       {open && (
-        <div className="px-5 pb-5 pt-1 border-t border-amber-200 space-y-4">
+        <div className="px-5 pb-5 pt-1 border-t-2 border-amber-300 space-y-4">
           {!presetDest && (
             <label className="block">
               <span className="text-sm font-medium text-stone-700">Destination country</span>
@@ -8310,10 +8334,15 @@ function TapewormWindow({ destKey = null, onResult = null }) {
                 className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900"
               >
                 <option value="">No stopover</option>
-                {TW_TRIP_COUNTRIES.map((c) => (
+                {stopoverChoices.map((c) => (
                   <option key={c.key} value={c.key}>{c.name}</option>
                 ))}
               </select>
+              {stopoverOptions && stopoverOptions.length > 0 && (
+                <span className="text-xs text-stone-500 mt-1 block">
+                  The stopover hubs on your planned route.
+                </span>
+              )}
             </label>
           </div>
 
@@ -8392,7 +8421,28 @@ function TapewormWindow({ destKey = null, onResult = null }) {
             </p>
           )}
 
-          <p className="text-xs text-stone-500 leading-relaxed border-t border-amber-200 pt-3">
+          {/* ADD TO CHECKLIST — only when the parent (planner) supplies the
+              callback. Puts the dated tapeworm line into the checklist that
+              shows on screen AND the printable PDF. */}
+          {result && onAddToChecklist && (
+            <div>
+              {addedToChecklist ? (
+                <div className="flex items-center gap-2 text-sm text-green-800 bg-green-100 border border-green-300 rounded-sm px-4 py-3">
+                  <Check className="w-4 h-4 flex-shrink-0" strokeWidth={2.5} />
+                  <span>Added to your checklist below — it's in the printable PDF too.</span>
+                </div>
+              ) : (
+                <button
+                  onClick={() => onAddToChecklist(result)}
+                  className="w-full bg-stone-900 text-amber-50 px-5 py-3 text-sm uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors rounded-sm"
+                >
+                  Add these dates to my checklist
+                </button>
+              )}
+            </div>
+          )}
+
+          <p className="text-xs text-stone-600 leading-relaxed border-t border-amber-300 pt-3">
             This is a guide based on the standard 24–120 hour rule. Always confirm the
             exact window and recording requirements with your vet and the destination's
             official guidance — and book the vet appointment early, as availability is
@@ -8854,6 +8904,18 @@ function JourneyPlanner() {
   const [expandedSections, setExpandedSections] = useState(() => new Set());
   const sectionRef = useRef(null);
 
+  // --- Tapeworm calculator integration ---
+  // wantTapeworm: set true when the user clicks "Plan & calculate tapeworm
+  //   treatment" — makes the calculator render auto-expanded and scrolls to it.
+  // tapewormResult: the latest result handed up from the TapewormWindow.
+  // tapewormAdded: true once the user clicks "Add to my checklist" — this is
+  //   what causes the dated line to be injected into the checklist (both the
+  //   on-screen preview AND the PDF, since both read the same combined object).
+  const [wantTapeworm, setWantTapeworm] = useState(false);
+  const [tapewormResult, setTapewormResult] = useState(null);
+  const [tapewormAdded, setTapewormAdded] = useState(false);
+  const tapewormRef = useRef(null);
+
   // When results appear, scroll to the START of the results (the route
   // header / "Your routes" area), NOT the top of the entire planner section.
   // The whole-section approach scrolls to above the form the user just
@@ -9039,6 +9101,34 @@ function JourneyPlanner() {
   const effectiveOrigin = driveTo ? driveTo.code : origin;
   const effectiveOriginAirport = driveTo ? airportByCode(driveTo.code) : originAirport;
 
+  // Route-aware stopover options for the tapeworm calculator. A workaround
+  // route's FIRST leg lands at the hub (e.g. "... → Paris CDG"); we pull the
+  // airport code from that leg, map it to a tapeworm-timezone country, and
+  // offer those as the stopover choices. De-duplicated. Falls back to null
+  // (calculator then shows its full country list) if nothing can be derived.
+  const tapewormStopovers = useMemo(() => {
+    const hubs = new Map(); // tzKey -> display name
+    const REGION_TO_TW = {
+      europe: "FR", us: "US-ET", canada: "CA-ET", india: "IN", dubai: "AE",
+    };
+    workaroundMatches.forEach((r) => {
+      const legs = (r.route && r.route.legs) || r.legs || [];
+      if (!legs.length) return;
+      // First leg text is like "JFK / BOS → Paris CDG" — the hub is after the
+      // arrow. Grab the text after "→" and find a bare 3-letter airport code.
+      const firstLeg = legs[0].route || "";
+      const afterArrow = firstLeg.split(/→|->/).pop() || "";
+      const codeMatch = afterArrow.match(/\b([A-Z]{3})\b/);
+      if (!codeMatch) return;
+      const hubAirport = airportByCode(codeMatch[1]);
+      if (!hubAirport) return;
+      const tzKey = REGION_TO_TW[hubAirport.region];
+      if (tzKey) hubs.set(tzKey, twNameFor(tzKey));
+    });
+    if (hubs.size === 0) return null;
+    return Array.from(hubs.entries()).map(([key, name]) => ({ key, name }));
+  }, [workaroundMatches]);
+
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
 
   // Airport-specific cabin warnings — accurate to the EXACT airport chosen.
@@ -9148,9 +9238,15 @@ function JourneyPlanner() {
     }, 100);
   }
 
-  function plan() {
+  function plan(withTapeworm = false) {
     if (origin && destination) {
       setPlanned(true);
+      // When the user chose "Plan & calculate tapeworm treatment", flag the
+      // calculator to open auto-expanded; otherwise leave it collapsed.
+      setWantTapeworm(withTapeworm && !!twCountryForAirport(destination));
+      // A fresh plan clears any previously-added tapeworm checklist line.
+      setTapewormAdded(false);
+      setTapewormResult(null);
       // GA4 — track journey planner submission. Captures the airport pair
       // the user is researching. (Different from journey_opened, which fires
       // when they pick one specific route from the list of options.)
@@ -9168,7 +9264,22 @@ function JourneyPlanner() {
     setOrigin("");
     setDestination("");
     setPlanned(false);
+    setWantTapeworm(false);
+    setTapewormAdded(false);
+    setTapewormResult(null);
   }
+
+  // When the user clicked "Plan & calculate", scroll to the calculator once
+  // the results have rendered. Slight delay lets the results DOM settle.
+  useEffect(() => {
+    if (!planned || !wantTapeworm) return;
+    const t = setTimeout(() => {
+      if (tapewormRef.current) {
+        tapewormRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 350);
+    return () => clearTimeout(t);
+  }, [planned, wantTapeworm]);
 
   // Airports grouped by region, for the dropdown <optgroup>s.
   const airportsByRegion = REGIONS.map((r) => ({
@@ -9261,22 +9372,24 @@ function JourneyPlanner() {
             </select>
           </div>
 
-          <button
-            onClick={plan}
-            disabled={!origin || !destination}
-            className="bg-amber-600 text-white px-7 py-3.5 uppercase tracking-widest text-xs font-medium hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-          >
-            Plan my journey
-          </button>
-        </div>
-
-        {/* TAPEWORM CALCULATOR — appears in the form area once an origin and
-            a tapeworm-rule destination are both selected, before planning. */}
-        {origin && destination && twCountryForAirport(destination) && (
-          <div className="mt-6">
-            <TapewormWindow destKey={twCountryForAirport(destination)} />
+          <div className="flex flex-col gap-2.5">
+            <button
+              onClick={() => plan(false)}
+              disabled={!origin || !destination}
+              className="bg-amber-600 text-white px-7 py-3.5 uppercase tracking-widest text-xs font-medium hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+            >
+              Plan my journey
+            </button>
+            {origin && destination && twCountryForAirport(destination) && (
+              <button
+                onClick={() => plan(true)}
+                className="bg-stone-700 text-amber-100 px-7 py-3 uppercase tracking-widest text-[11px] font-medium hover:bg-stone-600 transition-colors whitespace-nowrap border border-amber-700/40"
+              >
+                Plan &amp; calculate tapeworm treatment
+              </button>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Results */}
         {planned && (
@@ -9297,6 +9410,23 @@ function JourneyPlanner() {
                 Start over
               </button>
             </div>
+
+            {/* TAPEWORM CALCULATOR — shows when the destination is a tapeworm
+                country. Route-aware: stopover options come from the actual
+                workaround routes. Auto-expands + scrolls when the user chose
+                "Plan & calculate tapeworm treatment". */}
+            {origin !== destination && twCountryForAirport(destination) && (
+              <div ref={tapewormRef} className="mb-6 scroll-mt-20">
+                <TapewormWindow
+                  destKey={twCountryForAirport(destination)}
+                  defaultOpen={wantTapeworm}
+                  stopoverOptions={tapewormStopovers}
+                  onResult={setTapewormResult}
+                  onAddToChecklist={(res) => { setTapewormResult(res); setTapewormAdded(true); }}
+                  addedToChecklist={tapewormAdded}
+                />
+              </div>
+            )}
 
             {/* Same airport selected */}
             {origin === destination && (
@@ -9767,6 +9897,30 @@ function JourneyPlanner() {
                     transitRegions,
                     routeLegs
                   );
+
+                  // If the user added tapeworm dates via the calculator, inject
+                  // a dated line into the checklist. This mutates the `combined`
+                  // object that feeds BOTH the on-screen preview below AND the
+                  // printable PDF (openChecklistPrintable reads the same object),
+                  // so the dated line appears in both — as promised by the
+                  // calculator's confirmation message.
+                  if (tapewormAdded && tapewormResult && combined.sections && combined.sections.length > 0) {
+                    const datedLine =
+                      `Tapeworm treatment — vet must treat &amp; record between ` +
+                      `<strong>${tapewormResult.earliestStr}</strong> and ` +
+                      `<strong>${tapewormResult.latestStr}</strong> (${tapewormResult.treatLabel}). ` +
+                      `Valid only if you land in ${tapewormResult.destName} by ` +
+                      `${tapewormResult.cutoffStr} ${tapewormResult.destLabel}.`;
+                    // Avoid double-insertion on re-render.
+                    const alreadyThere = combined.sections.some((s) =>
+                      (s.items || []).some((it) => typeof it === "string" && it.includes("vet must treat &amp; record between"))
+                    );
+                    if (!alreadyThere) {
+                      // Prefer a non-divider section; fall back to the first.
+                      const target = combined.sections.find((s) => !s.divider) || combined.sections[0];
+                      target.items = [datedLine, ...target.items];
+                    }
+                  }
                   if (!combined.sections || combined.sections.length === 0) {
                     return (
                       <div className="bg-amber-950/40 border border-amber-800/50 p-5">

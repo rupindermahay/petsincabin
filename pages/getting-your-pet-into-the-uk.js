@@ -100,7 +100,108 @@ export default function GettingYourPetIntoTheUK() {
               Pick your European hub, then your crossing. Times and costs are ballpark — they swing with season, operator and how far you're going.
             </p>
 
-            <div className="overflow-x-auto -mx-6 px-6 mb-3">
+            {/* MOBILE — stacked cards. A 4-column comparison table can't be
+                read on a phone, so below md each route is a full-width card
+                with its legs and costs laid out vertically. */}
+            <div className="md:hidden space-y-4 mb-3">
+              {/* Via Paris */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Paris</div>
+                <div className="text-xs text-stone-500 mb-3">CDG → Calais → Eurotunnel/ferry</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~5–6h total</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Drive CDG→Calais ~3h</li>
+                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Check-in &amp; pet reception ~1–1.5h</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£110–£200</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £250–£450 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£400–£900 · + vehicle crossing ticket £115–£229</div>
+                <div className="font-serif text-base text-stone-900">≈ £515–£1,130 total</div>
+                <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
+              </div>
+              {/* Via Frankfurt */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Frankfurt</div>
+                <div className="text-xs text-stone-500 mb-3">FRA → Calais → Eurotunnel/ferry</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~7–8h total</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Drive FRA→Calais ~5–6h</li>
+                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Check-in &amp; pet reception ~1–1.5h</li>
+                  <li>Most split it with an overnight</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£140–£250 · pet-friendly overnight ~£80–£150</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £350–£600 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£600–£1,200 · + vehicle crossing ticket £115–£229</div>
+                <div className="font-serif text-base text-stone-900">≈ £715–£1,430 total</div>
+                <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
+              </div>
+              {/* Via Amsterdam — ferry */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Amsterdam — ferry</div>
+                <div className="text-xs text-stone-500 mb-3">DFDS overnight IJmuiden → Newcastle</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~17h overnight</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Schiphol→IJmuiden taxi ~40 min</li>
+                  <li>DFDS ferry ~16h (overnight, you sleep onboard)</li>
+                  <li>Ferry check-in ~1h</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Ferry passage + pet-friendly cabin ~£150–£350 · pet fee ~£30</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £180–£380 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-500">— (the ferry route isn't a pet-taxi option)</div>
+              </div>
+              {/* Via Amsterdam — overland */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Amsterdam — overland</div>
+                <div className="text-xs text-stone-500 mb-3">AMS → Belgium/France → Eurotunnel</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~7–8h total</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Drive AMS→Calais ~3.5–4h via Belgium</li>
+                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Check-in &amp; pet reception ~1–1.5h</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£130–£230</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £280–£480 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£500–£1,000 · + vehicle crossing ticket £115–£229</div>
+                <div className="font-serif text-base text-stone-900">≈ £615–£1,230 total</div>
+                <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
+              </div>
+              {/* Via Spain */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Spain</div>
+                <div className="text-xs text-stone-500 mb-3">Brittany Ferries Bilbao/Santander → Portsmouth or Plymouth</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time</div>
+                <div className="text-sm text-stone-700 mb-3">~24–36h crossing</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Ferry passage + pet-friendly cabin (car &amp; 2, peak) ~£250–£1,100 · pet fee from ~£50</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £300–£1,150 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-500">long-haul — get a quote</div>
+              </div>
+              {/* Cunard QM2 */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Cunard QM2</div>
+                <div className="text-xs text-stone-500 mb-3">Ocean liner New York → Southampton — no flight at all</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time</div>
+                <div className="text-sm text-stone-700 mb-3">~7 nights at sea</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Crossing fare + kennel fee — premium, varies widely by cabin and season</div>
+                <div className="font-serif text-base text-stone-900 mb-3">get a quote</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-500">n/a</div>
+              </div>
+            </div>
+
+            <div className="hidden md:block overflow-x-auto -mx-6 px-6 mb-3">
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b-2 border-stone-300 align-bottom">
@@ -117,16 +218,19 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">CDG → Calais → Eurotunnel/ferry</span>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="font-medium text-stone-900">~5–6h total</span><br />
-                      <span className="text-xs text-stone-500">Drive CDG→Calais ~3h · Eurotunnel 35 min (or Calais–Dover ferry ~1.5h) · check-in &amp; pet reception ~1–1.5h</span>
+                      <span className="font-medium text-stone-900">~5–6h total</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Drive CDG→Calais ~3h</span>
+                      <span className="block text-xs text-stone-500">Eurotunnel 35 min (or ferry ~1.5h)</span>
+                      <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="text-xs text-stone-600">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£110–£200</span><br />
                       <span className="font-medium text-stone-900">≈ £250–£450 total</span>
                     </td>
                     <td className="py-3 pl-3">
-                      <span className="font-medium text-stone-900">≈ £400–£900 total</span><br />
-                      <span className="text-xs text-stone-500">inc the crossing ticket — a guide only, prices change daily</span>
+                      <span className="text-xs text-stone-600">Driving fare ~£400–£900 · + crossing ticket £115–£229</span><br />
+                      <span className="font-medium text-stone-900">≈ £515–£1,130 total</span><br />
+                      <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
                     </td>
                   </tr>
                   <tr className="border-b border-stone-200">
@@ -135,16 +239,20 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">FRA → Calais → Eurotunnel/ferry</span>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="font-medium text-stone-900">~7–8h total</span><br />
-                      <span className="text-xs text-stone-500">Drive FRA→Calais ~5–6h · Eurotunnel 35 min (or Calais–Dover ferry ~1.5h) · check-in &amp; pet reception ~1–1.5h · most split it with an overnight</span>
+                      <span className="font-medium text-stone-900">~7–8h total</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Drive FRA→Calais ~5–6h</span>
+                      <span className="block text-xs text-stone-500">Eurotunnel 35 min (or ferry ~1.5h)</span>
+                      <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
+                      <span className="block text-xs text-stone-500">Most split it with an overnight</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="text-xs text-stone-600">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£140–£250 · pet-friendly overnight ~£80–£150</span><br />
                       <span className="font-medium text-stone-900">≈ £350–£600 total</span>
                     </td>
                     <td className="py-3 pl-3">
-                      <span className="font-medium text-stone-900">≈ £600–£1,200 total</span><br />
-                      <span className="text-xs text-stone-500">inc the crossing ticket — a guide only, prices change daily</span>
+                      <span className="text-xs text-stone-600">Driving fare ~£600–£1,200 · + crossing ticket £115–£229</span><br />
+                      <span className="font-medium text-stone-900">≈ £715–£1,430 total</span><br />
+                      <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
                     </td>
                   </tr>
                   <tr className="border-b border-stone-200">
@@ -153,8 +261,10 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">DFDS overnight IJmuiden → Newcastle</span>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="font-medium text-stone-900">~17h overnight</span><br />
-                      <span className="text-xs text-stone-500">Schiphol→IJmuiden taxi ~40 min · DFDS ferry ~16h (overnight, you sleep onboard) · ferry check-in ~1h</span>
+                      <span className="font-medium text-stone-900">~17h overnight</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Schiphol→IJmuiden taxi ~40 min</span>
+                      <span className="block text-xs text-stone-500">DFDS ferry ~16h (overnight, sleep onboard)</span>
+                      <span className="block text-xs text-stone-500">Ferry check-in ~1h</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="text-xs text-stone-600">Ferry passage + pet-friendly cabin ~£150–£350 · pet fee ~£30</span><br />
@@ -168,16 +278,19 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">AMS → Belgium/France → Eurotunnel</span>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="font-medium text-stone-900">~7–8h total</span><br />
-                      <span className="text-xs text-stone-500">Drive AMS→Calais ~3.5–4h via Belgium · Eurotunnel 35 min (or Calais–Dover ferry ~1.5h) · check-in &amp; pet reception ~1–1.5h</span>
+                      <span className="font-medium text-stone-900">~7–8h total</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Drive AMS→Calais ~3.5–4h via Belgium</span>
+                      <span className="block text-xs text-stone-500">Eurotunnel 35 min (or ferry ~1.5h)</span>
+                      <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="text-xs text-stone-600">Vehicle crossing £115–£229 · pet fee ~£24 · car hire &amp; fuel ~£130–£230</span><br />
                       <span className="font-medium text-stone-900">≈ £280–£480 total</span>
                     </td>
                     <td className="py-3 pl-3">
-                      <span className="font-medium text-stone-900">≈ £500–£1,000 total</span><br />
-                      <span className="text-xs text-stone-500">inc the crossing ticket — a guide only, prices change daily</span>
+                      <span className="text-xs text-stone-600">Driving fare ~£500–£1,000 · + crossing ticket £115–£229</span><br />
+                      <span className="font-medium text-stone-900">≈ £615–£1,230 total</span><br />
+                      <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
                     </td>
                   </tr>
                   <tr className="border-b border-stone-200">
@@ -209,7 +322,7 @@ export default function GettingYourPetIntoTheUK() {
             </div>
 
             <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
-              <strong>The pet-taxi total is the one to interrogate.</strong> There's no industry standard — some operators quote a single all-in price that already includes the Eurotunnel/ferry crossing and tolls; others quote the driving only and add the crossing as a separate charge (often a deposit equal to the ticket price), or leave you to pay it on the day. Two quotes that look similar can differ by £150–£250 once the crossing is in or out. Always ask the operator, in writing: <em>"Does this price include the Channel crossing ticket, the pet fee, and tolls — or are those extra?"</em>
+              <strong>How the pet-taxi total is built.</strong> The figures above show the pet-taxi driving fare <em>plus</em> the vehicle crossing ticket — because the crossing is almost always charged on top of the driving fare, not bundled into it. The crossing ticket is the same one a self-driver buys, and its price changes daily with demand, so treat the total as a guide. A few operators do quote a single all-in price with the crossing included — so always ask, in writing: <em>"Does your fare include the Channel crossing ticket and tolls, or are those extra?"</em>
             </p>
 
             <div className="bg-white border border-stone-300 rounded-sm p-5 mb-3">
@@ -224,7 +337,7 @@ export default function GettingYourPetIntoTheUK() {
                 <li><strong>Ferry cabins.</strong> On the Amsterdam, Spain and longer France crossings, a pet-friendly cabin isn't the pet fee — it's a separate, often pricey, booking.</li>
               </ul>
               <p className="font-serif text-stone-700 leading-relaxed text-sm">
-                None of this is hidden by anyone trying to trick you — it's just rarely added up in one place. So do add it up. The realistic all-in cost of the overland routes is the vehicle crossing <em>plus</em> the pet fee <em>plus</em> car hire/fuel <em>plus</em> any overnight — easily several hundred pounds before you've factored the flight. A pet taxi can fold most of this into one quote — but not always: some operators include the Channel crossing in their price, others charge it on top or ask for a deposit equal to the ticket. So when you compare a pet-taxi quote against driving it yourself, make sure you're comparing two genuine all-in totals — ask the operator outright whether the crossing, pet fee and tolls are included.
+                None of this is hidden by anyone trying to trick you — it's just rarely added up in one place. So do add it up. The realistic all-in cost of the overland routes is the vehicle crossing <em>plus</em> the pet fee <em>plus</em> car hire/fuel <em>plus</em> any overnight — easily several hundred pounds before you've factored the flight. And if you use a pet taxi, the crossing ticket is normally charged on top of the driving fare — it's the same ticket either way — so when you compare a pet-taxi quote against driving it yourself, make sure both totals include that crossing. Ask the operator outright whether the crossing, pet fee and tolls are in their number.
               </p>
             </div>
 
@@ -367,7 +480,7 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The pet usually rides in the vehicle with you, often out of its carrier on a blanket beside you, and the operator handles the pet check-in at the Eurotunnel or ferry terminal. Costs vary widely with distance — operators quote roughly £400 to £2,000 for the door-to-door journey. The Frankfurt route, being the longest drive, sits at the higher end; a Paris collection is typically less. One thing to pin down before you compare quotes: some operators' prices already include the Channel crossing ticket and tolls, others quote the driving only and add the crossing separately (sometimes as a deposit equal to the ticket price). Ask outright what's in the number.
+              The pet usually rides in the vehicle with you, often out of its carrier on a blanket beside you, and the operator handles the pet check-in at the Eurotunnel or ferry terminal. Costs vary widely with distance — operators quote roughly £400 to £2,000 for the door-to-door driving. The Frankfurt route, being the longest drive, sits at the higher end; a Paris collection is typically less. One thing to be clear on: that driving fare almost always sits separately from the Channel crossing ticket, which is normally charged on top (it's the same ticket a self-driver buys, and its price moves daily). A few operators quote a single all-in price with the crossing included — so always ask outright what's in the number.
             </p>
 
             <div className="bg-amber-50 border-l-2 border-amber-400 p-4 mb-4">

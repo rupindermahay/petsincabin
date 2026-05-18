@@ -192,7 +192,7 @@ const AIRLINES = [
     notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Air Transat operates this from Manchester (MAN) and Glasgow (GLA) only — NOT Gatwick. Like Air Canada, pets can't fly cabin into the UK on return.",
     intl: "Yes (transatlantic)",
     verified: "May 2026",
-    link: "https://www.airtransat.com/en/travel-info/baggage/special-baggage/pets",
+    link: "https://www.airtransat.com/en-CA/travel-information/special-services/pets-and-service-dogs",
   },
   {
     name: "Air France / KLM",
@@ -320,7 +320,7 @@ const AIRLINES = [
     notes: "Strong Istanbul-hub option for Asia-Europe-Americas connections. Pet rooms at Istanbul (IST) airport include a pet toilet — useful for layovers. Frequent IST flights to most Indian cities. Good for India → Europe → USA routings via Istanbul. ECONOMY ONLY (no cabin pets in business since April 2026). Reserve at least 6 hours before, recommended 48+ hours for international.",
     intl: "Yes (most routes)",
     verified: "May 2026",
-    link: "https://www.turkishairlines.com/en-int/any-questions/travelling-with-pets/",
+    link: "https://www.turkishairlines.com/en-us/any-questions/traveling-with-pets/",
   },
   {
     name: "Iberia",
@@ -2766,7 +2766,7 @@ const CHECKLIST_DATA = {
         items: [
           "Apply for <a href=\"https://aqcsindia.gov.in/\" target=\"_blank\" rel=\"noopener noreferrer\">NOC (No Objection Certificate)</a> from AQCS — submit advance copies of all docs (health cert, vaccine records, microchip cert, passport copy, ticket copy, 2 postcard photos of pet) by email or fax to the entry-port AQCS office. Processing fee Rs 1000 per application.",
           "Advance NOC can be issued within 7 days before arrival — don't apply too early, certificate has limited validity.",
-          "Book <a href=\"https://www.airindia.com/in/en/travel-information/baggage-information/travelling-with-pets.html\" target=\"_blank\" rel=\"noopener noreferrer\">Air India Paws on Board</a> cabin slot (if eligible route) — pets up to 10 kg combined on most India routes.",
+          "Book <a href=\"https://www.airindia.com/in/en/travel-information/travelling-with-pets.html\" target=\"_blank\" rel=\"noopener noreferrer\">Air India Paws on Board</a> cabin slot (if eligible route) — pets up to 10 kg combined on most India routes.",
           "Book a representative or agent at the entry airport if you don't have one (highly recommended, especially at Delhi).",
           "Confirm 48 hours before — Air India requires 48 hrs minimum notice for pet bookings.",
         ],
@@ -2918,7 +2918,7 @@ const CHECKLIST_DATA = {
         title: "4 weeks before",
         items: [
           "Apply for <a href=\"https://www.moccae.gov.ae/en/services/registration-pet.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">MOCCAE import permit</a> (Ministry of Climate Change and Environment) — ~AED 200",
-          "Book cabin pet space directly with <a href=\"https://www.etihad.com/en/help/baggage/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">Etihad</a> by phone (cabin for AUH; cargo only for DXB)",
+          "Book cabin pet space directly with <a href=\"https://www.etihad.com/en/plan/travel-companion/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">Etihad</a> by phone (cabin for AUH; cargo only for DXB)",
           "If using Dubai cargo: arrange Dubai Kennels & Cattery (DKC) or another customs broker",
           "Confirm departure airport allows your specific carrier and aircraft",
         ],

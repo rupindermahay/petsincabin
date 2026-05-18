@@ -208,7 +208,7 @@ const AIRLINES = [
     notes: "One of the most popular cabin options OUT of the UK for travel to Europe or onwards. Combined carrier from LHR (NOT Gatwick — Gatwick blocks cabin pets). Connect at Paris/Amsterdam for cabin-friendly onward flights to USA, India, and most of the world. Not allowed in business class on intercontinental. Snub-nosed breeds: cabin OK; cargo banned for medical reasons.",
     intl: "Yes",
     verified: "May 2026",
-    link: "https://www.airfrance.us/information/passagers/animaux",
+    link: "https://wwws.airfrance.us/information/passagers/voyager-avec-son-animal-chien-chat",
   },
   {
     name: "Lufthansa",

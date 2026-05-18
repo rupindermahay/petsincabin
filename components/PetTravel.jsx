@@ -5632,8 +5632,31 @@ function NavBar({ onStartIntake }) {
     if (id === "top") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
     if (id === "intake") { onStartIntake(); return; }
     if (id === "about") { window.location.href = "/about"; return; }
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Scroll to the target section. On mobile, content above the target can
+    // change height while a smooth-scroll is animating (e.g. the intake /
+    // assessment block collapsing), which makes the browser overshoot and
+    // land on the wrong section. To stay robust we scroll, then re-measure
+    // after layout has settled and correct any drift.
+    const scrollToId = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    scrollToId();
+    // Re-correct after the layout settles. Two passes catches both the
+    // immediate reflow and any slightly later image/async height changes.
+    // A correctly-landed section sits near the top of the viewport (within
+    // its scroll-margin, ~96px); large drift means an overshoot to correct.
+    const correct = (delay) => setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      if (top < -120 || top > 220) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, delay);
+    correct(450);
+    correct(900);
   }
 
   // Split nav items into two even rows — gives us control over the layout

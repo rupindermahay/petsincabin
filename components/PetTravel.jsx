@@ -2,6 +2,37 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
+// ---------- ROBUST SCROLL HELPER ----------
+// On mobile, content above a scroll target can change height while a
+// smooth-scroll is animating (intake/assessment blocks collapsing, result
+// cards/checklists expanding, images loading). The browser then overshoots
+// or undershoots and lands on the wrong section. scrollToTarget scrolls,
+// then re-measures after layout settles and corrects any drift.
+//   target: a DOM element, OR a string element id.
+function scrollToTarget(target) {
+  const resolve = () =>
+    typeof target === "string" ? document.getElementById(target) : target;
+  const doScroll = () => {
+    const el = resolve();
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  doScroll();
+  // Re-correct after layout settles. A correctly-landed section sits near the
+  // top of the viewport (within its scroll-margin, ~96px); large drift means
+  // an overshoot/undershoot worth correcting. Two passes catch the immediate
+  // reflow and any slightly later async height changes.
+  [450, 900].forEach((delay) => {
+    setTimeout(() => {
+      const el = resolve();
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      if (top < -120 || top > 220) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, delay);
+  });
+}
+
 // ---------- SITE META ----------
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
@@ -5633,30 +5664,9 @@ function NavBar({ onStartIntake }) {
     if (id === "intake") { onStartIntake(); return; }
     if (id === "about") { window.location.href = "/about"; return; }
 
-    // Scroll to the target section. On mobile, content above the target can
-    // change height while a smooth-scroll is animating (e.g. the intake /
-    // assessment block collapsing), which makes the browser overshoot and
-    // land on the wrong section. To stay robust we scroll, then re-measure
-    // after layout has settled and correct any drift.
-    const scrollToId = () => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-    scrollToId();
-    // Re-correct after the layout settles. Two passes catches both the
-    // immediate reflow and any slightly later image/async height changes.
-    // A correctly-landed section sits near the top of the viewport (within
-    // its scroll-margin, ~96px); large drift means an overshoot to correct.
-    const correct = (delay) => setTimeout(() => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const top = el.getBoundingClientRect().top;
-      if (top < -120 || top > 220) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }, delay);
-    correct(450);
-    correct(900);
+    // Robust scroll — see scrollToTarget: scrolls, then re-measures and
+    // corrects any overshoot once the layout has settled (mobile reflow).
+    scrollToTarget(id);
   }
 
   // Split nav items into two even rows — gives us control over the layout
@@ -8996,9 +9006,8 @@ function JourneyPlanner() {
       const resultsEl = document.getElementById("planner-results-anchor");
       const el = resultsEl || sectionRef.current;
       if (el) {
-        // block:"start" aligns the anchor to the top of the viewport; the
-        // anchor div carries scroll-mt-20 so it isn't tucked under the nav.
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // scrollToTarget re-corrects overshoot as the fadeIn results settle.
+        scrollToTarget(el);
       }
     }, 120);
     return () => clearTimeout(t);
@@ -9311,12 +9320,10 @@ function JourneyPlanner() {
       });
     }
     // After selecting, scroll smoothly to the checklist anchor (set below).
+    // Selecting a route expands a large checklist, so layout shifts a lot —
+    // scrollToTarget re-corrects any overshoot once it settles.
     setTimeout(() => {
-      const el = document.getElementById("planner-checklist-anchor");
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top, behavior: "smooth" });
-      }
+      scrollToTarget("planner-checklist-anchor");
     }, 100);
   }
 
@@ -9352,12 +9359,13 @@ function JourneyPlanner() {
   }
 
   // When the user clicked "Plan & calculate", scroll to the calculator once
-  // the results have rendered. Slight delay lets the results DOM settle.
+  // the results have rendered. scrollToTarget re-corrects overshoot as the
+  // results DOM settles around it.
   useEffect(() => {
     if (!planned || !wantTapeworm) return;
     const t = setTimeout(() => {
       if (tapewormRef.current) {
-        tapewormRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToTarget(tapewormRef.current);
       }
     }, 350);
     return () => clearTimeout(t);
@@ -11660,8 +11668,7 @@ function SiteToolsOverview() {
   ];
 
   function go(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToTarget(id);
   }
 
   return (

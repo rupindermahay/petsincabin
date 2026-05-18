@@ -5979,6 +5979,23 @@ function NavBar({ onStartIntake }) {
             </div>
           </div>
         </div>
+
+        {/* THIRD ROW — full-width feature link to the flagship UK-return guide.
+            Spans the entire nav width (logo edge to right edge) as a single
+            merged banner, distinct from the two section-link rows above. */}
+        <a
+          href="/getting-your-pet-into-the-uk"
+          className="hidden md:flex items-center justify-center gap-2 mt-2.5 py-2 bg-stone-900 hover:bg-amber-800 transition-colors group rounded-sm"
+        >
+          <PawPrint className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors" strokeWidth={2} />
+          <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors">
+            Getting your pet into the UK from Europe
+          </span>
+          <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors">
+            — every route, compared
+          </span>
+          <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all" strokeWidth={2} />
+        </a>
       </div>
 
       {/* Mobile menu */}
@@ -5988,6 +6005,16 @@ function NavBar({ onStartIntake }) {
           style={{ backgroundColor: "rgba(250, 246, 237, 0.99)" }}
         >
           <div className="max-w-7xl mx-auto px-6 py-5">
+            {/* Feature link — the flagship UK-return guide, prominent at top */}
+            <a
+              href="/getting-your-pet-into-the-uk"
+              className="flex items-center gap-2.5 mb-5 px-4 py-3.5 bg-stone-900 hover:bg-amber-800 transition-colors rounded-sm"
+            >
+              <PawPrint className="w-4 h-4 text-amber-400 flex-shrink-0" strokeWidth={2} />
+              <span className="font-serif text-sm text-stone-100 leading-snug">
+                Getting your pet into the UK from Europe — every route, compared
+              </span>
+            </a>
             <div className="grid grid-cols-2 gap-x-8">
               {navItems.map((s) => (
                 <button
@@ -7774,11 +7801,11 @@ function AirlineGrid() {
               {/* Signpost CTAs to the detailed pages — the card is the catch,
                   these pages carry the depth. */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <a href="/uk-pet-travel" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 text-sm font-medium transition-colors">
-                  Full UK guide →
+                <a href="/getting-your-pet-into-the-uk" className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-4 py-2.5 text-sm font-medium transition-colors">
+                  Every route into the UK, compared →
                 </a>
-                <a href="#destinations" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
-                  Difficult Destinations: UK →
+                <a href="/uk-pet-travel" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
+                  Full UK country guide →
                 </a>
                 <a href="#planner" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 text-sm font-medium border-b border-amber-300 hover:border-amber-700 transition-colors">
                   Plan this route in the Journey Planner →
@@ -11813,6 +11840,8 @@ const COUNTRY_GUIDES = [
   { slug: "/uk-pet-travel", flag: "🇬🇧", name: "United Kingdom", blurb: "The cabin ban, and the Paris-pivot workaround." },
   { slug: "/india-pet-travel", flag: "🇮🇳", name: "India", blurb: "AQCS paperwork, NOC, and the cabin routes in." },
   { slug: "/canada-pet-travel", flag: "🇨🇦", name: "Canada", blurb: "Gentle rules — no titer, no quarantine." },
+  { slug: "/mexico-pet-travel", flag: "🇲🇽", name: "Mexico", blurb: "One of the easiest — no health certificate from the US." },
+  { slug: "/uae-pet-travel", flag: "🇦🇪", name: "United Arab Emirates", blurb: "MOCCAE permit, cargo-only entry, banned breeds." },
   { slug: "/japan-pet-travel", flag: "🇯🇵", name: "Japan", blurb: "The 7-month import process, step by step." },
   { slug: "/oslo-pet-travel", flag: "🇳🇴", name: "Norway", blurb: "EEA rules, the tapeworm treatment, Oslo entry." },
   { slug: "/iceland-pet-travel", flag: "🇮🇸", name: "Iceland", blurb: "One of the strictest — quarantine and permits." },

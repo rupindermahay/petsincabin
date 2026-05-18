@@ -11045,8 +11045,8 @@ function BackToTop() {
 
   function scrollToCurrentSection() {
     // Find the section the user is currently inside: the last section whose
-    // top edge is at or above a point just below the viewport top (24px
-    // allows for the sticky nav). Scroll to that section's top.
+    // top edge is at or above a point just below the viewport top (the probe
+    // line allows for the sticky nav). Scroll to that section's top.
     const probe = 80; // px below viewport top — clears the sticky nav
     let target = null;
     for (const id of SECTION_IDS) {
@@ -11061,7 +11061,14 @@ function BackToTop() {
       }
     }
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const targetTop = target.getBoundingClientRect().top;
+      // If the current section's top is already at the viewport top (within a
+      // small tolerance), a second tap escalates to the very top of the page.
+      if (Math.abs(targetTop - probe) < 8 || targetTop > probe) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     } else {
       // Above the first section (still in hero) — go to page top.
       window.scrollTo({ top: 0, behavior: "smooth" });

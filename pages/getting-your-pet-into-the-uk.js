@@ -106,12 +106,12 @@ export default function GettingYourPetIntoTheUK() {
             <div className="md:hidden space-y-4 mb-3">
               {/* Via Paris */}
               <div className="bg-white border border-stone-200 rounded-sm p-4">
-                <div className="font-serif text-lg text-stone-900">Via Paris</div>
-                <div className="text-xs text-stone-500 mb-3">CDG → Calais → Eurotunnel/ferry</div>
+                <div className="font-serif text-lg text-stone-900">Via Paris — Eurotunnel</div>
+                <div className="text-xs text-stone-500 mb-3">CDG → Calais → LeShuttle</div>
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~5–6h total</div>
                 <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
                   <li>Drive CDG→Calais ~3h</li>
-                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Eurotunnel crossing 35 min</li>
                   <li>Check-in &amp; pet reception ~1–1.5h</li>
                 </ul>
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
@@ -122,14 +122,33 @@ export default function GettingYourPetIntoTheUK() {
                 <div className="font-serif text-base text-stone-900">≈ £515–£1,130 total</div>
                 <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
               </div>
-              {/* Via Frankfurt */}
+              {/* Via Paris — Calais–Dover ferry */}
               <div className="bg-white border border-stone-200 rounded-sm p-4">
-                <div className="font-serif text-lg text-stone-900">Via Frankfurt</div>
-                <div className="text-xs text-stone-500 mb-3">FRA → Calais → Eurotunnel/ferry</div>
+                <div className="font-serif text-lg text-stone-900">Via Paris — Calais–Dover ferry</div>
+                <div className="text-xs text-stone-500 mb-3">CDG → Calais → DFDS / P&amp;O / Irish Ferries</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~5.5–6.5h total</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Drive CDG→Calais ~3h</li>
+                  <li>Ferry crossing ~1.5h</li>
+                  <li>Check-in &amp; pet reception ~1–1.5h</li>
+                  <li>Pet stays in the car for the crossing</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Vehicle crossing ~£110–£230 · pet fee £15 · car hire &amp; fuel ~£110–£200</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £235–£445 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£400–£900 · + vehicle crossing ticket ~£110–£230</div>
+                <div className="font-serif text-base text-stone-900">≈ £510–£1,130 total</div>
+                <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
+              </div>
+              {/* Via Frankfurt — Eurotunnel */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Frankfurt — Eurotunnel</div>
+                <div className="text-xs text-stone-500 mb-3">FRA → Calais → LeShuttle</div>
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~7–8h total</div>
                 <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
                   <li>Drive FRA→Calais ~5–6h</li>
-                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Eurotunnel crossing 35 min</li>
                   <li>Check-in &amp; pet reception ~1–1.5h</li>
                   <li>Most split it with an overnight</li>
                 </ul>
@@ -139,6 +158,25 @@ export default function GettingYourPetIntoTheUK() {
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
                 <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£600–£1,200 · + vehicle crossing ticket £115–£229</div>
                 <div className="font-serif text-base text-stone-900">≈ £715–£1,430 total</div>
+                <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
+              </div>
+              {/* Via Frankfurt — Calais–Dover ferry */}
+              <div className="bg-white border border-stone-200 rounded-sm p-4">
+                <div className="font-serif text-lg text-stone-900">Via Frankfurt — Calais–Dover ferry</div>
+                <div className="text-xs text-stone-500 mb-3">FRA → Calais → DFDS / P&amp;O / Irish Ferries</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~7.5–8.5h total</div>
+                <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
+                  <li>Drive FRA→Calais ~5–6h</li>
+                  <li>Ferry crossing ~1.5h</li>
+                  <li>Check-in &amp; pet reception ~1–1.5h</li>
+                  <li>Pet stays in the car · most split it with an overnight</li>
+                </ul>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
+                <div className="text-sm text-stone-700 mb-1">Vehicle crossing ~£110–£230 · pet fee £15 · car hire &amp; fuel ~£140–£250 · pet-friendly overnight ~£80–£150</div>
+                <div className="font-serif text-base text-stone-900 mb-3">≈ £345–£600 total</div>
+                <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — pet taxi</div>
+                <div className="text-sm text-stone-700 mb-1">Pet-taxi driving fare ~£600–£1,200 · + vehicle crossing ticket ~£110–£230</div>
+                <div className="font-serif text-base text-stone-900">≈ £710–£1,430 total</div>
                 <div className="text-xs text-stone-500">the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide</div>
               </div>
               {/* Via Amsterdam — ferry */}
@@ -164,7 +202,7 @@ export default function GettingYourPetIntoTheUK() {
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Journey time — ~7–8h total</div>
                 <ul className="text-sm text-stone-700 mb-3 space-y-0.5">
                   <li>Drive AMS→Calais ~3.5–4h via Belgium</li>
-                  <li>Eurotunnel 35 min (or Calais–Dover ferry ~1.5h)</li>
+                  <li>Eurotunnel crossing 35 min (or Calais–Dover ferry ~1.5h)</li>
                   <li>Check-in &amp; pet reception ~1–1.5h</li>
                 </ul>
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">Cost — self-drive</div>
@@ -214,13 +252,13 @@ export default function GettingYourPetIntoTheUK() {
                 <tbody className="font-sans text-stone-700">
                   <tr className="border-b border-stone-200">
                     <td className="py-3 pr-3">
-                      <span className="font-medium text-stone-900">Via Paris</span><br />
-                      <span className="text-xs text-stone-500">CDG → Calais → Eurotunnel/ferry</span>
+                      <span className="font-medium text-stone-900">Via Paris — Eurotunnel</span><br />
+                      <span className="text-xs text-stone-500">CDG → Calais → LeShuttle</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="font-medium text-stone-900">~5–6h total</span>
                       <span className="block text-xs text-stone-500 mt-0.5">Drive CDG→Calais ~3h</span>
-                      <span className="block text-xs text-stone-500">Eurotunnel 35 min (or ferry ~1.5h)</span>
+                      <span className="block text-xs text-stone-500">Eurotunnel crossing 35 min</span>
                       <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
                     </td>
                     <td className="py-3 px-3">
@@ -235,13 +273,35 @@ export default function GettingYourPetIntoTheUK() {
                   </tr>
                   <tr className="border-b border-stone-200">
                     <td className="py-3 pr-3">
-                      <span className="font-medium text-stone-900">Via Frankfurt</span><br />
-                      <span className="text-xs text-stone-500">FRA → Calais → Eurotunnel/ferry</span>
+                      <span className="font-medium text-stone-900">Via Paris — Calais–Dover ferry</span><br />
+                      <span className="text-xs text-stone-500">CDG → Calais → DFDS/P&amp;O/Irish Ferries</span>
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="font-medium text-stone-900">~5.5–6.5h total</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Drive CDG→Calais ~3h</span>
+                      <span className="block text-xs text-stone-500">Ferry crossing ~1.5h</span>
+                      <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
+                      <span className="block text-xs text-stone-500">Pet stays in the car for the crossing</span>
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="text-xs text-stone-600">Vehicle crossing ~£110–£230 · pet fee £15 · car hire &amp; fuel ~£110–£200</span><br />
+                      <span className="font-medium text-stone-900">≈ £235–£445 total</span>
+                    </td>
+                    <td className="py-3 pl-3">
+                      <span className="text-xs text-stone-600">Driving fare ~£400–£900 · + crossing ticket ~£110–£230</span><br />
+                      <span className="font-medium text-stone-900">≈ £510–£1,130 total</span><br />
+                      <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-stone-200">
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Frankfurt — Eurotunnel</span><br />
+                      <span className="text-xs text-stone-500">FRA → Calais → LeShuttle</span>
                     </td>
                     <td className="py-3 px-3">
                       <span className="font-medium text-stone-900">~7–8h total</span>
                       <span className="block text-xs text-stone-500 mt-0.5">Drive FRA→Calais ~5–6h</span>
-                      <span className="block text-xs text-stone-500">Eurotunnel 35 min (or ferry ~1.5h)</span>
+                      <span className="block text-xs text-stone-500">Eurotunnel crossing 35 min</span>
                       <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
                       <span className="block text-xs text-stone-500">Most split it with an overnight</span>
                     </td>
@@ -252,6 +312,28 @@ export default function GettingYourPetIntoTheUK() {
                     <td className="py-3 pl-3">
                       <span className="text-xs text-stone-600">Driving fare ~£600–£1,200 · + crossing ticket £115–£229</span><br />
                       <span className="font-medium text-stone-900">≈ £715–£1,430 total</span><br />
+                      <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
+                    </td>
+                  </tr>
+                  <tr className="border-b border-stone-200">
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Frankfurt — Calais–Dover ferry</span><br />
+                      <span className="text-xs text-stone-500">FRA → Calais → DFDS/P&amp;O/Irish Ferries</span>
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="font-medium text-stone-900">~7.5–8.5h total</span>
+                      <span className="block text-xs text-stone-500 mt-0.5">Drive FRA→Calais ~5–6h</span>
+                      <span className="block text-xs text-stone-500">Ferry crossing ~1.5h</span>
+                      <span className="block text-xs text-stone-500">Check-in &amp; pet reception ~1–1.5h</span>
+                      <span className="block text-xs text-stone-500">Pet stays in the car · most split it with an overnight</span>
+                    </td>
+                    <td className="py-3 px-3">
+                      <span className="text-xs text-stone-600">Vehicle crossing ~£110–£230 · pet fee £15 · car hire &amp; fuel ~£140–£250 · pet-friendly overnight ~£80–£150</span><br />
+                      <span className="font-medium text-stone-900">≈ £345–£600 total</span>
+                    </td>
+                    <td className="py-3 pl-3">
+                      <span className="text-xs text-stone-600">Driving fare ~£600–£1,200 · + crossing ticket ~£110–£230</span><br />
+                      <span className="font-medium text-stone-900">≈ £710–£1,430 total</span><br />
                       <span className="text-xs text-stone-500">crossing ticket is extra, and its price changes daily</span>
                     </td>
                   </tr>

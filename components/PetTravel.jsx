@@ -7783,7 +7783,7 @@ function AirlineGrid() {
                     <a href="https://www.leshuttle.com/uk-en/travelling-with-us/travelling-with-pets" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">LeShuttle (Eurotunnel)</a>
                   </div>
                   <p className="text-stone-600 text-sm leading-relaxed">
-                    Calais → Folkestone in about 35 minutes. Your pet stays in your car for the entire crossing — no carrier, no hold, no separation. Pets travel from around £24 each way; check current fares and the pet check-in process on the official page. Pet-friendly ferries (Dover–Calais) are the alternative.
+                    Calais → Folkestone in about 35 minutes. Your pet stays in your car for the entire crossing — no carrier, no hold, no separation. The pet fee is small (from around £24 each way), but remember the vehicle itself needs a crossing ticket too — that's the bigger cost. Check current fares on the official page. Pet-friendly ferries (Dover–Calais) are the alternative.
                   </p>
                 </div>
                 <div className="border border-stone-200 p-4 rounded-sm">

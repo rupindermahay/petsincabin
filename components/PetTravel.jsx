@@ -9183,10 +9183,25 @@ function JourneyPlanner() {
     // Helper to determine if a route is genuinely single-leg (one actual flight,
     // no transit legs). Transit legs include layovers, drives, ferries.
     const isTransit = (legRoute) => isTransitLeg(legRoute);
+    // A route is "promotable to direct" only if it's effectively one flight
+    // with nothing more than a layover — NOT if it includes a real ground/sea
+    // crossing (a drive, ferry, train or Eurotunnel leg). A US→UK route is one
+    // flight to a European hub PLUS a Channel crossing: that is a multi-stage
+    // workaround, never a direct route, and must stay in the workaround list
+    // alongside its sibling routes. Without this check, the first such route
+    // got promoted to "direct" while its siblings stayed "workaround" — the
+    // same journey split across two differently-styled sections.
+    const CROSSING_LEG = /Drive|Ferry|Train|Eurotunnel|Calais|Folkestone|ferry|crossing/i;
     const isSingleFlight = (r) => {
       if (!r.legs || r.legs.length === 0) return false;
       const flightLegs = r.legs.filter((l) => !isTransit(l.route));
-      return flightLegs.length === 1;
+      if (flightLegs.length !== 1) return false;
+      // If any transit leg is a real crossing (not just a layover), this is a
+      // multi-stage workaround — do not promote it to a direct route.
+      const hasCrossing = r.legs.some(
+        (l) => isTransit(l.route) && CROSSING_LEG.test(l.route || "")
+      );
+      return !hasCrossing;
     };
     const push = (r, kind) => {
       const k = dedupeKey(r);

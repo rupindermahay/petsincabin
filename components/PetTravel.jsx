@@ -304,7 +304,7 @@ const AIRLINES = [
     notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Per Etihad's official country-restrictions page, the UK and USA are listed as 'flights to' restrictions — meaning cabin pets flying OUT of the UK (LHR, MAN) or OUT of the US to Abu Dhabi are permitted, while the inbound direction is not. Always confirm your specific route directly with Etihad when booking. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
     intl: "Yes (Abu Dhabi-routed only)",
     verified: "May 2026",
-    link: "https://www.etihad.com/en/plan/travel-companion/travelling-with-pets",
+    link: "https://www.etihad.com/en-us/plan/travel-companion/travelling-with-pets",
   },
   {
     name: "Turkish Airlines",
@@ -549,7 +549,7 @@ const NO_CABIN_AIRLINES = [
   {
     name: "Emirates",
     detail: "No cabin pets on any route. All pets to/from Dubai must travel as manifested cargo (UAE law).",
-    link: "https://www.emirates.com/english/help/topics/baggage-information/transporting-animals/",
+    link: "https://www.emirates.com/us/english/help/forms/pets-travel/",
   },
   {
     name: "Japan Airlines (JAL) / ANA",
@@ -2918,7 +2918,7 @@ const CHECKLIST_DATA = {
         title: "4 weeks before",
         items: [
           "Apply for <a href=\"https://www.moccae.gov.ae/en/services/registration-pet.aspx\" target=\"_blank\" rel=\"noopener noreferrer\">MOCCAE import permit</a> (Ministry of Climate Change and Environment) — ~AED 200",
-          "Book cabin pet space directly with <a href=\"https://www.etihad.com/en/plan/travel-companion/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">Etihad</a> by phone (cabin for AUH; cargo only for DXB)",
+          "Book cabin pet space directly with <a href=\"https://www.etihad.com/en-us/plan/travel-companion/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">Etihad</a> by phone (cabin for AUH; cargo only for DXB)",
           "If using Dubai cargo: arrange Dubai Kennels & Cattery (DKC) or another customs broker",
           "Confirm departure airport allows your specific carrier and aircraft",
         ],

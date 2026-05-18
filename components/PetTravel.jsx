@@ -9136,40 +9136,57 @@ function JourneyPlanner() {
   const effectiveOrigin = driveTo ? driveTo.code : origin;
   const effectiveOriginAirport = driveTo ? airportByCode(driveTo.code) : originAirport;
 
-  // Route-aware stopover options for the tapeworm calculator. A workaround
-  // route's FIRST leg lands at the hub (e.g. "... → Paris CDG"); we pull the
-  // hub AIRPORT from that leg and offer it as a city-level stopover choice.
-  // Each option carries `tz` — the timezone key used for the maths — separate
-  // from `key`/`name`, which are the airport code and city label for display.
-  // De-duplicated by airport. Falls back to null (calculator shows its full
-  // country list) if nothing can be derived.
+  // Route-aware stopover options for the tapeworm calculator.
+  //
+  // Every tapeworm route (into the UK/Ireland) pivots through continental
+  // Europe — that's structurally true of all the strategies. So the reliable
+  // approach is: offer the standard European hubs (Paris, Frankfurt,
+  // Amsterdam) as stopover choices. They're all CET, so the maths is
+  // identical — the choice just lets the user see their actual hub city.
+  //
+  // On top of that floor, if a workaround leg names a SPECIFIC hub airport
+  // with a clean code, we surface that too (deduplicated). We deliberately do
+  // NOT offer pass-through US gateways (Miami, JFK) — nobody schedules a
+  // UK-tapeworm vet visit at a US layover — nor the origin/destination
+  // themselves. Returns null only if the route doesn't transit Europe at all.
   const tapewormStopovers = useMemo(() => {
-    const hubs = new Map(); // airport code -> { key, name, tz }
-    const REGION_TO_TW = {
-      europe: "FR", us: "US-ET", canada: "CA-ET", india: "IN", dubai: "AE",
-    };
+    if (!workaroundMatches || workaroundMatches.length === 0) return null;
+
+    // Does any workaround actually transit Europe? (Tags carry transit
+    // regions; leg text mentioning Calais/Paris/Frankfurt/Amsterdam counts.)
+    const transitsEurope = workaroundMatches.some((r) => {
+      const tags = r.tags || (r.route && r.route.tags) || [];
+      if (tags.includes("europe")) return true;
+      const legs = (r.route && r.route.legs) || r.legs || [];
+      return legs.some((leg) =>
+        /Calais|Paris|Frankfurt|Amsterdam|Eurotunnel|CDG|FRA|AMS/i.test(leg.route || "")
+      );
+    });
+    if (!transitsEurope) return null;
+
+    // The standard European hub floor — all CET, so `tz` is "FR" for each.
+    const out = [
+      { key: "CDG", tz: "FR", name: "Paris (CDG)" },
+      { key: "FRA", tz: "FR", name: "Frankfurt (FRA)" },
+      { key: "AMS", tz: "FR", name: "Amsterdam (AMS)" },
+    ];
+    const seen = new Set(out.map((o) => o.key));
+
+    // Surface any other specific European hub a leg explicitly names.
     workaroundMatches.forEach((r) => {
       const legs = (r.route && r.route.legs) || r.legs || [];
-      if (!legs.length) return;
-      // First leg text is like "JFK / BOS → Paris CDG" — the hub is after the
-      // arrow. Grab the text after "→" and find a bare 3-letter airport code.
-      const firstLeg = legs[0].route || "";
-      const afterArrow = firstLeg.split(/→|->/).pop() || "";
-      const codeMatch = afterArrow.match(/\b([A-Z]{3})\b/);
-      if (!codeMatch) return;
-      const hubAirport = airportByCode(codeMatch[1]);
-      if (!hubAirport) return;
-      const tz = REGION_TO_TW[hubAirport.region];
-      if (!tz) return;
-      hubs.set(hubAirport.code, {
-        key: hubAirport.code,
-        name: `${hubAirport.city} (${hubAirport.code})`,
-        tz,
+      legs.forEach((leg) => {
+        (leg.route || "").match(/\b[A-Z]{3}\b/g)?.forEach((tok) => {
+          if (seen.has(tok) || tok === origin || tok === destination) return;
+          const ap = airportByCode(tok);
+          if (!ap || ap.region !== "europe") return;
+          seen.add(tok);
+          out.push({ key: tok, tz: "FR", name: `${ap.city} (${tok})` });
+        });
       });
     });
-    if (hubs.size === 0) return null;
-    return Array.from(hubs.values());
-  }, [workaroundMatches]);
+    return out;
+  }, [workaroundMatches, origin, destination]);
 
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
 

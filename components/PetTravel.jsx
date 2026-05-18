@@ -623,6 +623,18 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "London (LHR)", duration: "1h 10m", note: "KLM. ✓ Cabin OUT of Europe (remember: cabin INTO the UK is not possible — this route works as the last leg out of UK using AMS as a hub, not the return).", tags: ["europe", "uk-out"] },
   { from: "Amsterdam (AMS)", to: "Oslo (OSL)", duration: "1h 55m", note: "KLM / Norwegian / SAS. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival is required for Norway entry.", tags: ["europe"] },
 
+  // ═══════ INTRA-EUROPE TRAINS (Eurostar Red — former Thalys) ═══════
+  // Pets are allowed on Eurostar's continental routes between France,
+  // Belgium, the Netherlands and Germany — NOT on trains to/from London.
+  // Small pets under 6 kg travel free in a carrier (max 45×30×25 cm);
+  // larger dogs need a €30 dog ticket and must be muzzled and leashed.
+  { from: "Amsterdam (AMS)", to: "Paris (CDG)", duration: "~3h 20m by train", mode: "train", note: "By train, not plane — and for this hop the train is the better pet option. Eurostar (former Thalys) runs Amsterdam Centraal → Paris Gare du Nord direct. Pets are welcome: small pets under 6 kg travel free in a carrier; larger dogs need a €30 dog ticket and must be muzzled and on a lead. No cargo, no crate — your pet is with you the whole way. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+  { from: "Paris (CDG)", to: "Amsterdam (AMS)", duration: "~3h 20m by train", mode: "train", note: "By train, not plane. Eurostar (former Thalys) runs Paris Gare du Nord → Amsterdam Centraal direct. Pets welcome: small pets under 6 kg free in a carrier; larger dogs need a €30 dog ticket, muzzled and leashed. Your pet stays with you — no cargo. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+  { from: "Amsterdam (AMS)", to: "Frankfurt (FRA)", duration: "~4h by train", mode: "train", note: "By train. Eurostar (former Thalys) and Deutsche Bahn ICE both run Amsterdam → Frankfurt direct. Pets travel with you in the carriage — small pets under 6 kg free in a carrier; larger dogs need a dog ticket and must be muzzled and leashed. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+  { from: "Frankfurt (FRA)", to: "Amsterdam (AMS)", duration: "~4h by train", mode: "train", note: "By train. Eurostar (former Thalys) and Deutsche Bahn ICE run Frankfurt → Amsterdam direct. Pets welcome in the carriage — small pets under 6 kg free in a carrier; larger dogs need a dog ticket, muzzled and leashed. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+  { from: "Paris (CDG)", to: "Frankfurt (FRA)", duration: "~4h by train", mode: "train", note: "By train. Direct high-speed services (Deutsche Bahn ICE / TGV) link Paris and Frankfurt. Pets travel with you — small pets under 6 kg free in a carrier; on French TGV a €7-per-carrier ticket applies, larger dogs muzzled and leashed. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+  { from: "Frankfurt (FRA)", to: "Paris (CDG)", duration: "~4h by train", mode: "train", note: "By train. Direct high-speed services (Deutsche Bahn ICE / TGV) link Frankfurt and Paris. Pets travel with you — small pets under 6 kg free in a carrier; larger dogs need a dog ticket, muzzled and leashed. (Airport codes shown for routing; the journey is city-centre to city-centre.)", tags: ["europe"] },
+
   // ═══════ FROM FRANKFURT ═══════
   { from: "Frankfurt (FRA)", to: "New York (JFK)", duration: "8h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt has the world's most advanced Animal Lounge for cargo layovers — but for cabin, Lufthansa is the reliable choice.", tags: ["europe", "us"] },
   { from: "Frankfurt (FRA)", to: "Newark (EWR)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark is a strong US East Coast alternative.", tags: ["europe", "us"] },
@@ -9610,7 +9622,17 @@ function JourneyPlanner() {
                   <div className="flex items-baseline gap-3 mb-2">
                     <span className="text-emerald-400 text-base">✓</span>
                     <h4 className="font-serif text-xl text-stone-100">
-                      Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}
+                      {(() => {
+                        // "Direct cabin route" reads right for flights, but a
+                        // train isn't a "cabin" route. If every route in this
+                        // section is a non-flight mode (train), drop "cabin".
+                        const allTrain = directMatches.length > 0 &&
+                          directMatches.every((r) => r.mode === "train");
+                        const word = allTrain ? "Direct route" : "Direct cabin route";
+                        return grouped.length === 1
+                          ? word
+                          : `${word.replace("route", "routes")} · ${grouped.length} options`;
+                      })()}
                     </h4>
                   </div>
                   {selectableRoutes.length > 1 && (

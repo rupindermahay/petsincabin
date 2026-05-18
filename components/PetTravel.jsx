@@ -5968,34 +5968,35 @@ function NavBar({ onStartIntake }) {
           {/* Hairline divider between logo and nav rows */}
           <div className="w-px bg-stone-200 self-stretch" />
 
-          {/* Two nav rows, stacked, filling the space to the right of the logo */}
+          {/* Nav rows, stacked, filling the space to the right of the logo.
+              Three rows: two section-link rows, then the flagship UK-guide
+              link flush beneath them — part of the nav block, not a banner. */}
           <div className="flex-1 flex flex-col justify-center">
             <div className="flex items-center justify-between border-b border-stone-100">
               {row1.map((s) => <NavItem key={s.id} s={s} />)}
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-b border-stone-100">
               {row2.map((s) => <NavItem key={s.id} s={s} />)}
               <NavGuidesDropdown />
             </div>
+            {/* THIRD ROW — flagship UK-return guide. Sits flush under the two
+                section rows, sharing their left edge, so it reads as the
+                third line of the nav rather than a detached banner. */}
+            <a
+              href="/getting-your-pet-into-the-uk"
+              className="flex items-center gap-2 mt-1.5 py-1.5 px-3 bg-stone-900 hover:bg-amber-800 transition-colors group rounded-sm"
+            >
+              <PawPrint className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors flex-shrink-0" strokeWidth={2} />
+              <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors">
+                Getting your pet into the UK from Europe
+              </span>
+              <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors">
+                — every route, compared
+              </span>
+              <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all ml-auto flex-shrink-0" strokeWidth={2} />
+            </a>
           </div>
         </div>
-
-        {/* THIRD ROW — full-width feature link to the flagship UK-return guide.
-            Spans the entire nav width (logo edge to right edge) as a single
-            merged banner, distinct from the two section-link rows above. */}
-        <a
-          href="/getting-your-pet-into-the-uk"
-          className="hidden md:flex items-center justify-center gap-2 mt-2.5 py-2 bg-stone-900 hover:bg-amber-800 transition-colors group rounded-sm"
-        >
-          <PawPrint className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors" strokeWidth={2} />
-          <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors">
-            Getting your pet into the UK from Europe
-          </span>
-          <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors">
-            — every route, compared
-          </span>
-          <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all" strokeWidth={2} />
-        </a>
       </div>
 
       {/* Mobile menu */}
@@ -9579,8 +9580,10 @@ function JourneyPlanner() {
         </p>
 
         {/* Pet-type picker — controls which checklist items are shown.
-            "Both" shows everything; dog/cat filter out items that don't apply. */}
-        <div className="mb-6">
+            "Both" shows everything; dog/cat filter out items that don't apply.
+            id="planner-controls" is the scroll target for /?go=planner so the
+            tool's controls land in view, not just the section heading. */}
+        <div id="planner-controls" className="mb-6 scroll-mt-24">
           <label className="block text-xs uppercase tracking-widest text-stone-500 mb-2">Travelling with</label>
           <div className="flex gap-2">
             {[
@@ -12069,7 +12072,12 @@ export default function PetTravel() {
     let attempts = 0;
     const tryScroll = () => {
       attempts += 1;
-      const el = document.getElementById(id) || document.getElementById(id === "assessment" ? "intake-anchor" : id);
+      // For the planner, scroll to the controls block rather than the section
+      // top — the section has tall padding plus a heading, so targeting the
+      // top leaves the actual dropdowns below the fold. "planner-controls"
+      // puts the tool's controls in view with the heading still just above.
+      const targetId = id === "planner" ? "planner-controls" : id;
+      const el = document.getElementById(targetId) || document.getElementById(id === "assessment" ? "intake-anchor" : id);
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top, behavior: "smooth" });

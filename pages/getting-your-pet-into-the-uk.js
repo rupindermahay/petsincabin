@@ -59,7 +59,7 @@ export default function GettingYourPetIntoTheUK() {
           <div className="bg-white border border-stone-200 rounded-sm p-5 mb-12">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">In this guide</div>
             <div className="flex flex-wrap gap-2 text-sm">
-              <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Why there's no cabin route</a>
+              <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
               <a href="#compare" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>
               <a href="#via-paris" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Paris</a>
               <a href="#via-frankfurt" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Frankfurt</a>
@@ -76,24 +76,17 @@ export default function GettingYourPetIntoTheUK() {
 
           {/* Why no cabin route */}
           <section id="why" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">01 · The starting point</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">01 · The one rule</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Why there is no cabin flight into the UK
+              You cannot fly your pet into the UK in the cabin. Full stop.
             </h2>
-            <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              Every route below exists because of one fixed rule.
-            </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Under UK government rules, a pet dog, cat or ferret entering Great Britain by air must travel as manifested cargo in the hold — never in the cabin. This applies to every airline and every airport, including Heathrow. It is not negotiable and it cannot be worked around in the air.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              So the cabin route is an overland one. You fly your pet in the cabin to a continental European hub — Paris, Frankfurt or Amsterdam are the practical choices, because Air France, Lufthansa and KLM all carry cabin pets on long-haul routes into them — and then cross into the UK by land and sea, where your pet stays with you. The Channel crossing itself is on an approved route: the Eurotunnel Le Shuttle train, or a pet-friendly ferry.
+              It's a UK government rule, not an airline policy you can sweet-talk your way around — every pet flying into Britain rides as cargo, in the hold, no exceptions, Heathrow included. So nobody flies their pet <em>in</em>. What thousands of people do instead: fly the pet in the cabin to Europe, then cross the Channel by land or sea with the pet right beside them.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The three hub routes below differ mainly in the crossing at the end — Paris and Frankfurt feed the short Calais–Folkestone crossing, while Amsterdam has its own direct ferry to Newcastle. After the routes, this guide also covers every UK-approved ferry, the door-to-door pet taxi option, and even the one way to cross the Atlantic into the UK without flying at all.
+              That's the whole trick. The rest of this page is just <em>which</em> way to make that crossing — compared, costed and timed, so you can pick yours and get on with it.
             </p>
           </section>
 
@@ -101,63 +94,88 @@ export default function GettingYourPetIntoTheUK() {
           <section id="compare" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">02 · Compare the routes</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              The routes, side by side
+              Every route in, side by side
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              Journey times and costs are indicative — they vary by season, operator and how far you travel.
+              Pick your European hub, then your crossing. Times and costs are ballpark — they swing with season, operator and how far you're going.
             </p>
 
-            <div className="overflow-x-auto -mx-6 px-6 mb-4">
+            <div className="overflow-x-auto -mx-6 px-6 mb-3">
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="border-b-2 border-stone-300">
-                    <th className="text-left font-serif text-stone-900 py-2 pr-3 font-semibold">Route</th>
-                    <th className="text-left font-serif text-stone-900 py-2 px-3 font-semibold">The crossing</th>
-                    <th className="text-left font-serif text-stone-900 py-2 px-3 font-semibold">Rough journey time</th>
-                    <th className="text-left font-serif text-stone-900 py-2 pl-3 font-semibold">Indicative cost</th>
+                    <th className="text-left font-serif text-stone-900 py-2 pr-3 font-semibold">Hub &amp; crossing</th>
+                    <th className="text-left font-serif text-stone-900 py-2 px-3 font-semibold">Time after you land</th>
+                    <th className="text-left font-serif text-stone-900 py-2 px-3 font-semibold">If you drive it</th>
+                    <th className="text-left font-serif text-stone-900 py-2 pl-3 font-semibold">If a pet taxi drives it</th>
                   </tr>
                 </thead>
                 <tbody className="font-sans text-stone-700">
                   <tr className="border-b border-stone-200">
-                    <td className="py-3 pr-3 font-medium">Via Paris</td>
-                    <td className="py-3 px-3">Drive CDG→Calais, then Eurotunnel or ferry to Dover</td>
-                    <td className="py-3 px-3">Flight + ~5–6h overland</td>
-                    <td className="py-3 pl-3">Eurotunnel ~£22/pet or ferry ~£15/pet, + car hire/fuel</td>
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Paris</span><br />
+                      <span className="text-xs text-stone-500">CDG → Calais → Eurotunnel/ferry</span>
+                    </td>
+                    <td className="py-3 px-3">~5–6h</td>
+                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">~£400–£900 door-to-door</td>
                   </tr>
                   <tr className="border-b border-stone-200">
-                    <td className="py-3 pr-3 font-medium">Via Frankfurt</td>
-                    <td className="py-3 px-3">Drive FRA→Calais, then Eurotunnel or ferry to Dover</td>
-                    <td className="py-3 px-3">Flight + ~7–8h overland</td>
-                    <td className="py-3 pl-3">Eurotunnel ~£22/pet or ferry ~£15/pet, + car hire/fuel</td>
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Frankfurt</span><br />
+                      <span className="text-xs text-stone-500">FRA → Calais → Eurotunnel/ferry</span>
+                    </td>
+                    <td className="py-3 px-3">~7–8h drive + crossing</td>
+                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">~£10–14h trip; higher-end fare</td>
                   </tr>
                   <tr className="border-b border-stone-200">
-                    <td className="py-3 pr-3 font-medium">Via Amsterdam</td>
-                    <td className="py-3 px-3">DFDS overnight ferry IJmuiden→Newcastle</td>
-                    <td className="py-3 px-3">Flight + ~17h ferry</td>
-                    <td className="py-3 pl-3">Ferry ~£30/pet + pet-friendly cabin</td>
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Amsterdam — ferry</span><br />
+                      <span className="text-xs text-stone-500">DFDS overnight IJmuiden → Newcastle</span>
+                    </td>
+                    <td className="py-3 px-3">~17h overnight ferry</td>
+                    <td className="py-3 px-3">Ferry ~£30/pet + pet cabin</td>
+                    <td className="py-3 pl-3">—</td>
                   </tr>
                   <tr className="border-b border-stone-200">
-                    <td className="py-3 pr-3 font-medium">Door-to-door pet taxi</td>
-                    <td className="py-3 px-3">Driver meets you at the airport; handles the whole crossing</td>
-                    <td className="py-3 px-3">As the route above, but you don't drive</td>
-                    <td className="py-3 pl-3">~£400–£2,000 depending on distance</td>
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Amsterdam — overland</span><br />
+                      <span className="text-xs text-stone-500">AMS → Belgium/France → Eurotunnel</span>
+                    </td>
+                    <td className="py-3 px-3">~7–8h</td>
+                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">~£500–£1,000 door-to-door</td>
+                  </tr>
+                  <tr className="border-b border-stone-200">
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Via Spain</span><br />
+                      <span className="text-xs text-stone-500">Brittany Ferries Bilbao/Santander → Portsmouth or Plymouth</span>
+                    </td>
+                    <td className="py-3 px-3">~24–36h crossing</td>
+                    <td className="py-3 px-3">Ferry from ~£50/pet + pet cabin (vehicle passengers only)</td>
+                    <td className="py-3 pl-3">Long-haul fare — get a quote</td>
                   </tr>
                   <tr>
-                    <td className="py-3 pr-3 font-medium">Cunard QM2</td>
-                    <td className="py-3 px-3">Ocean liner New York→Southampton (no flight at all)</td>
+                    <td className="py-3 pr-3">
+                      <span className="font-medium text-stone-900">Cunard QM2</span><br />
+                      <span className="text-xs text-stone-500">Ocean liner New York → Southampton — no flight at all</span>
+                    </td>
                     <td className="py-3 px-3">~7 nights at sea</td>
-                    <td className="py-3 pl-3">Premium — kennel fare on top of the crossing</td>
+                    <td className="py-3 px-3">Premium — kennel fare on top of the crossing</td>
+                    <td className="py-3 pl-3">n/a</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="font-sans text-xs text-stone-500 leading-relaxed italic mb-4">
-              The pet taxi isn't a separate route — it's a way to do any of the three hub routes without driving yourself. The detailed sections below explain each.
+
+            <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
+              <strong>Heading to Ireland, not Britain?</strong> Different trip. The clean way in is the direct France→Ireland ferry — skip Britain entirely. The Holyhead (Wales)→Dublin ferry only matters as an <em>onward</em> hop once your pet is already in Britain. Full detail in <a href="#ireland" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">the Ireland note</a> below.
             </p>
 
             <div className="bg-amber-50 border-l-2 border-amber-500 p-4">
               <p className="font-serif text-stone-800 leading-relaxed text-sm">
-                <strong>One thing the table can't show:</strong> if your pet's journey <em>starts</em> outside Europe — Jamaica, India, South Africa, much of the Caribbean and elsewhere — there is a major extra step before any of these routes apply: a rabies blood test and a fixed three-month wait. Transiting through Paris does not get around it. This is covered in full under <a href="#paperwork" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">paperwork &amp; tapeworm</a> — read that section first if it applies to you.
+                <strong>The table can't show this, but it's the big one:</strong> if your pet's journey <em>starts</em> outside Europe — Jamaica, India, South Africa, much of the Caribbean — there's a rabies blood test plus a fixed three-month wait <em>before</em> any route here applies. A layover in Paris does not reset that clock. Don't skim past <a href="#paperwork" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">paperwork &amp; tapeworm</a> if this is you.
               </p>
             </div>
           </section>
@@ -223,11 +241,15 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The appeal is that there is no drive through Belgium and France at all. DFDS carries pets in pet-friendly cabins or onboard kennels, at around £30 per pet each way on top of the cabin fare. One practical detail: foot passengers cannot add a pet to the booking online — pet bookings on this route must be made by phone with DFDS.
+              The appeal is that there's no white-knuckle motorway drive through Belgium and France — you let the boat do the work overnight. DFDS carries pets in pet-friendly cabins or onboard kennels, around £30 per pet each way on top of the cabin fare. One practical catch: foot passengers can't add a pet to the booking online — pet bookings on this route are made by phone with DFDS.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              There's also a faster version of the Amsterdam route. A door-to-door pet taxi from Schiphol doesn't take the slow ferry — it drives down through Belgium and France to the Eurotunnel, landing you in the UK in around seven to eight hours rather than seventeen. So Amsterdam gives you a genuine choice: the restful overnight boat, or the quicker overland drive with someone else at the wheel.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              Because it lands in the north of England, the Amsterdam route suits anyone heading for Scotland or northern England better than someone bound for London. As with the other routes, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered in the paperwork section below.
+              The ferry version lands in the north of England, so it suits anyone heading for Scotland or northern England better than someone bound for London. Either way, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered below.
             </p>
           </section>
 

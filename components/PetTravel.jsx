@@ -1065,10 +1065,10 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "JFK / BOS / ORD / MIA / LAX → Paris CDG", time: "7–11h", airline: "Air France or Delta ✓ Cabin" },
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
-      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
-      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+      { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive + Eurotunnel + drive. Works from any major US gateway with cabin pets to Paris (JFK, BOS, ORD, MIA, LAX). Eurotunnel costs £25–£60 per pet. Most UK pet importers use this exact route.",
+    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive to Calais and cross the Channel. Two approved crossings run Calais → UK — the Eurotunnel Le Shuttle (35 min, pet stays in your car, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, pet stays in the car or, on P&O, a bookable Pet Lounge; ~£15 per pet). Both are UK-government-approved pet routes — pick whichever suits. Works from any major US gateway with cabin pets to Paris (JFK, BOS, ORD, MIA, LAX).",
     tags: ["us", "uk-out", "europe"],
   },
   {
@@ -1077,11 +1077,26 @@ const WORKAROUND_ROUTES_TABLE = [
     duration: "4–5h total",
     legs: [
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
-      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
-      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+      { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "If you're already in Europe (Paris, Amsterdam, Brussels) the Eurotunnel is by far the easiest way to bring your pet INTO the UK. Pet stays with you the whole way. The same workflow applies departing from AMS or BRU (just longer drive to Calais).",
+    note: "If you're already in Europe (Paris, Amsterdam, Brussels) crossing the Channel by land is by far the easiest way to bring your pet INTO the UK. From Calais you have two UK-government-approved crossings: the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays in the car either way. The same workflow applies departing from AMS or BRU (just a longer drive to Calais).",
     tags: ["europe", "uk-out"],
+  },
+  // USA → UK via Amsterdam (KLM hub + direct Amsterdam–Newcastle ferry — no
+  // drive through France needed; the pet travels with you the whole way).
+  {
+    from: "USA (major airports)",
+    to: "Newcastle / UK (via Amsterdam)",
+    duration: "~24h total (incl. overnight ferry)",
+    legs: [
+      { route: "JFK / BOS / ORD / IAD / MIA → Amsterdam AMS", time: "7–9h", airline: "KLM or Delta ✓ Cabin" },
+      { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+      { route: "Ferry: DFDS overnight, Amsterdam → Newcastle", time: "~17h", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+      { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+    ],
+    note: "An alternative to the Paris route, and a documented way US owners move pets to the UK in cabin. Fly cabin to Amsterdam on KLM (or Delta), then take the DFDS overnight ferry from Amsterdam (IJmuiden) directly to Newcastle — a UK-government-approved pet route. The big advantage: no drive through Belgium and France, and DFDS takes foot passengers with pets, so you don't need a car. Book a pet-friendly cabin so your dog is with you (~£19+ per pet; cabins limited — book early). It lands you in the north of England, so it suits Scotland or northern England better than London. Dogs still need the tapeworm treatment 24–120h before arrival.",
+    tags: ["us", "uk-out", "europe"],
   },
   // USA → UAE (no direct cabin to UAE — go via Europe to Abu Dhabi)
   {
@@ -1168,9 +1183,9 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Layover at MIA or JFK", time: "2–4h", airline: "Recommended buffer" },
       { route: "MIA/JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
-      { route: "Eurotunnel + drive to London", time: "2h 5m", airline: "Pet in car" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — Calais → UK, then drive to London", time: "2h–3h", airline: "Pet in car" },
     ],
-    note: "There's no cabin pet flight INTO the UK from anywhere. From the Caribbean: route via the US (Miami or JFK), then transatlantic cabin to Paris, then Eurotunnel. Long but workable. For Bahamas + Jamaica (CDC NOT high-risk), no extra US re-entry paperwork. For Dominican Republic (CDC high-risk), the Certification of US-issued Rabies Vaccination form must have been obtained BEFORE you left the US originally.",
+    note: "There's no cabin pet flight INTO the UK from anywhere. From the Caribbean: route via the US (Miami or JFK), then transatlantic cabin to Paris, then cross the Channel. From Calais you can use either the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet) — both are UK-government-approved pet routes, pet stays in the car. Long but workable. For Bahamas + Jamaica (CDC NOT high-risk), no extra US re-entry paperwork. For Dominican Republic (CDC high-risk), the Certification of US-issued Rabies Vaccination form must have been obtained BEFORE you left the US originally.",
     tags: ["caribbean", "uk-out", "us", "europe"],
   },
   // Caribbean → Europe workaround
@@ -1194,10 +1209,10 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "Canada → Paris CDG (or Frankfurt)", time: "7h 15m – 9h 45m", airline: "Air Canada ✓ Cabin (under 10 kg)" },
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
-      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
-      { route: "Folkestone → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+      { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "Air Canada does NOT allow cabin pets on flights to the UK (UK is on their no-cabin list, like the UK government rule for all airlines). The workaround: fly cabin Canada → Paris on Air Canada, then Eurotunnel into the UK. Pet stays with you from Paris onward. Eurotunnel costs £25–£60 per pet.",
+    note: "Air Canada does NOT allow cabin pets on flights to the UK (UK is on their no-cabin list, like the UK government rule for all airlines). The workaround: fly cabin Canada → Paris on Air Canada, then cross the Channel. From Calais, two UK-government-approved crossings — the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays with you from Paris onward, in the car for the crossing.",
     tags: ["canada", "uk-out", "europe"],
   },
   // Canada → UAE workaround
@@ -1246,9 +1261,9 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "Delhi/Mumbai → Frankfurt FRA (or Paris CDG)", time: "8–9h", airline: "Confirm cabin pet acceptance with the operating airline" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer" },
-      { route: "FRA/CDG → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+      { route: "FRA/CDG → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
     ],
-    note: "Two walls here: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK from anywhere (UK government rule). So the route is India → continental Europe, then the Eurotunnel land crossing into the UK. Confirm the India→Europe leg's cabin availability before booking; if it can't be confirmed as cabin, the long-haul portion becomes cargo, but the Europe→UK Eurotunnel leg always keeps your pet with you.",
+    note: "Two walls here: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK from anywhere (UK government rule). So the route is India → continental Europe, then a land/sea crossing into the UK. From Calais you can use the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover — both UK-government-approved pet routes that keep your pet with you. Confirm the India→Europe leg's cabin availability before booking; if it can't be confirmed as cabin, the long-haul portion becomes cargo.",
     tags: ["india", "uk-out", "europe"],
   },
   // UAE → UK (outbound from UAE; cabin into UK never allowed)
@@ -1259,9 +1274,9 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "Abu Dhabi → European hub (Paris / Frankfurt / Amsterdam)", time: "7–8h", airline: "Etihad ✓ Cabin (under 8 kg) out of AUH" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Recommended buffer" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
     ],
-    note: "Etihad accepts cabin pets OUT of Abu Dhabi to Europe (under 8 kg). From a European hub, the Eurotunnel land crossing brings your pet into the UK with you — since no airline flies cabin pets into the UK directly. Start the journey at Abu Dhabi (AUH), not Dubai (DXB), which is cargo-only for all airlines.",
+    note: "Etihad accepts cabin pets OUT of Abu Dhabi to Europe (under 8 kg). From a European hub, a land/sea crossing brings your pet into the UK with you — the Eurotunnel Le Shuttle or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes — since no airline flies cabin pets into the UK directly. Start the journey at Abu Dhabi (AUH), not Dubai (DXB), which is cargo-only for all airlines.",
     tags: ["dubai", "uk-out", "europe"],
   },
   // UAE → USA (outbound from UAE)
@@ -1551,41 +1566,41 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
       { route: "Layover at CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "CDG → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you — car + Eurotunnel" },
+      { route: "CDG → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
     ],
-    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → Paris by cabin, then the Eurotunnel land crossing to ${d}. Works from any major US gateway with a cabin route to Paris.`,
+    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → Paris by cabin, then a land/sea crossing to ${d}. From Calais you can use the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover — both are UK-government-approved pet routes. Works from any major US gateway with a cabin route to Paris.`,
   }),
   "europe>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Calais (drive/train)`, time: "varies", airline: "Pet stays with you" },
-      { route: "Eurotunnel Le Shuttle to Folkestone", time: "35m", airline: "Pet stays in car" },
-      { route: `Folkestone → ${d}`, time: "1h 30m+", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+      { route: `Folkestone / Dover → ${d}`, time: "1h 30m+", airline: "Pet stays with you" },
     ],
-    note: `If you're already in Europe, the Eurotunnel is the easiest way into the UK — your pet stays with you the whole way. No cabin flight INTO the UK exists on any airline.`,
+    note: `If you're already in Europe, crossing the Channel by land/sea is the easiest way into the UK — your pet stays with you the whole way. From Calais: the Eurotunnel Le Shuttle (35 min) or a DFDS/P&O ferry to Dover (~1h 30m), both UK-government-approved pet routes. No cabin flight INTO the UK exists on any airline.`,
   }),
   "canada>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air France / Lufthansa ✓ Cabin" },
       { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
     ],
-    note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then the Eurotunnel land crossing into ${d}.`,
+    note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then a land/sea crossing into ${d} — Eurotunnel Le Shuttle or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes.`,
   }),
   "india>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
     ],
-    note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then Eurotunnel into ${d}. Confirm the long-haul leg's cabin availability before booking — if it can't be confirmed as cabin, that portion becomes cargo.`,
+    note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Confirm the long-haul leg's cabin availability before booking — if it can't be confirmed as cabin, that portion becomes cargo.`,
   }),
   "dubai>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
     ],
-    note: `Etihad takes cabin pets OUT of Abu Dhabi to Europe. From a European hub, the Eurotunnel brings your pet into ${d}. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
+    note: `Etihad takes cabin pets OUT of Abu Dhabi to Europe. From a European hub, a land/sea crossing brings your pet into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
   }),
 
   // ----- INTO Ireland (same wall as UK — via Europe + ferry) -----
@@ -1768,9 +1783,9 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
     ],
-    note: `Caribbean to the UK is a three-leg journey — no airline flies cabin pets INTO the UK directly. The route is Caribbean → US gateway → European hub → Eurotunnel land crossing into the UK. Long but fully in cabin and with you at every step. Build in at least one overnight stop.`,
+    note: `Caribbean to the UK is a three-leg journey — no airline flies cabin pets INTO the UK directly. The route is Caribbean → US gateway → European hub → a land/sea crossing into the UK (Eurotunnel or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes). Long but fully in cabin and with you at every step. Build in at least one overnight stop.`,
   }),
 
   // ----- MEXICO outbound -----
@@ -1797,9 +1812,9 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
-      { route: "Hub → Calais → Eurotunnel → UK", time: "5–6h", airline: "Pet stays with you" },
+      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
     ],
-    note: `Mexico to the UK is three legs — no airline flies cabin pets into the UK. Route via the US, then a European hub, then the Eurotunnel land crossing. Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
+    note: `Mexico to the UK is three legs — no airline flies cabin pets into the UK. Route via the US, then a European hub, then a land/sea crossing into the UK (Eurotunnel or a DFDS/P&O ferry from Calais). Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
   }),
 
   // ----- IRELAND outbound (cabin OUT of Ireland is fine — Dublin to Europe) -----

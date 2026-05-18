@@ -10985,6 +10985,80 @@ const COUNTRY_GUIDES = [
   { slug: "/central-america-pet-travel", flag: "🌎", name: "Central America", blurb: "Costa Rica, Panama, and the routes through." },
 ];
 
+function SiteToolsOverview() {
+  // The site's tools, each as name + one line + jump link. Helps a new
+  // visitor see everything on offer instead of discovering tools by scrolling.
+  const TOOLS = [
+    {
+      id: "intake",
+      label: "Can my pet fly?",
+      blurb: "A quick assessment — answer a few questions about your pet and route, and see how tricky your trip is likely to be.",
+    },
+    {
+      id: "planner",
+      label: "Journey planner",
+      blurb: "Enter your origin and destination — get the cabin airlines, any connections, and a checklist matched to your exact route.",
+    },
+    {
+      id: "airlines",
+      label: "Airline comparison",
+      blurb: "Compare cabin-pet policies across 30+ airlines — weight limits, fees, carrier sizes, and which routes they'll carry pets on.",
+    },
+    {
+      id: "checklist",
+      label: "Checklist builder",
+      blurb: "Build a printable, country-specific checklist of every document and step your pet needs before travel day.",
+    },
+    {
+      id: "country-guides",
+      label: "Country pet guides",
+      blurb: "In-depth guides — the paperwork, airlines, catches and workarounds for specific destinations, country by country.",
+    },
+    {
+      id: "documents",
+      label: "Paperwork explained",
+      blurb: "Plain-English breakdowns of the documents that confuse people most — AHCs, pet passports, health certificates and more.",
+    },
+  ];
+
+  function go(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  return (
+    <section className="py-16 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
+          What this site does
+        </div>
+        <h2 className="font-serif text-3xl md:text-4xl text-stone-900 mb-3 leading-tight">
+          Free tools for every step of the trip
+        </h2>
+        <p className="font-serif text-stone-600 text-lg leading-relaxed mb-10 max-w-2xl">
+          Flying with a pet means airline rules, country paperwork, and timing — all different, all easy to get wrong. These tools sort through it. Everything here is free.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {TOOLS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => go(t.id)}
+              className="text-left bg-white border border-stone-200 hover:border-amber-300 hover:bg-amber-50/40 transition-colors p-5 rounded-sm group"
+            >
+              <div className="font-serif text-lg text-stone-900 group-hover:text-amber-700 transition-colors mb-1.5">
+                {t.label}
+                <span className="text-amber-600 ml-1.5" aria-hidden="true">→</span>
+              </div>
+              <p className="text-sm text-stone-600 leading-relaxed">{t.blurb}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function CountryGuidesSection() {
   return (
     <section id="country-guides" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300 scroll-mt-24">
@@ -11202,6 +11276,8 @@ export default function PetTravel() {
       <NavBar onStartIntake={startIntake} />
 
       <Hero onStart={startIntake} />
+
+      <SiteToolsOverview />
 
       <div id="intake-anchor" />
       {(phase === "intake" || phase === "results") && (

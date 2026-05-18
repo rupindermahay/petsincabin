@@ -33,7 +33,26 @@ function scrollToTarget(target) {
   });
 }
 
-// ---------- SITE META ----------
+// ---------- ROUTE LEG CLASSIFICATION ----------
+// A "transit" leg is any non-flight segment of a journey: a layover, a drive,
+// a train, a ferry, the Eurotunnel, etc. Everything else is a flight leg.
+// This is used both to label routes ("2-flight journey") and to drive
+// per-leg paperwork inference, so it must be accurate.
+//
+// Detection: the leg is transit if it STARTS with a transit keyword, OR if it
+// mentions a ground/sea crossing marker anywhere (Calais, Folkestone, Dover,
+// Eurotunnel, a ferry, Holyhead, Cherbourg/Roscoff, Rosslare). A genuine
+// flight leg never names those. This catches descriptive legs like
+// "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK" that don't happen
+// to start with a keyword.
+const TRANSIT_LEG_START = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended|At |Wait )/i;
+const TRANSIT_LEG_MARKER = /Calais|Folkestone|Eurotunnel|Holyhead|Cherbourg|Roscoff|Rosslare|ferry/i;
+function isTransitLeg(legRoute) {
+  const t = legRoute || "";
+  return TRANSIT_LEG_START.test(t) || TRANSIT_LEG_MARKER.test(t);
+}
+
+
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
@@ -1595,11 +1614,11 @@ const REGION_PAIR_STRATEGIES = {
   // ----- INTO the UK (cabin into UK impossible — via Europe + Eurotunnel) -----
   "us>uk-out": (o, d) => ({
     legs: [
-      { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
-      { route: "Layover at CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "CDG → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      { route: `${o} → Paris (CDG), Amsterdam (AMS) or Frankfurt (FRA)`, time: "7–11h", airline: "Air France / KLM / Lufthansa / Delta ✓ Cabin" },
+      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: "Drive + crossing: European hub → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
     ],
-    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → Paris by cabin, then a land/sea crossing to ${d}. From Calais you can use the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover — both are UK-government-approved pet routes. Works from any major US gateway with a cabin route to Paris.`,
+    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → a continental European hub by cabin, then a land/sea crossing to ${d}. Cabin transatlantic options into Europe include Paris (Air France), Amsterdam (KLM) and Frankfurt (Lufthansa). From the hub, drive to Calais and cross — the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover, both UK-government-approved pet routes. Works from any major US gateway with a cabin route to Europe.`,
   }),
   "europe>uk-out": (o, d) => ({
     legs: [
@@ -4831,7 +4850,7 @@ function normalizeItem(s) {
 function resolveAirlinesFromLegs(legs) {
   if (!Array.isArray(legs) || legs.length === 0) return [];
   const flightLegs = legs.filter(
-    (l) => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route || "")
+    (l) => !isTransitLeg(l.route || "")
   );
   const seen = new Set();
   const results = [];
@@ -9109,7 +9128,7 @@ function JourneyPlanner() {
     });
     // Helper to determine if a route is genuinely single-leg (one actual flight,
     // no transit legs). Transit legs include layovers, drives, ferries.
-    const isTransit = (legRoute) => /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended|At |Wait )/i.test(legRoute || "");
+    const isTransit = (legRoute) => isTransitLeg(legRoute);
     const isSingleFlight = (r) => {
       if (!r.legs || r.legs.length === 0) return false;
       const flightLegs = r.legs.filter((l) => !isTransit(l.route));
@@ -9736,14 +9755,14 @@ function JourneyPlanner() {
                           )}
                           {r.legs && r.legs.length > 1 && (
                             <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
-                              {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                              {r.legs.filter(l => !isTransitLeg(l.route)).length}-flight journey
                             </span>
                           )}
                         </div>
                         <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
                           {r.legs.map((leg, j) => {
-                            const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
-                            const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                            const isTransit = isTransitLeg(leg.route);
+                            const flightLegs = r.legs.filter(l => !isTransitLeg(l.route));
                             const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
                             return (
                               <div key={j} className="text-sm">
@@ -9897,14 +9916,14 @@ function JourneyPlanner() {
                               )}
                               {r.legs && r.legs.length > 1 && (
                                 <span className="text-xs uppercase tracking-widest text-amber-400/80 ml-1 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
-                                  {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                                  {r.legs.filter(l => !isTransitLeg(l.route)).length}-flight journey
                                 </span>
                               )}
                             </div>
                             <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
                               {r.legs.map((leg, j) => {
-                                const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
-                                const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                                const isTransit = isTransitLeg(leg.route);
+                                const flightLegs = r.legs.filter(l => !isTransitLeg(l.route));
                                 const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
                                 return (
                                   <div key={j} className="text-sm">
@@ -10495,7 +10514,7 @@ function Routes() {
                             <span>{r.from} <span className="text-stone-400 mx-2">→</span> {r.to}</span>
                             {r.legs && r.legs.length > 1 && (
                               <span className="text-xs uppercase tracking-widest text-amber-700 px-2 py-0.5 border border-amber-600/40 rounded-sm font-sans not-italic">
-                                {r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route)).length}-flight journey
+                                {r.legs.filter(l => !isTransitLeg(l.route)).length}-flight journey
                               </span>
                             )}
                           </div>
@@ -10515,8 +10534,8 @@ function Routes() {
 
                         <div className="space-y-2 mb-4">
                           {r.legs.map((leg, j) => {
-                            const isTransit = /^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(leg.route);
-                            const flightLegs = r.legs.filter(l => !/^(Layover|Overnight|Drive|Train|Ferry|Eurotunnel|Recommended)/i.test(l.route));
+                            const isTransit = isTransitLeg(leg.route);
+                            const flightLegs = r.legs.filter(l => !isTransitLeg(l.route));
                             const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
                             return (
                               <div key={j} className={`grid grid-cols-12 gap-3 text-sm items-center ${isTransit ? "bg-stone-50/60 py-1.5 px-2 -mx-2 rounded-sm" : ""}`}>

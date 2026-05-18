@@ -10201,6 +10201,28 @@ function JourneyPlanner() {
                         </p>
                       </div>
 
+                      {/* TAPEWORM REMINDER — only when the destination needs the
+                          treatment AND the user hasn't engaged the calculator
+                          yet. Easy to miss on mobile (the calculator sits
+                          collapsed up the page), so this nudges them to it. */}
+                      {twCountryForAirport(destination) && !tapewormResult && !tapewormAdded && (
+                        <div className="bg-amber-100 border-2 border-amber-400 rounded-sm p-4 mb-6 flex flex-col sm:flex-row sm:items-center gap-3">
+                          <button
+                            onClick={() => {
+                              setWantTapeworm(true);
+                              if (tapewormRef.current) scrollToTarget(tapewormRef.current);
+                            }}
+                            className="inline-flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-amber-50 px-5 py-3 text-sm uppercase tracking-widest font-medium transition-colors flex-shrink-0 rounded-sm"
+                          >
+                            <Stethoscope className="w-4 h-4" strokeWidth={2} />
+                            Calculate tapeworm dates
+                          </button>
+                          <p className="text-stone-700 text-xs leading-relaxed sm:flex-1">
+                            Dogs entering {twNameFor(twCountryForAirport(destination))} need a vet-recorded tapeworm treatment in a strict 24–120 hour window before arrival. You haven't worked out your dates yet — tap to do it now so it's on your checklist.
+                          </p>
+                        </div>
+                      )}
+
                       {/* CHANGE ROUTE link */}
                       {selectableRoutes.length > 1 && (
                         <button

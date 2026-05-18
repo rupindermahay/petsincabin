@@ -717,6 +717,7 @@ const DIRECT_ROUTES = [
   // ═══════ FROM WASHINGTON DULLES ═══════
   { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
   { from: "Washington (IAD)", to: "Paris (CDG)", duration: "7h 45m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+  { from: "Washington (IAD)", to: "Munich (MUC)", duration: "9h 15m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Munich is Lufthansa's second hub — a strong onward cabin connection point for Europe.", tags: ["us", "europe"] },
   { from: "Washington (IAD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Dulles direct to India.", tags: ["us", "india"] },
 
   // ═══════ FROM CAPE TOWN ═══════
@@ -983,6 +984,8 @@ const DIRECT_ROUTES = [
   { from: "Toronto (YYZ)", to: "Chicago (ORD)", duration: "1h 30m", note: "Air Canada or United. ✓ Cabin both. Shortest US Midwest cabin from Canada.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Delhi (DEL)", duration: "14h", note: "Air Canada. ✓ Cabin (under 10 kg combined). India isn't on Air Canada's no-cabin list — but you'll need India's AQCS NOC for the import side. One of the very few direct cabin options Canada ↔ India. Confirm with Air Canada when booking.", tags: ["canada", "india"] },
   { from: "Toronto (YYZ)", to: "Frankfurt (FRA)", duration: "8h 15m", note: "Air Canada. ✓ Cabin (under 10 kg combined). Frankfurt is a strong onward cabin hub for the rest of Europe and India.", tags: ["canada", "europe"] },
+  { from: "Toronto (YYZ)", to: "Amsterdam (AMS)", duration: "7h 45m", note: "KLM / Air Canada. ✓ Cabin (under 8 kg KLM / under 10 kg combined Air Canada). Amsterdam connects onward cabin-friendly across Europe.", tags: ["canada", "europe"] },
+  { from: "Toronto (YYZ)", to: "Munich (MUC)", duration: "8h 30m", note: "Air Canada / Lufthansa. ✓ Cabin (under 10 kg combined Air Canada / under 8 kg Lufthansa). Munich is Lufthansa's second hub with strong onward European cabin connections.", tags: ["canada", "europe"] },
   { from: "Toronto (YYZ)", to: "Los Angeles (LAX)", duration: "5h 15m", note: "Air Canada. ✓ Cabin (under 22 lb combined). West coast direct.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Miami (MIA)", duration: "3h 22m", note: "Air Canada or American. ✓ Cabin both. Popular cabin route for Canadians wintering in Florida.", tags: ["canada", "us"] },
   { from: "Toronto (YYZ)", to: "Montreal (YUL)", duration: "1h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined).", tags: ["canada"] },
@@ -2207,6 +2210,19 @@ const FALLBACK_STRATEGIES = {
     ],
     note: `No airline flies cabin pets out of South Africa internationally — your pet travels as manifested cargo via an IATA-registered pet shipper. Plan ahead: the destination country's import paperwork (permits, health certificates, sometimes rabies titre tests) must all be in order before travel.`,
   }),
+  // Generic cabin-direct fallback — for region pairs where a direct cabin
+  // flight genuinely exists (US/Canada/Europe/UAE/India transatlantic and
+  // similar corridors) but the EXACT airport pair the user picked has no
+  // hand-written direct route. Rather than show a blank, this generates an
+  // honest "a direct cabin flight exists — confirm the airline for your
+  // exact airports" route. It is a SAFETY NET: specific hand-written direct
+  // routes always take priority and render with the real airline named.
+  "cabin-direct": (o, d) => ({
+    legs: [
+      { route: `${o} → ${d}`, time: "direct flight — varies by route", airline: "Cabin available — confirm with the operating airline" },
+    ],
+    note: `This is a well-served corridor for cabin pets — major carriers fly it and accept small dogs and cats in the cabin (typically under 8 kg including the carrier). We may not have your exact airport pair written up with a named airline yet, so confirm cabin availability and the weight limit directly with the airline when you book. Reserve the pet's place early — cabin pet spots per flight are limited.`,
+  }),
   // Any destination = Hawaii
   "hawaii": (o, d) => ({
     legs: [
@@ -2523,6 +2539,23 @@ function strategiesFor(originRegion, destRegion) {
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
+  // Cabin-direct corridors — region pairs where a direct cabin flight
+  // genuinely exists (US/Canada/Europe/UAE/India/UK-out/Caribbean and
+  // similar). These pairs have no workaround strategy because they don't
+  // NEED one — but the hand-written direct-route list isn't exhaustive, so
+  // without this an unusual airport pair (e.g. Baltimore→Munich) returns a
+  // blank. This fallback guarantees a sensible result; specific direct
+  // routes still take priority and render with the real airline named.
+  // NOTE: this only ever fires for pairs with no explicit strategy. Pairs
+  // INTO the UK (europe>uk-out etc.) have their own workaround strategies,
+  // so they're never reached here — no risk of implying a cabin route
+  // into the UK exists.
+  {
+    const CABIN_DIRECT_REGIONS = new Set(["us", "canada", "europe", "dubai", "india", "uk-out", "caribbean"]);
+    if (CABIN_DIRECT_REGIONS.has(originRegion) && CABIN_DIRECT_REGIONS.has(destRegion)) {
+      return [FALLBACK_STRATEGIES["cabin-direct"]];
+    }
+  }
   return [];
 }
 

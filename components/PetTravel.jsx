@@ -75,7 +75,7 @@ const AIRLINES = [
     notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. United is one of very few airlines accepting cabin pets US↔Japan direct (no weight limit). Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
     intl: "Yes (restricted)",
     verified: "May 2026",
-    link: "https://www.united.com/en-us/travel-information/special-needs/travel-with-pets",
+    link: "https://www.united.com/en/us/fly/travel/traveling-with-pets.html",
   },
   {
     name: "JetBlue",
@@ -5641,6 +5641,53 @@ function NavBar({ onStartIntake }) {
     </button>
   );
 
+  // Country-guides dropdown — the guide pages are separate routes, not page
+  // sections, so they get their own hover/focus dropdown rather than sitting
+  // in the section nav. Closes on mouse-leave or selection.
+  const NavGuidesDropdown = () => {
+    const [dropOpen, setDropOpen] = useState(false);
+    return (
+      <div
+        className="relative"
+        onMouseEnter={() => setDropOpen(true)}
+        onMouseLeave={() => setDropOpen(false)}
+      >
+        <button
+          onClick={() => setDropOpen((v) => !v)}
+          className="relative group flex items-baseline gap-1.5 py-2 px-1 transition-colors whitespace-nowrap"
+          aria-haspopup="true"
+          aria-expanded={dropOpen}
+        >
+          <span className="font-serif italic text-amber-600/60 text-[11px]">❖</span>
+          <span className="font-serif text-[13px] text-stone-700 group-hover:text-amber-700 transition-colors">
+            Country pet guides
+          </span>
+          <span className="font-sans text-[9px] text-stone-400">▾</span>
+          <span className="absolute bottom-0 left-1 right-1 h-px bg-amber-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+        </button>
+        {dropOpen && (
+          <div
+            className="absolute left-0 top-full pt-1 z-50 animate-fadeIn"
+            style={{ minWidth: "230px" }}
+          >
+            <div className="bg-white border border-stone-200 shadow-lg rounded-sm py-1">
+              {COUNTRY_GUIDES.map((g) => (
+                <a
+                  key={g.slug}
+                  href={g.slug}
+                  className="flex items-baseline gap-2 px-4 py-2 hover:bg-amber-50 transition-colors"
+                >
+                  <span aria-hidden="true" className="text-sm">{g.flag}</span>
+                  <span className="font-serif text-[13px] text-stone-700">{g.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
@@ -5736,6 +5783,7 @@ function NavBar({ onStartIntake }) {
             </div>
             <div className="flex items-center justify-between">
               {row2.map((s) => <NavItem key={s.id} s={s} />)}
+              <NavGuidesDropdown />
             </div>
           </div>
         </div>
@@ -5763,6 +5811,25 @@ function NavBar({ onStartIntake }) {
                   </span>
                 </button>
               ))}
+            </div>
+
+            {/* Country guide pages — separate routes, shown as their own group */}
+            <div className="mt-5 pt-4 border-t-2 border-stone-200">
+              <div className="text-xs uppercase tracking-[0.2em] text-amber-700 mb-2">
+                Country pet guides
+              </div>
+              <div className="grid grid-cols-2 gap-x-8">
+                {COUNTRY_GUIDES.map((g) => (
+                  <a
+                    key={g.slug}
+                    href={g.slug}
+                    className="flex items-baseline gap-2 py-2.5 border-b border-stone-200 hover:text-amber-700 transition-colors"
+                  >
+                    <span aria-hidden="true" className="text-sm">{g.flag}</span>
+                    <span className="font-serif text-sm text-stone-900">{g.name}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -10904,8 +10971,67 @@ function AnalyticsOptOutListener() {
 // ~1.5 screens; clicking smooth-scrolls to the top of the page. Positioned
 // bottom-LEFT and styled in muted stone tones so it never competes with the
 // amber compare-airlines button (which lives bottom-right).
+// The standalone country/region guide pages. Used by both the nav dropdown
+// and the homepage "Country Pet Guides" section so the two never drift.
+const COUNTRY_GUIDES = [
+  { slug: "/uk-pet-travel", flag: "🇬🇧", name: "United Kingdom", blurb: "The cabin ban, and the Paris-pivot workaround." },
+  { slug: "/india-pet-travel", flag: "🇮🇳", name: "India", blurb: "AQCS paperwork, NOC, and the cabin routes in." },
+  { slug: "/canada-pet-travel", flag: "🇨🇦", name: "Canada", blurb: "Gentle rules — no titer, no quarantine." },
+  { slug: "/japan-pet-travel", flag: "🇯🇵", name: "Japan", blurb: "The 7-month import process, step by step." },
+  { slug: "/oslo-pet-travel", flag: "🇳🇴", name: "Norway", blurb: "EEA rules, the tapeworm treatment, Oslo entry." },
+  { slug: "/iceland-pet-travel", flag: "🇮🇸", name: "Iceland", blurb: "One of the strictest — quarantine and permits." },
+  { slug: "/seattle-pet-travel", flag: "🇺🇸", name: "Seattle / US Pacific NW", blurb: "Cabin hops including Seattle–Vancouver." },
+  { slug: "/south-america-pet-travel", flag: "🌎", name: "South America", blurb: "Country-by-country across the continent." },
+  { slug: "/central-america-pet-travel", flag: "🌎", name: "Central America", blurb: "Costa Rica, Panama, and the routes through." },
+];
+
+function CountryGuidesSection() {
+  return (
+    <section id="country-guides" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300 scroll-mt-24">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
+          Country pet guides
+        </div>
+        <h2 className="font-serif text-3xl md:text-4xl text-stone-900 mb-3 leading-tight">
+          In-depth guides, country by country
+        </h2>
+        <p className="font-serif text-stone-600 text-lg leading-relaxed mb-10 max-w-2xl">
+          The tools above cover any route. These are the deeper dives — the paperwork, the airlines, the catches and the workarounds for specific destinations.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {COUNTRY_GUIDES.map((g) => (
+            <a
+              key={g.slug}
+              href={g.slug}
+              className="block bg-stone-50 border border-stone-200 hover:border-amber-300 hover:bg-amber-50/40 transition-colors p-5 rounded-sm group"
+            >
+              <div className="flex items-baseline gap-2 mb-1.5">
+                <span aria-hidden="true" className="text-lg">{g.flag}</span>
+                <span className="font-serif text-lg text-stone-900 group-hover:text-amber-700 transition-colors">
+                  {g.name}
+                </span>
+              </div>
+              <p className="text-sm text-stone-600 leading-relaxed">{g.blurb}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BackToTop() {
   const [visible, setVisible] = useState(false);
+
+  // Section IDs in document order — used to work out which section the user
+  // is currently in, so the button scrolls to THAT section's top rather than
+  // all the way back to the hero.
+  const SECTION_IDS = [
+    "intake", "planner", "airlines", "routes", "destinations",
+    "quarantine", "timeline", "checklist", "documents", "tips",
+    "travel-day", "stories", "contact",
+  ];
 
   useEffect(() => {
     function onScroll() {
@@ -10917,12 +11043,37 @@ function BackToTop() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function scrollToCurrentSection() {
+    // Find the section the user is currently inside: the last section whose
+    // top edge is at or above a point just below the viewport top (24px
+    // allows for the sticky nav). Scroll to that section's top.
+    const probe = 80; // px below viewport top — clears the sticky nav
+    let target = null;
+    for (const id of SECTION_IDS) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const top = el.getBoundingClientRect().top;
+      // Section top is above the probe line => user is in or past this section
+      if (top <= probe) {
+        target = el;
+      } else {
+        break; // sections are in order; first one below probe = stop
+      }
+    }
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // Above the first section (still in hero) — go to page top.
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
   if (!visible) return null;
 
   return (
     <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Back to top"
+      onClick={scrollToCurrentSection}
+      aria-label="Scroll to top of this section"
       className="fixed left-5 z-40 w-11 h-11 flex items-center justify-center bg-stone-800 text-stone-100 border border-stone-600 hover:bg-stone-900 hover:border-stone-400 shadow-lg transition-colors rounded-full"
       style={{ bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))" }}
     >
@@ -11069,6 +11220,7 @@ export default function PetTravel() {
       <AirlineGrid />
       <Routes />
       <DifficultDestinations />
+      <CountryGuidesSection />
       <QuarantineWatch />
       <Checklist />
       <Documents />

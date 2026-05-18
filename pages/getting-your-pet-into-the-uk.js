@@ -117,8 +117,8 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">CDG → Calais → Eurotunnel/ferry</span>
                     </td>
                     <td className="py-3 px-3">~5–6h</td>
-                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
-                    <td className="py-3 pl-3">~£400–£900 door-to-door</td>
+                    <td className="py-3 px-3">Vehicle crossing ~£115–£229 + pet ~£24 + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">~£400–£900 door-to-door (all-in)</td>
                   </tr>
                   <tr className="border-b border-stone-200">
                     <td className="py-3 pr-3">
@@ -126,8 +126,8 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">FRA → Calais → Eurotunnel/ferry</span>
                     </td>
                     <td className="py-3 px-3">~7–8h drive + crossing</td>
-                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
-                    <td className="py-3 pl-3">~£10–14h trip; higher-end fare</td>
+                    <td className="py-3 px-3">Vehicle crossing ~£115–£229 + pet ~£24 + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">Higher-end fare (longest drive)</td>
                   </tr>
                   <tr className="border-b border-stone-200">
                     <td className="py-3 pr-3">
@@ -135,7 +135,7 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">DFDS overnight IJmuiden → Newcastle</span>
                     </td>
                     <td className="py-3 px-3">~17h overnight ferry</td>
-                    <td className="py-3 px-3">Ferry ~£30/pet + pet cabin</td>
+                    <td className="py-3 px-3">Ferry passage + cabin ~£150–£350 + pet ~£30</td>
                     <td className="py-3 pl-3">—</td>
                   </tr>
                   <tr className="border-b border-stone-200">
@@ -144,8 +144,8 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">AMS → Belgium/France → Eurotunnel</span>
                     </td>
                     <td className="py-3 px-3">~7–8h</td>
-                    <td className="py-3 px-3">Crossing ~£15–£22/pet + car hire &amp; fuel</td>
-                    <td className="py-3 pl-3">~£500–£1,000 door-to-door</td>
+                    <td className="py-3 px-3">Vehicle crossing ~£115–£229 + pet ~£24 + car hire &amp; fuel</td>
+                    <td className="py-3 pl-3">~£500–£1,000 door-to-door (all-in)</td>
                   </tr>
                   <tr className="border-b border-stone-200">
                     <td className="py-3 pr-3">
@@ -153,7 +153,7 @@ export default function GettingYourPetIntoTheUK() {
                       <span className="text-xs text-stone-500">Brittany Ferries Bilbao/Santander → Portsmouth or Plymouth</span>
                     </td>
                     <td className="py-3 px-3">~24–36h crossing</td>
-                    <td className="py-3 px-3">Ferry from ~£50/pet + pet cabin (vehicle passengers only)</td>
+                    <td className="py-3 px-3">Ferry passage + cabin (peak £250–£1,100 car &amp; 2) + pet from ~£50</td>
                     <td className="py-3 pl-3">Long-haul fare — get a quote</td>
                   </tr>
                   <tr>
@@ -167,6 +167,22 @@ export default function GettingYourPetIntoTheUK() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            <div className="bg-white border border-stone-300 rounded-sm p-5 mb-3">
+              <div className="font-serif text-lg text-stone-900 mb-2">The costs that ambush you — read this before you budget</div>
+              <p className="font-serif text-stone-700 leading-relaxed text-sm mb-3">
+                Here's the trap: every guide quotes the <em>pet's</em> crossing fee — that cheery "from £24" for the Eurotunnel — and stops there. But the pet fee is the tiny number. The one that actually stings is <strong>your own crossing ticket</strong>. The pet doesn't cross on its own; it crosses in a vehicle, and that vehicle needs a ticket.
+              </p>
+              <ul className="font-serif text-stone-700 leading-relaxed text-sm space-y-1.5 ml-5 list-disc mb-3">
+                <li><strong>The vehicle crossing itself.</strong> A one-way standard Eurotunnel fare for a car is roughly £115–£229 — and one-way movers can't use the cheap return-only "day trip" deals. The fare covers the car and up to 9 passengers, so it's per <em>car</em>, not per person — but it's still the biggest single line, and it's <em>on top</em> of the ~£24 pet fee.</li>
+                <li><strong>Car hire, if you don't bring your own.</strong> A one-way rental dropped in another country carries a hefty one-way drop fee, plus fuel and tolls across France or Belgium.</li>
+                <li><strong>An overnight stop.</strong> The Frankfurt route especially is a long day — most people build in a hotel night, and it has to be a pet-friendly one.</li>
+                <li><strong>Ferry cabins.</strong> On the Amsterdam, Spain and longer France crossings, a pet-friendly cabin isn't the pet fee — it's a separate, often pricey, booking.</li>
+              </ul>
+              <p className="font-serif text-stone-700 leading-relaxed text-sm">
+                None of this is hidden by anyone trying to trick you — it's just rarely added up in one place. So do add it up. The realistic all-in cost of the overland routes is the vehicle crossing <em>plus</em> the pet fee <em>plus</em> car hire/fuel <em>plus</em> any overnight — easily several hundred pounds before you've factored the flight. The "If a pet taxi drives it" column already bundles all of this into one quote, which is part of why a pet taxi can look closer in price than you'd expect.
+              </p>
             </div>
 
             <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
@@ -195,7 +211,7 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The crossing has two approved options. The Eurotunnel Le Shuttle puts your car on a train at Calais (Coquelles) and arrives at Folkestone in about 35 minutes — your pet stays in the car the entire time, with pets travelling from around £22 each way. Alternatively a pet-friendly ferry runs Calais–Dover (DFDS, P&O or Irish Ferries) in about 90 minutes, from roughly £15 per pet, with the pet again staying in the vehicle.
+              The crossing has two approved options. The Eurotunnel Le Shuttle puts your car on a train at Calais (Coquelles) and arrives at Folkestone in about 35 minutes — your pet stays in the car the entire time. The pet fee is small, from around £24 each way; the cost that matters is the vehicle ticket itself, roughly £115–£229 one way for a car (it covers up to nine passengers). Alternatively a pet-friendly ferry runs Calais–Dover (DFDS, P&O or Irish Ferries) in about 90 minutes — the pet again stays in the vehicle, and the same logic applies: a modest pet fee on top of the vehicle fare. See the cost breakdown above so nothing ambushes your budget.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -218,7 +234,7 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Because of that longer drive, many people split it with an overnight stop in Frankfurt or along the way, which also gives the pet a proper rest after the flight. The crossing itself is identical to the Paris route: Eurotunnel from around £22 per pet, or a Calais–Dover ferry from around £15.
+              Because of that longer drive, many people split it with an overnight stop in Frankfurt or along the way, which also gives the pet a proper rest after the flight — just budget for a pet-friendly hotel. The crossing itself is identical to the Paris route: the small pet fee (from ~£24) sits on top of the vehicle crossing ticket (~£115–£229 one way for a car), whether you take the Eurotunnel or a Calais–Dover ferry.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">

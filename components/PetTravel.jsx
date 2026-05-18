@@ -3347,7 +3347,7 @@ const CHECKLIST_DATA = {
       {
         title: "4–6 weeks before — Import Permit",
         items: [
-          "Apply for Bahamas Import Permit via bahamaspetpermit.com or email minagriculturalmarine@bahamas.gov.bs",
+          "Apply for the Bahamas Import Permit through the government BAHFSA e-permit system, or email minagriculturemarine@bahamas.gov.bs (see Official sources below)",
           "Standard processing: 6–8 weeks (expedited service available)",
           "Permit fee: ~$10 USD + 12% VAT",
           "Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier — confirm eligibility before applying",
@@ -4536,7 +4536,7 @@ const DIRECTIONAL_CHECKLISTS = {
         {
           title: "4–6 weeks before — Import Permit",
           items: [
-            "Apply for Bahamas Import Permit via bahamaspetpermit.com or email minagriculturalmarine@bahamas.gov.bs",
+            "Apply for the Bahamas Import Permit through the government BAHFSA e-permit system, or email minagriculturemarine@bahamas.gov.bs (see Official sources below)",
             "Standard processing: 6–8 weeks (expedited service available)",
             "Permit fee: ~$10 USD + 12% VAT",
             "Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier — confirm eligibility before applying",
@@ -7198,7 +7198,7 @@ const DESTINATIONS = [
       {
         title: "Bahamas: 6–8 week import permit",
         icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Apply via bahamaspetpermit.com at least 4 weeks before travel. International Veterinary Certificate within 48 hours of arrival. Pet examined by Bahamian vet within 48 hours of landing. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier. Good news for returning to the US: Bahamas is CDC-rabies-FREE, so re-entry is just the standard CDC Dog Import Form.",
+        body: "Apply for the government import permit (via the official BAHFSA e-permit system) at least 4 weeks before travel. International Veterinary Certificate within 48 hours of arrival. Pet examined by Bahamian vet within 48 hours of landing. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier. Good news for returning to the US: Bahamas is CDC-rabies-FREE, so re-entry is just the standard CDC Dog Import Form.",
         cost: "Permit: ~$10 USD + 12% VAT. Vet exam on arrival ~$50–100.",
       },
       {
@@ -11182,8 +11182,8 @@ function Documents() {
             {
               title: "Bahamas Import Permit",
               when: "Entering Bahamas",
-              detail: "Required for every pet. Apply via bahamaspetpermit.com (online) at least 4 weeks before travel — 6–8 weeks for standard processing without expedited service. ~$10 USD + 12% VAT. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier.",
-              link: { url: "https://bahamaspetpermit.com/", label: "bahamaspetpermit.com" },
+              detail: "Required for every pet. Issued by the government — apply through the official BAHFSA e-permit system at least 4 weeks before travel (6–8 weeks for standard processing without expedited service). ~$10 USD + 12% VAT. Banned breeds: Pit Bull, Presa Canario, Cane Corso, American Bully, Staffordshire Terrier.",
+              link: { url: "https://www.bahamas.gov.bs/bringing-pets", label: "bahamas.gov.bs · bringing pets" },
             },
             {
               title: "CDC Certification of U.S.-issued Rabies Vaccination",

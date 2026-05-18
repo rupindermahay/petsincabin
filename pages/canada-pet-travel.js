@@ -250,6 +250,11 @@ export default function CanadaPetTravel() {
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">Related guides</div>
             <h2 className="font-serif text-2xl text-stone-900 mb-6">More from the pets-in-cabin guide</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <Link href="/mexico-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">Mexico guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">The other easy North American destination — even lighter paperwork.</div>
+              </Link>
+
               <Link href="/seattle-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">Seattle / US Pacific NW guide →</div>
                 <div className="text-xs text-stone-600 leading-relaxed">The one-hour Seattle–Vancouver cabin hop starts here.</div>
@@ -258,11 +263,6 @@ export default function CanadaPetTravel() {
               <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
                 <div className="text-xs text-stone-600 leading-relaxed">Flying a pet out of the UK to Canada — and the cabin-ban catch.</div>
-              </Link>
-
-              <Link href="/travel-day-with-a-pet" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
-                <div className="font-serif text-base text-stone-900 mb-1">Travel day guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">What to expect at the airport, step by step.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

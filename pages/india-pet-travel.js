@@ -287,9 +287,9 @@ export default function IndiaPetTravel() {
                 <div className="text-xs text-stone-600 leading-relaxed">Cabin into Japan via Korean Air or United (180-day titer wait).</div>
               </Link>
 
-              <Link href="/seattle-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
-                <div className="font-serif text-base text-stone-900 mb-1">Seattle / US Pacific NW guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">Common US entry point for India → US routes via Asia.</div>
+              <Link href="/uae-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">UAE guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Another strict-import destination — MOCCAE permit, cargo-only entry.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

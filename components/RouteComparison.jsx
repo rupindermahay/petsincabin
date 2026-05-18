@@ -6,7 +6,7 @@ import { useState } from "react";
 //   sortCost / sortTime  — numeric keys used only for ordering (low end of range)
 //   isEurotunnel         — true for LeShuttle crossings (filter: Eurotunnel only)
 //   hasPetTaxi           — true where a door-to-door pet taxi is an option
-//   isShortCrossing      — false for the long sea routes (Amsterdam ferry, Spain, QM2)
+//   isFerrySea           — true where the Channel/sea crossing is by ferry or ship
 // ---------------------------------------------------------------------------
 const ROUTES = [
   {
@@ -27,7 +27,7 @@ const ROUTES = [
     sortTime: 5,
     isEurotunnel: true,
     hasPetTaxi: true,
-    isShortCrossing: true,
+    isFerrySea: false,
   },
   {
     id: "paris-ferry",
@@ -48,7 +48,7 @@ const ROUTES = [
     sortTime: 5.5,
     isEurotunnel: false,
     hasPetTaxi: true,
-    isShortCrossing: true,
+    isFerrySea: true,
   },
   {
     id: "frankfurt-eurotunnel",
@@ -74,7 +74,7 @@ const ROUTES = [
     sortTime: 7,
     isEurotunnel: true,
     hasPetTaxi: true,
-    isShortCrossing: true,
+    isFerrySea: false,
   },
   {
     id: "frankfurt-ferry",
@@ -100,7 +100,7 @@ const ROUTES = [
     sortTime: 7.5,
     isEurotunnel: false,
     hasPetTaxi: true,
-    isShortCrossing: true,
+    isFerrySea: true,
   },
   {
     id: "amsterdam-ferry",
@@ -120,7 +120,7 @@ const ROUTES = [
     sortTime: 17,
     isEurotunnel: false,
     hasPetTaxi: false,
-    isShortCrossing: false,
+    isFerrySea: true,
   },
   {
     id: "amsterdam-overland",
@@ -140,7 +140,7 @@ const ROUTES = [
     sortTime: 7,
     isEurotunnel: true,
     hasPetTaxi: true,
-    isShortCrossing: true,
+    isFerrySea: false,
   },
   {
     id: "spain",
@@ -159,7 +159,7 @@ const ROUTES = [
     sortTime: 24,
     isEurotunnel: false,
     hasPetTaxi: false,
-    isShortCrossing: false,
+    isFerrySea: true,
   },
   {
     id: "qm2",
@@ -176,7 +176,7 @@ const ROUTES = [
     sortTime: 168,
     isEurotunnel: false,
     hasPetTaxi: false,
-    isShortCrossing: false,
+    isFerrySea: true,
   },
 ];
 
@@ -188,8 +188,8 @@ const SORTS = [
 
 const FILTERS = [
   { id: "eurotunnel", label: "Eurotunnel only", test: (r) => r.isEurotunnel },
-  { id: "petTaxi", label: "Pet taxi available", test: (r) => r.hasPetTaxi },
-  { id: "short", label: "Short crossings only", test: (r) => r.isShortCrossing },
+  { id: "petTaxi", label: "Pet taxi", test: (r) => r.hasPetTaxi },
+  { id: "ferrySea", label: "Ferry / sea only", test: (r) => r.isFerrySea },
 ];
 
 export default function RouteComparison() {

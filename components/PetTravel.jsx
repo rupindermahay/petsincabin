@@ -8452,14 +8452,16 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
 
   const vetOptions = useMemo(() => {
     // Each entry: { key (selectable id), tz (for maths), name (label) }.
+    // The treatment must be given BEFORE arrival in the destination (24–120h
+    // prior), so the destination itself is never a valid treatment location —
+    // only the origin and any stopover qualify.
     const list = [{ key: origin, tz: origin, name: twNameFor(origin) }];
     if (stopoverResolved) {
       list.push({ key: stopover, tz: stopoverResolved.tz, name: stopoverResolved.name });
     }
-    list.push({ key: dest, tz: dest, name: twNameFor(dest) });
     const seen = new Set();
     return list.filter((o) => (seen.has(o.key) ? false : (seen.add(o.key), true)));
-  }, [origin, stopover, stopoverResolved, dest]);
+  }, [origin, stopover, stopoverResolved]);
 
   useEffect(() => {
     if (!vetOptions.some((o) => o.key === treatLoc)) {

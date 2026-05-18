@@ -12073,6 +12073,18 @@ export default function PetTravel() {
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top, behavior: "smooth" });
+        // For the planner, land the user IN the tool: once the scroll has
+        // settled, focus the first dropdown so it's visually highlighted and
+        // clearly the starting point — rather than just parking nearby.
+        if (id === "planner") {
+          setTimeout(() => {
+            const firstField = document.getElementById("planner-from");
+            if (firstField) {
+              try { firstField.focus({ preventScroll: true }); }
+              catch (e) { firstField.focus(); }
+            }
+          }, 700);
+        }
       } else if (attempts < 5) {
         setTimeout(tryScroll, 200);
       }

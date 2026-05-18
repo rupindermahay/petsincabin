@@ -229,6 +229,28 @@ export default function TapewormWindow({ destKey = null, onResult = null }) {
     if (onResult) onResult(result);
   }, [result, onResult]);
 
+  /* ---- Analytics ---------------------------------------------------
+     Fire a single GA4 event when a real treatment window is produced.
+     The `result` memo recomputes on every keystroke, so we debounce:
+     wait briefly after the last input change, then report once for
+     that destination + arrival combination. A ref guards against
+     re-firing for an unchanged combination. */
+  const lastReportedRef = React.useRef("");
+  React.useEffect(() => {
+    if (!result || !arrival) return;
+    const signature = `${dest}|${arrival}`;
+    if (signature === lastReportedRef.current) return;
+    const timer = setTimeout(() => {
+      lastReportedRef.current = signature;
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        window.gtag("event", "tapeworm_window_calculated", {
+          destination_country: nameFor(dest),
+        });
+      }
+    }, 1200); // settle after typing stops
+    return () => clearTimeout(timer);
+  }, [result, dest, arrival]);
+
   return (
     <div className="border border-amber-200 bg-amber-50/50 rounded-sm overflow-hidden">
       <button

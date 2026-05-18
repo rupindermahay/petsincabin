@@ -11010,11 +11010,6 @@ function SiteToolsOverview() {
       blurb: "Build a printable, country-specific checklist of every document, vaccination and step your pet needs — in order, with the timing — so nothing gets missed before travel day.",
     },
     {
-      id: "planner",
-      label: "Tapeworm timing calculator",
-      blurb: "Dogs entering the UK, Ireland, Norway, Malta or Finland need a vet-recorded tapeworm treatment in a strict 24–120 hour window before arrival. Enter your route and arrival time and it works out the exact dates — in your vet's local time — and drops them straight into your checklist.",
-    },
-    {
       id: "country-guides",
       label: "Country pet guides",
       blurb: "In-depth guides for specific destinations — the paperwork, the airlines that serve them, the quiet catches, and the workarounds — written country by country.",

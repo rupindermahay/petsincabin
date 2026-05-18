@@ -249,7 +249,7 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK government rule). Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO the UK (cargo only — UK government rule) or INTO Ireland (no carrier offers a cabin service). Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "~€75–€200 depending on route",
@@ -808,7 +808,7 @@ const DIRECT_ROUTES = [
   { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
 
   // ═══════ FROM DUBLIN ═══════
-  { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward — it's only flights INTO Ireland that ban cabin pets. Connects onward across Europe.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward — it's flights INTO Ireland where no airline currently offers a cabin-pet service. Connects onward across Europe.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin OUT of Ireland (under 8 kg). Onward connections across Europe and beyond.", tags: ["europe"] },
 
@@ -1376,7 +1376,7 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "This one is close to direct: Air India's official policy allows cabin pets on flights DEPARTING the UAE (the restriction is only on flights departing India and arriving in the UAE — that reverse direction is blocked). So UAE → India can be a single cabin flight. You still need India's AQCS NOC and entry via one of the six approved airports. Confirm the specific route and cabin space with Air India when booking.",
     tags: ["dubai", "india"],
   },
-  // USA / Europe → Ireland (no cabin into Ireland — same as UK)
+  // USA / Europe → Ireland (no airline offers cabin into Ireland — use ferry)
   {
     from: "USA or Europe",
     to: "Dublin / Ireland",
@@ -1386,7 +1386,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
       { route: "Ferry to Rosslare or Dublin", time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
     ],
-    note: "No commercial airline flies cabin pets INTO Ireland — same government-rule wall as the UK. The cleanest workaround is the direct France→Ireland ferry, which skips the UK landbridge entirely. From the US, fly cabin to a European hub first, then pick up the ferry route. The crossing is long but your pet is with you. Alternative: Eurotunnel into the UK, then the short Holyhead→Dublin ferry.",
+    note: "No commercial airline currently operates a cabin-pet service on flights INTO Ireland — so in practice the route in is by sea or as cargo. The cleanest workaround is the direct France→Ireland ferry, which skips the UK landbridge entirely. From the US, fly cabin to a European hub first, then pick up the ferry route. The crossing is long but your pet is with you. Alternative: Eurotunnel into the UK, then the short Holyhead→Dublin ferry.",
     tags: ["us", "europe", "ireland"],
   },
 ];
@@ -1536,7 +1536,7 @@ const AIRPORTS = [
     note: "Newcastle has no cabin-pet flights of its own — the carriers that take pets in the cabin out of the UK fly from Heathrow and Manchester. But Newcastle has something no other UK airport has: the DFDS overnight ferry to Amsterdam, which carries pets. For getting a pet to or from mainland Europe, that ferry is Newcastle's real route.",
     arrivalNote: "No airline flies cabin pets INTO the UK — but Newcastle is the UK port for the DFDS overnight ferry from Amsterdam (docking at North Shields), which DOES carry pets in pet-friendly cabins or onboard kennels. For a pet arriving from mainland Europe, that ferry makes Newcastle one of the most pet-practical ways into the UK — no cargo hold, no Channel drive." },
   // Ireland
-  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo.", arrivalNote: "No airline flies cabin pets INTO Ireland — Dublin included. Pets arriving in Ireland come in by ferry or as cargo. Plan the arrival leg around that." },
+  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline currently offers a cabin-pet service on flights INTO Ireland — so in practice arrival is by ferry or cargo.", arrivalNote: "No airline currently runs a cabin-pet service on flights INTO Ireland — Dublin included. (Unlike the UK, this isn't a legal ban — Irish authorities don't object to cabin pets — it's simply that no carrier offers it.) In practice, pets arriving in Ireland come in by ferry or as cargo. Plan the arrival leg around that." },
   // United States
   { code: "JFK", city: "New York JFK", region: "us", cabinOut: true, cabinIn: true },
   { code: "EWR", city: "Newark", region: "us", cabinOut: true, cabinIn: true },
@@ -1710,21 +1710,21 @@ const REGION_PAIR_STRATEGIES = {
     note: `Etihad takes cabin pets OUT of Abu Dhabi to Europe. From a European hub, a land/sea crossing brings your pet into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
   }),
 
-  // ----- INTO Ireland (same wall as UK — via Europe + ferry) -----
+  // ----- INTO Ireland (no airline offers cabin in — via Europe + ferry) -----
   "us>ireland": (o, d) => ({
     legs: [
       { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
       { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
       { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `No airline flies cabin pets INTO Ireland. Cleanest route: cabin into Europe, then the direct France→Ireland ferry — skips the UK entirely.`,
+    note: `No airline currently offers a cabin-pet service on flights INTO Ireland. Cleanest route: cabin into Europe, then the direct France→Ireland ferry — skips the UK entirely.`,
   }),
   "europe>ireland": (o, d) => ({
     legs: [
       { route: `${o} → Cherbourg or Roscoff (drive)`, time: "varies", airline: "Pet stays with you" },
       { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `From Europe, the direct France→Ireland ferry is the easiest way in — your pet stays with you. No cabin flight goes INTO Ireland.`,
+    note: `From Europe, the direct France→Ireland ferry is the easiest way in — your pet stays with you. No airline currently runs a cabin-pet service on flights into Ireland.`,
   }),
   "uk-out>ireland": (o, d) => ({
     legs: [
@@ -1929,7 +1929,7 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → ${d}`, time: "1h 30m–3h", airline: "Air France / KLM / Lufthansa ✓ Cabin out of Dublin" },
     ],
-    note: `Cabin OUT of Ireland is straightforward — it's only flights INTO Ireland that ban cabin pets. Air France (to Paris), KLM (to Amsterdam) and Lufthansa (to Frankfurt) all take cabin pets out of Dublin. From any of those hubs you can connect onward across Europe in cabin.`,
+    note: `Cabin OUT of Ireland is straightforward — it's flights INTO Ireland where no airline currently offers a cabin-pet service. Air France (to Paris), KLM (to Amsterdam) and Lufthansa (to Frankfurt) all take cabin pets out of Dublin. From any of those hubs you can connect onward across Europe in cabin.`,
   }),
   "ireland>uk-out": (o, d) => ({
     legs: [
@@ -2011,7 +2011,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland (Cherbourg/Roscoff → Rosslare/Dublin)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `No cabin flight goes INTO Ireland — same rule as the UK. Fly India→Europe in cabin, then take the pet-friendly ferry from France to Ireland. Your pet stays with you for the sea crossing. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, and tapeworm treatment for dogs.`,
+    note: `No airline currently runs a cabin-pet service into Ireland. Fly India→Europe in cabin, then take the pet-friendly ferry from France to Ireland. Your pet stays with you for the sea crossing. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, and tapeworm treatment for dogs.`,
   }),
 
   // ----- UAE (Abu Dhabi) outbound -----
@@ -2021,7 +2021,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Etihad cabin out of Abu Dhabi to a European hub, then the pet-friendly ferry from France into Ireland (no cabin flight goes into Ireland). If your pet is in Dubai, it's a short taxi to Abu Dhabi airport — cabin departures are only from AUH, not DXB.`,
+    note: `Etihad cabin out of Abu Dhabi to a European hub, then the pet-friendly ferry from France into Ireland (no airline currently runs a cabin-pet service into Ireland). If your pet is in Dubai, it's a short taxi to Abu Dhabi airport — cabin departures are only from AUH, not DXB.`,
   }),
   "dubai>canada": (o, d) => ({
     legs: [
@@ -2055,7 +2055,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
       { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `No cabin flight goes into Ireland. Route Mexico → US gateway → European hub in cabin, then the pet-friendly ferry from France into Ireland. A long journey — build in overnight stops.`,
+    note: `No airline currently runs a cabin-pet service into Ireland. Route Mexico → US gateway → European hub in cabin, then the pet-friendly ferry from France into Ireland. A long journey — build in overnight stops.`,
   }),
   "mexico>india": (o, d) => ({
     legs: [
@@ -2088,7 +2088,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
       { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `No cabin flight goes into Ireland. Caribbean → US gateway → European hub in cabin, then the pet-friendly ferry from France. Long and multi-leg — plan overnight stops.`,
+    note: `No airline currently runs a cabin-pet service into Ireland. Caribbean → US gateway → European hub in cabin, then the pet-friendly ferry from France. Long and multi-leg — plan overnight stops.`,
   }),
   "caribbean>mexico": (o, d) => ({
     legs: [
@@ -2121,7 +2121,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `No cabin flight goes into Ireland. Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
+    note: `No airline currently runs a cabin-pet service into Ireland. Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
   }),
   "canada>dubai": (o, d) => ({
     legs: [
@@ -2885,9 +2885,15 @@ const CHECKLIST_DATA = {
         items: [
           "Cats skip the tapeworm treatment — that's a dogs-only rule for Ireland (same as the UK)",
           "Everything else is identical: ISO microchip, rabies ≥21 days before entry, EU health certificate",
-          "The no-cabin-into-Ireland rule applies to cats too — you'll still take the ferry or cargo route in",
+          "The no-cabin-into-Ireland reality applies to cats too — you'll still take the ferry or cargo route in",
           "On the ferry the cat stays in its carrier in the vehicle or a pet-friendly cabin — bring a familiar blanket",
           "Feliway in a covered carrier, harness fitted for the ferry check-in",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Ireland's pet import authority is the Department of Agriculture, Food and the Marine (DAFM). Verify the current rules before you travel: <a href=\"https://www.gov.ie/en/department-of-agriculture-food-and-the-marine/publications/pet-travel/\" target=\"_blank\" rel=\"noopener noreferrer\">gov.ie · pet travel</a> and the official <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">Pet Travel Portal (pettravel.gov.ie)</a>, which gives requirements tailored to your country of origin.",
         ],
       },
     ],
@@ -3259,6 +3265,12 @@ const CHECKLIST_DATA = {
           "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
         ],
       },
+      {
+        title: "Official sources",
+        items: [
+          "The Dominican Republic's animal-health authority is the Ministry of Agriculture's animal health directorate (Dirección General de Ganadería). For pets from the US, the most reliable starting point is the USDA APHIS country page: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. For dogs returning to the US, check current CDC rules at <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">cdc.gov · dog import</a>.",
+        ],
+      },
     ],
   },
   jamaica: {
@@ -3310,6 +3322,12 @@ const CHECKLIST_DATA = {
           "The parasite-treatment schedule applies to cats — confirm the exact schedule with Jamaica Veterinary Services",
           "Brucella Canis testing is dog-only; the breed bans are dog-only — but every other step is the same for a cat",
           "Because of the long lead time, a covered carrier and Feliway acclimation over those months is easy to build in — start early",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Jamaica's pet import authority is the Veterinary Services Division of the Ministry of Agriculture, Fisheries and Mining. The official guidelines and the Veterinary Import Permit process are here: <a href=\"https://www.moa.gov.jm/content/guidelines-importation-dogs-and-cats-jamaica-animals-diseases-importation-control-amendment\" target=\"_blank\" rel=\"noopener noreferrer\">moa.gov.jm · importing dogs and cats</a>. A permit is mandatory — verify the current requirements well before you travel.",
         ],
       },
     ],
@@ -3366,11 +3384,17 @@ const CHECKLIST_DATA = {
       {
         title: "If you're flying with a cat",
         items: [
-          "Cats need the same Bahamas Import Permit — apply via bahamaspetpermit.com 6–8 weeks ahead",
+          "Cats need the same Bahamas Import Permit — apply 6–8 weeks ahead",
           "Microchip, rabies, and the International Veterinary Certificate (within 48 hours of arrival) all apply to cats",
           "The breed bans are dog-only — but the permit and paperwork process is identical for a cat",
           "Returning to the US with a cat: no CDC Dog Import Form needed (dogs only) — Bahamas being rabies-free makes the cat round trip very simple",
           "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "The Bahamas import permit is issued by the government — the Department of Agriculture / Bahamas Agricultural Health and Food Safety Authority (BAHFSA). Apply through the official channel and verify current requirements: <a href=\"https://www.bahamas.gov.bs/bringing-pets\" target=\"_blank\" rel=\"noopener noreferrer\">bahamas.gov.bs · bringing pets</a>. A valid import permit must accompany the pet on arrival.",
         ],
       },
     ],
@@ -3425,6 +3449,12 @@ const CHECKLIST_DATA = {
           "Out of SA: rabies titer test, State Vet health certificate, plus whatever the destination country requires (e.g. EU has a 3-month wait after a successful titer)",
           "IMPORTANT: exact crate specs, booking process, timings and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before committing to dates",
           "Don't rely on general guidance for a cargo move — get specifics for your exact route",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "South Africa's animal-import authority is the Department of Agriculture (DALRRD) and its State Veterinary Services, which issue the veterinary import permit. Verify current requirements at <a href=\"https://www.dalrrd.gov.za/\" target=\"_blank\" rel=\"noopener noreferrer\">dalrrd.gov.za</a>. For pets travelling from the US, the USDA APHIS country page is a reliable cross-reference: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
         ],
       },
     ],
@@ -3698,6 +3728,12 @@ const CHECKLIST_DATA = {
           "Same paperwork as dogs (microchip, rabies, health certificate) but no breed restrictions.",
           "Cats are exempt from CDC's US re-entry forms — easier on the return.",
           "Brazil exempts cats under 90 days old from rabies if from a low-risk origin (Brazil itself is medium-risk).",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Each South American country has its own animal-health authority (e.g. MAPA in Brazil, SENASA in Argentina and Peru, SAG in Chile). The most reliable single starting point for pets travelling from the US is the USDA APHIS country directory, which links to each country's current requirements: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. For dogs returning to the US, confirm current CDC rules at <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">cdc.gov · dog import</a>.",
         ],
       },
     ],
@@ -5627,8 +5663,8 @@ function assess(answers) {
   if (answers.destination === "Ireland") {
     flags.push({
       severity: "impossible",
-      title: "No commercial airline allows pets in the cabin into Ireland",
-      detail: "Like the UK, every flight into Ireland requires pets to travel as manifested cargo — never in the cabin. This is Irish government policy, and it's why airlines list Ireland alongside the UK in their no-cabin restrictions. (Flying OUT of Ireland in cabin is generally fine.)",
+      title: "No airline currently offers a cabin-pet service on flights into Ireland",
+      detail: "In practice, every flight into Ireland requires pets to travel as manifested cargo — not in the cabin. Unlike the UK, this isn't a legal ban: the Irish authorities don't object to cabin pets, and it's the airline's decision where a pet travels. It's simply that no carrier currently operates a cabin-pet service on flights into Ireland. (Flying OUT of Ireland in cabin is generally fine.)",
       workaround: "The cabin workaround: fly cabin into a continental EU airport (Paris CDG, Amsterdam AMS, Frankfurt FRA), then either take a pet-friendly ferry from France to Ireland (Cherbourg/Roscoff → Rosslare/Dublin on Irish Ferries or Brittany Ferries — pets stay in your vehicle or a pet-friendly cabin), or cross to the UK via Eurotunnel and take the Ireland ferry from Holyhead. The direct France → Ireland ferry avoids the UK landbridge entirely. Alternatively: cargo into Dublin via Lufthansa Cargo, KLM Cargo, or Aer Lingus Cargo.",
     });
     if (anyDog) {
@@ -6938,8 +6974,8 @@ const DESTINATIONS = [
     id: "ireland",
     flag: "🇮🇪",
     name: "Ireland",
-    headline: "Same cabin ban as the UK — but a cleaner ferry route in.",
-    rule: "Ireland follows the same core rule as the UK: no commercial airline allows pets in the cabin on flights INTO Ireland. Pets must arrive as manifested cargo, or via an approved pet-friendly sea route. Flying OUT of Ireland in the cabin is generally fine on the EU carriers. Tapeworm treatment is required for dogs (not cats) 24–120 hours before arrival, the same as the UK. The upside: Ireland has direct France→Ireland ferries, so you can skip the UK landbridge entirely.",
+    headline: "No airline offers cabin pets into Ireland — but a cleaner ferry route in.",
+    rule: "Getting a pet into Ireland is, in practice, like the UK — but for a different reason. No commercial airline currently operates a cabin-pet service on flights INTO Ireland, so pets arrive as manifested cargo or via an approved pet-friendly sea route. Unlike the UK, though, this isn't a legal ban: the Irish authorities don't object to cabin pets, and where a pet travels is the airline's decision — it's simply that no carrier offers the service. Flying OUT of Ireland in the cabin is generally fine on the EU carriers. Tapeworm treatment is required for dogs (not cats) 24–120 hours before arrival, the same as the UK. The upside: Ireland has direct France→Ireland ferries, so you can skip the UK landbridge entirely.",
     workarounds: [
       {
         title: "France → Ireland direct ferry (the cleanest route)",
@@ -6956,7 +6992,7 @@ const DESTINATIONS = [
       {
         title: "Cabin OUT of Ireland is straightforward",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Leaving Ireland is much easier than arriving. Aer Lingus and the EU flag carriers (Lufthansa, Air France, KLM) accept cabin pets on flights departing Dublin to continental Europe — under 8 kg combined. From a European hub you can connect onward. The cabin ban is specifically about flights INTO Ireland.",
+        body: "Leaving Ireland is much easier than arriving. Aer Lingus and the EU flag carriers (Lufthansa, Air France, KLM) accept cabin pets on flights departing Dublin to continental Europe — under 8 kg combined. From a European hub you can connect onward. The cabin gap is specifically about flights INTO Ireland, where no airline currently runs the service.",
         cost: "Cabin pet fee €50–€150 per leg with EU carriers.",
       },
       {
@@ -7689,9 +7725,10 @@ function AirlineGrid() {
 
         {isSpecialFilter ? (
           isIntoUkIe ? (
-          /* Special explainer card — the UK and Ireland both ban cabin pets
-             on arrival, so there are genuinely no airlines to list. Instead
-             we explain the workaround and signpost the detailed pages. */
+          /* Special explainer card — no airline carries cabin pets into the
+             UK (a legal ban) or Ireland (no carrier offers the service), so
+             there are genuinely no airlines to list. Instead we explain the
+             workaround and signpost the detailed pages. */
           <div className="bg-white border-2 border-amber-300 rounded-sm overflow-hidden">
             <div className="bg-stone-900 text-stone-50 px-6 py-5">
               <div className="text-xs uppercase tracking-[0.25em] text-amber-300 mb-1.5">Into the UK or Ireland</div>
@@ -7701,7 +7738,7 @@ function AirlineGrid() {
             </div>
             <div className="p-6 md:p-8 space-y-5">
               <p className="font-serif text-lg text-stone-800 leading-relaxed">
-                This isn't an airline policy you can shop around — it's a UK and Irish government rule. Every pet entering either country by air must travel as <strong>manifested cargo</strong>, never in the cabin. But there's a well-trodden cabin workaround that thousands of people use every year.
+                Either way, this isn't an airline policy you can shop around. For the <strong>UK</strong> it's a government rule — every pet entering by air must travel as <strong>manifested cargo</strong>, never in the cabin. For <strong>Ireland</strong> the outcome is the same in practice, though the reason differs: there's no legal ban, but no airline currently offers a cabin-pet service on flights in. Either way, there's a well-trodden cabin workaround that thousands of people use every year.
               </p>
 
               <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4">

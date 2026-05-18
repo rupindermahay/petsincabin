@@ -43,7 +43,7 @@ const AIRLINES = [
     notes: "Cabin only for general public — cargo limited to active U.S. Military and State Dept. NOT a transatlantic option (no cabin pets on Europe/Asia flights). Restrictions to/from PHX, TUS, LAS, PSP May–Sept.",
     intl: "Limited (Americas + Caribbean only)",
     verified: "May 2026",
-    link: "https://www.aa.com/i18n/travel-info/special-assistance/traveling-with-pets.jsp",
+    link: "https://www.aa.com/i18n/travel-info/special-assistance/pets.jsp",
   },
   {
     name: "Delta",

@@ -652,6 +652,14 @@ const DIRECT_ROUTES = [
   { from: "Frankfurt (FRA)", to: "Valencia (VLC)", duration: "2h 30m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg). Frankfurt→Valencia direct cabin.", tags: ["europe"] },
   { from: "Frankfurt (FRA)", to: "Oslo (OSL)", duration: "1h 55m", note: "Lufthansa / SAS. ✓ Cabin (under 8 kg). Lufthansa connects from Asia/India onward to Oslo. Tapeworm treatment required for dogs.", tags: ["europe"] },
 
+  // ═══════ FROM MUNICH ═══════
+  { from: "Munich (MUC)", to: "New York (JFK)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Munich is Lufthansa's second hub — a solid cabin-pet departure point alongside Frankfurt. Register the pet with Lufthansa at least 72 hours ahead.", tags: ["europe", "us"] },
+  { from: "Munich (MUC)", to: "Newark (EWR)", duration: "9h", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark is the New York-area alternative to JFK.", tags: ["europe", "us"] },
+  { from: "Munich (MUC)", to: "Washington (IAD)", duration: "9h 15m", note: "Lufthansa / United. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Munich (MUC)", to: "Chicago (ORD)", duration: "9h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
+  { from: "Munich (MUC)", to: "Delhi (DEL)", duration: "8h", note: "Lufthansa. ✓ Cabin (under 8 kg). Munich→India cabin route — Delhi is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Munich (MUC)", to: "Oslo (OSL)", duration: "2h", note: "Lufthansa / SAS. ✓ Cabin (under 8 kg). For dogs entering Norway: tapeworm treatment 24–120 hrs before arrival is required.", tags: ["europe"] },
+
   // ═══════ FROM PARIS ═══════
   { from: "Paris (CDG)", to: "New York (JFK)", duration: "7h 45m", note: "Air France / Delta. ✓ Cabin (under 8 kg). Paris is the central hub for the UK→USA cabin workaround — fly cabin out of the UK to CDG, then onward.", tags: ["europe", "us"] },
   { from: "Paris (CDG)", to: "Boston (BOS)", duration: "7h", note: "Air France. ✓ Cabin (under 8 kg). Shortest transatlantic cabin from Europe.", tags: ["europe", "us"] },
@@ -1406,7 +1414,7 @@ const REGION_HUBS = {
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)", "Seattle (SEA)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
   "mexico": ["Mexico City (MEX)", "Cancún (CUN)", "Guadalajara (GDL)"],
-  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)", "Oslo (OSL)"],
+  "europe": ["Paris (CDG)", "Amsterdam (AMS)", "Frankfurt (FRA)", "Munich (MUC)", "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Lisbon (LIS)", "Zurich (ZRH)", "Oslo (OSL)"],
   "india": ["Delhi (DEL)", "Mumbai (BOM)", "Bengaluru (BLR)", "Chennai (MAA)"],
   // UAE cabin hub order matters: Abu Dhabi (AUH) is FIRST because it's the
   // only UAE airport where cabin pets are permitted (Etihad). Dubai (DXB) is
@@ -1534,6 +1542,8 @@ const AIRPORTS = [
   { code: "MIA", city: "Miami", region: "us", cabinOut: true, cabinIn: true },
   { code: "LAX", city: "Los Angeles", region: "us", cabinOut: true, cabinIn: true },
   { code: "IAD", city: "Washington Dulles", region: "us", cabinOut: true, cabinIn: true },
+  { code: "BWI", city: "Baltimore/Washington (BWI)", region: "us", cabinOut: true, cabinIn: true,
+    note: "Baltimore/Washington Thurgood Marshall (BWI) is a focus city for Southwest, with mostly domestic and limited international service. For Europe, India or the UK there's no direct cabin pet route — connect via a major gateway (JFK, IAD, BOS) for transatlantic cabin carriers. BWI has four pet relief areas — two pre-security (near Concourse E by the international terminal, and by the Hourly Garage) and two post-security (the B/C Connector and Concourse C)." },
   { code: "SFO", city: "San Francisco", region: "us", cabinOut: true, cabinIn: true },
   { code: "SEA", city: "Seattle", region: "us", cabinOut: true, cabinIn: true,
     note: "Seattle-Tacoma (SEA) is Alaska Airlines' hub. Cabin pets are easy for domestic and limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). For India, Europe, or UK there's no direct cabin pet route — connect via SFO (Air India to/from India), or via FRA/AMS/CDG (Lufthansa/KLM/Air France to Europe and onward to India). The terminal has post-security pet relief areas at Concourse B and the International Arrivals Facility, plus four pre-security pet potty locations." },
@@ -1549,6 +1559,8 @@ const AIRPORTS = [
   { code: "CDG", city: "Paris CDG", region: "europe", cabinOut: true, cabinIn: true },
   { code: "AMS", city: "Amsterdam", region: "europe", cabinOut: true, cabinIn: true },
   { code: "FRA", city: "Frankfurt", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "MUC", city: "Munich", region: "europe", cabinOut: true, cabinIn: true,
+    note: "Munich is Lufthansa's second German hub and a strong cabin-pet airport — Lufthansa takes cats and small dogs (under 8 kg including the carrier) in the cabin on eligible routes. Munich has a pet relief area inside security in Terminal 1, Hall C1 West (non-Schengen area), plus green relief spaces outside each terminal. One caveat: pets cannot transit Munich in the cargo HOLD — only Frankfurt allows hold transfers — but this doesn't affect cabin pets, who stay with you throughout." },
   { code: "MAD", city: "Madrid", region: "europe", cabinOut: true, cabinIn: true, note: "Iberia hub — main cabin-pet departure for Spain. Flights to the US, Latin America, Europe and within Spain." },
   { code: "BCN", city: "Barcelona", region: "europe", cabinOut: true, cabinIn: true, note: "Spain's second-busiest airport. Iberia Express, Vueling, and connecting Iberia flights take cabin pets on eligible routes." },
   { code: "VLC", city: "Valencia", region: "europe", cabinOut: true, cabinIn: true, note: "Spain's third city. Iberia and Vueling serve cabin pets on Spanish domestic and EU routes from Valencia." },
@@ -2625,10 +2637,10 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   const originRegionKeywords = {
     "uk-out": ["London", "Manchester", "Newcastle", "(LHR)", "(MAN)", "(LGW)", "(NCL)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],
-    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "(SEA)", "USA"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "Baltimore", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(BWI)", "(SFO)", "(SEA)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
     "mexico": ["Mexico City", "Cancún", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "(OSL)", "Europe", "Norway"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Munich", "Madrid", "Barcelona", "Valencia", "Rome", "Lisbon", "Zurich", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(MUC)", "(MAD)", "(BCN)", "(VLC)", "(FCO)", "(LIS)", "(ZRH)", "(OSL)", "Europe", "Norway"],
     "india": ["Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)", "India"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
@@ -10304,9 +10316,9 @@ function Routes() {
   // contains one of these keywords. This way the filter respects the direction toggle.
   const REGION_CITIES = {
     "uk-out": ["London", "Manchester", "Glasgow", "Edinburgh", "(LHR)", "(MAN)", "(LGW)", "(GLA)", "(EDI)", "UK"],
-    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "Newark", "Seattle", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(EWR)", "(SEA)", "USA"],
+    "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "San Francisco", "Washington", "Baltimore", "Newark", "Seattle", "(JFK)", "(MIA)", "(ORD)", "(LAX)", "(BOS)", "(SFO)", "(IAD)", "(BWI)", "(EWR)", "(SEA)", "USA"],
     "india": ["Delhi", "Mumbai", "Bangalore", "Bengaluru", "Chennai", "Kolkata", "Hyderabad", "(DEL)", "(BOM)", "(BLR)", "(MAA)", "(CCU)", "(HYD)"],
-    "europe": ["Paris", "Amsterdam", "Frankfurt", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(OSL)", "Norway"],
+    "europe": ["Paris", "Amsterdam", "Frankfurt", "Munich", "Zurich", "Warsaw", "Lisbon", "Porto", "Rome", "Milan", "Madrid", "Barcelona", "Istanbul", "Oslo", "(CDG)", "(AMS)", "(FRA)", "(MUC)", "(ZRH)", "(WAW)", "(LIS)", "(OPO)", "(FCO)", "(MXP)", "(MAD)", "(BCN)", "(IST)", "(OSL)", "Norway"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)"],
     "dubai": ["Dubai", "Abu Dhabi", "(DXB)", "(AUH)", "UAE"],
     "caribbean": ["Nassau", "Punta Cana", "Santo Domingo", "Montego Bay", "Kingston", "Bridgetown", "Cayman", "Aruba", "Curacao", "San Juan", "(NAS)", "(PUJ)", "(SDQ)", "(MBJ)", "(KIN)", "(BGI)", "(GCM)", "(AUA)", "(CUR)", "(SJU)", "Bahamas", "Jamaica", "Dominican Republic", "Cayman Islands"],

@@ -1521,6 +1521,9 @@ const AIRPORTS = [
     // driveTo: a nearby airport that DOES work — the planner shows this as the
     // top-priority advice (driving an hour beats flying the pet to Europe).
     driveTo: { code: "LHR", text: "Heathrow is roughly an hour away by road — it's the same London area, and it's the UK's main cabin-pet departure airport. Driving there is far simpler than any workaround." } },
+  { code: "NCL", city: "Newcastle", region: "uk-out", cabinOut: false, cabinIn: false,
+    note: "Newcastle has no cabin-pet flights of its own — the carriers that take pets in the cabin out of the UK fly from Heathrow and Manchester. But Newcastle has something no other UK airport has: the DFDS overnight ferry to Amsterdam, which carries pets. For getting a pet to or from mainland Europe, that ferry is Newcastle's real route.",
+    arrivalNote: "No airline flies cabin pets INTO the UK — but Newcastle is the UK port for the DFDS overnight ferry from Amsterdam (docking at North Shields), which DOES carry pets in pet-friendly cabins or onboard kennels. For a pet arriving from mainland Europe, that ferry makes Newcastle one of the most pet-practical ways into the UK — no cargo hold, no Channel drive." },
   // Ireland
   { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo.", arrivalNote: "No airline flies cabin pets INTO Ireland — Dublin included. Pets arriving in Ireland come in by ferry or as cargo. Plan the arrival leg around that." },
   // United States
@@ -2593,7 +2596,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   const dA = airportByCode(destCode);
   if (!oA || !dA) return [];
   const originRegionKeywords = {
-    "uk-out": ["London", "Manchester", "(LHR)", "(MAN)", "(LGW)", "UK"],
+    "uk-out": ["London", "Manchester", "Newcastle", "(LHR)", "(MAN)", "(LGW)", "(NCL)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(SFO)", "(SEA)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
@@ -8252,7 +8255,7 @@ function twNameFor(key) {
 // Maps a destination airport CODE to one of the 5 tapeworm countries.
 // Returns null if the airport isn't a tapeworm-rule country.
 const TW_AIRPORT_TO_COUNTRY = {
-  LHR: "UK", LGW: "UK", MAN: "UK", EDI: "UK", BHX: "UK", GLA: "UK", BRS: "UK",
+  LHR: "UK", LGW: "UK", MAN: "UK", NCL: "UK", EDI: "UK", BHX: "UK", GLA: "UK", BRS: "UK",
   DUB: "IE", ORK: "IE", SNN: "IE",
   OSL: "NO",
   HEL: "FI",

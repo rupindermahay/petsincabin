@@ -69,7 +69,7 @@ export default function About() {
             <hr className="border-stone-300 my-8" />
 
             <div className="space-y-4 text-base md:text-lg text-stone-600">
-              <p><strong className="text-stone-800">The route that started it all:</strong> London Heathrow → Montreal (overnight) → Miami. Air Canada in cabin the whole way. Theo slept for most of it. I did not.</p>
+              <p><strong className="text-stone-800">The route that started it all:</strong> London Heathrow → Montreal (overnight) → Miami. Air Canada out of Heathrow, then American Airlines on to Miami — in cabin the whole way. Theo slept for most of it. I did not.</p>
 
               <p><strong className="text-stone-800">What this site is:</strong> a practical, real-world guide to <strong>pets in cabin</strong> travel — which airlines actually allow it, what paperwork each country needs, which routes work and which don't, and the workarounds when your destination makes it difficult (looking at you, UK).</p>
 

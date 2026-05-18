@@ -9270,6 +9270,14 @@ function JourneyPlanner() {
           </button>
         </div>
 
+        {/* TAPEWORM CALCULATOR — appears in the form area once an origin and
+            a tapeworm-rule destination are both selected, before planning. */}
+        {origin && destination && twCountryForAirport(destination) && (
+          <div className="mt-6">
+            <TapewormWindow destKey={twCountryForAirport(destination)} />
+          </div>
+        )}
+
         {/* Results */}
         {planned && (
           <div id="planner-results-anchor" className="border-t border-stone-700 pt-8 animate-fadeIn scroll-mt-20">
@@ -9338,19 +9346,6 @@ function JourneyPlanner() {
                   <div>
                     <div className="font-serif text-stone-100 mb-1">About departing from {airportLabel(origin)}</div>
                     <p className="text-stone-300 text-sm leading-relaxed">{originCabinWarning}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Destination airport can't receive cabin pets — accurate to the EXACT airport picked */}
-            {destCabinWarning && origin !== destination && (
-              <div className="bg-rose-950/50 border-l-2 border-rose-500 p-5 mb-6">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-                  <div>
-                    <div className="font-serif text-stone-100 mb-1">About arriving into {airportLabel(destination)}</div>
-                    <p className="text-stone-300 text-sm leading-relaxed">{destCabinWarning}</p>
                   </div>
                 </div>
               </div>
@@ -9453,6 +9448,11 @@ function JourneyPlanner() {
                 <p className="text-stone-300 text-sm leading-relaxed">
                   <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
                 </p>
+                {destCabinWarning && (
+                  <p className="text-stone-400 text-sm leading-relaxed mt-3 pt-3 border-t border-stone-700">
+                    {destCabinWarning}
+                  </p>
+                )}
               </div>
             )}
 
@@ -9839,6 +9839,17 @@ function JourneyPlanner() {
                         </button>
                       )}
 
+                      {/* PREVIEW HEADING — makes clear this is a summary, not
+                          the full checklist (the full version is the PDF above). */}
+                      <div className="border-t border-amber-800/40 pt-5 mb-4">
+                        <div className="text-sm uppercase tracking-widest text-amber-400 font-medium">
+                          Checklist preview
+                        </div>
+                        <p className="text-stone-400 text-xs leading-relaxed mt-1">
+                          A shortened summary — each stage shows the first couple of items. Download the full version above for everything, in order, ready to print.
+                        </p>
+                      </div>
+
                       {/* PREVIEW — sections truncated to 2 items each */}
                       <div className="space-y-5">
                         {combined.sections.map((s, i) => {
@@ -9923,14 +9934,6 @@ function JourneyPlanner() {
                           Download the full checklist as a printable PDF
                         </button>
                       </div>
-
-                      {/* TAPEWORM CALCULATOR — only when the destination is one
-                          of the 5 countries that require the treatment. */}
-                      {twCountryForAirport(destAirport.code) && (
-                        <div className="mt-6">
-                          <TapewormWindow destKey={twCountryForAirport(destAirport.code)} />
-                        </div>
-                      )}
                     </div>
                   );
                 })()}

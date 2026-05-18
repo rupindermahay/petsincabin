@@ -39,24 +39,24 @@ export default function GettingYourPetIntoTheUK() {
           </div>
         </nav>
 
-        <main className="max-w-2xl mx-auto px-6 py-16 md:py-24">
-          <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-6">
+        <main className="max-w-2xl mx-auto px-6 py-8 md:py-12">
+          <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
             The complete guide
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-6">
+          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-4">
             Getting your pet <span className="italic text-stone-600">into the UK from Europe</span>.
           </h1>
 
-          <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-8">
-            No airline flies a pet in the cabin into the UK — that is a UK government rule, not an airline policy you can shop around. Every pet entering the UK by air must travel as manifested cargo. But thousands of people bring pets in every year without using cargo at all: they fly the pet in the cabin to continental Europe, then cross the Channel by land or sea, with the pet beside them the whole way. This page lays out every route that works, side by side.
+          <p className="font-serif text-lg text-stone-700 leading-relaxed mb-3">
+            You can't fly a pet into the UK in the cabin — so people fly to Europe and cross the Channel with the pet beside them. This page compares every route that works: costs, times, the lot.
           </p>
 
-          <p className="font-serif italic text-stone-600 leading-relaxed mb-8">
-            Verified against the UK government's official list of approved pet travel routes (gov.uk / APHA, updated May 2026), the ferry operators' own pet policies, and DEFRA-licensed pet transport operators. Rules, schedules and fares change — confirm directly before booking.
+          <p className="font-sans text-xs italic text-stone-500 leading-relaxed mb-8">
+            Verified against the UK government's approved pet routes (gov.uk / APHA, May 2026), operator pet policies and DEFRA-licensed transporters. Rules and fares change — confirm before booking.
           </p>
 
-          <div className="bg-white border border-stone-200 rounded-sm p-5 mb-12">
+          <div className="bg-white border border-stone-200 rounded-sm p-5 mb-8">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">In this guide</div>
             <div className="flex flex-wrap gap-2 text-sm">
               <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
@@ -72,7 +72,7 @@ export default function GettingYourPetIntoTheUK() {
             </div>
           </div>
 
-          <div className="h-px bg-stone-300 mb-12" />
+          <div className="h-px bg-stone-300 mb-10" />
 
           {/* Why no cabin route */}
           <section id="why" className="mb-14 scroll-mt-24">

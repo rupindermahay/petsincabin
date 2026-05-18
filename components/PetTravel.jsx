@@ -1428,9 +1428,10 @@ function inferTransitRegionsFromLegs(legs, originRegion, destRegion) {
 // - India: cabin pets may only enter via DEL, BOM, MAA, CCU, BLR, HYD.
 const AIRPORTS = [
   // United Kingdom
-  { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here." },
+  { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here.", arrivalNote: "No airline flies cabin pets INTO the UK — Heathrow included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that." },
   { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false,
     note: "Manchester has a couple of direct cabin routes of its own (Etihad to Abu Dhabi, Air Transat to Toronto).",
+    arrivalNote: "No airline flies cabin pets INTO the UK — Manchester included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that.",
     // driveTo with conditionalOnNoDirect: Manchester CAN do a few cabin routes,
     // but for any destination it can't reach directly, driving to Heathrow
     // (a normal UK domestic drive) unlocks far more direct options and is the
@@ -1439,11 +1440,12 @@ const AIRPORTS = [
     driveTo: { code: "LHR", conditionalOnNoDirect: true, text: "Heathrow is a normal domestic drive from Manchester, and it's the UK's main cabin-pet departure airport — far more direct cabin routes leave from there. For destinations Manchester can't reach directly, driving to Heathrow is simpler than any multi-leg workaround." } },
   { code: "LGW", city: "London Gatwick", region: "uk-out", cabinOut: false, cabinIn: false,
     note: "Gatwick does NOT permit cabin pets on departing flights.",
+    arrivalNote: "No airline flies cabin pets INTO the UK — Gatwick included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that.",
     // driveTo: a nearby airport that DOES work — the planner shows this as the
     // top-priority advice (driving an hour beats flying the pet to Europe).
     driveTo: { code: "LHR", text: "Heathrow is roughly an hour away by road — it's the same London area, and it's the UK's main cabin-pet departure airport. Driving there is far simpler than any workaround." } },
   // Ireland
-  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo." },
+  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: false, note: "Cabin pets can fly OUT of Dublin on EU carriers, but no airline flies cabin pets INTO Ireland — arrival is by ferry or cargo.", arrivalNote: "No airline flies cabin pets INTO Ireland — Dublin included. Pets arriving in Ireland come in by ferry or as cargo. Plan the arrival leg around that." },
   // United States
   { code: "JFK", city: "New York JFK", region: "us", cabinOut: true, cabinIn: true },
   { code: "EWR", city: "Newark", region: "us", cabinOut: true, cabinIn: true },
@@ -9045,7 +9047,7 @@ function JourneyPlanner() {
     ? originAirport.note
     : null;
   const destCabinWarning = destAirport && !destAirport.cabinIn
-    ? destAirport.note
+    ? (destAirport.arrivalNote || destAirport.note)
     : null;
 
   const hasResults = directMatches.length > 0 || workaroundMatches.length > 0

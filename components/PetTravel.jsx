@@ -10992,32 +10992,37 @@ function SiteToolsOverview() {
     {
       id: "intake",
       label: "Can my pet fly?",
-      blurb: "A quick assessment — answer a few questions about your pet and route, and see how tricky your trip is likely to be.",
+      blurb: "A quick assessment. Answer a few questions about your pet and route, and get an honest read on how tricky your trip will be — and what stands in the way before you commit to booking.",
     },
     {
       id: "planner",
       label: "Journey planner",
-      blurb: "Enter your origin and destination — get the cabin airlines, any connections, and a checklist matched to your exact route.",
+      blurb: "Enter your origin and destination and get the cabin airlines that fly it, any connections you'll need, rough journey times, and a checklist matched to your exact route — including the tapeworm calculator when your destination needs one.",
     },
     {
       id: "airlines",
       label: "Airline comparison",
-      blurb: "Compare cabin-pet policies across 30+ airlines — weight limits, fees, carrier sizes, and which routes they'll carry pets on.",
+      blurb: "Compare cabin-pet policies across 30+ airlines side by side — weight limits, fees, carrier sizes, breed rules, and which routes each one will actually carry a pet on.",
     },
     {
       id: "checklist",
       label: "Checklist builder",
-      blurb: "Build a printable, country-specific checklist of every document and step your pet needs before travel day.",
+      blurb: "Build a printable, country-specific checklist of every document, vaccination and step your pet needs — in order, with the timing — so nothing gets missed before travel day.",
+    },
+    {
+      id: "planner",
+      label: "Tapeworm timing calculator",
+      blurb: "Dogs entering the UK, Ireland, Norway, Malta or Finland need a vet-recorded tapeworm treatment in a strict 24–120 hour window before arrival. Enter your route and arrival time and it works out the exact dates — in your vet's local time — and drops them straight into your checklist.",
     },
     {
       id: "country-guides",
       label: "Country pet guides",
-      blurb: "In-depth guides — the paperwork, airlines, catches and workarounds for specific destinations, country by country.",
+      blurb: "In-depth guides for specific destinations — the paperwork, the airlines that serve them, the quiet catches, and the workarounds — written country by country.",
     },
     {
       id: "documents",
       label: "Paperwork explained",
-      blurb: "Plain-English breakdowns of the documents that confuse people most — AHCs, pet passports, health certificates and more.",
+      blurb: "Plain-English breakdowns of the documents that confuse people most — Animal Health Certificates, pet passports, health certificates, import permits — what each one is and when you need it.",
     },
   ];
 
@@ -11040,9 +11045,9 @@ function SiteToolsOverview() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {TOOLS.map((t) => (
+          {TOOLS.map((t, i) => (
             <button
-              key={t.id}
+              key={i}
               onClick={() => go(t.id)}
               className="text-left bg-white border border-stone-200 hover:border-amber-300 hover:bg-amber-50/40 transition-colors p-5 rounded-sm group"
             >

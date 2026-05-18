@@ -8218,15 +8218,29 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
     }
   }, [stopoverChoices, stopover]);
 
+  // Resolve the currently-selected stopover into a timezone key and a display
+  // name. Route-aware options carry their own `tz` and city `name`; the
+  // fallback country list uses the key as both. Returns null if no stopover.
+  const stopoverResolved = useMemo(() => {
+    if (!stopover) return null;
+    const opt = stopoverChoices.find((c) => c.key === stopover);
+    if (opt) {
+      return { tz: opt.tz || opt.key, name: opt.name || twNameFor(opt.key) };
+    }
+    // stopover set but not in the current choice list — treat key as tz.
+    return { tz: stopover, name: twNameFor(stopover) };
+  }, [stopover, stopoverChoices]);
+
   const vetOptions = useMemo(() => {
-    const keys = [origin];
-    if (stopover) keys.push(stopover);
-    keys.push(dest);
+    // Each entry: { key (selectable id), tz (for maths), name (label) }.
+    const list = [{ key: origin, tz: origin, name: twNameFor(origin) }];
+    if (stopoverResolved) {
+      list.push({ key: stopover, tz: stopoverResolved.tz, name: stopoverResolved.name });
+    }
+    list.push({ key: dest, tz: dest, name: twNameFor(dest) });
     const seen = new Set();
-    return keys
-      .filter((k) => (seen.has(k) ? false : (seen.add(k), true)))
-      .map((k) => ({ key: k, name: twNameFor(k) }));
-  }, [origin, stopover, dest]);
+    return list.filter((o) => (seen.has(o.key) ? false : (seen.add(o.key), true)));
+  }, [origin, stopover, stopoverResolved, dest]);
 
   useEffect(() => {
     if (!vetOptions.some((o) => o.key === treatLoc)) {
@@ -8237,16 +8251,22 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
   const result = useMemo(() => {
     const w = twCalcWindow(arrival, dest);
     if (!w) return null;
+    // treatLoc is a vetOption key — resolve it to the timezone for the maths
+    // and a proper label (a city stopover's key is an airport code, not a tz).
+    const treatOpt = vetOptions.find((o) => o.key === treatLoc);
+    const treatTZ = treatOpt?.tz || treatLoc;
+    const treatName = treatOpt?.name || twNameFor(treatLoc);
+    const treatLabel = TW_TZ[treatTZ]?.label || treatName;
     return {
-      earliestStr: twFmtInTZ(w.earliestUTC, treatLoc),
-      latestStr: twFmtInTZ(w.latestUTC, treatLoc),
+      earliestStr: twFmtInTZ(w.earliestUTC, treatTZ),
+      latestStr: twFmtInTZ(w.latestUTC, treatTZ),
       cutoffStr: twFmtInTZ(w.arrivalUTC, dest),
-      treatLabel: TW_TZ[treatLoc]?.label || treatLoc,
+      treatLabel,
       destLabel: TW_TZ[dest]?.label || dest,
       destName: twNameFor(dest),
-      treatName: twNameFor(treatLoc),
+      treatName,
     };
-  }, [arrival, dest, treatLoc]);
+  }, [arrival, dest, treatLoc, vetOptions]);
 
   // Hand the result up so the parent (planner / checklist) can auto-fill.
   // Intentionally depends only on `result` — `onResult` is a notify-up
@@ -8403,10 +8423,10 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
                   minimum — recheck before you travel.
                 </p>
               </div>
-              {stopover && (
+              {stopover && stopoverResolved && (
                 <div className="border-t border-stone-100 pt-3">
                   <p className="text-stone-600 text-sm leading-relaxed">
-                    Your stopover in {twNameFor(stopover)} doesn't change this — the
+                    Your stopover in {stopoverResolved.name} doesn't change this — the
                     window is measured against your arrival in {result.destName}, not
                     when you leave the stopover. If the treatment is done before the
                     stopover, make sure the stopover plus onward travel still lands you
@@ -9103,11 +9123,13 @@ function JourneyPlanner() {
 
   // Route-aware stopover options for the tapeworm calculator. A workaround
   // route's FIRST leg lands at the hub (e.g. "... → Paris CDG"); we pull the
-  // airport code from that leg, map it to a tapeworm-timezone country, and
-  // offer those as the stopover choices. De-duplicated. Falls back to null
-  // (calculator then shows its full country list) if nothing can be derived.
+  // hub AIRPORT from that leg and offer it as a city-level stopover choice.
+  // Each option carries `tz` — the timezone key used for the maths — separate
+  // from `key`/`name`, which are the airport code and city label for display.
+  // De-duplicated by airport. Falls back to null (calculator shows its full
+  // country list) if nothing can be derived.
   const tapewormStopovers = useMemo(() => {
-    const hubs = new Map(); // tzKey -> display name
+    const hubs = new Map(); // airport code -> { key, name, tz }
     const REGION_TO_TW = {
       europe: "FR", us: "US-ET", canada: "CA-ET", india: "IN", dubai: "AE",
     };
@@ -9122,11 +9144,16 @@ function JourneyPlanner() {
       if (!codeMatch) return;
       const hubAirport = airportByCode(codeMatch[1]);
       if (!hubAirport) return;
-      const tzKey = REGION_TO_TW[hubAirport.region];
-      if (tzKey) hubs.set(tzKey, twNameFor(tzKey));
+      const tz = REGION_TO_TW[hubAirport.region];
+      if (!tz) return;
+      hubs.set(hubAirport.code, {
+        key: hubAirport.code,
+        name: `${hubAirport.city} (${hubAirport.code})`,
+        tz,
+      });
     });
     if (hubs.size === 0) return null;
-    return Array.from(hubs.entries()).map(([key, name]) => ({ key, name }));
+    return Array.from(hubs.values());
   }, [workaroundMatches]);
 
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
@@ -9898,12 +9925,11 @@ function JourneyPlanner() {
                     routeLegs
                   );
 
-                  // If the user added tapeworm dates via the calculator, inject
-                  // a dated line into the checklist. This mutates the `combined`
-                  // object that feeds BOTH the on-screen preview below AND the
-                  // printable PDF (openChecklistPrintable reads the same object),
-                  // so the dated line appears in both — as promised by the
-                  // calculator's confirmation message.
+                  // If the user added tapeworm dates via the calculator, add
+                  // them as their OWN clearly-titled section at the top of the
+                  // checklist. This mutates the `combined` object that feeds
+                  // BOTH the on-screen preview AND the printable PDF, so the
+                  // dated section appears in both — as the calculator promises.
                   if (tapewormAdded && tapewormResult && combined.sections && combined.sections.length > 0) {
                     const datedLine =
                       `Tapeworm treatment — vet must treat &amp; record between ` +
@@ -9913,12 +9939,13 @@ function JourneyPlanner() {
                       `${tapewormResult.cutoffStr} ${tapewormResult.destLabel}.`;
                     // Avoid double-insertion on re-render.
                     const alreadyThere = combined.sections.some((s) =>
-                      (s.items || []).some((it) => typeof it === "string" && it.includes("vet must treat &amp; record between"))
+                      s.title === "Tapeworm treatment — your dates"
                     );
                     if (!alreadyThere) {
-                      // Prefer a non-divider section; fall back to the first.
-                      const target = combined.sections.find((s) => !s.divider) || combined.sections[0];
-                      target.items = [datedLine, ...target.items];
+                      combined.sections.unshift({
+                        title: "Tapeworm treatment — your dates",
+                        items: [datedLine],
+                      });
                     }
                   }
                   if (!combined.sections || combined.sections.length === 0) {

@@ -1626,15 +1626,42 @@ const airportLabel = (code) => {
 // - Transatlantic cabin works between European hubs and major US cities
 //   (Air France, KLM, Lufthansa, Delta, etc.).
 const REGION_PAIR_STRATEGIES = {
-  // ----- INTO the UK (cabin into UK impossible — via Europe + Eurotunnel) -----
-  "us>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG), Amsterdam (AMS) or Frankfurt (FRA)`, time: "7–11h", airline: "Air France / KLM / Lufthansa / Delta ✓ Cabin" },
-      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Drive + crossing: European hub → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
-    ],
-    note: `No airline flies cabin pets INTO the UK, so the route is ${o} → a continental European hub by cabin, then a land/sea crossing to ${d}. Cabin transatlantic options into Europe include Paris (Air France), Amsterdam (KLM) and Frankfurt (Lufthansa). From the hub, drive to Calais and cross — the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover, both UK-government-approved pet routes. Works from any major US gateway with a cabin route to Europe.`,
-  }),
+  // ----- INTO the UK (cabin into UK impossible — via Europe + crossing) -----
+  // Three distinct routes, one per European hub, each shown as its own card.
+  "us>uk-out": [
+    // Via PARIS — Air France, then the Calais Channel crossing.
+    (o, d) => ({
+      label: "Via Paris",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+        { route: "Layover at Paris CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: fly cabin ${o} → Paris on Air France, then drive to Calais and cross the Channel — the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Both are UK-government-approved pet routes; your pet stays in the car for the crossing. This is the most-used route into ${d}.`,
+    }),
+    // Via FRANKFURT — Lufthansa, then the Calais Channel crossing.
+    (o, d) => ({
+      label: "Via Frankfurt",
+      legs: [
+        { route: `${o} → Frankfurt (FRA)`, time: "8–10h", airline: "Lufthansa / United ✓ Cabin" },
+        { route: "Layover at Frankfurt FRA", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Frankfurt: fly cabin ${o} → Frankfurt on Lufthansa, then drive to Calais and cross — the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover, both UK-government-approved pet routes. The Frankfurt→Calais drive is longer than from Paris, so consider an overnight in Frankfurt or along the way. Good if Lufthansa's schedule or pricing from your city beats Air France.`,
+    }),
+    // Via AMSTERDAM — KLM, then the DFDS overnight ferry direct to Newcastle.
+    // No drive through France: the ferry IS the crossing.
+    (o, d) => ({
+      label: "Via Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam: fly cabin ${o} → Amsterdam on KLM, then take the DFDS overnight ferry from IJmuiden directly to Newcastle — a UK-government-approved pet route. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels (~£30 per pet each way; foot-passenger pet bookings are by phone, not online). It lands in the north of England, so it suits Scotland or northern England better than London. Dogs still need tapeworm treatment 24–120h before UK arrival.`,
+    }),
+  ],
   "europe>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Calais (drive/train)`, time: "varies", airline: "Pet stays with you" },

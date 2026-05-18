@@ -165,6 +165,20 @@ export default function UKPetTravel() {
 
           <div className="h-px bg-stone-300 my-12" />
 
+          {/* Feature callout — the dedicated routes-into-the-UK guide */}
+          <Link
+            href="/getting-your-pet-into-the-uk"
+            className="block bg-amber-50 border-2 border-amber-300 hover:border-amber-500 rounded-sm p-6 md:p-7 transition-colors group mb-12"
+          >
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">The companion guide</div>
+            <div className="font-serif text-xl md:text-2xl text-stone-900 group-hover:text-amber-800 transition-colors mb-2 leading-tight">
+              Getting your pet into the UK from Europe — every route, compared →
+            </div>
+            <p className="font-serif text-stone-700 leading-relaxed text-sm">
+              The three hub routes (Paris, Frankfurt, Amsterdam), every UK-approved ferry crossing, door-to-door pet taxis, the ocean-liner option, costs and journey times side by side — and the extra blood-test rule if your pet's journey starts outside Europe.
+            </p>
+          </Link>
+
           {/* CTA back to tools */}
           <div className="bg-stone-900 text-stone-100 rounded-sm p-8 text-center">
             <h2 className="font-serif text-2xl text-stone-50 mb-3">Map your own route</h2>

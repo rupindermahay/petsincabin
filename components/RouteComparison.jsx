@@ -263,7 +263,7 @@ const ROUTES = [
     origin: "Dublin",
     name: "Via Dublin — fly in, then the Holyhead ferry",
     sub: "Cabin flight into Dublin (Iberia from Madrid or KLM from Amsterdam) → Dublin–Holyhead ferry → Britain",
-    timeHeadline: "~5–7h + the flight",
+    timeHeadline: "~5–7h total",
     timeLegs: [
       "Cabin flight into Dublin",
       "Dublin port transfer + ferry check-in ~1.5–2h",
@@ -278,10 +278,10 @@ const ROUTES = [
       "Ferry ticket — foot passenger ~£31–£60 per person one way (cheapest if booked early, midweek, off-peak)",
       "Pet on the ferry — ~£17–£35 per pet (kennel; foot passengers must book the kennel, or the Irish Ferries Pet Den at ~€20)",
     ],
-    taxiTotal: "≈ £50–£95 for the ferry leg (one person + one pet)",
+    taxiTotal: "≈ £50–£95 total, one person + one pet",
     costType: "ferry",
     taxiCaption:
-      "the ferry figure is one person and one pet, one way. Pets under about 10 kg can travel in a carrier with you; larger dogs go in the ship's kennel.",
+      "the figure is one person and one pet, one way. Pets under about 10 kg can travel in a carrier with you; larger dogs go in the ship's kennel.",
     sortCost: 75,
     sortTime: 6,
     isEurotunnel: false,
@@ -293,7 +293,7 @@ const ROUTES = [
     origin: "Amsterdam",
     name: "Via Newcastle — the DFDS overnight ferry",
     sub: "Cabin flight into Amsterdam → DFDS overnight ferry to Newcastle → northern England / Scotland",
-    timeHeadline: "~17h overnight + the flight",
+    timeHeadline: "~17h overnight total",
     timeLegs: [
       "Cabin flight into Amsterdam",
       "Transfer to IJmuiden ferry terminal + check-in",
@@ -309,7 +309,7 @@ const ROUTES = [
       "Pet fee — £30 per pet, per way, on top of the cabin",
       "Cheaper alternative — book a standard cabin for yourself and a kennel place for the dog",
     ],
-    taxiTotal: "≈ £180–£240 one way, one person + one pet in a pet-friendly cabin",
+    taxiTotal: "≈ £180–£240 total, one person + one pet in a pet-friendly cabin",
     costType: "ferry",
     taxiCaption:
       "foot passengers travelling with a pet cannot book online — you must phone the DFDS contact centre. Dogs cannot be left in a vehicle: a foot passenger books a pet-friendly cabin or a kennel place. Bring your own bedding.",
@@ -351,7 +351,7 @@ const ALL_FILTERS = [...ORIGIN_FILTERS, ...CROSSING_FILTERS];
 // the wrong word (e.g. "pet taxi" on a flight+ferry route) is misleading.
 function costLabel(costType) {
   if (costType === "shuttle") return "shuttle";
-  if (costType === "ferry") return "flight + ferry";
+  if (costType === "ferry") return "ferry";
   return "pet taxi";
 }
 
@@ -562,7 +562,7 @@ export default function RouteComparison() {
                     Cost — self-drive
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
-                    Cost — pet taxi / shuttle
+                    Cost — pet taxi / shuttle / ferry
                   </th>
                 </tr>
               </thead>

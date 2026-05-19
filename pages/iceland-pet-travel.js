@@ -5,10 +5,10 @@ export default function IcelandPetTravel() {
   return (
     <>
       <Head>
-        <title>Flying with a Pet to/from Iceland (2026): Complete Guide | Pets in Cabin</title>
+        <title>Flying a Pet to Iceland (2026): Icelandair, Quarantine &amp; Rules | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to Iceland — the realistic picture. Mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds, Keflavík-only entry, and what flying out of Iceland looks like. By a real pet mum who's done the paperwork."
+          content="Bringing a dog or cat to Iceland — the realistic picture: the mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds and Keflavík-only entry."
         />
         <link rel="canonical" href="https://www.petsincabin.com/iceland-pet-travel" />
       </Head>

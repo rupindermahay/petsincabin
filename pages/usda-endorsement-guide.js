@@ -8,7 +8,7 @@ export default function USDAEndorsementGuide() {
         <title>The USDA Endorsement Guide: Getting Your Pet's Health Certificate Stamped (2026) | Pets in Cabin</title>
         <meta
           name="description"
-          content="A plain-English walkthrough of the USDA APHIS endorsement step for flying a pet out of the United States — what it is, where it sits in the process, the prepaid return label explained properly, the deadlines that actually apply, and what the Reddit and Facebook horror stories really mean."
+          content="A plain-English guide to the USDA APHIS endorsement step for flying a pet out of the US — the deadlines that really apply, and the prepaid return label explained."
         />
         <link rel="canonical" href="https://www.petsincabin.com/usda-endorsement-guide" />
       </Head>

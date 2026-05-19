@@ -9,7 +9,7 @@ export default function GettingYourPetIntoTheUK() {
         <title>Getting Your Pet Into the UK From Europe (2026): Every Route Compared | Pets in Cabin</title>
         <meta
           name="description"
-          content="No airline flies a pet in the cabin into the UK — so here is every route that actually works, compared side by side. The three European hub routes (Paris, Frankfurt, Amsterdam), every UK-approved ferry crossing, door-to-door pet taxis, costs, journey times, and the paperwork including the tapeworm window."
+          content="No airline flies a pet in the cabin into the UK — so here's every route that works, compared: the Paris, Frankfurt and Amsterdam crossings, ferries, costs and times."
         />
         <link rel="canonical" href="https://www.petsincabin.com/getting-your-pet-into-the-uk" />
       </Head>

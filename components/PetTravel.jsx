@@ -159,7 +159,7 @@ const AIRLINES = [
     notes: "Domestic only — no international, no Hawaii. Six pets per flight max.",
     intl: "No",
     verified: "May 2026",
-    link: "https://www.southwest.com/help/traveling-with-pets",
+    link: "https://www.southwest.com/pets/",
   },
   {
     name: "Spirit",
@@ -176,7 +176,7 @@ const AIRLINES = [
     notes: "Domestic US, Puerto Rico, USVI, plus some Mexico, Central America, and select Caribbean / Latin America routes. Cabin pet eligibility varies by route and destination country rules. Pets must be at least 8 weeks old. Confirm your specific route by calling Spirit directly.",
     intl: "Limited",
     verified: "May 2026",
-    link: "https://customersupport.spirit.com/en-US/category/article/KA-01066",
+    link: "https://customersupport.spirit.com/en-us/category/article/KA-01181",
   },
   {
     name: "Frontier",

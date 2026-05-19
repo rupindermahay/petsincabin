@@ -6006,8 +6006,7 @@ const NAV_SECTIONS = [
   { id: "routes", label: "Routes", num: "III" },
   { id: "destinations", label: "Difficult destinations", num: "IV" },
   { id: "quarantine", label: "Quarantine", num: "⚠" },
-  { id: "timeline", label: "Timeline", num: "V" },
-  { id: "checklist", label: "Checklist", num: "✓" },
+  { id: "timeline", label: "Timeline & checklist", num: "V" },
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
   { id: "travel-day", label: "Airport day", num: "★" },
@@ -9025,6 +9024,7 @@ function Checklist() {
         "Buy the airline-compliant carrier (soft-sided is usually better) — let your pet sleep in it at home with a familiar blanket so it smells like them",
         "Practice short car rides or trips in the carrier — calm carrier-day is built weeks earlier, not on the morning of",
         "Schedule the government-accredited vet visit for the health certificate — timing varies, usually within 10 days of travel, sometimes 48 hours",
+        "Going to the UK, Ireland, Norway, Finland or Malta with a dog? Book the tapeworm-treatment vet visit now — it has to land in the 24–120 hour window before arrival, and that vet has to be available on the right date",
         "Complete destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, MGAP for Uruguay, AQS Form for Japan, etc.)",
         "Confirm climate / temperature embargoes — many airlines refuse pets above 85°F or below 20°F, and brachy breeds face wider seasonal bans",
         "Double-check carrier dimensions against your specific airline AND specific aircraft — the under-seat space varies by plane type, not just airline",
@@ -9063,6 +9063,7 @@ function Checklist() {
         "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
         "Practice the turn-around test at home: dog must stand up, turn around, lie down inside the carrier without touching walls or ceiling",
         "If your dog is over 20 lb combined with the carrier — most US airlines are out. Lufthansa, Air Canada, and Iberia are your friends",
+        "Tapeworm treatment — required for dogs entering the UK, Ireland, Norway, Finland or Malta, given by a vet 24–120 hours before arrival (a comfortable two-day window). Cats and ferrets are exempt. The journey planner calculates the exact dates for your trip",
         "Bring poop bags AND a small bottle of water for cleanup — accidents happen, and you'll want to handle it discreetly without making a scene at the gate",
       ],
     },
@@ -9090,7 +9091,7 @@ function Checklist() {
         </h2>
 
         <p className="font-serif italic text-stone-600 text-lg mb-10 max-w-2xl">
-          A general timeline below — or grab the printable checklist tailored to your route.
+          A general timeline below — useful as a quick overview. For a version tailored to your exact route, with your tapeworm window calculated and the right paperwork for your destination, <a href="#planner" className="not-italic text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">use the journey planner</a>.
         </p>
 
         <div id="checklist" className="scroll-mt-24">
@@ -12635,7 +12636,7 @@ function BackToTop() {
   // all the way back to the hero.
   const SECTION_IDS = [
     "intake", "planner", "airlines", "routes", "destinations",
-    "quarantine", "timeline", "checklist", "documents", "tips",
+    "quarantine", "timeline", "documents", "tips",
     "travel-day", "stories", "contact",
   ];
 

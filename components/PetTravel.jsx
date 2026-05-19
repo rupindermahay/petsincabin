@@ -6351,7 +6351,7 @@ function Hero({ onStart }) {
         </h1>
 
         <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-10">
-          Every airline has different rules. Every country has different paperwork. We sort through it so you and your animal arrive together — calm, prepared, and on the same flight.
+          Can your dog or cat fly in the cabin with you? Every airline has different rules, and every country has different paperwork. We sort through it so you and your pet arrive together — calm, prepared, and on the same flight.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center">

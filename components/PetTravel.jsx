@@ -5999,21 +5999,21 @@ function NavBar({ onStartIntake }) {
         </div>
       </div>
 
-      {/* Mobile menu — a normal in-flow dropdown. It is capped to the viewport
-          height and scrolls internally so a long list (all the country guides)
-          stays reachable. Kept in-flow deliberately: a fixed panel nested in
-          this nav fails because the nav's backdrop-filter traps fixed
-          positioning. */}
+      {/* Mobile menu — a normal in-flow dropdown. Capped to the viewport and
+          scrolls internally so the full list (all country guides) is reachable.
+          Uses dvh (dynamic viewport height) so the cap is correct on mobile
+          Safari, where the address bar makes 100vh taller than the visible
+          area. Background is fully opaque so page content can't bleed through. */}
       {open && (
         <div
           className="md:hidden border-t-2 border-stone-900 animate-fadeIn overflow-y-auto overscroll-contain"
           style={{
-            maxHeight: "calc(100vh - 84px)",
-            backgroundColor: "rgba(250, 246, 237, 0.99)",
+            maxHeight: "calc(100dvh - 84px)",
+            backgroundColor: "#faf6ed",
             WebkitOverflowScrolling: "touch",
           }}
         >
-          <div className="max-w-7xl mx-auto px-6 py-5 pb-10">
+          <div className="max-w-7xl mx-auto px-6 py-5 pb-24">
             {/* Feature link — the flagship UK-return guide, prominent at top */}
             <a
               href="/getting-your-pet-into-the-uk"

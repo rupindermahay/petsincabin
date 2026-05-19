@@ -56,7 +56,7 @@ function isTransitLeg(legRoute) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "15 May 2026";
+const LAST_UPDATED = "18 May 2026";
 
 // ---------- DATA ----------
 

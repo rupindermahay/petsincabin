@@ -249,13 +249,13 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam). Cabin NOT allowed: INTO the UK (cargo only — UK government rule). Ireland: cabin options are limited — Iberia runs Madrid → Dublin, but KLM's own Ireland position is best confirmed directly. Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Paris/Amsterdam) and KLM Amsterdam → Dublin (cabin into Ireland — traveller-confirmed). Cabin NOT allowed: INTO the UK (cargo only — UK government rule). Air France's own Ireland cabin position is less clear than KLM's — confirm directly. Bans cabin on connecting US flights operated by Delta/Virgin (operator's rules apply).",
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", ireland: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "~€75–€200 depending on route",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "46 × 28 × 24 cm (~18 × 11 × 9 in), soft-sided only",
-    notes: "One of the most popular cabin options OUT of the UK for travel to Europe or onwards. Combined carrier from LHR (NOT Gatwick — Gatwick blocks cabin pets). Connect at Paris/Amsterdam for cabin-friendly onward flights to USA, India, and most of the world. Not allowed in business class on intercontinental. Snub-nosed breeds: cabin OK; cargo banned for medical reasons.",
+    notes: "One of the most popular cabin options OUT of the UK for travel to Europe or onwards. Combined carrier from LHR (NOT Gatwick — Gatwick blocks cabin pets). Connect at Paris/Amsterdam for cabin-friendly onward flights to USA, India, and most of the world. KLM also carries cabin pets Amsterdam → Dublin — one of the few confirmed cabin routes INTO Ireland (KLM's own site does not list an Ireland ban, and travellers report flying it; book the pet via My Trip and confirm when adding it). Not allowed in business class on intercontinental. Snub-nosed breeds: cabin OK; cargo banned for medical reasons.",
     intl: "Yes",
     verified: "May 2026",
     link: "https://wwws.airfrance.us/information/passagers/voyager-avec-son-animal-chien-chat",
@@ -622,6 +622,7 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Miami (MIA)", duration: "9h 30m", note: "KLM. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Amsterdam (AMS)", to: "London (LHR)", duration: "1h 10m", note: "KLM. ✓ Cabin OUT of Europe (remember: cabin INTO the UK is not possible — this route works as the last leg out of UK using AMS as a hub, not the return).", tags: ["europe", "uk-out"] },
   { from: "Amsterdam (AMS)", to: "Oslo (OSL)", duration: "1h 55m", note: "KLM / Norwegian / SAS. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival is required for Norway entry.", tags: ["europe"] },
+  { from: "Amsterdam (AMS)", to: "Dublin (DUB)", duration: "1h 50m", note: "KLM. ✓ Cabin (under 8 kg incl. carrier, max 46 × 28 × 24 cm). One of the few confirmed cabin routes INTO Ireland — Ireland is not the UK and allows cabin pets. KLM's own site lists no Ireland ban and travellers report flying it; book the pet via My Trip and confirm when adding it. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Make sure it's an actual KLM flight, not a codeshare.", tags: ["europe"] },
 
   // ═══════ INTRA-EUROPE TRAINS (Eurostar Red — former Thalys) ═══════
   // Pets are allowed on Eurostar's continental routes between France,
@@ -808,8 +809,8 @@ const DIRECT_ROUTES = [
   { from: "Dubai (DXB)", to: "Delhi / Mumbai", duration: "3h 15m", note: "Air India. ✓ Cabin OUT of UAE (under 10 kg combined). Pets entering UAE must go cargo regardless of airline.", tags: ["dubai", "india"] },
 
   // ═══════ FROM DUBLIN ═══════
-  { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward. Cabin pets can also fly INTO Ireland — Iberia runs Madrid → Dublin — though options inbound are fewer. Connects onward across Europe.", tags: ["europe"] },
-  { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward. Cabin pets can also fly INTO Ireland — Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry them — though options inbound are fewer. Connects onward across Europe.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). KLM also carries cabin pets the other way, Amsterdam → Dublin — one of the few confirmed cabin routes into Ireland. Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin OUT of Ireland (under 8 kg). Onward connections across Europe and beyond.", tags: ["europe"] },
 
   // ═══════ FROM LONDON ═══════
@@ -1388,7 +1389,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
       { route: "Ferry to Rosslare or Dublin", time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
     ],
-    note: "Cabin options into Ireland are limited but they do exist — Iberia carries cabin pets Madrid → Dublin, so routing via Madrid is the one direct-cabin way in. Otherwise the cleanest route is the direct France→Ireland ferry, which skips the UK landbridge entirely: fly cabin to a European hub, then pick up the ferry. The crossing is long but your pet is with you. Another option: Eurotunnel into the UK, then the short Holyhead→Dublin ferry.",
+    note: "Cabin options into Ireland are limited but they do exist — Iberia carries cabin pets Madrid → Dublin, and KLM carries them Amsterdam → Dublin, so routing via either hub is a direct-cabin way in. Otherwise the cleanest route is the direct France→Ireland ferry, which skips the UK landbridge entirely: fly cabin to a European hub, then pick up the ferry. The crossing is long but your pet is with you. Another option: Eurotunnel into the UK, then the short Holyhead→Dublin ferry.",
     tags: ["us", "europe", "ireland"],
   },
 ];
@@ -1538,7 +1539,7 @@ const AIRPORTS = [
     note: "Newcastle has no cabin-pet flights of its own — the carriers that take pets in the cabin out of the UK fly from Heathrow and Manchester. But Newcastle has something no other UK airport has: the DFDS overnight ferry to Amsterdam, which carries pets. For getting a pet to or from mainland Europe, that ferry is Newcastle's real route.",
     arrivalNote: "No airline flies cabin pets INTO the UK — but Newcastle is the UK port for the DFDS overnight ferry from Amsterdam (docking at North Shields), which DOES carry pets in pet-friendly cabins or onboard kennels. For a pet arriving from mainland Europe, that ferry makes Newcastle one of the most pet-practical ways into the UK — no cargo hold, no Channel drive." },
   // Ireland
-  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: true, note: "Cabin pets fly both ways through Dublin. Iberia carries cabin pets Madrid ⇄ Dublin, and several EU carriers fly cabin pets out of Dublin. Ireland is not the UK — there is no legal ban on cabin pets — though cabin options into Ireland are fewer than mainland EU.", arrivalNote: "Ireland is NOT the UK — it does allow cabin pets, and Iberia runs a cabin-pet service Madrid → Dublin. Cabin options into Ireland are still limited compared with mainland Europe, so also consider the Dublin ferry routes if your departure city has no direct cabin flight. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival." },
+  { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: true, note: "Cabin pets fly both ways through Dublin. Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry cabin pets in, and several EU carriers fly cabin pets out of Dublin. Ireland is not the UK — there is no legal ban on cabin pets — though cabin options into Ireland are fewer than mainland EU.", arrivalNote: "Ireland is NOT the UK — it does allow cabin pets. Two confirmed cabin routes in: Iberia from Madrid and KLM from Amsterdam. Cabin options into Ireland are still limited compared with mainland Europe, so also consider the Dublin ferry routes if your departure city has no direct cabin flight. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival." },
   // United States
   { code: "JFK", city: "New York JFK", region: "us", cabinOut: true, cabinIn: true },
   { code: "EWR", city: "Newark", region: "us", cabinOut: true, cabinIn: true },
@@ -1636,8 +1637,8 @@ const airportLabel = (code) => {
 // VERIFIED FACTS THESE STRATEGIES REST ON (official sources, May 2026):
 // - No airline flies cabin pets INTO the UK (UK govt rule) — must use a
 //   European hub + Eurotunnel/ferry land crossing.
-// - Ireland is NOT the UK: cabin pets CAN fly in (Iberia, Madrid→Dublin),
-//   but direct cabin options are very limited, so ferry is often practical.
+// - Ireland is NOT the UK: cabin pets CAN fly in (Iberia Madrid→Dublin,
+//   KLM Amsterdam→Dublin), but direct cabin options are limited.
 // - Cabin OUT of the UK/Ireland to Europe IS allowed (Air France, KLM, Lufthansa).
 // - Etihad: cabin OUT of Abu Dhabi to Europe allowed; cabin INTO the UAE blocked
 //   on "flights to" the UAE — Dubai (DXB) is cargo-only for all airlines.
@@ -1721,14 +1722,14 @@ const REGION_PAIR_STRATEGIES = {
       { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
       { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Cabin pets CAN fly into Ireland — Iberia runs Madrid → Dublin — so routing via Madrid is one direct-cabin option. Otherwise: cabin into Europe, then the direct France→Ireland ferry, which skips the UK entirely.`,
+    note: `Cabin pets CAN fly into Ireland — Iberia runs Madrid → Dublin and KLM runs Amsterdam → Dublin — so routing via either hub is a direct-cabin option. Otherwise: cabin into Europe, then the direct France→Ireland ferry, which skips the UK entirely.`,
   }),
   "europe>ireland": (o, d) => ({
     legs: [
       { route: `${o} → Cherbourg or Roscoff (drive)`, time: "varies", airline: "Pet stays with you" },
       { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `From Europe you have two ways in: a direct cabin flight if your city has one (Iberia flies cabin Madrid → Dublin), or the direct France→Ireland ferry — your pet stays with you for the crossing.`,
+    note: `From Europe you have two ways in: a direct cabin flight if your city has one (Iberia flies Madrid → Dublin, KLM flies Amsterdam → Dublin), or the direct France→Ireland ferry — your pet stays with you for the crossing.`,
   }),
   "uk-out>ireland": (o, d) => ({
     legs: [
@@ -2015,7 +2016,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland (Cherbourg/Roscoff → Rosslare/Dublin)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Cabin routes into Ireland are limited — Iberia flies cabin Madrid → Dublin, so routing via Madrid is one option. Otherwise fly India→Europe in cabin, then take the pet-friendly ferry from France to Ireland — your pet stays with you for the crossing. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, and tapeworm treatment for dogs.`,
+    note: `Cabin routes into Ireland are limited — Iberia flies Madrid → Dublin and KLM flies Amsterdam → Dublin, so routing via either is an option. Otherwise fly India→Europe in cabin, then take the pet-friendly ferry from France to Ireland — your pet stays with you for the crossing. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, and tapeworm treatment for dogs.`,
   }),
 
   // ----- UAE (Abu Dhabi) outbound -----
@@ -2025,7 +2026,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Etihad cabin out of Abu Dhabi to a European hub, then either an onward cabin flight if available (Iberia flies cabin Madrid → Dublin) or the pet-friendly ferry from France into Ireland. If your pet is in Dubai, it's a short taxi to Abu Dhabi airport — cabin departures are only from AUH, not DXB.`,
+    note: `Etihad cabin out of Abu Dhabi to a European hub, then either an onward cabin flight if available (Iberia flies Madrid → Dublin, KLM flies Amsterdam → Dublin) or the pet-friendly ferry from France into Ireland. If your pet is in Dubai, it's a short taxi to Abu Dhabi airport — cabin departures are only from AUH, not DXB.`,
   }),
   "dubai>canada": (o, d) => ({
     legs: [
@@ -2059,7 +2060,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
       { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Cabin routes into Ireland are limited — Iberia flies cabin Madrid → Dublin, so a Madrid routing is one way in. Otherwise route Mexico → US gateway → European hub in cabin, then the pet-friendly ferry from France into Ireland. A long journey — build in overnight stops.`,
+    note: `Cabin routes into Ireland are limited — Iberia flies Madrid → Dublin and KLM flies Amsterdam → Dublin, so either hub is a way in. Otherwise route Mexico → US gateway → European hub in cabin, then the pet-friendly ferry from France into Ireland. A long journey — build in overnight stops.`,
   }),
   "mexico>india": (o, d) => ({
     legs: [
@@ -2092,7 +2093,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
       { route: "European hub → Ireland (ferry from France)", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Cabin routes into Ireland are limited — Iberia flies cabin Madrid → Dublin if a Madrid routing works. Otherwise Caribbean → US gateway → European hub in cabin, then the pet-friendly ferry from France. Long and multi-leg — plan overnight stops.`,
+    note: `Cabin routes into Ireland are limited — Iberia flies Madrid → Dublin and KLM flies Amsterdam → Dublin if either routing works. Otherwise Caribbean → US gateway → European hub in cabin, then the pet-friendly ferry from France. Long and multi-leg — plan overnight stops.`,
   }),
   "caribbean>mexico": (o, d) => ({
     legs: [
@@ -2125,7 +2126,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
       { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
     ],
-    note: `Cabin routes into Ireland are limited — Iberia flies cabin Madrid → Dublin if you can route via Madrid. Otherwise Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
+    note: `Cabin routes into Ireland are limited — Iberia flies Madrid → Dublin and KLM flies Amsterdam → Dublin if you can route via either. Otherwise Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
   }),
   "canada>dubai": (o, d) => ({
     legs: [
@@ -4870,7 +4871,7 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
   if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
     if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
     if (destRegion === "uk-out") return `The UK doesn't allow cabin pets on any commercial flight — your pet has to fly into mainland Europe and cross by land (Eurotunnel) or sea (ferry). Paperwork: ISO microchip, rabies vaccine ≥21 days old, Animal Health Certificate from accredited vet within 10 days of entry, tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "ireland") return `Ireland — like the UK — doesn't allow cabin pets on commercial flights. Use the France→Ireland ferry. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC), tapeworm treatment for dogs 24–120 hrs before arrival.`;
+    if (destRegion === "ireland") return `Ireland is not the UK — cabin pets CAN fly in. Iberia (Madrid→Dublin) and KLM (Amsterdam→Dublin) both carry them; beyond those, the France→Ireland ferry is the reliable route. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC), tapeworm treatment for dogs 24–120 hrs before arrival.`;
     if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC, not a pet passport).`;
     if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
     if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
@@ -5668,8 +5669,8 @@ function assess(answers) {
     flags.push({
       severity: "warning",
       title: "Cabin routes into Ireland are limited — but they exist",
-      detail: "Ireland is not the UK — there is no legal ban on cabin pets, and at least one airline runs a cabin-pet service into the country: Iberia flies cabin pets Madrid → Dublin (under 8 kg including carrier). Beyond that, direct cabin options into Ireland are few, so for most departure cities a sea route is still the practical way in. (Flying OUT of Ireland in cabin is straightforward on several EU carriers.)",
-      workaround: "If you can route via Madrid, the Iberia cabin flight to Dublin is the simplest way in. Otherwise: fly cabin into a continental EU airport (Paris CDG, Amsterdam AMS, Frankfurt FRA), then take a pet-friendly ferry from France to Ireland (Cherbourg/Roscoff → Rosslare/Dublin on Irish Ferries or Brittany Ferries — pets stay in your vehicle or a pet-friendly cabin). The direct France → Ireland ferry avoids the UK landbridge entirely. You can also cross to the UK via Eurotunnel and take the short Holyhead → Dublin ferry.",
+      detail: "Ireland is not the UK — there is no legal ban on cabin pets, and two airlines run a cabin-pet service into the country: Iberia flies cabin pets Madrid → Dublin and KLM flies them Amsterdam → Dublin (both under 8 kg including carrier). Beyond those two routes, direct cabin options into Ireland are few, so for most departure cities a sea route is still the practical way in. (Flying OUT of Ireland in cabin is straightforward on several EU carriers.)",
+      workaround: "If you can route via Madrid (Iberia) or Amsterdam (KLM), a cabin flight straight to Dublin is the simplest way in. Otherwise: fly cabin into a continental EU airport (Paris CDG, Amsterdam AMS, Frankfurt FRA), then take a pet-friendly ferry from France to Ireland (Cherbourg/Roscoff → Rosslare/Dublin on Irish Ferries or Brittany Ferries — pets stay in your vehicle or a pet-friendly cabin). The direct France → Ireland ferry avoids the UK landbridge entirely. You can also cross to the UK via Eurotunnel and take the short Holyhead → Dublin ferry.",
     });
     if (anyDog) {
       warnings.push({
@@ -7040,13 +7041,13 @@ const DESTINATIONS = [
     flag: "🇮🇪",
     name: "Ireland",
     headline: "Cabin pets CAN fly into Ireland — but options are limited.",
-    rule: "Getting a pet into Ireland is often assumed to be like the UK — it isn't. Ireland has no legal ban on cabin pets, and at least one airline runs a cabin-pet service into the country: Iberia flies cabin pets Madrid → Dublin (under 8 kg including carrier). Beyond that single route, direct cabin options into Ireland are genuinely few — so for most departure cities a pet-friendly sea route remains the practical way in. Flying OUT of Ireland in the cabin is straightforward on the EU carriers. Tapeworm treatment is required for dogs (not cats) 24–120 hours before arrival. The upside: Ireland has direct France→Ireland ferries, so you can skip the UK landbridge entirely.",
+    rule: "Getting a pet into Ireland is often assumed to be like the UK — it isn't. Ireland has no legal ban on cabin pets, and two airlines run a cabin-pet service into the country: Iberia flies cabin pets Madrid → Dublin, and KLM flies them Amsterdam → Dublin (both under 8 kg including carrier). Beyond those two routes, direct cabin options into Ireland are genuinely few — so for many departure cities a pet-friendly sea route remains the practical way in. Flying OUT of Ireland in the cabin is straightforward on the EU carriers. Tapeworm treatment is required for dogs (not cats) 24–120 hours before arrival. The upside: Ireland has direct France→Ireland ferries, so you can skip the UK landbridge entirely.",
     workarounds: [
       {
-        title: "Iberia cabin flight via Madrid (the one direct way in)",
+        title: "Cabin flight in — Iberia via Madrid or KLM via Amsterdam",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Iberia carries cabin pets on its Madrid → Dublin route — under 8 kg including carrier, carrier max 45 × 35 × 25 cm. If you can route your journey through Madrid, this is the simplest way in: your pet stays in the cabin with you the whole way, no ferry, no UK landbridge. Book the pet space via Iberia at least 48 hours ahead. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival.",
-        cost: "Iberia cabin pet fee ~€50 Europe per leg, plus your own fare.",
+        body: "Two airlines carry cabin pets into Ireland. Iberia flies the Madrid → Dublin route, and KLM flies Amsterdam → Dublin — both under 8 kg including carrier. If you can route your journey through Madrid or Amsterdam, this is the simplest way in: your pet stays in the cabin with you, no ferry, no UK landbridge. Iberia's carrier limit is 45 × 35 × 25 cm; KLM's is 46 × 28 × 24 cm. Book the pet space directly with the airline (Iberia ≥48 hours ahead; KLM via My Trip after booking) and confirm it when you add it — KLM's site lists no Ireland ban and travellers report flying it. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival.",
+        cost: "Cabin pet fee roughly €50–€200 per leg depending on the airline and route, plus your own fare.",
       },
       {
         title: "France → Ireland direct ferry (the cleanest sea route)",
@@ -7063,8 +7064,14 @@ const DESTINATIONS = [
       {
         title: "Cabin OUT of Ireland is straightforward",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Leaving Ireland is easy. Aer Lingus and the EU flag carriers (Lufthansa, Air France, KLM, Iberia) accept cabin pets on flights departing Dublin to continental Europe — under 8 kg combined. From a European hub you can connect onward in cabin.",
+        body: "Leaving Ireland is easy. The EU flag carriers — KLM (to Amsterdam), Iberia (to Madrid), and reportedly Air France (to Paris) and Lufthansa (to Frankfurt) — accept cabin pets on flights departing Dublin to continental Europe, under 8 kg combined. Note that Aer Lingus and Ryanair, the two Irish carriers, do NOT take cabin pets at all — cargo only. From a European hub you can connect onward in cabin.",
         cost: "Cabin pet fee €50–€150 per leg with EU carriers.",
+      },
+      {
+        title: "Air France & Lufthansa — confirm before you count on them",
+        icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) are the two cabin routes into Ireland we can point to with confidence. Air France and Lufthansa are less clear: travellers report flying cabin pets to Dublin, but neither airline's own site confirms it, and Lufthansa explicitly reserves the right to refuse pet bookings on routes to Ireland. They may well work — but call the airline and get the pet booking confirmed in writing before you rely on either for an inbound flight.",
+        cost: "—",
       },
       {
         title: "Cargo into Dublin",
@@ -7808,13 +7815,13 @@ function AirlineGrid() {
             </div>
             <div className="p-6 md:p-8 space-y-5">
               <p className="font-serif text-lg text-stone-800 leading-relaxed">
-                These two are not the same. For the <strong>UK</strong> it's a government rule — every pet entering by air must travel as <strong>manifested cargo</strong>, never in the cabin, and no airline can shop around it. <strong>Ireland</strong> is different: cabin pets <em>are</em> allowed, and Iberia runs a cabin-pet service on Madrid → Dublin — but beyond that one route, direct cabin options are few. Either way, there's a well-trodden workaround that thousands of people use every year.
+                These two are not the same. For the <strong>UK</strong> it's a government rule — every pet entering by air must travel as <strong>manifested cargo</strong>, never in the cabin, and no airline can shop around it. <strong>Ireland</strong> is different: cabin pets <em>are</em> allowed, and two airlines run cabin-pet services in — Iberia on Madrid → Dublin and KLM on Amsterdam → Dublin — though beyond those two routes direct cabin options are few. Either way, there's a well-trodden workaround that thousands of people use every year.
               </p>
 
               <div className="bg-amber-50 border-l-2 border-amber-500 px-5 py-4">
                 <div className="font-serif text-xl text-stone-900 mb-2">The cabin workaround — fly to the continent, then cross by land</div>
                 <p className="text-stone-700 leading-relaxed text-sm">
-                  Fly your pet in cabin into <strong>Paris (CDG)</strong>, <strong>Amsterdam (AMS)</strong>, or <strong>Frankfurt (FRA)</strong> — Air France, KLM, and Lufthansa all take cabin pets on those routes. Then complete the journey overland, with your pet staying with you the whole way. For Ireland specifically, you can also route via Madrid and fly Iberia's cabin service straight into Dublin.
+                  Fly your pet in cabin into <strong>Paris (CDG)</strong>, <strong>Amsterdam (AMS)</strong>, or <strong>Frankfurt (FRA)</strong> — Air France, KLM, and Lufthansa all take cabin pets on those routes. Then complete the journey overland, with your pet staying with you the whole way. For Ireland specifically, you can also fly straight in: Iberia carries cabin pets Madrid → Dublin, and KLM carries them Amsterdam → Dublin.
                 </p>
               </div>
 
@@ -7830,9 +7837,9 @@ function AirlineGrid() {
                 </div>
                 <div className="border border-stone-200 p-4 rounded-sm">
                   <div className="text-[10px] uppercase tracking-widest text-amber-700 mb-1">Into Ireland</div>
-                  <div className="font-serif text-base text-stone-900 mb-1">Iberia via Madrid, or a direct ferry from France</div>
+                  <div className="font-serif text-base text-stone-900 mb-1">Iberia or KLM cabin flight, or a direct ferry from France</div>
                   <p className="text-stone-600 text-sm leading-relaxed">
-                    If you can route through Madrid, Iberia flies cabin pets straight to Dublin (under 8 kg). Otherwise: Cherbourg or Roscoff → Rosslare or Dublin on <a href="https://www.irishferries.com/uk-en/frequently-asked-questions/pet-travel-all-routes/" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Irish Ferries</a> or <a href="https://www.brittany-ferries.ie/information/pet-travel/travelling-by-ferry-with-your-pet" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Brittany Ferries</a>. Pets stay in your vehicle or a pet-friendly cabin. This avoids the UK landbridge entirely.
+                    Two airlines carry cabin pets straight into Dublin: Iberia from Madrid and KLM from Amsterdam (both under 8 kg). Otherwise: Cherbourg or Roscoff → Rosslare or Dublin on <a href="https://www.irishferries.com/uk-en/frequently-asked-questions/pet-travel-all-routes/" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Irish Ferries</a> or <a href="https://www.brittany-ferries.ie/information/pet-travel/travelling-by-ferry-with-your-pet" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Brittany Ferries</a>. Pets stay in your vehicle or a pet-friendly cabin. This avoids the UK landbridge entirely.
                   </p>
                 </div>
               </div>
@@ -9795,28 +9802,21 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* AIRLINE GUIDE POINTER — the route legs above name the carrier,
-                but the full picture (fees, weight limits, exactly which
-                routes allow a cabin pet) lives in the airline guide. Point
-                people there rather than duplicating it in the planner. */}
+            {/* AIRLINE GUIDE POINTER — a quiet one-line signpost. The route
+                cards already name the carrier; this just points to the fuller
+                detail (fees, weight limits) without taking over the page. */}
             {origin !== destination && (
-              <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
-                <p className="text-stone-300 text-sm leading-relaxed mb-3">
-                  The routes above name the airline — but before you book,
-                  check that carrier's full policy. Cabin rules can differ by
-                  destination city, and fees and weight limits vary a lot. Our
-                  airline guide has the detail on{" "}
-                  <span className="text-amber-300 font-medium">32 airlines</span>
-                  , each cross-checked against the airline's own policy page.
-                </p>
+              <p className="text-stone-500 text-sm leading-relaxed mb-6">
+                Route cards name the airline — for fees, weight limits and the
+                full policy, see the{" "}
                 <a
                   href="#airlines"
-                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                  className="text-amber-400 underline decoration-stone-600 underline-offset-2 hover:decoration-amber-400 transition-colors"
                 >
-                  <Plane className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  See the airline guide
-                </a>
-              </div>
+                  airline guide
+                </a>{" "}
+                (32 airlines, cross-checked against each carrier's own page).
+              </p>
             )}
 
             {/* USDA note — only when the journey starts in the US. Endorsement

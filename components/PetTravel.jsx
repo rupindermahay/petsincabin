@@ -5979,22 +5979,39 @@ function NavBar({ onStartIntake }) {
               {row2.map((s) => <NavItem key={s.id} s={s} />)}
               <NavGuidesDropdown />
             </div>
-            {/* THIRD ROW — flagship UK-return guide. Sits flush under the two
-                section rows, sharing their left edge, so it reads as the
-                third line of the nav rather than a detached banner. */}
-            <a
-              href="/getting-your-pet-into-the-uk"
-              className="flex items-center gap-2 mt-1.5 py-1.5 px-3 bg-stone-900 hover:bg-amber-800 transition-colors group rounded-sm"
-            >
-              <PawPrint className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors flex-shrink-0" strokeWidth={2} />
-              <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors">
-                Getting your pet into the UK from Europe
-              </span>
-              <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors">
-                — every route, compared
-              </span>
-              <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all ml-auto flex-shrink-0" strokeWidth={2} />
-            </a>
+            {/* THIRD ROW — flagship guides. A single black bar sharing the
+                two section rows' left edge, so it reads as the third line of
+                the nav. Holds the UK-return guide and the USDA endorsement
+                guide side by side, split by a divider. */}
+            <div className="flex items-stretch mt-1.5 bg-stone-900 rounded-sm overflow-hidden">
+              <a
+                href="/getting-your-pet-into-the-uk"
+                className="flex items-center gap-2 py-1.5 px-3 hover:bg-amber-800 transition-colors group flex-1 min-w-0"
+              >
+                <PawPrint className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors flex-shrink-0" strokeWidth={2} />
+                <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors whitespace-nowrap">
+                  Getting your pet into the UK from Europe
+                </span>
+                <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors whitespace-nowrap hidden lg:inline">
+                  — every route, compared
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all ml-auto flex-shrink-0" strokeWidth={2} />
+              </a>
+              <div className="w-px bg-stone-700 flex-shrink-0" />
+              <a
+                href="/usda-endorsement-guide"
+                className="flex items-center gap-2 py-1.5 px-3 hover:bg-amber-800 transition-colors group flex-shrink-0"
+              >
+                <FileCheck className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 transition-colors flex-shrink-0" strokeWidth={2} />
+                <span className="font-serif text-[13px] text-stone-100 group-hover:text-white transition-colors whitespace-nowrap">
+                  USDA endorsement guide
+                </span>
+                <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-amber-400/80 group-hover:text-amber-200 transition-colors whitespace-nowrap hidden lg:inline">
+                  — leaving the US
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-200 group-hover:translate-x-0.5 transition-all flex-shrink-0" strokeWidth={2} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -6014,16 +6031,30 @@ function NavBar({ onStartIntake }) {
           }}
         >
           <div className="max-w-7xl mx-auto px-6 py-5 pb-24">
-            {/* Feature link — the flagship UK-return guide, prominent at top */}
-            <a
-              href="/getting-your-pet-into-the-uk"
-              className="flex items-center gap-2.5 mb-5 px-4 py-3.5 bg-stone-900 hover:bg-amber-800 transition-colors rounded-sm"
-            >
-              <PawPrint className="w-4 h-4 text-amber-400 flex-shrink-0" strokeWidth={2} />
-              <span className="font-serif text-sm text-stone-100 leading-snug">
-                Getting your pet into the UK from Europe — every route, compared
-              </span>
-            </a>
+            {/* Feature links — the flagship guides, prominent at top. One
+                shared black box; stacked (not side-by-side) since the mobile
+                width is too narrow for two columns. */}
+            <div className="mb-5 bg-stone-900 rounded-sm overflow-hidden">
+              <a
+                href="/getting-your-pet-into-the-uk"
+                className="flex items-center gap-2.5 px-4 py-3.5 hover:bg-amber-800 transition-colors"
+              >
+                <PawPrint className="w-4 h-4 text-amber-400 flex-shrink-0" strokeWidth={2} />
+                <span className="font-serif text-sm text-stone-100 leading-snug">
+                  Getting your pet into the UK from Europe — every route, compared
+                </span>
+              </a>
+              <div className="h-px bg-stone-700 mx-4" />
+              <a
+                href="/usda-endorsement-guide"
+                className="flex items-center gap-2.5 px-4 py-3.5 hover:bg-amber-800 transition-colors"
+              >
+                <FileCheck className="w-4 h-4 text-amber-400 flex-shrink-0" strokeWidth={2} />
+                <span className="font-serif text-sm text-stone-100 leading-snug">
+                  The USDA endorsement guide — flying your pet out of the US
+                </span>
+              </a>
+            </div>
             <div className="grid grid-cols-2 gap-x-8">
               {navItems.map((s) => (
                 <button

@@ -2702,6 +2702,13 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   const oA = airportByCode(originCode);
   const dA = airportByCode(destCode);
   if (!oA || !dA) return [];
+  // The "europe" region is a whole continent, not a country — Madrid and
+  // Amsterdam are both "europe" but are different countries 1,800 km apart.
+  // Treating them as interchangeable "same-area" origins produced wrong
+  // suggestions (e.g. offering an Amsterdam→Dublin route for a Madrid→Dublin
+  // search). Regional alternatives only make sense for regions that are
+  // roughly a single country, so europe is excluded here.
+  if (oA.region === "europe") return [];
   const originRegionKeywords = {
     "uk-out": ["London", "Manchester", "Newcastle", "(LHR)", "(MAN)", "(LGW)", "(NCL)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],

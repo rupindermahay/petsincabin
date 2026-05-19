@@ -1695,10 +1695,10 @@ function inferTransitRegionsFromLegs(legs, originRegion, destRegion) {
 // - India: cabin pets may only enter via DEL, BOM, MAA, CCU, BLR, HYD.
 const AIRPORTS = [
   // United Kingdom
-  { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here.", arrivalNote: "No airline flies cabin pets INTO the UK — Heathrow included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that." },
+  { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here.", arrivalNote: "No airline flies cabin pets INTO the UK — Heathrow included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel." },
   { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false,
     note: "Manchester has a couple of direct cabin routes of its own (Etihad to Abu Dhabi, Air Transat to Toronto).",
-    arrivalNote: "No airline flies cabin pets INTO the UK — Manchester included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that.",
+    arrivalNote: "No airline flies cabin pets INTO the UK — Manchester included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel.",
     // driveTo with conditionalOnNoDirect: Manchester CAN do a few cabin routes,
     // but for any destination it can't reach directly, driving to Heathrow
     // (a normal UK domestic drive) unlocks far more direct options and is the
@@ -1707,7 +1707,7 @@ const AIRPORTS = [
     driveTo: { code: "LHR", conditionalOnNoDirect: true, text: "Heathrow is a normal domestic drive from Manchester, and it's the UK's main cabin-pet departure airport — far more direct cabin routes leave from there. For destinations Manchester can't reach directly, driving to Heathrow is simpler than any multi-leg workaround." } },
   { code: "LGW", city: "London Gatwick", region: "uk-out", cabinOut: false, cabinIn: false,
     note: "Gatwick does NOT permit cabin pets on departing flights.",
-    arrivalNote: "No airline flies cabin pets INTO the UK — Gatwick included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel. Plan the arrival leg around that.",
+    arrivalNote: "No airline flies cabin pets INTO the UK — Gatwick included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel.",
     // driveTo: a nearby airport that DOES work — the planner shows this as the
     // top-priority advice (driving an hour beats flying the pet to Europe).
     driveTo: { code: "LHR", text: "Heathrow is roughly an hour away by road — it's the same London area, and it's the UK's main cabin-pet departure airport. Driving there is far simpler than any workaround." } },
@@ -10245,15 +10245,19 @@ function JourneyPlanner() {
               );
             })()}
 
-            {/* No direct route, but a workaround exists — explain it clearly */}
+            {/* No direct route, but a workaround exists — one clear card.
+                If the destination also has a cabin-arrival warning (UK, etc.)
+                that explanation is merged in here rather than shown as a
+                separate stacked block, to avoid repeating "no direct route". */}
             {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
               <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
-                <p className="text-stone-300 text-sm leading-relaxed">
-                  <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
-                </p>
-                {destCabinWarning && (
-                  <p className="text-stone-400 text-sm leading-relaxed mt-3 pt-3 border-t border-stone-700">
-                    {destCabinWarning}
+                {destCabinWarning ? (
+                  <p className="text-stone-300 text-sm leading-relaxed">
+                    <strong className="text-stone-100">No direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> {destCabinWarning} But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
+                  </p>
+                ) : (
+                  <p className="text-stone-300 text-sm leading-relaxed">
+                    <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
                   </p>
                 )}
               </div>

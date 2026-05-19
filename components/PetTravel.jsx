@@ -2402,12 +2402,31 @@ const FALLBACK_STRATEGIES = {
   // honest "a direct cabin flight exists — confirm the airline for your
   // exact airports" route. It is a SAFETY NET: specific hand-written direct
   // routes always take priority and render with the real airline named.
-  "cabin-direct": (o, d) => ({
-    legs: [
-      { route: `${o} → ${d}`, time: "direct flight", airline: "Cabin pets accepted — confirm the limit with the operating airline" },
-    ],
-    note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact fee, carrier-size limit and number of pet spaces differ between airlines, check those details with whichever carrier you book and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
-  }),
+  "cabin-direct": (o, d, oRegion, dRegion) => {
+    // Same-region European hop vs a long-haul corridor need different honest
+    // estimates. Every card must still show a time and a carrier, even when
+    // the exact airport pair isn't hand-written — so give a sensible band
+    // and the real set of cabin-friendly carriers for that corridor.
+    const isIntraEurope = oRegion === "europe" && dRegion === "europe";
+    const transatlantic =
+      (["us", "canada"].includes(oRegion) && ["europe"].includes(dRegion)) ||
+      (["europe"].includes(oRegion) && ["us", "canada"].includes(dRegion));
+    let time, airline;
+    if (isIntraEurope) {
+      time = "~1h–3h 30m (short-haul)";
+      airline = "Lufthansa Group, Air France-KLM, Iberia or Vueling ✓ Cabin (≤ 8 kg)";
+    } else if (transatlantic) {
+      time = "~7h–11h (long-haul)";
+      airline = "Lufthansa, Air France-KLM, United or American ✓ Cabin (≤ 8 kg)";
+    } else {
+      time = "direct flight — varies by route";
+      airline = "Mainstream carriers ✓ Cabin (≤ 8 kg) — confirm with the operating airline";
+    }
+    return {
+      legs: [{ route: `${o} → ${d}`, time, airline }],
+      note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
+    };
+  },
   // Any destination = Hawaii
   "hawaii": (o, d) => ({
     legs: [
@@ -2738,7 +2757,9 @@ function strategiesFor(originRegion, destRegion) {
   {
     const CABIN_DIRECT_REGIONS = new Set(["us", "canada", "europe", "dubai", "india", "uk-out", "caribbean"]);
     if (CABIN_DIRECT_REGIONS.has(originRegion) && CABIN_DIRECT_REGIONS.has(destRegion)) {
-      return [FALLBACK_STRATEGIES["cabin-direct"]];
+      // Wrap so the region-aware fallback receives the regions even though the
+      // strategy invoker only passes (origin, destination) labels.
+      return [(o, d) => FALLBACK_STRATEGIES["cabin-direct"](o, d, originRegion, destRegion)];
     }
   }
   return [];

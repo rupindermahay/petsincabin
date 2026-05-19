@@ -6229,10 +6229,10 @@ function NavBar({ onStartIntake }) {
               Three rows: two section-link rows, then the flagship UK-guide
               link flush beneath them — part of the nav block, not a banner. */}
           <div className="flex-1 flex flex-col justify-center">
-            <div className="flex flex-wrap items-center justify-between gap-x-3 border-b border-stone-100">
+            <div className="flex items-center justify-between border-b border-stone-100">
               {row1.map((s) => <NavItem key={s.id} s={s} />)}
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-x-3 border-b border-stone-100">
+            <div className="flex items-center justify-between border-b border-stone-100">
               {row2.map((s) => <NavItem key={s.id} s={s} />)}
               <NavLink href="/usda-endorsement-guide" label="USDA endorsement" mark="✦" />
               <NavGuidesDropdown />

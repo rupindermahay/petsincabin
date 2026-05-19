@@ -11841,15 +11841,20 @@ function Gear() {
               versions — and is the safe default if you're unsure.
             </p>
             <div className="flex flex-wrap gap-3">
+              <a href="https://www.amazon.com/dp/B0002YHWAU" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-sherpa-deluxe")}
+                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+                Sherpa Original Deluxe →
+              </a>
               <a href="https://amzn.eu/d/05rKHmmt" target="_blank" rel="noopener noreferrer"
                  onClick={() => trackOut("gear", "carrier-1")}
                  className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                Carrier option one →
+                Carrier option two →
               </a>
               <a href="https://amzn.eu/d/08Vyy4qB" target="_blank" rel="noopener noreferrer"
                  onClick={() => trackOut("gear", "carrier-2")}
                  className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                Carrier option two →
+                Carrier option three →
               </a>
             </div>
           </div>

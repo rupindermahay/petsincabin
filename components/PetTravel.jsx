@@ -6012,7 +6012,7 @@ const NAV_SECTIONS = [
   { id: "tips", label: "Tips", num: "VII" },
   { id: "travel-day", label: "Airport day", num: "★" },
   { id: "gear", label: "Travel gear", num: "VIII" },
-  { id: "operators", label: "Operators", num: "IX" },
+  { id: "operators", label: "Pet taxis, jets & cargo", num: "IX" },
   { id: "stories", label: "Stories", num: "✻" },
   { id: "contact", label: "Contact", num: "X" },
   { id: "about", label: "About", num: "✦" },

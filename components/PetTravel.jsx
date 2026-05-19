@@ -306,7 +306,7 @@ const AIRLINES = [
     notes: "Under-rated cabin option for long-haul. Flies UK → Warsaw → onward to USA, India, China, Japan — all legs cabin-friendly. One of the cheapest international cabin fees on the market (€70 to USA). Reserve by phone or via Manage My Booking.",
     intl: "Yes (most routes)",
     verified: "May 2026",
-    link: "https://www.lot.com/uk/en/travelling-with-pets",
+    link: "https://www.lot.com/uk/en/journey/special-services/traveling-with-pets",
   },
   {
     name: "SWISS",
@@ -548,7 +548,7 @@ const AIRLINES = [
     notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo.",
     intl: "Yes (extensive network)",
     verified: "May 2026",
-    link: "https://www.koreanair.com/us/en/airport/assistance/travel-with-pet/checklist",
+    link: "https://www.koreanair.com/contents/plan-your-travel/special-assistance/travel-with-pets",
   },
   {
     name: "T'Way Air",

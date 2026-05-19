@@ -329,7 +329,7 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "us", "longhaul"],
     cabin: "Cabin OUT of UK ✓ — best for UK → Portugal",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK/Ireland government rule).",
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO the UK (cargo only — UK government rule). Ireland is not the UK and has no such ban, but TAP's own cabin position for Dublin isn't clearly confirmed — check directly if you need it.",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     fee: "€75 short-haul · €200 long-haul (US, Brazil)",
@@ -844,7 +844,6 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM BARCELONA ═══════
   { from: "Barcelona (BCN)", to: "Madrid (MAD)", duration: "1h 10m", note: "Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain).", tags: ["europe"] },
-  { from: "Barcelona (BCN)", to: "Paris (CDG)", duration: "1h 55m", note: "Vueling / Air France. ✓ Cabin (under 8 kg). BCN is a strong Vueling hub — one of the best European cabin options.", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "Amsterdam (AMS)", duration: "2h 20m", note: "Vueling / KLM. ✓ Cabin (under 8 kg).", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "Frankfurt (FRA)", duration: "2h 20m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "New York (JFK)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150 to Americas). Barcelona's own transatlantic cabin route — a good alternative to Madrid for US-bound travel.", tags: ["us", "europe"] },
@@ -3069,8 +3068,8 @@ const CHECKLIST_DATA = {
         items: [
           "ISO 11784/11785 microchip implanted (must be before the rabies vaccine)",
           "Rabies vaccination — must be ≥21 days before entry to Ireland",
-          "If inbound to Ireland: pets cannot fly in cabin — plan the France→Ireland ferry, the UK landbridge, or cargo",
-          "If outbound from Ireland: book your cabin pet slot with Aer Lingus or an EU carrier",
+          "If inbound to Ireland: cabin pets can fly in on Iberia (Madrid → Dublin) or KLM (Amsterdam → Dublin) — otherwise plan the France→Ireland ferry, the UK landbridge, or cargo",
+          "If outbound from Ireland: book your cabin pet slot with an EU carrier (KLM, Iberia, Air France or Lufthansa) — note Aer Lingus and Ryanair do not take cabin pets",
           "Book your ferry (Irish Ferries / Brittany Ferries) well in advance — pet cabins sell out",
         ],
       },

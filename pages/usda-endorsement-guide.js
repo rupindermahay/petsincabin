@@ -83,15 +83,15 @@ export default function USDAEndorsementGuide() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              If you have been reading Reddit threads or Facebook groups, you have seen the horror stories: certificates not delivered in time, owners getting paperwork endorsed while standing at the airport, packages lost in transit. Those posts are real — but the context they leave out is genuinely calming.
+              If you have been reading Reddit threads or Facebook groups, you have seen the horror stories: certificates not delivered in time, owners getting paperwork endorsed while standing at the airport, packages lost in transit. Those posts are real — and they happen because the endorsement genuinely has to be done <em>before</em> you fly, and USDA processing takes time. So this is the one step to plan early.
             </p>
 
             <div className="bg-stone-900 text-stone-100 p-5 rounded-sm mb-4">
               <p className="font-serif text-base leading-relaxed mb-2">
-                For the UK and the EU, the endorsement does <em>not</em> have to happen before you fly.
+                The endorsed certificate must be in your hand before you travel — it flies with the pet.
               </p>
               <p className="font-sans text-sm text-stone-300 leading-relaxed">
-                The non-commercial UK/EU health certificate is valid for 30 days from when your vet signs it, and the endorsement only has to land inside a generous window — for the UK, within 10 days of your pet <em>arriving</em>. So a certificate endorsed close to your flight, or even sorted shortly after arrival, is usually not the disaster the panicked posts suggest.
+                USDA APHIS is explicit: the endorsed, ink-signed and embossed health certificate must accompany your pet during travel. You cannot fly with an un-endorsed certificate and sort the endorsement after arrival. The "10 days" you may have read about is not a grace period — it is an expiry clock: once APHIS endorses the certificate, your pet must <em>arrive</em> in the UK within 10 days. The certificate is also valid for only 30 days from your vet's signature. So the order is fixed: vet signs it, USDA endorses it, then you fly — and you must leave enough time for the endorsement to come back.
               </p>
             </div>
 
@@ -202,7 +202,7 @@ export default function USDAEndorsementGuide() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The relaxed one — non-commercial pet travel.</strong> The typical family flying with their own pet, not selling or transferring it. For the UK, the certificate just has to be endorsed within 10 days of your pet <em>arriving</em>. The EU works the same way — the pet must arrive within 10 days of the endorsement date. The certificate is valid for 30 days from your vet's signature. That is comfortable room. A certificate endorsed the day before your flight is normal, not a crisis.
+              <strong>The relaxed one — non-commercial pet travel.</strong> The typical family flying with their own pet, not selling or transferring it. For the UK, once APHIS endorses the certificate your pet must <em>arrive</em> within 10 days — the EU works exactly the same way. The certificate is also valid for 30 days from your vet's signature. So the endorsement still has to be done before you fly, but the timing around it is workable: a certificate endorsed a few days before your flight is normal. The key is to leave enough time for USDA to process and return it — do not assume it is instant.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

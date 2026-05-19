@@ -580,7 +580,7 @@ const AIRLINES = [
     notes: "Aeromexico is one of the very few airlines that allows cabin pets on flights to Japan (alongside United for US routes and Korean carriers for Korea routes). MEX ↔ NRT direct is the Pacific cabin pet route via Mexico. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo.",
     intl: "Yes",
     verified: "May 2026",
-    link: "https://aeromexico.com/en-us/help-center/general-questions/special-traveler/pets",
+    link: "https://www.aeromexico.com/en-us/travel-information/pets-in-cabin",
   },
 ];
 

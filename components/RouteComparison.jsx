@@ -262,29 +262,28 @@ const ROUTES = [
     id: "dublin-ferry",
     origin: "Dublin",
     name: "Via Dublin — fly in, then the Holyhead ferry",
-    sub: "Cabin flight into Dublin (e.g. Iberia from Madrid) → Dublin–Holyhead ferry → Britain",
+    sub: "Cabin flight into Dublin (Iberia from Madrid or KLM from Amsterdam) → Dublin–Holyhead ferry → Britain",
     timeHeadline: "~5–7h + the flight",
     timeLegs: [
-      "Cabin flight into Dublin — Iberia carries cabin pets Madrid → Dublin",
+      "Cabin flight into Dublin — Iberia (from Madrid) or KLM (from Amsterdam)",
       "Dublin port transfer + ferry check-in ~1.5–2h",
       "Dublin → Holyhead ferry ~3h 15m (Irish Ferries / Stena Line)",
-      "Arrive Holyhead, Wales — continue overland",
-      "No car needed — foot passengers with a pet carrier are accepted",
+      "Arrive Holyhead in Wales — continue overland by road or rail",
     ],
     driveCost: null,
     driveNA:
-      "this route is a flight plus a scheduled ferry — there is no self-drive leg, no car, fuel or Eurotunnel ticket to budget",
+      "this route is a flight plus a scheduled ferry — there is no self-drive leg, so no car, fuel or Eurotunnel ticket to budget",
     driveTotal: null,
     taxiCost: [
-      "Cabin flight into Dublin — fare varies; pet fee ~€50 on Iberia from Madrid",
-      "Dublin → Holyhead ferry — pet travels free or for a small fee in a kennel, pet cabin or your vehicle",
-      "Foot-passenger ferry ticket ~£20–£45 per person",
+      "Ferry ticket — foot passenger ~£31–£60 per person one way (cheapest if booked early, midweek, off-peak)",
+      "Pet on the ferry — ~£17–£35 per pet (kennel; foot passengers must book the kennel, or the Irish Ferries Pet Den at ~€20)",
+      "Cabin flight into Dublin — separate booking; the pet fee is roughly €50 on Iberia or KLM, plus your own fare",
     ],
-    taxiTotal: "≈ £25–£95 for the ferry leg — plus your cabin flight into Dublin",
+    taxiTotal: "≈ £50–£95 for the ferry leg (one person + one pet) — plus the cabin flight into Dublin",
     costType: "ferry",
     taxiCaption:
-      "this covers only the Dublin → Holyhead ferry leg — the cabin flight into Dublin is a separate booking and its own cost; uniquely, this route puts your pet in the cabin for the flight rather than a Channel crossing by car",
-    sortCost: 60,
+      "the ferry figure is one person and one pet, one way. The cabin flight into Dublin is booked and paid separately. Pets under about 10 kg can travel in a carrier with you; larger dogs go in the ship's kennel.",
+    sortCost: 75,
     sortTime: 6,
     isEurotunnel: false,
     hasPetTaxi: true,
@@ -316,6 +315,15 @@ const CROSSING_FILTERS = [
 ];
 
 const ALL_FILTERS = [...ORIGIN_FILTERS, ...CROSSING_FILTERS];
+
+// The second cost column adapts to what the route's secondary cost actually
+// is: a private pet taxi, a scheduled shuttle, or a flight-plus-ferry. Using
+// the wrong word (e.g. "pet taxi" on a flight+ferry route) is misleading.
+function costLabel(costType) {
+  if (costType === "shuttle") return "shuttle";
+  if (costType === "ferry") return "flight + ferry";
+  return "pet taxi";
+}
 
 export default function RouteComparison() {
   const [sort, setSort] = useState("default");
@@ -475,7 +483,7 @@ export default function RouteComparison() {
                 )}
 
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">
-                  Cost — {r.costType === "shuttle" ? "shuttle" : "pet taxi"}
+                  Cost — {costLabel(r.costType)}
                 </div>
                 {r.taxiNA ? (
                   <div className="text-sm text-stone-500 italic">
@@ -592,7 +600,7 @@ export default function RouteComparison() {
                       ) : r.taxiCost ? (
                         <>
                           <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                            {r.costType === "shuttle" ? "Shuttle" : "Pet taxi"}
+                            {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
                           </span>
                           {r.taxiCost.map((c, i) => (
                             <span

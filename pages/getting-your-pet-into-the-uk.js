@@ -425,8 +425,17 @@ export default function GettingYourPetIntoTheUK() {
               But it is worth being clear about direction. That ferry connects Great Britain and Ireland — it is not a route <em>into</em> the UK from continental Europe. If your destination is the Republic of Ireland, the cleanest way in is the direct France→Ireland ferry (Cherbourg or Roscoff to Rosslare or Dublin), which skips Great Britain altogether. The Holyhead–Dublin ferry only becomes relevant as an <em>onward</em> leg — for example, a pet that has come into Great Britain by one of the routes above and is then continuing to Ireland.
             </p>
 
+            <div className="bg-amber-50 border-l-2 border-amber-500 p-5 mb-4">
+              <p className="font-serif text-stone-800 leading-relaxed text-sm mb-2">
+                <strong>Flown your pet into Dublin and now need Britain?</strong>
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed text-sm">
+                The same crossing works in reverse, and it is a genuinely useful route. If your pet has flown in-cabin into Dublin — Iberia carries cabin pets Madrid → Dublin, for instance — you can reach Britain by taking the <strong>Dublin → Holyhead ferry</strong> (Irish Ferries or Stena Line, about 3 hours 15 minutes), then continuing overland. Pets travel free or for a small fee in a kennel, pet-friendly cabin or your vehicle, and foot passengers with a pet in a rigid carrier are accepted — so no car is needed. Into Britain a dog needs an AHC, a GB pet health certificate, or a valid EU/NI pet passport with current rabies vaccination, plus tapeworm treatment 24–120 hours before arrival. In effect, a cabin flight into Dublin plus this ferry is a back route into Britain when no in-cabin flight into the UK exists.
+              </p>
+            </div>
+
             <p className="font-serif text-stone-700 leading-relaxed">
-              One thing that surprises people: getting a pet into Ireland by air runs into the same wall as the UK — no airline currently offers a cabin-pet service on flights into Ireland. Unlike the UK, that is not a legal ban (the Irish authorities do not object to cabin pets); it is simply that no carrier runs the service. Either way, a pet bound for Ireland comes in by sea or as cargo. If Ireland is your destination, the dedicated Ireland section of the main guide covers it properly.
+              One thing worth knowing: Ireland is not the UK. Cabin pets <em>can</em> fly into Ireland — Iberia runs a cabin-pet service on Madrid → Dublin — though beyond that one route the direct cabin options are few, so for most departure cities a pet bound for Ireland still comes in by sea (or as cargo). If Ireland is your destination, the dedicated Ireland section of the main guide covers it properly.
             </p>
           </section>
 

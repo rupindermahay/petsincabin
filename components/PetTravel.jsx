@@ -11942,9 +11942,9 @@ function Operators() {
               </p>
               <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
                 As a real example, when I enquired they quoted roughly £780 plus
-                the Channel crossing for a Paris (CDG-area) to Surrey trip with two
-                passengers, four suitcases and one dog. That was the quote at the
-                time — prices change, so get your own.
+                the Channel crossing for a door-to-door trip from the Paris area
+                into the UK. That was the quote at the time — prices change with
+                distance, your pet and the season, so get your own.
               </p>
             </div>
             <div className="bg-white border border-stone-200 rounded-sm p-4">
@@ -11958,18 +11958,18 @@ function Operators() {
               </p>
               <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
                 As a real example, when I enquired they quoted roughly £685 plus
-                the Channel crossing for the same Paris (CDG-area) to Surrey trip —
-                two passengers, four suitcases and one dog. With the crossing around
-                £300 at the time, that came to about £985 one way. That was the quote
-                at the time — prices change, so get your own.
+                the Channel crossing for the same door-to-door trip from the Paris
+                area into the UK. With the crossing around £300 at the time, that
+                came to about £985 one way. That was the quote at the time — prices
+                change with distance, your pet and the season, so get your own.
               </p>
             </div>
           </div>
         </div>
 
         <div>
-          <h3 className="font-serif text-2xl text-stone-900 mb-1">Shared pet jet flights — pay per seat</h3>
-          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Shared international pet jet flights — pay per seat</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-4">
             These services fly your pet in the cabin with no carrier and no size
             limit — ideal for a large dog that can't fly cabin commercially. They are
             not whole-plane private charters: you buy a seat, not the aircraft, and
@@ -11977,24 +11977,48 @@ function Operators() {
             if your dog is anxious or reactive around other animals). As a rough
             guide, a seat from the US to the UK or Paris typically runs <strong>around
             $8,000–$11,000</strong> — confirm the current fare directly, as it varies
-            with route, date and demand. Operators I contacted:
+            with route, date and demand. Route networks change often, so always check
+            the operator's site for what's flying now. Operators I contacted:
           </p>
-          <div className="flex flex-wrap gap-3">
-            <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"
-               onClick={() => trackOut("pet-jet", "Bark Air")}
-               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-              Bark Air →
-            </a>
-            <a href="https://www.k9jets.com/" target="_blank" rel="noopener noreferrer"
-               onClick={() => trackOut("pet-jet", "K9 Jets")}
-               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-              K9 Jets →
-            </a>
-            <a href="https://www.vicunaair.com/" target="_blank" rel="noopener noreferrer"
-               onClick={() => trackOut("pet-jet", "Vicuna Air")}
-               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-              Vicuna Air →
-            </a>
+          <div className="space-y-3">
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "Bark Air")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                Bark Air →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Dog-focused service with a strong North America–Europe network.
+                Popular routes include New York to London, Paris, Lisbon and Madrid,
+                plus US domestic hops; new European routes to Dublin, Stockholm,
+                Athens and Berlin are being added through 2026.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.k9jets.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "K9 Jets")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                K9 Jets →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Transatlantic focus, built around the US–UK corridor. Popular routes
+                include New Jersey to the London area, plus Paris, Lisbon and Milan,
+                and Canadian links from Toronto and Vancouver.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.vicunaair.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "Vicuna Air")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                Vicuna Air →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Offers a supervised solo option, where a trained concierge travels
+                with your pet if you can't. Popular routes cover London, New York,
+                Los Angeles, San Francisco, Paris and Dubai, with Milan, Frankfurt
+                and Toronto listed as coming soon.
+              </p>
+            </div>
           </div>
         </div>
 

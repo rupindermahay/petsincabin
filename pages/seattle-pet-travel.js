@@ -176,7 +176,7 @@ export default function SeattlePetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Eurotunnel pet booking:</strong> 18€ each way for pets, advance booking required (don't show up without one). Pet stays in your car for the 35-minute crossing.
+              <strong>Eurotunnel pet booking:</strong> from around £24 per pet each way, advance booking required (don't show up without one). Pet stays in your car for the 35-minute crossing.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">

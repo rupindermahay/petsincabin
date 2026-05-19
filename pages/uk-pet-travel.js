@@ -97,7 +97,7 @@ export default function UKPetTravel() {
               Fly into Paris (CDG) in the cabin — Air France, KLM, Lufthansa or another EU carrier will all take a pet in the cabin to Paris. Then a pet taxi or rental car from Paris to Calais, around three hours. Cross the Channel on <strong>Eurotunnel Le Shuttle</strong> from Calais to Folkestone: your pet stays in the car with you for the 35-minute crossing. Drive on into London. This is the route most savvy owners use, and the one most UK pet importers will quote you.
             </p>
             <div className="text-sm text-stone-500 border-t border-stone-100 pt-3">
-              <strong className="text-stone-700">Rough cost:</strong> Eurotunnel £25–£60 per pet · pet taxi Paris–Calais £300–£600 · plan a full day, 8–10 hours door to door.
+              <strong className="text-stone-700">Rough cost:</strong> Eurotunnel pet fee from ~£24 per pet each way (the vehicle ticket is separate, roughly £115–£229 one way for the car) · pet taxi Paris–Calais £300–£600 · plan a full day, 8–10 hours door to door.
             </div>
           </div>
 

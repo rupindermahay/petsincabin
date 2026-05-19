@@ -225,7 +225,7 @@ export default function GettingYourPetIntoTheUK() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1">From France</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Calais–Dover and Dunkerque–Dover are the short crossings (DFDS, P&O, Irish Ferries) — your pet stays in the car. Longer Brittany Ferries crossings from western France carry pets too: Caen–Portsmouth, Cherbourg–Poole, Cherbourg–Plymouth, Cherbourg–Portsmouth, Roscoff–Plymouth and St Malo–Portsmouth. Dieppe–Newhaven (DFDS) is a useful mid-length option. Brittany Ferries pet fares start from around £35 each way.
+                  Calais–Dover and Dunkerque–Dover are the short crossings (DFDS, P&O, Irish Ferries) — your pet stays in the car, and the pet fee is modest, around £15–£22 per pet each way on top of the vehicle fare. Longer Brittany Ferries crossings from western France carry pets too: Caen–Portsmouth, Cherbourg–Poole, Cherbourg–Plymouth, Cherbourg–Portsmouth, Roscoff–Plymouth and St Malo–Portsmouth. Dieppe–Newhaven (DFDS) is a useful mid-length option. Brittany Ferries pet fares on these France routes start from around £35 each way.
                 </p>
               </div>
               <div>

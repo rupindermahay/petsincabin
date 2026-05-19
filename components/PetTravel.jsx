@@ -11958,16 +11958,18 @@ function Operators() {
 
         <div>
           <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
-            Private pet-jet charter — the premium option
+            Shared pet jet flights — pay per seat
           </div>
           <p className="text-stone-600 text-sm leading-relaxed mb-3">
-            If cost is genuinely no object, private pet-jet charters fly your pet in
-            the cabin with no carrier and no size limit. As a rough guide, a seat
-            from the US to the UK or Paris typically runs <strong>around
-            $8,000–$11,000</strong> — confirm the current fare directly, as it
-            varies with route, date and demand. For almost everyone, the cabin and
-            ferry routes in this guide are the practical answer. Operators I
-            contacted:
+            These services fly your pet in the cabin with no carrier and no size
+            limit — ideal for a large dog that can't fly cabin commercially. They are
+            not whole-plane private charters: you buy a seat, not the aircraft, and
+            you share the flight with other pet owners and their pets (worth knowing
+            if your dog is anxious or reactive around other animals). As a rough
+            guide, a seat from the US to the UK or Paris typically runs <strong>around
+            $8,000–$11,000</strong> — confirm the current fare directly, as it varies
+            with route, date and demand. For almost everyone, the cabin and ferry
+            routes in this guide are the practical answer. Operators I contacted:
           </p>
           <div className="flex flex-wrap gap-3">
             <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"

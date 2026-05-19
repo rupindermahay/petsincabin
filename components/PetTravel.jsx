@@ -6000,21 +6000,27 @@ function SectionLabel({ children, num }) {
 
 const NAV_SECTIONS = [
   { id: "top", label: "Home", num: "" },
+  // Start — first questions, personalised tools
   { id: "intake", label: "Can my pet fly?", num: "I" },
   { id: "planner", label: "Journey planner", num: "✦" },
-  { id: "airlines", label: "Airlines", num: "II" },
-  { id: "routes", label: "Routes", num: "III" },
-  { id: "destinations", label: "Difficult destinations", num: "IV" },
+  { id: "timeline", label: "Timeline & checklist", num: "II" },
+  // Research — compare and choose
+  { id: "airlines", label: "Airlines", num: "III" },
+  { id: "routes", label: "Routes", num: "IV" },
   { id: "quarantine", label: "Quarantine", num: "⚠" },
-  { id: "timeline", label: "Timeline & checklist", num: "V" },
+  { id: "destinations", label: "Difficult destinations", num: "V" },
+  // Prepare — paperwork and tips
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
-  { id: "travel-day", label: "Airport day", num: "★" },
+  // Travel — final mile
   { id: "gear", label: "Travel gear", num: "VIII" },
+  { id: "travel-day", label: "Airport day", num: "★" },
+  // Last resort
   { id: "operators", label: "Pet Jets & Cargo", num: "IX" },
+  // Connect
   { id: "stories", label: "Stories", num: "✻" },
-  { id: "contact", label: "Contact", num: "X" },
   { id: "about", label: "About", num: "✦" },
+  { id: "contact", label: "Contact", num: "X" },
 ];
 
 function NavBar({ onStartIntake }) {
@@ -6940,7 +6946,7 @@ function Assessment({ answers, onReset }) {
   return (
     <section ref={sectionRef} id="assessment-result" className="py-20 px-6 md:px-12 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="II.">Your assessment</SectionLabel>
+        <SectionLabel num="✦">Your assessment</SectionLabel>
 
         <div className="bg-stone-50 border border-stone-300 mb-12">
           {/* TOP: Trip summary + restart */}
@@ -7626,7 +7632,7 @@ function DifficultDestinations() {
   return (
     <section id="destinations" className="py-20 px-6 md:px-12 bg-stone-100 border-t border-stone-300">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="IV.">Difficult destinations</SectionLabel>
+        <SectionLabel num="V.">Difficult destinations</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           Where the rules get strange — and how clever owners get through.
@@ -9084,7 +9090,7 @@ function Checklist() {
   return (
     <section id="timeline" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="V.">The timeline</SectionLabel>
+        <SectionLabel num="II.">The timeline</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           What to do, and when.
@@ -12336,7 +12342,7 @@ function Contact() {
   return (
     <section id="contact" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-3xl mx-auto">
-        <SectionLabel num="VIII.">Get in touch</SectionLabel>
+        <SectionLabel num="X.">Get in touch</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-6 leading-tight">
           Got a question? Ask me anything.

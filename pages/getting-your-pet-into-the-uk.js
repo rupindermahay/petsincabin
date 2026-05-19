@@ -40,7 +40,7 @@ export default function GettingYourPetIntoTheUK() {
           </div>
         </nav>
 
-        <main className="max-w-2xl mx-auto px-6 py-8 md:py-12">
+        <main className="max-w-4xl mx-auto px-6 py-8 md:py-12">
           <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
             The complete guide
           </div>

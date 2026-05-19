@@ -628,24 +628,24 @@ export default function RouteComparison() {
             </table>
           </div>
 
-          {/* Tapeworm timing note — these routes are multi-leg and often
-              start with an international flight. The UK/Ireland tapeworm
-              rule is time-and-place specific, so a pet owner who had the
-              treatment done at origin (outside Europe) can still be caught
-              out. Worth flagging right next to the routes. */}
+          {/* Tapeworm timing note — these routes end in Britain or Ireland,
+              where the tapeworm rule is window-specific. Framed calmly: a
+              well-planned trip fits the window; the European vet is a
+              backup, not the expected step. */}
           <div className="mt-5 bg-amber-50 border border-amber-200 rounded-sm p-4">
             <div className="font-sans text-[11px] uppercase tracking-[0.12em] text-amber-700 font-semibold mb-1">
-              One timing rule that catches people out
+              One timing rule worth planning around
             </div>
             <p className="text-sm text-stone-700 leading-relaxed">
-              Every route here ends in Britain or Ireland, and a dog must have
-              a tapeworm treatment recorded by a vet <strong>24–120 hours
-              before arrival</strong> — not before, not after. If your dog flew
-              in from outside Europe, a treatment given by your vet back home
-              almost certainly falls outside that window, so you will usually
-              need a second treatment from a vet in Europe before the crossing.
-              Cats are exempt. Use the tapeworm timing calculator on the main
-              guide to check your window.
+              Every route here ends in Britain or Ireland, where a dog needs a
+              tapeworm treatment recorded by a vet <strong>24–120 hours before
+              arrival</strong>. That window is a comfortable two days wide, so
+              for most trips it is easily met — have the treatment done shortly
+              before you travel and you will usually be well inside it. If your
+              schedule shifts and the timing slips, the simple fix is a quick
+              top-up treatment from a vet in Europe before the crossing. Cats
+              are exempt. The tapeworm timing calculator on the main guide
+              works out your exact window.
             </p>
           </div>
         </>

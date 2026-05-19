@@ -1729,6 +1729,7 @@ const AIRPORTS = [
   { code: "SFO", city: "San Francisco", region: "us", cabinOut: true, cabinIn: true },
   { code: "SEA", city: "Seattle", region: "us", cabinOut: true, cabinIn: true,
     note: "Seattle-Tacoma (SEA) is Alaska Airlines' hub. Cabin pets are easy for domestic and limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). For India, Europe, or UK there's no direct cabin pet route — connect via SFO (Air India to/from India), or via FRA/AMS/CDG (Lufthansa/KLM/Air France to Europe and onward to India). The terminal has post-security pet relief areas at Concourse B and the International Arrivals Facility, plus four pre-security pet potty locations." },
+  { code: "IAH", city: "Houston", region: "us", cabinOut: true, cabinIn: true, note: "Houston George Bush Intercontinental (IAH) is a major United hub with strong cabin-pet links into Latin America — Avianca and others fly cabin pets onward to South America." },
   // Canada
   { code: "YYZ", city: "Toronto", region: "canada", cabinOut: true, cabinIn: true },
   { code: "YUL", city: "Montreal", region: "canada", cabinOut: true, cabinIn: true },
@@ -1756,6 +1757,9 @@ const AIRPORTS = [
   { code: "BRU", city: "Brussels", region: "europe", cabinOut: true, cabinIn: true, note: "Brussels Airlines hub (Lufthansa Group). Belgium follows EU pet passport rules — no tapeworm requirement." },
   { code: "MXP", city: "Milan Malpensa", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Italy's main international airport. Italy follows EU pet passport rules — no tapeworm requirement. Served for cabin pets by ITA Airways and the Lufthansa Group carriers." },
   { code: "GVA", city: "Geneva", region: "europe", cabinOut: true, cabinIn: true, note: "SWISS hub. Switzerland follows EU-aligned pet rules — no tapeworm requirement. A short cabin hop to most West-European hubs." },
+  { code: "IST", city: "Istanbul", region: "europe", cabinOut: true, cabinIn: true, note: "Turkish Airlines hub — a strong connection point between Asia, Europe and the Americas. Pet rooms at the airport include a pet toilet, useful on layovers. Türkiye follows its own pet import rules — check requirements for an actual stop versus a transit." },
+  { code: "OPO", city: "Porto", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Portugal's main airport, served by TAP Air Portugal. Portugal follows EU pet passport rules — no tapeworm requirement." },
+  { code: "WAW", city: "Warsaw", region: "europe", cabinOut: true, cabinIn: true, note: "LOT Polish Airlines hub. LOT has one of the lowest cabin-pet fees on the market, making Warsaw a cost-effective connection point. Poland follows EU pet passport rules — no tapeworm requirement." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
@@ -1775,9 +1779,12 @@ const AIRPORTS = [
   { code: "SDQ", city: "Santo Domingo, Dominican Republic", region: "caribbean", cabinOut: true, cabinIn: true, note: "The DR is on the CDC high-risk rabies list — US travellers must prepare the return paperwork BEFORE leaving the US." },
   // Hawaii
   { code: "HNL", city: "Honolulu", region: "hawaii", cabinOut: true, cabinIn: true, note: "Honolulu is the only animal port of entry for Hawaii. Hawaii's rabies-free import programme needs 4+ months of prep." },
+  { code: "OGG", city: "Kahului — Maui", region: "hawaii", cabinOut: true, cabinIn: true, note: "Maui's main airport. Pets entering Hawaii still clear animal inspection at Honolulu first — Kahului is reached on an inter-island cabin hop after that." },
   // South Africa
   { code: "JNB", city: "Johannesburg", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
   { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+  { code: "DUR", city: "Durban", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
+  { code: "GRJ", city: "George", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
   // South America — LATAM and Avianca are the primary cabin pet carriers (both 10kg combined limit, brachycephalic excluded from cargo). Aeromexico provides Mexico ↔ SA connections.
   { code: "GRU", city: "São Paulo Guarulhos", region: "south-america", cabinOut: true, cabinIn: true, note: "São Paulo Guarulhos (GRU) is South America's largest hub. LATAM is the primary cabin pet carrier (10 kg combined). Brazil's entry rules are relatively lenient: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, no microchip or titer required for most origin countries." },
   { code: "EZE", city: "Buenos Aires Ezeiza", region: "south-america", cabinOut: true, cabinIn: true, note: "Buenos Aires Ezeiza (EZE) is Argentina's main international airport. LATAM and Aerolineas Argentinas serve cabin pets. Argentina requires ISO microchip, rabies vaccine, SENASA-endorsed health certificate, and import permit." },

@@ -1232,6 +1232,24 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "SWISS (≤ 8 kg, soft carrier ≤ 55×40×23 cm) and Air France (≤ 8 kg, carrier ≤ 46×28×24 cm) both fly cabin pets on this short hop. Reserve the pet's place at booking.",
     tags: ["europe"],
   },
+  {
+    from: "Berlin (BER)", to: "Frankfurt (FRA)", duration: "1h 15m",
+    legs: [{ route: "Berlin (BER) → Frankfurt (FRA)", time: "1h 15m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets on this domestic German hop (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). Note that easyJet and Ryanair, also frequent on this route, do not take cabin pets.",
+    tags: ["europe"],
+  },
+  {
+    from: "Berlin (BER)", to: "Munich (MUC)", duration: "1h 10m",
+    legs: [{ route: "Berlin (BER) → Munich (MUC)", time: "1h 10m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets Berlin–Munich (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). Munich is a strong hub for onward cabin connections.",
+    tags: ["europe"],
+  },
+  {
+    from: "London (LHR)", to: "Berlin (BER)", duration: "1h 55m",
+    legs: [{ route: "London (LHR) → Berlin (BER)", time: "1h 55m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets OUT of the UK to Berlin (≤ 8 kg incl. carrier, register at least 72 hours ahead). Remember the cabin ban is on flights INTO the UK — leaving the UK in the cabin is fine.",
+    tags: ["uk-out", "europe"],
+  },
 
   // UK → USA via Europe (cabin all the way)
   {
@@ -1759,6 +1777,7 @@ const AIRPORTS = [
   { code: "IST", city: "Istanbul", region: "europe", cabinOut: true, cabinIn: true, note: "Turkish Airlines hub — a strong connection point between Asia, Europe and the Americas. Pet rooms at the airport include a pet toilet, useful on layovers. Türkiye follows its own pet import rules — check requirements for an actual stop versus a transit." },
   { code: "OPO", city: "Porto", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Portugal's main airport, served by TAP Air Portugal. Portugal follows EU pet passport rules — no tapeworm requirement." },
   { code: "WAW", city: "Warsaw", region: "europe", cabinOut: true, cabinIn: true, note: "LOT Polish Airlines hub. LOT has one of the lowest cabin-pet fees on the market, making Warsaw a cost-effective connection point. Poland follows EU pet passport rules — no tapeworm requirement." },
+  { code: "BER", city: "Berlin", region: "europe", cabinOut: true, cabinIn: true, note: "Berlin Brandenburg (BER) is served for cabin pets by Lufthansa and Eurowings (note: easyJet and Ryanair, also big at BER, do NOT carry cabin pets — assistance dogs only). Germany follows EU pet passport rules — no tapeworm requirement. A well-connected hub for onward cabin travel across Europe." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },

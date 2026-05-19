@@ -1065,7 +1065,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "Madrid (MAD) → Dublin (DUB)", time: "2h 45m", airline: "Iberia ✓ Cabin (under 8 kg incl. carrier)" },
     ],
-    note: "One of the two confirmed cabin-pet routes INTO Ireland — Ireland is not the UK and does allow cabin pets. Carrier max 45 × 35 × 25 cm. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia at least 48 hours ahead.",
+    note: "Carrier max 45 × 35 × 25 cm, pet plus carrier under 8 kg. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival in Ireland. Book the pet's cabin space via Iberia at least 48 hours ahead — spaces per flight are limited.",
     tags: ["europe", "ireland"],
   },
   {
@@ -1085,9 +1085,155 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "Amsterdam (AMS) → Dublin (DUB)", time: "1h 50m", airline: "KLM ✓ Cabin (under 8 kg incl. carrier)" },
     ],
-    note: "The other confirmed cabin route into Ireland. Carrier max 46 × 28 × 24 cm. KLM's own site lists no Ireland ban and travellers report flying it — book the pet via My Trip and confirm when adding it. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Make sure it's an actual KLM flight, not a codeshare.",
+    note: "Carrier max 46 × 28 × 24 cm, pet plus carrier under 8 kg. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival in Ireland. Book the pet via KLM's My Trip after booking and confirm when adding it. Make sure it's an actual KLM-operated flight, not a codeshare.",
     tags: ["europe", "ireland"],
   },
+  // UK → USA via Europe (cabin all the way)
+  // ─── Major intra-European cabin corridors — single-flight, written with the
+  //     real carriers that serve each pair. Structured as legs so they render
+  //     in the rich layout and promote into the "Direct cabin route" section.
+  //     Carrier facts verified May 2026: Lufthansa Group 8 kg / 55×40×23 cm;
+  //     Vueling 8 kg / 45×39×21 cm; Air France-KLM 8 kg / 46×28×24 cm;
+  //     Iberia 8 kg / 45×35×25 cm. All cabin pet + carrier ≤ 8 kg combined. ───
+  {
+    from: "Barcelona (BCN)", to: "Munich (MUC)", duration: "2h",
+    legs: [{ route: "Barcelona (BCN) → Munich (MUC)", time: "2h", airline: "Lufthansa / Vueling ✓ Cabin" }],
+    note: "A well-served cabin corridor. Lufthansa (pet + carrier ≤ 8 kg, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead) and Vueling (≤ 8 kg, soft carrier ≤ 45×39×21 cm) both fly it. Reserve the pet's place when you book — cabin spots per flight are capped.",
+    tags: ["europe"],
+  },
+  {
+    from: "Madrid (MAD)", to: "Frankfurt (FRA)", duration: "2h 50m",
+    legs: [{ route: "Madrid (MAD) → Frankfurt (FRA)", time: "2h 50m", airline: "Lufthansa / Iberia ✓ Cabin" }],
+    note: "Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) and Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) both carry cabin pets on this hub-to-hub route. Book the pet's space early.",
+    tags: ["europe"],
+  },
+  {
+    from: "Paris (CDG)", to: "Rome (FCO)", duration: "2h 10m",
+    legs: [{ route: "Paris (CDG) → Rome (FCO)", time: "2h 10m", airline: "Air France / ITA Airways ✓ Cabin" }],
+    note: "Air France (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and ITA Airways (≤ 8 kg) both take cabin pets Paris–Rome. Reserve the pet when booking; spaces are limited.",
+    tags: ["europe"],
+  },
+  {
+    from: "Amsterdam (AMS)", to: "Madrid (MAD)", duration: "2h 40m",
+    legs: [{ route: "Amsterdam (AMS) → Madrid (MAD)", time: "2h 40m", airline: "KLM / Iberia ✓ Cabin" }],
+    note: "KLM (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) both fly cabin pets on this route. Book the pet's place at the same time as your ticket.",
+    tags: ["europe"],
+  },
+  {
+    from: "Frankfurt (FRA)", to: "Milan (MXP)", duration: "1h 25m",
+    legs: [{ route: "Frankfurt (FRA) → Milan (MXP)", time: "1h 25m", airline: "Lufthansa / ITA Airways ✓ Cabin" }],
+    note: "A short hop well covered for cabin pets. Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) and ITA Airways (≤ 8 kg) both serve it.",
+    tags: ["europe"],
+  },
+  {
+    from: "Paris (CDG)", to: "Barcelona (BCN)", duration: "1h 50m",
+    legs: [{ route: "Paris (CDG) → Barcelona (BCN)", time: "1h 50m", airline: "Air France / Vueling ✓ Cabin" }],
+    note: "Air France (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and Vueling (≤ 8 kg, soft carrier ≤ 45×39×21 cm) both carry cabin pets Paris–Barcelona. Vueling also flies it from Paris Orly. Reserve the pet's space early.",
+    tags: ["europe"],
+  },
+  {
+    from: "Munich (MUC)", to: "Lisbon (LIS)", duration: "3h",
+    legs: [{ route: "Munich (MUC) → Lisbon (LIS)", time: "3h", airline: "Lufthansa / TAP Air Portugal ✓ Cabin" }],
+    note: "Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) and TAP Air Portugal (≤ 8 kg) both take cabin pets on this route. Book the pet when you book your seat.",
+    tags: ["europe"],
+  },
+  {
+    from: "Zurich (ZRH)", to: "Paris (CDG)", duration: "1h 20m",
+    legs: [{ route: "Zurich (ZRH) → Paris (CDG)", time: "1h 20m", airline: "SWISS / Air France ✓ Cabin" }],
+    note: "SWISS (≤ 8 kg, soft carrier ≤ 55×40×23 cm) and Air France (≤ 8 kg, carrier ≤ 46×28×24 cm) both fly cabin pets on this short hop. Reserve the pet's place at booking.",
+    tags: ["europe"],
+  },
+  {
+    from: "Vienna (VIE)", to: "Frankfurt (FRA)", duration: "1h 25m",
+    legs: [{ route: "Vienna (VIE) → Frankfurt (FRA)", time: "1h 25m", airline: "Austrian Airlines / Lufthansa ✓ Cabin" }],
+    note: "Austrian Airlines and Lufthansa — both Lufthansa Group, same pet rules (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). A frequent, well-served corridor.",
+    tags: ["europe"],
+  },
+  {
+    from: "Madrid (MAD)", to: "Paris (CDG)", duration: "2h 5m",
+    legs: [{ route: "Madrid (MAD) → Paris (CDG)", time: "2h 5m", airline: "Air France / Iberia / Vueling ✓ Cabin" }],
+    note: "One of Europe's busiest cabin-pet corridors. Air France (≤ 8 kg, carrier ≤ 46×28×24 cm), Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) and Vueling (≤ 8 kg, carrier ≤ 45×39×21 cm) all fly it. Book the pet's space early — spots per flight are capped.",
+    tags: ["europe"],
+  },
+  {
+    from: "Lisbon (LIS)", to: "Madrid (MAD)", duration: "1h 20m",
+    legs: [{ route: "Lisbon (LIS) → Madrid (MAD)", time: "1h 20m", airline: "TAP Air Portugal / Iberia ✓ Cabin" }],
+    note: "TAP Air Portugal (≤ 8 kg) and Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) both carry cabin pets on this short Iberian hop. Reserve the pet when booking.",
+    tags: ["europe"],
+  },
+  {
+    from: "Amsterdam (AMS)", to: "Rome (FCO)", duration: "2h 35m",
+    legs: [{ route: "Amsterdam (AMS) → Rome (FCO)", time: "2h 35m", airline: "KLM / ITA Airways ✓ Cabin" }],
+    note: "KLM (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and ITA Airways (≤ 8 kg) both take cabin pets Amsterdam–Rome. Book the pet's place at the same time as your ticket.",
+    tags: ["europe"],
+  },
+  {
+    from: "Brussels (BRU)", to: "Frankfurt (FRA)", duration: "1h 5m",
+    legs: [{ route: "Brussels (BRU) → Frankfurt (FRA)", time: "1h 5m", airline: "Brussels Airlines / Lufthansa ✓ Cabin" }],
+    note: "Brussels Airlines and Lufthansa — both Lufthansa Group, same pet rules (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). A short, frequent corridor.",
+    tags: ["europe"],
+  },
+  {
+    from: "Paris (CDG)", to: "Lisbon (LIS)", duration: "2h 40m",
+    legs: [{ route: "Paris (CDG) → Lisbon (LIS)", time: "2h 40m", airline: "Air France / TAP Air Portugal ✓ Cabin" }],
+    note: "Air France (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and TAP Air Portugal (≤ 8 kg) both carry cabin pets Paris–Lisbon. Reserve the pet's place when you book.",
+    tags: ["europe"],
+  },
+  {
+    from: "Frankfurt (FRA)", to: "Vienna (VIE)", duration: "1h 25m",
+    legs: [{ route: "Frankfurt (FRA) → Vienna (VIE)", time: "1h 25m", airline: "Lufthansa / Austrian Airlines ✓ Cabin" }],
+    note: "Lufthansa and Austrian Airlines — both Lufthansa Group, same pet rules (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). The return of a frequent hub corridor.",
+    tags: ["europe"],
+  },
+  {
+    from: "Munich (MUC)", to: "Madrid (MAD)", duration: "2h 45m",
+    legs: [{ route: "Munich (MUC) → Madrid (MAD)", time: "2h 45m", airline: "Lufthansa / Iberia ✓ Cabin" }],
+    note: "Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) and Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) both carry cabin pets on this route. Book the pet's space early.",
+    tags: ["europe"],
+  },
+  {
+    from: "Copenhagen (CPH)", to: "Frankfurt (FRA)", duration: "1h 40m",
+    legs: [{ route: "Copenhagen (CPH) → Frankfurt (FRA)", time: "1h 40m", airline: "Lufthansa / SAS ✓ Cabin" }],
+    note: "Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) and SAS (≤ 8 kg incl. carrier) both fly cabin pets Copenhagen–Frankfurt. Reserve the pet's place when booking.",
+    tags: ["europe"],
+  },
+  {
+    from: "Zurich (ZRH)", to: "Frankfurt (FRA)", duration: "1h",
+    legs: [{ route: "Zurich (ZRH) → Frankfurt (FRA)", time: "1h", airline: "SWISS / Lufthansa ✓ Cabin" }],
+    note: "SWISS and Lufthansa — both Lufthansa Group, same pet rules (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). A very short, very frequent hop.",
+    tags: ["europe"],
+  },
+  {
+    from: "Paris (CDG)", to: "Munich (MUC)", duration: "1h 40m",
+    legs: [{ route: "Paris (CDG) → Munich (MUC)", time: "1h 40m", airline: "Air France / Lufthansa ✓ Cabin" }],
+    note: "Air France (≤ 8 kg, soft carrier ≤ 46×28×24 cm) and Lufthansa (≤ 8 kg, carrier ≤ 55×40×23 cm, register 72 hours ahead) both serve this hub-to-hub route. Book the pet's space early.",
+    tags: ["europe"],
+  },
+  {
+    from: "Barcelona (BCN)", to: "Paris (CDG)", duration: "1h 55m",
+    legs: [{ route: "Barcelona (BCN) → Paris (CDG)", time: "1h 55m", airline: "Vueling / Air France ✓ Cabin" }],
+    note: "Vueling (≤ 8 kg, soft carrier ≤ 45×39×21 cm) and Air France (≤ 8 kg, carrier ≤ 46×28×24 cm) both carry cabin pets on this busy route. Reserve the pet's place when you book.",
+    tags: ["europe"],
+  },
+  {
+    from: "Vienna (VIE)", to: "Zurich (ZRH)", duration: "1h 20m",
+    legs: [{ route: "Vienna (VIE) → Zurich (ZRH)", time: "1h 20m", airline: "Austrian Airlines / SWISS ✓ Cabin" }],
+    note: "Austrian Airlines and SWISS — both Lufthansa Group, same pet rules (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead).",
+    tags: ["europe"],
+  },
+  {
+    from: "Rome (FCO)", to: "Madrid (MAD)", duration: "2h 25m",
+    legs: [{ route: "Rome (FCO) → Madrid (MAD)", time: "2h 25m", airline: "ITA Airways / Iberia ✓ Cabin" }],
+    note: "ITA Airways (≤ 8 kg) and Iberia (≤ 8 kg, carrier ≤ 45×35×25 cm) both take cabin pets Rome–Madrid. Book the pet when booking your seat.",
+    tags: ["europe"],
+  },
+  {
+    from: "Geneva (GVA)", to: "Paris (CDG)", duration: "1h 15m",
+    legs: [{ route: "Geneva (GVA) → Paris (CDG)", time: "1h 15m", airline: "SWISS / Air France ✓ Cabin" }],
+    note: "SWISS (≤ 8 kg, soft carrier ≤ 55×40×23 cm) and Air France (≤ 8 kg, carrier ≤ 46×28×24 cm) both fly cabin pets on this short hop. Reserve the pet's place at booking.",
+    tags: ["europe"],
+  },
+
   // UK → USA via Europe (cabin all the way)
   {
     from: "London (LHR)",
@@ -1606,6 +1752,10 @@ const AIRPORTS = [
   { code: "OSL", city: "Oslo", region: "europe", cabinOut: true, cabinIn: true, note: "Oslo Gardermoen is Norway's ONLY airport approved for pet entry (the only other pet entry point is the Storskog land border in the north). SAS hub. Norway is in the EEA — follows EU pet passport rules but with extras for dogs: tapeworm treatment 24-120 hours before entry (Echinococcus multilocularis), and seven dog breeds are banned including Pit Bull and wolf hybrids." },
   { code: "CPH", city: "Copenhagen", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Denmark follows EU pet passport rules — no tapeworm requirement (unlike Norway/Finland/Ireland/Malta). Strong cabin pet connectivity across Europe and to the US." },
   { code: "ARN", city: "Stockholm Arlanda", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Sweden follows EU pet passport rules. Pet movement Sweden↔Norway specifically doesn't require a rabies vaccine (bilateral arrangement)." },
+  { code: "VIE", city: "Vienna", region: "europe", cabinOut: true, cabinIn: true, note: "Austrian Airlines hub (Lufthansa Group). Austria follows EU pet passport rules — no tapeworm requirement. Strong cabin pet connectivity across Europe." },
+  { code: "BRU", city: "Brussels", region: "europe", cabinOut: true, cabinIn: true, note: "Brussels Airlines hub (Lufthansa Group). Belgium follows EU pet passport rules — no tapeworm requirement." },
+  { code: "MXP", city: "Milan Malpensa", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Italy's main international airport. Italy follows EU pet passport rules — no tapeworm requirement. Served for cabin pets by ITA Airways and the Lufthansa Group carriers." },
+  { code: "GVA", city: "Geneva", region: "europe", cabinOut: true, cabinIn: true, note: "SWISS hub. Switzerland follows EU-aligned pet rules — no tapeworm requirement. A short cabin hop to most West-European hubs." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
@@ -2254,9 +2404,9 @@ const FALLBACK_STRATEGIES = {
   // routes always take priority and render with the real airline named.
   "cabin-direct": (o, d) => ({
     legs: [
-      { route: `${o} → ${d}`, time: "direct flight — varies by route", airline: "Cabin available — confirm with the operating airline" },
+      { route: `${o} → ${d}`, time: "direct flight", airline: "Cabin pets accepted — confirm the limit with the operating airline" },
     ],
-    note: `This is a well-served corridor for cabin pets — major carriers fly it and accept small dogs and cats in the cabin (typically under 8 kg including the carrier). We may not have your exact airport pair written up with a named airline yet, so confirm cabin availability and the weight limit directly with the airline when you book. Reserve the pet's place early — cabin pet spots per flight are limited.`,
+    note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact fee, carrier-size limit and number of pet spaces differ between airlines, check those details with whichever carrier you book and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
   }),
   // Any destination = Hawaii
   "hawaii": (o, d) => ({

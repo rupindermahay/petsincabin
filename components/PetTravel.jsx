@@ -6868,7 +6868,7 @@ const DESTINATIONS = [
         title: "The Paris Pivot",
         icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
         body: "Fly into Paris (CDG) in cabin on Air France, KLM, Lufthansa or another EU carrier. Take a pet taxi or rental car from Paris to Calais (~3 hours). Cross the Channel via Eurotunnel Le Shuttle from Calais to Folkestone — your pet stays in the car with you for the 35-minute crossing. Drive on to London. This is the route most savvy owners use.",
-        cost: "Eurotunnel: £25–£60 per pet · Pet taxi Paris–Calais: £300–£600 · Total day: 8–10 hours.",
+        cost: "Eurotunnel pet fee: from ~£24 per pet each way (the vehicle ticket is separate — roughly £115–£229 one way for the car) · Pet taxi Paris–Calais: £300–£600 · Total day: 8–10 hours.",
       },
       {
         title: "The Ferry Route",
@@ -7020,7 +7020,7 @@ const DESTINATIONS = [
         title: "UK landbridge: Eurotunnel + Holyhead ferry",
         icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
         body: "The alternative: fly cabin into Paris, Eurotunnel into the UK, drive across to Holyhead in Wales, then the short ferry (Irish Ferries / Stena Line) to Dublin. More legs than the direct France route, but the individual crossings are shorter and there are more daily sailings. Note you transit the UK, so UK pet rules apply on that leg too.",
-        cost: "Eurotunnel £25–£60 + Holyhead–Dublin ferry €40–€120 per pet.",
+        cost: "Eurotunnel pet fee from ~£24 per pet each way (vehicle ticket separate) + Holyhead–Dublin ferry €40–€120 per pet.",
       },
       {
         title: "Cabin OUT of Ireland is straightforward",
@@ -7158,7 +7158,7 @@ const DESTINATIONS = [
         title: "Eurotunnel Le Shuttle (the UK exit standard)",
         icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
         body: "The most popular UK ↔ Europe option. Drive your car onto the train at Folkestone, your pet stays in the car with you for the 35-minute crossing, drive off at Calais. Eurotunnel has a dedicated Pet Reception where checks happen before boarding (not on arrival). Around 10% of Eurotunnel passengers travel with pets — it's pet-normal.",
-        cost: "£25–£60 per pet (one-way).",
+        cost: "Pet fee from ~£24 per pet each way (the vehicle ticket is separate — roughly £115–£229 one way for the car).",
       },
       {
         title: "Pet-friendly ferries (UK ↔ Europe)",

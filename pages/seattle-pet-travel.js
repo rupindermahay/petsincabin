@@ -157,7 +157,7 @@ export default function SeattlePetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The US is not on the EU rabies high-risk list, so paperwork is straightforward — just one endorsed health certificate plus the rabies/microchip basics.
+              The US is not on the EU rabies high-risk list, so paperwork is straightforward — just one endorsed health certificate plus the rabies/microchip basics. New to the endorsement step? Our <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">USDA endorsement guide</Link> explains exactly what it is, the deadlines that apply, and the prepaid return label — including why the forum horror stories are less alarming than they look.
             </p>
           </section>
 

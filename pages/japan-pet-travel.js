@@ -152,6 +152,9 @@ export default function JapanPetTravel() {
             <p className="font-serif text-stone-700 leading-relaxed">
               <strong>The single most common mistake</strong> is arriving before Day 180. Your pet will be detained at an AQS facility for the remaining days, at your expense (~$25/day plus transport and vet visits). Build a buffer — book your flight for Day 190+ if you can.
             </p>
+            <p className="font-serif text-stone-700 leading-relaxed mt-4">
+              The "USDA APHIS endorsement" line above trips people up — it is the step where USDA reviews and stamps the certificate your vet issues. Our <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">USDA endorsement guide</Link> walks through how it works, the prepaid return label, and how to keep it from becoming a last-minute scramble.
+            </p>
           </section>
 
           {/* FAVN */}

@@ -11923,9 +11923,13 @@ function Operators() {
         </p>
 
         <div className="mb-10">
-          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-3">
-            Pet taxis — door-to-door road transport
-          </div>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Pet taxis — door-to-door road transport</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-4">
+            Pet-taxi fares are quoted per journey, not per person, and depend on
+            distance, the number of passengers and bags, and your pet. The Channel
+            crossing is usually charged on top. Always get your own written quote —
+            figures move with season and route.
+          </p>
           <div className="space-y-3">
             <div className="bg-white border border-stone-200 rounded-sm p-4">
               <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
@@ -11934,8 +11938,13 @@ function Operators() {
                 ElitePetTaxi →
               </a>
               <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                Door-to-door pet transport across the UK and Europe. Get a written
-                quote for your specific journey.
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £780 plus
+                the Channel crossing for a Paris (CDG-area) to Surrey trip with two
+                passengers, four suitcases and one dog. That was the quote at the
+                time — prices change, so get your own.
               </p>
             </div>
             <div className="bg-white border border-stone-200 rounded-sm p-4">
@@ -11945,26 +11954,21 @@ function Operators() {
                 PetMoves Abroad →
               </a>
               <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                Door-to-door pet transport for international moves. Get a written
-                quote for your specific journey.
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £685 plus
+                the Channel crossing for the same Paris (CDG-area) to Surrey trip —
+                two passengers, four suitcases and one dog. With the crossing around
+                £300 at the time, that came to about £985 one way. That was the quote
+                at the time — prices change, so get your own.
               </p>
             </div>
           </div>
-          <p className="text-stone-500 text-sm leading-relaxed mt-3 italic">
-            What to expect on price: pet-taxi fares are quoted per journey, not per
-            person, and depend on distance, the number of passengers and bags, and
-            your pet. As a real example, a Paris (CDG-area) to Surrey trip for two
-            passengers, four suitcases and one dog was quoted at roughly £785 plus
-            the Channel crossing — with the crossing around £300 at the time, about
-            £1,085 one way. Always get your own written quote; figures move with
-            season and route.
-          </p>
         </div>
 
         <div>
-          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
-            Shared pet jet flights — pay per seat
-          </div>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Shared pet jet flights — pay per seat</h3>
           <p className="text-stone-600 text-sm leading-relaxed mb-3">
             These services fly your pet in the cabin with no carrier and no size
             limit — ideal for a large dog that can't fly cabin commercially. They are
@@ -11973,8 +11977,7 @@ function Operators() {
             if your dog is anxious or reactive around other animals). As a rough
             guide, a seat from the US to the UK or Paris typically runs <strong>around
             $8,000–$11,000</strong> — confirm the current fare directly, as it varies
-            with route, date and demand. For almost everyone, the cabin and ferry
-            routes in this guide are the practical answer. Operators I contacted:
+            with route, date and demand. Operators I contacted:
           </p>
           <div className="flex flex-wrap gap-3">
             <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"
@@ -11996,9 +11999,7 @@ function Operators() {
         </div>
 
         <div className="mt-10">
-          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
-            Manifested cargo — when a route is cargo-only
-          </div>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Manifested cargo — when a route is cargo-only</h3>
           <p className="text-stone-600 text-sm leading-relaxed mb-3">
             Some journeys are cargo-only whatever you do — every pet flying into the
             UK, for example, or a dog too large for any cabin. Pets travel in a

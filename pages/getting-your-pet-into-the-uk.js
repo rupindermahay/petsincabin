@@ -374,37 +374,28 @@ export default function GettingYourPetIntoTheUK() {
             </p>
           </section>
 
-          {/* USDA endorsement */}
+          {/* USDA endorsement — black box, matching the CTA weighting */}
           <section id="usda" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">10 · If your pet is leaving the US</div>
-            <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              The USDA endorsement step — less scary than the forums suggest
-            </h2>
-            <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              If your journey starts in the United States, there is one extra step — and a lot of unnecessary panic around it.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              A pet flying out of the US needs its health certificate <em>endorsed</em> — reviewed and stamped — by USDA APHIS. Reddit and Facebook are full of worried posts about certificates not arriving in time, or being endorsed at the airport. The context those posts leave out is reassuring: for the UK, the endorsement does <strong>not</strong> have to happen before you fly. The non-commercial UK health certificate must be endorsed within 10 days of your pet <em>arriving</em> in the UK, and is valid for 30 days from your vet's signature. The tight 48-hour deadline people quote applies to <em>commercial</em> movements — not a typical family flying with their own pet.
-            </p>
-
-            <div className="bg-amber-50 border-l-2 border-amber-500 p-4 mb-6">
-              <p className="font-serif text-stone-800 leading-relaxed text-sm mb-2">
-                <strong>The two things that actually cause delays.</strong>
+            <div className="bg-stone-900 text-stone-50 rounded-sm p-7 md:p-9">
+              <div className="text-xs uppercase tracking-[0.25em] text-amber-400 mb-3">
+                10 · If your pet is leaving the US
+              </div>
+              <h2 className="font-serif text-2xl md:text-3xl mb-3 leading-tight">
+                The USDA endorsement step — less scary than the forums suggest
+              </h2>
+              <p className="font-serif text-stone-300 leading-relaxed mb-4">
+                A pet flying out of the US needs its health certificate <em>endorsed</em> — reviewed and stamped — by USDA APHIS. Reddit and Facebook are full of worried posts about certificates not arriving in time, or being endorsed at the airport. The reassuring part those posts leave out: for the UK, the endorsement does <strong className="text-stone-100">not</strong> have to happen before you fly. The non-commercial UK health certificate must be endorsed within 10 days of your pet <em>arriving</em> in the UK, and is valid for 30 days from your vet's signature. The tight 48-hour deadline people quote applies to <em>commercial</em> movements — not a typical family flying with their own pet.
               </p>
-              <p className="font-serif text-stone-700 leading-relaxed text-sm">
-                First, paperwork errors — an incorrect certificate gets bounced back for correction, and that round trip eats the days, not USDA's review. Second, the return shipping label: if your destination needs a physical embossed certificate, you must supply a prepaid, trackable courier label so the stamped document can be posted back to you — with your own address in both the sender and recipient fields, and no USDA address on it. Get those two right and endorsement becomes the routine administrative step it should be.
+              <p className="font-serif text-stone-300 leading-relaxed mb-6">
+                Two things actually cause the delays. First, paperwork errors — an incorrect certificate gets bounced back for correction, and that round trip eats the days, not USDA's review. Second, the return shipping label: if your destination needs a physical embossed certificate, you must supply a prepaid, trackable courier label so the stamped document can be posted back to you, with your own address in both the sender and recipient fields and no USDA address on it. Get those two right and endorsement becomes the routine administrative step it should be.
               </p>
+              <Link
+                href="/usda-endorsement-guide"
+                className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white font-serif text-base px-6 py-3 rounded-sm transition-colors"
+              >
+                Read the full USDA endorsement guide →
+              </Link>
             </div>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-2">
-              This is a genuinely important step that catches people out — so we have written it up in full, including a proper walkthrough of that return label and what the forum horror stories actually mean.
-            </p>
-            <ul className="font-serif text-stone-700 leading-relaxed mb-2 space-y-1.5 ml-5 list-disc">
-              <li>
-                <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">The USDA endorsement guide</Link> — the full deep-dive: where endorsement sits, the VEHCS colour banners, the deadlines, and the prepaid return label explained step by step.
-              </li>
-            </ul>
           </section>
 
           {/* Ireland note */}

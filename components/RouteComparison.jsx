@@ -90,6 +90,13 @@ const ROUTES = [
       "Excess luggage £75/bag pre-booked (£100 on the day) — one 23 kg bag is included",
     ],
     taxiTotal: "≈ £230–£300 total, one person + one pet",
+    // This route's secondary cost is a scheduled shuttle, not a private pet
+    // taxi — costType drives the column label. taxiCaption overrides the
+    // default "crossing ticket is extra" note, since the £195 already
+    // includes the Eurotunnel crossing.
+    costType: "shuttle",
+    taxiCaption:
+      "the £195 shuttle fare already includes the Eurotunnel crossing — the train fare and any excess luggage are the variable extras",
     sortCost: 230,
     sortTime: 5,
     isEurotunnel: true,
@@ -251,6 +258,38 @@ const ROUTES = [
     hasPetTaxi: false,
     isFerrySea: true,
   },
+  {
+    id: "dublin-ferry",
+    origin: "Dublin",
+    name: "Via Dublin — fly in, then the Holyhead ferry",
+    sub: "Cabin flight into Dublin (e.g. Iberia from Madrid) → Dublin–Holyhead ferry → Britain",
+    timeHeadline: "~5–7h + the flight",
+    timeLegs: [
+      "Cabin flight into Dublin — Iberia carries cabin pets Madrid → Dublin",
+      "Dublin port transfer + ferry check-in ~1.5–2h",
+      "Dublin → Holyhead ferry ~3h 15m (Irish Ferries / Stena Line)",
+      "Arrive Holyhead, Wales — continue overland",
+      "No car needed — foot passengers with a pet carrier are accepted",
+    ],
+    driveCost: null,
+    driveNA:
+      "this route is a flight plus a scheduled ferry — there is no self-drive leg, no car, fuel or Eurotunnel ticket to budget",
+    driveTotal: null,
+    taxiCost: [
+      "Cabin flight into Dublin — fare varies; pet fee ~€50 on Iberia from Madrid",
+      "Dublin → Holyhead ferry — pet travels free or for a small fee in a kennel, pet cabin or your vehicle",
+      "Foot-passenger ferry ticket ~£20–£45 per person",
+    ],
+    taxiTotal: "≈ £25–£95 for the ferry leg — plus your cabin flight into Dublin",
+    costType: "ferry",
+    taxiCaption:
+      "this covers only the Dublin → Holyhead ferry leg — the cabin flight into Dublin is a separate booking and its own cost; uniquely, this route puts your pet in the cabin for the flight rather than a Channel crossing by car",
+    sortCost: 60,
+    sortTime: 6,
+    isEurotunnel: false,
+    hasPetTaxi: true,
+    isFerrySea: true,
+  },
 ];
 
 const SORTS = [
@@ -267,11 +306,12 @@ const ORIGIN_FILTERS = [
   { id: "o-amsterdam", label: "Amsterdam", test: (r) => r.origin === "Amsterdam" },
   { id: "o-spain", label: "Spain", test: (r) => r.origin === "Spain" },
   { id: "o-ny", label: "New York", test: (r) => r.origin === "New York" },
+  { id: "o-dublin", label: "Dublin", test: (r) => r.origin === "Dublin" },
 ];
 
 const CROSSING_FILTERS = [
   { id: "eurotunnel", label: "Eurotunnel only", test: (r) => r.isEurotunnel },
-  { id: "petTaxi", label: "Pet taxi", test: (r) => r.hasPetTaxi },
+  { id: "petTaxi", label: "Pet taxi / shuttle", test: (r) => r.hasPetTaxi },
   { id: "ferrySea", label: "Ferry / sea only", test: (r) => r.isFerrySea },
 ];
 
@@ -435,7 +475,7 @@ export default function RouteComparison() {
                 )}
 
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">
-                  Cost — pet taxi
+                  Cost — {r.costType === "shuttle" ? "shuttle" : "pet taxi"}
                 </div>
                 {r.taxiNA ? (
                   <div className="text-sm text-stone-500 italic">
@@ -452,8 +492,8 @@ export default function RouteComparison() {
                       {r.taxiTotal}
                     </div>
                     <div className="text-xs text-stone-500">
-                      the crossing ticket is extra on top of the pet-taxi fare,
-                      and its price changes daily — treat the total as a guide
+                      {r.taxiCaption ||
+                        "the crossing ticket is extra on top of the pet-taxi fare, and its price changes daily — treat the total as a guide"}
                     </div>
                   </>
                 ) : (
@@ -484,7 +524,7 @@ export default function RouteComparison() {
                     Cost — self-drive
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
-                    Cost — pet taxi
+                    Cost — pet taxi / shuttle
                   </th>
                 </tr>
               </thead>
@@ -551,6 +591,9 @@ export default function RouteComparison() {
                         </span>
                       ) : r.taxiCost ? (
                         <>
+                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                            {r.costType === "shuttle" ? "Shuttle" : "Pet taxi"}
+                          </span>
                           {r.taxiCost.map((c, i) => (
                             <span
                               key={i}

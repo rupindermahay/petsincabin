@@ -256,6 +256,16 @@ export default function RouteComparison() {
       prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
     );
 
+  // Single-select toggle for a group: picking a filter clears any other
+  // selection from the SAME group, so only one can be active at a time.
+  // Tapping the active one again clears it.
+  const selectSingle = (id, group) =>
+    setActiveFilters((prev) => {
+      const groupIds = group.map((f) => f.id);
+      const withoutGroup = prev.filter((f) => !groupIds.includes(f));
+      return prev.includes(id) ? withoutGroup : [...withoutGroup, id];
+    });
+
   // Group-aware filtering. Within a group (e.g. origins) selections are OR —
   // "Paris or Frankfurt". Across groups they're AND — "(Paris or Frankfurt)
   // AND ferry". A group with nothing selected imposes no constraint.
@@ -280,7 +290,8 @@ export default function RouteComparison() {
   const btnOff =
     "bg-white text-stone-600 border-stone-300 hover:border-stone-500";
 
-  const FilterRow = ({ label, group }) => (
+  // `single` groups (departure point) allow only one active filter at a time.
+  const FilterRow = ({ label, group, single }) => (
     <div className="flex flex-wrap items-center gap-2">
       <span className="font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mr-1 w-full sm:w-auto">
         {label}
@@ -289,7 +300,9 @@ export default function RouteComparison() {
         <button
           key={f.id}
           type="button"
-          onClick={() => toggleFilter(f.id)}
+          onClick={() =>
+            single ? selectSingle(f.id, group) : toggleFilter(f.id)
+          }
           aria-pressed={activeFilters.includes(f.id)}
           className={`${btnBase} ${
             activeFilters.includes(f.id) ? btnOn : btnOff
@@ -322,8 +335,8 @@ export default function RouteComparison() {
             </button>
           ))}
         </div>
-        <FilterRow label="Departure point" group={ORIGIN_FILTERS} />
-        <FilterRow label="Crossing" group={CROSSING_FILTERS} />
+        <FilterRow label="Filter by departure point" group={ORIGIN_FILTERS} single />
+        <FilterRow label="Filter by crossing" group={CROSSING_FILTERS} />
         {activeFilters.length > 0 && (
           <button
             type="button"

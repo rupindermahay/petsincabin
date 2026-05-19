@@ -1141,7 +1141,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
       { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive to Calais and cross the Channel. Two approved crossings run Calais → UK — the Eurotunnel Le Shuttle (35 min, pet stays in your car, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, pet stays in the car or, on P&O, a bookable Pet Lounge; ~£15 per pet). Both are UK-government-approved pet routes — pick whichever suits. Works from any major US gateway with cabin pets to Paris (JFK, BOS, ORD, MIA, LAX).",
+    note: "There's no cabin pet flight INTO the UK from anywhere (UK government rule, all airlines). The standard workaround: fly cabin to Paris, then drive to Calais and cross the Channel. Two approved crossings run Calais → UK — the Eurotunnel Le Shuttle (35 min, pet stays in your car, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, pet stays in the car or, on P&O, a bookable Pet Lounge; ~£15 per pet). Both are UK-government-approved pet routes — pick whichever suits. Works from any major US gateway with cabin pets to Paris (JFK, BOS, ORD, MIA, LAX).",
     tags: ["us", "uk-out", "europe"],
   },
   {
@@ -1153,7 +1153,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
       { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "If you're already in Europe (Paris, Amsterdam, Brussels) crossing the Channel by land is by far the easiest way to bring your pet INTO the UK. From Calais you have two UK-government-approved crossings: the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays in the car either way. The same workflow applies departing from AMS or BRU (just a longer drive to Calais).",
+    note: "If you're already in Europe (Paris, Amsterdam, Brussels) crossing the Channel by land is by far the easiest way to bring your pet INTO the UK. From Calais you have two UK-government-approved crossings: the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays in the car either way. The same workflow applies departing from AMS or BRU (just a longer drive to Calais).",
     tags: ["europe", "uk-out"],
   },
   // USA → UK via Amsterdam (KLM hub + direct Amsterdam–Newcastle ferry — no
@@ -1168,7 +1168,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Ferry: DFDS overnight, Amsterdam → Newcastle", time: "~17h", airline: "Pet in a pet-friendly cabin or onboard kennel" },
       { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
     ],
-    note: "An alternative to the Paris route, and a documented way US owners move pets to the UK in cabin. Fly cabin to Amsterdam on KLM (or Delta), then take the DFDS overnight ferry from Amsterdam (IJmuiden) directly to Newcastle — a UK-government-approved pet route. The big advantage: no drive through Belgium and France, and DFDS takes foot passengers with pets, so you don't need a car. Book a pet-friendly cabin so your dog is with you (~£19+ per pet; cabins limited — book early). It lands you in the north of England, so it suits Scotland or northern England better than London. Dogs still need the tapeworm treatment 24–120h before arrival.",
+    note: "An alternative to the Paris route, and a documented way US owners move pets to the UK in cabin. Fly cabin to Amsterdam on KLM (or Delta), then take the DFDS overnight ferry from Amsterdam (IJmuiden) directly to Newcastle — a UK-government-approved pet route. The big advantage: no drive through Belgium and France, and DFDS takes foot passengers with pets, so you don't need a car. Book a pet-friendly cabin so your dog is with you (~£30 per pet each way; cabins limited — book early). It lands you in the north of England, so it suits Scotland or northern England better than London. Dogs still need the tapeworm treatment 24–120h before arrival.",
     tags: ["us", "uk-out", "europe"],
   },
   // USA → UAE (no direct cabin to UAE — go via Europe to Abu Dhabi)
@@ -1258,7 +1258,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "CDG → Calais (drive/taxi)", time: "2h 30m", airline: "Pet stays with you" },
       { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — Calais → UK, then drive to London", time: "2h–3h", airline: "Pet in car" },
     ],
-    note: "There's no cabin pet flight INTO the UK from anywhere. From the Caribbean: route via the US (Miami or JFK), then transatlantic cabin to Paris, then cross the Channel. From Calais you can use either the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet) — both are UK-government-approved pet routes, pet stays in the car. Long but workable. For Bahamas + Jamaica (CDC NOT high-risk), no extra US re-entry paperwork. For Dominican Republic (CDC high-risk), the Certification of US-issued Rabies Vaccination form must have been obtained BEFORE you left the US originally.",
+    note: "There's no cabin pet flight INTO the UK from anywhere. From the Caribbean: route via the US (Miami or JFK), then transatlantic cabin to Paris, then cross the Channel. From Calais you can use either the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet) — both are UK-government-approved pet routes, pet stays in the car. Long but workable. For Bahamas + Jamaica (CDC NOT high-risk), no extra US re-entry paperwork. For Dominican Republic (CDC high-risk), the Certification of US-issued Rabies Vaccination form must have been obtained BEFORE you left the US originally.",
     tags: ["caribbean", "uk-out", "us", "europe"],
   },
   // Caribbean → Europe workaround
@@ -1285,7 +1285,7 @@ const WORKAROUND_ROUTES_TABLE = [
       { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
       { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
     ],
-    note: "Air Canada does NOT allow cabin pets on flights to the UK (UK is on their no-cabin list, like the UK government rule for all airlines). The workaround: fly cabin Canada → Paris on Air Canada, then cross the Channel. From Calais, two UK-government-approved crossings — the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays with you from Paris onward, in the car for the crossing.",
+    note: "Air Canada does NOT allow cabin pets on flights to the UK (UK is on their no-cabin list, like the UK government rule for all airlines). The workaround: fly cabin Canada → Paris on Air Canada, then cross the Channel. From Calais, two UK-government-approved crossings — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays with you from Paris onward, in the car for the crossing.",
     tags: ["canada", "uk-out", "europe"],
   },
   // Canada → UAE workaround
@@ -1652,7 +1652,7 @@ const REGION_PAIR_STRATEGIES = {
         { route: "Layover at Paris CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
-      note: `Via Paris: fly cabin ${o} → Paris on Air France, then drive to Calais and cross the Channel — the Eurotunnel Le Shuttle (35 min, ~£22 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Both are UK-government-approved pet routes; your pet stays in the car for the crossing. This is the most-used route into ${d}.`,
+      note: `Via Paris: fly cabin ${o} → Paris on Air France, then drive to Calais and cross the Channel — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Both are UK-government-approved pet routes; your pet stays in the car for the crossing. This is the most-used route into ${d}.`,
     }),
     // Via FRANKFURT — Lufthansa, then the Calais Channel crossing.
     (o, d) => ({
@@ -5999,11 +5999,16 @@ function NavBar({ onStartIntake }) {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — capped to the viewport with internal scroll, so a long
+          list (all the country guides) is always reachable rather than running
+          off-screen or being clipped. */}
       {open && (
         <div
-          className="md:hidden border-t-2 border-stone-900 animate-fadeIn"
-          style={{ backgroundColor: "rgba(250, 246, 237, 0.99)" }}
+          className="md:hidden border-t-2 border-stone-900 animate-fadeIn overflow-y-auto overscroll-contain"
+          style={{
+            backgroundColor: "rgba(250, 246, 237, 0.99)",
+            maxHeight: "calc(100vh - 64px)",
+          }}
         >
           <div className="max-w-7xl mx-auto px-6 py-5">
             {/* Feature link — the flagship UK-return guide, prominent at top */}
@@ -8402,7 +8407,7 @@ function twCountryForAirport(code) {
   return TW_AIRPORT_TO_COUNTRY[code] || null;
 }
 
-function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, stopoverOptions = null, onAddToChecklist = null, addedToChecklist = false }) {
+function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, stopoverOptions = null, onAddToChecklist = null, addedToChecklist = false, checklistAnchor = null }) {
   const presetDest = TW_DEST_COUNTRIES.find((c) => c.key === destKey);
 
   const [open, setOpen] = useState(defaultOpen);
@@ -8680,6 +8685,26 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
                   Add these dates to my checklist
                 </button>
               )}
+            </div>
+          )}
+
+          {/* STANDALONE NEXT STEP — when the calc runs on its own (no planner
+              callback), give the user a direction once they have a window,
+              rather than leaving them to scroll the page to find the checklist. */}
+          {result && !onAddToChecklist && checklistAnchor && (
+            <div className="bg-stone-900 text-amber-50 rounded-sm p-4">
+              <p className="text-sm leading-relaxed mb-3">
+                You've got your window — now get the full checklist so the
+                tapeworm dose sits alongside every other document and deadline
+                for this trip.
+              </p>
+              <a
+                href={`#${checklistAnchor}`}
+                className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+              >
+                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                Go to the full checklist
+              </a>
             </div>
           )}
 
@@ -9119,7 +9144,7 @@ function ChecklistDownload() {
             if (!twDest) return null;
             return (
               <div className="mt-2">
-                <TapewormWindow destKey={twDest} />
+                <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
               </div>
             );
           })()}
@@ -9714,6 +9739,30 @@ function JourneyPlanner() {
                 <p className="text-stone-300 text-sm leading-relaxed">
                   You've picked the same airport for both ends. Choose a different origin and destination to plan a journey.
                 </p>
+              </div>
+            )}
+
+            {/* AIRLINE GUIDE POINTER — the route legs above name the carrier,
+                but the full picture (fees, weight limits, exactly which
+                routes allow a cabin pet) lives in the airline guide. Point
+                people there rather than duplicating it in the planner. */}
+            {origin !== destination && (
+              <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
+                <p className="text-stone-300 text-sm leading-relaxed mb-3">
+                  The routes above name the airline — but before you book,
+                  check that carrier's full policy. Cabin rules can differ by
+                  destination city, and fees and weight limits vary a lot. Our
+                  airline guide has the detail on{" "}
+                  <span className="text-amber-300 font-medium">32 airlines</span>
+                  , each cross-checked against the airline's own policy page.
+                </p>
+                <a
+                  href="#airlines"
+                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                >
+                  <Plane className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  See the airline guide
+                </a>
               </div>
             )}
 

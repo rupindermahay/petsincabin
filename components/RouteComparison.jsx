@@ -115,7 +115,8 @@ const ROUTES = [
     driveCost: ["Ferry passage + pet-friendly cabin ~£150–£350", "Pet fee ~£30"],
     driveTotal: "≈ £180–£380 total",
     taxiCost: null,
-    taxiTotal: "—",
+    taxiNA: "this route is an overnight ferry you board yourself — there is no door-to-door pet-taxi version of it",
+    taxiTotal: null,
     sortCost: 180,
     sortTime: 17,
     isEurotunnel: false,
@@ -154,7 +155,8 @@ const ROUTES = [
     ],
     driveTotal: "≈ £300–£1,150 total",
     taxiCost: null,
-    taxiTotal: "long-haul — get a quote",
+    taxiNA: "no pet-taxi operator runs this far south as a standard service — possible only as a bespoke long-haul quote",
+    taxiTotal: null,
     sortCost: 300,
     sortTime: 24,
     isEurotunnel: false,
@@ -164,14 +166,15 @@ const ROUTES = [
   {
     id: "qm2",
     name: "Cunard QM2",
-    sub: "Ocean liner New York → Southampton — no flight at all",
+    sub: "Ocean liner New York → Southampton — no flight at all. Fare is a premium cruise booking (kennel place + crossing), varies widely by cabin and season — get a quote from Cunard.",
     timeHeadline: "~7 nights at sea",
     timeLegs: null,
     driveCost: null,
-    driveCostNote: "Crossing fare + kennel fee — premium, varies widely by cabin and season",
-    driveTotal: "get a quote",
+    driveNA: "the QM2 is a transatlantic ocean liner — there is no drive and no Channel crossing to pay for",
+    driveTotal: null,
     taxiCost: null,
-    taxiTotal: "n/a",
+    taxiNA: "a pet taxi is a European road service — it has no role on an ocean crossing",
+    taxiTotal: null,
     sortCost: 9000, // premium / unknowable — always sorts last on "cheapest"
     sortTime: 168,
     isEurotunnel: false,
@@ -301,26 +304,38 @@ export default function RouteComparison() {
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">
                   Cost — self-drive
                 </div>
-                {r.driveCost && (
-                  <ul className="text-sm text-stone-700 mb-1 space-y-0.5">
-                    {r.driveCost.map((c, i) => (
-                      <li key={i}>{c}</li>
-                    ))}
-                  </ul>
-                )}
-                {r.driveCostNote && (
-                  <div className="text-sm text-stone-700 mb-1">
-                    {r.driveCostNote}
+                {r.driveNA ? (
+                  <div className="text-sm text-stone-500 italic mb-3">
+                    Not applicable — {r.driveNA}
                   </div>
+                ) : (
+                  <>
+                    {r.driveCost && (
+                      <ul className="text-sm text-stone-700 mb-1 space-y-0.5">
+                        {r.driveCost.map((c, i) => (
+                          <li key={i}>{c}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {r.driveCostNote && (
+                      <div className="text-sm text-stone-700 mb-1">
+                        {r.driveCostNote}
+                      </div>
+                    )}
+                    <div className="font-serif text-base text-stone-900 mb-3">
+                      {r.driveTotal}
+                    </div>
+                  </>
                 )}
-                <div className="font-serif text-base text-stone-900 mb-3">
-                  {r.driveTotal}
-                </div>
 
                 <div className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mb-1">
                   Cost — pet taxi
                 </div>
-                {r.taxiCost ? (
+                {r.taxiNA ? (
+                  <div className="text-sm text-stone-500 italic">
+                    Not applicable — {r.taxiNA}
+                  </div>
+                ) : r.taxiCost ? (
                   <>
                     <ul className="text-sm text-stone-700 mb-1 space-y-0.5">
                       {r.taxiCost.map((c, i) => (
@@ -391,23 +406,38 @@ export default function RouteComparison() {
                         ))}
                     </td>
                     <td className="py-3 px-3 align-bottom">
-                      {r.driveCost &&
-                        r.driveCost.map((c, i) => (
-                          <span key={i} className="block text-xs text-stone-600">
-                            {c}
-                          </span>
-                        ))}
-                      {r.driveCostNote && (
-                        <span className="text-xs text-stone-600">
-                          {r.driveCostNote}
+                      {r.driveNA ? (
+                        <span className="text-xs text-stone-500 italic">
+                          Not applicable — {r.driveNA}
                         </span>
+                      ) : (
+                        <>
+                          {r.driveCost &&
+                            r.driveCost.map((c, i) => (
+                              <span
+                                key={i}
+                                className="block text-xs text-stone-600"
+                              >
+                                {c}
+                              </span>
+                            ))}
+                          {r.driveCostNote && (
+                            <span className="text-xs text-stone-600">
+                              {r.driveCostNote}
+                            </span>
+                          )}
+                          <span className="block font-medium text-stone-900 mt-1">
+                            {r.driveTotal}
+                          </span>
+                        </>
                       )}
-                      <span className="block font-medium text-stone-900 mt-1">
-                        {r.driveTotal}
-                      </span>
                     </td>
                     <td className="py-3 pl-3 align-bottom">
-                      {r.taxiCost ? (
+                      {r.taxiNA ? (
+                        <span className="text-xs text-stone-500 italic">
+                          Not applicable — {r.taxiNA}
+                        </span>
+                      ) : r.taxiCost ? (
                         <>
                           {r.taxiCost.map((c, i) => (
                             <span

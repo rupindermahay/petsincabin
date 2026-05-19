@@ -25,12 +25,12 @@ const ROUTES = [
       "Eurotunnel pet fee £22 each way, per pet",
       "Car hire & fuel for the ~3h CDG→Calais drive ~£110–£170",
     ],
-    driveTotal: "≈ £250–£420 total",
+    driveTotal: "≈ £250–£420 total, one way",
     taxiCost: [
       "Pet-taxi driving fare (CDG→Calais) ~£400–£900 for the whole journey",
       "+ Eurotunnel ticket £115–£229 per vehicle",
     ],
-    taxiTotal: "≈ £515–£1,130 total",
+    taxiTotal: "≈ £515–£1,130 total, one way",
     sortCost: 250,
     sortTime: 5,
     isEurotunnel: true,
@@ -54,12 +54,12 @@ const ROUTES = [
       "Ferry pet fee ~£15–£22 each way, per pet",
       "Car hire & fuel for the ~3h CDG→Calais drive ~£110–£170",
     ],
-    driveTotal: "≈ £235–£420 total",
+    driveTotal: "≈ £235–£420 total, one way",
     taxiCost: [
       "Pet-taxi driving fare (CDG→Calais) ~£400–£900 for the whole journey",
       "+ Calais–Dover ferry ticket ~£110–£230 per vehicle",
     ],
-    taxiTotal: "≈ £510–£1,130 total",
+    taxiTotal: "≈ £510–£1,130 total, one way",
     sortCost: 235,
     sortTime: 5.5,
     isEurotunnel: false,
@@ -89,7 +89,7 @@ const ROUTES = [
       "Paris → Calais Frethun train ~£30–£70 per person",
       "Excess luggage £75 per bag pre-booked (£100 per bag on the day) — one 23 kg bag is included",
     ],
-    taxiTotal: "≈ £230–£300 total, one person + one pet",
+    taxiTotal: "≈ £230–£300 total, one person + one pet, one way",
     // This route's secondary cost is a scheduled shuttle, not a private pet
     // taxi — costType drives the column label. taxiCaption overrides the
     // default "crossing ticket is extra" note, since the £195 already
@@ -119,14 +119,13 @@ const ROUTES = [
       "Eurotunnel ticket £115–£229 per vehicle (one ticket covers the whole car)",
       "Eurotunnel pet fee £22 each way, per pet",
       "Car hire & fuel for the ~5–6h FRA→Calais drive ~£200–£320",
-      "Pet-friendly overnight ~£80–£150 per room",
     ],
-    driveTotal: "≈ £420–£720 total",
+    driveTotal: "≈ £340–£570 total, one way",
     taxiCost: [
       "Pet-taxi driving fare (FRA→Calais) ~£600–£1,200 for the whole journey",
       "+ Eurotunnel ticket £115–£229 per vehicle",
     ],
-    taxiTotal: "≈ £715–£1,430 total",
+    taxiTotal: "≈ £715–£1,430 total, one way",
     sortCost: 420,
     sortTime: 7,
     isEurotunnel: true,
@@ -149,14 +148,13 @@ const ROUTES = [
       "Calais–Dover ferry ticket ~£110–£230 per vehicle (one ticket covers the whole car)",
       "Ferry pet fee ~£15–£22 each way, per pet",
       "Car hire & fuel for the ~5–6h FRA→Calais drive ~£200–£320",
-      "Pet-friendly overnight ~£80–£150 per room",
     ],
-    driveTotal: "≈ £415–£720 total",
+    driveTotal: "≈ £335–£570 total, one way",
     taxiCost: [
       "Pet-taxi driving fare (FRA→Calais) ~£600–£1,200 for the whole journey",
       "+ Calais–Dover ferry ticket ~£110–£230 per vehicle",
     ],
-    taxiTotal: "≈ £710–£1,430 total",
+    taxiTotal: "≈ £710–£1,430 total, one way",
     sortCost: 345,
     sortTime: 7.5,
     isEurotunnel: false,
@@ -179,7 +177,7 @@ const ROUTES = [
       "Pet-friendly cabin ~£150–£350 per cabin (sleeps up to 4)",
       "DFDS pet fee £30 each way, per pet",
     ],
-    driveTotal: "≈ £180–£380 total",
+    driveTotal: "≈ £180–£380 total, one way",
     taxiCost: null,
     taxiNA: "this route is an overnight ferry you board yourself — there is no door-to-door pet-taxi version of it",
     taxiTotal: null,
@@ -205,12 +203,12 @@ const ROUTES = [
       "Crossing pet fee £22 each way per pet (Eurotunnel) / ~£15–£22 per pet (ferry)",
       "Car hire & fuel for the ~3.5–4h AMS→Calais drive ~£130–£210",
     ],
-    driveTotal: "≈ £270–£460 total",
+    driveTotal: "≈ £270–£460 total, one way",
     taxiCost: [
       "Pet-taxi driving fare (AMS→Calais) ~£500–£1,000 for the whole journey",
       "+ Eurotunnel ticket £115–£229 per vehicle",
     ],
-    taxiTotal: "≈ £615–£1,230 total",
+    taxiTotal: "≈ £615–£1,230 total, one way",
     sortCost: 270,
     sortTime: 7,
     isEurotunnel: true,
@@ -229,7 +227,7 @@ const ROUTES = [
       "Pet-friendly cabin — mandatory on this long crossing, priced per cabin, included in the range above",
       "Brittany Ferries pet fee — flat £50 per pet each way",
     ],
-    driveTotal: "≈ £300–£1,150 total",
+    driveTotal: "≈ £300–£1,150 total, one way",
     taxiCost: null,
     taxiNA: "no pet-taxi operator runs this far south as a standard service — possible only as a bespoke long-haul quote",
     taxiTotal: null,
@@ -278,7 +276,7 @@ const ROUTES = [
       "Ferry ticket — foot passenger ~£31–£60 per person one way (cheapest if booked early, midweek, off-peak)",
       "Pet on the ferry — ~£17–£35 per pet (kennel; foot passengers must book the kennel, or the Irish Ferries Pet Den at ~€20)",
     ],
-    taxiTotal: "≈ £50–£95 total, one person + one pet",
+    taxiTotal: "≈ £50–£95 total, one person + one pet, one way",
     costType: "ferry",
     taxiCaption:
       "the figure is one person and one pet, one way. Pets under about 10 kg can travel in a carrier with you; larger dogs go in the ship's kennel.",
@@ -309,7 +307,7 @@ const ROUTES = [
       "Pet fee — £30 per pet, per way, on top of the cabin",
       "Cheaper alternative — book a standard cabin for yourself and a kennel place for the dog",
     ],
-    taxiTotal: "≈ £180–£240 total, one person + one pet in a pet-friendly cabin",
+    taxiTotal: "≈ £180–£240 total, one person + one pet in a pet-friendly cabin, one way",
     costType: "ferry",
     taxiCaption:
       "foot passengers travelling with a pet cannot book online — you must phone the DFDS contact centre. Dogs cannot be left in a vehicle: a foot passenger books a pet-friendly cabin or a kennel place. Bring your own bedding.",
@@ -652,6 +650,27 @@ export default function RouteComparison() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Tapeworm timing note — these routes are multi-leg and often
+              start with an international flight. The UK/Ireland tapeworm
+              rule is time-and-place specific, so a pet owner who had the
+              treatment done at origin (outside Europe) can still be caught
+              out. Worth flagging right next to the routes. */}
+          <div className="mt-5 bg-amber-50 border border-amber-200 rounded-sm p-4">
+            <div className="font-sans text-[11px] uppercase tracking-[0.12em] text-amber-700 font-semibold mb-1">
+              One timing rule that catches people out
+            </div>
+            <p className="text-sm text-stone-700 leading-relaxed">
+              Every route here ends in Britain or Ireland, and a dog must have
+              a tapeworm treatment recorded by a vet <strong>24–120 hours
+              before arrival</strong> — not before, not after. If your dog flew
+              in from outside Europe, a treatment given by your vet back home
+              almost certainly falls outside that window, so you will usually
+              need a second treatment from a vet in Europe before the crossing.
+              Cats are exempt. Use the tapeworm timing calculator on the main
+              guide to check your window.
+            </p>
           </div>
         </>
       )}

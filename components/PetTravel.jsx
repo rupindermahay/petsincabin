@@ -622,7 +622,6 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Miami (MIA)", duration: "9h 30m", note: "KLM. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Amsterdam (AMS)", to: "London (LHR)", duration: "1h 10m", note: "KLM. ✓ Cabin OUT of Europe (remember: cabin INTO the UK is not possible — this route works as the last leg out of UK using AMS as a hub, not the return).", tags: ["europe", "uk-out"] },
   { from: "Amsterdam (AMS)", to: "Oslo (OSL)", duration: "1h 55m", note: "KLM / Norwegian / SAS. ✓ Cabin (under 8 kg). For dogs: tapeworm treatment 24–120 hrs before arrival is required for Norway entry.", tags: ["europe"] },
-  { from: "Amsterdam (AMS)", to: "Dublin (DUB)", duration: "1h 50m", note: "KLM. ✓ Cabin (under 8 kg incl. carrier, max 46 × 28 × 24 cm). One of the few confirmed cabin routes INTO Ireland — Ireland is not the UK and allows cabin pets. KLM's own site lists no Ireland ban and travellers report flying it; book the pet via My Trip and confirm when adding it. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Make sure it's an actual KLM flight, not a codeshare.", tags: ["europe"] },
 
   // ═══════ INTRA-EUROPE TRAINS (Eurostar Red — former Thalys) ═══════
   // Pets are allowed on Eurostar's continental routes between France,
@@ -842,8 +841,6 @@ const DIRECT_ROUTES = [
   { from: "Madrid (MAD)", to: "Miami (MIA)", duration: "9h 30m", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas). Strong Spain → USA cabin route.", tags: ["us", "europe"] },
   { from: "Madrid (MAD)", to: "New York (JFK)", duration: "8h", note: "Iberia. ✓ Cabin (under 8 kg, €150 to Americas).", tags: ["us", "europe"] },
   { from: "Madrid (MAD)", to: "Barcelona (BCN)", duration: "1h 10m", note: "Iberia / Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain). Multiple daily. Quickest Spain domestic cabin hop.", tags: ["europe"] },
-  { from: "Madrid (MAD)", to: "Dublin (DUB)", duration: "2h 45m", note: "Iberia. ✓ Cabin (under 8 kg incl. carrier, max 45 × 35 × 25 cm). One of the few cabin-pet routes INTO Ireland — Ireland is not the UK and does allow cabin pets. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia ≥48 hours ahead.", tags: ["europe"] },
-  { from: "Dublin (DUB)", to: "Madrid (MAD)", duration: "2h 50m", note: "Iberia. ✓ Cabin (under 8 kg incl. carrier). The return leg — cabin pets OUT of Dublin to Madrid, onward across Iberia's network. No tapeworm rule leaving Ireland; check Spain's entry paperwork.", tags: ["europe"] },
 
   // ═══════ FROM BARCELONA ═══════
   { from: "Barcelona (BCN)", to: "Madrid (MAD)", duration: "1h 10m", note: "Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain).", tags: ["europe"] },
@@ -1058,6 +1055,39 @@ const DIRECT_ROUTES = [
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
+  // ─── Cabin routes INTO Ireland — single-flight, structured as legs so they
+  //     render with the rich Leg-by-leg layout and get promoted into the
+  //     "Direct cabin route" section by the single-flight promotion logic. ───
+  {
+    from: "Madrid (MAD)",
+    to: "Dublin (DUB)",
+    duration: "2h 45m",
+    legs: [
+      { route: "Madrid (MAD) → Dublin (DUB)", time: "2h 45m", airline: "Iberia ✓ Cabin (under 8 kg incl. carrier)" },
+    ],
+    note: "One of the two confirmed cabin-pet routes INTO Ireland — Ireland is not the UK and does allow cabin pets. Carrier max 45 × 35 × 25 cm. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia at least 48 hours ahead.",
+    tags: ["europe", "ireland"],
+  },
+  {
+    from: "Dublin (DUB)",
+    to: "Madrid (MAD)",
+    duration: "2h 50m",
+    legs: [
+      { route: "Dublin (DUB) → Madrid (MAD)", time: "2h 50m", airline: "Iberia ✓ Cabin (under 8 kg incl. carrier)" },
+    ],
+    note: "The return leg — cabin pets OUT of Dublin to Madrid, onward across Iberia's network. No tapeworm rule leaving Ireland; check Spain's entry paperwork.",
+    tags: ["europe"],
+  },
+  {
+    from: "Amsterdam (AMS)",
+    to: "Dublin (DUB)",
+    duration: "1h 50m",
+    legs: [
+      { route: "Amsterdam (AMS) → Dublin (DUB)", time: "1h 50m", airline: "KLM ✓ Cabin (under 8 kg incl. carrier)" },
+    ],
+    note: "The other confirmed cabin route into Ireland. Carrier max 46 × 28 × 24 cm. KLM's own site lists no Ireland ban and travellers report flying it — book the pet via My Trip and confirm when adding it. A dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival. Make sure it's an actual KLM flight, not a codeshare.",
+    tags: ["europe", "ireland"],
+  },
   // UK → USA via Europe (cabin all the way)
   {
     from: "London (LHR)",
@@ -9402,16 +9432,27 @@ function JourneyPlanner() {
       const pairKey = fCode && tCode ? `${fCode}>${tCode}` : null;
       if (isSingleFlight(r) && pairKey && !directKeys.has(pairKey)) {
         directKeys.add(pairKey);
-        // Convert leg structure into a DIRECT-route shaped object so the
-        // direct-routes renderer can show it cleanly.
+        // Promote to the direct list but KEEP the full leg structure, so the
+        // direct-routes renderer can show the rich "1-flight journey / Leg 1"
+        // layout (airline + duration per leg) rather than a flat paragraph.
         const flightLeg = r.legs.find((l) => !isTransit(l.route)) || r.legs[0];
         direct.push({
           from: r.from,
           to: r.to,
           duration: flightLeg.time || r.duration || "",
           note: r.note,
+          legs: r.legs,
           _airlineFromLeg: flightLeg.airline,
+          _promoted: true,
         });
+        return;
+      }
+      // Suppress an auto-GENERATED workaround when a real direct route already
+      // covers the exact same airport pair. A genuine direct flight makes the
+      // generic ferry/strategy workaround for the identical city-pair just
+      // redundant noise (the "0-flight journey" ghost). Hand-written and
+      // region-level workarounds are kept — those are deliberate alternatives.
+      if (kind === "generated" && pairKey && directKeys.has(pairKey)) {
         return;
       }
       workarounds.push({ ...r, _kind: kind });
@@ -9802,23 +9843,6 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* AIRLINE GUIDE POINTER — a quiet one-line signpost. The route
-                cards already name the carrier; this just points to the fuller
-                detail (fees, weight limits) without taking over the page. */}
-            {origin !== destination && (
-              <p className="text-stone-500 text-sm leading-relaxed mb-6">
-                Route cards name the airline — for fees, weight limits and the
-                full policy, see the{" "}
-                <a
-                  href="#airlines"
-                  className="text-amber-400 underline decoration-stone-600 underline-offset-2 hover:decoration-amber-400 transition-colors"
-                >
-                  airline guide
-                </a>{" "}
-                (32 airlines, cross-checked against each carrier's own page).
-              </p>
-            )}
-
             {/* USDA note — only when the journey starts in the US. Endorsement
                 is a US-export step, so it's irrelevant to non-US origins. */}
             {origin !== destination && originAirport?.region === "us" && (
@@ -9979,10 +10003,43 @@ function JourneyPlanner() {
                           </div>
                           {g.routes.length === 1 ? (
                             <>
-                              {g.routes[0]._airlineFromLeg && (
-                                <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
+                              {g.routes[0].legs && g.routes[0].legs.length > 0 ? (
+                                <>
+                                  <div className="mb-2">
+                                    <span className="text-xs uppercase tracking-widest text-amber-400/80 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                                      {g.routes[0].legs.filter((l) => !isTransitLeg(l.route)).length}-flight journey
+                                    </span>
+                                  </div>
+                                  <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                                    {g.routes[0].legs.map((leg, j) => {
+                                      const isTransit = isTransitLeg(leg.route);
+                                      const flightLegs = g.routes[0].legs.filter((l) => !isTransitLeg(l.route));
+                                      const flightIdx = isTransit ? null : flightLegs.indexOf(leg) + 1;
+                                      return (
+                                        <div key={j} className="text-sm">
+                                          <div className="flex items-baseline gap-2">
+                                            <span className={`font-serif italic text-xs ${isTransit ? "text-stone-500" : "text-amber-400/70"} flex-shrink-0 w-14`}>
+                                              {isTransit ? "transit" : `Leg ${flightIdx}`}
+                                            </span>
+                                            <div className="flex-1">
+                                              <div className="text-stone-100">{leg.route}</div>
+                                              <div className="text-stone-500 text-xs">{leg.time} · {leg.airline}</div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                  <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                                </>
+                              ) : (
+                                <>
+                                  {g.routes[0]._airlineFromLeg && (
+                                    <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
+                                  )}
+                                  <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                                </>
                               )}
-                              <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                             </>
                           ) : (
                             <div className="space-y-2">

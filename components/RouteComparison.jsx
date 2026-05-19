@@ -644,8 +644,14 @@ export default function RouteComparison() {
               before you travel and you will usually be well inside it. If your
               schedule shifts and the timing slips, the simple fix is a quick
               top-up treatment from a vet in Europe before the crossing. Cats
-              are exempt. The tapeworm timing calculator on the main guide
-              works out your exact window.
+              are exempt. The{" "}
+              <a
+                href="/?go=planner"
+                className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2"
+              >
+                tapeworm timing calculator in the journey planner
+              </a>{" "}
+              works out your exact window once you've picked your route.
             </p>
           </div>
         </>

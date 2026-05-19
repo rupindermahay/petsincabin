@@ -6011,7 +6011,7 @@ const NAV_SECTIONS = [
   { id: "tips", label: "Tips", num: "VII" },
   { id: "travel-day", label: "Airport day", num: "★" },
   { id: "gear", label: "Travel gear", num: "VIII" },
-  { id: "operators", label: "Pet taxis, jets & cargo", num: "IX" },
+  { id: "operators", label: "Pet Jets & Cargo", num: "IX" },
   { id: "stories", label: "Stories", num: "✻" },
   { id: "contact", label: "Contact", num: "X" },
   { id: "about", label: "About", num: "✦" },
@@ -6229,10 +6229,10 @@ function NavBar({ onStartIntake }) {
               Three rows: two section-link rows, then the flagship UK-guide
               link flush beneath them — part of the nav block, not a banner. */}
           <div className="flex-1 flex flex-col justify-center">
-            <div className="flex items-center justify-between border-b border-stone-100">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 border-b border-stone-100">
               {row1.map((s) => <NavItem key={s.id} s={s} />)}
             </div>
-            <div className="flex items-center justify-between border-b border-stone-100">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 border-b border-stone-100">
               {row2.map((s) => <NavItem key={s.id} s={s} />)}
               <NavLink href="/usda-endorsement-guide" label="USDA endorsement" mark="✦" />
               <NavGuidesDropdown />
@@ -11924,51 +11924,6 @@ function Operators() {
         </p>
 
         <div className="mb-10">
-          <h3 className="font-serif text-2xl text-stone-900 mb-1">Pet taxis — door-to-door road transport</h3>
-          <p className="text-stone-600 text-sm leading-relaxed mb-4">
-            Pet-taxi fares are quoted per journey, not per person, and depend on
-            distance, the number of passengers and bags, and your pet. The Channel
-            crossing is usually charged on top. Always get your own written quote —
-            figures move with season and route.
-          </p>
-          <div className="space-y-3">
-            <div className="bg-white border border-stone-200 rounded-sm p-4">
-              <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
-                 onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
-                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
-                ElitePetTaxi →
-              </a>
-              <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                Door-to-door pet transport across the UK and Europe.
-              </p>
-              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
-                As a real example, when I enquired they quoted roughly £780 plus
-                the Channel crossing for a door-to-door trip from the Paris area
-                into the UK. That was the quote at the time — prices change with
-                distance, your pet and the season, so get your own.
-              </p>
-            </div>
-            <div className="bg-white border border-stone-200 rounded-sm p-4">
-              <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
-                 onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
-                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
-                PetMoves Abroad →
-              </a>
-              <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                Door-to-door pet transport across the UK and Europe.
-              </p>
-              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
-                As a real example, when I enquired they quoted roughly £685 plus
-                the Channel crossing for the same door-to-door trip from the Paris
-                area into the UK. With the crossing around £300 at the time, that
-                came to about £985 one way. That was the quote at the time — prices
-                change with distance, your pet and the season, so get your own.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div>
           <h3 className="font-serif text-2xl text-stone-900 mb-1">Shared international pet jet flights — pay per seat</h3>
           <p className="text-stone-600 text-sm leading-relaxed mb-4">
             These services fly your pet in the cabin with no carrier and no size
@@ -12023,7 +11978,7 @@ function Operators() {
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mb-10">
           <h3 className="font-serif text-2xl text-stone-900 mb-1">Manifested cargo — when a route is cargo-only</h3>
           <p className="text-stone-600 text-sm leading-relaxed mb-3">
             Some journeys are cargo-only whatever you do — every pet flying into the
@@ -12043,6 +11998,53 @@ function Operators() {
              className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
             Find a vetted pet shipper — IPATA directory →
           </a>
+        </div>
+
+        <div>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Pet taxis — door-to-door road transport</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-4">
+            A regional option rather than a long-haul one: pet taxis cover the UK and
+            mainland Europe by road, useful for the final leg into the UK once your
+            pet has arrived in Europe by cabin or jet. Fares are quoted per journey,
+            not per person, and depend on distance, the number of passengers and bags,
+            and your pet. The Channel crossing is usually charged on top. Always get
+            your own written quote — figures move with season and route.
+          </p>
+          <div className="space-y-3">
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                ElitePetTaxi →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £780 plus
+                the Channel crossing for a door-to-door trip from the Paris area
+                into the UK. That was the quote at the time — prices change with
+                distance, your pet and the season, so get your own.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                PetMoves Abroad →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £685 plus
+                the Channel crossing for the same door-to-door trip from the Paris
+                area into the UK. With the crossing around £300 at the time, that
+                came to about £985 one way. That was the quote at the time — prices
+                change with distance, your pet and the season, so get your own.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

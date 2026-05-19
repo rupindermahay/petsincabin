@@ -5999,20 +5999,21 @@ function NavBar({ onStartIntake }) {
         </div>
       </div>
 
-      {/* Mobile menu — fixed to the viewport and pinned below the nav bar, so
-          the full list (all country guides) is always reachable. As a fixed
-          panel with its own scroll it's fully decoupled from the sticky nav
-          and page scroll, which previously cut the list off on phones. */}
+      {/* Mobile menu — a normal in-flow dropdown. It is capped to the viewport
+          height and scrolls internally so a long list (all the country guides)
+          stays reachable. Kept in-flow deliberately: a fixed panel nested in
+          this nav fails because the nav's backdrop-filter traps fixed
+          positioning. */}
       {open && (
         <div
-          className="md:hidden fixed inset-x-0 bottom-0 z-40 border-t-2 border-stone-900 animate-fadeIn overflow-y-auto overscroll-contain"
+          className="md:hidden border-t-2 border-stone-900 animate-fadeIn overflow-y-auto overscroll-contain"
           style={{
-            top: "60px",
+            maxHeight: "calc(100vh - 84px)",
             backgroundColor: "rgba(250, 246, 237, 0.99)",
             WebkitOverflowScrolling: "touch",
           }}
         >
-          <div className="max-w-7xl mx-auto px-6 py-5 pb-24">
+          <div className="max-w-7xl mx-auto px-6 py-5 pb-10">
             {/* Feature link — the flagship UK-return guide, prominent at top */}
             <a
               href="/getting-your-pet-into-the-uk"

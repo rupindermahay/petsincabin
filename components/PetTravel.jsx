@@ -6011,9 +6011,10 @@ const NAV_SECTIONS = [
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
   { id: "travel-day", label: "Airport day", num: "★" },
-  { id: "gear-operators", label: "Gear & operators", num: "VIII" },
+  { id: "gear", label: "Travel gear", num: "VIII" },
+  { id: "operators", label: "Operators", num: "IX" },
   { id: "stories", label: "Stories", num: "✻" },
-  { id: "contact", label: "Contact", num: "IX" },
+  { id: "contact", label: "Contact", num: "X" },
   { id: "about", label: "About", num: "✦" },
 ];
 
@@ -11800,11 +11801,7 @@ function TravelDay() {
   );
 }
 
-function GearAndOperators() {
-  // Outbound-click tracking — fires a GA4 event naming the exact product or
-  // operator. This is what turns the page into negotiating data: in Analytics
-  // you can see "ElitePetTaxi: N clicks this month" and take that number to
-  // the operator for a referral deal. Standard analytics, no ad network.
+function Gear() {
   const trackOut = (kind, name) => {
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
@@ -11812,165 +11809,75 @@ function GearAndOperators() {
   };
 
   return (
-    <section id="gear-operators" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
+    <section id="gear" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-amber-700 text-2xl">VIII</span>
-          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">Gear &amp; operators</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">Travel gear</span>
           <div className="flex-1 h-px bg-stone-300" />
         </div>
 
         <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4 max-w-3xl">
-          The kit, and the people who move pets
+          The kit worth packing
         </h2>
-        <p className="font-serif text-lg text-stone-700 max-w-2xl mb-12 leading-relaxed">
-          A short, honest list — the travel gear worth buying, and the transport
-          operators we've contacted. The advice is the point; where a link earns
-          the site a small fee, it's marked plainly and it never decides what's
-          listed here.
+        <p className="font-serif text-lg text-stone-700 max-w-2xl mb-4 leading-relaxed">
+          A short list of the travel gear that genuinely earned its place.
+        </p>
+        <p className="text-sm text-stone-500 italic mb-12 leading-relaxed max-w-2xl">
+          No affiliates, no sponsorships — these are simply things I bought and used
+          myself preparing for our own move. The links go to the products; I earn
+          nothing from them.
         </p>
 
-        {/* ── BLOCK 1 — TRAVEL GEAR ── */}
-        <div className="mb-14">
-          <h3 className="font-serif text-2xl text-stone-900 mb-2">Travel gear</h3>
-          <p className="text-sm text-stone-500 italic mb-6 leading-relaxed">
-            These are Amazon links. If you buy through one, the site earns a small
-            commission at no extra cost to you — it never changes what's recommended.
-            As an Amazon Associate, Pets in Cabin earns from qualifying purchases.
-          </p>
-
-          <div className="space-y-5">
-            <div className="bg-white border border-stone-200 rounded-sm p-5">
-              <div className="font-serif text-lg text-stone-900 mb-1">A soft-sided cabin carrier</div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-3">
-                The single most important buy. It must be soft-sided and fit under the
-                seat — aim for no larger than 46 × 28 × 24 cm, which clears even the
-                strictest airline limit. Good ventilation on at least two sides and a
-                waterproof base. <strong>Sherpa</strong> is the long-established,
-                widely-used airline-carrier brand — it even makes airline-specific
-                versions — and is the safe default if you're unsure.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://amzn.eu/d/05rKHmmt" target="_blank" rel="noopener noreferrer sponsored"
-                   onClick={() => trackOut("gear", "carrier-1")}
-                   className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                  Carrier option one →
-                </a>
-                <a href="https://amzn.eu/d/08Vyy4qB" target="_blank" rel="noopener noreferrer sponsored"
-                   onClick={() => trackOut("gear", "carrier-2")}
-                   className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                  Carrier option two →
-                </a>
-              </div>
-            </div>
-
-            <div className="bg-white border border-stone-200 rounded-sm p-5">
-              <div className="font-serif text-lg text-stone-900 mb-1">A collapsible water bowl</div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-3">
-                A flat-folding silicone bowl weighs nothing and clips to a bag — useful
-                at every layover and pet-relief area.
-              </p>
-              <a href="https://www.amazon.com/dp/B0CMXCGHXV" target="_blank" rel="noopener noreferrer sponsored"
-                 onClick={() => trackOut("gear", "collapsible-bowl")}
-                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                See it on Amazon →
-              </a>
-            </div>
-
-            <div className="bg-white border border-stone-200 rounded-sm p-5">
-              <div className="font-serif text-lg text-stone-900 mb-1">A travel water bottle with a fold-out bowl</div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-3">
-                A bottle with a flip-out trough lets your pet drink one-handed mid-journey
-                without spills — handy on a long transit.
-              </p>
-              <a href="https://www.amazon.com/dp/B09F5ZYV7M" target="_blank" rel="noopener noreferrer sponsored"
-                 onClick={() => trackOut("gear", "water-bottle")}
-                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                See it on Amazon →
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* ── BLOCK 2 — TRANSPORT OPERATORS ── */}
-        <div>
-          <h3 className="font-serif text-2xl text-stone-900 mb-2">Transport operators</h3>
-          <p className="text-sm text-stone-500 italic mb-6 leading-relaxed">
-            Operators we've contacted and checked. Some links may be referral
-            arrangements — if so, the site may earn a small fee — but that never
-            decides who appears here. Operators are listed alphabetically, not ranked.
-            Always get your own written quote.
-          </p>
-
-          <div className="mb-8">
-            <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-3">
-              Pet taxis — door-to-door road transport
-            </div>
-            <div className="space-y-3">
-              <div className="bg-white border border-stone-200 rounded-sm p-4">
-                <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer sponsored"
-                   onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
-                   className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
-                  ElitePetTaxi →
-                </a>
-                <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                  Door-to-door pet transport across the UK and Europe. Get a written
-                  quote for your specific journey.
-                </p>
-              </div>
-              <div className="bg-white border border-stone-200 rounded-sm p-4">
-                <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer sponsored"
-                   onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
-                   className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
-                  PetMoves Abroad →
-                </a>
-                <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                  Door-to-door pet transport for international moves. Get a written
-                  quote for your specific journey.
-                </p>
-              </div>
-            </div>
-            <p className="text-stone-500 text-sm leading-relaxed mt-3 italic">
-              What to expect on price: pet-taxi fares are quoted per journey, not per
-              person, and depend on distance, the number of passengers and bags, and
-              your pet. As a real example, a Paris (CDG-area) to Surrey trip for two
-              passengers, four suitcases and one dog was quoted at roughly £785 plus
-              the Channel crossing — with the crossing around £300 at the time, about
-              £1,085 one way. Always get your own written quote; figures move with
-              season and route.
-            </p>
-          </div>
-
-          <div>
-            <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
-              Private pet-jet charter — the premium option
-            </div>
+        <div className="space-y-5">
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A soft-sided cabin carrier</div>
             <p className="text-stone-600 text-sm leading-relaxed mb-3">
-              If cost is genuinely no object, private pet-jet charters fly your pet in
-              the cabin with no carrier and no size limit. As a rough guide, a seat
-              from the US to the UK or Paris typically runs <strong>around
-              $8,000–$11,000</strong> — confirm the current fare directly, as it
-              varies with route, date and demand. For almost everyone, the cabin and
-              ferry routes in this guide are the practical answer. Operators we've
-              contacted:
+              The single most important buy. It must be soft-sided and fit under the
+              seat — aim for no larger than 46 × 28 × 24 cm, which clears even the
+              strictest airline limit. Good ventilation on at least two sides and a
+              waterproof base. <strong>Sherpa</strong> is the long-established,
+              widely-used airline-carrier brand — it even makes airline-specific
+              versions — and is the safe default if you're unsure.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer sponsored"
-                 onClick={() => trackOut("pet-jet", "Bark Air")}
+              <a href="https://amzn.eu/d/05rKHmmt" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-1")}
                  className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                Bark Air →
+                Carrier option one →
               </a>
-              <a href="https://www.k9jets.com/" target="_blank" rel="noopener noreferrer sponsored"
-                 onClick={() => trackOut("pet-jet", "K9 Jets")}
+              <a href="https://amzn.eu/d/08Vyy4qB" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-2")}
                  className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                K9 Jets →
-              </a>
-              <a href="https://www.vicunaair.com/" target="_blank" rel="noopener noreferrer sponsored"
-                 onClick={() => trackOut("pet-jet", "Vicuna Air")}
-                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
-                Vicuna Air →
+                Carrier option two →
               </a>
             </div>
+          </div>
+
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A collapsible water bowl</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              A flat-folding silicone bowl weighs nothing and clips to a bag — useful
+              at every layover and pet-relief area.
+            </p>
+            <a href="https://www.amazon.com/dp/B0CMXCGHXV" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("gear", "collapsible-bowl")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              See it on Amazon →
+            </a>
+          </div>
+
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A travel water bottle with a fold-out bowl</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              A bottle with a flip-out trough lets your pet drink one-handed mid-journey
+              without spills — handy on a long transit.
+            </p>
+            <a href="https://www.amazon.com/dp/B09F5ZYV7M" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("gear", "water-bottle")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              See it on Amazon →
+            </a>
           </div>
         </div>
       </div>
@@ -11978,6 +11885,136 @@ function GearAndOperators() {
   );
 }
 
+function Operators() {
+  const trackOut = (kind, name) => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
+    }
+  };
+
+  return (
+    <section id="operators" className="py-20 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-serif italic text-amber-700 text-2xl">IX</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">When all else fails: operators</span>
+          <div className="flex-1 h-px bg-stone-300" />
+        </div>
+
+        <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4 max-w-3xl">
+          When the cabin isn't an option
+        </h2>
+        <p className="font-serif text-lg text-stone-700 max-w-2xl mb-4 leading-relaxed">
+          Sometimes the cabin route just doesn't work — the dog is too big, the
+          journey isn't suitable, or the timing won't line up. If that's you, and the
+          budget allows it, these are operators I reached out to for quotes while
+          planning our own trip. They are companies I'd be comfortable booking, based
+          on my own research and the conversations I had with them.
+        </p>
+        <p className="text-sm text-stone-500 italic mb-12 leading-relaxed max-w-2xl">
+          No affiliates, no referral deals — I earn nothing from these. They are
+          simply the operators I actually contacted before settling on our own
+          Miami → Paris → Eurotunnel route. Always get your own written quote.
+        </p>
+
+        <div className="mb-10">
+          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-3">
+            Pet taxis — door-to-door road transport
+          </div>
+          <div className="space-y-3">
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                ElitePetTaxi →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport across the UK and Europe. Get a written
+                quote for your specific journey.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                PetMoves Abroad →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport for international moves. Get a written
+                quote for your specific journey.
+              </p>
+            </div>
+          </div>
+          <p className="text-stone-500 text-sm leading-relaxed mt-3 italic">
+            What to expect on price: pet-taxi fares are quoted per journey, not per
+            person, and depend on distance, the number of passengers and bags, and
+            your pet. As a real example, a Paris (CDG-area) to Surrey trip for two
+            passengers, four suitcases and one dog was quoted at roughly £785 plus
+            the Channel crossing — with the crossing around £300 at the time, about
+            £1,085 one way. Always get your own written quote; figures move with
+            season and route.
+          </p>
+        </div>
+
+        <div>
+          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
+            Private pet-jet charter — the premium option
+          </div>
+          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+            If cost is genuinely no object, private pet-jet charters fly your pet in
+            the cabin with no carrier and no size limit. As a rough guide, a seat
+            from the US to the UK or Paris typically runs <strong>around
+            $8,000–$11,000</strong> — confirm the current fare directly, as it
+            varies with route, date and demand. For almost everyone, the cabin and
+            ferry routes in this guide are the practical answer. Operators I
+            contacted:
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("pet-jet", "Bark Air")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              Bark Air →
+            </a>
+            <a href="https://www.k9jets.com/" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("pet-jet", "K9 Jets")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              K9 Jets →
+            </a>
+            <a href="https://www.vicunaair.com/" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("pet-jet", "Vicuna Air")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              Vicuna Air →
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <div className="font-sans text-[11px] uppercase tracking-[0.15em] text-stone-500 font-semibold mb-2">
+            Manifested cargo — when a route is cargo-only
+          </div>
+          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+            Some journeys are cargo-only whatever you do — every pet flying into the
+            UK, for example, or a dog too large for any cabin. Pets travel in a
+            temperature-controlled, pressurised hold, usually booked through a
+            professional pet-shipping agent who handles the crate, paperwork and
+            customs. As a rough guide, expect <strong>around $300–$2,000</strong> for
+            a domestic move (ground or air) and <strong>roughly $2,000–$8,000+</strong>
+            for an international door-to-door relocation — strict-entry destinations
+            sit at the higher end. Cargo isn't our focus here, so rather than name
+            firms, the safest route is the official directory below: it lists vetted,
+            scam-screened shippers in every country. Contact a few directly for
+            quotes.
+          </p>
+          <a href="https://www.ipata.org/find-ipata-pet-shippers" target="_blank" rel="noopener noreferrer"
+             onClick={() => trackOut("cargo", "IPATA directory")}
+             className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+            Find a vetted pet shipper — IPATA directory →
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
 function Stories() {
   const [open, setOpen] = useState(true);
 
@@ -12789,7 +12826,8 @@ export default function PetTravel() {
       <Documents />
       <Tips />
       <TravelDay />
-      <GearAndOperators />
+      <Gear />
+      <Operators />
       <Stories />
       <Contact />
       <Footer />

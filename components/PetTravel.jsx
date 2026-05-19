@@ -9026,6 +9026,14 @@ function ChecklistDownload() {
             </div>
           )}
 
+          {originAirport?.region === "us" && destAirport && destAirport.region !== "us" && (
+            <div className="bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+              Leaving the US: your pet's health certificate must be endorsed by USDA APHIS. It's the step that causes the most last-minute panic online — the{" "}
+              <a href="/usda-endorsement-guide" className="text-amber-300 underline decoration-amber-500/50 underline-offset-2 hover:text-amber-200">USDA endorsement guide</a>{" "}
+              explains the deadlines and the prepaid return label so it doesn't catch you out.
+            </div>
+          )}
+
           <div className="flex justify-end">
             <button
               onClick={openPrintable}
@@ -9110,6 +9118,14 @@ function ChecklistDownload() {
           {data && data.restriction && (
             <div className="bg-amber-900/30 border-l-2 border-amber-500 px-4 py-3 text-sm text-amber-100 leading-relaxed">
               <strong className="not-italic">Important:</strong> {data.restriction}
+            </div>
+          )}
+
+          {route === "usa" && effectiveDirection === "departing" && (
+            <div className="bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+              Taking a pet out of the US? Its health certificate must be endorsed by USDA APHIS — the step behind most of the last-minute panic online. The{" "}
+              <a href="/usda-endorsement-guide" className="text-amber-300 underline decoration-amber-500/50 underline-offset-2 hover:text-amber-200">USDA endorsement guide</a>{" "}
+              walks through the deadlines, the VEHCS system, and the prepaid return label.
             </div>
           )}
 
@@ -9765,6 +9781,27 @@ function JourneyPlanner() {
                 >
                   <Plane className="w-3.5 h-3.5" strokeWidth={2.5} />
                   See the airline guide
+                </a>
+              </div>
+            )}
+
+            {/* USDA note — only when the journey starts in the US. Endorsement
+                is a US-export step, so it's irrelevant to non-US origins. */}
+            {origin !== destination && originAirport?.region === "us" && (
+              <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
+                <p className="text-stone-300 text-sm leading-relaxed mb-3">
+                  Flying a pet <span className="text-amber-300 font-medium">out of the US</span>?
+                  Its health certificate has to be endorsed — stamped — by USDA
+                  APHIS. It generates a lot of forum panic, most of it
+                  avoidable. Our guide explains where the step sits, the
+                  deadlines that actually apply, and the prepaid return label.
+                </p>
+                <a
+                  href="/usda-endorsement-guide"
+                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                >
+                  <FileCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  The USDA endorsement guide
                 </a>
               </div>
             )}

@@ -11,6 +11,7 @@ import { useState } from "react";
 const ROUTES = [
   {
     id: "paris-eurotunnel",
+    origin: "Paris",
     name: "Via Paris — Eurotunnel",
     sub: "CDG → Calais → LeShuttle",
     timeHeadline: "~5–6h total",
@@ -19,9 +20,16 @@ const ROUTES = [
       "Eurotunnel crossing 35 min",
       "Check-in & pet reception ~1–1.5h",
     ],
-    driveCost: ["Vehicle crossing £115–£229", "Pet fee ~£24", "Car hire & fuel ~£110–£200"],
-    driveTotal: "≈ £250–£450 total",
-    taxiCost: ["Pet-taxi driving fare ~£400–£900", "+ vehicle crossing ticket £115–£229"],
+    driveCost: [
+      "Eurotunnel vehicle ticket £115–£229",
+      "Eurotunnel pet fee ~£24",
+      "Car hire & fuel for the ~3h CDG→Calais drive ~£110–£170",
+    ],
+    driveTotal: "≈ £250–£420 total",
+    taxiCost: [
+      "Pet-taxi driving fare (CDG→Calais) ~£400–£900",
+      "+ Eurotunnel vehicle ticket £115–£229",
+    ],
     taxiTotal: "≈ £515–£1,130 total",
     sortCost: 250,
     sortTime: 5,
@@ -31,6 +39,7 @@ const ROUTES = [
   },
   {
     id: "paris-ferry",
+    origin: "Paris",
     name: "Via Paris — Calais–Dover ferry",
     sub: "CDG → Calais → DFDS / P&O / Irish Ferries",
     timeHeadline: "~5.5–6.5h total",
@@ -40,9 +49,16 @@ const ROUTES = [
       "Check-in & pet reception ~1–1.5h",
       "Pet stays in the car for the crossing",
     ],
-    driveCost: ["Vehicle crossing ~£110–£230", "Pet fee £15", "Car hire & fuel ~£110–£200"],
-    driveTotal: "≈ £235–£445 total",
-    taxiCost: ["Pet-taxi driving fare ~£400–£900", "+ vehicle crossing ticket ~£110–£230"],
+    driveCost: [
+      "Calais–Dover ferry vehicle ticket ~£110–£230",
+      "Ferry pet fee ~£15–£22",
+      "Car hire & fuel for the ~3h CDG→Calais drive ~£110–£170",
+    ],
+    driveTotal: "≈ £235–£420 total",
+    taxiCost: [
+      "Pet-taxi driving fare (CDG→Calais) ~£400–£900",
+      "+ Calais–Dover ferry vehicle ticket ~£110–£230",
+    ],
     taxiTotal: "≈ £510–£1,130 total",
     sortCost: 235,
     sortTime: 5.5,
@@ -52,6 +68,7 @@ const ROUTES = [
   },
   {
     id: "frankfurt-eurotunnel",
+    origin: "Frankfurt",
     name: "Via Frankfurt — Eurotunnel",
     sub: "FRA → Calais → LeShuttle",
     timeHeadline: "~7–8h total",
@@ -62,15 +79,18 @@ const ROUTES = [
       "Most split it with an overnight",
     ],
     driveCost: [
-      "Vehicle crossing £115–£229",
-      "Pet fee ~£24",
-      "Car hire & fuel ~£140–£250",
+      "Eurotunnel vehicle ticket £115–£229",
+      "Eurotunnel pet fee ~£24",
+      "Car hire & fuel for the ~5–6h FRA→Calais drive ~£200–£320",
       "Pet-friendly overnight ~£80–£150",
     ],
-    driveTotal: "≈ £350–£600 total",
-    taxiCost: ["Pet-taxi driving fare ~£600–£1,200", "+ vehicle crossing ticket £115–£229"],
+    driveTotal: "≈ £420–£720 total",
+    taxiCost: [
+      "Pet-taxi driving fare (FRA→Calais) ~£600–£1,200",
+      "+ Eurotunnel vehicle ticket £115–£229",
+    ],
     taxiTotal: "≈ £715–£1,430 total",
-    sortCost: 350,
+    sortCost: 420,
     sortTime: 7,
     isEurotunnel: true,
     hasPetTaxi: true,
@@ -78,6 +98,7 @@ const ROUTES = [
   },
   {
     id: "frankfurt-ferry",
+    origin: "Frankfurt",
     name: "Via Frankfurt — Calais–Dover ferry",
     sub: "FRA → Calais → DFDS / P&O / Irish Ferries",
     timeHeadline: "~7.5–8.5h total",
@@ -88,13 +109,16 @@ const ROUTES = [
       "Pet stays in the car · most split it with an overnight",
     ],
     driveCost: [
-      "Vehicle crossing ~£110–£230",
-      "Pet fee £15",
-      "Car hire & fuel ~£140–£250",
+      "Calais–Dover ferry vehicle ticket ~£110–£230",
+      "Ferry pet fee ~£15–£22",
+      "Car hire & fuel for the ~5–6h FRA→Calais drive ~£200–£320",
       "Pet-friendly overnight ~£80–£150",
     ],
-    driveTotal: "≈ £345–£600 total",
-    taxiCost: ["Pet-taxi driving fare ~£600–£1,200", "+ vehicle crossing ticket ~£110–£230"],
+    driveTotal: "≈ £415–£720 total",
+    taxiCost: [
+      "Pet-taxi driving fare (FRA→Calais) ~£600–£1,200",
+      "+ Calais–Dover ferry vehicle ticket ~£110–£230",
+    ],
     taxiTotal: "≈ £710–£1,430 total",
     sortCost: 345,
     sortTime: 7.5,
@@ -104,6 +128,7 @@ const ROUTES = [
   },
   {
     id: "amsterdam-ferry",
+    origin: "Amsterdam",
     name: "Via Amsterdam — ferry",
     sub: "DFDS overnight IJmuiden → Newcastle",
     timeHeadline: "~17h overnight",
@@ -112,7 +137,11 @@ const ROUTES = [
       "DFDS ferry ~16h (overnight, sleep onboard)",
       "Ferry check-in ~1h",
     ],
-    driveCost: ["Ferry passage + pet-friendly cabin ~£150–£350", "Pet fee ~£30"],
+    driveCost: [
+      "DFDS ferry passage (foot passenger or with car)",
+      "Pet-friendly cabin ~£150–£350 (priced per cabin)",
+      "DFDS pet fee ~£30 per pet each way",
+    ],
     driveTotal: "≈ £180–£380 total",
     taxiCost: null,
     taxiNA: "this route is an overnight ferry you board yourself — there is no door-to-door pet-taxi version of it",
@@ -125,6 +154,7 @@ const ROUTES = [
   },
   {
     id: "amsterdam-overland",
+    origin: "Amsterdam",
     name: "Via Amsterdam — overland",
     sub: "AMS → Belgium/France → Eurotunnel",
     timeHeadline: "~7–8h total",
@@ -133,11 +163,18 @@ const ROUTES = [
       "Eurotunnel 35 min (or ferry ~1.5h)",
       "Check-in & pet reception ~1–1.5h",
     ],
-    driveCost: ["Vehicle crossing £115–£229", "Pet fee ~£24", "Car hire & fuel ~£130–£230"],
-    driveTotal: "≈ £280–£480 total",
-    taxiCost: ["Pet-taxi driving fare ~£500–£1,000", "+ vehicle crossing ticket £115–£229"],
+    driveCost: [
+      "Eurotunnel vehicle ticket £115–£229 (or Calais–Dover ferry ~£110–£230)",
+      "Crossing pet fee ~£24 Eurotunnel / ~£15–£22 ferry",
+      "Car hire & fuel for the ~3.5–4h AMS→Calais drive ~£130–£210",
+    ],
+    driveTotal: "≈ £270–£460 total",
+    taxiCost: [
+      "Pet-taxi driving fare (AMS→Calais) ~£500–£1,000",
+      "+ Eurotunnel vehicle ticket £115–£229",
+    ],
     taxiTotal: "≈ £615–£1,230 total",
-    sortCost: 280,
+    sortCost: 270,
     sortTime: 7,
     isEurotunnel: true,
     hasPetTaxi: true,
@@ -145,13 +182,15 @@ const ROUTES = [
   },
   {
     id: "spain",
+    origin: "Spain",
     name: "Via Spain",
     sub: "Brittany Ferries Bilbao/Santander → Portsmouth or Plymouth",
     timeHeadline: "~24–36h crossing",
     timeLegs: null,
     driveCost: [
-      "Ferry passage + pet-friendly cabin (car & 2, peak) ~£250–£1,100",
-      "Pet fee from ~£50",
+      "Ferry passage for a car plus two passengers ~£250–£1,100 (the high end is peak summer season)",
+      "Pet-friendly cabin — mandatory on this long crossing, priced per cabin, included in the range above",
+      "Brittany Ferries pet fee — flat £50 per pet each way",
     ],
     driveTotal: "≈ £300–£1,150 total",
     taxiCost: null,
@@ -165,6 +204,7 @@ const ROUTES = [
   },
   {
     id: "qm2",
+    origin: "New York",
     name: "Cunard QM2",
     sub: "Ocean liner New York → Southampton — no flight at all. Fare is a premium cruise booking (kennel place + crossing), varies widely by cabin and season — get a quote from Cunard.",
     timeHeadline: "~7 nights at sea",
@@ -189,11 +229,23 @@ const SORTS = [
   { id: "fastest", label: "Fastest first" },
 ];
 
-const FILTERS = [
+// Filters come in two groups. Origin first — it's the thing a traveller knows
+// before anything else ("I'm flying into Paris") — then the crossing type.
+const ORIGIN_FILTERS = [
+  { id: "o-paris", label: "Paris", test: (r) => r.origin === "Paris" },
+  { id: "o-frankfurt", label: "Frankfurt", test: (r) => r.origin === "Frankfurt" },
+  { id: "o-amsterdam", label: "Amsterdam", test: (r) => r.origin === "Amsterdam" },
+  { id: "o-spain", label: "Spain", test: (r) => r.origin === "Spain" },
+  { id: "o-ny", label: "New York", test: (r) => r.origin === "New York" },
+];
+
+const CROSSING_FILTERS = [
   { id: "eurotunnel", label: "Eurotunnel only", test: (r) => r.isEurotunnel },
   { id: "petTaxi", label: "Pet taxi", test: (r) => r.hasPetTaxi },
   { id: "ferrySea", label: "Ferry / sea only", test: (r) => r.isFerrySea },
 ];
+
+const ALL_FILTERS = [...ORIGIN_FILTERS, ...CROSSING_FILTERS];
 
 export default function RouteComparison() {
   const [sort, setSort] = useState("default");
@@ -204,11 +256,16 @@ export default function RouteComparison() {
       prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
     );
 
-  let routes = ROUTES.filter((r) =>
-    activeFilters.every((fid) => {
-      const f = FILTERS.find((x) => x.id === fid);
-      return f ? f.test(r) : true;
-    })
+  // Group-aware filtering. Within a group (e.g. origins) selections are OR —
+  // "Paris or Frankfurt". Across groups they're AND — "(Paris or Frankfurt)
+  // AND ferry". A group with nothing selected imposes no constraint.
+  const matchesGroup = (route, group) => {
+    const picked = group.filter((f) => activeFilters.includes(f.id));
+    return picked.length === 0 || picked.some((f) => f.test(route));
+  };
+
+  let routes = ROUTES.filter(
+    (r) => matchesGroup(r, ORIGIN_FILTERS) && matchesGroup(r, CROSSING_FILTERS)
   );
 
   if (sort === "cheapest") {
@@ -223,12 +280,34 @@ export default function RouteComparison() {
   const btnOff =
     "bg-white text-stone-600 border-stone-300 hover:border-stone-500";
 
+  const FilterRow = ({ label, group }) => (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mr-1 w-full sm:w-auto">
+        {label}
+      </span>
+      {group.map((f) => (
+        <button
+          key={f.id}
+          type="button"
+          onClick={() => toggleFilter(f.id)}
+          aria-pressed={activeFilters.includes(f.id)}
+          className={`${btnBase} ${
+            activeFilters.includes(f.id) ? btnOn : btnOff
+          }`}
+        >
+          {f.label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <div className="mb-3">
-      {/* Controls */}
+      {/* Controls — sort, then filter by origin, then by crossing type.
+          Origin comes first because it's what a traveller knows up front. */}
       <div className="mb-5 space-y-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mr-1">
+          <span className="font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mr-1 w-full sm:w-auto">
             Sort
           </span>
           {SORTS.map((s) => (
@@ -243,33 +322,17 @@ export default function RouteComparison() {
             </button>
           ))}
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold mr-1">
-            Filter
-          </span>
-          {FILTERS.map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              onClick={() => toggleFilter(f.id)}
-              aria-pressed={activeFilters.includes(f.id)}
-              className={`${btnBase} ${
-                activeFilters.includes(f.id) ? btnOn : btnOff
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-          {activeFilters.length > 0 && (
-            <button
-              type="button"
-              onClick={() => setActiveFilters([])}
-              className="font-sans text-xs px-2 py-1.5 text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2"
-            >
-              Clear
-            </button>
-          )}
-        </div>
+        <FilterRow label="Departure point" group={ORIGIN_FILTERS} />
+        <FilterRow label="Crossing" group={CROSSING_FILTERS} />
+        {activeFilters.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setActiveFilters([])}
+            className="font-sans text-xs px-2 py-1 text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2"
+          >
+            Clear all filters
+          </button>
+        )}
       </div>
 
       {routes.length === 0 ? (
@@ -358,8 +421,14 @@ export default function RouteComparison() {
           </div>
 
           {/* DESKTOP — table. Breaks out wider than the reading column on lg. */}
-          <div className="hidden md:block overflow-x-auto -mx-6 px-6 lg:-mx-44 lg:px-0">
-            <table className="w-full text-sm border-collapse">
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-sm border-collapse table-fixed">
+              <colgroup>
+                <col style={{ width: "22%" }} />
+                <col style={{ width: "26%" }} />
+                <col style={{ width: "26%" }} />
+                <col style={{ width: "26%" }} />
+              </colgroup>
               <thead>
                 <tr className="border-b-2 border-stone-300 align-bottom">
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pr-3">
@@ -384,12 +453,12 @@ export default function RouteComparison() {
                       idx < routes.length - 1 ? "border-b border-stone-200" : ""
                     }
                   >
-                    <td className="py-3 pr-3">
+                    <td className="py-3 pr-3 align-top">
                       <span className="font-medium text-stone-900">{r.name}</span>
                       <br />
                       <span className="text-xs text-stone-500">{r.sub}</span>
                     </td>
-                    <td className="py-3 px-3 align-bottom">
+                    <td className="py-3 px-3 align-top">
                       <span className="font-medium text-stone-900">
                         {r.timeHeadline}
                       </span>
@@ -405,7 +474,7 @@ export default function RouteComparison() {
                           </span>
                         ))}
                     </td>
-                    <td className="py-3 px-3 align-bottom">
+                    <td className="py-3 px-3 align-top">
                       {r.driveNA ? (
                         <span className="text-xs text-stone-500 italic">
                           Not applicable — {r.driveNA}
@@ -432,7 +501,7 @@ export default function RouteComparison() {
                         </>
                       )}
                     </td>
-                    <td className="py-3 pl-3 align-bottom">
+                    <td className="py-3 pl-3 align-top">
                       {r.taxiNA ? (
                         <span className="text-xs text-stone-500 italic">
                           Not applicable — {r.taxiNA}

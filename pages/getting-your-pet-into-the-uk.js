@@ -104,6 +104,10 @@ export default function GettingYourPetIntoTheUK() {
             <RouteComparison />
 
             <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
+              <strong>How to read these costs.</strong> Every figure above is for a <em>single one-way crossing</em>. Two things people miss: first, the <em>vehicle ticket</em> (roughly £89–£230 for a car on the Calais–Dover ferry, more in peak summer) is the real cost — the pet fee of ~£15–£24 is only the surcharge for the dog on top of it. Second, the ferry and Eurotunnel both charge <em>per vehicle, not per person</em>: one car carries up to nine passengers for the same fare, so you, a sibling and the dog travel on one vehicle ticket plus one pet fee — not three fares. But if someone drives out from the UK to collect you, that is <em>two</em> crossings to pay for (their outbound trip and the return with you), each with its own vehicle ticket and — on the leg the pet is aboard — its own pet fee. Budget for the round trip, not a single leg.
+            </p>
+
+            <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
               <strong>How the pet-taxi total is built.</strong> The figures above show the pet-taxi driving fare <em>plus</em> the vehicle crossing ticket — because the crossing is almost always charged on top of the driving fare, not bundled into it. The crossing ticket is the same one a self-driver buys, and its price changes daily with demand, so treat the total as a guide. A few operators do quote a single all-in price with the crossing included — so always ask, in writing: <em>"Does your fare include the Channel crossing ticket and tolls, or are those extra?"</em>
             </p>
 

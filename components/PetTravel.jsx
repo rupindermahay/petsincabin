@@ -5266,8 +5266,8 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
   // specific things that matter for this destination.
   if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
     if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
-    if (destRegion === "uk-out") return `The UK doesn't allow cabin pets on any commercial flight — your pet has to fly into mainland Europe and cross by land (Eurotunnel) or sea (ferry). Paperwork: ISO microchip, rabies vaccine ≥21 days old, Animal Health Certificate from accredited vet within 10 days of entry, tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "ireland") return `Ireland is not the UK — cabin pets CAN fly in. Iberia (Madrid→Dublin) and KLM (Amsterdam→Dublin) both carry them; beyond those, the France→Ireland ferry is the reliable route. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC), tapeworm treatment for dogs 24–120 hrs before arrival.`;
+    if (destRegion === "uk-out") return `For the UK: no airline carries pets in cabin into the UK — the route is always cabin into mainland Europe, then Eurotunnel or a ferry. The paperwork timeline is detailed below.`;
+    if (destRegion === "ireland") return `For Ireland: cabin pets CAN fly in (Iberia Madrid→Dublin and KLM Amsterdam→Dublin), or take the France→Ireland ferry. The paperwork timeline is detailed below.`;
     if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC, not a pet passport).`;
     if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
     if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
@@ -5536,7 +5536,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   sections.push({
     title: `Leaving ${originLabel}`,
     divider: true,
-    items: [`Prep for departure from ${originLabel}. Time-ordered — earliest prep first.`],
+    items: [`Everything to do before you fly out of ${originLabel} — earliest prep first.`],
   });
   originSections.forEach((s) => {
     if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
@@ -5581,7 +5581,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     sections.push({
       title: `Entering ${destLabel}`,
       divider: true,
-      items: [`Prep specific to entering ${destLabel}. Duplicates from earlier chapters are not repeated.`],
+      items: [`The rules that kick in once you arrive in ${destLabel}.`],
     });
     destSections.forEach((s) => {
       if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
@@ -9236,28 +9236,48 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
 function Checklist() {
   const sections = [
     {
+      title: "If you're flying with a dog",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Practice the turn-around test at home: your dog must stand up, turn around and lie down inside the carrier without touching walls or ceiling",
+        "If your dog is over 20 lb combined with the carrier, most US airlines are out — Lufthansa, Air Canada and Iberia are your friends",
+        "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
+        "Adaptil pheromone spray on the carrier (never on the dog) 15 minutes before you head out — vets aren't selling snake oil here",
+        "Tapeworm treatment — required for dogs entering the UK, Ireland, Norway, Finland or Malta, given by a vet 24–120 hours before arrival. Cats and ferrets are exempt. The journey planner calculates the exact dates for your trip",
+      ],
+    },
+    {
+      title: "If you're flying with a cat",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Start carrier acclimation weeks ahead — leave it out as a normal den, never something that appears only on travel day. That ship sails fast with cats",
+        "Line the carrier with unwashed bedding from home — cats orient by smell, and familiar scent settles them faster than anything else",
+        "Feliway pheromone spray (the cat version of Adaptil) on the carrier 15 minutes before you leave — never directly on the cat",
+        "Fit a well-adjusted harness BEFORE travel day and practise it — a loose cat in airport security is the scariest moment imaginable, prevent it",
+        "Don't feed within 4 hours of departure — cats are particularly prone to travel-sickness",
+        "Cats go quiet and still when stressed, not vocal — check on them gently through the carrier mesh, but don't assume silence means everything's fine",
+      ],
+    },
+    {
       title: "Six weeks before",
       icon: <Stethoscope className="w-5 h-5" strokeWidth={1.5} />,
       items: [
         "Vet visit: confirm your pet is healthy enough to fly — and ask about breed-specific airline restrictions before you book anything",
         "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies shot for international, or you may have to start over",
-        "Rabies vaccine administered — most countries need a 21-30 day wait after the shot, the UK and EU specifically require 21 days minimum",
-        "Research the destination country's rules — every country differs, some need 3-6 months lead time (Japan, Hawaii, Australia, Jamaica)",
-        "Book your flight AND phone the airline to reserve a pet spot — most cap at 2-7 pets per cabin, fills fast on popular routes",
-        "If snub-nosed (Frenchie, Pug, Bulldog, Persian cat) — start looking at airlines NOW, summer embargoes are wide and many cargo holds are off-limits",
+        "Rabies vaccine administered — most countries need a 21–30 day wait after the shot; the UK and EU specifically require 21 days minimum",
+        "Research the destination country's rules — every country differs, some need 3–6 months lead time (Japan, Hawaii, Australia, Jamaica)",
+        "Book your flight AND phone the airline to reserve a pet spot — most cap at 2–7 pets per cabin, fills fast on popular routes",
       ],
     },
     {
       title: "Two weeks before",
       icon: <ScrollText className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Buy the airline-compliant carrier (soft-sided is usually better) — let your pet sleep in it at home with a familiar blanket so it smells like them",
-        "Practice short car rides or trips in the carrier — calm carrier-day is built weeks earlier, not on the morning of",
+        "Buy the airline-compliant carrier — soft-sided is usually better. Double-check dimensions against your specific airline AND aircraft (under-seat space varies by plane, not just airline)",
         "Schedule the government-accredited vet visit for the health certificate — timing varies, usually within 10 days of travel, sometimes 48 hours",
         "Going to the UK, Ireland, Norway, Finland or Malta with a dog? Book the tapeworm-treatment vet visit now — it has to land in the 24–120 hour window before arrival, and that vet has to be available on the right date",
         "Complete destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, MGAP for Uruguay, AQS Form for Japan, etc.)",
         "Confirm climate / temperature embargoes — many airlines refuse pets above 85°F or below 20°F, and brachy breeds face wider seasonal bans",
-        "Double-check carrier dimensions against your specific airline AND specific aircraft — the under-seat space varies by plane type, not just airline",
       ],
     },
     {
@@ -9265,8 +9285,8 @@ function Checklist() {
       icon: <Luggage className="w-5 h-5" strokeWidth={1.5} />,
       items: [
         "Light meal 3–4 hours before flight; water available right up until departure — empty stomachs cause anxiety, full ones cause accidents at altitude",
-        "Walk your dog or let your cat use the box right before leaving home — airport pet relief areas are often hidden, dirty, or non-existent",
-        "Pad the carrier with absorbent puppy pads — bring 3-4 spares and change them at the gate if needed, no shame in that",
+        "Get your pet outside (or to the litter tray) right before you leave home — airport pet-relief areas are often hidden, dirty, or non-existent",
+        "Pad the carrier with absorbent puppy pads — bring 3–4 spares and change them at the gate if needed, no shame in that",
         "Pack: food, collapsible water bowl, leash, waste bags, vet records (originals + photocopies), comfort item, calming spray, treats",
         "Arrive 2.5–3 hours early — pet check-in is in person at the counter, never online, and the turn-around test always takes longer than expected",
         "Charge your phone fully and bring a portable battery — you'll be juggling paperwork, carrier, and luggage with both hands full",
@@ -9284,31 +9304,6 @@ function Checklist() {
         "Window seat preferred — slightly more under-seat depth, away from cart traffic, and you can control the light through the window",
       ],
     },
-    {
-      title: "If you're flying with a dog",
-      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
-      items: [
-        "Walk them properly 2-3 hours before leaving — a tired dog in a carrier is a sleeping dog; a fresh one is an anxious one stuck in a small space",
-        "Adaptil pheromone spray on the carrier (never on the dog) 15 minutes before you head out — it actually works, vets aren't selling snake oil here",
-        "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
-        "Practice the turn-around test at home: dog must stand up, turn around, lie down inside the carrier without touching walls or ceiling",
-        "If your dog is over 20 lb combined with the carrier — most US airlines are out. Lufthansa, Air Canada, and Iberia are your friends",
-        "Tapeworm treatment — required for dogs entering the UK, Ireland, Norway, Finland or Malta, given by a vet 24–120 hours before arrival (a comfortable two-day window). Cats and ferrets are exempt. The journey planner calculates the exact dates for your trip",
-        "Bring poop bags AND a small bottle of water for cleanup — accidents happen, and you'll want to handle it discreetly without making a scene at the gate",
-      ],
-    },
-    {
-      title: "If you're flying with a cat",
-      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
-      items: [
-        "Start carrier acclimation WEEKS ahead — leave it out as a normal den, never something that appears only on travel day, that ship sails fast with cats",
-        "Feliway pheromone spray (the cat version of Adaptil) on the carrier 15 minutes before you leave — never directly on the cat, they'll hate you for it",
-        "Line the carrier with unwashed bedding from home — cats orient by smell, and familiar scent settles them faster than literally anything else",
-        "Fit a well-adjusted harness BEFORE travel day and practise it — a loose cat in airport security is the scariest moment imaginable, prevent it",
-        "Don't feed within 4 hours of departure — cats are particularly prone to travel-sickness, and an empty carrier on landing is a much better outcome",
-        "Cats go quiet and still when stressed, not vocal — check on them gently through the carrier mesh, but don't assume silence means everything's fine",
-      ],
-    },
   ];
 
   return (
@@ -9321,7 +9316,7 @@ function Checklist() {
         </h2>
 
         <p className="font-serif italic text-stone-600 text-lg mb-10 max-w-2xl">
-          A general timeline below — useful as a quick overview. For a version tailored to your exact route, with your tapeworm window calculated and the right paperwork for your destination, <a href="#planner" className="not-italic text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">use the journey planner</a>.
+          Dog-specific and cat-specific tips first, then a general timeline — six weeks out, two weeks out, the day of, and security. For a version tailored to your exact route, with your tapeworm window calculated and the right paperwork for your destination, <a href="#planner" className="not-italic text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">use the journey planner</a>.
         </p>
 
         <div id="checklist" className="scroll-mt-24">

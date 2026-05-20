@@ -1698,13 +1698,15 @@ const REGION_HUBS = {
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
   "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)", "Montevideo (MVD)"],
   "central-america": ["Panama City (PTY)"],
-  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
+  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)"],
+  "korea": ["Seoul Incheon (ICN)"],
+  "russia": ["Moscow (SVO)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan", "korea": "South Korea", "russia": "Russia",
 };
 
 // Reverse-index: 3-letter airport code → region, built from REGION_HUBS.
@@ -1910,7 +1912,7 @@ const AIRPORTS = [
   // pet travel its main relevance is as the hub for Korean carriers (Korean Air,
   // T'Way, Air Premia) that fly cabin pets to/from Japan when JAL/ANA won't. Listed
   // under japan region so it surfaces when planning Japan-related cabin routes.
-  { code: "ICN", city: "Seoul Incheon", region: "japan", cabinOut: true, cabinIn: true, note: "Seoul Incheon is Korean Air's hub. Listed in the Japan region tag for cabin pet planning purposes — Korea ↔ Japan via Korean carriers (Korean Air, T'Way Air, Air Premia) is one of the main cabin paths to/from Japan, since JAL and ANA don't carry cabin pets. Note T'Way does not permit pet transit in Korea — Japan-Korea must be point-to-point, not a connection." },
+  { code: "ICN", city: "Seoul Incheon", region: "korea", cabinOut: true, cabinIn: true, note: "Seoul Incheon is Korean Air's hub. Korea ↔ Japan via Korean carriers (Korean Air, T'Way Air, Air Premia) is one of the main cabin paths to/from Japan, since JAL and ANA don't carry cabin pets. Korean Air also runs cabin pets onward to the US and a wider network. Note T'Way does not permit pet transit in Korea — Japan-Korea must be point-to-point, not a connection." },
 ];
 
 const airportByCode = (code) => AIRPORTS.find((a) => a.code === code);
@@ -2870,12 +2872,18 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
   if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
+  // Korea uses the same strategy infrastructure as Japan — the japan handlers
+  // already include Korea-aware logic (isFromKorea, isToKorea branches) and
+  // the cabin pet path Korea ↔ rest-of-world runs on Korean Air, which has
+  // the same role in our advice as United does for the US.
+  if (destRegion === "korea") return [FALLBACK_STRATEGIES["japan"]];
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (destRegion === "mexico") return [FALLBACK_STRATEGIES["mexico"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
+  if (originRegion === "korea") return [FALLBACK_STRATEGIES["japan-out"]];
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
@@ -3030,7 +3038,9 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "Japan"],
+    "korea": ["Seoul", "Busan", "(ICN)", "(GMP)", "(PUS)", "Korea", "South Korea"],
+    "russia": ["Moscow", "St Petersburg", "Saint Petersburg", "(SVO)", "(DME)", "(VKO)", "(LED)", "Russia"],
   };
   const fromInOriginRegion = (field) =>
     (originRegionKeywords[oA.region] || []).some((kw) => field.includes(kw));
@@ -4943,6 +4953,8 @@ const REGION_TO_CHECKLIST_ID = {
   "south-america": "south_america",
   "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
   "japan": "japan",
+  "korea": null,            // No dedicated checklist yet — Korean Air carriage rules + standard rabies paperwork; uses generic
+  "russia": null,           // Sanctions complexity — uses generic + Russia note
 };
 
 // ----- Item-level classification helpers for the merged route checklist -----
@@ -4964,6 +4976,8 @@ const ROUTE_FACTS = {
   "south-america": { name: "South America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "central-america": { name: "Central America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "japan":       { name: "Japan", cdcHighRisk: false, euMember: false, ukOrIreland: false, isRabiesFree: true, strictImport: true },
+  "korea":       { name: "South Korea", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "russia":      { name: "Russia", cdcHighRisk: false, euMember: false, ukOrIreland: false },
 };
 
 // Transit-only essentials per region. When a workaround route briefly crosses
@@ -8111,6 +8125,7 @@ function AirlineGrid() {
     { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // The "Into UK / Ireland" and "Into Australia / NZ" filters are special —
@@ -9328,7 +9343,9 @@ function ChecklistDownload() {
     { id: "south-america", label: "South America", flag: "🌎" },
     { id: "central-america", label: "Central America", flag: "🌎" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
   const clAirportsByRegion = CL_REGIONS.map((r) => ({
     region: r,
@@ -9711,7 +9728,9 @@ function JourneyPlanner() {
     { id: "south-america", label: "South America", flag: "🌎" },
     { id: "central-america", label: "Central America", flag: "🌎" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // Map a region to its checklist tab id.
@@ -11067,6 +11086,7 @@ function Routes() {
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],
     "korea": ["Seoul", "Busan", "(ICN)", "(GMP)", "(PUS)", "Korea", "South Korea"],
+    "russia": ["Moscow", "St Petersburg", "Saint Petersburg", "(SVO)", "(DME)", "(VKO)", "(LED)", "Russia"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region

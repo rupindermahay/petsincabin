@@ -229,6 +229,10 @@ const ROUTES = [
     isEurotunnel: false,
     hasPetTaxi: false,
     isFerrySea: true,
+    // QM2 is the only row with no leg breakdown and no totals in any
+    // cost column — every cell in cols 2/3/4 is a single short paragraph.
+    // Centre them vertically on desktop so they don't hang from the top.
+    centerCells: true,
   },
   {
     id: "dublin-ferry",
@@ -572,11 +576,11 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Journey time — label / body / total */}
-                  <div className="py-3 px-3 flex flex-col">
+                  <div className={`py-3 px-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
                     <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                       Breakdown
                     </span>
-                    <div className="flex-grow">
+                    <div className={r.centerCells ? "" : "flex-grow"}>
                       {r.timeLegs &&
                         r.timeLegs.map((leg, i) => (
                           <span
@@ -593,13 +597,13 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Self-drive cost — label / body / total */}
-                  <div className="py-3 px-3 flex flex-col">
+                  <div className={`py-3 px-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
                     {r.driveNA ? (
                       <>
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Not applicable
                         </span>
-                        <div className="flex-grow">
+                        <div className={r.centerCells ? "" : "flex-grow"}>
                           <span className="text-xs text-stone-500 italic">
                             {r.driveNA}
                           </span>
@@ -610,7 +614,7 @@ export default function RouteComparison() {
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Self-drive
                         </span>
-                        <div className="flex-grow">
+                        <div className={r.centerCells ? "" : "flex-grow"}>
                           {r.driveCost &&
                             r.driveCost.map((c, i) => (
                               <span
@@ -634,13 +638,13 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Pet taxi / shuttle / ferry cost — label / body / total */}
-                  <div className="py-3 pl-3 flex flex-col">
+                  <div className={`py-3 pl-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
                     {r.taxiNA ? (
                       <>
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Not applicable
                         </span>
-                        <div className="flex-grow">
+                        <div className={r.centerCells ? "" : "flex-grow"}>
                           <span className="text-xs text-stone-500 italic">
                             {r.taxiNA}
                           </span>
@@ -651,7 +655,7 @@ export default function RouteComparison() {
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
                         </span>
-                        <div className="flex-grow">
+                        <div className={r.centerCells ? "" : "flex-grow"}>
                           {r.taxiCost.map((c, i) => (
                             <span
                               key={i}

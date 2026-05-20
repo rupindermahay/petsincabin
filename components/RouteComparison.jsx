@@ -533,114 +533,84 @@ export default function RouteComparison() {
             ))}
           </div>
 
-          {/* DESKTOP — table. Breaks out wider than the reading column on lg. */}
-          <div className="hidden md:block overflow-x-auto md:-mx-12 lg:-mx-24 xl:-mx-32">
-            <table className="w-full text-sm border-collapse table-fixed">
-              <colgroup>
-                <col style={{ width: "22%" }} />
-                <col style={{ width: "26%" }} />
-                <col style={{ width: "26%" }} />
-                <col style={{ width: "26%" }} />
-              </colgroup>
-              <thead>
-                <tr className="border-b-2 border-stone-300 align-bottom">
-                  <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pr-3">
-                    Route
-                  </th>
-                  <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Journey time
-                  </th>
-                  <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Cost — self-drive
-                  </th>
-                  <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
-                    Cost — pet taxi / shuttle / ferry
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="font-sans text-stone-700">
-                {routes.map((r, idx) => (
-                  <tr
-                    key={r.id}
-                    className={
-                      idx < routes.length - 1 ? "border-b border-stone-200" : ""
-                    }
-                  >
-                    <td className="py-3 pr-3 align-top">
-                      <span className="font-medium text-stone-900 break-words">{r.name}</span>
-                      <br />
-                      <span className="text-xs text-stone-500 break-words">{r.sub}</span>
-                    </td>
-                    <td className="py-3 px-3 align-top">
-                      <div className="flex flex-col h-full">
+          {/* DESKTOP — CSS grid rows (NOT a <table>) so every cell in a row
+              is the same height, which lets the totals anchor to the bottom
+              and align across the row. Breaks out past the reading column. */}
+          <div className="hidden md:block md:-mx-12 lg:-mx-24 xl:-mx-32 text-sm">
+            {/* Header row */}
+            <div className="grid grid-cols-[22%_26%_26%_26%] border-b-2 border-stone-300">
+              <div className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pr-3">
+                Route
+              </div>
+              <div className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
+                Journey time
+              </div>
+              <div className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
+                Self-drive cost
+              </div>
+              <div className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
+                Pet taxi / shuttle / ferry cost
+              </div>
+            </div>
+
+            {/* Body rows */}
+            <div className="font-sans text-stone-700">
+              {routes.map((r, idx) => (
+                <div
+                  key={r.id}
+                  className={`grid grid-cols-[22%_26%_26%_26%] ${
+                    idx < routes.length - 1 ? "border-b border-stone-200" : ""
+                  }`}
+                >
+                  {/* Route */}
+                  <div className="py-3 pr-3">
+                    <span className="font-medium text-stone-900 break-words">{r.name}</span>
+                    <br />
+                    <span className="text-xs text-stone-500 break-words">{r.sub}</span>
+                  </div>
+
+                  {/* Journey time — label / body / total */}
+                  <div className="py-3 px-3 flex flex-col">
+                    <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                      Breakdown
+                    </span>
+                    <div className="flex-grow">
+                      {r.timeLegs &&
+                        r.timeLegs.map((leg, i) => (
+                          <span
+                            key={i}
+                            className="block text-xs text-stone-500"
+                          >
+                            {leg}
+                          </span>
+                        ))}
+                    </div>
+                    <span className="block font-semibold text-stone-900 mt-2">
+                      {r.timeHeadline}
+                    </span>
+                  </div>
+
+                  {/* Self-drive cost — label / body / total */}
+                  <div className="py-3 px-3 flex flex-col">
+                    {r.driveNA ? (
+                      <>
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                          Breakdown
+                          Not applicable
                         </span>
                         <div className="flex-grow">
-                          {r.timeLegs &&
-                            r.timeLegs.map((leg, i) => (
-                              <span
-                                key={i}
-                                className="block text-xs text-stone-500"
-                              >
-                                {leg}
-                              </span>
-                            ))}
-                        </div>
-                        <span className="block font-semibold text-stone-900 mt-2">
-                          {r.timeHeadline}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-3 align-top">
-                      {r.driveNA ? (
-                        <div>
-                          <div className="text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                            Not applicable
-                          </div>
-                          <div className="text-xs text-stone-500 italic">
+                          <span className="text-xs text-stone-500 italic">
                             {r.driveNA}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex flex-col h-full">
-                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                            Self-drive
-                          </span>
-                          <div className="flex-grow">
-                            {r.driveCost &&
-                              r.driveCost.map((c, i) => (
-                                <span
-                                  key={i}
-                                  className="block text-xs text-stone-600"
-                                >
-                                  {c}
-                                </span>
-                              ))}
-                            {r.driveCostNote && (
-                              <span className="text-xs text-stone-600">
-                                {r.driveCostNote}
-                              </span>
-                            )}
-                          </div>
-                          <span className="block font-semibold text-stone-900 mt-2">
-                            {r.driveTotal}
                           </span>
                         </div>
-                      )}
-                    </td>
-                    <td className="py-3 pl-3 align-top">
-                      {r.taxiNA ? (
-                        <span className="text-xs text-stone-500 italic">
-                          Not applicable — {r.taxiNA}
+                      </>
+                    ) : (
+                      <>
+                        <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                          Self-drive
                         </span>
-                      ) : r.taxiCost ? (
-                        <div className="flex flex-col h-full">
-                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                            {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
-                          </span>
-                          <div className="flex-grow">
-                            {r.taxiCost.map((c, i) => (
+                        <div className="flex-grow">
+                          {r.driveCost &&
+                            r.driveCost.map((c, i) => (
                               <span
                                 key={i}
                                 className="block text-xs text-stone-600"
@@ -648,19 +618,58 @@ export default function RouteComparison() {
                                 {c}
                               </span>
                             ))}
-                          </div>
-                          <span className="block font-semibold text-stone-900 mt-2">
-                            {r.taxiTotal}
+                          {r.driveCostNote && (
+                            <span className="text-xs text-stone-600">
+                              {r.driveCostNote}
+                            </span>
+                          )}
+                        </div>
+                        <span className="block font-semibold text-stone-900 mt-2">
+                          {r.driveTotal}
+                        </span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Pet taxi / shuttle / ferry cost — label / body / total */}
+                  <div className="py-3 pl-3 flex flex-col">
+                    {r.taxiNA ? (
+                      <>
+                        <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                          Not applicable
+                        </span>
+                        <div className="flex-grow">
+                          <span className="text-xs text-stone-500 italic">
+                            {r.taxiNA}
                           </span>
                         </div>
-                      ) : (
-                        <span className="text-stone-500">{r.taxiTotal}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </>
+                    ) : r.taxiCost ? (
+                      <>
+                        <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                          {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
+                        </span>
+                        <div className="flex-grow">
+                          {r.taxiCost.map((c, i) => (
+                            <span
+                              key={i}
+                              className="block text-xs text-stone-600"
+                            >
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="block font-semibold text-stone-900 mt-2">
+                          {r.taxiTotal}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-stone-500">{r.taxiTotal}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Tapeworm timing note — these routes end in Britain or Ireland,

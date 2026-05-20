@@ -12105,19 +12105,30 @@ function Operators() {
         </div>
 
         <div className="mb-10">
-          <h3 className="font-serif text-2xl text-stone-900 mb-1">Manifested cargo — when a route is cargo-only</h3>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Manifested cargo — when a route is cargo-only, or you can't fly with your pet</h3>
           <p className="text-stone-600 text-sm leading-relaxed mb-3">
             Some journeys are cargo-only whatever you do — every pet flying into the
-            UK, for example, or a dog too large for any cabin. Pets travel in a
+            UK, for example, or a dog too large for any cabin. Cargo is also the path
+            when <em>you</em> aren't flying with your pet (unaccompanied moves —
+            think a job relocation where your pet follows on a later date, or a
+            family member shipping a dog home from abroad). Pets travel in a
             temperature-controlled, pressurised hold, usually booked through a
             professional pet-shipping agent who handles the crate, paperwork and
             customs. As a rough guide, expect <strong>around $300–$2,000</strong> for
             a domestic move (ground or air) and <strong>roughly $2,000–$8,000+</strong>
             for an international door-to-door relocation — strict-entry destinations
-            sit at the higher end. Cargo isn't our focus here, so rather than name
-            firms, the safest route is the official directory below: it lists vetted,
-            scam-screened shippers in every country. Contact a few directly for
-            quotes.
+            sit at the higher end.
+          </p>
+          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+            The three big international live-animal cargo operators are
+            <strong> Lufthansa Cargo </strong>(via Frankfurt's Animal Lounge — the
+            gold-standard transit facility), <strong>KLM Cargo</strong> (via
+            Amsterdam's Animal Hotel) and <strong>American PetEmbark</strong> (US
+            domestic and transatlantic from DFW, MIA, JFK, ORD). All three accept
+            bookings only via a freight forwarder — you don't book direct as a
+            private individual. The IPATA directory below lists vetted, scam-screened
+            shippers; contact three or four for comparison quotes (anyone quoting
+            wildly under the band above is a red flag).
           </p>
           <a href="https://www.ipata.org/find-ipata-pet-shippers" target="_blank" rel="noopener noreferrer"
              onClick={() => trackOut("cargo", "IPATA directory")}

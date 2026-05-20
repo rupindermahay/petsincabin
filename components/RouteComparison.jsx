@@ -86,16 +86,18 @@ const ROUTES = [
       "Shuttle fare · £195 (1 person + 1 pet, all-in)",
       "Second pet · +£85",
       "Train to Calais Frethun · £30–£70 per person",
+      "Train Ashford → London · £25–£60 per person",
       "Excess luggage · £75/bag (£100 on the day)",
+      "Same-day rebooking fee · £50/ticket if needed",
     ],
-    taxiTotal: "≈ £230–£300 one way (1 person + 1 pet)",
+    taxiTotal: "≈ £230–£475 one way (1 person + 1 pet)",
     // This route's secondary cost is a scheduled shuttle, not a private pet
     // taxi — costType drives the column label. taxiCaption overrides the
     // default "crossing ticket is extra" note, since the £195 already
     // includes the Eurotunnel crossing.
     costType: "shuttle",
     taxiCaption:
-      "the £195 shuttle fare is for one person plus one pet and already includes the Eurotunnel crossing. The train fare is per person; excess luggage is per bag. The shuttle runs twice daily each way — Ashford departs 10:00 and 13:00; Calais Frethun departs 16:00 and 18:00.",
+      "the £195 shuttle fare is for one person plus one pet and already includes the Eurotunnel crossing. The train fare is per person; excess luggage is per bag. The ceiling assumes peak walk-up train fares both sides, day-of excess luggage and a same-day rebooking — most journeys land near the floor. The shuttle runs twice daily each way — Ashford departs 10:00 and 13:00; Calais Frethun departs 16:00 and 18:00.",
     sortCost: 230,
     sortTime: 5,
     isEurotunnel: true,

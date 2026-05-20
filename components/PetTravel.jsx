@@ -2,6 +2,31 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
+// ============================================================
+// ⏰ ETIHAD PROMO — EXPIRES 31 MAY 2026
+// ------------------------------------------------------------
+// On 1 June 2026, set ETIHAD_PROMO_ACTIVE to false. That single
+// flip rewrites every mention of the $399 promo across the site
+// (airline card, route notes, planner branches, difficult-dest
+// workaround, Wisdom card). Standard rate post-promo is around
+// $1,500/segment — adjust ETIHAD_STANDARD_FEE_SHORT if Etihad
+// publishes a new standard rate.
+// ============================================================
+const ETIHAD_PROMO_ACTIVE = true;
+const ETIHAD_PROMO_SHORT = ETIHAD_PROMO_ACTIVE
+  ? "$399 promo through May 2026"
+  : "~$1,500 per segment";
+const ETIHAD_PROMO_FEE_FULL = ETIHAD_PROMO_ACTIVE
+  ? "Promotional rate: $399 per flight segment (booking + travel by 31 May 2026). Standard rate post-promo is significantly higher — confirm directly with Etihad when booking."
+  : "Standard rate: around $1,500 per flight segment — confirm directly with Etihad when booking.";
+const ETIHAD_PROMO_COST_DETAIL = ETIHAD_PROMO_ACTIVE
+  ? "PROMO: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment."
+  : "Standard: around $1,500 per segment. Confirm directly with Etihad when booking.";
+const ETIHAD_PROMO_WORKAROUND = ETIHAD_PROMO_ACTIVE
+  ? "Promo fee currently $399/segment through May 2026 (down from $1,500)"
+  : "Fee currently around $1,500 per segment";
+
+
 // ---------- ROBUST SCROLL HELPER ----------
 // On mobile, content above a scroll target can change height while a
 // smooth-scroll is animating (intake/assessment blocks collapsing, result
@@ -348,7 +373,7 @@ const AIRLINES = [
     direction: "Cabin allowed: OUT of the UK (London Heathrow, Manchester) to Abu Dhabi, OUT of the USA to Abu Dhabi, India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), Canada ↔ Abu Dhabi. All under 8 kg combined. Cabin NOT allowed: INTO the UK (London, Manchester) and INTO the USA — Etihad's country-restrictions page lists these as 'flights to' only, meaning the inbound direction is blocked while flying OUT to Abu Dhabi is permitted. Also no cabin to/from Australia (Sydney), Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    fee: "Promotional rate: $399 per flight segment (booking + travel by 31 May 2026). Standard rate post-promo is significantly higher — confirm directly with Etihad when booking.",
+    fee: ETIHAD_PROMO_FEE_FULL,
     weight: "Pet + carrier max 8 kg (17.6 lb) — economy under-seat OR buy adjacent seat for bigger carrier",
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
     notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Per Etihad's official country-restrictions page, the UK and USA are listed as 'flights to' restrictions — meaning cabin pets flying OUT of the UK (LHR, MAN) or OUT of the US to Abu Dhabi are permitted, while the inbound direction is not. Always confirm your specific route directly with Etihad when booking. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
@@ -821,7 +846,7 @@ const DIRECT_ROUTES = [
   { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. For Mexico→Japan in cabin, position to US west coast and fly United (e.g. LAX/SFO → HND/NRT direct, no weight limit, $150).", tags: ["mexico", "japan"] },
 
   // ═══════ FROM ABU DHABI ═══════
-  { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: `Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same ${ETIHAD_PROMO_SHORT}.`, tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Delhi (DEL)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Delhi.", tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Mumbai (BOM)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Mumbai.", tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Bengaluru (BLR)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["dubai", "india"] },
@@ -846,7 +871,7 @@ const DIRECT_ROUTES = [
   { from: "Dublin (DUB)", to: "New York (JFK)", duration: "7h 30m", note: "Delta. ✓ Cabin direct to the US for small dogs, cats and household birds ($200 each way, payable at check-in). Must be a true Delta-operated flight (DL45 daily) — not an Aer Lingus or JetBlue codeshare, since those carriers don't take cabin pets. Soft-sided carrier max 18 × 11 × 11 in (45 × 28 × 28 cm), must fit under seat. Aircraft is usually a Boeing 767-400 or A330-300, both with confirmed under-seat space. Pets cannot travel cargo or checked baggage on this route, cabin only. Notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Some third-party policy lists still show Ireland as banned on Delta — that information is out of date; confirm directly with Delta Reservations at booking.", tags: ["us"] },
 
   // ═══════ FROM LONDON ═══════
-  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg) — Etihad's restrictions block 'flights to London/Manchester' (inbound), not flights out. Promo $399 per segment through May 2026. The cabin route into the UAE — AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.", tags: ["uk-out", "dubai"] },
+  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: `Etihad. ✓ Cabin OUT of UK (under 8 kg) — Etihad's restrictions block 'flights to London/Manchester' (inbound), not flights out. ${ETIHAD_PROMO_SHORT}. The cabin route into the UAE — AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.`, tags: ["uk-out", "dubai"] },
   { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin out of UK (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Istanbul (IST)", duration: "3h 50m", note: "Turkish Airlines. ✓ Cabin out of UK (under 8 kg, economy only since April 2026).", tags: ["uk-out", "europe"] },
@@ -906,7 +931,7 @@ const DIRECT_ROUTES = [
   { from: "Tokyo (NRT)", to: "Oslo (OSL)", duration: "11h 30m", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Reverse of the OSL→NRT cabin route. Tapeworm treatment for dogs required before Norway entry. SAS is one of the very few airlines offering cabin pets Tokyo→Europe direct.", tags: ["japan", "europe"] },
 
   // ═══════ FROM MANCHESTER ═══════
-  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
+  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: `Etihad. ✓ Cabin out of UK (under 8 kg). ${ETIHAD_PROMO_SHORT}.`, tags: ["uk-out", "dubai"] },
   { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
 
   // ═══════ FROM VANCOUVER ═══════
@@ -1422,7 +1447,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
       { route: "Layover at CDG", time: "3–4h", airline: "Recommended buffer for pet handover" },
-      { route: "Paris CDG → Abu Dhabi AUH", time: "6h 45m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "Paris CDG → Abu Dhabi AUH", time: "6h 45m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
     ],
     note: "No direct US ↔ UAE cabin flight exists on any airline. The cabin route uses Paris (or Frankfurt/Amsterdam/Zurich) as the pivot, then Etihad onward to Abu Dhabi. Abu Dhabi is 90 min from Dubai by road.",
     tags: ["us", "dubai", "europe"],
@@ -1446,7 +1471,7 @@ const WORKAROUND_ROUTES_TABLE = [
     to: "Dubai (DXB)",
     duration: "~9h total + 90min drive",
     legs: [
-      { route: "LHR → Abu Dhabi AUH", time: "7h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "LHR → Abu Dhabi AUH", time: "7h 30m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
       { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
     ],
     note: "Etihad is the only airline that allows cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. From AUH it's a 90-minute drive to Dubai. The neat thing about this route: you fly direct from Heathrow with your pet in cabin and skip a stopover entirely. Manchester also works (same Etihad cabin policy).",
@@ -1458,7 +1483,7 @@ const WORKAROUND_ROUTES_TABLE = [
     to: "Dubai (DXB)",
     duration: "~5h total + 90min drive",
     legs: [
-      { route: "DEL/BOM → Abu Dhabi AUH", time: "3h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "DEL/BOM → Abu Dhabi AUH", time: "3h 30m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
       { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
     ],
     note: "No airline allows cabin pets INTO Dubai (DXB) — UAE law. The workaround: fly cabin into Abu Dhabi on Etihad (cabin from Delhi, Mumbai, Bangalore, and Chennai all permitted), then 90-minute road transfer to Dubai. Etihad cabin from Indian airports outside those four is NOT permitted (Ahmedabad, Jaipur, Kochi excluded).",
@@ -5994,7 +6019,7 @@ function assess(answers) {
       severity: "impossible",
       title: "No cabin entry to Dubai — cargo only into DXB",
       detail: "Every pet entering Dubai (DXB) must arrive as manifested cargo, regardless of airline. This is UAE federal law applying to all carriers.",
-      workaround: "The cabin workaround DOES exist via Abu Dhabi: Etihad accepts cabin pets under 8 kg into Abu Dhabi (AUH) — the only airline that does. Promo fee currently $399/segment through May 2026 (down from $1,500). From AUH, it's a 90-minute taxi (around AED 250) to Dubai. See the LHR/Mumbai/JFK → Abu Dhabi routes. For larger pets: cargo into DXB via Emirates SkyCargo + Dubai Kennels & Cattery (DKC) as broker.",
+      workaround: `The cabin workaround DOES exist via Abu Dhabi: Etihad accepts cabin pets under 8 kg into Abu Dhabi (AUH) — the only airline that does. ${ETIHAD_PROMO_WORKAROUND}. From AUH, it's a 90-minute taxi (around AED 250) to Dubai. See the LHR/Mumbai/JFK → Abu Dhabi routes. For larger pets: cargo into DXB via Emirates SkyCargo + Dubai Kennels & Cattery (DKC) as broker.`,
     });
     warnings.push({
       title: "MOCCAE permit valid only 30 days",
@@ -6409,7 +6434,7 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-6 md:pt-8 pb-10 md:pb-24 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-6 md:pt-8 pb-10 md:pb-12 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
@@ -7456,7 +7481,7 @@ const DESTINATIONS = [
         title: "The Abu Dhabi back door — Etihad cabin (this is THE route)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
         body: "Etihad is the only airline accepting cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. Combined pet + carrier max 8 kg (17.6 lb). Carrier max 40 × 40 × 22 cm under-seat (or 50 × 43 × 50 cm if you buy the adjacent seat). All other UAE requirements still apply (MOCCAE permit, microchip, rabies, etc.). Abu Dhabi to Dubai is a 90-minute drive — taxis are easy, around AED 250. Note: Etihad cabin is NOT allowed on USA, UK, Australia or Hong Kong routes.",
-        cost: "PROMO: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
+        cost: ETIHAD_PROMO_COST_DETAIL,
       },
       {
         title: "Myth check: 'I heard you can fly cabin to Dubai now'",

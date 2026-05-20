@@ -95,9 +95,9 @@ export default function JapanPetTravel() {
                 </p>
               </div>
               <div>
-                <h3 className="font-serif text-lg text-stone-900 mb-1.5">3. Mexico ↔ Japan via Aeromexico</h3>
+                <h3 className="font-serif text-lg text-stone-900 mb-1.5">3. Mexico / Latin America → Japan via US west coast</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Aeromexico flies MEX ↔ NRT direct with cabin pets accepted, combined weight 9 kg. About 14 hours flight time. Useful for Latin American travellers, or as a routing option for US travellers who can position to Mexico City cheaply. Snub-nosed breeds are welcome in cabin.
+                  There is no direct cabin pet route from Mexico or Latin America to Japan. Aeromexico's Mexico City–Tokyo direct service is sometimes described as cabin pet–friendly, but Aeromexico's own published policy restricts cabin pets to flights under 6 hours, and the MEX-NRT route itself appears to have been suspended in early 2026. The cabin workaround: route Mexico City → US west coast (LAX/SFO) on Aeromexico or Volaris (~3-4 hours, well within Aeromexico's 6-hour rule), then United LAX/SFO → Tokyo direct (cabin pet, no weight limit, $150). Two segments, but both viable cabin.
                 </p>
               </div>
             </div>

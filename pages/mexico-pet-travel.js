@@ -142,13 +142,13 @@ export default function MexicoPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Aeroméxico</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Mexico's flag carrier takes cabin pets on many domestic and international routes, including connections to Europe. For travel within Mexico or onward across the Atlantic, Aeroméxico is the natural choice.
+                  Mexico's flag carrier takes cabin pets on most domestic and short-haul international routes — and crucially, only on flights under 6 hours. That covers all of Mexico, the US, Central America, and the Caribbean. For transatlantic routes (Paris, Madrid, Amsterdam, Rome), Aeroméxico's own example pages do mention these as pet-friendly segments, but the 6-hour rule from their published policy would technically exclude them. Confirm cabin pet acceptance in writing before booking transatlantic.
                 </p>
               </div>
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">From Europe</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Air France flies cabin pets Paris to Mexico, and there are connecting cabin options via the major European hubs. From the UK, the route is the usual cabin-out-of-the-UK pattern — fly cabin to a European hub, then onward — since no airline flies cabin pets out of the UK direct to Mexico.
+                  Air France flies cabin pets Paris to Mexico, and KLM connects via Amsterdam. From the UK, the route is the usual cabin-out-of-the-UK pattern — fly cabin to a European hub, then onward — since no airline flies cabin pets out of the UK direct to Mexico.
                 </p>
               </div>
             </div>
@@ -169,7 +169,7 @@ export default function MexicoPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>From Europe:</strong> Air France flies cabin pets Paris to Mexico, and Aeroméxico connects the major European hubs. Expect a long-haul flight of 11 hours or more — worth planning a calm routing and confirming the cabin pet space well ahead.
+              <strong>From Europe:</strong> Air France flies cabin pets Paris to Mexico, and KLM connects via Amsterdam. Aeroméxico's own example page does mention Mexico City–Paris as a pet-friendly route, but their published 6-hour cabin pet rule technically excludes transatlantic — written confirmation before booking is essential. Expect a long-haul flight of 11 hours or more — worth planning a calm routing and confirming the cabin pet space well ahead.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">

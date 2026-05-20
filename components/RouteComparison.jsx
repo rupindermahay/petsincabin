@@ -85,6 +85,7 @@ const ROUTES = [
       "Shuttle fare · £195 (1 person + 1 pet, all-in)",
       "Second pet · +£85",
       "Train to Calais Frethun · £30–£70 per person",
+      "Excess luggage · £75/bag (£100 on the day)",
     ],
     taxiTotal: "≈ £230–£300 one way (1 person + 1 pet)",
     // This route's secondary cost is a scheduled shuttle, not a private pet
@@ -599,7 +600,7 @@ export default function RouteComparison() {
                               </span>
                             )}
                           </div>
-                          <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
+                          <span className="block font-semibold text-stone-900 mt-2">
                             {r.driveTotal}
                           </span>
                         </div>
@@ -612,9 +613,6 @@ export default function RouteComparison() {
                         </span>
                       ) : r.taxiCost ? (
                         <div className="flex flex-col h-full">
-                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                            {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
-                          </span>
                           <div className="flex-grow">
                             {r.taxiCost.map((c, i) => (
                               <span
@@ -625,7 +623,7 @@ export default function RouteComparison() {
                               </span>
                             ))}
                           </div>
-                          <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
+                          <span className="block font-semibold text-stone-900 mt-2">
                             {r.taxiTotal}
                           </span>
                         </div>

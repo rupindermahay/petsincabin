@@ -6247,6 +6247,18 @@ function NavBar({ onStartIntake }) {
             </div>
           </button>
 
+          {/* Updated timestamp — sits between logo and nav. Tiny, clickable,
+              jumps to the What's New section. Separate <a> (not nested in the
+              logo button) to keep markup valid. */}
+          <a
+            href="#whats-new"
+            className="hidden lg:flex flex-col justify-center text-[9px] uppercase tracking-[0.18em] text-stone-400 hover:text-amber-700 transition-colors leading-tight font-sans whitespace-nowrap self-center"
+            title="See what's new"
+          >
+            <span>Updated</span>
+            <span>{LAST_UPDATED}</span>
+          </a>
+
           {/* Hairline divider between logo and nav rows */}
           <div className="w-px bg-stone-200 self-stretch" />
 
@@ -11704,7 +11716,7 @@ function Tips() {
             {
               tag: "On the unexpected",
               title: "Have a Plan B.",
-              body: "Save your destination's nearest 24-hour vet in your phone before you leave — and the one near your origin airport too, in case of a same-day issue at check-in. Pack copies of vaccination records in a clear Ziploc inside the carrier (not buried in your suitcase), and have photos of everything on your phone. If you're connecting, build in at least 90 minutes between flights — pet relief areas are usually a long hike from gates, and pet check-in counters at connection hubs are often unstaffed or shared with oversized baggage. The single most useful thing on a delayed travel day: a pre-packed pouch with two days' worth of pet food in a sealed bag, in case checked baggage is rerouted while you stay with your pet. And for a big, can't-fail move — an international relocation, say — think hard before booking the cheapest non-changeable fare. Pets do occasionally get refused at the gate: a carrier that's a centimetre too tall, a paperwork query, or the flight's pet quota already full. On a rigid fare that's your ticket gone. A changeable fare costs more, but it means that if your pet is turned away you can rebook and try again another day instead of losing everything. It won't re-secure the pet slot itself — that's a separate, often phone-only booking — but it buys you the time and room to regroup. For a once-in-a-lifetime move, treat the fare premium as cheap insurance.",
+              body: "Save the destination's nearest 24-hour vet in your phone before you leave — and one near your origin airport too. Keep copies of vaccination records in a Ziploc inside the carrier (not buried in your suitcase) and on your phone. If you're connecting, build in at least 90 minutes — pet relief areas are usually a long hike from gates. And for a once-in-a-lifetime move, think hard before booking the cheapest non-changeable fare: pets do occasionally get refused at the gate (a carrier a centimetre too tall, a paperwork query, the pet quota already full), and on a rigid fare that's your ticket gone. A changeable fare costs more, but it means you can regroup and try again. Treat the premium as cheap insurance.",
             },
             {
               tag: "On comfort items",
@@ -12584,7 +12596,7 @@ function WhatsNew() {
   ];
 
   return (
-    <section className="py-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60">
+    <section id="whats-new" className="py-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-3">
           <span className="text-xs uppercase tracking-[0.25em] text-amber-700 font-medium">

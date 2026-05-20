@@ -6201,7 +6201,7 @@ function NavBar({ onStartIntake }) {
                 ))}
               </span>
               <span
-                className="text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+                className="block w-full text-center text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
               >
                 Updated {LAST_UPDATED}
               </span>
@@ -6250,7 +6250,7 @@ function NavBar({ onStartIntake }) {
                 ))}
               </span>
               <span
-                className="text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+                className="block w-full text-center text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
               >
                 Updated {LAST_UPDATED}
               </span>

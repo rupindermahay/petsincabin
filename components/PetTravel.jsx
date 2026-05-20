@@ -214,12 +214,12 @@ const AIRLINES = [
   },
   {
     name: "Air Canada",
-    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico", "korea"],
+    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico", "korea", "india"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic Canada, US, continental Europe, and OUT of UK (LHR, Edinburgh — same asymmetric pattern as KLM/Lufthansa). Cabin NOT allowed: INTO UK (cargo only — UK government rule for pet entry), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados, Trinidad & Tobago. Important June 2025 rule change: only SOFT-sided carriers accepted in cabin — hard kennels no longer permitted.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "CAD $50–$60 domestic / $100–$120 international",
     weight: "Pet + carrier max 22 lb (10 kg)",
     carrier: "Soft-sided only (since June 2025). Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — varies by aircraft, confirm at booking",
@@ -1028,7 +1028,7 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM SÃO PAULO ═══════
   { from: "São Paulo (GRU)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — note: cabin pet service on this route currently suspended due to CDC dog rules; verify status before booking. American Airlines: cargo only (PetEmbark). Brazil's main US gateway — daily.", tags: ["south-america", "us"] },
-  { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg, ~USD 200). Direct overnight.", tags: ["south-america", "us"] },
+  { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM cabin (under 7 kg, ~USD 200) — note: cabin pet service on US ↔ Brazil routes currently suspended due to CDC dog rules; verify status with LATAM before booking. Direct overnight when operating.", tags: ["south-america", "us"] },
   { from: "São Paulo (GRU)", to: "Madrid (MAD)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin. The main South America → Europe cabin route. Onward to most of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Paris (CDG)", duration: "11h 30m", note: "Air France, LATAM. ✓ Cabin. Onward to all of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Buenos Aires (EZE)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin (LATAM under 7 kg). The main intra-South-America cabin pet hop.", tags: ["south-america"] },
@@ -1066,7 +1066,7 @@ const DIRECT_ROUTES = [
   { from: "Madrid (MAD)", to: "Buenos Aires (EZE)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. Reverse of EZE→MAD — Spain is Latin America's main European gateway.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
-  { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg).", tags: ["us", "south-america"] },
+  { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM cabin (under 7 kg) — note: cabin pet service on US ↔ Brazil routes currently suspended due to CDC dog rules; verify status with LATAM before booking.", tags: ["us", "south-america"] },
 
   // ═══════ COPA AIRLINES VIA PANAMA — deeper South America cabin routes ═══════
   { from: "Miami (MIA)", to: "Panama City (PTY)", duration: "2h 50m", note: "Copa Airlines. ✓ Cabin (under 10 kg, $125 international). Copa's main US gateway — best onward connections to deeper South America (Uruguay, Paraguay, Bolivia, Ecuador).", tags: ["us", "central-america"] },
@@ -6466,7 +6466,7 @@ function Hero({ onStart }) {
         <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl mx-auto">
           {[
             { num: "08", label: "Quick questions" },
-            { num: "32", label: "Airlines compared" },
+            { num: "34", label: "Airlines compared" },
             { num: "14", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i} className="text-center">

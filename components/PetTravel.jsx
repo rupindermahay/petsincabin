@@ -223,7 +223,7 @@ const AIRLINES = [
     fee: "CAD $50–$60 domestic / $100–$120 international",
     weight: "Pet + carrier max 22 lb (10 kg)",
     carrier: "Soft-sided only (since June 2025). Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — varies by aircraft, confirm at booking",
-    notes: "Important rule change effective June 2025: hard-sided carriers no longer accepted in cabin — only soft-sided. Cabin rules are directional like other major European carriers: pets CAN fly with you in cabin from London Heathrow or Edinburgh TO Canada, but the return leg into UK is cargo-only because UK government rules block pets entering as cabin or checked baggage. Confirm directly at booking. Aircraft-specific carrier sizes — confirm at booking. Combined weight strictly enforced. Pet booking required within 24 hours of buying your own ticket.",
+    notes: "Soft-sided carriers only since 1 June 2025 (Air Canada formalised this; hard-sided had always been a poor fit for the under-seat space anyway). Cabin rules are directional like other major European carriers: pets CAN fly with you in cabin from London Heathrow or Edinburgh TO Canada, but the return leg into UK is cargo-only because UK government rules block pets entering as cabin or checked baggage. Confirm directly at booking. Aircraft-specific carrier sizes — confirm at booking. Combined weight strictly enforced. Pet booking required within 24 hours of buying your own ticket.",
     intl: "Yes",
     verified: "May 2026",
     link: "https://www.aircanada.com/ca/en/aco/home/plan/special-assistance/pets.html",
@@ -12557,9 +12557,9 @@ const COUNTRY_GUIDES = [
 ];
 
 function WhatsNew() {
-  // Recent verified rule changes. Order matters — most consequential first.
-  // Keep this short (5-6 items max). Pruned and updated each time something
-  // material changes in the world of pet travel.
+  // Recent verified rule changes from airlines and regulators only — not
+  // site housekeeping. Order matters: most consequential first. Keep this
+  // short and pruned each time something material changes.
   const ITEMS = [
     {
       date: "22 Apr 2026",
@@ -12570,13 +12570,13 @@ function WhatsNew() {
     {
       date: "May 2026",
       headline: "Delta now carries cabin pets to Ireland",
-      body: "Verified via Delta's own international travel page and a traveller flight at Easter: JFK ⇄ Dublin direct, true Delta-operated flights only (not Aer Lingus or JetBlue codeshares), $200 each way at check-in. Most third-party policy lists still show Ireland as banned on Delta — that's out of date.",
+      body: "Delta's own international travel page confirms cabin pet travel to the Republic of Ireland on true Delta-operated flights (JFK ⇄ DUB direct, $200 each way at check-in, advance notification required to petmove@agriculture.gov.ie). Most third-party policy lists still show Ireland as banned on Delta — that information is out of date.",
       tag: "Delta",
     },
     {
       date: "Jun 2025",
-      headline: "Air Canada: soft-sided carriers only in cabin",
-      body: "Hard-sided kennels are no longer accepted under the seat — only soft carriers. Combined weight limit (pet + carrier) stays at 10 kg. Aircraft-specific sizes apply, so confirm at booking.",
+      headline: "Air Canada formalised soft-sided-only cabin carriers",
+      body: "Air Canada's news page confirmed that from 1 June 2025, hard-sided kennels are no longer accepted under the seat on flights operated by Air Canada, Rouge or Express. Soft-sided had long been the recommendation; this makes it a firm rule. Combined weight limit (pet + carrier) stays at 10 kg.",
       tag: "Air Canada",
     },
     {
@@ -12584,12 +12584,6 @@ function WhatsNew() {
       headline: "ITA Airways: dogs up to 30 kg in cabin",
       body: "Italy's civil aviation authority (ENAC) approved a new rule allowing medium and large dogs in the cabin on selected 'large pet-friendly' domestic Italian flights. ITA Airways is the first carrier rolling it out; an extra seat purchase is required. Watch for the public booking launch through summer 2026.",
       tag: "ITA",
-    },
-    {
-      date: "May 2026",
-      headline: "Finnair and Helsinki added",
-      body: "Both were missing from earlier versions of the site. Finnair carries cabin pets on most routes (8 kg combined limit) including Helsinki ⇄ Dublin and the polar-route hops to Japan and Korea, but not UK / Hong Kong / UAE / Australia.",
-      tag: "Finnair",
     },
   ];
 

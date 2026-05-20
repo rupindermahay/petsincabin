@@ -576,11 +576,11 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Journey time — label / body / total */}
-                  <div className={`py-3 px-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
+                  <div className="py-3 px-3 flex flex-col">
                     <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                       Breakdown
                     </span>
-                    <div className={r.centerCells ? "" : "flex-grow"}>
+                    <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
                       {r.timeLegs &&
                         r.timeLegs.map((leg, i) => (
                           <span
@@ -597,13 +597,13 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Self-drive cost — label / body / total */}
-                  <div className={`py-3 px-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
+                  <div className="py-3 px-3 flex flex-col">
                     {r.driveNA ? (
                       <>
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Not applicable
                         </span>
-                        <div className={r.centerCells ? "" : "flex-grow"}>
+                        <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
                           <span className="text-xs text-stone-500 italic">
                             {r.driveNA}
                           </span>
@@ -614,7 +614,7 @@ export default function RouteComparison() {
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Self-drive
                         </span>
-                        <div className={r.centerCells ? "" : "flex-grow"}>
+                        <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
                           {r.driveCost &&
                             r.driveCost.map((c, i) => (
                               <span
@@ -638,13 +638,13 @@ export default function RouteComparison() {
                   </div>
 
                   {/* Pet taxi / shuttle / ferry cost — label / body / total */}
-                  <div className={`py-3 pl-3 flex flex-col${r.centerCells ? " justify-center" : ""}`}>
+                  <div className="py-3 pl-3 flex flex-col">
                     {r.taxiNA ? (
                       <>
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           Not applicable
                         </span>
-                        <div className={r.centerCells ? "" : "flex-grow"}>
+                        <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
                           <span className="text-xs text-stone-500 italic">
                             {r.taxiNA}
                           </span>
@@ -655,7 +655,7 @@ export default function RouteComparison() {
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                           {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
                         </span>
-                        <div className={r.centerCells ? "" : "flex-grow"}>
+                        <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
                           {r.taxiCost.map((c, i) => (
                             <span
                               key={i}

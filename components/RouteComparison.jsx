@@ -538,13 +538,13 @@ export default function RouteComparison() {
                     Route
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Journey time
+                    Time
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Cost — self-drive
+                    Cost
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
-                    Cost — pet taxi / shuttle / ferry
+                    Cost
                   </th>
                 </tr>
               </thead>
@@ -564,20 +564,23 @@ export default function RouteComparison() {
                     </td>
                     <td className="py-3 px-3 align-top">
                       <div className="flex flex-col h-full">
-                        <span className="font-medium text-stone-900">
+                        <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                          Journey time
+                        </span>
+                        <div className="flex-grow">
+                          {r.timeLegs &&
+                            r.timeLegs.map((leg, i) => (
+                              <span
+                                key={i}
+                                className="block text-xs text-stone-500"
+                              >
+                                {leg}
+                              </span>
+                            ))}
+                        </div>
+                        <span className="block font-semibold text-stone-900 mt-2">
                           {r.timeHeadline}
                         </span>
-                        {r.timeLegs &&
-                          r.timeLegs.map((leg, i) => (
-                            <span
-                              key={i}
-                              className={`block text-xs text-stone-500${
-                                i === 0 ? " mt-0.5" : ""
-                              }`}
-                            >
-                              {leg}
-                            </span>
-                          ))}
                       </div>
                     </td>
                     <td className="py-3 px-3 align-top">
@@ -587,6 +590,9 @@ export default function RouteComparison() {
                         </span>
                       ) : (
                         <div className="flex flex-col h-full">
+                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                            Self-drive
+                          </span>
                           <div className="flex-grow">
                             {r.driveCost &&
                               r.driveCost.map((c, i) => (
@@ -616,6 +622,9 @@ export default function RouteComparison() {
                         </span>
                       ) : r.taxiCost ? (
                         <div className="flex flex-col h-full">
+                          <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                            {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
+                          </span>
                           <div className="flex-grow">
                             {r.taxiCost.map((c, i) => (
                               <span

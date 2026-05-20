@@ -12731,9 +12731,17 @@ function WhatsNew() {
           ))}
         </div>
 
-        <p className="font-serif italic text-stone-500 text-sm mt-8 max-w-2xl">
-          Spotted something out of date? Email <a href="mailto:petincabinguide@gmail.com" className="text-amber-700 hover:text-amber-600">petincabinguide@gmail.com</a> and we'll verify and fix it.
-        </p>
+        <div className="flex flex-wrap items-baseline justify-between gap-4 mt-8">
+          <p className="font-serif italic text-stone-500 text-sm max-w-2xl">
+            Spotted something out of date? Email <a href="mailto:petincabinguide@gmail.com" className="text-amber-700 hover:text-amber-600">petincabinguide@gmail.com</a> and we'll verify and fix it.
+          </p>
+          <a
+            href="/updates"
+            className="text-xs uppercase tracking-[0.2em] text-amber-700 hover:text-amber-600 transition-colors whitespace-nowrap"
+          >
+            View full archive →
+          </a>
+        </div>
       </div>
     </section>
   );

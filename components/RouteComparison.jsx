@@ -268,14 +268,14 @@ const ROUTES = [
       "Arrive North Shields, Newcastle — continue overland",
     ],
     driveCost: [
-      "Ferry passage (with car) · included in cabin price",
+      "Ferry (with car) · included in cabin price",
       "Pet-friendly cabin · £150–£350 (4-berth)",
       "Pet fee · £30 each way",
     ],
     driveTotal: "≈ £200–£420 one way (with car)",
     taxiCost: [
       "Foot passenger fare · included in cabin price",
-      "Pet-friendly cabin · £150–£210 (4-berth, 2 dogs)",
+      "Pet-friendly cabin · £150–£210 (up to 2 dogs)",
       "Pet fee · £30 each way",
     ],
     taxiTotal: "≈ £180–£240 one way (1 person + 1 pet)",
@@ -524,10 +524,10 @@ export default function RouteComparison() {
           <div className="hidden md:block overflow-x-auto md:-mx-12 lg:-mx-24 xl:-mx-32">
             <table className="w-full text-sm border-collapse table-fixed">
               <colgroup>
-                <col style={{ width: "12%" }} />
-                <col style={{ width: "20%" }} />
-                <col style={{ width: "34%" }} />
-                <col style={{ width: "34%" }} />
+                <col style={{ width: "22%" }} />
+                <col style={{ width: "26%" }} />
+                <col style={{ width: "26%" }} />
+                <col style={{ width: "26%" }} />
               </colgroup>
               <thead>
                 <tr className="border-b-2 border-stone-300 align-bottom">

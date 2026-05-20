@@ -474,8 +474,13 @@ export default function RouteComparison() {
                         {r.driveCostNote}
                       </div>
                     )}
-                    <div className="font-serif text-base text-stone-900 font-semibold mb-3 pt-1.5 border-t border-stone-200">
-                      {r.driveTotal}
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold">
+                        Total
+                      </span>
+                      <span className="font-serif text-base text-stone-900 font-semibold">
+                        {r.driveTotal}
+                      </span>
                     </div>
                   </>
                 )}
@@ -494,8 +499,13 @@ export default function RouteComparison() {
                         <li key={i}>{c}</li>
                       ))}
                     </ul>
-                    <div className="font-serif text-base text-stone-900 font-semibold pt-1.5 border-t border-stone-200">
-                      {r.taxiTotal}
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold">
+                        Total
+                      </span>
+                      <span className="font-serif text-base text-stone-900 font-semibold">
+                        {r.taxiTotal}
+                      </span>
                     </div>
                     <div className="text-xs text-stone-500">
                       {r.taxiCaption ||

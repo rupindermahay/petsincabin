@@ -81,7 +81,7 @@ function isTransitLeg(legRoute) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "19 May 2026";
+const LAST_UPDATED = "20 May 2026";
 
 // ---------- DATA ----------
 
@@ -1933,7 +1933,10 @@ const airportLabel = (code) => {
 // - Cabin OUT of the UK/Ireland to Europe IS allowed (Air France, KLM, Lufthansa).
 // - Etihad: cabin OUT of Abu Dhabi to Europe allowed; cabin INTO the UAE blocked
 //   on "flights to" the UAE — Dubai (DXB) is cargo-only for all airlines.
-// - Air India: cargo-only to/from the UK; cabin allowed DEPARTING the UAE.
+// - Air India: cargo-only to/from the UK (LHR/LGW only — no pet service from BHX);
+//   no service of any kind to/from USA, Canada or Australia; cabin allowed
+//   DEPARTING the UAE (UAE→India only — reverse direction blocked); Ultra
+//   Long Haul flights have no cabin pets even when otherwise eligible.
 // - Transatlantic cabin works between European hubs and major US cities
 //   (Air France, KLM, Lufthansa, Delta, etc.).
 const REGION_PAIR_STRATEGIES = {
@@ -2070,9 +2073,9 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "7–9h", airline: "Lufthansa / Air France ✓ Cabin" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–9h", airline: "Air India 'Paws on Board' / confirm with operating airline" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Same carrier as your first leg ✓ Cabin (single-carrier through-ticket — see note)" },
     ],
-    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India. Air India flies cabin pets from Europe (e.g. CDG → Delhi). India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
+    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India on the SAME carrier (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Air India does not accept pet connections from other airlines, so any path that puts Air India on the second leg won't work for a through-ticket. Book it as one ticket on Lufthansa or Air France. India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
   }),
 
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
@@ -2283,7 +2286,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
       { route: `Hub → ${d}`, time: "8–10h", airline: "Lufthansa / Air France / Delta ✓ Cabin" },
     ],
-    note: `India→USA in cabin routes via a European hub — there's no direct cabin route (Air India is cargo-only to the US, and the 'India→Tokyo→US' cabin route is a myth, JAL/ANA don't take cabin pets internationally). For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
+    note: `India→USA in cabin routes via a European hub on a single carrier — there's no direct cabin route (Air India does not transport pets to/from the USA in any form, and the 'India→Tokyo→US' cabin route is a myth — JAL/ANA don't take cabin pets internationally). Book Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris — a single through-ticket avoids the interline issue. For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
   }),
   "india>mexico": (o, d) => ({
     legs: [

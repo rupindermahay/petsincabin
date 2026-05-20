@@ -104,7 +104,7 @@ export default function SouthAmericaPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Aeromexico</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Links Mexico City to São Paulo, Buenos Aires, Santiago, Bogotá, and Lima with cabin pets (9 kg combined). Useful if you're connecting through Mexico from the US or beyond. Snub-nosed breeds welcome in cabin.
+                  Connects Mexico City to several South American capitals (Bogotá, Lima, San José within the 6-hour window; São Paulo, Buenos Aires and Santiago beyond it). Cabin pets are capped at 9 kg combined, and Aeromexico's own policy restricts cabin pets to flights of 6 hours or less — useful for the shorter pairs, but the longer pairs are blocked under the published rule. Aeromexico's example page does cite Mexico City–Paris as an exception, so call to confirm in writing before booking anything over 6 hours. Snub-nosed breeds are welcome in cabin.
                 </p>
               </div>
               <div>
@@ -369,7 +369,7 @@ export default function SouthAmericaPetTravel() {
 
               <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">Japan guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">Aeromexico → Tokyo is a rare cabin option from Latin America.</div>
+                <div className="text-xs text-stone-600 leading-relaxed">From Latin America to Japan in cabin — the realistic paths via Mexico, Korea or the US.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

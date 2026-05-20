@@ -113,22 +113,22 @@ export default function SeattlePetTravel() {
           <section id="sea-to-india" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">02 · SEA to India</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              The shortest cabin route: SEA → SFO → DEL/BOM
+              The cabin path: SEA → Frankfurt or Paris → India
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              No direct cabin pet flight Seattle to India exists. The cleanest path is via San Francisco on Air India's Paws on Board direct.
+              There is no direct cabin pet flight from Seattle to India. The working path is two cabin legs on the same carrier via a European hub.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The route:</strong> Alaska or Delta SEA → SFO (about 2 hours), then connect to Air India's direct flight from SFO to Delhi, Mumbai, Bengaluru, or Hyderabad. The full journey is roughly 21 hours including connection.
+              <strong>Why no direct option:</strong> Air India does not transport pets to or from the USA in any form (not cabin, not baggage, not cargo) — and the airline does not accept pet connections from other airlines, so any path that tries to use Air India on the second leg won't work for a through-ticket. That makes a single-carrier European route the only practical way.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The catch:</strong> two separate tickets if you book Alaska and Air India independently. This means you'll re-check the pet at SFO. Plan a 4–5 hour layover minimum so there's time for the airline transfer plus a pet relief break. SFO has post-security pet relief in Terminals 2 and 3 — useful here.
+              <strong>The route:</strong> Lufthansa end-to-end from SEA via Frankfurt to Delhi, Mumbai, Hyderabad or Chennai — one ticket, one airline, one bag transfer. Allow 3+ hours at FRA (overnight is gentler on the pet). Total time roughly 22–24 hours. Note Lufthansa specifically excludes Bangalore from cabin pets, so for BLR route via Air France through Paris instead.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Alternative:</strong> Lufthansa SEA → FRA → DEL/BOM/HYD/MAA on a single ticket. Better for connection logistics (one airline, one bag handling), but the SEA → FRA leg is 10+ hours and FRA → India is another 8–9 hours. Note Lufthansa's Bangalore exclusion.
+              <strong>Alternative:</strong> Air France end-to-end from SEA via Paris (CDG) to Delhi, Mumbai or Bengaluru. Slightly different timing, same single-carrier benefit. Useful if the Lufthansa fares or schedule don't work, or if you're heading to BLR.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">

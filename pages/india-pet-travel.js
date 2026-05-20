@@ -77,26 +77,30 @@ export default function IndiaPetTravel() {
           <section id="cabin-pets-india" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">01 · Cabin pets</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Air India's Paws on Board changed the game in 2026
+              India ↔ Europe and Asia in cabin — but the USA still needs a European hub
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              For the first time, you can fly your dog or cat in cabin direct between major Indian cities and the USA, Europe, and Canada — on a single airline, no transit-country shuffle.
+              Air India's Paws on Board makes India ↔ Europe and India ↔ Asia routes genuinely workable in cabin. The long-haul Americas trip still needs the via-Europe pattern.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Air India's Paws on Board programme allows cabin pets up to 10 kg (combined pet plus carrier weight) on 80+ international routes including direct flights to JFK, SFO, IAD, ORD, EWR, and YYZ. The carrier sits at your feet in the last economy row. Booking is via Air India customer support at least 48 hours before departure (reduced from 72 hours in 2026).
+              Air India's Paws on Board programme allows cabin pets up to 10 kg (combined pet plus carrier weight) on 80+ sectors. Cabin is permitted on domestic Indian flights, India ↔ Europe (excluding the UK — Frankfurt, Paris, Amsterdam, Israel etc.), and India ↔ Asia (UAE, Japan, Korea, Hong Kong, Thailand, Singapore and many more). The carrier sits at your feet in the last economy row. Booking is via Air India customer support at least 48 hours before departure (reduced from 72 hours in 2026).
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The exclusions matter.</strong> Air India does NOT permit cabin pets on flights to/from the UK (cargo hold only — this is a UK government embargo, not Air India's choice) or departing India to the UAE (cabin allowed in the opposite direction). For UK arrival, you'll still need the Paris-pivot workaround — fly to Frankfurt or Paris first, then Eurotunnel.
+              <strong>The exclusions matter.</strong> Air India does NOT transport pets to or from the USA, Canada or Australia in any form — not cabin, not checked baggage, not cargo. The UK is cargo only and only at London Heathrow (LHR) and Gatwick (LGW); there is no pet service at all from Birmingham (BHX). And cabin is barred on flights departing India and arriving in the UAE — though UAE → India in cabin is permitted. There's also a separate Ultra Long Haul cabin ban that rules out cabin on Air India's longest sectors even when the destination is otherwise eligible.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Other cabin options:</strong> Lufthansa cabin pets to/from FRA on most Indian routes (but specifically excludes Bangalore — BLR is not eligible for Lufthansa cabin). KLM and Air France to AMS/CDG. Etihad direct DEL/BOM/BLR/MAA/CCU/HYD ↔ AUH (Abu Dhabi only — not Dubai). Air Canada direct YYZ ↔ DEL. Turkish Airlines via Istanbul. All require their own paperwork plus India's AQCS NOC.
+              <strong>For the USA, Canada or the UK: route via Europe on a single carrier.</strong> Lufthansa end-to-end via Frankfurt or Air France end-to-end via Paris is the workable pattern. A single-carrier through-ticket matters because Air India explicitly does not accept pets connecting from other airlines, so any path that puts Air India on the second leg won't work. For the UK, you'll add the Paris-pivot — fly to Frankfurt or Paris first, then Eurotunnel.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>Other cabin options out of India:</strong> Lufthansa cabin pets to/from FRA on most Indian routes (but specifically excludes Bangalore — BLR is not eligible for Lufthansa cabin). KLM and Air France to AMS/CDG. Etihad direct DEL/BOM/BLR/MAA/CCU/HYD ↔ AUH (Abu Dhabi only — not Dubai). Air Canada direct YYZ ↔ DEL (Air Canada accepts cabin to India in both directions). Turkish Airlines via Istanbul. All require their own paperwork plus India's AQCS NOC.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              Air India's 10 kg cabin allowance is more generous than the 8 kg most European carriers offer — useful for slightly larger small dogs and most cats with carrier.
+              Air India's 10 kg cabin allowance is more generous than the 8 kg most European carriers offer — useful for slightly larger small dogs and most cats with carrier, on the routes where Air India cabin is actually available.
             </p>
           </section>
 
@@ -166,11 +170,11 @@ export default function IndiaPetTravel() {
 
             <ul className="font-serif text-stone-700 leading-relaxed mb-4 space-y-2 ml-5 list-disc">
               <li><strong>Delhi (DEL)</strong> — Indira Gandhi International. The busiest pet-arrival airport; most agents/in-country reps work here.</li>
-              <li><strong>Mumbai (BOM)</strong> — Chhatrapati Shivaji International. Strong direct cabin connections (Air India to SFO/JFK/EWR; Lufthansa to FRA).</li>
-              <li><strong>Bengaluru (BLR)</strong> — Kempegowda International. Important: Lufthansa specifically EXCLUDES Bangalore from cabin pets, but Air India direct from SFO works.</li>
+              <li><strong>Mumbai (BOM)</strong> — Chhatrapati Shivaji International. Strong cabin connections to Europe and onward to the US: Lufthansa to FRA, Air France to CDG, KLM to AMS.</li>
+              <li><strong>Bengaluru (BLR)</strong> — Kempegowda International. Important: Lufthansa specifically EXCLUDES Bangalore from cabin pets — for BLR cabin to/from Europe, use Air France via Paris (CDG) or Etihad via Abu Dhabi.</li>
               <li><strong>Chennai (MAA)</strong> — direct cabin options via Lufthansa (FRA) and Etihad (AUH).</li>
               <li><strong>Kolkata (CCU)</strong> — direct Lufthansa to/from Frankfurt.</li>
-              <li><strong>Hyderabad (HYD)</strong> — direct cabin via Air India to SFO and Lufthansa to FRA.</li>
+              <li><strong>Hyderabad (HYD)</strong> — direct cabin to Europe via Lufthansa (FRA), and to Abu Dhabi via Etihad.</li>
             </ul>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -202,7 +206,7 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              <strong>Direct cabin route:</strong> Air India Paws on Board has direct cabin flights from Delhi, Mumbai, Bengaluru, and Hyderabad to San Francisco, JFK, Newark, Chicago, and Washington Dulles. For Seattle travellers, the shortest cabin path is via SFO with an onward Alaska/Delta domestic.
+              <strong>The cabin route to the USA:</strong> there is no direct cabin option — Air India does not transport pets to or from the USA at all, and no other airline offers a direct India ↔ US cabin pet flight. The workable pattern is a single-carrier through-ticket via a European hub: Lufthansa end-to-end via Frankfurt (Lufthansa excludes Bangalore, so route via Paris for BLR), or Air France end-to-end via Paris. A single-carrier ticket matters because Air India explicitly does not accept pets connecting from other airlines, so any path that puts Air India on a second leg won't work. For Seattle travellers, the European hub option continues with an onward US-domestic flight on Alaska or Delta after arrival.
             </p>
           </section>
 
@@ -217,7 +221,7 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              From India, fly cabin to Paris CDG (Air France or Air India), Frankfurt (Lufthansa or Air India), or Amsterdam (KLM). Then take the Eurotunnel Le Shuttle (Calais → Folkestone) or a ferry to the UK. You stay with your pet the whole way.
+              From India, fly cabin to Paris CDG (Air France or Air India both serve this in cabin), Frankfurt (Lufthansa or Air India), or Amsterdam (KLM). Then take the Eurotunnel Le Shuttle (Calais → Folkestone) or a ferry to the UK. You stay with your pet the whole way. Since the second leg is overland and not another flight, the interline restriction on Air India doesn't bite here — pick whichever first-leg airline suits your origin city.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

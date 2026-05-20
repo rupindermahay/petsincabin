@@ -56,7 +56,7 @@ function isTransitLeg(legRoute) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "18 May 2026";
+const LAST_UPDATED = "19 May 2026";
 
 // ---------- DATA ----------
 
@@ -11561,7 +11561,7 @@ function Documents() {
             {
               title: "GB Animal Health Certificate (AHC)",
               when: "Leaving the UK for EU / many destinations",
-              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Since 22 April 2026, this is the required document for GB residents travelling to the EU — an EU pet passport can no longer be used for that. A new AHC is needed for each outbound trip.",
+              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 6 months for EU onward travel and return (extended from 4 months in April 2026). Since 22 April 2026, this is the required document for GB residents travelling to the EU — an EU pet passport can no longer be used for that, even if it was issued before. A new AHC is needed for each outbound trip.",
               link: { url: "https://www.gov.uk/take-pet-abroad", label: "gov.uk/take-pet-abroad" },
             },
             {
@@ -12546,6 +12546,93 @@ const COUNTRY_GUIDES = [
   { slug: "/central-america-pet-travel", flag: "🌎", name: "Central America", blurb: "Costa Rica, Panama, and the routes through." },
 ];
 
+function WhatsNew() {
+  // Recent verified rule changes. Order matters — most consequential first.
+  // Keep this short (5-6 items max). Pruned and updated each time something
+  // material changes in the world of pet travel.
+  const ITEMS = [
+    {
+      date: "22 Apr 2026",
+      headline: "EU pet passport rules changed for non-EU residents",
+      body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
+      tag: "EU",
+    },
+    {
+      date: "May 2026",
+      headline: "Delta now carries cabin pets to Ireland",
+      body: "Verified via Delta's own international travel page and a traveller flight at Easter: JFK ⇄ Dublin direct, true Delta-operated flights only (not Aer Lingus or JetBlue codeshares), $200 each way at check-in. Most third-party policy lists still show Ireland as banned on Delta — that's out of date.",
+      tag: "Delta",
+    },
+    {
+      date: "Jun 2025",
+      headline: "Air Canada: soft-sided carriers only in cabin",
+      body: "Hard-sided kennels are no longer accepted under the seat — only soft carriers. Combined weight limit (pet + carrier) stays at 10 kg. Aircraft-specific sizes apply, so confirm at booking.",
+      tag: "Air Canada",
+    },
+    {
+      date: "Summer 2026",
+      headline: "ITA Airways: dogs up to 30 kg in cabin",
+      body: "Italy's civil aviation authority (ENAC) approved a new rule allowing medium and large dogs in the cabin on selected 'large pet-friendly' domestic Italian flights. ITA Airways is the first carrier rolling it out; an extra seat purchase is required. Watch for the public booking launch through summer 2026.",
+      tag: "ITA",
+    },
+    {
+      date: "May 2026",
+      headline: "Finnair and Helsinki added",
+      body: "Both were missing from earlier versions of the site. Finnair carries cabin pets on most routes (8 kg combined limit) including Helsinki ⇄ Dublin and the polar-route hops to Japan and Korea, but not UK / Hong Kong / UAE / Australia.",
+      tag: "Finnair",
+    },
+  ];
+
+  return (
+    <section className="py-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-3">
+          <span className="text-xs uppercase tracking-[0.25em] text-amber-700 font-medium">
+            What's new
+          </span>
+          <span className="font-serif italic text-stone-500 text-sm">
+            recent rule changes &amp; site updates
+          </span>
+        </div>
+
+        <h2 className="font-serif text-3xl md:text-4xl text-stone-900 mb-3 leading-tight">
+          The rules keep changing. We keep checking.
+        </h2>
+        <p className="font-serif text-stone-600 text-lg leading-relaxed mb-10 max-w-2xl">
+          Pet-travel rules shift constantly — and most online guides go out of date within months. Here are the most consequential changes we've verified recently, with the source we used.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {ITEMS.map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border border-stone-200 p-5 rounded-sm"
+            >
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="text-xs uppercase tracking-[0.2em] text-amber-700 font-medium">
+                  {item.date}
+                </span>
+                <span className="text-xs uppercase tracking-[0.2em] text-stone-400">·</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {item.tag}
+                </span>
+              </div>
+              <h3 className="font-serif text-xl text-stone-900 mb-2 leading-snug">
+                {item.headline}
+              </h3>
+              <p className="text-sm text-stone-700 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="font-serif italic text-stone-500 text-sm mt-8 max-w-2xl">
+          Spotted something out of date? Email <a href="mailto:petincabinguide@gmail.com" className="text-amber-700 hover:text-amber-600">petincabinguide@gmail.com</a> and we'll verify and fix it.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function SiteToolsOverview() {
   // The site's tools, each as name + one line + jump link. Helps a new
   // visitor see everything on offer instead of discovering tools by scrolling.
@@ -12853,6 +12940,8 @@ export default function PetTravel() {
       <NavBar onStartIntake={startIntake} />
 
       <Hero onStart={startIntake} />
+
+      <WhatsNew />
 
       <SiteToolsOverview />
 

@@ -29,6 +29,7 @@ const ROUTES = [
     taxiCost: [
       "Driving fare · £650–£900",
       "Crossing ticket · £260–£300 (booked as return)",
+      "Deposit · ~£260 on booking (crossing fee)",
     ],
     taxiTotal: "≈ £910–£1,200 total",
     sortCost: 270,
@@ -122,6 +123,7 @@ const ROUTES = [
     taxiCost: [
       "Driving fare · £600–£1,200",
       "Crossing ticket · £260–£300 (booked as return)",
+      "Deposit · ~£260 on booking (crossing fee)",
     ],
     taxiTotal: "≈ £860–£1,500 total",
     sortCost: 370,
@@ -177,6 +179,7 @@ const ROUTES = [
     taxiCost: [
       "Driving fare · £500–£1,000",
       "Crossing ticket · £260–£300 (booked as return)",
+      "Deposit · ~£260 on booking (crossing fee)",
     ],
     taxiTotal: "≈ £760–£1,300 total",
     sortCost: 290,

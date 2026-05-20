@@ -825,22 +825,22 @@ const DIRECT_ROUTES = [
   // ═══════ FROM TOKYO (NARITA) ═══════
   { from: "Tokyo (NRT)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). One of the very few cabin pet routes OUT of Japan. JAL and ANA don't carry cabin pets at all.", tags: ["japan", "us"] },
   { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026.", tags: ["japan", "us"] },
-  { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan"] },
+  { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan", "korea"] },
   { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. Cargo only if Aeromexico resumes the route, and only via specialist freight forwarder. For Japan→Mexico cabin, route via US/Korea instead.", tags: ["japan", "mexico"] },
 
   // ═══════ FROM TOKYO (HANEDA) ═══════
   { from: "Tokyo (HND)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026. Haneda is closer to central Tokyo than Narita.", tags: ["japan", "us"] },
-  { from: "Tokyo (HND)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Shortest Japan↔Korea cabin route from central Tokyo.", tags: ["japan"] },
+  { from: "Tokyo (HND)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Shortest Japan↔Korea cabin route from central Tokyo.", tags: ["japan", "korea"] },
 
   // ═══════ FROM OSAKA (KANSAI) ═══════
   { from: "Osaka (KIX)", to: "San Francisco (SFO)", duration: "10h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). 5 weekly flights from Oct 2026. Osaka is an approved pet entry port.", tags: ["japan", "us"] },
-  { from: "Osaka (KIX)", to: "Seoul (ICN)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Direct Korea cabin connection from Osaka.", tags: ["japan"] },
+  { from: "Osaka (KIX)", to: "Seoul (ICN)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Direct Korea cabin connection from Osaka.", tags: ["japan", "korea"] },
 
   // ═══════ FROM SEOUL ═══════
-  { from: "Seoul (ICN)", to: "Tokyo (NRT)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Reverse of the Japan→Korea cabin route. Onward Korean Air connects to 30+ countries in cabin.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "Tokyo (HND)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Direct to Tokyo's closer-to-city airport.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "Osaka (KIX)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us"] },
+  { from: "Seoul (ICN)", to: "Tokyo (NRT)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Reverse of the Japan→Korea cabin route. Onward Korean Air connects to 30+ countries in cabin.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "Tokyo (HND)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Direct to Tokyo's closer-to-city airport.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "Osaka (KIX)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us", "korea"] },
 
   // ═══════ FROM MEXICO CITY ═══════
   { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. For Mexico→Japan in cabin, position to US west coast and fly United (e.g. LAX/SFO → HND/NRT direct, no weight limit, $150).", tags: ["mexico", "japan"] },
@@ -11021,6 +11021,10 @@ function Routes() {
     { id: "mexico", label: "Mexico", flag: "🇲🇽" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-america", label: "South America", flag: "🇧🇷" },
+    { id: "central-america", label: "Central America", flag: "🇵🇦" },
+    { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
   ];
@@ -11061,7 +11065,8 @@ function Routes() {
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],
+    "korea": ["Seoul", "Busan", "(ICN)", "(GMP)", "(PUS)", "Korea", "South Korea"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region

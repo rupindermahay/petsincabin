@@ -8,7 +8,7 @@ export default function Home() {
         <title>Flying With a Dog or Cat in the Cabin: Airline Policies &amp; Route Planner | Pets in Cabin</title>
         <meta
           name="description"
-          content="Which airlines let pets fly in the cabin? Check cabin policies for 32 airlines, plan your route, build a vet checklist and time the tapeworm window — free, no sign-up."
+          content="Which airlines let pets fly in the cabin? Check cabin policies for 30+ airlines, plan your route, build a vet checklist and time the tapeworm window — free, no sign-up."
         />
         {/* This page's own canonical — the homepage is canonical to itself. */}
         <link rel="canonical" href="https://www.petsincabin.com" />

@@ -90,6 +90,23 @@ export default function GettingYourPetIntoTheUK() {
             <p className="font-serif text-stone-700 leading-relaxed">
               That's the whole trick. The rest of this page is just <em>which</em> way to make that crossing — compared, costed and timed, so you can pick yours and get on with it.
             </p>
+
+            <p className="font-serif italic text-stone-600 text-sm leading-relaxed mt-4">
+              There's an active UK Parliament petition to change this rule — <a
+                href="https://petition.parliament.uk/petitions/750817"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.gtag) {
+                    window.gtag("event", "petition_link", {
+                      event_category: "outbound",
+                      event_label: "UK Parliament petition 750817 · getting-uk page",
+                    });
+                  }
+                }}
+                className="not-italic text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2"
+              >sign here if you're a UK resident</a>. 100,000 signatures forces a parliamentary debate.
+            </p>
           </section>
 
           {/* Comparison table */}

@@ -581,19 +581,28 @@ export default function RouteComparison() {
                       Breakdown
                     </span>
                     <div className={r.centerCells ? "flex-grow flex items-center" : "flex-grow"}>
-                      {r.timeLegs &&
-                        r.timeLegs.map((leg, i) => (
-                          <span
-                            key={i}
-                            className="block text-xs text-stone-500"
-                          >
-                            {leg}
+                      <div>
+                        {r.timeLegs &&
+                          r.timeLegs.map((leg, i) => (
+                            <span
+                              key={i}
+                              className="block text-xs text-stone-500"
+                            >
+                              {leg}
+                            </span>
+                          ))}
+                        {r.centerCells && (
+                          <span className="block font-semibold text-stone-900">
+                            {r.timeHeadline}
                           </span>
-                        ))}
+                        )}
+                      </div>
                     </div>
-                    <span className="block font-semibold text-stone-900 mt-2">
-                      {r.timeHeadline}
-                    </span>
+                    {!r.centerCells && (
+                      <span className="block font-semibold text-stone-900 mt-2">
+                        {r.timeHeadline}
+                      </span>
+                    )}
                   </div>
 
                   {/* Self-drive cost — label / body / total */}

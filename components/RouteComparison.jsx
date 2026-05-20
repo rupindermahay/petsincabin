@@ -521,13 +521,13 @@ export default function RouteComparison() {
           </div>
 
           {/* DESKTOP — table. Breaks out wider than the reading column on lg. */}
-          <div className="hidden md:block overflow-x-auto">
+          <div className="hidden md:block overflow-x-auto md:-mx-12 lg:-mx-24 xl:-mx-32">
             <table className="w-full text-sm border-collapse table-fixed">
               <colgroup>
-                <col style={{ width: "14%" }} />
-                <col style={{ width: "22%" }} />
-                <col style={{ width: "32%" }} />
-                <col style={{ width: "32%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "34%" }} />
+                <col style={{ width: "34%" }} />
               </colgroup>
               <thead>
                 <tr className="border-b-2 border-stone-300 align-bottom">

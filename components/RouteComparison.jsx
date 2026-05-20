@@ -21,16 +21,16 @@ const ROUTES = [
       "Check-in & pet reception ~1–1.5h",
     ],
     driveCost: [
-      "Eurotunnel ticket £115–£229 per vehicle (one ticket covers the whole car)",
-      "Eurotunnel pet fee £22 each way, per pet",
-      "Car hire & fuel for the ~3h CDG→Calais drive ~£130–£200",
+      "Crossing ticket · £115–£229 per vehicle",
+      "Pet fee · £22 each way",
+      "Car hire + fuel (CDG→Calais ~3h) · £130–£200",
     ],
-    driveTotal: "≈ £270–£450 total, one way",
+    driveTotal: "≈ £270–£450 one way",
     taxiCost: [
-      "Pet-taxi driving fare (CDG→Calais) ~£650–£900 for the whole journey",
-      "+ Eurotunnel ticket ~£260–£300 (pet-taxi services book the crossing as a return)",
+      "Driving fare (CDG→Calais) · £650–£900",
+      "Crossing ticket · £260–£300 (booked as return)",
     ],
-    taxiTotal: "≈ £910–£1,200 total, one way",
+    taxiTotal: "≈ £910–£1,200 one way",
     sortCost: 270,
     sortTime: 5,
     isEurotunnel: true,
@@ -50,11 +50,11 @@ const ROUTES = [
       "Pet stays in the car for the crossing",
     ],
     driveCost: [
-      "Calais–Dover ferry ticket ~£110–£230 per vehicle (one ticket covers the whole car)",
-      "Ferry pet fee ~£15–£22 each way, per pet",
-      "Car hire & fuel for the ~3h CDG→Calais drive ~£130–£200",
+      "Ferry ticket · £110–£230 per vehicle",
+      "Pet fee · £15–£22 each way",
+      "Car hire + fuel (CDG→Calais ~3h) · £130–£200",
     ],
-    driveTotal: "≈ £255–£450 total, one way",
+    driveTotal: "≈ £255–£450 one way",
     taxiCost: null,
     taxiNA: "pet taxis don't use ferry crossings — Eurotunnel only. If you want a pet-taxi, see the Eurotunnel option for this origin.",
     taxiTotal: null,
@@ -82,12 +82,12 @@ const ROUTES = [
       "this is a scheduled shuttle, not a self-drive route — there is no car, fuel or Eurotunnel vehicle ticket to budget",
     driveTotal: null,
     taxiCost: [
-      "Le Pet Express shuttle £195 — one person + one pet, Eurotunnel crossing and pet fare included",
-      "Second pet +£85 per pet",
-      "Paris → Calais Frethun train ~£30–£70 per person",
-      "Excess luggage £75 per bag pre-booked (£100 per bag on the day) — one 23 kg bag is included",
+      "Shuttle fare · £195 (1 person + 1 pet, crossing included)",
+      "Second pet · +£85",
+      "Train to Calais Frethun · £30–£70 per person",
+      "Excess luggage · £75 per bag pre-booked (£100 on the day) — first 23kg bag included",
     ],
-    taxiTotal: "≈ £230–£300 total, one person + one pet, one way",
+    taxiTotal: "≈ £230–£300 one way (1 person + 1 pet)",
     // This route's secondary cost is a scheduled shuttle, not a private pet
     // taxi — costType drives the column label. taxiCaption overrides the
     // default "crossing ticket is extra" note, since the £195 already
@@ -114,16 +114,16 @@ const ROUTES = [
       "Most split it with an overnight",
     ],
     driveCost: [
-      "Eurotunnel ticket £115–£229 per vehicle (one ticket covers the whole car)",
-      "Eurotunnel pet fee £22 each way, per pet",
-      "Car hire & fuel for the ~5–6h FRA→Calais drive ~£230–£370",
+      "Crossing ticket · £115–£229 per vehicle",
+      "Pet fee · £22 each way",
+      "Car hire + fuel (FRA→Calais ~5–6h) · £230–£370",
     ],
-    driveTotal: "≈ £370–£620 total, one way",
+    driveTotal: "≈ £370–£620 one way",
     taxiCost: [
-      "Pet-taxi driving fare (FRA→Calais) ~£600–£1,200 for the whole journey",
-      "+ Eurotunnel ticket ~£260–£300 (pet-taxi services book the crossing as a return)",
+      "Driving fare (FRA→Calais) · £600–£1,200",
+      "Crossing ticket · £260–£300 (booked as return)",
     ],
-    taxiTotal: "≈ £860–£1,500 total, one way",
+    taxiTotal: "≈ £860–£1,500 one way",
     sortCost: 370,
     sortTime: 7,
     isEurotunnel: true,
@@ -143,11 +143,11 @@ const ROUTES = [
       "Pet stays in the car · most split it with an overnight",
     ],
     driveCost: [
-      "Calais–Dover ferry ticket ~£110–£230 per vehicle (one ticket covers the whole car)",
-      "Ferry pet fee ~£15–£22 each way, per pet",
-      "Car hire & fuel for the ~5–6h FRA→Calais drive ~£230–£370",
+      "Ferry ticket · £110–£230 per vehicle",
+      "Pet fee · £15–£22 each way",
+      "Car hire + fuel (FRA→Calais ~5–6h) · £230–£370",
     ],
-    driveTotal: "≈ £365–£620 total, one way",
+    driveTotal: "≈ £365–£620 one way",
     taxiCost: null,
     taxiNA: "pet taxis don't use ferry crossings — Eurotunnel only. If you want a pet-taxi, see the Eurotunnel option for this origin.",
     taxiTotal: null,
@@ -169,16 +169,16 @@ const ROUTES = [
       "Check-in & pet reception ~1–1.5h",
     ],
     driveCost: [
-      "Eurotunnel ticket £115–£229 per vehicle (or Calais–Dover ferry ~£110–£230 per vehicle) — one ticket covers the whole car",
-      "Crossing pet fee £22 each way per pet (Eurotunnel) / ~£15–£22 per pet (ferry)",
-      "Car hire & fuel for the ~3.5–4h AMS→Calais drive ~£150–£240",
+      "Crossing ticket · £115–£229 (Eurotunnel) or £110–£230 (ferry)",
+      "Pet fee · £15–£22 each way",
+      "Car hire + fuel (AMS→Calais ~3.5–4h) · £150–£240",
     ],
-    driveTotal: "≈ £290–£490 total, one way",
+    driveTotal: "≈ £290–£490 one way",
     taxiCost: [
-      "Pet-taxi driving fare (AMS→Calais) ~£500–£1,000 for the whole journey",
-      "+ Eurotunnel ticket ~£260–£300 (pet-taxi services book the crossing as a return)",
+      "Driving fare (AMS→Calais) · £500–£1,000",
+      "Crossing ticket · £260–£300 (booked as return)",
     ],
-    taxiTotal: "≈ £760–£1,300 total, one way",
+    taxiTotal: "≈ £760–£1,300 one way",
     sortCost: 290,
     sortTime: 7,
     isEurotunnel: true,
@@ -193,11 +193,10 @@ const ROUTES = [
     timeHeadline: "~24–36h crossing",
     timeLegs: null,
     driveCost: [
-      "Ferry passage for a car plus two passengers ~£250–£1,100 (the high end is peak summer season)",
-      "Pet-friendly cabin — mandatory on this long crossing, priced per cabin, included in the range above",
-      "Brittany Ferries pet fee — flat £50 per pet each way",
+      "Ferry (car + 2 passengers, cabin included) · £250–£1,100",
+      "Pet fee · £50 each way (flat)",
     ],
-    driveTotal: "≈ £300–£1,150 total, one way",
+    driveTotal: "≈ £300–£1,150 one way",
     taxiCost: null,
     taxiNA: "no pet-taxi operator runs this far south as a standard service — possible only as a bespoke long-haul quote",
     taxiTotal: null,
@@ -243,10 +242,10 @@ const ROUTES = [
       "this route is a flight plus a scheduled ferry — there is no self-drive leg, so no car, fuel or Eurotunnel ticket to budget",
     driveTotal: null,
     taxiCost: [
-      "Ferry ticket — foot passenger ~£31–£60 per person one way (cheapest if booked early, midweek, off-peak)",
-      "Pet on the ferry — ~£17–£35 per pet (kennel; foot passengers must book the kennel, or the Irish Ferries Pet Den at ~€20)",
+      "Foot passenger ticket · £31–£60 per person",
+      "Pet · £17–£35 per pet (ship's kennel or Irish Ferries Pet Den ~€20)",
     ],
-    taxiTotal: "≈ £50–£95 total, one person + one pet, one way",
+    taxiTotal: "≈ £50–£95 one way (1 person + 1 pet)",
     costType: "ferry",
     taxiCaption:
       "the figure is one person and one pet, one way. Pets under about 10 kg can travel in a carrier with you; larger dogs go in the ship's kennel.",
@@ -269,17 +268,17 @@ const ROUTES = [
       "Arrive North Shields, Newcastle — continue overland",
     ],
     driveCost: [
-      "DFDS ferry passage with a car — fare covers the vehicle",
-      "Pet-friendly cabin ~£150–£350 per cabin (4-berth, sleeps up to 4)",
-      "DFDS pet fee £30 each way, per pet",
+      "Ferry passage (with car) · included in cabin price",
+      "Pet-friendly cabin · £150–£350 (4-berth)",
+      "Pet fee · £30 each way",
     ],
-    driveTotal: "≈ £200–£420 total, with a car, one way",
+    driveTotal: "≈ £200–£420 one way (with car)",
     taxiCost: [
-      "DFDS ferry passage as a foot passenger",
-      "Pet-friendly cabin ~£150–£210 per cabin (4-berth, up to 2 dogs)",
-      "DFDS pet fee £30 each way, per pet",
+      "Foot passenger ferry passage · included in cabin price",
+      "Pet-friendly cabin · £150–£210 (4-berth, up to 2 dogs)",
+      "Pet fee · £30 each way",
     ],
-    taxiTotal: "≈ £180–£240 total, one person + one pet, one way",
+    taxiTotal: "≈ £180–£240 one way (1 person + 1 pet)",
     costType: "ferry",
     taxiCaption:
       "the self-drive column is the same ferry taken with a car; this column is for foot passengers. Foot passengers travelling with a pet cannot book online — you must phone the DFDS contact centre. Dogs cannot be left in a vehicle: book a pet-friendly cabin or a kennel place, and bring your own bedding.",
@@ -476,7 +475,7 @@ export default function RouteComparison() {
                         {r.driveCostNote}
                       </div>
                     )}
-                    <div className="font-serif text-base text-stone-900 mb-3">
+                    <div className="font-serif text-base text-stone-900 font-semibold mb-3 pt-1.5 border-t border-stone-200">
                       {r.driveTotal}
                     </div>
                   </>
@@ -496,7 +495,7 @@ export default function RouteComparison() {
                         <li key={i}>{c}</li>
                       ))}
                     </ul>
-                    <div className="font-serif text-base text-stone-900">
+                    <div className="font-serif text-base text-stone-900 font-semibold pt-1.5 border-t border-stone-200">
                       {r.taxiTotal}
                     </div>
                     <div className="text-xs text-stone-500">
@@ -586,7 +585,7 @@ export default function RouteComparison() {
                               {r.driveCostNote}
                             </span>
                           )}
-                          <span className="block font-medium text-stone-900 mt-1">
+                          <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
                             {r.driveTotal}
                           </span>
                         </>
@@ -610,7 +609,7 @@ export default function RouteComparison() {
                               {c}
                             </span>
                           ))}
-                          <span className="block font-medium text-stone-900 mt-1">
+                          <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
                             {r.taxiTotal}
                           </span>
                         </>

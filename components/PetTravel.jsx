@@ -6181,12 +6181,12 @@ function NavBar({ onStartIntake }) {
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-14 h-14 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-16 h-16 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
             <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "21px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "22px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
@@ -6199,6 +6199,11 @@ function NavBar({ onStartIntake }) {
                 {"BY THEO'S MUM".split("").map((ch, i) => (
                   <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
+              </span>
+              <span
+                className="text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+              >
+                Updated {LAST_UPDATED}
               </span>
             </div>
           </button>
@@ -6225,12 +6230,12 @@ function NavBar({ onStartIntake }) {
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-[72px] h-[72px] rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-[96px] h-[96px] rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
             <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "26px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
@@ -6244,20 +6249,13 @@ function NavBar({ onStartIntake }) {
                   <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
               </span>
+              <span
+                className="text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+              >
+                Updated {LAST_UPDATED}
+              </span>
             </div>
           </button>
-
-          {/* Updated timestamp — sits between logo and nav. Tiny, clickable,
-              jumps to the What's New section. Separate <a> (not nested in the
-              logo button) to keep markup valid. */}
-          <a
-            href="#whats-new"
-            className="hidden lg:flex flex-col justify-center text-[9px] uppercase tracking-[0.18em] text-stone-400 hover:text-amber-700 transition-colors leading-tight font-sans whitespace-nowrap self-center"
-            title="See what's new"
-          >
-            <span>Updated</span>
-            <span>{LAST_UPDATED}</span>
-          </a>
 
           {/* Hairline divider between logo and nav rows */}
           <div className="w-px bg-stone-200 self-stretch" />

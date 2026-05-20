@@ -577,7 +577,7 @@ const AIRLINES = [
     fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
     weight: "Pet + carrier max 7 kg (15.4 lb) for cabin. Verified against Korean Air's official Travel With Pets policy May 2026.",
     carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
-    notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo.",
+    notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo. Important aircraft restriction: pets are NOT accepted on Boeing 737 aircraft for international flights — check the equipment when booking, especially on shorter Asia routes.",
     intl: "Yes (extensive network)",
     verified: "May 2026",
     link: "https://www.koreanair.com/contents/plan-your-travel/special-assistance/travel-with-pets",
@@ -593,23 +593,23 @@ const AIRLINES = [
     fee: "Domestic Korea: 30,000 KRW (~$23). International: 100,000–200,000 KRW (~$75–150).",
     weight: "Pet + carrier max 9 kg (20 lb) — the most generous limit among Korean cabin-pet airlines",
     carrier: "Hard: max 37 cm wide × 23 cm tall. Soft: up to 26 cm tall. T'carriers can be purchased at check-in from Korean airports.",
-    notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point.",
+    notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point. Heads-up: T'Way Air is rebranding to Trinity Airways (announced 9 September 2025, follow-up 25 March 2026) — the rebrand is in transition, and the airline has cut several routes May–October 2026 amid financial restructuring. Confirm your specific route is still operating before booking, and watch for the brand change at the airport.",
     intl: "Yes (limited Asia routes + ZAG)",
     verified: "May 2026",
     link: "https://www.twayair.com/app/serviceInfo/contents/1148",
   },
   {
     name: "Aeromexico",
-    tags: ["mexico", "us", "japan", "south-america", "longhaul", "korea"],
-    cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
-    cabinStatus: "yes",
-    direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
-    fee: "Mexico domestic: $35. Mexico ↔ US: $125. International long-haul: $200–250.",
-    weight: "Pet + carrier max 9 kg (20 lb)",
-    carrier: "Soft: max 40 × 30 × 21 cm. Hard: max 40 × 28 × 22 cm. Must fit under the seat.",
-    notes: "Aeromexico is one of the very few airlines that allows cabin pets on flights to Japan (alongside United for US routes and Korean carriers for Korea routes). MEX ↔ NRT direct is the Pacific cabin pet route via Mexico. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo.",
+    tags: ["mexico", "us", "south-america", "central-america", "caribbean"],
+    cabin: "Cabin ✓ — but only on flights under 6 hours (a real limit, not a guideline)",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Caribbean — all under Aeromexico's hard 6-hour cabin pet rule. Cabin NOT allowed: UK (cargo only). Important: Aeromexico's published policy restricts cabin pets to flights with a duration of 6 hours or less, which excludes most transpacific (Tokyo, Seoul) and transatlantic (Paris, Amsterdam, Madrid, Rome) routes. Aeromexico's own example page does cite Mexico City–Paris as an example route, so there may be exceptions on specific aircraft — but for now treat the 6-hour rule as the default. Snub-nosed breeds are accepted in cabin (more flexible than Volaris).",
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "no", "central-america": "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "no", "central-america": "yes", korea: "no" },
+    fee: "Mexico domestic: $1,350–1,700 MXN (~$80–100). Mexico ↔ US: ~$162. International long-haul (where allowed): $162–168 each segment.",
+    weight: "Pet + carrier max 9 kg (20 lb) — verified against Aeromexico's official Pets in Cabin page, May 2026",
+    carrier: "Soft or hard: max 40 × 30 × 20 cm (16 × 12 × 8 in). Must fit under the seat.",
+    notes: "Aeromexico's 6-hour rule is the headline catch — most third-party guides describe Aeromexico as offering cabin pets to Japan and Europe, but the airline's own policy contradicts that for any flight over 6 hours. We've previously listed Mexico City–Tokyo as a cabin pet route; that route now appears to have been suspended in early 2026 anyway. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo. If you're booking a transatlantic Aeromexico route (Paris, Amsterdam, Madrid, Rome), call the airline and confirm cabin pet acceptance in writing before booking — written confirmation matters because the published rule contradicts the example page.",
     intl: "Yes",
     verified: "May 2026",
     link: "https://www.aeromexico.com/en-us/travel-information/pets-in-cabin",
@@ -801,7 +801,7 @@ const DIRECT_ROUTES = [
   { from: "Tokyo (NRT)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). One of the very few cabin pet routes OUT of Japan. JAL and ANA don't carry cabin pets at all.", tags: ["japan", "us"] },
   { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026.", tags: ["japan", "us"] },
   { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan"] },
-  { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). One of very few cabin pet routes out of Japan — Aeromexico flies Tokyo↔Mexico City directly with cabin pets accepted.", tags: ["japan", "mexico"] },
+  { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. Cargo only if Aeromexico resumes the route, and only via specialist freight forwarder. For Japan→Mexico cabin, route via US/Korea instead.", tags: ["japan", "mexico"] },
 
   // ═══════ FROM TOKYO (HANEDA) ═══════
   { from: "Tokyo (HND)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026. Haneda is closer to central Tokyo than Narita.", tags: ["japan", "us"] },
@@ -818,7 +818,7 @@ const DIRECT_ROUTES = [
   { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us"] },
 
   // ═══════ FROM MEXICO CITY ═══════
-  { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). The Mexico→Japan cabin route — rare and useful for Latin American travellers heading to Japan.", tags: ["mexico", "japan"] },
+  { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. For Mexico→Japan in cabin, position to US west coast and fly United (e.g. LAX/SFO → HND/NRT direct, no weight limit, $150).", tags: ["mexico", "japan"] },
 
   // ═══════ FROM ABU DHABI ═══════
   { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
@@ -1085,6 +1085,19 @@ const DIRECT_ROUTES = [
   { from: "Montevideo (MVD)", to: "Bogotá (BOG)", duration: "6h 30m", note: "Avianca. ✓ Cabin (under 10 kg). Reverse of BOG→MVD.", tags: ["south-america"] },
   { from: "Montevideo (MVD)", to: "Panama City (PTY)", duration: "7h 30m", note: "Copa Airlines. ✓ Cabin (under 10 kg). Reverse of PTY→MVD.", tags: ["south-america", "central-america"] },
   { from: "Montevideo (MVD)", to: "Buenos Aires (EZE)", duration: "1h", note: "LATAM, Aerolineas Argentinas. ✓ Cabin. Short cross-river hop.", tags: ["south-america"] },
+  // ─── European city pairs added May 2026 — featuring the four new airports
+  //     (DUS, HAM, STR, ATH). Each includes a real airline, current cabin
+  //     status, fee/weight where known, and the meaningful catch.
+  { from: "Düsseldorf (DUS)", to: "Newark (EWR)", duration: "9h", note: "United Airlines. ✓ Cabin (under 9 kg combined). One of the few US ↔ German routes that doesn't require connecting through Frankfurt or Munich. United fee $125 each way. Practical for German-speaking US relocators in the Rhine-Ruhr corridor.", tags: ["us", "europe"] },
+  { from: "Düsseldorf (DUS)", to: "London Heathrow (LHR)", duration: "1h 30m", note: "Lufthansa, British Airways. UK cabin entry is BLOCKED on all airlines (UK government rule, cargo only via IAG Cargo). LHR → DUS is fine in cabin on Lufthansa for European travellers leaving the UK.", tags: ["europe", "uk"] },
+  { from: "Hamburg (HAM)", to: "Copenhagen (CPH)", duration: "1h", note: "SAS, Lufthansa. ✓ Cabin (8 kg). The quickest cabin hop between northern Germany and Scandinavia — useful for SAS connections onward to Oslo, Stockholm and US East Coast.", tags: ["europe"] },
+  { from: "Hamburg (HAM)", to: "Frankfurt (FRA)", duration: "1h 10m", note: "Lufthansa. ✓ Cabin (8 kg). Most long-haul cabin trips out of Hamburg connect through Frankfurt. Lufthansa fee €60 short-haul.", tags: ["europe"] },
+  { from: "Stuttgart (STR)", to: "Munich (MUC)", duration: "55m", note: "Lufthansa. ✓ Cabin (8 kg). Short connection to Lufthansa's southern hub for onward US/Asia cabin pet travel.", tags: ["europe"] },
+  { from: "Stuttgart (STR)", to: "Amsterdam (AMS)", duration: "1h 30m", note: "KLM. ✓ Cabin (8 kg). KLM's preferred routing for Stuttgart-area travellers heading to the US, Canada or India — connect at Schiphol.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Frankfurt (FRA)", duration: "3h", note: "Lufthansa, Aegean (codeshare). ✓ Cabin (8 kg). The best onward cabin pet route from Greece to North America — connect at Frankfurt for direct Lufthansa cabin flights to JFK, ORD, IAD, MIA.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Paris CDG (CDG)", duration: "3h 30m", note: "Air France, Aegean (codeshare). ✓ Cabin (8 kg). Strong cabin pet option from Greece — Air France hub at CDG connects to most cabin pet destinations worldwide.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Istanbul (IST)", duration: "1h 30m", note: "Turkish Airlines, Aegean. ✓ Cabin (8 kg). Useful first leg for Greek travellers heading to Middle East, India, Russia or Central Asia via Istanbul.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Thessaloniki (SKG)", duration: "55m", note: "Aegean, SKY express. ✓ Cabin (8 kg, Aegean fee €20). Greece's main domestic cabin pet route. Important: many Greek island airports are NOT approved pet entry points — ATH or SKG is usually your only legal Greek arrival airport from outside the EU.", tags: ["europe"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -1821,6 +1834,11 @@ const AIRPORTS = [
   { code: "OPO", city: "Porto", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Portugal's main airport, served by TAP Air Portugal. Portugal follows EU pet passport rules — no tapeworm requirement." },
   { code: "WAW", city: "Warsaw", region: "europe", cabinOut: true, cabinIn: true, note: "LOT Polish Airlines hub. LOT has one of the lowest cabin-pet fees on the market, making Warsaw a cost-effective connection point. Poland follows EU pet passport rules — no tapeworm requirement." },
   { code: "BER", city: "Berlin", region: "europe", cabinOut: true, cabinIn: true, note: "Berlin Brandenburg (BER) is served for cabin pets by Lufthansa and Eurowings (note: easyJet and Ryanair, also big at BER, do NOT carry cabin pets — assistance dogs only). Germany follows EU pet passport rules — no tapeworm requirement. A well-connected hub for onward cabin travel across Europe." },
+  { code: "DUS", city: "Düsseldorf", region: "europe", cabinOut: true, cabinIn: true, note: "Düsseldorf is Lufthansa's third-largest German hub and a major Eurowings base, with strong cabin pet connections to the rest of Europe and direct cabin routes to the US (United via EWR and IAD). Germany follows EU pet passport rules — no tapeworm requirement, but be aware of Germany's breed bans (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes are prohibited from entry regardless of paperwork). Cabin-pet check-in at DUS is at the regular Lufthansa counters." },
+  { code: "HAM", city: "Hamburg", region: "europe", cabinOut: true, cabinIn: true, note: "Hamburg Airport publishes its own pet-travel guidance and is a comfortable smaller German hub, with cabin pet connections via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Eurowings, and SAS to Scandinavia. Germany follows EU pet passport rules with no tapeworm requirement — but the same German breed bans apply (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes). No direct long-haul cabin routes from HAM — most US/Asia trips connect via FRA or MUC." },
+  { code: "STR", city: "Stuttgart", region: "europe", cabinOut: true, cabinIn: true, note: "Stuttgart serves southern Germany — useful for the Baden-Württemberg region. Cabin pet connections via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Air France (Paris), and Eurowings. Germany follows EU pet passport rules with no tapeworm requirement; the same German breed bans apply (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes). All long-haul trips connect via FRA or MUC." },
+  { code: "ATH", city: "Athens", region: "europe", cabinOut: true, cabinIn: true, note: "Athens Eleftherios Venizelos is Greece's main international airport and the primary Greek pet-entry point — with a dedicated pet check-in counter. Aegean Airlines (the Greek flag carrier, not currently catalogued on this site) is the dominant cabin-pet operator out of Athens, with 8 kg limit and €20 domestic / €50 international fees — among the lowest in Europe. Long-haul cabin connections via Lufthansa (Frankfurt/Munich), Air France (Paris), KLM (Amsterdam), and Turkish Airlines (Istanbul). Greece follows EU pet passport rules with no tapeworm requirement. Useful note: many Greek island airports are NOT approved pet entry points — most island trips require landing in Athens or Thessaloniki first." },
+  { code: "SKG", city: "Thessaloniki", region: "europe", cabinOut: true, cabinIn: true, note: "Thessaloniki Macedonia Airport is Greece's second-largest airport and the country's second approved pet entry point (alongside Athens). Aegean and SKY express are the main Greek carriers; Lufthansa and Eurowings provide cabin pet connections to/from Germany. Useful for northern Greece arrivals and as the legal entry point when island destinations don't allow pet entry directly. Greece follows EU pet passport rules with no tapeworm requirement." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
@@ -1856,9 +1874,9 @@ const AIRPORTS = [
   { code: "PTY", city: "Panama City", region: "central-america", cabinOut: true, cabinIn: true, note: "Panama City Tocumen (PTY) is Copa Airlines' hub and the key cabin pet transit point for deeper South American destinations like Montevideo, Asunción, and La Paz. Copa is the dominant operator; pets transit through the airport on Copa-operated itineraries without needing to enter Panama formally." },
   // Japan — pets can enter at 11 designated ports; we list the major five.
   // Critical note: JAL and ANA do NOT carry cabin pets on any route. Cabin
-  // routes in/out of Japan exist on United (US ↔ Japan), Korean carriers
-  // (Japan ↔ Korea), and Aeromexico (Japan ↔ Mexico) only.
-  { code: "NRT", city: "Tokyo Narita", region: "japan", cabinOut: true, cabinIn: true, note: "Narita is Japan's main international gateway and one of 11 approved pet entry ports. JAL and ANA do not carry cabin pets — for cabin into/out of Japan, use United (US routes), Korean carriers (Korea routes), or Aeromexico (Mexico routes). Other airlines are cargo-only." },
+  // routes in/out of Japan exist on United (US ↔ Japan) and Korean carriers
+  // (Japan ↔ Korea, with onward Korean Air to ~30 countries) only.
+  { code: "NRT", city: "Tokyo Narita", region: "japan", cabinOut: true, cabinIn: true, note: "Narita is Japan's main international gateway and one of 11 approved pet entry ports. JAL and ANA do not carry cabin pets — for cabin into/out of Japan, use United (US direct) or Korean carriers (Korea + onward via Korean Air's wider cabin network). Other airlines are cargo-only." },
   { code: "HND", city: "Tokyo Haneda", region: "japan", cabinOut: true, cabinIn: true, note: "Haneda is Tokyo's domestic-heavy airport but has growing international cabin pet support via Korean carriers and United. Approved pet entry port." },
   { code: "KIX", city: "Osaka Kansai", region: "japan", cabinOut: true, cabinIn: true, note: "Osaka's main international airport, one of 11 approved pet entry ports. Cabin pets via Korean carriers and select international routes." },
   { code: "NGO", city: "Nagoya Chubu", region: "japan", cabinOut: true, cabinIn: true, note: "Nagoya Chubu Centrair is an approved pet entry port. Limited international cabin options." },
@@ -2718,14 +2736,14 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "2-6h", airline: "American, Delta, United, Aeromexico, JetBlue, Spirit, Volaris (no brachy) ✓ Cabin" };
       note = "Mexico → US in cabin is one of the easiest cross-border routes. CDC Dog Import Form online (dogs only, cats exempt). Mexico is NOT on the CDC high-risk rabies list.";
     } else if (isToEurope) {
-      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Aeromexico (to MAD), Iberia, Air France, KLM ✓ Cabin" };
-      note = "Aeromexico Mexico City → Madrid is the direct cabin route. Iberia, Air France, KLM also run cabin pets MEX → Europe. EU Health Certificate (10 days) plus rabies 21+ days required.";
+      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Iberia, Air France, KLM ✓ Cabin (transatlantic). Aeromexico is published as 6-hour cabin pet max, but its own page examples Mexico City → Paris — confirm by phone before booking on Aeromexico." };
+      note = "Iberia (Madrid), Air France (Paris), KLM (Amsterdam) are the safer cabin pet bets MEX → Europe — these are transatlantic specialists where cabin pets are standard. Aeromexico's published policy restricts cabin pets to flights under 6 hours, which would exclude transatlantic — but their own example page does mention Mexico City → Paris, so written confirmation is essential. EU Health Certificate (10 days) plus rabies 21+ days required.";
     } else if (dLower.includes("tokyo") || dLower.includes("nrt") || dLower.includes("hnd")) {
-      leg = { route: `${o} → Tokyo (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      note = "Aeromexico MEX → NRT direct cabin is one of the very few Pacific cabin pet routes. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
+      leg = { route: `${o} → ${d}`, time: "14h+", airline: "✗ No direct cabin option from Mexico. Position to US west coast first." };
+      note = "There is no direct cabin pet route MEX → Japan. Aeromexico's MEX-NRT route appears suspended as of Feb 2026, and even when operating, Aeromexico's published 6-hour cabin pet limit would exclude this route. Instead: fly Mexico → US west coast (LAX/SFO) on Aeromexico/Volaris/American with cabin pet, then United LAX/SFO → Tokyo (NRT/HND) direct. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
     } else {
-      leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin" };
-      note = "Aeromexico has the broadest cabin pet network from Mexico. For deeper South America, connect via Panama City on Copa. For Japan, Aeromexico direct.";
+      leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin (within 6-hour rule)" };
+      note = "Aeromexico has the broadest cabin pet network from Mexico for routes under 6 hours. For deeper South America, connect via Panama City on Copa. For Japan, position to US west coast then United.";
     }
     return { legs: [leg], note };
   },
@@ -2750,10 +2768,10 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${arrivalPort}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
       hub = "Korea ↔ Japan is one of the best cabin pet paths for Japan entry. Korean Air's max cabin weight is 7 kg, T'Way's is 9 kg.";
     } else if (isFromMexico) {
-      leg = { route: `${o} → Tokyo Narita (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      hub = "Aeromexico Mexico City → NRT direct cabin is one of the very few Pacific cabin pet routes. Snub-nosed breeds welcome in cabin.";
+      leg = { route: `${o} → Tokyo (HND/NRT)`, time: "16-18h via US", airline: "✗ No direct cabin route. Route via LAX/SFO on Aeromexico/Volaris (cabin), then United LAX/SFO → Tokyo (cabin direct)." };
+      hub = "There is no direct cabin pet route Mexico → Japan. Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and Aeromexico's 6-hour cabin pet limit would exclude this route anyway. Position to US west coast on Aeromexico cabin, then United LAX/SFO → Tokyo direct cabin (no weight limit, $150).";
     } else {
-      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN), Aeromexico (from Mexico)" };
+      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN)" };
       hub = "Route via Korea on Korean Air or via the US on United — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan.";
     }
     return {
@@ -2775,8 +2793,8 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), Air Premia ✓ Cabin" };
       note = "Japan → Korea is a short, well-served cabin route — and from Seoul you can connect onward on Korean Air's 30+ country cabin network.";
     } else if (isToMexico) {
-      leg = { route: `${o} → Mexico City (MEX)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      note = "Aeromexico Japan → Mexico City direct cabin route. Mexico is one of the easier entry countries for pets.";
+      leg = { route: `${o} → Mexico City (MEX)`, time: "16-18h via US", airline: "✗ No direct cabin. Route via US west coast on United (Japan→LAX/SFO cabin direct), then Aeromexico/Volaris LAX/SFO→MEX (cabin)." };
+      note = "Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and even if it resumes, Aeromexico's published 6-hour cabin pet limit would exclude this route. Route Japan → US west coast on United (cabin direct, no weight limit), then onward to Mexico City on Aeromexico or Volaris.";
     } else {
       // For UK, EU, other destinations — need a connection via Korea or US
       leg = { route: `${o} → Seoul (ICN) → ${d}`, time: "varies", airline: "Leg 1: Korean Air ✓ Cabin (under 7 kg). Leg 2: Korean Air cabin connection (or other carrier)" };
@@ -3853,7 +3871,7 @@ const CHECKLIST_DATA = {
         items: [
           "Bring ALL originals: Form AC with USDA endorsement, original titer test result, vaccination records, microchip certificate, AQS Approval of Import Inspection, passport.",
           "Book flights to arrive in Japan BEFORE 5 PM — pets arriving after 5 PM cannot be released from their crate until customs reopens the next day.",
-          "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan), Korean carriers (Japan ↔ Korea), Aeromexico (Japan ↔ Mexico).",
+          "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan direct, no weight limit), Korean carriers (Japan ↔ Korea, then onward via Korean Air's wider cabin network).",
         ],
       },
       {
@@ -7293,8 +7311,8 @@ const DESTINATIONS = [
     id: "japan",
     flag: "🇯🇵",
     name: "Japan",
-    headline: "Strict import rules + JAL/ANA cargo-only. Three cabin paths exist.",
-    rule: "Japan's two flag carriers — JAL and ANA — DO NOT carry pets in cabin on any flight (international or domestic). Pets are cargo only on both. Cabin pets to/from Japan exist on just three paths: United (US ↔ Japan direct, no weight limit), Korean Air / T'Way / Air Premia (Japan ↔ Korea cabin, then onward via Korean Air's wider cabin network), and Aeromexico (Mexico City ↔ Tokyo direct). Plus: Japan's pet import process is one of the strictest in the world — 180-day wait after a passing rabies titer test, plus a 40-day AQS Advance Notification deadline. Get any step wrong and your pet faces up to 180 days quarantine at your expense. Plan 7+ months ahead.",
+    headline: "Strict import rules + JAL/ANA cargo-only. Two cabin paths exist.",
+    rule: "Japan's two flag carriers — JAL and ANA — DO NOT carry pets in cabin on any flight (international or domestic). Pets are cargo only on both. Cabin pets to/from Japan exist on just two paths: United (US ↔ Japan direct, no weight limit), and Korean Air / T'Way / Air Premia (Japan ↔ Korea cabin, then onward via Korean Air's wider cabin network). Aeromexico previously offered a Mexico City ↔ Tokyo direct service that some guides describe as cabin pet–friendly, but Aeromexico's own published policy restricts cabin pets to flights under 6 hours, and the MEX-NRT route itself appears to have been suspended in early 2026. Plus: Japan's pet import process is one of the strictest in the world — 180-day wait after a passing rabies titer test, plus a 40-day AQS Advance Notification deadline. Get any step wrong and your pet faces up to 180 days quarantine at your expense. Plan 7+ months ahead.",
     workarounds: [
       {
         title: "US ↔ Japan: United direct (the cleanest cabin path)",
@@ -7309,10 +7327,10 @@ const DESTINATIONS = [
         cost: "Japan↔Korea on Korean Air: $100. Korea↔elsewhere: $150–$200.",
       },
       {
-        title: "Mexico/Latin America ↔ Japan: Aeromexico direct",
+        title: "Mexico / Latin America → Japan: route via US west coast",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aeromexico flies cabin pets MEX ↔ NRT direct — one of the few Pacific cabin pet routes. Combined pet+carrier weight 9 kg. Snub-nosed breeds welcome in cabin. Useful for Latin American travellers OR as a routing option for US travellers who can position to Mexico City cheaply.",
-        cost: "$200–$250 each way long-haul international.",
+        body: "There is no direct cabin pet route between Mexico/Latin America and Japan. Aeromexico's MEX-NRT direct service is the obvious route on a map, but Aeromexico's published policy restricts cabin pets to flights under 6 hours — and the route itself appears suspended as of early 2026. The cabin workaround: fly your pet from Mexico City to a US west coast hub (LAX/SFO) on Aeromexico, Volaris, or American (cabin pet, ~3-4 hours), then United LAX/SFO → Tokyo direct (cabin, no weight limit, $150). Two segments, but both viable cabin.",
+        cost: "Mexico→US segment: ~$162 (Aeromexico). US→Japan segment: $150 (United). Total ~$315 each way.",
       },
       {
         title: "Start the import clock at least 7 months out",

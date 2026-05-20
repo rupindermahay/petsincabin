@@ -369,7 +369,7 @@ export default function SouthAmericaPetTravel() {
 
               <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">Japan guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">From Latin America to Japan in cabin — the realistic paths via Mexico, Korea or the US.</div>
+                <div className="text-xs text-stone-600 leading-relaxed">No direct cabin route from Latin America — route via US west coast on United instead.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

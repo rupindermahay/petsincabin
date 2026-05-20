@@ -723,7 +723,7 @@ const DIRECT_ROUTES = [
   { from: "Paris (CDG)", to: "Miami (MIA)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Paris (CDG)", to: "Delhi (DEL)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Paris→India is a strong cabin route — Air France accepts cabin pets and connects to the India AQCS NOC system.", tags: ["europe", "india"] },
   { from: "Paris (CDG)", to: "Vancouver (YVR)", duration: "10h", note: "Air France / Air Canada. ✓ Cabin.", tags: ["europe", "canada"] },
-  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France direct ✓ Cabin (under 8 kg). Aeromexico is also published on this route but its 6-hour cabin pet rule excludes transatlantic — Aeromexico's own example page does cite Mexico City–Paris so written confirmation is essential if booking on AM. Air France is the safer cabin bet.", tags: ["europe", "mexico"] },
+  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France direct ✓ Cabin (under 8 kg). Aeromexico is also published here but its 6-hour cabin pet rule excludes transatlantic — written confirmation essential if booking on AM.", tags: ["europe", "mexico"] },
 
   // ═══════ FROM LISBON ═══════
   { from: "Lisbon (LIS)", to: "New York (JFK)", duration: "7h 30m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). TAP is one of the better cabin-pet airlines for transatlantic — more flexibility than some US carriers.", tags: ["europe", "us"] },
@@ -985,8 +985,8 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Lima (LIM)", duration: "12h 30m", note: "KLM. ✓ Cabin (under 8 kg). Dutch gateway to Peru.", tags: ["europe", "south-america"] },
 
   // ═══════ MEXICO → SOUTH AMERICA cabin ═══════
-  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "Aeromexico is published on this route but its 6-hour cabin pet rule excludes a 10-hour flight — written confirmation from Aeromexico is essential before booking on cabin. LATAM via São Paulo or Santiago is the more reliable cabin alternative, or Copa via Panama. Argentina needs ISO microchip and SENASA-endorsed health certificate.", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "LATAM ✓ Cabin (under 7-9 kg). Aeromexico is also published on this route but Aeromexico's 6-hour cabin pet rule sits right on the edge here — depending on aircraft and routing, individual flights can exceed it. LATAM is the cleaner cabin bet; if booking on Aeromexico, get cabin acceptance in writing.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "LATAM (via São Paulo or Santiago) ✓ Cabin — the reliable bet. Aeromexico is published direct but its 6-hour cabin pet rule excludes a 10-hour flight; written confirmation essential if booking on AM.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "LATAM ✓ Cabin (under 7-9 kg). Aeromexico is also published here but its 6-hour rule sits right on the edge — LATAM is the cleaner cabin bet.", tags: ["mexico", "south-america"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -1087,7 +1087,7 @@ const DIRECT_ROUTES = [
 
   // ═══════ TO SOUTH AMERICA from elsewhere ═══════
   { from: "Mexico City (MEX)", to: "Bogotá (BOG)", duration: "4h 30m", note: "Aeromexico, Avianca. ✓ Cabin. Mexico ↔ Colombia cabin hop.", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "LATAM ✓ Cabin. Aeromexico is also published on this route but its 6-hour cabin pet rule excludes a 9.5-hour flight — written confirmation from Aeromexico is essential if booking on AM cabin. LATAM is the safer cabin bet for Mexico ↔ Brazil. Brazil is the most lenient South American entry (rabies 21+ days, USDA-endorsed health certificate, no microchip required).", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "LATAM ✓ Cabin — the reliable bet for Mexico ↔ Brazil. Aeromexico is published direct but its 6-hour cabin pet rule excludes a 9.5-hour flight; written confirmation essential if booking on AM.", tags: ["mexico", "south-america"] },
   { from: "Madrid (MAD)", to: "Buenos Aires (EZE)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. Reverse of EZE→MAD — Spain is Latin America's main European gateway.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
@@ -1123,6 +1123,19 @@ const DIRECT_ROUTES = [
   { from: "Athens (ATH)", to: "Paris CDG (CDG)", duration: "3h 30m", note: "Air France, Aegean (codeshare). ✓ Cabin (8 kg). Strong cabin pet option from Greece — Air France hub at CDG connects to most cabin pet destinations worldwide.", tags: ["europe"] },
   { from: "Athens (ATH)", to: "Istanbul (IST)", duration: "1h 30m", note: "Turkish Airlines, Aegean. ✓ Cabin (8 kg). Useful first leg for Greek travellers heading to Middle East, India, Russia or Central Asia via Istanbul.", tags: ["europe"] },
   { from: "Athens (ATH)", to: "Thessaloniki (SKG)", duration: "55m", note: "Aegean, SKY express. ✓ Cabin (8 kg, Aegean fee €20). Greece's main domestic cabin pet route. Important: many Greek island airports are NOT approved pet entry points — ATH or SKG is usually your only legal Greek arrival airport from outside the EU.", tags: ["europe"] },
+
+  // ═══════ FROM / TO RUSSIA — Aeroflot only ═══════
+  // Russian airspace closures since Feb 2022 mean Aeroflot is essentially the
+  // only cabin-pet option for Russia routes. The practical Western-traveller
+  // pairs are Russia ↔ UAE and Russia ↔ India.
+  { from: "Moscow (SVO)", to: "Dubai (DXB)", duration: "5h 30m", note: "Aeroflot. ✓ Cabin (8 kg under-seat, +15 kg adjacent-seat option). One of the few Russia ↔ Western-friendly cabin pet routes still operating. Dubai is cargo-only on arrival for most other airlines; Aeroflot is the cabin exception.", tags: ["russia", "dubai"] },
+  { from: "Moscow (SVO)", to: "Delhi (DEL)", duration: "6h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). India needs the AQCS NOC on arrival.", tags: ["russia", "india"] },
+  { from: "Moscow (SVO)", to: "Mumbai (BOM)", duration: "7h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). AQCS NOC required.", tags: ["russia", "india"] },
+  { from: "Moscow (SVO)", to: "Istanbul (IST)", duration: "3h", note: "Aeroflot, Turkish Airlines. ✓ Cabin (8 kg). Istanbul is a useful hub for onward cabin connections — Turkish flies cabin pets to most of Europe and Asia.", tags: ["russia", "europe"] },
+  { from: "Dubai (DXB)", to: "Moscow (SVO)", duration: "5h 30m", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). Russia requires an export health certificate (5-day validity) and microchip-linked rabies vaccine.", tags: ["dubai", "russia"] },
+  { from: "Delhi (DEL)", to: "Moscow (SVO)", duration: "6h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). India's AQCS export documentation needed for departure.", tags: ["india", "russia"] },
+  { from: "Mumbai (BOM)", to: "Moscow (SVO)", duration: "7h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). AQCS export documentation required.", tags: ["india", "russia"] },
+  { from: "Istanbul (IST)", to: "Moscow (SVO)", duration: "3h", note: "Aeroflot, Turkish Airlines. ✓ Cabin (8 kg). Useful hop for Western travellers routing via Turkey — Turkish Airlines connects most of Europe cabin-direct into Istanbul.", tags: ["europe", "russia"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -4943,6 +4956,31 @@ function getChecklist(routeId, direction) {
   return CHECKLIST_DATA[routeId] || CHECKLIST_DATA.generic;
 }
 
+// Filter a single-country checklist by pet type. Used by the standalone
+// Checklist tool in country mode so the dog/cat chip works there too.
+// Returns the input unchanged if petType is "both" or unspecified.
+function filterChecklistByPet(checklist, petType) {
+  if (!checklist || !petType || petType === "both") return checklist;
+  const filteredSections = checklist.sections
+    .map((sec) => {
+      const sectionLevel = petAppliesTo("", sec.title);
+      // Drop the entire dog-only or cat-only section if it doesn't match.
+      if (sectionLevel === "dog" && petType === "cat") return null;
+      if (sectionLevel === "cat" && petType === "dog") return null;
+      const items = sec.items.filter((rawItem) => {
+        const text = typeof rawItem === "string" ? rawItem : rawItem.text;
+        const applies = petAppliesTo(text, sec.title);
+        if (petType === "dog" && applies === "cat") return false;
+        if (petType === "cat" && applies === "dog") return false;
+        return true;
+      });
+      if (items.length === 0) return null;
+      return { ...sec, items };
+    })
+    .filter(Boolean);
+  return { ...checklist, sections: filteredSections };
+}
+
 // Map a planner REGION id to its checklist-data id.
 const REGION_TO_CHECKLIST_ID = {
   "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
@@ -5573,8 +5611,8 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   }
 
   return {
-    title: `${originLabel} → ${destLabel} pet-travel checklist`,
-    subtitle: petType === "dog" ? "For a dog" : petType === "cat" ? "For a cat" : "For a dog and a cat",
+    title: `${originLabel} → ${destLabel} — pet-travel checklist`.replace(/^the\s+/i, "The "),
+    subtitle: petType === "dog" ? "Dog edition" : petType === "cat" ? "Cat edition" : "For dogs and cats",
     sections,
     restriction,
     isRouteChecklist: true,
@@ -5590,7 +5628,7 @@ function openChecklistPrintable(data) {
     ? `<div style="background:#fef3c7;border-left:3px solid #d97706;padding:14px 18px;margin:24px 0;font-family:'Fraunces',serif;font-style:italic;color:#78350f;border-radius:2px;">${data.restriction}</div>`
     : "";
   const subtitleHtml = data.subtitle
-    ? `<p class="subtitle">${data.subtitle} · Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`
+    ? `<p class="subtitle"><strong style="font-style:normal;color:#1c1917;">${data.subtitle}.</strong> Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`
     : `<p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`;
 
   const html = `<!DOCTYPE html>
@@ -7393,7 +7431,7 @@ const DESTINATIONS = [
       {
         title: "Mexico / Latin America → Japan: route via US west coast",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "There is no direct cabin pet route between Mexico/Latin America and Japan. Aeromexico's MEX-NRT direct service is the obvious route on a map, but Aeromexico's published policy restricts cabin pets to flights under 6 hours — and the route itself appears suspended as of early 2026. The cabin workaround: fly your pet from Mexico City to a US west coast hub (LAX/SFO) on Aeromexico, Volaris, or American (cabin pet, ~3-4 hours), then United LAX/SFO → Tokyo direct (cabin, no weight limit, $150). Two segments, but both viable cabin.",
+        body: "There is no direct cabin pet route Mexico/Latin America → Japan. Aeromexico's MEX-NRT service appears suspended as of early 2026 and Aeromexico's 6-hour cabin rule would exclude it anyway. Position to a US west coast hub (LAX/SFO) on Aeromexico, Volaris or American in cabin, then United LAX/SFO → Tokyo direct (cabin, no weight limit, $150).",
         cost: "Mexico→US segment: ~$162 (Aeromexico). US→Japan segment: $150 (United). Total ~$315 each way.",
       },
       {
@@ -7409,7 +7447,7 @@ const DESTINATIONS = [
         cost: "Domestic onward to non-entry airports is fine after clearance.",
       },
     ],
-    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Most international airlines are cargo-only into Japan (JAL, ANA, Lufthansa, KLM, BA, Singapore) — cabin options are limited to United (from US) and Korean carriers (from/via Korea). Aeromexico's MEX-NRT direct service appears suspended as of February 2026 and Aeromexico's 6-hour cabin pet rule would exclude the route anyway.",
+    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Cabin options into Japan are limited to United (from US) and Korean carriers (from/via Korea); most other international airlines are cargo-only.",
   },
   {
     id: "ireland",
@@ -7735,9 +7773,9 @@ const DESTINATIONS = [
         cost: "USD 125 international · USD 25 domestic Panama.",
       },
       {
-        title: "Aeromexico Mexico ↔ South America cabin direct",
+        title: "Aeromexico Mexico ↔ South America cabin — under 6 hours only",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aeromexico flies Mexico City to Bogotá (4h 30m) in cabin under its 6-hour rule — that's the comfortable one. Lima (6h) sits on the edge and depends on the specific aircraft and routing. São Paulo, Buenos Aires and Santiago are all 8–10h and excluded under Aeromexico's published 6-hour cabin pet rule — LATAM (via São Paulo or Santiago) and Copa (via Panama) are the more reliable cabin carriers for those deeper South American destinations. Snub-nosed breeds welcome in cabin where Aeromexico is viable.",
+        body: "Aeromexico flies Mexico City to Bogotá (4h 30m) in cabin comfortably under its 6-hour rule. Lima (6h) sits on the edge. São Paulo, Buenos Aires and Santiago (8–10h) are excluded — use LATAM or Copa via Panama for those. Snub-nosed breeds welcome in cabin where Aeromexico is viable.",
         cost: "USD 200–250 long-haul international.",
       },
       {
@@ -9319,6 +9357,7 @@ function ChecklistDownload() {
   const [mode, setMode] = useState("route"); // "route" or "country"
   const [route, setRoute] = useState("generic");
   const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
+  const [petType, setPetType] = useState("both"); // "dog" | "cat" | "both" — filters items
   // Route mode: airport-level origin + destination (codes)
   const [originCode, setOriginCode] = useState("");
   const [destCode, setDestCode] = useState("");
@@ -9378,13 +9417,14 @@ function ChecklistDownload() {
         originAirport.region,
         destAirport.region,
         REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
-        REGION_LABELS_SHORT[destAirport.region] || destAirport.region
+        REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
+        petType
       );
     } else {
       data = null; // nothing selected yet
     }
   } else {
-    data = getChecklist(route, effectiveDirection);
+    data = filterChecklistByPet(getChecklist(route, effectiveDirection), petType);
   }
 
   const hasDirectionalContent = mode === "country" &&
@@ -9439,6 +9479,39 @@ function ChecklistDownload() {
         >
           By single country
         </button>
+      </div>
+
+      {/* Pet-type chip — filters the checklist items to dog-only, cat-only,
+          or both. "Both" is the default so first-time users see the full
+          list; selecting dog or cat trims sections + items that don't apply. */}
+      <div className="mb-6">
+        <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">Flying with</div>
+        <div className="inline-flex border border-stone-700 bg-stone-800">
+          <button
+            onClick={() => setPetType("dog")}
+            className={`px-4 py-2 text-sm transition-all ${
+              petType === "dog" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            🐕 Dog
+          </button>
+          <button
+            onClick={() => setPetType("cat")}
+            className={`px-4 py-2 text-sm transition-all border-l border-stone-700 ${
+              petType === "cat" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            🐈 Cat
+          </button>
+          <button
+            onClick={() => setPetType("both")}
+            className={`px-4 py-2 text-sm transition-all border-l border-stone-700 ${
+              petType === "both" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            Both
+          </button>
+        </div>
       </div>
 
       {mode === "route" ? (
@@ -9619,28 +9692,39 @@ function ChecklistDownload() {
               <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
             </div>
           )}
+        </div>
+      )}
 
-          {/* TAPEWORM CALCULATOR — shows when the destination is one of the
-              5 countries that require the treatment. Works off the route-mode
-              destination airport, or the country-mode destination. */}
-          {(() => {
-            // Resolve the destination tapeworm-country, if any.
-            let twDest = null;
-            if (mode === "route" && destCode) {
-              twDest = twCountryForAirport(destCode);
-            } else if (mode === "country") {
-              const COUNTRY_ROUTE_TO_TW = {
-                uk: "UK", ireland: "IE", norway: "NO",
-              };
-              twDest = COUNTRY_ROUTE_TO_TW[route] || null;
-            }
-            if (!twDest) return null;
-            return (
-              <div className="mt-2">
-                <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
-              </div>
-            );
-          })()}
+      {/* TAPEWORM CALCULATOR — shows in BOTH modes when the destination is
+          one of the 5 countries that require the treatment (UK, Ireland,
+          Norway, Finland, Malta). Route mode resolves via airport code;
+          country mode maps the picked country to its tapeworm-rule key. */}
+      {(() => {
+        let twDest = null;
+        if (mode === "route" && destCode) {
+          twDest = twCountryForAirport(destCode);
+        } else if (mode === "country") {
+          const COUNTRY_ROUTE_TO_TW = {
+            uk: "UK", ireland: "IE", norway: "NO",
+          };
+          twDest = COUNTRY_ROUTE_TO_TW[route] || null;
+        }
+        if (!twDest) return null;
+        return (
+          <div className="mt-6">
+            <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
+          </div>
+        );
+      })()}
+
+      {/* JOURNEY PLANNER CTA — shown after both airports are picked in route
+          mode. The journey planner does more than the checklist (route legs,
+          carriers, workarounds, tailored tapeworm dates) so this is the
+          honest next step once the user has selected a real route. */}
+      {mode === "route" && originAirport && destAirport && (
+        <div className="mt-6 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+          Want carriers named, route legs mapped, and the tapeworm window dated to your flight?{" "}
+          <a href="#planner" className="text-amber-300 underline decoration-amber-500/50 underline-offset-2 hover:text-amber-200">Run this trip through the journey planner</a> — it builds a full plan with everything in one place.
         </div>
       )}
     </div>
@@ -11046,6 +11130,7 @@ function Routes() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // Extract a clean grouping key from "City (CODE)" or "City / City" strings

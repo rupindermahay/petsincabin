@@ -723,7 +723,7 @@ const DIRECT_ROUTES = [
   { from: "Paris (CDG)", to: "Miami (MIA)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Paris (CDG)", to: "Delhi (DEL)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Paris→India is a strong cabin route — Air France accepts cabin pets and connects to the India AQCS NOC system.", tags: ["europe", "india"] },
   { from: "Paris (CDG)", to: "Vancouver (YVR)", duration: "10h", note: "Air France / Air Canada. ✓ Cabin.", tags: ["europe", "canada"] },
-  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France / Aeromexico. ✓ Cabin (under 8 kg).", tags: ["europe", "mexico"] },
+  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France direct ✓ Cabin (under 8 kg). Aeromexico is also published on this route but its 6-hour cabin pet rule excludes transatlantic — Aeromexico's own example page does cite Mexico City–Paris so written confirmation is essential if booking on AM. Air France is the safer cabin bet.", tags: ["europe", "mexico"] },
 
   // ═══════ FROM LISBON ═══════
   { from: "Lisbon (LIS)", to: "New York (JFK)", duration: "7h 30m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). TAP is one of the better cabin-pet airlines for transatlantic — more flexibility than some US carriers.", tags: ["europe", "us"] },
@@ -985,8 +985,8 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Lima (LIM)", duration: "12h 30m", note: "KLM. ✓ Cabin (under 8 kg). Dutch gateway to Peru.", tags: ["europe", "south-america"] },
 
   // ═══════ MEXICO → SOUTH AMERICA cabin ═══════
-  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "Aeromexico. ✓ Cabin (under 9 kg).", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "Aeromexico, LATAM. ✓ Cabin (under 7-9 kg).", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "Aeromexico is published on this route but its 6-hour cabin pet rule excludes a 10-hour flight — written confirmation from Aeromexico is essential before booking on cabin. LATAM via São Paulo or Santiago is the more reliable cabin alternative, or Copa via Panama. Argentina needs ISO microchip and SENASA-endorsed health certificate.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "LATAM ✓ Cabin (under 7-9 kg). Aeromexico is also published on this route but Aeromexico's 6-hour cabin pet rule sits right on the edge here — depending on aircraft and routing, individual flights can exceed it. LATAM is the cleaner cabin bet; if booking on Aeromexico, get cabin acceptance in writing.", tags: ["mexico", "south-america"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -1087,7 +1087,7 @@ const DIRECT_ROUTES = [
 
   // ═══════ TO SOUTH AMERICA from elsewhere ═══════
   { from: "Mexico City (MEX)", to: "Bogotá (BOG)", duration: "4h 30m", note: "Aeromexico, Avianca. ✓ Cabin. Mexico ↔ Colombia cabin hop.", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "Aeromexico, LATAM. ✓ Cabin. Mexico ↔ Brazil cabin direct.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "LATAM ✓ Cabin. Aeromexico is also published on this route but its 6-hour cabin pet rule excludes a 9.5-hour flight — written confirmation from Aeromexico is essential if booking on AM cabin. LATAM is the safer cabin bet for Mexico ↔ Brazil. Brazil is the most lenient South American entry (rabies 21+ days, USDA-endorsed health certificate, no microchip required).", tags: ["mexico", "south-america"] },
   { from: "Madrid (MAD)", to: "Buenos Aires (EZE)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. Reverse of EZE→MAD — Spain is Latin America's main European gateway.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
@@ -7395,7 +7395,7 @@ const DESTINATIONS = [
         cost: "Domestic onward to non-entry airports is fine after clearance.",
       },
     ],
-    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Most international airlines are cargo-only into Japan (JAL, ANA, Lufthansa, KLM, BA, Singapore) — cabin options are limited to United (from US), Korean carriers (from/via Korea), and Aeromexico (from Mexico).",
+    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Most international airlines are cargo-only into Japan (JAL, ANA, Lufthansa, KLM, BA, Singapore) — cabin options are limited to United (from US) and Korean carriers (from/via Korea). Aeromexico's MEX-NRT direct service appears suspended as of February 2026 and Aeromexico's 6-hour cabin pet rule would exclude the route anyway.",
   },
   {
     id: "ireland",
@@ -7723,7 +7723,7 @@ const DESTINATIONS = [
       {
         title: "Aeromexico Mexico ↔ South America cabin direct",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aeromexico links Mexico City to São Paulo, Buenos Aires, Santiago, Bogotá, and Lima with cabin pets (9 kg combined). Useful for travellers connecting through Mexico from the US or Asia. Snub-nosed breeds welcome in cabin.",
+        body: "Aeromexico flies Mexico City to Bogotá (4h 30m) in cabin under its 6-hour rule — that's the comfortable one. Lima (6h) sits on the edge and depends on the specific aircraft and routing. São Paulo, Buenos Aires and Santiago are all 8–10h and excluded under Aeromexico's published 6-hour cabin pet rule — LATAM (via São Paulo or Santiago) and Copa (via Panama) are the more reliable cabin carriers for those deeper South American destinations. Snub-nosed breeds welcome in cabin where Aeromexico is viable.",
         cost: "USD 200–250 long-haul international.",
       },
       {
@@ -7897,7 +7897,7 @@ function DifficultDestinations() {
                       Read the complete Japan pet travel guide →
                     </h4>
                     <p className="text-amber-50/90 leading-relaxed text-sm">
-                      The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, three cabin pet paths (United, Korean carriers, Aeromexico), and 11 approved entry ports — all on one page.
+                      The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, the two main cabin pet paths (United from the US, Korean carriers from/via Korea), and 11 approved entry ports — all on one page.
                     </p>
                   </a>
                 )}

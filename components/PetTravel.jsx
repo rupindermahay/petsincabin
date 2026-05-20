@@ -11760,7 +11760,7 @@ function Tips() {
             {
               tag: "On food",
               title: "Light meal, 3–4 hours out — and toilet time.",
-              body: "Don't fly your pet hungry, but don't fly them full. A small meal 3–4 hours before departure is the sweet spot. Make sure they've pooped and peed properly BEFORE you enter the airport (airport pet relief areas are often tiny patches of fake grass dogs see right through). Freeze a little water in the carrier dish so it melts gradually.",
+              body: "Don't fly your pet hungry, but don't fly them full. A small meal 3–4 hours before departure is the sweet spot — enough to settle their stomach, not so much that turbulence becomes a problem. Make sure they've pooped and peed properly BEFORE you enter the airport (airport pet relief areas are often tiny patches of fake grass that dogs see right through — and security lines kill any chance of a real wee). Walk them somewhere green near the drop-off zone before you check in. Skip the bigger water bowl right before; freeze a little water in the carrier dish so it melts gradually mid-flight without sloshing.",
             },
             {
               tag: "On treats during the flight",
@@ -11780,17 +11780,27 @@ function Tips() {
             {
               tag: "On summer travel",
               title: "Heat embargoes are real — and they can ground your pet.",
-              body: "Most airlines refuse to fly pets — in cabin or cargo — when ground temperatures at any point in the itinerary exceed roughly 85°F / 29°C. Some carriers run full summer-long embargoes (American bans pet cargo May–Sept on many routes); others decide flight-by-flight on the day. This catches owners out: you book your July move months ahead, then your pet's refused at check-in because the forecast at the origin, destination, or connection is too hot. If you're moving in June through early September, the right play is an early-morning departure to clear the heat window, and a routing that avoids midsummer hotspots — Phoenix, Dallas, Houston, Las Vegas, Madrid, Athens. Confirm your specific route's temperature policy with the airline before booking, and keep a fallback date.",
+              body: "Most airlines refuse pets — cabin or cargo — when ground temperatures at any point in the itinerary exceed roughly 85°F / 29°C. Some run full summer-long embargoes (American bans pet cargo May–Sept on many routes); others decide flight-by-flight on the day. Owners get caught out: you book your July move months ahead, then your pet's refused at check-in because the forecast at the origin, destination, or connection is too hot. If you're moving June through early September, the right play is an early-morning departure to clear the heat window, plus a routing that avoids midsummer hotspots — Phoenix, Dallas, Houston, Madrid, Athens. Confirm your route's policy with the airline and keep a fallback date.",
             },
             {
               tag: "On comfort items",
               title: "Bring a piece of home.",
-              body: "Pack a small teddy or favourite toy alongside their blanket — something soft that smells of you and home. A collapsible silicone water bowl (I got mine from Amazon for under £10) takes up almost no space and is invaluable for hotel stops, layovers, and the airport. Skip glass or hard ceramic — they're heavy and ban-prone.",
+              body: "Pack a small teddy or favourite toy alongside their blanket — something soft that smells of you and home, not a fresh shop-bought version. The familiar scent does more for an animal's stress than any expensive carrier accessory. A collapsible silicone water bowl (I got mine from Amazon for under £10) takes up almost no space and is invaluable for hotel stops, long layovers, and the airport. Skip glass or hard ceramic — they're heavy, breakable, and security tends to query them. A few sealed pouches of their normal food go in your carry-on too: airline meals (and 24-hour kennels at connection hubs) can't be trusted to match your pet's usual diet.",
             },
             {
               tag: "On bringing pet food",
               title: "Most countries restrict pet food at the border.",
-              body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly.",
+              body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in, so we transitioned him onto a US brand before travel to avoid a sudden diet change on arrival. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly — and ideally start the switch a week or two ahead, since abrupt diet changes plus the stress of travel is a guaranteed upset stomach.",
+            },
+            {
+              tag: "On sedation",
+              title: "Don't sedate your pet for the flight.",
+              body: "Almost every airline, the IATA, the American Veterinary Medical Association and every reputable vet specifically warn against this — and yet it remains one of the most common things owners ask about. At altitude, sedatives interact unpredictably with reduced cabin pressure, can suppress your pet's ability to balance themselves in the carrier (leading to injury), and slow their breathing and heart rate dangerously. A sedated animal also can't communicate distress to you. If your pet is anxious about travel, talk to your vet about acclimatisation training and (for dogs only) Adaptil, a calming pheromone product that's pharmacologically inert and safe. For cats, Feliway. Crate training over weeks beats medication on the day.",
+            },
+            {
+              tag: "On booking",
+              title: "Booking your ticket does NOT book the pet.",
+              body: "This is the single most common DIY mistake. You click 'book flight' online with the pet ticked, get a confirmation email, assume your pet is on the plane — and then arrive at the airport to find the pet quota was full, or no pet booking exists at all. Almost every airline that carries cabin pets requires a separate phone call to a reservations team to actually secure the pet's space, often within 24-48 hours of buying your own ticket. The website 'add a pet' tickbox is typically a flag for the airline to call you, not a confirmation. Book your own seat, then immediately call. Get a confirmation number for the pet. Email yourself the booking reference. Treat it as two separate transactions even when they sit on one itinerary.",
             },
             {
               tag: "For cat owners",
@@ -11806,6 +11816,21 @@ function Tips() {
               tag: "For cat owners",
               title: "Bring a piece of unwashed bedding from home.",
               body: "Cats orient by smell more than sight — familiar scent settles them faster than anything else you can pack. Line the carrier with a piece of bedding that already smells like them and their territory. Resist the urge to wash it fresh before travel day: the slightly used blanket is the point. Pair it with their favourite small toy if they have one. A carrier they've slept in for weeks, lined with their own scent, turns 'unknown box' into 'my known place that happens to be moving today' — and many cats sleep through the entire flight as a result.",
+            },
+            {
+              tag: "On preparation",
+              title: "Photograph your pet the week before you fly.",
+              body: "Take a clear photo of your pet — face-on, side-on, and one showing any distinctive markings — within a week of departure. Also photograph their microchip number, rabies certificate, and vaccination records. If the worst happens at an unfamiliar airport — a slipped harness at security, an open carrier, a panic-bolt from a strange handler — the staff and local authorities will work faster with a recent photo than with your description through tears. Keep the photos on your phone AND emailed to yourself, so you can access them if your phone dies. It's a 5-minute job most pet owners never do until they wish they had.",
+            },
+            {
+              tag: "On preparation",
+              title: "Check your microchip's frequency before international travel.",
+              body: "Microchips come in two frequencies: the international standard (ISO 11784/11785, 134.2 kHz) and the older American 125 kHz format. EU, UK, Australian, and most international scanners only read ISO chips — a US 125 kHz chip will scan as 'no chip detected' at Heathrow or Frankfurt, which can mean refused entry or quarantine. If your pet was chipped in the US before 2014-ish, check the chip number format: a 15-digit number starting with the country code is ISO; a 9 or 10-digit format usually isn't. If it isn't ISO, get a second ISO chip implanted at least a month before travel — having both is fine; the new one becomes the one of record.",
+            },
+            {
+              tag: "On arrival",
+              title: "The first 48 hours is decompression, not exploration.",
+              body: "When you arrive at the destination, your pet has just spent a long flight in a carrier, in unfamiliar smells, with no idea what's happening. Resist the urge to celebrate by walking them around the new neighbourhood, introducing them to new people, or letting them off-leash in the new garden. The rescue world calls it the 'rule of 3' — three days to decompress, three weeks to settle, three months to feel at home. For the first 48 hours: one quiet room, their familiar carrier and bedding accessible, water always available, food in small amounts, short on-leash toilet trips only. The bigger the move, the more this matters — they'll come out of the den when they're ready.",
             },
           ].map((t, i) => (
             <div key={i}>

@@ -1992,14 +1992,23 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then a land/sea crossing into ${d} — Eurotunnel Le Shuttle or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes.`,
   }),
-  "india>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Confirm the long-haul leg's cabin availability before booking — if it can't be confirmed as cabin, that portion becomes cargo.`,
-  }),
+  "india>uk-out": (o, d) => {
+    const isBLR = o.includes("(BLR)");
+    return {
+      legs: [
+        {
+          route: `${o} → Frankfurt (FRA) or Paris (CDG)`,
+          time: "8–9h",
+          airline: isBLR
+            ? "Air India / Air France ✓ Cabin (under 8–10 kg) — Lufthansa excludes Bangalore, so route via Paris"
+            : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)",
+        },
+        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
+      ],
+      note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Air India, Lufthansa and Air France all carry cabin pets on India ↔ Europe sectors${isBLR ? " (Lufthansa excludes Bangalore — use Air France via Paris instead)" : ""}.`,
+    };
+  },
   "dubai>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
@@ -2041,32 +2050,45 @@ const REGION_PAIR_STRATEGIES = {
   // route restated — including it created duplicate cards. If a specific origin
   // airport has no direct AUH route, the honest answer is the drive-to-a-
   // qualifying-airport logic, not a fake one-leg workaround.
-  "india>dubai": (o, d) => ({
-    legs: [
-      { route: `${o} → Europe (Frankfurt / Paris)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
-      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin" },
-    ],
-    note: `Air India blocks cabin pets on flights India→UAE, so the workaround routes via Europe. Confirm the India→Europe leg's cabin availability. Alternatively this is a cargo move. Note: UAE→India in cabin IS allowed (the block is one-directional).`,
-  }),
+  "india>dubai": (o, d) => {
+    const isBLR = o.includes("(BLR)");
+    return {
+      legs: [
+        {
+          route: `${o} → Europe (Frankfurt / Paris)`,
+          time: "8–9h",
+          airline: isBLR
+            ? "Air India / Air France ✓ Cabin (under 8–10 kg) — Lufthansa excludes Bangalore"
+            : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)",
+        },
+        { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin" },
+      ],
+      note: `Air India blocks cabin pets on flights India→UAE, so the workaround routes via Europe. Air India, Lufthansa and Air France all carry cabin pets on India ↔ Europe sectors${isBLR ? " (Lufthansa excludes Bangalore — use Air France via Paris)" : ""}; from Europe, Etihad carries you on to Abu Dhabi in cabin. Note: UAE→India in cabin IS allowed (the block is one-directional).`,
+    };
+  },
 
   // ----- INTO India (no direct cabin from UK; via Europe) -----
   "uk-out>india": (o, d) => {
     const isHeathrow = o.includes("(LHR)");
+    const isBLR = d.includes("(BLR)");
+    const longHaulAirline = isBLR
+      ? "Air France ✓ Cabin (under 8 kg) — Lufthansa excludes Bangalore, route via Paris"
+      : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)";
     const legs = isHeathrow
       ? [
           { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
           { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
         ]
       : [
           { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
           { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
           { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
         ];
     return {
       legs,
-      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Confirm the second leg's cabin availability; India also needs the AQCS NOC and entry via one of six approved airports.`,
+      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors${isBLR ? " (Lufthansa excludes Bangalore — route via Paris on Air France)" : ""}. India needs the AQCS NOC and entry via one of six approved airports.`,
     };
   },
   "us>india": (o, d) => ({
@@ -8844,12 +8866,22 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
     if (presetDest && presetDest.key !== dest) setDest(presetDest.key);
   }, [presetDest, dest]);
 
+  // If origin and destination match (someone changed dest to match origin),
+  // bump origin to the first non-destination option so the form stays valid.
+  useEffect(() => {
+    if (origin === dest) {
+      const fallback = TW_TRIP_COUNTRIES.find((c) => c.key !== dest);
+      if (fallback) setOrigin(fallback.key);
+    }
+  }, [origin, dest]);
+
   // The stopover dropdown options. When the parent passes route-specific
   // stopoverOptions (the actual workaround hubs for this route), use those;
-  // otherwise fall back to the full country list.
+  // otherwise fall back to the full country list excluding the destination
+  // and origin (you can't stop over in your own start or end country).
   const stopoverChoices = stopoverOptions && stopoverOptions.length > 0
     ? stopoverOptions
-    : TW_TRIP_COUNTRIES;
+    : TW_TRIP_COUNTRIES.filter((c) => c.key !== dest && c.key !== origin);
 
   // If the available stopover choices change and the current pick is no
   // longer valid, clear it.
@@ -8982,7 +9014,7 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
                 onChange={(e) => setOrigin(e.target.value)}
                 className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900"
               >
-                {TW_TRIP_COUNTRIES.map((c) => (
+                {TW_TRIP_COUNTRIES.filter((c) => c.key !== dest).map((c) => (
                   <option key={c.key} value={c.key}>{c.name}</option>
                 ))}
               </select>
@@ -9088,12 +9120,21 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
               callback. Puts the dated tapeworm line into the checklist that
               shows on screen AND the printable PDF. */}
           {result && onAddToChecklist && (
-            <div>
+            <div className="space-y-3">
               {addedToChecklist ? (
-                <div className="flex items-center gap-2 text-sm text-green-800 bg-green-100 border border-green-300 rounded-sm px-4 py-3">
-                  <Check className="w-4 h-4 flex-shrink-0" strokeWidth={2.5} />
-                  <span>Added to your checklist below — it's in the printable PDF too.</span>
-                </div>
+                <>
+                  <div className="flex items-center gap-2 text-sm text-green-800 bg-green-100 border border-green-300 rounded-sm px-4 py-3">
+                    <Check className="w-4 h-4 flex-shrink-0" strokeWidth={2.5} />
+                    <span>Added to your checklist below — it's in the printable PDF too.</span>
+                  </div>
+                  <a
+                    href="#checklist"
+                    className="inline-flex items-center gap-2 bg-stone-900 text-amber-50 px-5 py-3 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors rounded-sm"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    Jump to my checklist
+                  </a>
+                </>
               ) : (
                 <button
                   onClick={() => onAddToChecklist(result)}

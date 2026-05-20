@@ -85,13 +85,13 @@ export default function SeattlePetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Alaska Airlines</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Seattle's hub airline. $100 each way for cabin pets. Soft carrier up to 17 × 11 × 9.5 in. Domestic plus limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). No transatlantic or India routes — you'll connect to another carrier for those. Max 3 cabin pets in First, 8 in Main per flight, first-come first-served.
+                  Seattle's hub airline. $100 each way for cabin pets. Soft carrier up to 17 × 11 × 9.5 in. Domestic plus growing international: Canada, Mexico, Costa Rica, Bahamas, Japan, Korea (new), Hawaii (with Direct Airport Release prep), plus the new long-haul SEA ↔ Rome and SEA ↔ London routes launched 2026. UK arrivals are still cargo-only by UK government rule. Max 3 cabin pets in First, 8 in Main per flight, first-come first-served. Dogs and cats only since June 2025.
                 </p>
               </div>
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Delta Air Lines</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  $150 each way domestic, $200 international. Cabin pets allowed to most European destinations (KLM/Air France codeshare onward). Delta does NOT allow cabin pets to/from UK, Ireland, Hawaii, UAE, South Africa, or Hong Kong.
+                  $95 each way domestic, $200 international (including the Dublin route). Cabin pets allowed to most European destinations (KLM/Air France codeshare onward) AND now direct to Ireland (JFK ⇄ DUB on true Delta-operated flights — verified May 2026). Delta does NOT allow cabin pets to/from UK, Hawaii, UAE, South Africa, or Hong Kong.
                 </p>
               </div>
               <div>

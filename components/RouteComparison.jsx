@@ -23,11 +23,11 @@ const ROUTES = [
     driveCost: [
       "Crossing ticket · £115–£229 per vehicle",
       "Pet fee · £22 each way",
-      "Car hire + fuel (CDG→Calais ~3h) · £130–£200",
+      "Car hire + fuel · £130–£200",
     ],
     driveTotal: "≈ £270–£450 one way",
     taxiCost: [
-      "Driving fare (CDG→Calais) · £650–£900",
+      "Driving fare · £650–£900",
       "Crossing ticket · £260–£300 (booked as return)",
     ],
     taxiTotal: "≈ £910–£1,200 one way",
@@ -52,7 +52,7 @@ const ROUTES = [
     driveCost: [
       "Ferry ticket · £110–£230 per vehicle",
       "Pet fee · £15–£22 each way",
-      "Car hire + fuel (CDG→Calais ~3h) · £130–£200",
+      "Car hire + fuel · £130–£200",
     ],
     driveTotal: "≈ £255–£450 one way",
     taxiCost: null,
@@ -82,10 +82,9 @@ const ROUTES = [
       "this is a scheduled shuttle, not a self-drive route — there is no car, fuel or Eurotunnel vehicle ticket to budget",
     driveTotal: null,
     taxiCost: [
-      "Shuttle fare · £195 (1 person + 1 pet, crossing included)",
+      "Shuttle fare · £195 (1 person + 1 pet, all-in)",
       "Second pet · +£85",
       "Train to Calais Frethun · £30–£70 per person",
-      "Excess luggage · £75 per bag pre-booked (£100 on the day) — first 23kg bag included",
     ],
     taxiTotal: "≈ £230–£300 one way (1 person + 1 pet)",
     // This route's secondary cost is a scheduled shuttle, not a private pet
@@ -116,11 +115,11 @@ const ROUTES = [
     driveCost: [
       "Crossing ticket · £115–£229 per vehicle",
       "Pet fee · £22 each way",
-      "Car hire + fuel (FRA→Calais ~5–6h) · £230–£370",
+      "Car hire + fuel · £230–£370",
     ],
     driveTotal: "≈ £370–£620 one way",
     taxiCost: [
-      "Driving fare (FRA→Calais) · £600–£1,200",
+      "Driving fare · £600–£1,200",
       "Crossing ticket · £260–£300 (booked as return)",
     ],
     taxiTotal: "≈ £860–£1,500 one way",
@@ -145,7 +144,7 @@ const ROUTES = [
     driveCost: [
       "Ferry ticket · £110–£230 per vehicle",
       "Pet fee · £15–£22 each way",
-      "Car hire + fuel (FRA→Calais ~5–6h) · £230–£370",
+      "Car hire + fuel · £230–£370",
     ],
     driveTotal: "≈ £365–£620 one way",
     taxiCost: null,
@@ -169,13 +168,13 @@ const ROUTES = [
       "Check-in & pet reception ~1–1.5h",
     ],
     driveCost: [
-      "Crossing ticket · £115–£229 (Eurotunnel) or £110–£230 (ferry)",
+      "Crossing ticket · £110–£230 (tunnel or ferry)",
       "Pet fee · £15–£22 each way",
-      "Car hire + fuel (AMS→Calais ~3.5–4h) · £150–£240",
+      "Car hire + fuel · £150–£240",
     ],
     driveTotal: "≈ £290–£490 one way",
     taxiCost: [
-      "Driving fare (AMS→Calais) · £500–£1,000",
+      "Driving fare · £500–£1,000",
       "Crossing ticket · £260–£300 (booked as return)",
     ],
     taxiTotal: "≈ £760–£1,300 one way",
@@ -193,7 +192,7 @@ const ROUTES = [
     timeHeadline: "~24–36h crossing",
     timeLegs: null,
     driveCost: [
-      "Ferry (car + 2 passengers, cabin included) · £250–£1,100",
+      "Ferry (car + 2 pax, cabin) · £250–£1,100",
       "Pet fee · £50 each way (flat)",
     ],
     driveTotal: "≈ £300–£1,150 one way",
@@ -243,7 +242,7 @@ const ROUTES = [
     driveTotal: null,
     taxiCost: [
       "Foot passenger ticket · £31–£60 per person",
-      "Pet · £17–£35 per pet (ship's kennel or Irish Ferries Pet Den ~€20)",
+      "Pet · £17–£35 (ship's kennel or Pet Den)",
     ],
     taxiTotal: "≈ £50–£95 one way (1 person + 1 pet)",
     costType: "ferry",
@@ -274,8 +273,8 @@ const ROUTES = [
     ],
     driveTotal: "≈ £200–£420 one way (with car)",
     taxiCost: [
-      "Foot passenger ferry passage · included in cabin price",
-      "Pet-friendly cabin · £150–£210 (4-berth, up to 2 dogs)",
+      "Foot passenger fare · included in cabin price",
+      "Pet-friendly cabin · £150–£210 (4-berth, 2 dogs)",
       "Pet fee · £30 each way",
     ],
     taxiTotal: "≈ £180–£240 one way (1 person + 1 pet)",
@@ -514,10 +513,10 @@ export default function RouteComparison() {
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm border-collapse table-fixed">
               <colgroup>
+                <col style={{ width: "14%" }} />
                 <col style={{ width: "22%" }} />
-                <col style={{ width: "26%" }} />
-                <col style={{ width: "26%" }} />
-                <col style={{ width: "26%" }} />
+                <col style={{ width: "32%" }} />
+                <col style={{ width: "32%" }} />
               </colgroup>
               <thead>
                 <tr className="border-b-2 border-stone-300 align-bottom">
@@ -544,25 +543,28 @@ export default function RouteComparison() {
                     }
                   >
                     <td className="py-3 pr-3 align-top">
-                      <span className="font-medium text-stone-900">{r.name}</span>
-                      <br />
-                      <span className="text-xs text-stone-500">{r.sub}</span>
+                      <div className="flex flex-col h-full">
+                        <span className="font-medium text-stone-900 break-words">{r.name}</span>
+                        <span className="text-xs text-stone-500 break-words">{r.sub}</span>
+                      </div>
                     </td>
                     <td className="py-3 px-3 align-top">
-                      <span className="font-medium text-stone-900">
-                        {r.timeHeadline}
-                      </span>
-                      {r.timeLegs &&
-                        r.timeLegs.map((leg, i) => (
-                          <span
-                            key={i}
-                            className={`block text-xs text-stone-500${
-                              i === 0 ? " mt-0.5" : ""
-                            }`}
-                          >
-                            {leg}
-                          </span>
-                        ))}
+                      <div className="flex flex-col h-full">
+                        <span className="font-medium text-stone-900">
+                          {r.timeHeadline}
+                        </span>
+                        {r.timeLegs &&
+                          r.timeLegs.map((leg, i) => (
+                            <span
+                              key={i}
+                              className={`block text-xs text-stone-500${
+                                i === 0 ? " mt-0.5" : ""
+                              }`}
+                            >
+                              {leg}
+                            </span>
+                          ))}
+                      </div>
                     </td>
                     <td className="py-3 px-3 align-top">
                       {r.driveNA ? (
@@ -570,25 +572,27 @@ export default function RouteComparison() {
                           Not applicable — {r.driveNA}
                         </span>
                       ) : (
-                        <>
-                          {r.driveCost &&
-                            r.driveCost.map((c, i) => (
-                              <span
-                                key={i}
-                                className="block text-xs text-stone-600"
-                              >
-                                {c}
+                        <div className="flex flex-col h-full">
+                          <div className="flex-grow">
+                            {r.driveCost &&
+                              r.driveCost.map((c, i) => (
+                                <span
+                                  key={i}
+                                  className="block text-xs text-stone-600"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                            {r.driveCostNote && (
+                              <span className="text-xs text-stone-600">
+                                {r.driveCostNote}
                               </span>
-                            ))}
-                          {r.driveCostNote && (
-                            <span className="text-xs text-stone-600">
-                              {r.driveCostNote}
-                            </span>
-                          )}
+                            )}
+                          </div>
                           <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
                             {r.driveTotal}
                           </span>
-                        </>
+                        </div>
                       )}
                     </td>
                     <td className="py-3 pl-3 align-top">
@@ -597,22 +601,24 @@ export default function RouteComparison() {
                           Not applicable — {r.taxiNA}
                         </span>
                       ) : r.taxiCost ? (
-                        <>
+                        <div className="flex flex-col h-full">
                           <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
                             {costLabel(r.costType).replace(/^./, (c) => c.toUpperCase())}
                           </span>
-                          {r.taxiCost.map((c, i) => (
-                            <span
-                              key={i}
-                              className="block text-xs text-stone-600"
-                            >
-                              {c}
-                            </span>
-                          ))}
+                          <div className="flex-grow">
+                            {r.taxiCost.map((c, i) => (
+                              <span
+                                key={i}
+                                className="block text-xs text-stone-600"
+                              >
+                                {c}
+                              </span>
+                            ))}
+                          </div>
                           <span className="block font-semibold text-stone-900 mt-2 pt-1.5 border-t border-stone-200">
                             {r.taxiTotal}
                           </span>
-                        </>
+                        </div>
                       ) : (
                         <span className="text-stone-500">{r.taxiTotal}</span>
                       )}

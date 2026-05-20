@@ -461,8 +461,13 @@ export default function RouteComparison() {
                   Cost — self-drive
                 </div>
                 {r.driveNA ? (
-                  <div className="text-sm text-stone-500 italic mb-3">
-                    Not applicable — {r.driveNA}
+                  <div className="mb-3">
+                    <div className="text-[11px] uppercase tracking-[0.12em] text-stone-400 font-semibold mb-1">
+                      Not applicable
+                    </div>
+                    <div className="text-sm text-stone-500 italic">
+                      {r.driveNA}
+                    </div>
                   </div>
                 ) : (
                   <>
@@ -493,8 +498,13 @@ export default function RouteComparison() {
                   Cost — {costLabel(r.costType)}
                 </div>
                 {r.taxiNA ? (
-                  <div className="text-sm text-stone-500 italic">
-                    Not applicable — {r.taxiNA}
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.12em] text-stone-400 font-semibold mb-1">
+                      Not applicable
+                    </div>
+                    <div className="text-sm text-stone-500 italic">
+                      {r.taxiNA}
+                    </div>
                   </div>
                 ) : r.taxiCost ? (
                   <>
@@ -538,13 +548,13 @@ export default function RouteComparison() {
                     Route
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Time
+                    Journey time
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 px-3">
-                    Cost
+                    Cost — self-drive
                   </th>
                   <th className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pl-3">
-                    Cost
+                    Cost — pet taxi / shuttle / ferry
                   </th>
                 </tr>
               </thead>
@@ -557,15 +567,14 @@ export default function RouteComparison() {
                     }
                   >
                     <td className="py-3 pr-3 align-top">
-                      <div className="flex flex-col h-full">
-                        <span className="font-medium text-stone-900 break-words">{r.name}</span>
-                        <span className="text-xs text-stone-500 break-words">{r.sub}</span>
-                      </div>
+                      <span className="font-medium text-stone-900 break-words">{r.name}</span>
+                      <br />
+                      <span className="text-xs text-stone-500 break-words">{r.sub}</span>
                     </td>
                     <td className="py-3 px-3 align-top">
                       <div className="flex flex-col h-full">
                         <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
-                          Journey time
+                          Breakdown
                         </span>
                         <div className="flex-grow">
                           {r.timeLegs &&
@@ -585,9 +594,14 @@ export default function RouteComparison() {
                     </td>
                     <td className="py-3 px-3 align-top">
                       {r.driveNA ? (
-                        <span className="text-xs text-stone-500 italic">
-                          Not applicable — {r.driveNA}
-                        </span>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">
+                            Not applicable
+                          </div>
+                          <div className="text-xs text-stone-500 italic">
+                            {r.driveNA}
+                          </div>
+                        </div>
                       ) : (
                         <div className="flex flex-col h-full">
                           <span className="block text-[10px] uppercase tracking-[0.1em] text-stone-400 font-semibold mb-1">

@@ -297,6 +297,42 @@ const ROUTES = [
     hasPetTaxi: true,
     isFerrySea: true,
   },
+  {
+    id: "newhaven-dieppe",
+    origin: "Paris",
+    name: "Via Dieppe — DFDS pet-friendly cabin (foot-passenger option)",
+    sub: "Paris → Dieppe by train → DFDS ferry Dieppe → Newhaven → London by train",
+    timeHeadline: "~7–9h total (with the day crossing)",
+    timeLegs: [
+      "Paris → Rouen → Dieppe by train ~2.5–3h (dogs allowed on French trains)",
+      "Check-in at Dieppe Maritime Terminal (closes 45 min before sailing)",
+      "Ferry crossing ~4h (day) or overnight (evening sailings available)",
+      "Arrive Newhaven Marine Terminal",
+      "Train Newhaven → Lewes → London Victoria ~1h 40m (dogs allowed on UK trains)",
+    ],
+    driveCost: [
+      "Ferry (with car) · £100–£200 one way",
+      "Pet fee · £20 each way (per pet, kennel or pet cabin)",
+      "Car hire + fuel from Paris · £140–£220",
+    ],
+    driveTotal: "≈ £260–£440 one way (with car)",
+    taxiCost: [
+      "Foot passenger fare · £40–£90 one way",
+      "Pet-friendly cabin · £80–£140 (4-berth, 2-bunk, sea view)",
+      "Pet fee · £20 each way",
+      "Paris→Dieppe train · €25–€50 per person",
+      "Newhaven→London train · £15–£30 per person",
+    ],
+    taxiTotal: "≈ £180–£290 one way (1 person + 1 pet, no car)",
+    costType: "ferry",
+    taxiCaption:
+      "the only English Channel ferry that accepts foot passengers with pets. Pet-friendly cabins added since late 2025 — three onboard. You CANNOT book pets online as a foot passenger; phone DFDS on +44 33 058 787 87 to add the pet to your booking. Three pet-friendly cabins only, so book early in peak season. Dogs in the dedicated kennel area must stay on a lead in transit; bedding not provided — bring your own. Cats and other pets must use a pet-friendly cabin, not the kennels.",
+    sortCost: 180,
+    sortTime: 8,
+    isEurotunnel: false,
+    hasPetTaxi: true,
+    isFerrySea: true,
+  },
 ];
 
 const SORTS = [

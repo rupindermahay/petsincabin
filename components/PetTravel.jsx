@@ -674,30 +674,113 @@ const NO_CABIN_AIRLINES = [
 ];
 
 // Shared helper: find an AIRLINES[] entry given some free-text (a route note,
-// a leg's airline label, etc.). Handles combined-name entries like
-// "Air France / KLM" or "Japan Airlines (JAL) / ANA" — text mentioning just
-// one half ("Air France", "ANA") still resolves. Used by both the Carriers
-// chapter (resolveAirlinesFromLegs) and the direct-route card UI.
+// a leg's airline label, etc.). Handles:
+//   - Combined-name entries like "Air France / KLM" (text mentioning one half
+//     still resolves)
+//   - Parenthetical aliases like "Japan Airlines (JAL) / ANA"
+//   - Short-form mentions like "Etihad." → "Etihad Airways", "LATAM." →
+//     "LATAM Airlines" by matching distinctive tokens as whole words after
+//     stripping generic descriptors (Airlines, Airways, Air, Group, etc).
+// Used by both the Carriers chapter (resolveAirlinesFromLegs) and the
+// direct-route card UI.
+const GENERIC_AIRLINE_WORDS = new Set([
+  "airlines", "airways", "air", "group", "polish", "portugal",
+  "scandinavian", "international", "atlantic", "the",
+]);
+function airlineSearchTerms(name) {
+  // Build a set of search terms for matching: the full name, each "/"-split
+  // half, the no-paren version, and each distinctive token (≥4 chars, not a
+  // generic descriptor) so short mentions resolve. We use whole-word matches
+  // for distinctive tokens to avoid "Air" matching any "Air France" in a note.
+  const out = new Set();
+  const low = name.toLowerCase();
+  out.add(low);
+  const noParen = low.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
+  if (noParen !== low) out.add(noParen);
+  [low, noParen].forEach((s) => {
+    if (s.includes(" / ")) {
+      s.split(" / ").map((p) => p.trim()).forEach((p) => out.add(p));
+    }
+  });
+  return Array.from(out);
+}
+function airlineTokens(name) {
+  // Distinctive tokens to look up as whole-word matches inside note text.
+  // Excludes generic descriptors and very short tokens (which produce false
+  // positives — e.g. "Air" matching anything mentioning "Air France").
+  const tokens = new Set();
+  const parts = name.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+  parts.forEach((p) => {
+    if (p.length >= 4 && !GENERIC_AIRLINE_WORDS.has(p)) tokens.add(p);
+  });
+  // Also accept all-uppercase abbreviations like "ANA", "JAL", "SAS", "LOT",
+  // "TAP" — these are 3-letter but distinctive when written in caps in the
+  // original name. We can't see the original case in a lowercased copy, so
+  // we look at the original.
+  name.split(/[^A-Za-z0-9]+/).forEach((p) => {
+    if (p.length >= 3 && p === p.toUpperCase() && /^[A-Z]+$/.test(p)) {
+      tokens.add(p.toLowerCase());
+    }
+  });
+  return Array.from(tokens);
+}
 function findAirlineInText(text) {
   if (!text) return null;
   const t = text.toLowerCase();
-  return AIRLINES.find((a) => {
-    const an = a.name.toLowerCase();
-    if (t.includes(an) || an.includes(t)) return true;
-    if (an.includes(" / ")) {
-      const parts = an.split(" / ").map((p) => p.trim());
-      if (parts.some((p) => t.includes(p) || p.includes(t))) return true;
+  // Tier 1: exact-substring on any search term (handles full names, halves
+  // of combined names, no-paren variants).
+  for (const a of AIRLINES) {
+    const terms = airlineSearchTerms(a.name);
+    if (terms.some((term) => t.includes(term))) return a;
+  }
+  // Tier 2: whole-word match against distinctive tokens (handles "Etihad."
+  // mentioning "Etihad Airways", "LATAM." matching "LATAM Airlines", etc).
+  // We require word boundaries so "AIR" inside "AirPet" or similar doesn't
+  // false-match.
+  for (const a of AIRLINES) {
+    const tokens = airlineTokens(a.name);
+    for (const tok of tokens) {
+      const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+      if (re.test(t)) return a;
     }
-    const anNoParen = an.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
-    if (anNoParen !== an) {
-      if (t.includes(anNoParen) || anNoParen.includes(t)) return true;
-      if (anNoParen.includes(" / ")) {
-        const parts = anNoParen.split(" / ").map((p) => p.trim());
-        if (parts.some((p) => t.includes(p) || p.includes(t))) return true;
+  }
+  return null;
+}
+
+// Find ALL airlines mentioned in a text, in order of first appearance.
+// Used by direct-route leg synthesis and the card UI carrier specs block so
+// notes mentioning multiple carriers (e.g. "Air France / Delta. ✓ Cabin")
+// render specs for ALL of them, not just whichever appears earlier in the
+// AIRLINES[] list. Without this the Paris→JFK card would show only Delta
+// even though the note explicitly names both Air France and Delta as valid
+// cabin carriers on the route.
+function findAllAirlinesInText(text) {
+  if (!text) return [];
+  const t = text.toLowerCase();
+  // Score each AIRLINES entry by first-match position so we preserve the
+  // order in which airlines are mentioned (Air France first, then Delta).
+  const hits = [];
+  AIRLINES.forEach((a) => {
+    let firstPos = -1;
+    // Tier 1: search terms
+    for (const term of airlineSearchTerms(a.name)) {
+      const idx = t.indexOf(term);
+      if (idx >= 0 && (firstPos < 0 || idx < firstPos)) firstPos = idx;
+    }
+    // Tier 2: whole-word tokens
+    if (firstPos < 0) {
+      for (const tok of airlineTokens(a.name)) {
+        const re = new RegExp(`\\b${tok.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+        const m = t.match(re);
+        if (m && m.index !== undefined && (firstPos < 0 || m.index < firstPos)) {
+          firstPos = m.index;
+        }
       }
     }
-    return false;
-  }) || null;
+    if (firstPos >= 0) hits.push({ airline: a, pos: firstPos });
+  });
+  hits.sort((x, y) => x.pos - y.pos);
+  return hits.map((h) => h.airline);
 }
 
 // ---------- POPULAR ROUTES & TIMES ----------
@@ -11682,51 +11765,62 @@ function JourneyPlanner() {
                                   </div>
                                   <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                                   {/* Carrier specs block — surfaces weight / dims / fee /
-                                      link from AIRLINES[] for the carrier mentioned in
+                                      link from AIRLINES[] for ALL carriers mentioned in
                                       the route note. Same lookup pattern used elsewhere
                                       (line ~12064) for the Carriers checklist chapter.
                                       Without this, stub notes like "Air France. ✓ Cabin
                                       (under 8 kg)." leave the card with no carrier
-                                      context — even though full data exists in AIRLINES[]. */}
+                                      context — even though full data exists in AIRLINES[].
+                                      For multi-airline notes (e.g. "Air France / Delta"),
+                                      we render specs for both so the user can compare. */}
                                   {(() => {
-                                    const matched = findAirlineInText(g.routes[0].note || "");
-                                    if (!matched) return null;
+                                    const matched = findAllAirlinesInText(g.routes[0].note || "");
+                                    if (matched.length === 0) return null;
                                     return (
-                                      <div className="mt-3 pt-3 border-t border-stone-700/60">
-                                        <p className="text-xs uppercase tracking-widest text-amber-400/80 mb-2">
-                                          {matched.name} — carrier specs
-                                        </p>
-                                        <dl className="text-xs text-stone-400 space-y-1 leading-relaxed">
-                                          {matched.weight && (
-                                            <div className="flex gap-2">
-                                              <dt className="text-stone-500 flex-shrink-0 w-24">Weight limit</dt>
-                                              <dd className="flex-1">{matched.weight}</dd>
-                                            </div>
-                                          )}
-                                          {matched.carrier && (
-                                            <div className="flex gap-2">
-                                              <dt className="text-stone-500 flex-shrink-0 w-24">Carrier max</dt>
-                                              <dd className="flex-1">{matched.carrier}</dd>
-                                            </div>
-                                          )}
-                                          {matched.fee && (
-                                            <div className="flex gap-2">
-                                              <dt className="text-stone-500 flex-shrink-0 w-24">Fee</dt>
-                                              <dd className="flex-1">{matched.fee}</dd>
-                                            </div>
-                                          )}
-                                        </dl>
-                                        {matched.link && (
-                                          <a
-                                            href={matched.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            onClick={(e) => e.stopPropagation()}
-                                            className="inline-flex items-center gap-1 mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline"
-                                          >
-                                            See {matched.name}'s official pet page →
-                                          </a>
+                                      <div className="mt-3 pt-3 border-t border-stone-700/60 space-y-4">
+                                        {matched.length > 1 && (
+                                          <p className="text-xs text-stone-500 italic leading-relaxed">
+                                            Either carrier flies this route — pick whichever's specs and price work for you.
+                                          </p>
                                         )}
+                                        {matched.map((a, ai) => (
+                                          <div key={ai}>
+                                            <p className="text-xs uppercase tracking-widest text-amber-400/80 mb-2">
+                                              {a.name} — carrier specs
+                                            </p>
+                                            <dl className="text-xs text-stone-400 space-y-1 leading-relaxed">
+                                              {a.weight && (
+                                                <div className="flex gap-2">
+                                                  <dt className="text-stone-500 flex-shrink-0 w-24">Weight limit</dt>
+                                                  <dd className="flex-1">{a.weight}</dd>
+                                                </div>
+                                              )}
+                                              {a.carrier && (
+                                                <div className="flex gap-2">
+                                                  <dt className="text-stone-500 flex-shrink-0 w-24">Carrier max</dt>
+                                                  <dd className="flex-1">{a.carrier}</dd>
+                                                </div>
+                                              )}
+                                              {a.fee && (
+                                                <div className="flex gap-2">
+                                                  <dt className="text-stone-500 flex-shrink-0 w-24">Fee</dt>
+                                                  <dd className="flex-1">{a.fee}</dd>
+                                                </div>
+                                              )}
+                                            </dl>
+                                            {a.link && (
+                                              <a
+                                                href={a.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="inline-flex items-center gap-1 mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline"
+                                              >
+                                                See {a.name}'s official pet page →
+                                              </a>
+                                            )}
+                                          </div>
+                                        ))}
                                       </div>
                                     );
                                   })()}
@@ -12094,8 +12188,10 @@ function JourneyPlanner() {
                     // chapter still renders generically.
                     let airlineText = dr._airlineFromLeg || "";
                     if (!airlineText && dr.note) {
-                      const matched = findAirlineInText(dr.note);
-                      if (matched) airlineText = `${matched.name} ✓ Cabin`;
+                      const allMatched = findAllAirlinesInText(dr.note);
+                      if (allMatched.length > 0) {
+                        airlineText = `${allMatched.map((a) => a.name).join(" / ")} ✓ Cabin`;
+                      }
                     }
                     routeLegs = [{
                       route: `${dr.from} → ${dr.to}`,

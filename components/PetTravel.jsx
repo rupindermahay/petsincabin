@@ -3328,7 +3328,9 @@ const CHECKLIST_DATA = {
           "Visit AQCS at your departure port at least 7 days before flight with the pet and pre-appointment.",
           "Bring: completed application form, microchip certificate, vaccination records, rabies titer test results (if destination requires), 2 postcard photos of pet, passport copy, ticket copy.",
           "AQCS export certificate is valid for 10 days from issue.",
-          "Destination-specific requirements: USA needs CDC Dog Import Form (India IS on the CDC high-risk list — requires Certification of US-issued Rabies Vaccination OR FAVN titer); UK needs Animal Health Certificate (cabin not allowed — cargo only via continental Europe pivot); EU needs EU Animal Health Certificate + microchip + rabies 21+ days.",
+          "If outbound to USA: India IS on the CDC high-risk list — you need the CDC Dog Import Form receipt PLUS either the Certification of US-issued Rabies Vaccination form OR a FAVN rabies titer.",
+          "If outbound to UK: GB Animal Health Certificate required, but cabin pets cannot fly directly into the UK — the route is cargo into LHR or cabin to mainland Europe (Paris/Amsterdam/Frankfurt/Lisbon) then Eurotunnel.",
+          "If outbound to Europe (EU): EU Animal Health Certificate, ISO microchip implanted BEFORE rabies vaccine, rabies ≥21 days before entry.",",
         ],
       },
       {
@@ -4214,6 +4216,65 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  // Central America (Panama) — verified against MIDA, Panama's Ministry of
+  // Agricultural Development, plus multiple pet-shipper sources. Panama's
+  // rules apply broadly to Central American entry; for non-Panama Central
+  // American destinations (Costa Rica, Guatemala, etc.) the user should
+  // verify with that country's specific authority — flagged in subhead.
+  central_america: {
+    title: "Central America (Panama) entry / exit checklist",
+    sections: [
+      {
+        title: "6 weeks before",
+        items: [
+          "ISO 11784/11785 microchip implanted (if not already) — recommended for Panama entry, required by most airlines flying into Panama, AND required if you'll return to the US",
+          "Rabies vaccination — must be administered ≥30 days before entry (no wait needed for boosters kept current). Vaccine must be administered AFTER the microchip.",
+          "Core vaccinations current — dogs need distemper, hepatitis, leptospirosis and parvovirus; cats need feline viral rhinotracheitis, panleukopenia and feline leukemia",
+          "Book cabin pet space with the airline — Copa Airlines is the dominant operator into Panama City (PTY); United, American, Avianca, and Iberia also serve PTY",
+        ],
+      },
+      {
+        title: "30 days before",
+        items: [
+          "Internal and external parasite treatment by your vet — required by Panama, must be recorded on the health certificate",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "International health certificate from a government-accredited vet (USDA-accredited if from the US; equivalent in other origin countries). Form must list microchip number, rabies vaccine date, parasite treatment dates.",
+          "USDA APHIS endorsement (US origin) — same-day in many states via VEHCS, mail-in in others. The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> covers timing and the return label.",
+          "Some sources also recommend Panamanian consulate authentication of the endorsed certificate — historically required, partially waived in 2020. Confirm with the Panamanian consulate in your country before relying on either path.",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring originals (not photocopies) of all paperwork — microchip record, rabies certificate, parasite treatment record, government-endorsed health certificate",
+          "On arrival at Tocumen International (PTY): a MIDA veterinarian inspects the pet and paperwork. No mandatory quarantine if all documents are in order.",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Same paperwork as dogs — microchip, rabies, vet certificate, parasite treatment",
+          "Some breeds restricted: wolf hybrids, Savannah and Bengal cats less than 5 generations from the wild are not permitted under standard rules",
+        ],
+      },
+      {
+        title: "Important note on broader Central America",
+        items: [
+          "This checklist covers Panama specifically. Other Central American destinations (Costa Rica, Guatemala, Belize, Honduras, El Salvador, Nicaragua) have their own paperwork and quarantine rules — verify with each country's veterinary authority before relying on the Panama timeline here.",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Panama's competent authority is MIDA (Ministerio de Desarrollo Agropecuario). For US travellers, USDA publishes the Panama-specific export requirements at <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
+        ],
+      },
+    ],
+  },
 };
 
 // For routes where direction (departing vs arriving) genuinely changes the checklist content,
@@ -5089,7 +5150,7 @@ const REGION_TO_CHECKLIST_ID = {
   "hawaii": "hawaii",       // CHECKLIST_DATA.hawaii exists — use it
   "south-africa": "south_africa",
   "south-america": "south_america",
-  "central-america": null,  // PTY is transit-only — no detailed entry checklist needed
+  "central-america": "central_america",  // Verified MIDA paperwork added in this build (Panama-specific; flag for non-Panama destinations)
   "japan": "japan",
   "korea": "korea",         // Verified APQA / QIA paperwork added in this build
   "russia": "russia",       // Verified Rosselkhoznadzor paperwork added in this build
@@ -5395,7 +5456,8 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
     if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is the make-or-break document. Paperwork timeline below.`;
     if (destRegion === "south-africa") return `For South Africa: import permit + ISO microchip + rabies titer. No cabin option internationally — pet travels as manifested cargo. Paperwork timeline below.`;
     if (destRegion === "japan") return `For Japan: the 180-day rabies titer waiting period is the binding constraint — start ≥7 months ahead. Paperwork timeline below.`;
-    if (destRegion === "south-america" || destRegion === "central-america") return `For ${dest.name}: rules differ by country. Paperwork timeline below covers the universal essentials.`;
+    if (destRegion === "south-america") return `For ${dest.name}: rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Paperwork timeline below covers the universal essentials.`;
+    if (destRegion === "central-america") return `For ${dest.name}: Panama (PTY) has well-documented MIDA rules — microchip, rabies ≥30 days, parasite treatment, USDA-endorsed certificate. For other Central American countries verify with the specific country's authority. Paperwork timeline below.`;
     if (destRegion === "korea") return `For South Korea: microchip + rabies + health certificate. Some origins need a rabies titer. Paperwork timeline below.`;
   }
 
@@ -5434,36 +5496,117 @@ function petAppliesTo(itemText, sectionTitle) {
   return "both";
 }
 
-// Filter "If outbound from X" / "If inbound to X" items by chapter side.
-// Returns true if the item is relevant to the chapter being built, false to
-// drop it. Items without a direction conditional are always relevant.
+// Filter "If outbound from X" / "If inbound to X" items by chapter side AND
+// by actual route destination. Returns true if the item is relevant to the
+// chapter being built, false to drop it. Items without a direction or
+// destination conditional are always relevant.
 //
 // Logic:
 //   "If outbound from X" / "If outbound to ..."  → only relevant in the
 //     LEAVING (origin) chapter — that's where the pet is departing.
+//     PLUS: if the item names a specific destination ("to USA", "to Canada"),
+//     only relevant when that destination matches the actual route.
 //   "If inbound to X" / "If arriving in X"  → only relevant in the
 //     ENTERING (destination) chapter — that's where the pet is arriving.
 //   "If going to non-EU" / "If destination is ..."  → these are about the
 //     destination, so only relevant in the LEAVING chapter (the user reads
 //     "if going to" while preparing to depart).
-function isRelevantConditional(itemText, side) {
+//   "For [pet] flying to X" / "(X departing)" / "(X arriving)" / "X→Y" —
+//     these embed a destination/origin in the item text. Only relevant when
+//     the route actually matches.
+function isRelevantConditional(itemText, side, originRegion, destRegion) {
   const t = (itemText || "").toLowerCase();
-  // Patterns starting with "If outbound" — outbound is a departure
-  // statement, only relevant when reading the Leaving chapter.
+
+  // --- Patterns 1: explicit "If outbound" / "If inbound" / "If going to" ---
   if (t.startsWith("if outbound")) {
-    return side === "origin";
+    if (side !== "origin") return false;
+    // "If outbound to NON-EU country (Canada, USA, UAE, etc.)" — relevant
+    // only if the destination is actually non-EU. UK→Europe should hide this.
+    if (t.includes("non-eu country") || t.includes("non-eu countries")) {
+      const isNonEU = destRegion && destRegion !== "europe" && destRegion !== "ireland" && destRegion !== "uk-out";
+      return isNonEU;
+    }
+    // "If outbound to USA" / "If outbound to UK" / "If outbound to Europe (EU)" —
+    // destination-specific. Match the named destination against the route.
+    const namedToMatch = t.match(/if outbound to (the\s+)?(usa|us|united states|uk|united kingdom|ireland|canada|europe|eu|japan|hawaii|mexico|uae|australia|india|south africa|south korea|korea|russia)\b/);
+    if (namedToMatch) {
+      const named = namedToMatch[2];
+      const destMatchMap = {
+        "usa": "us", "us": "us", "united states": "us",
+        "uk": "uk-out", "united kingdom": "uk-out",
+        "ireland": "ireland", "canada": "canada", "europe": "europe", "eu": "europe",
+        "japan": "japan", "hawaii": "hawaii", "mexico": "mexico", "uae": "dubai",
+        "india": "india", "south africa": "south-africa",
+        "south korea": "korea", "korea": "korea", "russia": "russia",
+      };
+      return destMatchMap[named] === destRegion;
+    }
+    return true;
   }
-  // Patterns starting with "If inbound to X" / "If arriving" — these
-  // describe arrival rules, only relevant in the Entering chapter.
   if (t.startsWith("if inbound") || t.startsWith("if arriving")) {
     return side === "destination";
   }
-  // "If going to ..." and "If destination is ..." — directional advice
-  // read at the origin side while planning the trip.
   if (t.startsWith("if going to") || t.startsWith("if destination") || t.startsWith("if your destination")) {
-    return side === "origin";
+    if (side !== "origin") return false;
+    // "If going to non-EU" — only relevant when destination is non-EU.
+    if (t.includes("non-eu")) {
+      const isNonEU = destRegion && destRegion !== "europe" && destRegion !== "ireland" && destRegion !== "uk-out";
+      return isNonEU;
+    }
+    return true;
   }
-  // Default: not a directional conditional — keep it.
+  if (t.startsWith("if returning to ") || t.startsWith("if from ") || t.startsWith("if coming from ")) {
+    // Conditional on origin direction or origin country.
+    if (t.startsWith("if returning to the us") || t.startsWith("if returning to us")) return originRegion === "us";
+    if (t.startsWith("if returning to us from cdc high-risk")) return originRegion === "us";
+    if (t.startsWith("if from us") || t.startsWith("if from the us")) return originRegion === "us";
+    if (t.startsWith("if from uk") || t.startsWith("if from the uk") || t.startsWith("if from uk/eu")) {
+      return originRegion === "uk-out" || originRegion === "europe" || originRegion === "ireland";
+    }
+    if (t.startsWith("if coming from the uk") || t.startsWith("if coming from uk")) return originRegion === "uk-out";
+    if (t.startsWith("if coming from the us") || t.startsWith("if coming from us")) return originRegion === "us";
+    if (t.startsWith("if coming from the eu") || t.startsWith("if coming from eu") || t.startsWith("if coming from europe")) return originRegion === "europe";
+    return true;
+  }
+
+  // --- Patterns 2: destination embedded in item text ---
+  // "For dogs flying to the USA from the UK" / "For cats entering Japan" etc.
+  // Only relevant when route actually matches.
+  const forFlyingToMatch = t.match(/^for (dogs|cats|pets) (flying|entering|going|travelling|traveling) (to|into) (the\s+)?(usa|us|united states|uk|united kingdom|ireland|canada|europe|eu|japan|hawaii|mexico|uae|australia|india|south africa|south korea|korea|russia)/);
+  if (forFlyingToMatch) {
+    const namedDest = forFlyingToMatch[5];
+    if (side !== "origin") return false; // these are origin-side prep items
+    const destMatchMap = {
+      "usa": "us", "us": "us", "united states": "us",
+      "uk": "uk-out", "united kingdom": "uk-out",
+      "ireland": "ireland",
+      "canada": "canada",
+      "europe": "europe", "eu": "europe",
+      "japan": "japan",
+      "hawaii": "hawaii",
+      "mexico": "mexico",
+      "uae": "dubai",
+      "india": "india",
+      "south africa": "south-africa",
+      "south korea": "korea", "korea": "korea",
+      "russia": "russia",
+    };
+    const expectedRegion = destMatchMap[namedDest];
+    return expectedRegion === destRegion;
+  }
+
+  // "(US departing)" / "(UK→EU)" parenthetical markers
+  if (t.includes("(us departing)") || t.includes("(usa departing)")) {
+    return originRegion === "us";
+  }
+  if (t.includes("(uk→eu)") || t.includes("(uk → eu)") || t.includes("(uk\\u2192eu)")) {
+    return originRegion === "uk-out" && (destRegion === "europe" || destRegion === "ireland");
+  }
+  if (t.includes("(uk→us)") || t.includes("(uk → us)")) {
+    return originRegion === "uk-out" && destRegion === "us";
+  }
+
+  // Default: not a directional/destination conditional — keep it.
   return true;
 }
 
@@ -5671,7 +5814,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
         // views. In a route checklist, the direction is fixed — so an item
         // tagged "outbound from UK" should only appear in the LEAVING UK
         // chapter, never in ENTERING UK, and vice versa.
-        if (!isRelevantConditional(text, side)) return;
+        if (!isRelevantConditional(text, side, originRegion, destRegion)) return;
 
         // Tip? Demote out of the timeline into the tips box.
         if (isTip(text)) { tips.add(text); return; }
@@ -5876,7 +6019,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       if (destRegion === "caribbean") return `Each island differs (Bahamas, Jamaica, Dominican Republic each have their own permit + paperwork). Confirm with the specific country's Department of Agriculture.`;
       // South / Central America — perCountry, so flag that.
       if (destRegion === "south-america") return `Rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Check the specific country's requirements.`;
-      if (destRegion === "central-america") return `Rules differ by country. Health certificate + rabies vaccination are universal; some require an import permit.`;
+      if (destRegion === "central-america") return `Panama: microchip, rabies ≥30 days, parasite treatment, USDA-endorsed health certificate. For other Central American countries, verify with the specific country's authority.`;
       // Korea — limited data but flag what we know.
       if (destRegion === "korea") return `Microchip, rabies ≥30 days, health certificate from origin, optional rabies titer for some origins.`;
       // Russia — sanctions-era complexity.

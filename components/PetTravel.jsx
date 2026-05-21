@@ -3315,6 +3315,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "On arrival in India",
+        direction: "arrival",
         items: [
           "Quarantine officer examines pet and verifies documents at the AQCS station at the entry airport.",
           "If clinically healthy and paperwork in order, pet is released with Provisional Quarantine Clearance Certificate — no 15-day quarantine for accompanied baggage pets with proper docs.",
@@ -3324,6 +3325,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Departing FROM India (export)",
+        direction: "depart",
         items: [
           "Visit AQCS at your departure port at least 7 days before flight with the pet and pre-appointment.",
           "Bring: completed application form, microchip certificate, vaccination records, rabies titer test results (if destination requires), 2 postcard photos of pet, passport copy, ticket copy.",
@@ -3570,6 +3572,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Returning to home country",
+        direction: "us-uk-eu-canada-leg",
         items: [
           "Returning to US: <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> receipt required for dogs",
           "Returning to Canada: standard rabies + health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/exports/pets/eng\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a>)",
@@ -3593,6 +3596,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6–8 weeks before",
+        direction: "arrival",
         items: [
           "Vet appointment for full health check",
           "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
@@ -3603,6 +3607,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "If returning to the US: do this BEFORE departure",
+        direction: "us-leg",
         items: [
           "Get Certification of U.S.-issued Rabies Vaccination form from a USDA-accredited vet (NOT a regular rabies certificate)",
           "Form must be USDA-endorsed BEFORE your dog leaves the US — cannot be issued retroactively",
@@ -3613,6 +3618,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "10 days before travel to DR",
+        direction: "arrival",
         items: [
           "USDA-accredited vet issues Health Certificate for export to DR (valid 10 days)",
           "Certificate includes microchip number, rabies info, parasite treatments",
@@ -3622,6 +3628,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
+        direction: "arrival",
         items: [
           "Bring original (signed/stamped) Health Certificate",
           "If returning to US later: bring Certification of U.S.-issued Rabies Vaccination (for return)",
@@ -3652,6 +3659,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6+ MONTHS before (this is a long process)",
+        direction: "arrival",
         items: [
           "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
           "Rabies vaccine administered (after microchip) — primary vaccine needs 3-month wait before entry for dogs over 12 months",
@@ -3662,6 +3670,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Permit application (start ASAP after titer)",
+        direction: "arrival",
         items: [
           "Submit Preliminary Application Form to vsdpermits@moa.gov.jm",
           "Attach rabies certificate + FAVN titer results",
@@ -3672,6 +3681,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "30 days before — pre-export treatments",
+        direction: "arrival",
         items: [
           "Two internal parasite treatments, 14 days apart (second within 7 days of travel)",
           "Two external parasite treatments, 14 days apart (second within 48 hours of travel)",
@@ -3681,6 +3691,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
+        direction: "arrival",
         items: [
           "Original Veterinary Import Permit (mandatory — no entry without it)",
           "Government-endorsed international health certificate",
@@ -3720,6 +3731,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "4–6 weeks before — Import Permit",
+        direction: "arrival",
         items: [
           "Apply for the Bahamas Import Permit through the government BAHFSA e-permit system, or email minagriculturemarine@bahamas.gov.bs (see Official sources below)",
           "Standard processing: 6–8 weeks (expedited service available)",
@@ -3729,6 +3741,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "48 hours before travel",
+        direction: "arrival",
         items: [
           "Licensed vet completes International Veterinary Certificate (within 48 hours of arrival in Bahamas)",
           "USDA APHIS endorsement NOT required (US only) — vet signature alone is enough",
@@ -3738,6 +3751,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day & arrival",
+        direction: "arrival",
         items: [
           "Original Import Permit (mandatory)",
           "Original Veterinary Certificate (signed within 48 hours of arrival)",
@@ -3748,6 +3762,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Returning to US",
+        direction: "us-leg",
         items: [
           "Bahamas is a CDC dog-rabies-FREE country — return is straightforward",
           "Only the CDC Dog Import Form receipt is needed for re-entry",
@@ -3838,6 +3853,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "First — understand what Hawaii is",
+        direction: "arrival",
         items: [
           "Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state. The official authority is Hawaii's Department of Agriculture & Biosecurity — see their <a href=\"https://dab.hawaii.gov/ai/aqs/aqs-info/\" target=\"_blank\" rel=\"noopener noreferrer\">Animal Quarantine Information page</a> for forms and current requirements.",
           "The goal is the 'Direct Airport Release' (or '5-Day-Or-Less') program — without it, your pet faces up to 120 days of quarantine on arrival",
@@ -3847,6 +3863,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "5+ months before",
+        direction: "arrival",
         items: [
           "Confirm your pet has an ISO 11784/11785 compatible microchip — implanted BEFORE the rabies blood test",
           "Ensure two rabies vaccinations are on record (two separate shots in your pet's lifetime, more than 30 days apart)",
@@ -3856,6 +3873,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "1–2 months before",
+        direction: "arrival",
         items: [
           "Most recent rabies vaccine must be current and given at least 30 days before arrival",
           "Submit the completed Dog & Cat Import Form (AQS-279) and the original rabies certificates to the Animal Industry Division",
@@ -3866,6 +3884,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "10 days before",
+        direction: "arrival",
         items: [
           "Vet health check — confirm your pet is fit to fly",
           "Treat for ticks within 14 days of arrival (required) and document it",
@@ -3875,6 +3894,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day & arrival",
+        direction: "arrival",
         items: [
           "Bring ALL original documents — Hawaii inspects paperwork carefully on arrival",
           "Your pet is inspected at the Airport Animal Quarantine Holding Facility at Honolulu (HNL)",
@@ -3899,6 +3919,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "7 months before",
+        direction: "arrival",
         items: [
           "Confirm your origin country's category: Japan classifies countries as 'designated' (rabies-free — Iceland, Australia, NZ, Fiji, Hawaii, Guam) or 'non-designated' (everywhere else). Non-designated requires the full 180-day process below; designated countries can skip the titer and waiting period.",
           "Plan backwards from intended arrival date: blood draw for rabies titer must be ≥180 days before arrival in Japan, and that's the hard floor.",
@@ -3907,6 +3928,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "6 months before",
+        direction: "arrival",
         items: [
           "ISO 11784/11785 microchip implanted — and it MUST be implanted BEFORE the first rabies vaccination or the vaccine is invalid. If your pet already has a microchip, verify it's ISO compliant; if it's not, bring a microchip reader with you.",
           "First rabies vaccine — must be administered when the pet is at least 91 days old (12 weeks is 84 days, which is below Japan's minimum and would invalidate the timeline).",
@@ -3915,6 +3937,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "5–6 months before",
+        direction: "arrival",
         items: [
           "Rabies antibody titer test (FAVN or RFFIT) — blood draw at a Japan-approved laboratory (Kansas State University Rabies Lab is the standard US destination).",
           "Result must show antibody level ≥0.5 IU/ml. Keep the ORIGINAL lab report — required on arrival.",
@@ -3924,6 +3947,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "40+ days before arrival",
+        direction: "arrival",
         items: [
           "Submit <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">Advance Notification Form</a> to the AQS office at your intended port of arrival — by mail or fax. Forms differ for dogs vs cats.",
           "Notification includes: microchip number, vaccination dates and vaccine details, blood draw date and titer result, pet's physical measurements (length and height), home address, destination address in Japan, copy of passport.",
@@ -3934,6 +3958,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "10 days before",
+        direction: "arrival",
         items: [
           "USDA-accredited (or country-equivalent) vet performs final clinical inspection and completes Form A (animal info) and Form C (health certificate). Dogs: confirm free of rabies and leptospirosis symptoms. Cats: confirm free of rabies symptoms.",
           "AQS recommends emailing a draft of the completed form for review BEFORE getting government endorsement — catches errors that would otherwise trigger detention.",
@@ -3951,6 +3976,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "On arrival in Japan",
+        direction: "arrival",
         items: [
           "Proceed to AQS at the arrival port — pets cleared in under 12 hours if paperwork is perfect (this is what AQS calls 'quarantine' but is really just inspection time).",
           "AQS officer scans microchip, verifies it matches every document exactly, reviews titer result and Form AC.",
@@ -3961,6 +3987,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Departing FROM Japan (export)",
+        direction: "depart",
         items: [
           "Apply for export inspection from AQS — JAL and ANA recommend at least 2 weeks before flight. Cargo space must be reserved.",
           "AQS issues Export Quarantine Certificate — valid 180 days.",
@@ -4078,6 +4105,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "On arrival",
+        direction: "arrival",
         items: [
           "Brazil: present documents at the customs (Receita Federal) and agriculture (MAPA/VIGIAGRO) counter on arrival. No quarantine if documents are in order.",
           "Argentina: SENASA inspection at EZE — present documentation, inspection typically 15–30 minutes.",
@@ -4089,6 +4117,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Returning to the US from South America",
+        direction: "us-leg",
         items: [
           "Standard CDC Dog Import Form (online, valid 6 months for multiple entries to same port).",
           "Certification of US-Issued Rabies Vaccination form (replaces health certificate for US-vaccinated dogs as of 2025).",
@@ -4123,6 +4152,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6 weeks before",
+        direction: "arrival",
         items: [
           "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies vaccine, or the vaccine record is invalid for Korea entry",
           "Confirm whether your origin is on Korea's rabies-free list (UK, Japan, Australia, NZ, Germany, France, Spain, Ireland — and other APQA-recognised countries) or not. The paperwork differs.",
@@ -4133,6 +4163,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "10 days before",
+        direction: "arrival",
         items: [
           "Government-endorsed health certificate from your origin country — USDA APHIS endorsement (US), CFIA (Canada), competent authority in EU member states. Must list the microchip number and the titer result (if required).",
           "Documents must match: pet's age, microchip number, vaccine record and titer details consistent across every paper. Mismatches can mean owner-paid quarantine or refused entry.",
@@ -4141,6 +4172,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
+        direction: "arrival",
         items: [
           "Bring originals of all certificates (not photocopies) — microchip record, rabies record, titer result if required, government-endorsed health certificate",
           "If inbound to Korea: pets are released same-day at Incheon (ICN) if paperwork is complete; expect ~1–2 hours at the animal quarantine office",
@@ -4181,6 +4213,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "5 days before — for export FROM Russia",
+        direction: "depart",
         items: [
           "If exporting OUT of Russia: obtain Russian Veterinary Certificate Form No. 1 from the State Veterinary Service within 5 days of departure. At the airport border control, Rosselkhoznadzor exchanges this for international Form No. 5a (free).",
           "If exporting OUT of Russia to the EU: the destination country's own health certificate is also required",
@@ -4188,6 +4221,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Within 5 days of entering Russia",
+        direction: "arrival",
         items: [
           "Health certificate or international pet passport showing a clinical examination by an official veterinarian within 5 days of travel (some Russian carriers and airports accept up to 14 days — confirm with the specific airline)",
           "At the Russian border control, Rosselkhoznadzor reissues the foreign veterinary certificate to Russian Form No. 6.1 (or a similar import form depending on the entry point)",
@@ -4226,6 +4260,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6 weeks before",
+        direction: "arrival",
         items: [
           "ISO 11784/11785 microchip implanted (if not already) — recommended for Panama entry, required by most airlines flying into Panama, AND required if you'll return to the US",
           "Rabies vaccination — must be administered ≥30 days before entry (no wait needed for boosters kept current). Vaccine must be administered AFTER the microchip.",
@@ -4235,12 +4270,14 @@ const CHECKLIST_DATA = {
       },
       {
         title: "30 days before",
+        direction: "arrival",
         items: [
           "Internal and external parasite treatment by your vet — required by Panama, must be recorded on the health certificate",
         ],
       },
       {
         title: "10 days before",
+        direction: "arrival",
         items: [
           "International health certificate from a government-accredited vet (USDA-accredited if from the US; equivalent in other origin countries). Form must list microchip number, rabies vaccine date, parasite treatment dates.",
           "USDA APHIS endorsement (US only) — same-day in many states via VEHCS, mail-in in others. The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> covers timing and the return label.",
@@ -4249,6 +4286,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
+        direction: "arrival",
         items: [
           "Bring originals (not photocopies) of all paperwork — microchip record, rabies certificate, parasite treatment record, government-endorsed health certificate",
           "On arrival at Tocumen International (PTY): a MIDA veterinarian inspects the pet and paperwork. No mandatory quarantine if all documents are in order.",
@@ -4913,6 +4951,7 @@ const DIRECTIONAL_CHECKLISTS = {
         },
         {
           title: "If returning to the US: do this BEFORE departure",
+          direction: "us-leg",
           items: [
             "Get Certification of U.S.-issued Rabies Vaccination form from a USDA-accredited vet (NOT a regular rabies certificate)",
             "Form must be USDA-endorsed BEFORE your dog leaves the US — cannot be issued retroactively",
@@ -5063,6 +5102,7 @@ const DIRECTIONAL_CHECKLISTS = {
         },
         {
           title: "4–6 weeks before — Import Permit",
+          direction: "arrival",
           items: [
             "Apply for the Bahamas Import Permit through the government BAHFSA e-permit system, or email minagriculturemarine@bahamas.gov.bs (see Official sources below)",
             "Standard processing: 6–8 weeks (expedited service available)",
@@ -5091,6 +5131,7 @@ const DIRECTIONAL_CHECKLISTS = {
         },
         {
           title: "Returning to US",
+          direction: "us-leg",
           items: [
             "Bahamas is a CDC dog-rabies-FREE country — return is straightforward",
             "Only the CDC Dog Import Form receipt is needed for re-entry",
@@ -5595,6 +5636,25 @@ function isRelevantConditional(itemText, side, originRegion, destRegion) {
     return expectedOrigin === originRegion;
   }
 
+  // Bare "Returning to X:" prefix at the start of an item text — same
+  // semantics as "If returning to X" but without the "If" wrapper. Common in
+  // destination-country checklists that list multiple home-country return
+  // scenarios in one section. Fires when route involves X in either direction.
+  const returningMatch = t.match(/^returning to (the\s+)?(usa|us|united states|uk|united kingdom|ireland|canada|europe|eu|japan|hawaii|mexico|uae|australia|india|south africa|south korea|korea|russia)[\s:,—-]/);
+  if (returningMatch) {
+    const named = returningMatch[2];
+    const matchMap = {
+      "usa": "us", "us": "us", "united states": "us",
+      "uk": "uk-out", "united kingdom": "uk-out",
+      "ireland": "ireland", "canada": "canada", "europe": "europe", "eu": "europe",
+      "japan": "japan", "hawaii": "hawaii", "mexico": "mexico", "uae": "dubai",
+      "india": "india", "south africa": "south-africa",
+      "south korea": "korea", "korea": "korea", "russia": "russia",
+    };
+    const expected = matchMap[named];
+    return expected === originRegion || expected === destRegion;
+  }
+
   // --- Patterns 2: destination embedded in item text ---
   // "For dogs flying to the USA from the UK" / "For cats entering Japan" etc.
   // Only relevant when route actually matches.
@@ -5886,14 +5946,11 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     null;
 
   // Resolve the directional (departing/arriving) checklist AND the base
-  // checklist for each side. Some directional checklists (notably UK
-  // arriving) hold entry-option content that's all "Anytime / general prep"
-  // — they tell you WHAT routes work, not WHEN to do each step. Merging
-  // the base CHECKLIST_DATA on top gives us BOTH the entry options AND
-  // the time-bound paperwork timeline (6 weeks → 10 days → 24-120hrs →
-  // travel day). Without this merge, "Entering the UK" emits the options
-  // into Anytime/general prep at the top, then leaves the actual chapter
-  // empty.
+  // checklist for each side. Merge them so we get BOTH the time-bound
+  // timeline AND any directional-specific content. Direction-specific
+  // sections are tagged with `direction: "arrival" | "depart" | "us-leg"`
+  // which the section filter honours, so merging is safe — irrelevant
+  // sections get dropped automatically per route.
   const mergeChecklists = (directional, base) => {
     if (!directional && !base) return null;
     if (!directional) return base;
@@ -5904,31 +5961,15 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     };
   };
 
-  // Some base checklists are ENTRY-focused — every section describes what's
-  // needed to enter the country, not to leave it. Caribbean (Bahamas, Jamaica,
-  // DR), Hawaii and Japan all fit this pattern. When the country is the
-  // ORIGIN, merging in its entry-focused base produces irrelevant content
-  // ("apply for Bahamas import permit" makes no sense when leaving Bahamas).
-  // For these, skip the base merge on the origin side. Destination side still
-  // benefits from the merge.
-  const ENTRY_FOCUSED_BASE = new Set([
-    "bahamas", "jamaica", "dominican_republic",
-    "hawaii", "japan", "south_africa", "korea", "central_america",
-  ]);
-
   const originDirectional = originId ? getChecklist(originId, "departing") : null;
   const originBase = originId ? (CHECKLIST_DATA[originId] || null) : null;
   const destDirectional = destId ? getChecklist(destId, "arriving") : null;
   const destBase = destId ? (CHECKLIST_DATA[destId] || null) : null;
 
-  // For entry-focused-base countries on the origin side, use directional only.
-  // Otherwise merge as before.
-  const originChecklist = (() => {
-    if (originDirectional === originBase) return originDirectional;
-    if (originId && ENTRY_FOCUSED_BASE.has(originId)) return originDirectional || originBase;
-    return mergeChecklists(originDirectional, originBase);
-  })();
-  // Destination side always merges (base is correct context for arrival).
+  // Both sides merge directional + base. The section-level direction filter
+  // (sec.direction === "arrival" / "depart" / "us-leg") drops sections that
+  // don't apply on the current side or route, so merging always-on is safe.
+  const originChecklist = originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase);
   const destChecklist = destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase);
   const generic = CHECKLIST_DATA.generic;
 
@@ -5952,12 +5993,28 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     const buckets = new Map(); // order -> { label, items, seenKeys }
 
     checklist.sections.forEach((sec) => {
-      // SECTION-LEVEL filter — some section titles imply a specific origin
-      // or destination ("Returning to US", "Departing FROM India", "From UK")
-      // and the entire section is irrelevant on routes that don't match.
-      // Drop the whole section before iterating items, so the bucket label
-      // doesn't appear empty either.
-      if (!isRelevantSection(sec.title, side, originRegion, destRegion)) return;
+      // SECTION-LEVEL filter — first check the explicit `direction` field
+      // (Option C: each section can be tagged "arrival", "depart", or
+      // "us-leg" / similar). If absent, fall back to title heuristics
+      // (isRelevantSection) which handle the legacy section names.
+      if (sec.direction) {
+        // "arrival" — only fires when this section's checklist is being
+        // rendered as the destination chapter for the country it describes.
+        if (sec.direction === "arrival" && side !== "destination") return;
+        // "depart" — only fires when this section's checklist is being
+        // rendered as the origin chapter.
+        if (sec.direction === "depart" && side !== "origin") return;
+        // "us-leg" — fires when route involves the US in either direction.
+        if (sec.direction === "us-leg" && originRegion !== "us" && destRegion !== "us") return;
+        // Multi-country home-return helper.
+        if (sec.direction === "us-uk-eu-canada-leg") {
+          const homes = ["us", "uk-out", "europe", "ireland", "canada"];
+          if (!homes.includes(originRegion) && !homes.includes(destRegion)) return;
+        }
+      } else {
+        // Fall back to title heuristic for sections without a direction tag.
+        if (!isRelevantSection(sec.title, side, originRegion, destRegion)) return;
+      }
 
       const bucket = timelineBucket(sec.title);
       sec.items.forEach((rawItem) => {

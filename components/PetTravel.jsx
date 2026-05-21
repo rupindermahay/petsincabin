@@ -4986,7 +4986,7 @@ const REGION_TO_CHECKLIST_ID = {
   "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
   "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
   "caribbean": null,        // per-island — handled specially below
-  "hawaii": null,           // uses generic + Hawaii note
+  "hawaii": "hawaii",       // CHECKLIST_DATA.hawaii exists — use it
   "south-africa": "south_africa",
   "south-america": "south_america",
   "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
@@ -5263,18 +5263,24 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
   }
 
   // Generic "research destination's import requirements" — replace with the
-  // specific things that matter for this destination.
+  // specific things that matter for this destination. Keep these to a
+  // one-line headline — the full paperwork timeline lives in the
+  // "Entering [X]" chapter below, so dumping it again here just creates
+  // repetition.
   if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
-    if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
+    if (dest.isUS) return `For the US: the CDC Dog Import Form is the central piece. ${origin.cdcHighRisk === true ? `${origin.name} is on the high-risk list, so extra rabies paperwork applies.` : "Paperwork timeline below."}`;
     if (destRegion === "uk-out") return `For the UK: no airline carries pets in cabin into the UK — the route is always cabin into mainland Europe, then Eurotunnel or a ferry. The paperwork timeline is detailed below.`;
     if (destRegion === "ireland") return `For Ireland: cabin pets CAN fly in (Iberia Madrid→Dublin and KLM Amsterdam→Dublin), or take the France→Ireland ferry. The paperwork timeline is detailed below.`;
-    if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC, not a pet passport).`;
-    if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
-    if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
-    if (destRegion === "canada") return `For Canada: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No USDA endorsement required if coming from the US. Confirm details with the CFIA before travel.`;
-    if (destRegion === "mexico") return `For Mexico: SENASICA Health Certificate from an accredited vet within 10 days of travel, rabies vaccine on record. No quarantine. Cats and dogs over 3 months only.`;
-    if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is required for pet entry. ISO microchip, current rabies vaccine, recent health certificate. Quarantine waived only if all paperwork is in order on arrival.`;
-    if (destRegion === "south-africa") return `For South Africa: import permit from the Department of Agriculture, ISO microchip, rabies titer test, health certificate. Pet travels as manifested cargo — no cabin option internationally.`;
+    if (destRegion === "europe") return `For Europe: microchip BEFORE rabies vaccine, then a 21-day waiting period. EU Health Certificate or EU pet passport (the latter only if you're an EU resident). Paperwork timeline below.`;
+    if (destRegion === "dubai") return `For the UAE: cabin only via Etihad to Abu Dhabi (AUH); Dubai (DXB) is cargo-only on every airline (UAE law). Paperwork timeline below.`;
+    if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — plan 4–5 months ahead because of the FAVN titer + 30-day wait. Honolulu (HNL) is the only port of entry. Paperwork timeline below.`;
+    if (destRegion === "canada") return `For Canada: usually just a current rabies certificate for dogs and cats over 3 months. No USDA endorsement needed coming from the US. Paperwork timeline below.`;
+    if (destRegion === "mexico") return `For Mexico: SENASICA Health Certificate within 10 days, current rabies, no quarantine. Paperwork timeline below.`;
+    if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is the make-or-break document. Paperwork timeline below.`;
+    if (destRegion === "south-africa") return `For South Africa: import permit + ISO microchip + rabies titer. No cabin option internationally — pet travels as manifested cargo. Paperwork timeline below.`;
+    if (destRegion === "japan") return `For Japan: the 180-day rabies titer waiting period is the binding constraint — start ≥7 months ahead. Paperwork timeline below.`;
+    if (destRegion === "south-america" || destRegion === "central-america") return `For ${dest.name}: rules differ by country. Paperwork timeline below covers the universal essentials.`;
+    if (destRegion === "korea") return `For South Korea: microchip + rabies + health certificate. Some origins need a rabies titer. Paperwork timeline below.`;
   }
 
   // Generic "Research destination's import rules — especially for UK..." style items.
@@ -5349,6 +5355,28 @@ function normalizeItem(s) {
     .replace(/[^\w\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+// Map an item to a CANONICAL key for cross-chapter dedupe. Two items about
+// the same underlying concept (e.g. "ISO microchip" and "ISO 11784/11785
+// microchip implanted before rabies") should resolve to the same key so we
+// don't repeat the same step in both Leaving and Entering chapters.
+// Returns null if no canonical concept matches — in that case the item is
+// treated as unique and uses its full normalised text as the key.
+function canonicalConceptKey(text) {
+  const t = (text || "").toLowerCase();
+  // Universal prep that belongs ONCE on origin side, not repeated at dest.
+  if (t.includes("microchip") && (t.includes("iso") || t.includes("implant"))) return "concept:microchip";
+  if (t.includes("rabies") && (t.includes("vaccin") || t.includes("shot"))) return "concept:rabies";
+  if (t.includes("vet") && (t.includes("health check") || t.includes("appointment") || t.includes("examin"))) return "concept:vet-health-check";
+  if (t.includes("titer") || t.includes("titre") || t.includes("favn") || t.includes("rnatt")) return "concept:rabies-titer";
+  if (t.includes("snub") || t.includes("brachy") || t.includes("flat-faced")) return "concept:brachy-warning";
+  if (t.includes("book") && (t.includes("cabin pet") || t.includes("pet space") || t.includes("airline by phone"))) return "concept:book-airline";
+  // Tapeworm — same concept whether origin or dest mentions it.
+  if (t.includes("tapeworm")) return "concept:tapeworm";
+  // AHC / health cert is destination-specific (each country issues its own
+  // type) — don't unify across countries. Return null so they stay distinct.
+  return null;
 }
 
 // Build a route-specific checklist. Multi-chapter model: "Leaving [origin]"
@@ -5491,7 +5519,11 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
 
         // De-dupe based on the FINAL text (post-rewrite). Two different generic
         // items can rewrite to the same concrete answer — keep one copy.
-        const key = normalizeItem(finalText);
+        // We use a CANONICAL concept key when one exists (so "ISO microchip"
+        // and "ISO 11784/11785 microchip implanted before rabies" both resolve
+        // to "concept:microchip" and dedupe across chapters) — falling back to
+        // the normalised text for items where no concept matches.
+        const key = canonicalConceptKey(finalText) || normalizeItem(finalText);
 
         // Origin-chapter items get recorded so destination can suppress duplicates.
         if (side === "origin") {
@@ -5533,7 +5565,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     chapterSections.forEach((bucket) => {
       if (bucket.label !== "Anytime / general prep") return;
       bucket.items.forEach((it) => {
-        const k = normalizeItem(it);
+        const k = canonicalConceptKey(it) || normalizeItem(it);
         if (anytimeKeys.has(k)) return;
         anytimeKeys.add(k);
         anytimeItems.push(it);
@@ -5649,13 +5681,35 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   if (destTimed.length > 0 || destChecklist) {
     const destFact = ROUTE_FACTS[destRegion];
     const destSubhead = (() => {
+      // UK / Ireland — paperwork + tapeworm window + UK's no-cabin rule.
       if (destRegion === "uk-out") return `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
       if (destRegion === "ireland") return `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
-      if (destFact && destFact.cdcHighRisk) return `Entry requirements — note ${destFact.name} is on the CDC high-risk rabies list, which adds paperwork.`;
-      if (destRegion === "japan") return `The strict 180-day rabies titer rule, AQS advance notification, and entry paperwork.`;
-      if (destRegion === "hawaii") return `Direct Airport Release programme, FAVN titer, and arrival paperwork.`;
-      if (destRegion === "us") return `CDC Dog Import Form, microchip, and entry paperwork.`;
-      if (destRegion === "europe") return `Microchip-first ordering, rabies ≥21 days, and EU Health Certificate.`;
+      // India is CDC high-risk; the catch-all below handles that line.
+      if (destFact && destFact.cdcHighRisk) return `Microchip, rabies, NOC from the Animal Quarantine Station, and CDC-high-risk paperwork for return to the US.`;
+      // Strict-import destinations.
+      if (destRegion === "japan") return `Microchip-first, two rabies vaccines, FAVN titer + 180-day wait, AQS advance notification, and Form A/C paperwork.`;
+      if (destRegion === "hawaii") return `Direct Airport Release programme: microchip, two rabies vaccines, FAVN titer ≥30 days pre-arrival, AQS-279 form — plan 4–5 months ahead.`;
+      // US — CDC dog import is the headline.
+      if (destRegion === "us") return `CDC Dog Import Form (online, free, valid 6 months), microchip, dog ≥6 months old. Extra rabies paperwork if origin is high-risk.`;
+      // Europe — paperwork ordering matters.
+      if (destRegion === "europe") return `Microchip BEFORE rabies, ≥21-day rabies wait, EU Health Certificate (or EU pet passport if you're an EU resident).`;
+      // UAE — Etihad-to-AUH is the cabin path, Dubai is cargo-only.
+      if (destRegion === "dubai") return `MOCCAE import permit, health certificate, rabies titer (origin-dependent). Cabin entry only via Etihad to Abu Dhabi; Dubai is cargo-only.`;
+      // Canada — usually the simplest.
+      if (destRegion === "canada") return `Current rabies certificate for dogs and cats over 3 months old. No USDA endorsement needed coming from the US.`;
+      // Mexico — short list.
+      if (destRegion === "mexico") return `SENASICA Health Certificate within 10 days of travel, current rabies, no quarantine. Cats and dogs over 3 months.`;
+      // South Africa — cargo-only internationally, import permit + titer.
+      if (destRegion === "south-africa") return `Import permit from the Department of Agriculture, microchip, rabies titer, health certificate. Pet travels as manifested cargo — no cabin internationally.`;
+      // Caribbean (when picked by airport — DR, Jamaica, Bahamas).
+      if (destRegion === "caribbean") return `Each island differs (Bahamas, Jamaica, Dominican Republic each have their own permit + paperwork). Confirm with the specific country's Department of Agriculture.`;
+      // South / Central America — perCountry, so flag that.
+      if (destRegion === "south-america") return `Rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Check the specific country's requirements.`;
+      if (destRegion === "central-america") return `Rules differ by country. Health certificate + rabies vaccination are universal; some require an import permit.`;
+      // Korea — limited data but flag what we know.
+      if (destRegion === "korea") return `Microchip, rabies ≥30 days, health certificate from origin, optional rabies titer for some origins.`;
+      // Russia — sanctions-era complexity.
+      if (destRegion === "russia") return `Veterinary certificate F1, microchip, rabies vaccine. Sanctions and limited flights make routing tricky — confirm with the specific airline.`;
       return `Entry requirements and paperwork for ${destLabel}.`;
     })();
     sections.push({
@@ -5671,8 +5725,12 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // Tips — at the very end, clearly labelled as optional comfort suggestions.
   // Filter against the Anytime block so any tip that already appears in
   // "General prep" doesn't also appear in "Tips" — the user shouldn't see
-  // the same item twice with two different framings.
-  const dedupedTips = [...tips].filter((tip) => !anytimeKeys.has(normalizeItem(tip)));
+  // the same item twice with two different framings. Use the canonical
+  // concept key when one exists so wording variations don't slip through.
+  const dedupedTips = [...tips].filter((tip) => {
+    const k = canonicalConceptKey(tip) || normalizeItem(tip);
+    return !anytimeKeys.has(k);
+  });
   if (dedupedTips.length > 0) {
     sections.push({
       title: "Travel-day tips & comfort suggestions",

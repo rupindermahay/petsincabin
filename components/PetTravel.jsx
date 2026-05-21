@@ -3069,6 +3069,27 @@ const FALLBACK_STRATEGIES = {
       note: `${note} Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days.`,
     };
   },
+  // Any destination = Russia. Russian airspace is closed to Western carriers
+  // since 2022, so the only realistic cabin path is via Aeroflot's remaining
+  // ~17-country network (Istanbul, Dubai, Delhi, plus other Gulf/Asian hubs).
+  "russia": (o, d) => ({
+    legs: [
+      { route: `${o} → Istanbul (IST) or Dubai (DXB) or Delhi (DEL)`, time: "varies", airline: "Western carrier (Turkish / Emirates / Etihad / Air India) ✓ Cabin to the hub" },
+      { route: "Layover at hub", time: "2–4h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → Moscow (SVO)`, time: "3–7h", airline: "Aeroflot ✓ Cabin (8 kg under-seat, or up to 15 kg with adjacent seat)" },
+    ],
+    note: `No Western carrier flies into Russia since the 2022 airspace closures. The cabin pet route is a two-leg journey via one of Aeroflot's remaining hubs — Istanbul on Turkish, Dubai on Emirates (Dubai is cargo-only inbound on most airlines but Aeroflot is the cabin exception), Delhi on Air India, or Tashkent / Yerevan / Bishkek on regional carriers. Two separate tickets, two pet bookings, two sets of paperwork — but each leg is cabin. Russia paperwork: ISO microchip, rabies vaccine ≥30 days old, official veterinary certificate within 5 days of travel. Some Russian carriers and airports accept up to 14 days — confirm with Aeroflot.`,
+  }),
+  // Any origin = Russia. Same hub pattern in reverse — Aeroflot to Istanbul /
+  // Dubai / Delhi, then Western carrier onward.
+  "russia-out": (o, d) => ({
+    legs: [
+      { route: `Moscow (SVO) → Istanbul (IST) or Dubai (DXB) or Delhi (DEL)`, time: "3–7h", airline: "Aeroflot ✓ Cabin (8 kg under-seat, or up to 15 kg with adjacent seat)" },
+      { route: "Layover at hub", time: "2–4h+ (overnight gentler)", airline: "Pet handover buffer" },
+      { route: `Hub → ${d}`, time: "varies", airline: "Western carrier (Turkish / Emirates / Etihad / Air India) ✓ Cabin" },
+    ],
+    note: `Leaving Russia by cabin runs via the same hub pattern that brings pets in — Aeroflot to Istanbul, Dubai or Delhi, then a Western carrier onward. Two separate tickets, two pet bookings. Russian export paperwork: Russian Veterinary Certificate Form No. 1 from the State Vet Service within 5 days of departure; Rosselkhoznadzor at the airport exchanges this for international Form No. 5a free of charge. Destination-country health certificate may also be required (EU especially).`,
+  }),
 };
 
 // A region-pair can have ONE strategy (a single function) or SEVERAL (an array
@@ -3092,6 +3113,7 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (destRegion === "mexico") return [FALLBACK_STRATEGIES["mexico"]];
+  if (destRegion === "russia") return [FALLBACK_STRATEGIES["russia"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
@@ -3099,6 +3121,7 @@ function strategiesFor(originRegion, destRegion) {
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
+  if (originRegion === "russia") return [FALLBACK_STRATEGIES["russia-out"]];
   // Cabin-direct corridors — region pairs where a direct cabin flight
   // genuinely exists (US/Canada/Europe/UAE/India/UK-out/Caribbean and
   // similar). These pairs have no workaround strategy because they don't

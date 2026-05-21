@@ -2165,14 +2165,36 @@ const REGION_PAIR_STRATEGIES = {
   ],
 
   // ----- INTO Ireland (limited cabin: Iberia MAD→DUB, else Europe + ferry) -----
-  "us>ireland": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
-      { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
-      { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
-    ],
-    note: `Cabin pets CAN fly into Ireland — Iberia runs Madrid → Dublin and KLM runs Amsterdam → Dublin — so routing via either hub is a direct-cabin option. Otherwise: cabin into Europe, then the direct France→Ireland ferry, which skips the UK entirely.`,
-  }),
+  "us>ireland": [
+    // Via Madrid (Iberia direct cabin to Dublin)
+    (o, d) => ({
+      label: "Via Madrid (Iberia direct cabin)",
+      legs: [
+        { route: `${o} → Madrid (MAD)`, time: "8–11h", airline: "Iberia / American (Iberia codeshare) ✓ Cabin" },
+        { route: `Madrid (MAD) → ${d}`, time: "2h 50m", airline: "Iberia ✓ Cabin" },
+      ],
+      note: `Iberia carries cabin pets Madrid → Dublin (under 8 kg) — combine with a Iberia-operated US → Madrid flight and the whole journey stays in cabin. No ferry, no UK landbridge. Iberia's carrier limit: 45 × 35 × 25 cm.`,
+    }),
+    // Via Amsterdam (KLM direct cabin to Dublin)
+    (o, d) => ({
+      label: "Via Amsterdam (KLM direct cabin)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–10h", airline: "KLM / Delta ✓ Cabin" },
+        { route: `Amsterdam (AMS) → ${d}`, time: "1h 25m", airline: "KLM ✓ Cabin" },
+      ],
+      note: `KLM carries cabin pets Amsterdam → Dublin (under 8 kg). Pair with a KLM-operated US → Amsterdam transatlantic and stay in cabin start-to-finish. KLM carrier limit: 46 × 28 × 24 cm.`,
+    }),
+    // Via France + direct France→Ireland ferry (skips the UK)
+    (o, d) => ({
+      label: "Via France + direct France→Ireland ferry",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+        { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
+        { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+      ],
+      note: `For travellers who want time on the continent en route, or whose schedule doesn't fit the Madrid (Iberia) or Amsterdam (KLM) direct-cabin options. Cabin into Paris, drive to a French Atlantic port, then the direct France→Ireland ferry — your pet stays with you for the whole crossing. The ferry is the longest leg of the journey but it skips the UK entirely.`,
+    }),
+  ],
   "europe>ireland": (o, d) => ({
     legs: [
       { route: `${o} → Cherbourg or Roscoff (drive)`, time: "varies", airline: "Pet stays with you" },
@@ -2652,14 +2674,27 @@ const REGION_PAIR_STRATEGIES = {
   }),
 
   // ----- CANADA / UK additional -----
-  "canada>ireland": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
-      { route: "European hub → France ferry port", time: "varies", airline: "Pet stays with you" },
-      { route: "Ferry to Ireland", time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
-    ],
-    note: `Cabin routes into Ireland are limited — Iberia flies Madrid → Dublin and KLM flies Amsterdam → Dublin if you can route via either. Otherwise Air Canada cabin to a European hub, then the pet-friendly ferry from France into Ireland. Ireland needs ISO microchip, rabies ≥21 days, EU Health Certificate, tapeworm treatment for dogs.`,
-  }),
+  "canada>ireland": [
+    // Via Amsterdam (Air Canada to AMS, then KLM AMS→DUB)
+    (o, d) => ({
+      label: "Via Amsterdam (KLM direct cabin)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+        { route: `Amsterdam (AMS) → ${d}`, time: "1h 25m", airline: "KLM ✓ Cabin" },
+      ],
+      note: `Cabin into Ireland is possible via KLM's Amsterdam → Dublin route (under 8 kg). Pair with Air Canada's cabin flight to AMS — the journey stays in cabin start to finish. KLM carrier limit: 46 × 28 × 24 cm.`,
+    }),
+    // Via France + direct France→Ireland ferry
+    (o, d) => ({
+      label: "Via France + direct France→Ireland ferry",
+      legs: [
+        { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+        { route: "European hub → French Atlantic port (drive)", time: "varies", airline: "Pet stays with you" },
+        { route: `Ferry to Rosslare or ${d}`, time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
+      ],
+      note: `Useful when KLM's Amsterdam → Dublin doesn't fit your schedule. Cabin to a European hub on Air Canada, drive to a French Atlantic port, then the direct France → Ireland ferry — skips the UK entirely.`,
+    }),
+  ],
   "canada>dubai": (o, d) => ({
     legs: [
       { route: `${o} → Paris / Frankfurt`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
@@ -9833,6 +9868,23 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
   const [arrival, setArrival] = useState("");
   const [treatLoc, setTreatLoc] = useState("US-ET");
 
+  // Bounds for the arrival datetime-local input. Browsers allow 6-digit-year
+  // input by default, which can produce e.g. year 202618 from a typo — that
+  // generates an invalid Date and the calc silently returns null. Constraining
+  // min/max means the picker rejects malformed years up front. The bounds use
+  // local-time YYYY-MM-DDTHH:mm format that datetime-local expects.
+  const twDateBounds = useMemo(() => {
+    const toLocalInput = (d) => {
+      const pad = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    };
+    const now = new Date();
+    const twoYears = new Date(now.getTime() + 2 * 365 * 24 * 60 * 60 * 1000);
+    return { min: toLocalInput(now), max: toLocalInput(twoYears) };
+  }, []);
+  const twMinArrival = twDateBounds.min;
+  const twMaxArrival = twDateBounds.max;
+
   // Follow defaultOpen if the parent flips it (e.g. "Plan & calculate").
   useEffect(() => {
     if (defaultOpen) setOpen(true);
@@ -9852,11 +9904,12 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
     }
   }, [origin, dest]);
 
-  // The stopover dropdown options. When the parent passes route-specific
-  // stopoverOptions (the actual workaround hubs for this route), use those;
-  // otherwise fall back to the full country list excluding the destination
-  // and origin (you can't stop over in your own start or end country).
-  const stopoverChoices = stopoverOptions && stopoverOptions.length > 0
+  // The stopover dropdown options. Three cases for the parent's stopoverOptions:
+  //   - non-empty array: use those route-specific hubs
+  //   - empty array (route is direct): no stopover possible, show empty list
+  //   - null/undefined (no route data): fall back to the full country list,
+  //     excluding origin and destination
+  const stopoverChoices = Array.isArray(stopoverOptions)
     ? stopoverOptions
     : TW_TRIP_COUNTRIES.filter((c) => c.key !== dest && c.key !== origin);
 
@@ -10003,14 +10056,20 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
               <select
                 value={stopover}
                 onChange={(e) => setStopover(e.target.value)}
-                className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900"
+                disabled={Array.isArray(stopoverOptions) && stopoverOptions.length === 0}
+                className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900 disabled:bg-stone-100 disabled:text-stone-500"
               >
                 <option value="">No stopover</option>
                 {stopoverChoices.map((c) => (
                   <option key={c.key} value={c.key}>{c.name}</option>
                 ))}
               </select>
-              {stopoverOptions && stopoverOptions.length > 0 && (
+              {Array.isArray(stopoverOptions) && stopoverOptions.length === 0 && (
+                <span className="text-xs text-stone-500 mt-1 block">
+                  Your selected route is direct — no stopover.
+                </span>
+              )}
+              {Array.isArray(stopoverOptions) && stopoverOptions.length > 0 && (
                 <span className="text-xs text-stone-500 mt-1 block">
                   The stopover hubs on your planned route.
                 </span>
@@ -10026,11 +10085,18 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
               type="datetime-local"
               value={arrival}
               onChange={(e) => setArrival(e.target.value)}
+              min={twMinArrival}
+              max={twMaxArrival}
               className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900"
             />
             <span className="text-xs text-stone-500 mt-1 block">
               The scheduled time you land — in {twNameFor(dest)} local time.
             </span>
+            {arrival && !result && (
+              <span className="text-xs text-red-700 mt-1 block">
+                That date doesn't look right — check the year and time format, then re-enter.
+              </span>
+            )}
           </label>
 
           <label className="block">
@@ -10129,16 +10195,16 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
           {result && !onAddToChecklist && checklistAnchor && (
             <div className="bg-stone-900 text-amber-50 rounded-sm p-4">
               <p className="text-sm leading-relaxed mb-3">
-                You've got your window — now get the full checklist so the
-                tapeworm dose sits alongside every other document and deadline
-                for this trip.
+                You've got your window — now open the printable checklist so
+                the tapeworm dose sits alongside every other document and
+                deadline for this trip.
               </p>
               <a
                 href={`#${checklistAnchor}`}
                 className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
               >
                 <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-                Go to the full checklist
+                Open the printable checklist
               </a>
             </div>
           )}
@@ -10341,12 +10407,37 @@ function ChecklistDownload() {
   // The checklist data shown depends on the mode. We don't compute it until
   // the user has picked a pet type (dog/cat/both) — there's no sensible
   // default, and forcing a pick keeps the filter honest.
+  // A generic carriers-chapter prefix used by the standalone Checklist tool
+  // (both route mode and country mode). The standalone tool doesn't know
+  // which specific airline the user will fly, so it can't list per-airline
+  // dimensions like the planner does — but it should still surface carriers
+  // at the top of the checklist. Points users at the Airline comparison tool
+  // for exact specs.
+  const genericCarriersChapter = [
+    {
+      title: "Your carriers — airline-specific",
+      divider: true,
+      items: [
+        `Carrier dimensions and weight limits are set by the airline, not the country. Look up your airline below, then buy a carrier that meets its specific specs and measure your pet inside it at home before travel day.`,
+      ],
+    },
+    {
+      title: "Carrier — what to do first",
+      items: [
+        `<strong>Look up your airline's carrier specs</strong> — use the <a href="#airlines">Airline comparison tool</a> to find weight limits and exact dimensions for the airline(s) you'll fly. Specs differ enough that a carrier accepted by one airline can be refused by another.`,
+        `<strong>Buy for the strictest spec on your route.</strong> If you're connecting on two airlines, the smaller carrier limit wins — or bring a second carrier for the more generous leg if the strict box is too tight for your pet.`,
+        `<strong>Measure with your pet inside at home BEFORE travel day.</strong> At check-in, staff will measure the carrier and watch your pet stand up and turn around inside it.`,
+        `Soft-sided carriers usually fit better under the seat. Make sure ventilation is on at least three sides and the base is leak-proof.`,
+      ],
+    },
+  ];
+
   let data;
   if (!petType) {
     data = null;
   } else if (mode === "route") {
     if (originAirport && destAirport) {
-      data = buildRouteChecklist(
+      const built = buildRouteChecklist(
         originAirport.region,
         destAirport.region,
         REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
@@ -10356,6 +10447,19 @@ function ChecklistDownload() {
         [],
         { origin: originAirport.code, dest: destAirport.code }
       );
+      // Standalone route mode doesn't pass legs, so buildRouteChecklist's
+      // per-airline carriers chapter is skipped. Prepend the generic version
+      // so carrier info still sits at the top of the checklist.
+      if (built && built.sections) {
+        const alreadyHasCarriers = built.sections.some(
+          (s) => s.title === "Your carriers — airline-specific"
+        );
+        data = alreadyHasCarriers
+          ? built
+          : { ...built, sections: [...genericCarriersChapter, ...built.sections] };
+      } else {
+        data = built;
+      }
     } else {
       data = null; // nothing selected yet
     }
@@ -10368,25 +10472,7 @@ function ChecklistDownload() {
     if (raw && raw.sections) {
       data = {
         ...raw,
-        sections: [
-          {
-            title: "Your carriers — airline-specific",
-            divider: true,
-            items: [
-              `Carrier dimensions and weight limits are set by the airline, not the country. Look up your airline below, then buy a carrier that meets its specific specs and measure your pet inside it at home before travel day.`,
-            ],
-          },
-          {
-            title: "Carrier — what to do first",
-            items: [
-              `<strong>Look up your airline's carrier specs</strong> — use the <a href="#airlines">Airline comparison tool</a> to find weight limits and exact dimensions for the airline(s) you'll fly. Specs differ enough that a carrier accepted by one airline can be refused by another.`,
-              `<strong>Buy for the strictest spec on your route.</strong> If you're connecting on two airlines, the smaller carrier limit wins — or bring a second carrier for the more generous leg if the strict box is too tight for your pet.`,
-              `<strong>Measure with your pet inside at home BEFORE travel day.</strong> At check-in, staff will measure the carrier and watch your pet stand up and turn around inside it.`,
-              `Soft-sided carriers usually fit better under the seat. Make sure ventilation is on at least three sides and the base is leak-proof.`,
-            ],
-          },
-          ...raw.sections,
-        ],
+        sections: [...genericCarriersChapter, ...raw.sections],
       };
     } else {
       data = raw;
@@ -10659,7 +10745,7 @@ function ChecklistDownload() {
         if (!twDest) return null;
         return (
           <div className="mt-6">
-            <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
+            <TapewormWindow destKey={twDest} checklistAnchor="standalone-checklist-download" />
           </div>
         );
       })()}
@@ -10680,7 +10766,7 @@ function ChecklistDownload() {
           tapeworm calc if applicable → see journey-planner upsell → print.
           A mid-panel placement made the button look orphaned between info
           boxes. */}
-      <div className="mt-6 flex justify-end">
+      <div id="standalone-checklist-download" className="mt-6 flex justify-end scroll-mt-24">
         <button
           onClick={openPrintable}
           disabled={!data}
@@ -10952,6 +11038,12 @@ function JourneyPlanner() {
   // Falls back to scanning all matching workarounds only when no route has
   // been selected yet (initial render before auto-select fires).
   const tapewormStopovers = useMemo(() => {
+    // If the user has selected a DIRECT route, there's no stopover possible —
+    // return [] (distinct from null) so the calc shows only "No stopover".
+    if (selectedRouteId && /^(direct|altDirect):/.test(selectedRouteId)) {
+      return [];
+    }
+
     if (!workaroundMatches || workaroundMatches.length === 0) return null;
 
     // Decide the scope. selectableRoutes is defined below, but its IDs are
@@ -11325,16 +11417,42 @@ function JourneyPlanner() {
               </div>
             )}
 
-            {/* USDA note — only when the journey starts in the US. Endorsement
-                is a US-export step, so it's irrelevant to non-US origins. */}
-            {origin !== destination && originAirport?.region === "us" && (
+            {/* USDA note — fires when the journey starts in the US OR
+                transits a US gateway. The endorsement is a US-export step,
+                which applies to ANY leg that DEPARTS the US — including
+                caribbean→US→Europe and mexico→US→Europe transit routes,
+                where the transatlantic leg leaves a US airport. */}
+            {(() => {
+              if (origin === destination) return false;
+              if (originAirport?.region === "us") return true;
+              // Check if the selected route (or any candidate route) has a
+              // US-departing leg beyond Leg 1. Workaround routes store legs
+              // at r.route.legs (not r.legs); direct routes don't have legs.
+              const routesToScan = selectedRoute
+                ? [selectedRoute]
+                : selectableRoutes;
+              const transitsUS = routesToScan.some((r) => {
+                if (!r) return false;
+                const legs = (r.route && r.route.legs) || r.legs || [];
+                if (legs.length < 2) return false;
+                return legs.some((leg, idx) => {
+                  if (idx === 0) return false; // Leg 1's departure is the journey origin
+                  const route = (leg.route || "").toString();
+                  // Match common US-gateway patterns in leg descriptions
+                  return /US gateway|MIA|JFK|EWR|ORD|LAX|SFO|IAD|ATL|DFW|MSP|SEA|BOS/.test(route)
+                    && /→/.test(route);
+                });
+              });
+              return transitsUS;
+            })() && (
               <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
                 <p className="text-stone-300 text-sm leading-relaxed mb-3">
-                  Flying a pet <span className="text-amber-300 font-medium">out of the US</span>?
-                  Its health certificate has to be endorsed — stamped — by USDA
-                  APHIS. It generates a lot of forum panic, most of it
-                  avoidable. Our guide explains where the step sits, the
-                  deadlines that actually apply, and the prepaid return label.
+                  Flying a pet <span className="text-amber-300 font-medium">out of the US</span> — whether the trip starts there or transits a US gateway —
+                  the health certificate has to be endorsed (stamped) by USDA
+                  APHIS before the US-departure leg. It generates a lot of
+                  forum panic, most of it avoidable. Our guide explains where
+                  the step sits, the deadlines that actually apply, and the
+                  prepaid return label.
                 </p>
                 <a
                   href="/usda-endorsement-guide"
@@ -11515,10 +11633,30 @@ function JourneyPlanner() {
                                   <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                                 </>
                               ) : (
+                                // True DIRECT_ROUTES entry (no legs array) — synthesize
+                                // a single-leg view so the card format matches the
+                                // multi-leg workaround cards: 1-flight badge + Leg 1
+                                // with from → to · time · airline + note below.
                                 <>
-                                  {g.routes[0]._airlineFromLeg && (
-                                    <p className="text-stone-300 text-sm mb-2 font-medium">{g.routes[0]._airlineFromLeg}</p>
-                                  )}
+                                  <div className="mb-2">
+                                    <span className="text-xs uppercase tracking-widest text-amber-400/80 px-1.5 py-0.5 border border-amber-700/40 rounded-sm">
+                                      1-flight journey
+                                    </span>
+                                  </div>
+                                  <div className="space-y-2 mb-2 pl-3 border-l border-stone-600">
+                                    <div className="text-sm">
+                                      <div className="flex items-baseline gap-2">
+                                        <span className="font-serif italic text-xs text-amber-400/70 flex-shrink-0 w-14">Leg 1</span>
+                                        <div className="flex-1">
+                                          <div className="text-stone-100">{g.from} → {g.to}</div>
+                                          <div className="text-stone-500 text-xs">
+                                            {g.duration}
+                                            {g.routes[0]._airlineFromLeg ? ` · ${g.routes[0]._airlineFromLeg}` : ""}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                   <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                                 </>
                               )}

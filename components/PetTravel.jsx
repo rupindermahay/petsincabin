@@ -2924,31 +2924,98 @@ const FALLBACK_STRATEGIES = {
   // flight genuinely exists (US/Canada/Europe/UAE/India transatlantic and
   // similar corridors) but the EXACT airport pair the user picked has no
   // hand-written direct route. Rather than show a blank, this generates an
-  // honest "a direct cabin flight exists — confirm the airline for your
-  // exact airports" route. It is a SAFETY NET: specific hand-written direct
+  // honest route — either a real direct cabin corridor between hubs, or
+  // an honest 2-leg via-hub journey when either endpoint isn't a major
+  // intercontinental hub. It is a SAFETY NET: specific hand-written direct
   // routes always take priority and render with the real airline named.
   "cabin-direct": (o, d, oRegion, dRegion) => {
-    // Same-region European hop vs a long-haul corridor need different honest
-    // estimates. Every card must still show a time and a carrier, even when
-    // the exact airport pair isn't hand-written — so give a sensible band
-    // and the real set of cabin-friendly carriers for that corridor.
+    // Same-region European hop. For these, "direct" is usually safe to
+    // assume — intra-Europe network is dense and most pairs have
+    // someone flying direct on a 1-3 hour hop.
     const isIntraEurope = oRegion === "europe" && dRegion === "europe";
     const transatlantic =
       (["us", "canada"].includes(oRegion) && ["europe"].includes(dRegion)) ||
       (["europe"].includes(oRegion) && ["us", "canada"].includes(dRegion));
-    let time, airline;
+
+    // Intercontinental hub sets. These are airports that genuinely have
+    // multiple direct intercontinental cabin pet routes — anything outside
+    // these lists is a secondary airport that almost certainly doesn't
+    // have a direct flight to the other region.
+    const EU_HUBS = /\b(cdg|paris|ams|amsterdam|fra|frankfurt|muc|munich|mad|madrid|bcn|barcelona|fco|rome|mxp|milan|zrh|zurich|lis|lisbon|ist|istanbul|cph|copenhagen|arn|stockholm|hel|helsinki|dub|dublin|vie|vienna|bru|brussels|lhr|london)\b/i;
+    const US_HUBS = /\b(jfk|ewr|new york|newark|iad|washington|dulles|mia|miami|atl|atlanta|ord|chicago|dfw|dallas|lax|los angeles|sfo|san francisco|iah|houston|bos|boston|sea|seattle|msp|minneapolis|phl|philadelphia|den|denver|clt|charlotte|mco|orlando|las|las vegas)\b/i;
+    const CA_HUBS = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/i;
+
     if (isIntraEurope) {
-      time = "~1h–3h 30m (short-haul)";
-      airline = "Lufthansa Group, Air France-KLM, Iberia or Vueling ✓ Cabin (≤ 8 kg)";
-    } else if (transatlantic) {
-      time = "~7h–11h (long-haul)";
-      airline = "Lufthansa, Air France-KLM, United or American ✓ Cabin (≤ 8 kg)";
-    } else {
-      time = "direct flight — varies by route";
-      airline = "Mainstream carriers ✓ Cabin (≤ 8 kg) — confirm with the operating airline";
+      // Intra-Europe — most pairs have someone direct. Keep "direct" framing.
+      return {
+        legs: [{ route: `${o} → ${d}`, time: "~1h–3h 30m (short-haul)", airline: "Lufthansa Group, Air France-KLM, Iberia or Vueling ✓ Cabin (≤ 8 kg)" }],
+        note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
+      };
     }
+
+    if (transatlantic) {
+      // Check which endpoints are intercontinental hubs vs secondary.
+      const oIsHub = EU_HUBS.test(o) || US_HUBS.test(o) || CA_HUBS.test(o);
+      const dIsHub = EU_HUBS.test(d) || US_HUBS.test(d) || CA_HUBS.test(d);
+
+      if (oIsHub && dIsHub) {
+        // Both endpoints are major hubs — direct cabin route genuinely exists.
+        return {
+          legs: [{ route: `${o} → ${d}`, time: "~7h–11h (long-haul)", airline: "Lufthansa, Air France-KLM, United, American or Delta ✓ Cabin (≤ 8 kg)" }],
+          note: `This is a direct cabin-pet corridor between two major intercontinental hubs — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
+        };
+      }
+
+      // At least one endpoint isn't a hub — no direct flight. Route via
+      // a hub on the European side (where the cabin-pet network is densest).
+      // For Europe origin: position to a European hub first, then transatlantic.
+      // For US/Canada origin: transatlantic to a European hub, then onward
+      // into Europe to the user's secondary airport.
+      if (oRegion === "europe") {
+        // Europe → US/Canada via European hub
+        const oNotHub = !oIsHub;
+        const dNotHub = !dIsHub;
+        const legs = [];
+        if (oNotHub) {
+          legs.push({ route: `${o} → European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
+          legs.push({ route: `European hub → ${dIsHub ? d : "US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)"}`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          if (dNotHub) {
+            legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          }
+        } else {
+          // Origin IS a hub but destination isn't.
+          legs.push({ route: `${o} → US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
+        }
+        return {
+          legs,
+          note: `No airline flies ${o} → ${d} direct in cabin. The cabin path goes via a European hub (Lufthansa from Frankfurt/Munich, Air France from Paris CDG, KLM from Amsterdam, Iberia from Madrid) for the transatlantic leg, then a domestic US/Canada connection if your final destination isn't itself a major hub. All legs are mainstream cabin pet airlines (≤ 8 kg combined). Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
+        };
+      } else {
+        // US/Canada → Europe via hub
+        const oNotHub = !oIsHub;
+        const dNotHub = !dIsHub;
+        const legs = [];
+        if (oNotHub) {
+          legs.push({ route: `${o} → US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          legs.push({ route: `US/Canada hub → ${dIsHub ? d : "European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)"}`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          if (dNotHub) {
+            legs.push({ route: `European hub → ${d}`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
+          }
+        } else {
+          legs.push({ route: `${o} → European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+          legs.push({ route: `European hub → ${d}`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
+        }
+        return {
+          legs,
+          note: `No airline flies ${o} → ${d} direct in cabin. The cabin path goes via a US/Canada gateway and a European hub (Lufthansa from Frankfurt/Munich, Air France from Paris CDG, KLM from Amsterdam, Iberia from Madrid for the transatlantic leg). All legs are mainstream cabin pet airlines (≤ 8 kg combined). Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
+        };
+      }
+    }
+
+    // Other long-haul corridors (UAE, India, etc.) — keep honest direct framing.
     return {
-      legs: [{ route: `${o} → ${d}`, time, airline }],
+      legs: [{ route: `${o} → ${d}`, time: "direct flight — varies by route", airline: "Mainstream carriers ✓ Cabin (≤ 8 kg) — confirm with the operating airline" }],
       note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
     };
   },
@@ -3265,6 +3332,86 @@ const FALLBACK_STRATEGIES = {
       note: `${note} Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days.`,
     };
   },
+  // Any destination = Korea. Korean Air is the dominant cabin carrier with a
+  // 30+ country direct network. UK and UAE are cargo-only on Korean Air (UK
+  // also blocks cabin entry under government rules). Australia/NZ not
+  // handled at all by Korean Air for pets.
+  "korea": (o, d) => {
+    const isFromUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|sea|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta|seattle|washington|iad/i.test(o || "");
+    const isFromJapan = /nrt|hnd|kix|ngo|fuk|tokyo|osaka|kansai|nagoya|fukuoka/i.test(o || "");
+    const isFromMexico = /mex|mexico city|gdl|guadalajara/i.test(o || "");
+    const isFromUK = /lhr|lgw|man|edi|gla|london|manchester|edinburgh|glasgow/i.test(o || "");
+    let leg, hub;
+    if (isFromUS) {
+      leg = { route: `${o} → Seoul Incheon (ICN)`, time: "13-15h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
+      hub = "Korean Air operates direct cabin pet flights from JFK, LAX, SFO, IAD, ATL, SEA, DFW to ICN. Hard-sided carrier max 45 × 32 × 19 cm; soft-sided up to 25 cm tall if it compresses to 19 cm.";
+    } else if (isFromJapan) {
+      leg = { route: `${o} → Seoul Incheon (ICN)`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
+      hub = "Japan ↔ Korea is one of the best-served short cabin pet routes. Korean Air's max combined weight is 7 kg, T'Way's is 9 kg.";
+    } else if (isFromMexico) {
+      leg = [
+        { route: `${o} → Los Angeles (LAX) or San Francisco (SFO)`, time: "4-5h", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United ✓ Cabin" },
+        { route: `Los Angeles (LAX) or San Francisco (SFO) → Seoul Incheon (ICN)`, time: "12-13h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" },
+      ];
+      hub = "No direct cabin pet route Mexico → Korea. The cabin workaround: position to US west coast on Aeromexico/Volaris/American/Delta/United, then Korean Air LAX/SFO → ICN direct. Two separate tickets, two pet bookings.";
+    } else if (isFromUK) {
+      leg = [
+        { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1-2h or train via St Pancras", airline: "Pet stays with you — Eurostar or short-hop carrier" },
+        { route: `Paris (CDG) or Amsterdam (AMS) → Seoul Incheon (ICN)`, time: "10-12h", airline: "Korean Air, Air France, or KLM ✓ Cabin (under 7-8 kg incl. carrier)" },
+      ];
+      hub = "Korean Air is cargo-only out of the UK. The cabin workaround: cross the Channel via Eurostar (pet-friendly cabin) or Eurotunnel Le Shuttle to Paris/Amsterdam, then Korean Air, Air France, or KLM direct to Seoul. Two separate tickets.";
+    } else {
+      // Europe (excl UK) / elsewhere → Korea. Korean Air operates direct cabin
+      // from CDG, FRA, AMS, MAD, FCO, ZRH, LIS, IST. For non-hub EU origins,
+      // a positioning leg to a hub is needed first — but most named EU
+      // destinations the user will pick map to one of these hubs directly.
+      leg = { route: `${o} → Seoul Incheon (ICN)`, time: "10-14h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
+      hub = "Korean Air operates direct cabin from CDG (Paris), FRA (Frankfurt), AMS (Amsterdam), MAD (Madrid), FCO (Rome), ZRH (Zurich), LIS (Lisbon), IST (Istanbul). Air France (CDG), Lufthansa (FRA, MUC), and KLM (AMS) also operate cabin direct on these same routes — Korean Air is usually cheapest at $200, but check which airline best suits your booking. From non-hub EU airports, you'll need a positioning flight to a hub first.";
+    }
+    return {
+      legs: Array.isArray(leg) ? leg : [leg],
+      note: `${hub} Korea import: ISO microchip, rabies vaccination 30+ days old, FAVN titer if from non-listed country, APQA (Animal and Plant Quarantine Agency) inspection on arrival. Australia and New Zealand are not handled by Korean Air for pets.`,
+    };
+  },
+  // Any origin = Korea. Symmetrical with the korea handler — Korean Air is
+  // the primary cabin carrier with direct service to most of its 30+ country
+  // network. UK destinations need a Channel crossing (no airline flies cabin
+  // pets INTO the UK under UK government rule).
+  "korea-out": (o, d) => {
+    const isToUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|sea|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta|seattle|washington|iad/i.test(d || "");
+    const isToJapan = /nrt|hnd|kix|ngo|fuk|tokyo|osaka|kansai|nagoya|fukuoka/i.test(d || "");
+    const isToMexico = /mex|mexico city|gdl|guadalajara/i.test(d || "");
+    const isToUK = /lhr|lgw|man|edi|gla|london|manchester|edinburgh|glasgow/i.test(d || "");
+    let leg, note;
+    if (isToUS) {
+      leg = { route: `${o} → ${d}`, time: "13-15h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
+      note = "Korean Air operates direct cabin pet flights ICN → JFK, LAX, SFO, IAD, ATL, SEA, DFW. CDC Dog Import Form online for US entry (dogs only). South Korea is a low-risk country under CDC rules.";
+    } else if (isToJapan) {
+      leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
+      note = "Korea → Japan is short and well-served in cabin. Japan still requires the 180-day rabies titer wait, ISO microchip before first rabies, FAVN ≥0.5 IU/ml — the airline route is easy, the paperwork is the binding constraint. Start preparation 7+ months ahead.";
+    } else if (isToMexico) {
+      leg = [
+        { route: `${o} → Los Angeles (LAX) or San Francisco (SFO)`, time: "12-13h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" },
+        { route: `Los Angeles (LAX) or San Francisco (SFO) → Mexico City (MEX)`, time: "4-5h", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United ✓ Cabin" },
+      ];
+      note = "No direct cabin pet route Korea → Mexico. The workaround: Korean Air to LAX/SFO direct, then Aeromexico/Volaris/American/Delta/United onward to MEX. Two separate tickets, two pet bookings.";
+    } else if (isToUK) {
+      leg = [
+        { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "10-12h", airline: "Korean Air, Air France, or KLM ✓ Cabin (under 7-8 kg incl. carrier)" },
+        { route: `Paris or Amsterdam → Calais ferry/Eurotunnel terminal`, time: "varies (drive/train)", airline: "Pet stays with you — car or train" },
+        { route: `Cross-Channel: Eurotunnel or DFDS/P&O ferry → UK`, time: "35min (Eurotunnel) or 90min (DFDS ferry)", airline: "Pet stays with you" },
+      ];
+      note = "No airline flies cabin pets INTO the UK (UK government rule). The cabin path: Korean Air, Air France, or KLM to a European hub (Paris or Amsterdam are the most convenient), then Eurotunnel Le Shuttle (Calais → Folkestone, 35min) or DFDS/P&O ferry (Calais → Dover, 90min) — both UK-government-approved pet routes. UK requires ISO microchip, rabies 21+ days, tapeworm treatment 24-120 hours before entry.";
+    } else {
+      // Europe (excl UK) / elsewhere — Korean Air direct cabin to major hubs.
+      leg = { route: `${o} → ${d}`, time: "10-14h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
+      note = "Korean Air operates direct cabin from ICN to CDG (Paris), FRA (Frankfurt), AMS (Amsterdam), MAD (Madrid), FCO (Rome), ZRH (Zurich), LIS (Lisbon), IST (Istanbul). Air France, Lufthansa, and KLM also operate cabin direct from Seoul. Australia and New Zealand are not handled by Korean Air for pets — those need a different routing entirely.";
+    }
+    return {
+      legs: Array.isArray(leg) ? leg : [leg],
+      note: `${note} Korea export: APQA inspection — apply 1-2 weeks before flight. Export Health Certificate issued by accredited Korean vet, endorsed by APQA.`,
+    };
+  },
   // Any destination = Russia. Russian airspace is closed to Western carriers
   // since 2022, so the only realistic cabin path is via Aeroflot's remaining
   // ~17-country network (Istanbul, Dubai, Delhi, plus other Gulf/Asian hubs).
@@ -3301,11 +3448,10 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
   if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
-  // Korea uses the same strategy infrastructure as Japan — the japan handlers
-  // already include Korea-aware logic (isFromKorea, isToKorea branches) and
-  // the cabin pet path Korea ↔ rest-of-world runs on Korean Air, which has
-  // the same role in our advice as United does for the US.
-  if (destRegion === "korea") return [FALLBACK_STRATEGIES["japan"]];
+  // Korea has its own handlers. Previously Korea routes were misrouted
+  // through the japan handlers, which built routes via Japanese airports —
+  // producing broken cards like ICN→CDG showing "Seoul→Seoul" as leg 1.
+  if (destRegion === "korea") return [FALLBACK_STRATEGIES["korea"]];
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (destRegion === "mexico") return [FALLBACK_STRATEGIES["mexico"]];
@@ -3313,7 +3459,7 @@ function strategiesFor(originRegion, destRegion) {
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
-  if (originRegion === "korea") return [FALLBACK_STRATEGIES["japan-out"]];
+  if (originRegion === "korea") return [FALLBACK_STRATEGIES["korea-out"]];
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
@@ -5810,11 +5956,69 @@ function isTravelDayOp(itemText) {
 // answers. Returns the new text, or null if no rewrite applies (item stays as-is).
 // This is the "do the hard work for them" piece — instead of "Check if origin
 // is on CDC high-risk list", we look up the answer and state it plainly.
-function rewriteItemForRoute(itemText, originRegion, destRegion) {
+function rewriteItemForRoute(itemText, originRegion, destRegion, originLabel) {
   const t = (itemText || "").toLowerCase();
   const origin = ROUTE_FACTS[originRegion];
   const dest = ROUTE_FACTS[destRegion];
   if (!origin || !dest) return null;
+
+  // ------------------------------------------------------------------
+  // USDA-centric paperwork text needs an origin-aware rewrite. Items
+  // written as "USDA-accredited (or country-equivalent) vet" and "USDA
+  // APHIS (or country equivalent) endorses Form AC" are lazy hedges
+  // that read like we don't know — for many origins we DO know the
+  // actual competent authority (DGAV for Portugal, MAPA for Spain,
+  // DGAL for France, APHA for UK). Swap in the concrete authority for
+  // verified origins; for unverified EU origins say "your EU member
+  // state's competent veterinary authority"; keep "USDA" hard-coded
+  // for US origins; fall back to the original hedge otherwise.
+  if (t.includes("usda-accredited") || t.includes("usda apha") || t.includes("usda aphis") || t.includes("usda endors") || t.includes("usda-endors")) {
+    const oLabel = (originLabel || "").toLowerCase();
+    let vetPhrase = null;
+    let endorsePhrase = null;
+    if (originRegion === "us") {
+      // Keep USDA, drop the hedge — for US origins it is USDA.
+      vetPhrase = "USDA-accredited vet";
+      endorsePhrase = "USDA APHIS";
+    } else if (originRegion === "uk-out") {
+      vetPhrase = "OV (Official Veterinarian, UK term for the equivalent accreditation)";
+      endorsePhrase = "APHA (UK Animal and Plant Health Agency)";
+    } else if (originRegion === "europe") {
+      // Named EU member states with verified competent authorities.
+      if (/lisbon|porto|faro|funchal|ponta delgada|portugal/.test(oLabel)) {
+        vetPhrase = "EU-accredited vet (authorised by DGAV, Portugal's competent veterinary authority)";
+        endorsePhrase = "DGAV (Portugal's competent veterinary authority)";
+      } else if (/madrid|barcelona|valencia|seville|sevilla|malaga|bilbao|palma|spain/.test(oLabel)) {
+        vetPhrase = "EU-accredited vet (authorised by MAPA, Spain's competent veterinary authority)";
+        endorsePhrase = "MAPA (Spain's Ministry of Agriculture)";
+      } else if (/paris|cdg|orly|nice|lyon|marseille|toulouse|bordeaux|nantes|france/.test(oLabel)) {
+        vetPhrase = "EU-accredited vet (authorised by DGAL, France's competent veterinary authority)";
+        endorsePhrase = "DGAL (France's Directorate General for Food)";
+      } else {
+        // Generic EU fallback — honest, doesn't pretend to know the
+        // specific country's authority name.
+        vetPhrase = "EU-accredited vet (authorised by your EU member state's competent veterinary authority)";
+        endorsePhrase = "your EU member state's competent veterinary authority";
+      }
+    } else if (originRegion === "ireland") {
+      vetPhrase = "EU-accredited vet (authorised by DAFM, Ireland's Department of Agriculture, Food and the Marine)";
+      endorsePhrase = "DAFM (Ireland's Department of Agriculture, Food and the Marine)";
+    } else if (originRegion === "canada") {
+      vetPhrase = "CFIA-accredited vet";
+      endorsePhrase = "CFIA (Canadian Food Inspection Agency)";
+    }
+    // If we have an origin-specific phrase, swap it in. Otherwise keep
+    // the original "or country-equivalent" hedge — better honest than wrong.
+    if (vetPhrase && endorsePhrase) {
+      return itemText
+        .replace(/USDA-accredited \(or country-equivalent\) vet/g, vetPhrase)
+        .replace(/USDA-accredited vet/g, vetPhrase)
+        .replace(/USDA APHIS \(or country equivalent\)/g, endorsePhrase)
+        .replace(/USDA APHIS/g, endorsePhrase)
+        .replace(/USDA endorsement/g, `${endorsePhrase} endorsement`)
+        .replace(/USDA-endorsed/g, `${endorsePhrase}-endorsed`);
+    }
+  }
 
   // FAVN / rabies-titer advisories — only relevant if origin is high-risk.
   if (t.includes("favn") || (t.includes("rabies titer") && t.includes("high-risk"))) {
@@ -6460,7 +6664,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
         if (isTravelDayOp(text)) return;
 
         // Route-aware rewrite — "research this" → "here's the answer".
-        const rewritten = rewriteItemForRoute(text, originRegion, destRegion);
+        const rewritten = rewriteItemForRoute(text, originRegion, destRegion, originLabel);
         // Empty string means "this item doesn't apply to this route" — skip.
         if (rewritten === "") return;
         const finalText = rewritten || text;

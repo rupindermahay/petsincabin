@@ -793,7 +793,19 @@ function findAllAirlinesInText(text) {
         }
       }
     }
-    if (firstPos >= 0) hits.push({ airline: a, pos: firstPos });
+    if (firstPos < 0) return;
+    // Exclude airlines mentioned in negation/cargo-only contexts. The matcher
+    // is purely positional; without this filter, "NOT American Airlines (AA
+    // bans transatlantic cabin)" produces a phantom American Airlines card on
+    // JFK→CDG. We look at ~30 chars before the match for explicit negation
+    // markers and ~60 chars after for cargo-only / banned / suspended markers.
+    // A match within a negation window is excluded from the hit list.
+    const before = t.slice(Math.max(0, firstPos - 30), firstPos);
+    const after = t.slice(firstPos, Math.min(t.length, firstPos + 60));
+    const negatedBefore = /\bnot\b[^.;]*$|\bno\b[^.;]*$|\bexcept\b[^.;]*$|\bnever\b[^.;]*$/i.test(before);
+    const negatedAfter = /:\s*cargo\s*only|\bcargo[- ]only\b|\bbans\b|\bbanned\b|\bsuspended\b/i.test(after);
+    if (negatedBefore || negatedAfter) return;
+    hits.push({ airline: a, pos: firstPos });
   });
   hits.sort((x, y) => x.pos - y.pos);
   return hits.map((h) => h.airline);

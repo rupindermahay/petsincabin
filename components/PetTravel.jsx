@@ -3581,7 +3581,7 @@ const CHECKLIST_DATA = {
         items: [
           "Mexico is straightforward for cats: vet health certificate + current rabies vaccine is the core requirement",
           "SADER/SENASICA inspect cats on arrival the same way as dogs — free of charge",
-          "Returning to the US with a cat: no CDC Dog Import Form needed (that's dogs only)",
+          "If returning to US later: with a cat no CDC Dog Import Form is needed (that's dogs only)",
           "Internal/external parasite treatment should still be documented for a cat",
           "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
         ],
@@ -3598,7 +3598,7 @@ const CHECKLIST_DATA = {
           "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
           "Rabies vaccine 30 days–12 months old (after microchip)",
           "DHPP for dogs (distemper, hepatitis, parainfluenza, parvovirus); FVRCP for cats",
-          "IMPORTANT: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
+          "If returning to US later: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
         ],
       },
       {
@@ -3624,8 +3624,8 @@ const CHECKLIST_DATA = {
         title: "Travel day",
         items: [
           "Bring original (signed/stamped) Health Certificate",
-          "Bring Certification of U.S.-issued Rabies Vaccination (for return)",
-          "Bring CDC Dog Import Form receipt (for return)",
+          "If returning to US later: bring Certification of U.S.-issued Rabies Vaccination (for return)",
+          "If returning to US later: bring CDC Dog Import Form receipt (for return)",
           "DR inspection on arrival — typically quick if paperwork complete",
         ],
       },
@@ -3731,7 +3731,7 @@ const CHECKLIST_DATA = {
         title: "48 hours before travel",
         items: [
           "Licensed vet completes International Veterinary Certificate (within 48 hours of arrival in Bahamas)",
-          "USDA APHIS endorsement NOT required — vet signature alone is enough",
+          "USDA APHIS endorsement NOT required (US only) — vet signature alone is enough",
           "Internal parasite test (negative stool sample test) recorded on certificate",
           "Re-confirm cabin pet booking with airline (JetBlue, AA, Delta all do cabin to Nassau)",
         ],
@@ -3761,7 +3761,7 @@ const CHECKLIST_DATA = {
           "Cats need the same Bahamas Import Permit — apply 6–8 weeks ahead",
           "Microchip, rabies, and the International Veterinary Certificate (within 48 hours of arrival) all apply to cats",
           "The breed bans are dog-only — but the permit and paperwork process is identical for a cat",
-          "Returning to the US with a cat: no CDC Dog Import Form needed (dogs only) — Bahamas being rabies-free makes the cat round trip very simple",
+          "If returning to US later with a cat: no CDC Dog Import Form needed (dogs only) — Bahamas being rabies-free makes the cat round trip very simple",
           "Cat travel-day basics: litter tray until you leave, no food within ~4 hours, Feliway, covered carrier, harness for security",
         ],
       },
@@ -4107,7 +4107,7 @@ const CHECKLIST_DATA = {
       {
         title: "Official sources",
         items: [
-          "Each South American country has its own animal-health authority (e.g. MAPA in Brazil, SENASA in Argentina and Peru, SAG in Chile). The most reliable single starting point for pets travelling from the US is the USDA APHIS country directory, which links to each country's current requirements: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. For dogs returning to the US, confirm current CDC rules at <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">cdc.gov · dog import</a>.",
+          "Each South American country has its own animal-health authority (e.g. MAPA in Brazil, SENASA in Argentina and Peru, SAG in Chile, ICA in Colombia). The reliable single starting point for the country's current requirements is the destination country's veterinary authority directly. US travellers can use the USDA APHIS country directory: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. For dogs returning to the US, current CDC rules are at <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">cdc.gov · dog import</a>.",
         ],
       },
     ],
@@ -4243,7 +4243,7 @@ const CHECKLIST_DATA = {
         title: "10 days before",
         items: [
           "International health certificate from a government-accredited vet (USDA-accredited if from the US; equivalent in other origin countries). Form must list microchip number, rabies vaccine date, parasite treatment dates.",
-          "USDA APHIS endorsement (US origin) — same-day in many states via VEHCS, mail-in in others. The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> covers timing and the return label.",
+          "USDA APHIS endorsement (US only) — same-day in many states via VEHCS, mail-in in others. The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> covers timing and the return label.",
           "Some sources also recommend Panamanian consulate authentication of the endorsed certificate — historically required, partially waived in 2020. Confirm with the Panamanian consulate in your country before relying on either path.",
         ],
       },
@@ -4881,8 +4881,9 @@ const DIRECTIONAL_CHECKLISTS = {
         {
           title: "Travel day",
           items: [
-            "Bring originals: rabies + health certificate + (for US return) Certification of US-issued Rabies Vaccination",
-            "DR is on CDC high-risk rabies list — US return requires more paperwork than you might expect",
+            "Bring originals: rabies + health certificate",
+            "If returning to US later: bring Certification of US-issued Rabies Vaccination too",
+            "If returning to US later: DR is on CDC high-risk rabies list — US return requires more paperwork than you might expect",
             "Arrive 3 hours early",
           ],
         },
@@ -4907,7 +4908,7 @@ const DIRECTIONAL_CHECKLISTS = {
             "ISO 15-digit microchip implanted FIRST (must precede rabies vaccine)",
             "Rabies vaccine 30 days–12 months old (after microchip)",
             "DHPP for dogs (distemper, hepatitis, parainfluenza, parvovirus); FVRCP for cats",
-            "IMPORTANT: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
+            "If returning to US later: DR is a CDC high-risk country for dog rabies — this affects your return to the US",
           ],
         },
         {
@@ -4933,8 +4934,8 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "Travel day",
           items: [
             "Bring original (signed/stamped) Health Certificate",
-            "Bring Certification of U.S.-issued Rabies Vaccination (for return)",
-            "Bring CDC Dog Import Form receipt (for return)",
+            "If returning to US later: bring Certification of U.S.-issued Rabies Vaccination (for return)",
+            "If returning to US later: bring CDC Dog Import Form receipt (for return)",
             "DR inspection on arrival — typically quick if paperwork complete",
           ],
         },
@@ -4966,7 +4967,7 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "Travel day",
           items: [
             "Bring originals: rabies + health certificate",
-            "Jamaica isn't on the CDC high-risk list — US return is straightforward",
+            "If returning to US later: Jamaica isn't on the CDC high-risk list — US return is straightforward",
             "Arrive 3 hours early",
           ],
         },
@@ -5073,7 +5074,7 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "48 hours before travel",
           items: [
             "Licensed vet completes International Veterinary Certificate (within 48 hours of arrival in Bahamas)",
-            "USDA APHIS endorsement NOT required — vet signature alone is enough",
+            "USDA APHIS endorsement NOT required (US only) — vet signature alone is enough",
             "Internal parasite test (negative stool sample test) recorded on certificate",
             "Re-confirm cabin pet booking with airline (JetBlue, AA, Delta all do cabin to Nassau)",
           ],
@@ -5563,6 +5564,31 @@ function isRelevantConditional(itemText, side, originRegion, destRegion) {
     return true;
   }
 
+  // Bare "From X:" or "From X —" prefix at the start of an item text — same
+  // semantics as "If from X" but written without the "If" wrapper. Common in
+  // "Origin reminders" sections where each item bullets a different origin.
+  // Drop unless the route's origin matches the named country.
+  const fromMatch = t.match(/^from (the\s+)?(usa|us|united states|uk|united kingdom|ireland|canada|europe|eu|japan|hawaii|mexico|uae|australia|india|south africa|south korea|korea|russia|caribbean|bahamas|jamaica|dominican republic|panama|central america|south america|brazil|argentina|chile|peru|colombia)[\s:,—-]/);
+  if (fromMatch) {
+    const named = fromMatch[2];
+    const originMatchMap = {
+      "usa": "us", "us": "us", "united states": "us",
+      "uk": "uk-out", "united kingdom": "uk-out",
+      "ireland": "ireland", "canada": "canada", "europe": "europe", "eu": "europe",
+      "japan": "japan", "hawaii": "hawaii", "mexico": "mexico", "uae": "dubai",
+      "india": "india", "south africa": "south-africa",
+      "south korea": "korea", "korea": "korea", "russia": "russia",
+      "caribbean": "caribbean", "bahamas": "caribbean", "jamaica": "caribbean",
+      "dominican republic": "caribbean",
+      "panama": "central-america", "central america": "central-america",
+      "south america": "south-america",
+      "brazil": "south-america", "argentina": "south-america", "chile": "south-america",
+      "peru": "south-america", "colombia": "south-america",
+    };
+    const expectedOrigin = originMatchMap[named];
+    return expectedOrigin === originRegion;
+  }
+
   // --- Patterns 2: destination embedded in item text ---
   // "For dogs flying to the USA from the UK" / "For cats entering Japan" etc.
   // Only relevant when route actually matches.
@@ -5688,6 +5714,19 @@ function isRelevantSection(sectionTitle, side, originRegion, destRegion) {
     return originRegion === "uk-out";
   }
   if (t.startsWith("from eu") || t.startsWith("from europe")) {
+    return originRegion === "europe";
+  }
+
+  // "Reminder for US visitors going home" / "for US travellers" — these
+  // sections are about return travel home and only matter if the origin is
+  // that country.
+  if (t.includes("for us visitors") || t.includes("for usa visitors") || t.includes("for us travellers") || t.includes("for us travelers")) {
+    return originRegion === "us";
+  }
+  if (t.includes("for uk visitors") || t.includes("for uk travellers") || t.includes("for uk travelers")) {
+    return originRegion === "uk-out";
+  }
+  if (t.includes("for eu visitors") || t.includes("for european visitors")) {
     return originRegion === "europe";
   }
 

@@ -3554,7 +3554,7 @@ const CHECKLIST_DATA = {
           "AQCS export certificate is valid for 10 days from issue.",
           "If outbound to USA: India IS on the CDC high-risk list — you need the CDC Dog Import Form receipt PLUS either the Certification of US-issued Rabies Vaccination form OR a FAVN rabies titer.",
           "If outbound to UK: GB Animal Health Certificate required, but cabin pets cannot fly directly into the UK — the route is cargo into LHR or cabin to mainland Europe (Paris/Amsterdam/Frankfurt/Lisbon) then Eurotunnel.",
-          "If outbound to Europe (EU): EU Animal Health Certificate, ISO microchip implanted BEFORE rabies vaccine, rabies ≥21 days before entry.",",
+          "If outbound to Europe (EU): EU Animal Health Certificate, ISO microchip implanted BEFORE rabies vaccine, rabies ≥21 days before entry.",
         ],
       },
       {

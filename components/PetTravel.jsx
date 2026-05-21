@@ -4945,14 +4945,6 @@ const DIRECTIONAL_CHECKLISTS = {
             "Arrive 3 hours early for international",
           ],
         },
-        {
-          title: "Reminder",
-          items: [
-            "If returning to the US: CDC Dog Import Form receipt needed (online, free)",
-            "Mexico isn't on the CDC high-risk rabies list, so US re-entry is straightforward",
-            "If returning to EU: 3-month wait may apply (Mexico is unlisted third country)",
-          ],
-        },
       ],
     },
     arriving: {
@@ -5021,15 +5013,6 @@ const DIRECTIONAL_CHECKLISTS = {
             "Window seat preferred",
           ],
         },
-        {
-          title: "Reminder on destinations",
-          items: [
-            "UK: cabin not allowed INTO UK — see Eurotunnel workaround in UK arriving checklist",
-            "USA: CDC Dog Import Form receipt needed in advance",
-            "UAE: only cabin entry is via Etihad to Abu Dhabi (AUH), then road to Dubai",
-            "Always confirm the destination's specific requirements directly with their official agriculture authority",
-          ],
-        },
       ],
     },
     arriving: {
@@ -5042,6 +5025,7 @@ const DIRECTIONAL_CHECKLISTS = {
             "Rabies vaccine AFTER microchip (≥21 days before EU entry)",
             "Official vet appointment booked for health certificate (varies by origin country)",
             "Confirm whether your airline allows cabin pets on this leg",
+            "If you're coming from an unlisted third country (Mexico, much of Latin America, parts of Africa, etc. — see the EU Commission's listed/unlisted reference), a rabies antibody titer test (FAVN ≥0.5 IU/ml) is required, AND you must wait 3 months from the date the blood sample was drawn before entering the EU",
           ],
         },
         {
@@ -5059,15 +5043,6 @@ const DIRECTIONAL_CHECKLISTS = {
             "Arrive 3 hours early for international",
             "Bring calming spray for long flights",
             "Window seat if possible; extra-legroom if airline allows",
-          ],
-        },
-        {
-          title: "Origin reminders",
-          items: [
-            "From UK: GB Animal Health Certificate from your UK Official Vet",
-            "From US: EU Health Certificate from USDA-accredited vet + APHIS endorsement",
-            "From India: Air India Paws on Board direct cabin to Paris; or Etihad/Lufthansa/SWISS via hub",
-            "Tapeworm treatment may also be required if you then continue to UK, Ireland, Malta, Finland, or Norway (dogs only)",
           ],
         },
       ],
@@ -5105,15 +5080,6 @@ const DIRECTIONAL_CHECKLISTS = {
             "Confirm with airline that cabin slot still applies",
           ],
         },
-        {
-          title: "Reminder on destinations",
-          items: [
-            "USA from India: cabin via European hub airline (Lufthansa, KLM, Air France, SWISS, LOT) — no direct India ↔ USA cabin",
-            "UK from India: Eurotunnel workaround required (no cabin into UK)",
-            "UAE from India: Etihad direct to Abu Dhabi (Delhi/Mumbai/Bangalore/Chennai supported)",
-            "Australia from India: cargo only + mandatory quarantine",
-          ],
-        },
       ],
     },
     arriving: {
@@ -5143,15 +5109,6 @@ const DIRECTIONAL_CHECKLISTS = {
             "Have NOC printed AND digital copy",
             "Arrive 4 hours early for international",
             "Confirm with airline that cabin slot still applies — pets approved 48 hrs prior on Air India",
-          ],
-        },
-        {
-          title: "Origin reminders",
-          items: [
-            "From USA: USDA APHIS endorsement on health certificate; CDC Dog Import Form for return",
-            "From UK: GB Animal Health Certificate; pre-2021 UK pet passports not accepted",
-            "From UAE: MOCCAE export certificate; Etihad/Air India cabin out of UAE allowed",
-            "From EU: EU pet passport or country-specific health certificate",
           ],
         },
       ],
@@ -11696,6 +11653,58 @@ function JourneyPlanner() {
                                     </div>
                                   </div>
                                   <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                                  {/* Carrier specs block — surfaces weight / dims / fee /
+                                      link from AIRLINES[] for the carrier mentioned in
+                                      the route note. Same lookup pattern used elsewhere
+                                      (line ~12064) for the Carriers checklist chapter.
+                                      Without this, stub notes like "Air France. ✓ Cabin
+                                      (under 8 kg)." leave the card with no carrier
+                                      context — even though full data exists in AIRLINES[]. */}
+                                  {(() => {
+                                    const noteLower = (g.routes[0].note || "").toLowerCase();
+                                    const matched = AIRLINES.find((a) =>
+                                      noteLower.includes(a.name.toLowerCase())
+                                    );
+                                    if (!matched) return null;
+                                    return (
+                                      <div className="mt-3 pt-3 border-t border-stone-700/60">
+                                        <p className="text-xs uppercase tracking-widest text-amber-400/80 mb-2">
+                                          {matched.name} — carrier specs
+                                        </p>
+                                        <dl className="text-xs text-stone-400 space-y-1 leading-relaxed">
+                                          {matched.weight && (
+                                            <div className="flex gap-2">
+                                              <dt className="text-stone-500 flex-shrink-0 w-24">Weight limit</dt>
+                                              <dd className="flex-1">{matched.weight}</dd>
+                                            </div>
+                                          )}
+                                          {matched.carrier && (
+                                            <div className="flex gap-2">
+                                              <dt className="text-stone-500 flex-shrink-0 w-24">Carrier max</dt>
+                                              <dd className="flex-1">{matched.carrier}</dd>
+                                            </div>
+                                          )}
+                                          {matched.fee && (
+                                            <div className="flex gap-2">
+                                              <dt className="text-stone-500 flex-shrink-0 w-24">Fee</dt>
+                                              <dd className="flex-1">{matched.fee}</dd>
+                                            </div>
+                                          )}
+                                        </dl>
+                                        {matched.link && (
+                                          <a
+                                            href={matched.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="inline-flex items-center gap-1 mt-2 text-xs text-amber-400/80 hover:text-amber-300 underline"
+                                          >
+                                            See {matched.name}'s official pet page →
+                                          </a>
+                                        )}
+                                      </div>
+                                    );
+                                  })()}
                                 </>
                               )}
                             </>

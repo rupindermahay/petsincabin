@@ -12019,10 +12019,12 @@ function JourneyPlanner() {
                   );
 
                   // If the user added tapeworm dates via the calculator, add
-                  // them as their OWN clearly-titled section at the top of the
-                  // checklist. This mutates the `combined` object that feeds
-                  // BOTH the on-screen preview AND the printable PDF, so the
-                  // dated section appears in both — as the calculator promises.
+                  // them as their OWN clearly-titled chapter at the top of the
+                  // checklist — same divider-band + content-section pattern as
+                  // Carriers / Anytime / Leaving X, so it reads as a top-level
+                  // chapter rather than a demoted plain section. This mutates
+                  // `combined` which feeds BOTH the on-screen preview AND the
+                  // printable PDF.
                   if (tapewormAdded && tapewormResult && combined.sections && combined.sections.length > 0) {
                     const datedLine =
                       `Tapeworm treatment — vet must treat &amp; record between ` +
@@ -12030,14 +12032,20 @@ function JourneyPlanner() {
                       `<strong>${tapewormResult.latestStr}</strong> (${tapewormResult.treatLabel}). ` +
                       `Valid only if you land in ${tapewormResult.destName} by ` +
                       `${tapewormResult.cutoffStr} ${tapewormResult.destLabel}.`;
-                    // Avoid double-insertion on re-render.
+                    // Avoid double-insertion on re-render — check for the divider title.
                     const alreadyThere = combined.sections.some((s) =>
                       s.title === "Tapeworm treatment — your dates"
                     );
                     if (!alreadyThere) {
+                      // unshift in reverse so divider lands at index 0, content at 1.
+                      combined.sections.unshift({
+                        title: "Your dates",
+                        items: [datedLine],
+                      });
                       combined.sections.unshift({
                         title: "Tapeworm treatment — your dates",
-                        items: [datedLine],
+                        divider: true,
+                        items: [`Your vet must treat and record the dose inside the window below. This is the most time-critical step of the trip — get the appointment booked as soon as you know your flight date.`],
                       });
                     }
                   }

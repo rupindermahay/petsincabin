@@ -6354,26 +6354,16 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originTimed = stripAnytime(originSections);
   const destTimed = stripAnytime(destSections);
 
-  // Assemble: anytime block at top, carriers, origin chapter, transit, destination chapter, tips.
+  // Assemble: carriers at top (alongside tapeworm in the planner), then
+  // anytime block, origin chapter, transit, destination chapter, tips.
   const sections = [];
 
-  // ANYTIME / GENERAL PREP — at the very top. Non-time-bound advice that
-  // applies regardless of when in the timeline you read it: species tips,
-  // booking notes, carrier acclimation. One section, not two.
-  if (anytimeItems.length > 0) {
-    sections.push({
-      title: "Anytime / general prep",
-      divider: true,
-      items: [`Read these first. They apply throughout the trip, not on a specific date.`],
-    });
-    sections.push({
-      title: "General prep",
-      items: anytimeItems,
-    });
-  }
-
-  // CARRIERS chapter — at the TOP because the carrier dimensions are
-  // airline-specific and you need to know them BEFORE you buy a carrier.
+  // CARRIERS chapter — at the VERY TOP because:
+  //   (a) carrier dimensions are airline-specific and you need to know them
+  //       BEFORE you buy a carrier, and
+  //   (b) the planner unshifts the dated tapeworm window above this when the
+  //       user runs the calc — keeping carriers + tapeworm together at the
+  //       head of the checklist is the most useful information layout.
   // On multi-leg journeys with different airlines, you may genuinely need
   // TWO carriers (e.g. a smaller one for Air Canada's first leg, a larger
   // one for United's second leg). This is the single biggest practical
@@ -6403,6 +6393,21 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     sections.push({
       title: "Carrier dimensions & weight limits",
       items: carrierItems,
+    });
+  }
+
+  // ANYTIME / GENERAL PREP — after carriers. Non-time-bound advice that
+  // applies regardless of when in the timeline you read it: species tips,
+  // booking notes, carrier acclimation. One section, not two.
+  if (anytimeItems.length > 0) {
+    sections.push({
+      title: "Anytime / general prep",
+      divider: true,
+      items: [`Read these first. They apply throughout the trip, not on a specific date.`],
+    });
+    sections.push({
+      title: "General prep",
+      items: anytimeItems,
     });
   }
 
@@ -10155,6 +10160,16 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
 function Checklist() {
   const sections = [
     {
+      title: "Your carrier — first thing",
+      icon: <Luggage className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Carrier dimensions and weight limits are set by the airline, not the country — and they differ enough that a carrier accepted by one airline can be refused by another. Use the Airline comparison tool to find your airline's exact specs before you buy anything.",
+        "On a multi-airline route, the strictest dimensions win — buy for the tightest spec on your trip, or bring a second carrier for the more generous leg if your pet's cramped in the strict one.",
+        "Measure with your pet inside at home before travel day. At check-in, staff measure the carrier AND watch your pet stand up + turn around inside it. Both have to pass.",
+        "Soft-sided usually beats hard-sided under-seat: it compresses to fit tighter spaces and feels less cage-like. Ventilation on at least three sides; leak-proof base.",
+      ],
+    },
+    {
       title: "If you're flying with a dog",
       icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
       items: [
@@ -10345,7 +10360,37 @@ function ChecklistDownload() {
       data = null; // nothing selected yet
     }
   } else {
-    data = filterChecklistByPet(getChecklist(route, effectiveDirection), petType);
+    const raw = filterChecklistByPet(getChecklist(route, effectiveDirection), petType);
+    // COUNTRY MODE: prepend a Carriers chapter at the top so carrier info
+    // sits at the head of the checklist (matching route mode + the planner's
+    // tailored checklist). Country mode doesn't know which airline the user
+    // will fly, so we point them at the Airlines tool for exact specs.
+    if (raw && raw.sections) {
+      data = {
+        ...raw,
+        sections: [
+          {
+            title: "Your carriers — airline-specific",
+            divider: true,
+            items: [
+              `Carrier dimensions and weight limits are set by the airline, not the country. Look up your airline below, then buy a carrier that meets its specific specs and measure your pet inside it at home before travel day.`,
+            ],
+          },
+          {
+            title: "Carrier — what to do first",
+            items: [
+              `<strong>Look up your airline's carrier specs</strong> — use the <a href="#airlines">Airline comparison tool</a> to find weight limits and exact dimensions for the airline(s) you'll fly. Specs differ enough that a carrier accepted by one airline can be refused by another.`,
+              `<strong>Buy for the strictest spec on your route.</strong> If you're connecting on two airlines, the smaller carrier limit wins — or bring a second carrier for the more generous leg if the strict box is too tight for your pet.`,
+              `<strong>Measure with your pet inside at home BEFORE travel day.</strong> At check-in, staff will measure the carrier and watch your pet stand up and turn around inside it.`,
+              `Soft-sided carriers usually fit better under the seat. Make sure ventilation is on at least three sides and the base is leak-proof.`,
+            ],
+          },
+          ...raw.sections,
+        ],
+      };
+    } else {
+      data = raw;
+    }
   }
 
   const hasDirectionalContent = mode === "country" &&

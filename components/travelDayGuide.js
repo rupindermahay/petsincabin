@@ -17,6 +17,10 @@ export const TRAVEL_DAY_GUIDE = {
           p: "Tire them out. A proper walk, not a quick block. A tired dog in a carrier is a sleeping dog in a carrier; a fresh dog in a carrier is an anxious dog. This is the single most useful thing you can do for the flight itself.",
         },
         {
+          h: "Cats: litter tray right up until you leave",
+          p: "The cat version of the long walk. Keep the litter tray accessible until the moment you put them in the carrier — they'll use it once more before you go. The flight is the first time in their life they can't reach a tray, so this last visit matters.",
+        },
+        {
           h: "Light meal about 4 hours before the flight",
           p: "Not on an empty stomach (anxious), not on a full one (stressed digestion in a confined space). A small meal four hours out is the sweet spot. Water freely until you leave — don't restrict it.",
         },
@@ -26,7 +30,7 @@ export const TRAVEL_DAY_GUIDE = {
         },
         {
           h: "Final toilet trip just before you leave the house",
-          p: "Long walk, full toilet, fresh water. Now you're ready.",
+          p: "Dogs: long walk, full toilet, fresh water. Cats: one more pass at the litter tray. Now you're ready.",
         },
       ],
     },
@@ -46,7 +50,7 @@ export const TRAVEL_DAY_GUIDE = {
         },
         {
           h: "On some routes, the specific Heathrow vs Gatwick choice matters",
-          p: "For UK departure, Heathrow has cabin pets on more airlines (Air France, KLM, Lufthansa, Air Canada). Gatwick blocks cabin pets on most airlines. If you can fly out of Heathrow, do.",
+          p: "For UK departure, Heathrow has cabin pets on more airlines (Air France, KLM, Lufthansa, Air Canada, Etihad). Gatwick blocks cabin pets on most airlines — it's effectively cargo-only for international pet travel. Manchester (MAN) is a useful alternative for the north of England — Air Transat takes cabin pets MAN→Canada, Etihad takes cabin MAN→Abu Dhabi. Glasgow (GLA) only handles Air Transat cabin to Canada. If you can fly out of Heathrow or Manchester, do; avoid Gatwick for cabin pets.",
         },
       ],
     },
@@ -62,7 +66,7 @@ export const TRAVEL_DAY_GUIDE = {
         },
         {
           h: "Paperwork review",
-          p: "The agent will check every document — health certificate, rabies certificate, microchip number, CDC Dog Import Form receipt (for US-bound), EU Pet Passport (for EU), import permit (for some destinations). Have all originals in a clear folder, in the order the destination country expects them. Photocopies in a separate folder as backup.",
+          p: "The agent will check every document — health certificate, rabies certificate, microchip number, CDC Dog Import Form receipt (for US-bound), EU Animal Health Certificate (for travellers entering the EU from outside) or EU Pet Passport (only if you're an EU resident with one issued previously), import permit (for some destinations). Have all originals in a clear folder, in the order the destination country expects them. Photocopies in a separate folder as backup.",
         },
         {
           h: "The carrier turn-around test — and why size matters",
@@ -98,7 +102,7 @@ export const TRAVEL_DAY_GUIDE = {
         },
         {
           h: "If you're flying to the US via a Canadian airport, expect US Preclearance",
-          p: "At Montreal (YUL), Toronto (YYZ), Vancouver and other Canadian airports, US-bound passengers clear US Customs and Border Protection BEFORE boarding — this is called Preclearance. For pets, that's a paperwork check at a desk (CDC Dog Import Form, rabies, microchip). The full security screening still happens once with CATSA; you arrive in the US as a domestic passenger.",
+          p: "At Montreal (YUL), Toronto (YYZ), Vancouver (YVR) and other Canadian airports, US-bound passengers clear US Customs and Border Protection BEFORE boarding — this is called Preclearance. For pets, that's a paperwork check at a desk (CDC Dog Import Form, rabies, microchip). The full security screening still happens once with CATSA; you arrive in the US as a domestic passenger.",
         },
         {
           h: "Pet back in carrier as soon as you're clear",
@@ -114,7 +118,7 @@ export const TRAVEL_DAY_GUIDE = {
       points: [
         {
           h: "Find the pet relief area — if it's after security",
-          p: "Larger airports (Heathrow T2/T5, JFK, Amsterdam, Frankfurt, Munich) have post-security pet relief rooms. Use the airport app or signage to find yours. If your airport doesn't have one, your pet has to wait until arrival — give them a full toilet break right before you go through security.",
+          p: "Few major airports have post-security (airside) pet relief: Heathrow lists airside facilities at T2/T3/T4/T5 but its own guidance describes them as for assistance dogs, with pet access at staff discretion; JFK has an airside room in B Concourse (B31–B33); Munich has one airside in T1 Hall C1 West (non-Schengen); Helsinki has indoor airside zones in T2; Madrid Barajas has an indoor airside area. Many big hubs DON'T — Amsterdam Schiphol officially has no pet relief area at all, and Frankfurt explicitly states no designated pet relief in transit. Use the airport app or signage to find yours. If your airport doesn't have one, your pet has to wait until arrival — give them a full toilet break right before you go through security.",
         },
         {
           h: "Carrier vs leash rules in the terminal",
@@ -157,6 +161,10 @@ export const TRAVEL_DAY_GUIDE = {
           p: "Push it all the way under so the carrier handle is at your feet. This is a regulation, not a suggestion. Don't let crew put it anywhere else (overhead, in your lap during takeoff).",
         },
         {
+          h: "Don't book a bulkhead or exit row — pets aren't allowed there",
+          p: "Bulkhead seats (the front row of a cabin or behind a divider) have no under-seat storage at all — your carrier has nowhere to go. Exit rows are off-limits to pet travellers on every airline because cabin pets can't be in a row with safety-critical egress duties. If you accidentally got assigned one when adding the pet to the booking, the gate agent will reseat you — but better to fix it before you fly.",
+        },
+        {
           h: "First 15 minutes are the hardest",
           p: "Taxi, takeoff and the engine roar are the loudest moments of the flight. Most pets settle within 20 minutes of cruising altitude. Talk quietly to them, slip a finger through the mesh, then leave them be — over-fussing keeps them alert.",
         },
@@ -165,8 +173,8 @@ export const TRAVEL_DAY_GUIDE = {
           p: "Most airlines and many aviation authorities prohibit opening a pet carrier during flight. If your pet seems distressed, ask a flight attendant — don't unzip on your own.",
         },
         {
-          h: "Window seat is usually better",
-          p: "Slightly more under-seat depth on most aircraft, away from cart traffic in the aisle, and the wall gives the carrier (and your pet) one less direction of stimulation.",
+          h: "Window seat is usually better — with a small caveat",
+          p: "Window seats give your pet more floor depth under the seat in front, and you're away from cart traffic in the aisle. The trade-off: on most narrow-body aircraft, the fuselage curves inward, so under-seat HEIGHT is slightly less at the window than the middle. If your carrier sits right at the published maximum, the middle seat is actually the most forgiving spot. For most cabin pets and standard 18×11×11 carriers, window still wins — but check seat maps on SeatGuru if your carrier is on the edge of the height limit.",
         },
       ],
     },

@@ -5,14 +5,17 @@ import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, Rotat
 // ============================================================
 // ⏰ ETIHAD PROMO — EXPIRES 31 MAY 2026
 // ------------------------------------------------------------
-// On 1 June 2026, set ETIHAD_PROMO_ACTIVE to false. That single
-// flip rewrites every mention of the $399 promo across the site
-// (airline card, route notes, planner branches, difficult-dest
-// workaround, Wisdom card). Standard rate post-promo is around
-// $1,500/segment — adjust ETIHAD_STANDARD_FEE_SHORT if Etihad
-// publishes a new standard rate.
+// Auto-flip on 1 June 2026: ETIHAD_PROMO_ACTIVE is now date-driven, so the
+// promo references across the site automatically switch to standard pricing
+// without a manual edit. If Etihad publishes a NEW promo or changes the
+// standard rate, override ETIHAD_PROMO_OVERRIDE below — set it to true/false
+// to force one state, or leave as null for date-driven default.
 // ============================================================
-const ETIHAD_PROMO_ACTIVE = true;
+const ETIHAD_PROMO_OVERRIDE = null;  // null = date-driven; true/false = force
+const ETIHAD_PROMO_EXPIRY = new Date("2026-05-31T23:59:59Z");
+const ETIHAD_PROMO_ACTIVE = ETIHAD_PROMO_OVERRIDE !== null
+  ? ETIHAD_PROMO_OVERRIDE
+  : new Date() <= ETIHAD_PROMO_EXPIRY;
 const ETIHAD_PROMO_SHORT = ETIHAD_PROMO_ACTIVE
   ? "$399 promo through May 2026"
   : "~$1,500 per segment";
@@ -92,13 +95,13 @@ const AIRLINES = [
     tags: ["us", "mexico", "japan", "korea"],
     cabin: "Cabin US/Canada/Mexico/Japan/Korea ✓ — limited intl beyond",
     cabinStatus: "yes",
-    direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, Costa Rica, Bahamas, plus Tokyo and Seoul on Alaska's growing long-haul network from Seattle (year-round service). Alaska now also flies Seattle ↔ London Heathrow (launched May 2026) and Seattle ↔ Rome (launched April 2026) — but UK destination is cargo-only by UK government rule. Cabin NOT allowed: India, EU/UK as destination, UAE, most other long-haul markets.",
+    direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, Costa Rica, Bahamas, plus Tokyo and Seoul on Alaska's growing long-haul network from Seattle (year-round service). Alaska launched Seattle ↔ London Heathrow (May 2026) and Seattle ↔ Rome (April 2026) passenger routes, but Alaska does NOT carry pets to/from the UK or Italy in any form — their published pet service list covers only the US, Canada, Mexico, Costa Rica, Bahamas, Japan and Korea. Cabin NOT allowed: India, EU (including new Rome route), UK (passenger route exists, no pet service), UAE, most other long-haul markets.",
     originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "yes", korea: "yes" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "$100 each way cabin / $200 each way checked baggage (increased from $150 on Jan 2, 2026)",
     weight: "No stated weight limit; pet must fit comfortably in carrier (under 17 × 11 × 9.5 in soft / 17 × 11 × 7.5 in hard)",
     carrier: "Soft: 17 × 11 × 9.5 in. Hard: 17 × 11 × 7.5 in.",
-    notes: "Seattle-based (SEA hub) — strongest pet-friendly network on the US west coast. Since 5 June 2025, only dogs and cats are accepted in cabin (rabbits/birds being phased out by April 4, 2026 even on grandfathered tickets). International cabin pet routes are dogs/cats only. Two pets of the same species can share one carrier if both fit comfortably. Max 3 cabin pets in First, 8 in Main on each flight. Alaska's international long-haul expansion (Seattle to Tokyo, Seoul, Rome, London, Reykjavík) means new cabin-pet pathways from the US West Coast — but UK arrivals are cargo-only because of UK government rules.",
+    notes: "Seattle-based (SEA hub) — strongest pet-friendly network on the US west coast. Since 5 June 2025, only dogs and cats are accepted in cabin (rabbits/birds being phased out by April 4, 2026 even on grandfathered tickets). International cabin pet routes are dogs/cats only. Two pets of the same species can share one carrier if both fit comfortably. Max 3 cabin pets in First, 8 in Main on each flight. IMPORTANT: Alaska's international long-haul expansion (Seattle to Tokyo, Seoul, Rome, London, Reykjavík) has opened new passenger routes, but Alaska's published pet service list covers only the US, Canada, Mexico, Costa Rica, Bahamas, Japan and Korea. Despite the new SEA↔LHR passenger route, Alaska does NOT carry pets to the UK in cabin or cargo. Same for Rome. For US west coast → UK/EU pet travel, use Delta/KLM/Lufthansa via the standard EU-hub workaround instead.",
     intl: "Yes (growing)",
     verified: "May 2026",
     link: "https://www.alaskaair.com/content/travel-info/policies/pets-traveling-with-pets",
@@ -8467,7 +8470,7 @@ const DESTINATIONS = [
       {
         title: "The Abu Dhabi back door — Etihad cabin (this is THE route)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Etihad is the only airline accepting cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. Combined pet + carrier max 8 kg (17.6 lb). Carrier max 40 × 40 × 22 cm under-seat (or 50 × 43 × 50 cm if you buy the adjacent seat). All other UAE requirements still apply (MOCCAE permit, microchip, rabies, etc.). Abu Dhabi to Dubai is a 90-minute drive — taxis are easy, around AED 250. Note: Etihad cabin is NOT allowed on USA, UK, Australia or Hong Kong routes.",
+        body: "Etihad is the only airline accepting cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. Combined pet + carrier max 8 kg (17.6 lb). Carrier max 40 × 40 × 22 cm under-seat (or 50 × 43 × 50 cm if you buy the adjacent seat). All other UAE requirements still apply (MOCCAE permit, microchip, rabies, etc.). Abu Dhabi to Dubai is a 90-minute drive — taxis are easy, around AED 250. Direction note: Etihad cabin pets are allowed OUT of the UK (LHR/MAN) and OUT of the US to AUH, but NOT cabin INTO the UK or USA from AUH — Etihad's restrictions block the inbound direction only. Australia and Hong Kong are cabin-banned both ways.",
         cost: ETIHAD_PROMO_COST_DETAIL,
       },
       {

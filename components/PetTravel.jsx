@@ -84,7 +84,7 @@ function isTransitLeg(legRoute) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "20 May 2026";
+const LAST_UPDATED = "21 May 2026";
 
 // ---------- DATA ----------
 
@@ -3121,8 +3121,11 @@ const FALLBACK_STRATEGIES = {
         note = "Direct cabin routes exist on LATAM (where not suspended), Avianca, or Copa via Panama. Verify current LATAM US suspension status before booking.";
       }
     } else if (isToEurope) {
-      legs = [{ route: `${o} → Madrid (MAD) or Paris (CDG) or Frankfurt (FRA)`, time: "11-14h", airline: "Iberia, LATAM, Air France, Lufthansa, or Avianca ✓ Cabin" }];
-      note = "South America → Europe is well-served in cabin. Madrid (Iberia, LATAM, Avianca), Paris (Air France), Frankfurt (Lufthansa, LATAM) and Amsterdam (KLM) all run direct cabin pet routes. EU Health Certificate required (issued by accredited vet, valid 10 days).";
+      legs = [
+        { route: `${o} → Madrid (MAD), Paris (CDG), or Frankfurt (FRA)`, time: "11-14h", airline: "Iberia, LATAM, Air France, Lufthansa, or Avianca ✓ Cabin" },
+        { route: `Hub → ${d}`, time: "1-3h", airline: "Same carrier's intra-EU cabin network — Iberia / Air France / KLM / Lufthansa ✓ Cabin" },
+      ];
+      note = "South America → Europe is well-served in cabin to the major EU hubs (Madrid on Iberia/LATAM/Avianca, Paris on Air France, Frankfurt on Lufthansa/LATAM, Amsterdam on KLM). From there, the same carrier's intra-EU network gets you to your final destination — e.g. Iberia Madrid→Dublin, KLM Amsterdam→Dublin, Air France/Lufthansa intra-EU. Book on a single carrier or alliance where possible so the pet booking carries through. EU Health Certificate required (issued by accredited vet, valid 10 days).";
     } else {
       legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM, Avianca, or Copa via Panama ✓ Cabin" }];
       note = "Leaving South America for the Americas or Europe is cabin-friendly. For Asia: cargo only — no commercial cabin pet routes from South America to Asia.";
@@ -11817,6 +11820,11 @@ function JourneyPlanner() {
                             <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
                             <span className="font-serif text-base text-stone-100">{g.to}</span>
                             <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                            {g.routes[0]._splitAirline && (
+                              <span className="text-xs uppercase tracking-widest text-amber-300 ml-2 px-2 py-0.5 bg-amber-950/60 border border-amber-700/50 rounded-sm">
+                                via {g.routes[0]._splitAirline.name}
+                              </span>
+                            )}
                             {isSelected && (
                               <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
                                 <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
@@ -11883,7 +11891,9 @@ function JourneyPlanner() {
                                       </div>
                                     </div>
                                   </div>
-                                  <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                                  {!g.routes[0]._splitAirline && (
+                                    <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
+                                  )}
                                   {/* Carrier specs block — surfaces weight / dims / fee /
                                       link from AIRLINES[] for ALL carriers mentioned in
                                       the route note. Same lookup pattern used elsewhere
@@ -12163,6 +12173,11 @@ function JourneyPlanner() {
                                 <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
                                 <span className="font-serif text-base text-stone-100">{g.to}</span>
                                 <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
+                                {g.routes[0]._splitAirline && (
+                                  <span className="text-xs uppercase tracking-widest text-amber-300 ml-2 px-2 py-0.5 bg-amber-950/60 border border-amber-700/50 rounded-sm">
+                                    via {g.routes[0]._splitAirline.name}
+                                  </span>
+                                )}
                                 {isSelected && (
                                   <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
                                     <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected

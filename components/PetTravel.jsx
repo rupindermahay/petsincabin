@@ -5318,20 +5318,22 @@ function timelineBucket(sectionTitle) {
   const t = (sectionTitle || "").toLowerCase();
 
   // Order is "weeks/months before" → smaller number = further out in time.
-  // We pick the most specific match first.
+  // We pick the most specific match first. Labels include the most-asked
+  // timing windows (10-day cert, 24–120hr tapeworm) so the reader sees the
+  // binding constraints without hunting in the items.
   if (t.includes("6 months") || t.includes("5+ months") || t.includes("4+ months")) return { order: 0, label: "5–6 months before" };
   if (t.includes("3 months") || t.includes("2 months")) return { order: 5, label: "2–3 months before" };
-  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before" };
-  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "4 weeks before" };
-  if (t.includes("2 weeks") || t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "1–2 weeks before" };
+  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before — vet, microchip, rabies" };
+  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "2–4 weeks before — carrier, bookings, paperwork prep" };
+  if (t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "10 days before — health certificate signed" };
+  if (t.includes("2 weeks")) return { order: 30, label: "10 days before — health certificate signed" };
+  if (t.includes("24") && t.includes("120")) return { order: 40, label: "24–120 hours before arrival — tapeworm (dogs only, UK/IE/NO/FI/MT)" };
   if (t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
 
-  // Generic guidance, "first — understand", "if you're flying with a cat" etc.
-  // Stuff that doesn't have a clear timing — bucket as "good to know".
-  if (t.includes("first") || t.includes("understand") || t.includes("flying with a")) return { order: -10, label: "Good to know" };
-
-  // Anything else gets a safe middle bucket.
-  return { order: 25, label: "Anytime / general prep" };
+  // Non-time-bound general guidance and "if you're flying with a..." sections.
+  // Single bucket so the document doesn't end up with both "Good to know" and
+  // "Anytime / general prep" — they're the same thing functionally.
+  return { order: -10, label: "Anytime / general prep" };
 }
 
 // Normalise an item string for duplicate detection across the two countries.
@@ -5415,8 +5417,33 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originId = REGION_TO_CHECKLIST_ID[originRegion];
   const destId = REGION_TO_CHECKLIST_ID[destRegion];
 
-  const originChecklist = originId ? getChecklist(originId, "departing") : null;
-  const destChecklist = destId ? getChecklist(destId, "arriving") : null;
+  // Resolve the directional (departing/arriving) checklist AND the base
+  // checklist for each side. Some directional checklists (notably UK
+  // arriving) hold entry-option content that's all "Anytime / general prep"
+  // — they tell you WHAT routes work, not WHEN to do each step. Merging
+  // the base CHECKLIST_DATA on top gives us BOTH the entry options AND
+  // the time-bound paperwork timeline (6 weeks → 10 days → 24-120hrs →
+  // travel day). Without this merge, "Entering the UK" emits the options
+  // into Anytime/general prep at the top, then leaves the actual chapter
+  // empty.
+  const mergeChecklists = (directional, base) => {
+    if (!directional && !base) return null;
+    if (!directional) return base;
+    if (!base) return directional;
+    return {
+      ...directional,
+      sections: [...directional.sections, ...base.sections],
+    };
+  };
+  const originDirectional = originId ? getChecklist(originId, "departing") : null;
+  const originBase = originId ? (CHECKLIST_DATA[originId] || null) : null;
+  const destDirectional = destId ? getChecklist(destId, "arriving") : null;
+  const destBase = destId ? (CHECKLIST_DATA[destId] || null) : null;
+  // Only merge if the two are actually different objects (directional may
+  // fall back to base when no directional variant exists, in which case
+  // merging would duplicate every section).
+  const originChecklist = originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase);
+  const destChecklist = destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase);
   const generic = CHECKLIST_DATA.generic;
 
   // Resolve airlines from the route's legs so we can flag the carrier-size
@@ -5495,8 +5522,51 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originSections = buildChapter(originWithGeneric, "origin");
   const destSections = buildChapter(destChecklist, "destination");
 
-  // Assemble: chapter divider, origin sections, chapter divider, destination sections, tips.
+  // Anytime/general prep — pull from BOTH chapters and merge into ONE top
+  // section. Otherwise the document ends up with "Anytime / general prep"
+  // appearing twice (once after Leaving X, once after Entering Y), which
+  // is repetitive and confusing. Time-bound buckets stay in their chapter.
+  const ANYTIME_ORDER = -10;
+  const anytimeItems = [];
+  const anytimeKeys = new Set();
+  const collectAnytime = (chapterSections) => {
+    chapterSections.forEach((bucket) => {
+      if (bucket.label !== "Anytime / general prep") return;
+      bucket.items.forEach((it) => {
+        const k = normalizeItem(it);
+        if (anytimeKeys.has(k)) return;
+        anytimeKeys.add(k);
+        anytimeItems.push(it);
+      });
+    });
+  };
+  collectAnytime(originSections);
+  collectAnytime(destSections);
+
+  // Strip the Anytime bucket from the per-chapter section lists so it isn't
+  // emitted again under the chapter dividers.
+  const stripAnytime = (chapterSections) =>
+    chapterSections.filter((bucket) => bucket.label !== "Anytime / general prep");
+  const originTimed = stripAnytime(originSections);
+  const destTimed = stripAnytime(destSections);
+
+  // Assemble: anytime block at top, carriers, origin chapter, transit, destination chapter, tips.
   const sections = [];
+
+  // ANYTIME / GENERAL PREP — at the very top. Non-time-bound advice that
+  // applies regardless of when in the timeline you read it: species tips,
+  // booking notes, carrier acclimation. One section, not two.
+  if (anytimeItems.length > 0) {
+    sections.push({
+      title: "Anytime / general prep",
+      divider: true,
+      items: [`Read these first. They apply throughout the trip, not on a specific date.`],
+    });
+    sections.push({
+      title: "General prep",
+      items: anytimeItems,
+    });
+  }
 
   // CARRIERS chapter — at the TOP because the carrier dimensions are
   // airline-specific and you need to know them BEFORE you buy a carrier.
@@ -5532,24 +5602,22 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
   }
 
-  // Origin chapter header.
-  sections.push({
-    title: `Leaving ${originLabel}`,
-    divider: true,
-    items: [`Everything to do before you fly out of ${originLabel} — earliest prep first.`],
-  });
-  originSections.forEach((s) => {
-    if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
-  });
+  // Origin chapter — time-bound items only (anytime already pulled out).
+  if (originTimed.length > 0) {
+    sections.push({
+      title: `Leaving ${originLabel}`,
+      divider: true,
+      items: [`Time-bound steps for departure — earliest prep first.`],
+    });
+    originTimed.forEach((s) => {
+      if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
+    });
+  }
 
   // Transit chapters — one per region the pet legally enters between origin
   // and destination. Each is briefer than a full arrival chapter (transit-only
   // essentials). Filtered to exclude origin and destination themselves, and
   // de-duplicated so the same transit region only appears once.
-  //
-  // We pass the route's legs into getTransitNotes so it can tailor the chapter
-  // to the SPECIFIC transit country (e.g. "France (Paris)" vs generic "Europe")
-  // and surface country-specific gotchas (breed bans, tapeworm requirements).
   const seenTransits = new Set([originRegion, destRegion]);
   const transitChapters = [];
   for (const tr of transitRegions) {
@@ -5557,7 +5625,6 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     seenTransits.add(tr);
     const notes = getTransitNotes(tr, originRegion, legs);
     if (!notes) continue;
-    // notes is now an object: { label, items }
     transitChapters.push({
       region: tr,
       label: notes.label || (ROUTE_FACTS[tr] ? ROUTE_FACTS[tr].name : tr),
@@ -5576,20 +5643,37 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
   });
 
-  // Destination chapter header.
-  if (destSections.length > 0 || destChecklist) {
+  // Destination chapter — time-bound items only. Subhead names the actual
+  // headline rules (paperwork + any binding constraint) so the reader knows
+  // WHAT'S inside, not just THAT this is the destination chapter.
+  if (destTimed.length > 0 || destChecklist) {
+    const destFact = ROUTE_FACTS[destRegion];
+    const destSubhead = (() => {
+      if (destRegion === "uk-out") return `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
+      if (destRegion === "ireland") return `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
+      if (destFact && destFact.cdcHighRisk) return `Entry requirements — note ${destFact.name} is on the CDC high-risk rabies list, which adds paperwork.`;
+      if (destRegion === "japan") return `The strict 180-day rabies titer rule, AQS advance notification, and entry paperwork.`;
+      if (destRegion === "hawaii") return `Direct Airport Release programme, FAVN titer, and arrival paperwork.`;
+      if (destRegion === "us") return `CDC Dog Import Form, microchip, and entry paperwork.`;
+      if (destRegion === "europe") return `Microchip-first ordering, rabies ≥21 days, and EU Health Certificate.`;
+      return `Entry requirements and paperwork for ${destLabel}.`;
+    })();
     sections.push({
       title: `Entering ${destLabel}`,
       divider: true,
-      items: [`The rules that kick in once you arrive in ${destLabel}.`],
+      items: [destSubhead],
     });
-    destSections.forEach((s) => {
+    destTimed.forEach((s) => {
       if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
     });
   }
 
   // Tips — at the very end, clearly labelled as optional comfort suggestions.
-  if (tips.size > 0) {
+  // Filter against the Anytime block so any tip that already appears in
+  // "General prep" doesn't also appear in "Tips" — the user shouldn't see
+  // the same item twice with two different framings.
+  const dedupedTips = [...tips].filter((tip) => !anytimeKeys.has(normalizeItem(tip)));
+  if (dedupedTips.length > 0) {
     sections.push({
       title: "Travel-day tips & comfort suggestions",
       divider: true,
@@ -5597,7 +5681,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
     sections.push({
       title: "Tips",
-      items: [...tips],
+      items: dedupedTips,
     });
   }
 
@@ -9352,7 +9436,7 @@ function ChecklistDownload() {
   const [mode, setMode] = useState("route"); // "route" or "country"
   const [route, setRoute] = useState("generic");
   const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
-  const [petType, setPetType] = useState("both"); // "dog" | "cat" | "both" — filters items
+  const [petType, setPetType] = useState(null); // "dog" | "cat" | "both" | null — null forces user to pick
   // Route mode: airport-level origin + destination (codes)
   const [originCode, setOriginCode] = useState("");
   const [destCode, setDestCode] = useState("");
@@ -9404,9 +9488,13 @@ function ChecklistDownload() {
     }
   }, [mode, originCode, destCode, effectiveDirection]);
 
-  // The checklist data shown depends on the mode.
+  // The checklist data shown depends on the mode. We don't compute it until
+  // the user has picked a pet type (dog/cat/both) — there's no sensible
+  // default, and forcing a pick keeps the filter honest.
   let data;
-  if (mode === "route") {
+  if (!petType) {
+    data = null;
+  } else if (mode === "route") {
     if (originAirport && destAirport) {
       data = buildRouteChecklist(
         originAirport.region,
@@ -9477,10 +9565,13 @@ function ChecklistDownload() {
       </div>
 
       {/* Pet-type chip — filters the checklist items to dog-only, cat-only,
-          or both. "Both" is the default so first-time users see the full
-          list; selecting dog or cat trims sections + items that don't apply. */}
+          or both. No default — the user must pick so the filter is honest
+          (the wrong default would mean someone with a cat sees dog-specific
+          content they don't need, and vice versa). */}
       <div className="mb-6">
-        <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">Flying with</div>
+        <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">
+          Flying with{!petType && <span className="ml-2 normal-case tracking-normal text-amber-400 italic">— pick one to start</span>}
+        </div>
         <div className="inline-flex border border-stone-700 bg-stone-800">
           <button
             onClick={() => setPetType("dog")}
@@ -9575,17 +9666,6 @@ function ChecklistDownload() {
               explains the deadlines and the prepaid return label so it doesn't catch you out.
             </div>
           )}
-
-          <div className="flex justify-end">
-            <button
-              onClick={openPrintable}
-              disabled={!data}
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
-            >
-              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       ) : (
         <div className="space-y-4">
@@ -9671,17 +9751,6 @@ function ChecklistDownload() {
             </div>
           )}
 
-          <div className="flex justify-end">
-            <button
-              onClick={openPrintable}
-              disabled={!data}
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
-            >
-              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
           {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
             <div className="mt-1 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
               <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
@@ -9722,6 +9791,22 @@ function ChecklistDownload() {
           <a href="#planner" className="text-amber-300 underline decoration-amber-500/50 underline-offset-2 hover:text-amber-200">Run this trip through the journey planner</a> — it builds a full plan with everything in one place.
         </div>
       )}
+
+      {/* OPEN & PRINT — the panel's primary action, kept at the very bottom
+          so the read order is: pick filters → see contextual notes → see
+          tapeworm calc if applicable → see journey-planner upsell → print.
+          A mid-panel placement made the button look orphaned between info
+          boxes. */}
+      <div className="mt-6 flex justify-end">
+        <button
+          onClick={openPrintable}
+          disabled={!data}
+          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
+        >
+          <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 }

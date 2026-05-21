@@ -3039,8 +3039,8 @@ const FALLBACK_STRATEGIES = {
       importNote = "Chile: ISO microchip + rabies 30+ days + SAG pre-arranged import permit (apply 30+ days ahead) + USDA-endorsed health certificate.";
     } else if (dLower.includes("lima") || dLower.includes("lim")) {
       if (isFromUS) {
-        legs = [{ route: `${o} → Lima (LIM)`, time: "6-8h", airline: "LATAM or Avianca via Bogotá ✓ Cabin" }];
-        hubDescription = "LATAM direct from MIA (cabin reliable). Avianca cabin via Bogotá from JFK/LAX is the alternative. Copa via Panama also works.";
+        legs = [{ route: `${o} → Lima (LIM)`, time: "6-8h", airline: "LATAM ✓ Cabin (under 7 kg, where not suspended)" }];
+        hubDescription = "LATAM direct from MIA is the cabin route. Avianca via Bogotá (BOG) and Copa via Panama (PTY) are the workaround options when LATAM isn't bookable — those would be 2-leg journeys, not direct.";
       } else if (isFromEurope) {
         legs = [
           { route: `${o} → Madrid (MAD)`, time: "varies", airline: "Iberia, Air France, KLM, Lufthansa ✓ Cabin (under 8 kg)" },
@@ -3074,8 +3074,8 @@ const FALLBACK_STRATEGIES = {
       }
       importNote = "Uruguay: ISO microchip + rabies 30+ days + MGAP health certificate (USDA-endorsed for US origin). No quarantine.";
     } else {
-      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM (7 kg), Avianca (10 kg), or Copa via Panama (10 kg) ✓ Cabin" }];
-      hubDescription = "From the US: LATAM direct (where not suspended), Copa via PTY, or Avianca via BOG. From Europe: Iberia, Air France, KLM, Lufthansa cabin to major SA hubs.";
+      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM (7 kg) or Avianca (10 kg) ✓ Cabin (direct where the route is served)" }];
+      hubDescription = "LATAM is the most-served South American cabin carrier (where US routes aren't suspended). Avianca direct serves Bogotá-region routes. Copa via Panama City (PTY) is the cabin workaround for routes neither LATAM nor Avianca flies direct — that would be a 2-leg journey, not direct.";
       importNote = "Each South American country has its own paperwork. Brazil is the most lenient; Argentina, Chile, Peru, Uruguay all need ISO microchips and 30+ day rabies waits.";
     }
     return {
@@ -3117,8 +3117,8 @@ const FALLBACK_STRATEGIES = {
         ];
         note = "Copa Airlines via Panama City is the cabin workaround for southern South America to the US. Single Copa itinerary end-to-end. Standard US re-entry paperwork.";
       } else {
-        legs = [{ route: `${o} → ${d}`, time: "varies", airline: "LATAM, Avianca, or Copa via PTY ✓ Cabin" }];
-        note = "Direct cabin routes exist on LATAM (where not suspended), Avianca, or Copa via Panama. Verify current LATAM US suspension status before booking.";
+        legs = [{ route: `${o} → ${d}`, time: "varies", airline: "LATAM (7 kg) or Avianca (10 kg) ✓ Cabin (direct where the route is served)" }];
+        note = "Direct cabin routes exist on LATAM (where not suspended) or Avianca to US gateways. Copa via Panama City (PTY) is the 2-leg cabin workaround when neither flies your origin→US pair direct. Verify current LATAM US suspension status before booking.";
       }
     } else if (isToEurope) {
       legs = [
@@ -3127,8 +3127,8 @@ const FALLBACK_STRATEGIES = {
       ];
       note = "South America → Europe is well-served in cabin to the major EU hubs (Madrid on Iberia/LATAM/Avianca, Paris on Air France, Frankfurt on Lufthansa/LATAM, Amsterdam on KLM). From there, the same carrier's intra-EU network gets you to your final destination — e.g. Iberia Madrid→Dublin, KLM Amsterdam→Dublin, Air France/Lufthansa intra-EU. Book on a single carrier or alliance where possible so the pet booking carries through. EU Health Certificate required (issued by accredited vet, valid 10 days).";
     } else {
-      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM, Avianca, or Copa via Panama ✓ Cabin" }];
-      note = "Leaving South America for the Americas or Europe is cabin-friendly. For Asia: cargo only — no commercial cabin pet routes from South America to Asia.";
+      legs = [{ route: `${o} → ${d}`, time: "varies — long-haul", airline: "LATAM (7 kg) or Avianca (10 kg) ✓ Cabin (direct where the route is served)" }];
+      note = "Leaving South America for the Americas or Europe is cabin-friendly on LATAM or Avianca where they fly direct. Copa via Panama City (PTY) is the 2-leg cabin workaround for routes neither serves direct. For Asia: cargo only — no commercial cabin pet routes from South America to Asia.";
     }
     return {
       legs,
@@ -3181,13 +3181,16 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Iberia, Air France, KLM ✓ Cabin (transatlantic). Aeromexico is published as 6-hour cabin pet max, but its own page examples Mexico City → Paris — confirm by phone before booking on Aeromexico." };
       note = "Iberia (Madrid), Air France (Paris), KLM (Amsterdam) are the safer cabin pet bets MEX → Europe — these are transatlantic specialists where cabin pets are standard. Aeromexico's published policy restricts cabin pets to flights under 6 hours, which would exclude transatlantic — but their own example page does mention Mexico City → Paris, so written confirmation is essential. EU Health Certificate (10 days) plus rabies 21+ days required.";
     } else if (dLower.includes("tokyo") || dLower.includes("nrt") || dLower.includes("hnd")) {
-      leg = { route: `${o} → ${d}`, time: "14h+", airline: "✗ No direct cabin option from Mexico. Position to US west coast first." };
-      note = "There is no direct cabin pet route MEX → Japan. Aeromexico's MEX-NRT route appears suspended as of Feb 2026, and even when operating, Aeromexico's published 6-hour cabin pet limit would exclude this route. Instead: fly Mexico → US west coast (LAX/SFO) on Aeromexico/Volaris/American with cabin pet, then United LAX/SFO → Tokyo (NRT/HND) direct. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
+      leg = [
+        { route: `${o} → Los Angeles (LAX) or San Francisco (SFO)`, time: "4-5h", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United ✓ Cabin" },
+        { route: `Los Angeles (LAX) or San Francisco (SFO) → ${d}`, time: "11-12h", airline: "United ✓ Cabin (no weight limit, pet under seat, $150)" },
+      ];
+      note = "There is no direct cabin pet route Mexico → Japan. Aeromexico's MEX-NRT route appears suspended as of Feb 2026, and Aeromexico's 6-hour cabin pet limit would exclude it anyway. The cabin workaround: Mexico → US west coast on Aeromexico/Volaris/American/Delta/United, then United LAX/SFO → Tokyo direct cabin. Two separate tickets, two pet bookings. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
     } else {
       leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin (within 6-hour rule)" };
       note = "Aeromexico has the broadest cabin pet network from Mexico for routes under 6 hours. For deeper South America, connect via Panama City on Copa. For Japan, position to US west coast then United.";
     }
-    return { legs: [leg], note };
+    return { legs: Array.isArray(leg) ? leg : [leg], note };
   },
   // Any destination = Japan
   "japan": (o, d) => {
@@ -3210,14 +3213,23 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${arrivalPort}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
       hub = "Korea ↔ Japan is one of the best cabin pet paths for Japan entry. Korean Air's max cabin weight is 7 kg, T'Way's is 9 kg.";
     } else if (isFromMexico) {
-      leg = { route: `${o} → Tokyo (HND/NRT)`, time: "16-18h via US", airline: "✗ No direct cabin route. Route via LAX/SFO on Aeromexico/Volaris (cabin), then United LAX/SFO → Tokyo (cabin direct)." };
-      hub = "There is no direct cabin pet route Mexico → Japan. Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and Aeromexico's 6-hour cabin pet limit would exclude this route anyway. Position to US west coast on Aeromexico cabin, then United LAX/SFO → Tokyo direct cabin (no weight limit, $150).";
+      leg = [
+        { route: `${o} → Los Angeles (LAX) or San Francisco (SFO)`, time: "4-5h", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United ✓ Cabin" },
+        { route: `Los Angeles (LAX) or San Francisco (SFO) → ${arrivalPort}`, time: "11-12h", airline: "United ✓ Cabin (no weight limit, pet under seat, $150)" },
+      ];
+      hub = "No direct cabin pet route Mexico → Japan exists. Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and Aeromexico's 6-hour cabin pet limit would exclude it anyway. The workaround: position to US west coast on Aeromexico or Volaris cabin, then United LAX/SFO → Japan direct cabin (no weight limit, $150). Two separate tickets, two pet bookings.";
     } else {
-      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN)" };
-      hub = "Route via Korea on Korean Air or via the US on United — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan.";
+      // Most international airlines are cargo-only into Japan. The cabin
+      // workaround for non-US, non-Korea, non-Mexico origins is via Seoul on
+      // Korean Air (the same airline runs both legs, so it's one ticket).
+      leg = [
+        { route: `${o} → Seoul Incheon (ICN)`, time: "varies — long-haul", airline: "Korean Air ✓ Cabin (under 7 kg). JAL, ANA, Lufthansa, BA, Air France, KLM are all cargo-only into Japan — Korean Air via Seoul is the cabin workaround." },
+        { route: `Seoul Incheon (ICN) → ${arrivalPort}`, time: "2-3h", airline: "Korean Air ✓ Cabin (under 7 kg)" },
+      ];
+      hub = "Route via Seoul on Korean Air — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan. Book end-to-end on a single Korean Air itinerary so the pet booking carries through both legs.";
     }
     return {
-      legs: [leg],
+      legs: Array.isArray(leg) ? leg : [leg],
       note: `${hub} The 180-day rabies-titer wait is the binding constraint — start preparation 7+ months before your arrival date. AQS Advance Notification must be submitted ≥40 days before arrival, FAVN titer ≥0.5 IU/ml, two rabies vaccines, ISO microchip implanted before the first vaccine. Get any of this wrong and your pet is detained up to 180 days at your expense.`,
     };
   },
@@ -3235,15 +3247,21 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), Air Premia ✓ Cabin" };
       note = "Japan → Korea is a short, well-served cabin route — and from Seoul you can connect onward on Korean Air's 30+ country cabin network.";
     } else if (isToMexico) {
-      leg = { route: `${o} → Mexico City (MEX)`, time: "16-18h via US", airline: "✗ No direct cabin. Route via US west coast on United (Japan→LAX/SFO cabin direct), then Aeromexico/Volaris LAX/SFO→MEX (cabin)." };
-      note = "Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and even if it resumes, Aeromexico's published 6-hour cabin pet limit would exclude this route. Route Japan → US west coast on United (cabin direct, no weight limit), then onward to Mexico City on Aeromexico or Volaris.";
+      leg = [
+        { route: `${o} → Los Angeles (LAX) or San Francisco (SFO)`, time: "10-12h", airline: "United ✓ Cabin (no weight limit, pet under seat, $150)" },
+        { route: `Los Angeles (LAX) or San Francisco (SFO) → Mexico City (MEX)`, time: "4-5h", airline: "Aeromexico (9 kg), Volaris (12 kg, no brachy), American, Delta, United ✓ Cabin" },
+      ];
+      note = "Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and Aeromexico's published 6-hour cabin pet limit would exclude this route anyway. The cabin workaround: Japan → US west coast on United (cabin direct, no weight limit), then onward to Mexico City on Aeromexico or Volaris. Two separate tickets, two pet bookings — book each leg individually.";
     } else {
-      // For UK, EU, other destinations — need a connection via Korea or US
-      leg = { route: `${o} → Seoul (ICN) → ${d}`, time: "varies", airline: "Leg 1: Korean Air ✓ Cabin (under 7 kg). Leg 2: Korean Air cabin connection (or other carrier)" };
-      note = "Direct cabin pets Japan → UK/EU don't exist (BA, Lufthansa, AF, KLM are all cargo-only out of Japan). The cabin workaround is via Seoul on Korean Air, then onward on Korean Air's cabin network to your destination.";
+      // For UK, EU, other destinations — connect via Seoul on Korean Air
+      leg = [
+        { route: `${o} → Seoul Incheon (ICN)`, time: "2-3h", airline: "Korean Air ✓ Cabin (under 7 kg)" },
+        { route: `Seoul Incheon (ICN) → ${d}`, time: "varies — long-haul", airline: "Korean Air ✓ Cabin (under 7 kg) — Korean Air's intra-Asia and longhaul network reaches 30+ countries in cabin" },
+      ];
+      note = "Direct cabin pets Japan → UK/EU don't exist (BA, Lufthansa, Air France, KLM are all cargo-only out of Japan). The cabin workaround is via Seoul on Korean Air, then onward on Korean Air's cabin network. Book end-to-end on a single Korean Air itinerary so the pet booking carries through.";
     }
     return {
-      legs: [leg],
+      legs: Array.isArray(leg) ? leg : [leg],
       note: `${note} Leaving Japan: apply for AQS export inspection at least 2 weeks before flight. Export Quarantine Certificate is valid 180 days.`,
     };
   },

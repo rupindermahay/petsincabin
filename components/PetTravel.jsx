@@ -3162,7 +3162,7 @@ const CHECKLIST_DATA = {
         title: "6 weeks before",
         items: [
           "ISO 11784/11785 microchip implanted (if not already)",
-          "Rabies vaccination (must be ≥21 days before entry to UK)",
+          "Current rabies vaccine — for UK entry the rule is ≥21 days old; other destinations have their own minimum wait (commonly 21–30 days). Check the destination chapter for its specific rule.",
           "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet — required for EU destinations (this is the GOVERNMENT export document — see the note above on how it differs from the airline's fit-to-fly)",
           "If outbound to a NON-EU country (Canada, USA, UAE, etc.): you do NOT need the GB AHC. Instead, you need (a) your airline's required 'fit to fly' certificate, (b) any destination country paperwork (e.g. <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> for USA), and (c) for some destinations a <a href=\"https://www.gov.uk/export-health-certificates\" target=\"_blank\" rel=\"noopener noreferrer\">DEFRA Export Health Certificate</a> — start the application early as it's processed by an OV (Official Veterinarian)",
           "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
@@ -4110,6 +4110,110 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  // South Korea — verified against APQA (Animal and Plant Quarantine Agency)
+  // and QIA. Two cases: from rabies-free origin (UK, JP, AUS, NZ, Germany,
+  // France, Spain etc.) skip the titer; from non-rabies-free (US, Canada,
+  // most of Latin America, India etc.) requires RNATT but with NO post-titer
+  // waiting period (unlike Japan's 180-day rule). Minimum process ~45 days
+  // from microchip if starting fresh from a non-rabies-free origin.
+  korea: {
+    title: "South Korea entry / exit checklist",
+    sections: [
+      {
+        title: "6 weeks before",
+        items: [
+          "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies vaccine, or the vaccine record is invalid for Korea entry",
+          "Confirm whether your origin is on Korea's rabies-free list (UK, Japan, Australia, NZ, Germany, France, Spain, Ireland — and other APQA-recognised countries) or not. The paperwork differs.",
+          "Rabies vaccination — must be administered when the pet is ≥90 days old, ≥30 days before entry, and ≤12 months old. Inactivated (killed) vaccine required.",
+          "If from a NON-rabies-free origin (USA, Canada, most of Latin America, India): book the rabies antibody titer (RNATT) — blood draw must be ≥30 days after the rabies vaccine. Result ≥0.5 IU/mL from a WOAH-approved lab. No post-titer waiting period required — pet can travel as soon as the result is in hand.",
+          "Book your cabin pet space with the airline by phone — Korean Air, Asiana, T'Way are the main Korea hub options",
+        ],
+      },
+      {
+        title: "10 days before",
+        items: [
+          "Government-endorsed health certificate from your origin country — USDA APHIS endorsement (US), CFIA (Canada), competent authority in EU member states. Must list the microchip number and the titer result (if required).",
+          "Documents must match: pet's age, microchip number, vaccine record and titer details consistent across every paper. Mismatches can mean owner-paid quarantine or refused entry.",
+          "Internal and external parasite treatment recorded by the vet (usually within 48 hours of departure per Korean requirements)",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring originals of all certificates (not photocopies) — microchip record, rabies record, titer result if required, government-endorsed health certificate",
+          "If inbound to Korea: pets are released same-day at Incheon (ICN) if paperwork is complete; expect ~1–2 hours at the animal quarantine office",
+          "Pets without a valid titer (when one was required) face quarantine at owner's expense",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Same paperwork as dogs — microchip, rabies, titer (if from non-rabies-free origin), endorsed health certificate",
+          "Cats from Malaysia need an additional Nipah-free certificate; cats from Australia need a Hendra-virus certificate. Most other origins: standard paperwork.",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Korea's competent authority is APQA / QIA. Current requirements: <a href=\"https://www.qia.go.kr/english/html/Animal_livestock/02animal_livestock_03.html\" target=\"_blank\" rel=\"noopener noreferrer\">qia.go.kr · pet import</a>. For US travellers, USDA also lists the Korea-specific health certificate at <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov</a>.",
+        ],
+      },
+    ],
+  },
+  // Russia — verified against Rosselkhoznadzor and Russian airport vet
+  // inspection desks (Vnukovo, Tolmachevo). Up to 2 pets per person allowed
+  // without an import permit; 3+ requires a Rosselkhoznadzor permit. Post-
+  // 2022 airspace closures limit cabin routing to Aeroflot via SVO and a
+  // handful of Middle Eastern carriers.
+  russia: {
+    title: "Russia entry / exit checklist",
+    sections: [
+      {
+        title: "6 weeks before",
+        items: [
+          "ISO microchip implanted (if not already) — microchip number must be recorded in the international pet passport AND on the veterinary certificate",
+          "Rabies vaccination — must be ≥30 days old at entry and ≤12 months old. International pet passport must record it.",
+          "If travelling with 3 or more pets: apply for an import permit from Rosselkhoznadzor (the Federal Service for Veterinary and Phytosanitary Surveillance). Up to 2 pets per person needs no permit.",
+          "Book cabin pet space directly with the airline — Aeroflot via Moscow Sheremetyevo (SVO) is the main cabin option since 2022 airspace closures; cabin allowed under 8 kg with adjacent-seat 15 kg option",
+        ],
+      },
+      {
+        title: "5 days before — for export FROM Russia",
+        items: [
+          "If exporting OUT of Russia: obtain Russian Veterinary Certificate Form No. 1 from the State Veterinary Service within 5 days of departure. At the airport border control, Rosselkhoznadzor exchanges this for international Form No. 5a (free).",
+          "If exporting OUT of Russia to the EU: the destination country's own health certificate is also required",
+        ],
+      },
+      {
+        title: "Within 5 days of entering Russia",
+        items: [
+          "Health certificate or international pet passport showing a clinical examination by an official veterinarian within 5 days of travel (some Russian carriers and airports accept up to 14 days — confirm with the specific airline)",
+          "At the Russian border control, Rosselkhoznadzor reissues the foreign veterinary certificate to Russian Form No. 6.1 (or a similar import form depending on the entry point)",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Bring originals (not photocopies) of microchip record, rabies vaccine record, and international pet passport",
+          "If outbound from Russia with EU destination: bring the destination's health certificate alongside the Russian export documentation",
+          "Sanctions and limited flight routing: many Western airlines do not operate to/from Russia. Confirm cabin pet acceptance on the specific airline before booking — some Aeroflot, Etihad, Turkish, Emirates routes via Moscow remain viable.",
+        ],
+      },
+      {
+        title: "If you're flying with a cat",
+        items: [
+          "Same paperwork as dogs — microchip, rabies, vet exam, international pet passport or Form No. 1 / No. 5a",
+          "Some breeds restricted: wolf hybrids, Savannah and Bengal cats less than 5 generations from the wild are not permitted under standard rules",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Russia's competent authority is Rosselkhoznadzor (the Federal Service for Veterinary and Phytosanitary Surveillance). Site is in Russian; use translation. For US travellers, USDA APHIS publishes the Russia-specific health certificate at <a href=\"https://www.aphis.usda.gov/pet-travel/us-to-another-country-export/pet-travel-us-russian-federation\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel Russia</a>.",
+        ],
+      },
+    ],
+  },
 };
 
 // For routes where direction (departing vs arriving) genuinely changes the checklist content,
@@ -4988,8 +5092,8 @@ const REGION_TO_CHECKLIST_ID = {
   "south-america": "south_america",
   "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
   "japan": "japan",
-  "korea": null,            // No dedicated checklist yet — Korean Air carriage rules + standard rabies paperwork; uses generic
-  "russia": null,           // Sanctions complexity — uses generic + Russia note
+  "korea": "korea",         // Verified APQA / QIA paperwork added in this build
+  "russia": "russia",       // Verified Rosselkhoznadzor paperwork added in this build
 };
 
 // ----- Item-level classification helpers for the merged route checklist -----
@@ -5315,6 +5419,39 @@ function petAppliesTo(itemText, sectionTitle) {
   return "both";
 }
 
+// Filter "If outbound from X" / "If inbound to X" items by chapter side.
+// Returns true if the item is relevant to the chapter being built, false to
+// drop it. Items without a direction conditional are always relevant.
+//
+// Logic:
+//   "If outbound from X" / "If outbound to ..."  → only relevant in the
+//     LEAVING (origin) chapter — that's where the pet is departing.
+//   "If inbound to X" / "If arriving in X"  → only relevant in the
+//     ENTERING (destination) chapter — that's where the pet is arriving.
+//   "If going to non-EU" / "If destination is ..."  → these are about the
+//     destination, so only relevant in the LEAVING chapter (the user reads
+//     "if going to" while preparing to depart).
+function isRelevantConditional(itemText, side) {
+  const t = (itemText || "").toLowerCase();
+  // Patterns starting with "If outbound" — outbound is a departure
+  // statement, only relevant when reading the Leaving chapter.
+  if (t.startsWith("if outbound")) {
+    return side === "origin";
+  }
+  // Patterns starting with "If inbound to X" / "If arriving" — these
+  // describe arrival rules, only relevant in the Entering chapter.
+  if (t.startsWith("if inbound") || t.startsWith("if arriving")) {
+    return side === "destination";
+  }
+  // "If going to ..." and "If destination is ..." — directional advice
+  // read at the origin side while planning the trip.
+  if (t.startsWith("if going to") || t.startsWith("if destination") || t.startsWith("if your destination")) {
+    return side === "origin";
+  }
+  // Default: not a directional conditional — keep it.
+  return true;
+}
+
 // Map a section title to a chronological bucket. Earlier prep first.
 // Returns { order, label } so we can sort and re-label consistently.
 function timelineBucket(sectionTitle) {
@@ -5503,6 +5640,14 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
         // Pet-type filter.
         if (petType === "dog" && applies === "cat") return;
         if (petType === "cat" && applies === "dog") return;
+
+        // Directional conditional filter. Many checklist items are written
+        // as "If outbound from X: ..." or "If inbound to X: ..." because the
+        // base CHECKLIST_DATA serves both country-mode departing AND arriving
+        // views. In a route checklist, the direction is fixed — so an item
+        // tagged "outbound from UK" should only appear in the LEAVING UK
+        // chapter, never in ENTERING UK, and vice versa.
+        if (!isRelevantConditional(text, side)) return;
 
         // Tip? Demote out of the timeline into the tips box.
         if (isTip(text)) { tips.add(text); return; }

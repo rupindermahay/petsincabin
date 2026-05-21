@@ -3722,6 +3722,7 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "8+ weeks before",
+        direction: "arrival",
         items: [
           "ISO 15-digit microchip implanted FIRST",
           "Rabies vaccine: primary doses need at least 30 days before entry; max 10 months for 1-year vaccine or 34 months for 3-year vaccine",
@@ -3968,6 +3969,7 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
+        direction: "arrival",
         items: [
           "Bring ALL originals: Form AC with USDA endorsement, original titer test result, vaccination records, microchip certificate, AQS Approval of Import Inspection, passport.",
           "Book flights to arrive in Japan BEFORE 5 PM — pets arriving after 5 PM cannot be released from their crate until customs reopens the next day.",
@@ -4152,7 +4154,6 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6 weeks before",
-        direction: "arrival",
         items: [
           "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies vaccine, or the vaccine record is invalid for Korea entry",
           "Confirm whether your origin is on Korea's rabies-free list (UK, Japan, Australia, NZ, Germany, France, Spain, Ireland — and other APQA-recognised countries) or not. The paperwork differs.",
@@ -4163,7 +4164,6 @@ const CHECKLIST_DATA = {
       },
       {
         title: "10 days before",
-        direction: "arrival",
         items: [
           "Government-endorsed health certificate from your origin country — USDA APHIS endorsement (US), CFIA (Canada), competent authority in EU member states. Must list the microchip number and the titer result (if required).",
           "Documents must match: pet's age, microchip number, vaccine record and titer details consistent across every paper. Mismatches can mean owner-paid quarantine or refused entry.",
@@ -4172,7 +4172,6 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
-        direction: "arrival",
         items: [
           "Bring originals of all certificates (not photocopies) — microchip record, rabies record, titer result if required, government-endorsed health certificate",
           "If inbound to Korea: pets are released same-day at Incheon (ICN) if paperwork is complete; expect ~1–2 hours at the animal quarantine office",
@@ -4260,7 +4259,6 @@ const CHECKLIST_DATA = {
     sections: [
       {
         title: "6 weeks before",
-        direction: "arrival",
         items: [
           "ISO 11784/11785 microchip implanted (if not already) — recommended for Panama entry, required by most airlines flying into Panama, AND required if you'll return to the US",
           "Rabies vaccination — must be administered ≥30 days before entry (no wait needed for boosters kept current). Vaccine must be administered AFTER the microchip.",
@@ -4270,14 +4268,12 @@ const CHECKLIST_DATA = {
       },
       {
         title: "30 days before",
-        direction: "arrival",
         items: [
           "Internal and external parasite treatment by your vet — required by Panama, must be recorded on the health certificate",
         ],
       },
       {
         title: "10 days before",
-        direction: "arrival",
         items: [
           "International health certificate from a government-accredited vet (USDA-accredited if from the US; equivalent in other origin countries). Form must list microchip number, rabies vaccine date, parasite treatment dates.",
           "USDA APHIS endorsement (US only) — same-day in many states via VEHCS, mail-in in others. The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> covers timing and the return label.",
@@ -4286,10 +4282,9 @@ const CHECKLIST_DATA = {
       },
       {
         title: "Travel day",
-        direction: "arrival",
         items: [
           "Bring originals (not photocopies) of all paperwork — microchip record, rabies certificate, parasite treatment record, government-endorsed health certificate",
-          "On arrival at Tocumen International (PTY): a MIDA veterinarian inspects the pet and paperwork. No mandatory quarantine if all documents are in order.",
+          "If inbound to Panama: a MIDA veterinarian inspects the pet and paperwork at Tocumen International (PTY). No mandatory quarantine if all documents are in order.",
         ],
       },
       {
@@ -5093,6 +5088,7 @@ const DIRECTIONAL_CHECKLISTS = {
       sections: [
         {
           title: "8+ weeks before",
+          direction: "arrival",
           items: [
             "ISO 15-digit microchip implanted FIRST",
             "Rabies vaccine: primary doses need at least 30 days before entry; max 10 months for 1-year vaccine or 34 months for 3-year vaccine",
@@ -12248,6 +12244,18 @@ const WORKAROUND_ROUTES = [
     fees: "Airline fee + £25–£60 Eurotunnel",
     bestFor: "Returning to UK from anywhere — UK doesn't allow cabin entry, but Eurotunnel does. Pet stays with you the whole way.",
     weight: "No weight limit on Eurotunnel — any size dog",
+    accent: "rose",
+  },
+  {
+    title: "Amsterdam → UK via DFDS ferry (the foot-passenger route)",
+    summary: "Cabin into Amsterdam, then overnight ferry to Newcastle",
+    legs: [
+      { from: "🇺🇸 / 🇮🇳", to: "🇳🇱 AMS", duration: "Varies", airline: "KLM / Delta", note: "Cabin" },
+      { from: "🇳🇱 IJmuiden", to: "🇬🇧 Newcastle", duration: "16h overnight", airline: "DFDS ferry", note: "Pet in private cabin / kennel" },
+    ],
+    fees: "Airline fee + ~£30 per pet each way (cabin/kennel)",
+    bestFor: "Anyone heading to Scotland or northern England — no Channel drive, foot passengers welcome with pets, pet stays with you on the boat. Book pet-friendly cabin early (limited).",
+    weight: "No hard weight limit on DFDS — large dogs welcome",
     accent: "rose",
   },
 ];

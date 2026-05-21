@@ -5552,8 +5552,14 @@ function isRelevantConditional(itemText, side, originRegion, destRegion) {
   }
   if (t.startsWith("if returning to ") || t.startsWith("if from ") || t.startsWith("if coming from ")) {
     // Conditional on origin direction or origin country.
-    if (t.startsWith("if returning to the us") || t.startsWith("if returning to us")) return originRegion === "us";
-    if (t.startsWith("if returning to us from cdc high-risk")) return originRegion === "us";
+    // For "If returning to US" — same logic as section-level: relevant when
+    // the route involves the US in either direction (origin OR dest).
+    if (t.startsWith("if returning to the us") || t.startsWith("if returning to us")) {
+      return originRegion === "us" || destRegion === "us";
+    }
+    if (t.startsWith("if returning to us from cdc high-risk")) {
+      return originRegion === "us" || destRegion === "us";
+    }
     if (t.startsWith("if from us") || t.startsWith("if from the us")) return originRegion === "us";
     if (t.startsWith("if from uk") || t.startsWith("if from the uk") || t.startsWith("if from uk/eu")) {
       return originRegion === "uk-out" || originRegion === "europe" || originRegion === "ireland";
@@ -5663,17 +5669,21 @@ function isRelevantConditional(itemText, side, originRegion, destRegion) {
 function isRelevantSection(sectionTitle, side, originRegion, destRegion) {
   const t = (sectionTitle || "").toLowerCase();
 
-  // "Returning to US" / "Returning to the US" / "Returning to USA" — the user
-  // is planning a return leg to the US, so this section is only relevant when
-  // the actual ORIGIN is the US (they're going somewhere and coming back).
+  // "Returning to US" / "Returning to the US" / "Returning to USA" — sections
+  // about the leg back to / into the US. Relevant when:
+  //   - the destination of THIS trip is the US (a one-way move to the US, or
+  //     they're now planning that next leg), OR
+  //   - the origin was the US (they came from US and are planning a round
+  //     trip back home)
+  // Either way, the user is connected to the US.
   if (t.startsWith("returning to us") || t.startsWith("returning to the us") || t.startsWith("returning to usa")) {
-    return originRegion === "us";
+    return originRegion === "us" || destRegion === "us";
   }
   if (t.startsWith("returning to uk") || t.startsWith("returning to the uk")) {
-    return originRegion === "uk-out";
+    return originRegion === "uk-out" || destRegion === "uk-out";
   }
   if (t.startsWith("returning to eu") || t.startsWith("returning to europe")) {
-    return originRegion === "europe";
+    return originRegion === "europe" || destRegion === "europe";
   }
 
   // "Departing FROM X" — only relevant when building the ORIGIN chapter for X.
@@ -5695,14 +5705,14 @@ function isRelevantSection(sectionTitle, side, originRegion, destRegion) {
     return side === "origin";
   }
 
-  // "On arrival in X" — only relevant on the destination side for X.
+  // "On arrival in X" / "On arrival" — only relevant on the destination side.
   if (t.startsWith("on arrival in india")) {
     return side === "destination" && destRegion === "india";
   }
   if (t.startsWith("on arrival in japan")) {
     return side === "destination" && destRegion === "japan";
   }
-  if (t.startsWith("on arrival in ")) {
+  if (t.startsWith("on arrival in ") || t === "on arrival" || t.startsWith("on arrival ")) {
     return side === "destination";
   }
 
@@ -5717,17 +5727,17 @@ function isRelevantSection(sectionTitle, side, originRegion, destRegion) {
     return originRegion === "europe";
   }
 
-  // "Reminder for US visitors going home" / "for US travellers" — these
-  // sections are about return travel home and only matter if the origin is
-  // that country.
+  // "Reminder for US visitors going home" / "for US travellers" — sections
+  // about return travel home, relevant when the route involves the US in
+  // either direction.
   if (t.includes("for us visitors") || t.includes("for usa visitors") || t.includes("for us travellers") || t.includes("for us travelers")) {
-    return originRegion === "us";
+    return originRegion === "us" || destRegion === "us";
   }
   if (t.includes("for uk visitors") || t.includes("for uk travellers") || t.includes("for uk travelers")) {
-    return originRegion === "uk-out";
+    return originRegion === "uk-out" || destRegion === "uk-out";
   }
   if (t.includes("for eu visitors") || t.includes("for european visitors")) {
-    return originRegion === "europe";
+    return originRegion === "europe" || destRegion === "europe";
   }
 
   // Default: section is relevant.

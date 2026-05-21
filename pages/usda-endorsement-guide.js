@@ -100,7 +100,7 @@ export default function USDAEndorsementGuide() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              USDA itself is usually fast. Certificates are generally reviewed and returned the same day they arrive, as long as nothing is missing or incorrect. The slow parts are almost never USDA — they are the courier legs on either side, and human error in the paperwork.
+              How long does USDA take? APHIS's own current notice is the honest answer: endorsements <strong>"may take several business days"</strong> and are often completed just one or two days before travel. Mailing adds more time on top. There is no in-person or drop-off service, and the endorsement offices run Monday-Friday only, 7:00am-4:30pm Central Time. So while the review itself can be quick when paperwork is clean, the right plan is to leave buffer for the system around it — not to rely on a same-day turnaround.
             </p>
           </section>
 
@@ -203,6 +203,10 @@ export default function USDAEndorsementGuide() {
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
               <strong>The relaxed one — non-commercial pet travel.</strong> The typical family flying with their own pet, not selling or transferring it. For the UK, once APHIS endorses the certificate your pet must <em>arrive</em> within 10 days — the EU works exactly the same way. The certificate is also valid for 30 days from your vet's signature. So the endorsement still has to be done before you fly, but the timing around it is workable: a certificate endorsed a few days before your flight is normal. The key is to leave enough time for USDA to process and return it — do not assume it is instant.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>One useful nuance for ferry routes.</strong> APHIS's own UK page adds that <em>"for pets traveling to the UK by sea, the 10 days is extended by the duration of sea travel."</em> So if you are flying into mainland Europe and crossing the Channel by ferry or Eurotunnel, that crossing time is added to your 10-day arrival window. A small but useful piece of slack if your route includes a sea leg into the UK.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
@@ -313,7 +317,7 @@ export default function USDAEndorsementGuide() {
             </h3>
             <ul className="font-serif text-stone-700 leading-relaxed mb-6 space-y-2 ml-5 list-disc">
               <li><strong>"Endorsed at the airport" / "came through close to the flight."</strong> For UK and EU non-commercial travel there is real slack — a 10-day-after-arrival window for the UK. Cutting it close is uncomfortable, but usually not the failure it looks like.</li>
-              <li><strong>"USDA is so slow."</strong> USDA generally returns certificates the same day they arrive. The delays people hit were almost always courier legs or paperwork bouncing back.</li>
+              <li><strong>"USDA is so slow."</strong> APHIS's own notice says endorsements may take several business days, and most are completed just one or two days before travel — so it isn't instant. But the worst delays people post about usually involve a paperwork bounce-back or a courier leg, not USDA's review itself. Start early enough that "several business days" isn't a problem.</li>
             </ul>
 
             <div className="bg-stone-900 text-stone-100 p-5 rounded-sm">
@@ -343,6 +347,7 @@ export default function USDAEndorsementGuide() {
                 <li>☐ <strong>Printed paper hardcopy</strong> of the endorsed certificate ready to travel with the pet</li>
                 <li>☐ <strong>Airline's own document deadline</strong> confirmed directly with the carrier</li>
                 <li>☐ Tapeworm appointment (UK, dogs) booked into the timeline</li>
+                <li>☐ <strong>Backup plan</strong> in case the certificate isn't ready in time — APHIS itself recommends one (a caretaker, or a movable travel date)</li>
               </ul>
             </div>
           </section>

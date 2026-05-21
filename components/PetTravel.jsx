@@ -10100,7 +10100,7 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
                     <span>Added to your checklist below — it's in the printable PDF too.</span>
                   </div>
                   <a
-                    href="#checklist"
+                    href={`#${checklistAnchor || "checklist"}`}
                     className="inline-flex items-center gap-2 bg-stone-900 text-amber-50 px-5 py-3 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors rounded-sm"
                   >
                     <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -11266,6 +11266,7 @@ function JourneyPlanner() {
                   onResult={setTapewormResult}
                   onAddToChecklist={(res) => { setTapewormResult(res); setTapewormAdded(true); }}
                   addedToChecklist={tapewormAdded}
+                  checklistAnchor="planner-tailored-checklist"
                 />
               </div>
             )}
@@ -11877,7 +11878,7 @@ function JourneyPlanner() {
 
                   let inTipsBlock = false;
                   return (
-                    <div className="bg-amber-950/40 border-2 border-amber-700 p-5 md:p-6">
+                    <div id="planner-tailored-checklist" className="bg-amber-950/40 border-2 border-amber-700 p-5 md:p-6 scroll-mt-24">
                       {/* HEADER — explains what this is + download CTA at the TOP */}
                       <div className="flex items-start gap-3 mb-4">
                         <FileCheck className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" strokeWidth={1.75} />

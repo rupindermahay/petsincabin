@@ -4323,8 +4323,7 @@ const DIRECTIONAL_CHECKLISTS = {
         {
           title: "10 days before",
           items: [
-            "USDA-accredited vet signs export health certificate (destination-specific)",
-            "USDA APHIS endorsement (timing varies by state — some same-day, some mail-in)",
+            "USDA-accredited vet signs the export health certificate (destination-specific), then it gets USDA APHIS endorsement — many states are now electronic via VEHCS (same-day), but some are still mail-in (allow up to a week, and include a prepaid return label). The <a href=\"/usda-endorsement-guide\">USDA endorsement guide</a> walks through the deadlines and how to handle the return label so it doesn't catch you out.",
             "Confirm CDC Dog Import Form receipt is ready for your eventual return",
           ],
         },
@@ -5086,14 +5085,30 @@ function filterChecklistByPet(checklist, petType) {
 const REGION_TO_CHECKLIST_ID = {
   "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
   "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
-  "caribbean": null,        // per-island — handled specially below
+  "caribbean": null,        // per-island — resolved via AIRPORT_CHECKLIST_OVERRIDE below
   "hawaii": "hawaii",       // CHECKLIST_DATA.hawaii exists — use it
   "south-africa": "south_africa",
   "south-america": "south_america",
-  "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
+  "central-america": null,  // PTY is transit-only — no detailed entry checklist needed
   "japan": "japan",
   "korea": "korea",         // Verified APQA / QIA paperwork added in this build
   "russia": "russia",       // Verified Rosselkhoznadzor paperwork added in this build
+};
+
+// When the region's checklist is null (Caribbean is the main case) we can
+// still resolve a country-specific checklist via the airport code itself —
+// MBJ goes to Jamaica, NAS to Bahamas, PUJ/SDQ to the Dominican Republic.
+// This map is consulted in buildRouteChecklist when REGION_TO_CHECKLIST_ID
+// returns null but a specific airport is known.
+const AIRPORT_CHECKLIST_OVERRIDE = {
+  // Caribbean — each island has its own paperwork; the airport tells us which.
+  NAS: "bahamas",
+  MBJ: "jamaica",
+  KIN: "jamaica",
+  PUJ: "dominican_republic",
+  SDQ: "dominican_republic",
+  STI: "dominican_republic",
+  // Central America — PTY is transit-only on Copa itineraries, no entry checklist needed.
 };
 
 // ----- Item-level classification helpers for the merged route checklist -----
@@ -5580,9 +5595,18 @@ function resolveAirlinesFromLegs(legs) {
   return results;
 }
 
-function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = [], legs = []) {
-  const originId = REGION_TO_CHECKLIST_ID[originRegion];
-  const destId = REGION_TO_CHECKLIST_ID[destRegion];
+function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, petType = "both", transitRegions = [], legs = [], airportOverrides = {}) {
+  // Resolve checklist IDs from region, with airport-level overrides for the
+  // Caribbean where the region is null but the specific airport (e.g. MBJ
+  // → Jamaica) maps to a country-specific checklist.
+  const originId =
+    REGION_TO_CHECKLIST_ID[originRegion] ||
+    AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.origin] ||
+    null;
+  const destId =
+    REGION_TO_CHECKLIST_ID[destRegion] ||
+    AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.dest] ||
+    null;
 
   // Resolve the directional (departing/arriving) checklist AND the base
   // checklist for each side. Some directional checklists (notably UK
@@ -9706,7 +9730,10 @@ function ChecklistDownload() {
         destAirport.region,
         REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
         REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
-        petType
+        petType,
+        [],
+        [],
+        { origin: originAirport.code, dest: destAirport.code }
       );
     } else {
       data = null; // nothing selected yet
@@ -11168,7 +11195,8 @@ function JourneyPlanner() {
                     REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
                     petType,
                     transitRegions,
-                    routeLegs
+                    routeLegs,
+                    { origin: originAirport.code, dest: destAirport.code }
                   );
 
                   // If the user added tapeworm dates via the calculator, add

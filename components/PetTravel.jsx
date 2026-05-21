@@ -3223,10 +3223,10 @@ const FALLBACK_STRATEGIES = {
       // workaround for non-US, non-Korea, non-Mexico origins is via Seoul on
       // Korean Air (the same airline runs both legs, so it's one ticket).
       leg = [
-        { route: `${o} → Seoul Incheon (ICN)`, time: "varies — long-haul", airline: "Korean Air ✓ Cabin (under 7 kg). JAL, ANA, Lufthansa, BA, Air France, KLM are all cargo-only into Japan — Korean Air via Seoul is the cabin workaround." },
-        { route: `Seoul Incheon (ICN) → ${arrivalPort}`, time: "2-3h", airline: "Korean Air ✓ Cabin (under 7 kg)" },
+        { route: `${o} → Seoul Incheon (ICN)`, time: "11-14h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier)" },
+        { route: `Seoul Incheon (ICN) → ${arrivalPort}`, time: "2-3h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier)" },
       ];
-      hub = "Route via Seoul on Korean Air — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan. Book end-to-end on a single Korean Air itinerary so the pet booking carries through both legs.";
+      hub = "Route via Seoul on Korean Air — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan. Korean Air's cabin pet limit is 7 kg combined (pet + carrier). Hard-sided carrier max 45 × 32 × 19 cm; soft-sided carrier can be up to 25 cm tall if it compresses to 19 cm to fit under the seat. Book end-to-end on a single Korean Air itinerary so the pet booking carries through both legs.";
     }
     return {
       legs: Array.isArray(leg) ? leg : [leg],

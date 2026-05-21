@@ -6496,9 +6496,28 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       const weightPart = a.weight ? ` <em>(${a.weight})</em>` : "";
       return `<strong>${a.name}</strong> — ${a.carrier || "see airline policy"}${weightPart}${linkPart}`;
     });
-    if (hasMultipleAirlines) {
+    // Distinguish two cases that look identical from `routeAirlines.length > 1`
+    // but need very different advice:
+    //   (a) Multi-LEG routes where each leg uses a different airline. The
+    //       user flies ALL of them, and the strictest carrier dim wins.
+    //   (b) Single-LEG routes where the leg lists multiple alternative
+    //       cabin carriers. The user picks ONE — strictest doesn't apply.
+    // We detect (a) by counting how many flight legs there are (transit legs
+    // excluded). Workaround routes with 2+ flight legs are case (a); direct
+    // routes synthesised from DIRECT_ROUTES are case (b) when the note names
+    // alternatives.
+    const flightLegCount = Array.isArray(legs)
+      ? legs.filter((l) => !isTransitLeg((l && l.route) || "")).length
+      : 0;
+    const isMultiLegMultiAirline = flightLegCount > 1 && hasMultipleAirlines;
+    const isSingleLegAlternatives = flightLegCount <= 1 && hasMultipleAirlines;
+    if (isMultiLegMultiAirline) {
       carrierItems.unshift(
-        `⚠️ <strong>Multi-airline route — carriers can differ.</strong> Buy a carrier that meets the STRICTEST airline's specs and make sure your pet is comfortable in it. If a smaller airline's box would force your pet into something cramped, bring a second carrier for the more generous leg instead. Measure with your pet inside at home before travel day.`
+        `⚠️ <strong>Multi-airline route — carriers can differ.</strong> You'll be on more than one airline across the legs, so buy a carrier that meets the STRICTEST airline's specs and make sure your pet is comfortable in it. If a smaller airline's box would force your pet into something cramped, bring a second carrier for the more generous leg instead. Measure with your pet inside at home before travel day.`
+      );
+    } else if (isSingleLegAlternatives) {
+      carrierItems.unshift(
+        `Either carrier flies this leg — pick whichever's specs and price work for you, then buy a carrier that meets THAT airline's dimensions. Measure with your pet inside at home before travel day. At check-in, staff will measure both the carrier and watch your pet stand up + turn around inside.`
       );
     } else {
       carrierItems.unshift(
@@ -6509,7 +6528,9 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       title: "Your carriers — airline-specific",
       divider: true,
       items: [
-        `What carrier(s) you need depends on the airline(s) on your route. We've pulled the specs for each airline you'll fly. The strictest dimensions win — pet must fit comfortably in ALL of them.`,
+        isSingleLegAlternatives
+          ? `This leg has more than one cabin-friendly airline. We've pulled specs for each — pick the one you're flying, then match its dimensions exactly.`
+          : `What carrier(s) you need depends on the airline(s) on your route. We've pulled the specs for each airline you'll fly. The strictest dimensions win — pet must fit comfortably in ALL of them.`,
       ],
     });
     sections.push({

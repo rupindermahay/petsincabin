@@ -673,6 +673,33 @@ const NO_CABIN_AIRLINES = [
   },
 ];
 
+// Shared helper: find an AIRLINES[] entry given some free-text (a route note,
+// a leg's airline label, etc.). Handles combined-name entries like
+// "Air France / KLM" or "Japan Airlines (JAL) / ANA" — text mentioning just
+// one half ("Air France", "ANA") still resolves. Used by both the Carriers
+// chapter (resolveAirlinesFromLegs) and the direct-route card UI.
+function findAirlineInText(text) {
+  if (!text) return null;
+  const t = text.toLowerCase();
+  return AIRLINES.find((a) => {
+    const an = a.name.toLowerCase();
+    if (t.includes(an) || an.includes(t)) return true;
+    if (an.includes(" / ")) {
+      const parts = an.split(" / ").map((p) => p.trim());
+      if (parts.some((p) => t.includes(p) || p.includes(t))) return true;
+    }
+    const anNoParen = an.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
+    if (anNoParen !== an) {
+      if (t.includes(anNoParen) || anNoParen.includes(t)) return true;
+      if (anNoParen.includes(" / ")) {
+        const parts = anNoParen.split(" / ").map((p) => p.trim());
+        if (parts.some((p) => t.includes(p) || p.includes(t))) return true;
+      }
+    }
+    return false;
+  }) || null;
+}
+
 // ---------- POPULAR ROUTES & TIMES ----------
 
 const DIRECT_ROUTES = [
@@ -6160,10 +6187,11 @@ function resolveAirlinesFromLegs(legs) {
         .trim();
       if (!cleaned || cleaned.length < 3) return;
       const cleanLower = cleaned.toLowerCase();
-      const match = AIRLINES.find((a) => {
-        const an = a.name.toLowerCase();
-        return cleanLower.includes(an) || an.includes(cleanLower);
-      });
+      // Use the shared findAirlineInText helper so this matching stays in
+      // lockstep with the card UI and the leg synthesis paths. Handles
+      // combined-name entries like "Air France / KLM" — a leg saying just
+      // "Air France" or "KLM" still resolves to the right entry.
+      const match = findAirlineInText(cleanLower);
       if (match && !seen.has(match.name)) {
         seen.add(match.name);
         results.push({
@@ -11661,10 +11689,7 @@ function JourneyPlanner() {
                                       (under 8 kg)." leave the card with no carrier
                                       context — even though full data exists in AIRLINES[]. */}
                                   {(() => {
-                                    const noteLower = (g.routes[0].note || "").toLowerCase();
-                                    const matched = AIRLINES.find((a) =>
-                                      noteLower.includes(a.name.toLowerCase())
-                                    );
+                                    const matched = findAirlineInText(g.routes[0].note || "");
                                     if (!matched) return null;
                                     return (
                                       <div className="mt-3 pt-3 border-t border-stone-700/60">
@@ -12069,10 +12094,7 @@ function JourneyPlanner() {
                     // chapter still renders generically.
                     let airlineText = dr._airlineFromLeg || "";
                     if (!airlineText && dr.note) {
-                      const noteLower = dr.note.toLowerCase();
-                      const matched = AIRLINES.find((a) =>
-                        noteLower.includes(a.name.toLowerCase())
-                      );
+                      const matched = findAirlineInText(dr.note);
                       if (matched) airlineText = `${matched.name} ✓ Cabin`;
                     }
                     routeLegs = [{

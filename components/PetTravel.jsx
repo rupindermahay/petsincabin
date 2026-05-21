@@ -9879,7 +9879,7 @@ function twCountryForAirport(code) {
   return TW_AIRPORT_TO_COUNTRY[code] || null;
 }
 
-function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, stopoverOptions = null, onAddToChecklist = null, addedToChecklist = false, checklistAnchor = null }) {
+function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, stopoverOptions = null, onAddToChecklist = null, addedToChecklist = false, checklistAnchor = null, onOpenChecklist = null }) {
   const presetDest = TW_DEST_COUNTRIES.find((c) => c.key === destKey);
 
   const [open, setOpen] = useState(defaultOpen);
@@ -10212,21 +10212,34 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
 
           {/* STANDALONE NEXT STEP — when the calc runs on its own (no planner
               callback), give the user a direction once they have a window,
-              rather than leaving them to scroll the page to find the checklist. */}
-          {result && !onAddToChecklist && checklistAnchor && (
+              rather than leaving them to scroll the page to find the checklist.
+              If the parent supplies onOpenChecklist, fire the PDF directly —
+              otherwise fall back to a scroll-to-anchor link. */}
+          {result && !onAddToChecklist && (onOpenChecklist || checklistAnchor) && (
             <div className="bg-stone-900 text-amber-50 rounded-sm p-4">
               <p className="text-sm leading-relaxed mb-3">
                 You've got your window — now open the printable checklist so
                 the tapeworm dose sits alongside every other document and
                 deadline for this trip.
               </p>
-              <a
-                href={`#${checklistAnchor}`}
-                className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
-              >
-                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
-                Open the printable checklist
-              </a>
+              {onOpenChecklist ? (
+                <button
+                  type="button"
+                  onClick={onOpenChecklist}
+                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  Open the printable checklist
+                </button>
+              ) : (
+                <a
+                  href={`#${checklistAnchor}`}
+                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  Open the printable checklist
+                </a>
+              )}
             </div>
           )}
 
@@ -10766,7 +10779,11 @@ function ChecklistDownload() {
         if (!twDest) return null;
         return (
           <div className="mt-6">
-            <TapewormWindow destKey={twDest} checklistAnchor="standalone-checklist-download" />
+            <TapewormWindow
+              destKey={twDest}
+              checklistAnchor="standalone-checklist-download"
+              onOpenChecklist={data ? openPrintable : null}
+            />
           </div>
         );
       })()}

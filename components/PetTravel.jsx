@@ -6077,19 +6077,32 @@ function timelineBucket(sectionTitle) {
   // We pick the most specific match first. Labels include the most-asked
   // timing windows (10-day cert, 24–120hr tapeworm) so the reader sees the
   // binding constraints without hunting in the items.
-  if (t.includes("6 months") || t.includes("5+ months") || t.includes("4+ months")) return { order: 0, label: "5–6 months before" };
+  if (t.includes("7 months") || t.includes("6+ months") || t.includes("6 months") || t.includes("5+ months") || t.includes("4+ months")) return { order: 0, label: "5–6 months before" };
   if (t.includes("3 months") || t.includes("2 months")) return { order: 5, label: "2–3 months before" };
-  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before — vet, microchip, rabies" };
-  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "2–4 weeks before — carrier, bookings, paperwork prep" };
+  if (t.includes("8+ weeks") || t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before — vet, microchip, rabies" };
+  if (t.includes("4+ weeks") || t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks") || t.includes("30 days")) return { order: 20, label: "2–4 weeks before — carrier, bookings, paperwork prep" };
   if (t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "10 days before — health certificate signed" };
   if (t.includes("2 weeks")) return { order: 30, label: "10 days before — health certificate signed" };
   if (t.includes("24") && t.includes("120")) return { order: 40, label: "24–120 hours before arrival — tapeworm (dogs only, UK/IE/NO/FI/MT)" };
+  // 5 days / 48 hours — final paperwork window for several countries (UAE,
+  // Russia, Bahamas, Jamaica). Tighter than 10 days, looser than 24–120h.
+  if (t.includes("5 days") || t.includes("48 hours") || t.includes("72 hours")) return { order: 42, label: "5 days / 48 hours before — final paperwork window" };
   // "Day before" — final-night packing, nail trim, last-minute prep.
   if (t.includes("day before") || t.includes("night before")) return { order: 45, label: "The day before — packing & final prep" };
   // Travel day buckets — "Day of flight", "Travel day", "At the airport", etc.
   if (t.includes("day of") || t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
   // Security and onboard fall into the same travel-day band.
   if (t.includes("security") || t.includes("onboard") || t.includes("on board") || t.includes("in flight")) return { order: 55, label: "At security & onboard" };
+  // Post-arrival / on-arrival follow-up steps (Russia's "Within 5 days of
+  // entering Russia" registration, etc.) — sits AFTER travel-day.
+  if (t.includes("within") && t.includes("entering")) return { order: 60, label: "After arrival — registration & follow-up" };
+  // Direction-specific sections marked at the title level. These carry items
+  // that only apply on the OUTBOUND leg from this country (export paperwork)
+  // or when returning home from this country. buildChapter's `direction` tag
+  // filter already gates them to the right chapter — here we just need a
+  // sensible time bucket so they don't fall into Anytime. Treat both as
+  // "carrier/bookings/paperwork" since that's typically when the prep happens.
+  if (t.includes("departing from") || t.includes("returning to") || t.includes("permit application")) return { order: 25, label: "Country-specific paperwork & permits" };
 
   // Non-time-bound general guidance and "if you're flying with a..." sections.
   // Single bucket so the document doesn't end up with both "Good to know" and

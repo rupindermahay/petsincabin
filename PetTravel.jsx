@@ -2,6 +2,31 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
+// ============================================================
+// ⏰ ETIHAD PROMO — EXPIRES 31 MAY 2026
+// ------------------------------------------------------------
+// On 1 June 2026, set ETIHAD_PROMO_ACTIVE to false. That single
+// flip rewrites every mention of the $399 promo across the site
+// (airline card, route notes, planner branches, difficult-dest
+// workaround, Wisdom card). Standard rate post-promo is around
+// $1,500/segment — adjust ETIHAD_STANDARD_FEE_SHORT if Etihad
+// publishes a new standard rate.
+// ============================================================
+const ETIHAD_PROMO_ACTIVE = true;
+const ETIHAD_PROMO_SHORT = ETIHAD_PROMO_ACTIVE
+  ? "$399 promo through May 2026"
+  : "~$1,500 per segment";
+const ETIHAD_PROMO_FEE_FULL = ETIHAD_PROMO_ACTIVE
+  ? "Promotional rate: $399 per flight segment (booking + travel by 31 May 2026). Standard rate post-promo is significantly higher — confirm directly with Etihad when booking."
+  : "Standard rate: around $1,500 per flight segment — confirm directly with Etihad when booking.";
+const ETIHAD_PROMO_COST_DETAIL = ETIHAD_PROMO_ACTIVE
+  ? "PROMO: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment."
+  : "Standard: around $1,500 per segment. Confirm directly with Etihad when booking.";
+const ETIHAD_PROMO_WORKAROUND = ETIHAD_PROMO_ACTIVE
+  ? "Promo fee currently $399/segment through May 2026 (down from $1,500)"
+  : "Fee currently around $1,500 per segment";
+
+
 // ---------- ROBUST SCROLL HELPER ----------
 // On mobile, content above a scroll target can change height while a
 // smooth-scroll is animating (intake/assessment blocks collapsing, result
@@ -56,7 +81,7 @@ function isTransitLeg(legRoute) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "18 May 2026";
+const LAST_UPDATED = "20 May 2026";
 
 // ---------- DATA ----------
 
@@ -64,29 +89,29 @@ const AIRLINES = [
   {
     name: "Alaska Airlines",
     scope: "north-america",
-    tags: ["us", "mexico"],
-    cabin: "Cabin US domestic ✓ — limited intl (Mexico, Canada, Costa Rica)",
+    tags: ["us", "mexico", "japan", "korea"],
+    cabin: "Cabin US/Canada/Mexico/Japan/Korea ✓ — limited intl beyond",
     cabinStatus: "yes",
-    direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, and Costa Rica routes. Cabin NOT allowed: most other international destinations (Alaska's network is mostly North America-focused).",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    direction: "Cabin allowed: domestic US, Hawaii (with strict prep), some Mexico, Canada, Costa Rica, Bahamas, plus Tokyo and Seoul on Alaska's growing long-haul network from Seattle (year-round service). Alaska now also flies Seattle ↔ London Heathrow (launched May 2026) and Seattle ↔ Rome (launched April 2026) — but UK destination is cargo-only by UK government rule. Cabin NOT allowed: India, EU/UK as destination, UAE, most other long-haul markets.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "yes", korea: "yes" },
     fee: "$100 each way cabin / $200 each way checked baggage (increased from $150 on Jan 2, 2026)",
     weight: "No stated weight limit; pet must fit comfortably in carrier (under 17 × 11 × 9.5 in soft / 17 × 11 × 7.5 in hard)",
     carrier: "Soft: 17 × 11 × 9.5 in. Hard: 17 × 11 × 7.5 in.",
-    notes: "Seattle-based (SEA hub) — strongest pet-friendly network on the US west coast. Cabin pets allowed on domestic, plus Canada, Mexico, Costa Rica, Bahamas, Japan, and Hawaii (with Direct Airport Release prep — start 4+ months out). Two pets of the same species can share one carrier if both fit comfortably. Max 3 cabin pets in First, 8 in Main on each flight. No transatlantic or India routes — connect via partner airlines.",
-    intl: "Yes (limited routes)",
+    notes: "Seattle-based (SEA hub) — strongest pet-friendly network on the US west coast. Since 5 June 2025, only dogs and cats are accepted in cabin (rabbits/birds being phased out by April 4, 2026 even on grandfathered tickets). International cabin pet routes are dogs/cats only. Two pets of the same species can share one carrier if both fit comfortably. Max 3 cabin pets in First, 8 in Main on each flight. Alaska's international long-haul expansion (Seattle to Tokyo, Seoul, Rome, London, Reykjavík) means new cabin-pet pathways from the US West Coast — but UK arrivals are cargo-only because of UK government rules.",
+    intl: "Yes (growing)",
     verified: "May 2026",
     link: "https://www.alaskaair.com/content/travel-info/policies/pets-traveling-with-pets",
   },
   {
     name: "American Airlines",
     scope: "north-america",
-    tags: ["us", "caribbean", "mexico", "korea"],
+    tags: ["us", "caribbean", "mexico"],
     cabin: "Yes — but NO transatlantic / transpacific cabin",
     cabinStatus: "conditional",
     direction: "Cabin allowed: domestic US, Canada, Mexico, Puerto Rico, Caribbean, Central America (up to 12 hour flights). Cabin NOT allowed (both directions): transatlantic flights (Europe), transpacific flights (Asia), UK, Hawaii.",
-    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     fee: "$150 each way",
     weight: "Pet + carrier max 20 lb (~9 kg) combined",
     carrier: "Soft (recommended): 18 × 11 × 11 in. Hard: 19 × 13 × 9 in",
@@ -97,19 +122,19 @@ const AIRLINES = [
   },
   {
     name: "Delta",
-    tags: ["us", "europe", "longhaul", "caribbean", "mexico", "korea"],
-    cabin: "Cabin US/Canada/EU only — long banned list",
+    tags: ["us", "europe", "longhaul", "caribbean", "mexico", "korea", "ireland"],
+    cabin: "Cabin US/Canada/EU/Ireland — long banned list",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Ireland, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
-    fee: "$150 domestic / $200 international",
+    direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.) and the Republic of Ireland (Delta's own international-travel page confirms cabin pets to Dublin, with advance notification required to Ireland's Department of Agriculture). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes" },
+    fee: "$95 domestic / $200 international (including Dublin)",
     weight: "No stated weight; must fit under seat",
     carrier: "Soft-sided with 3+ ventilation panels (4 international). ~18 × 11 × 11 in",
-    notes: "Long list of country exclusions — always confirm by phone before booking. JFK → CDG is a verified working route (Delta cabin to Paris, OK). Cargo only available to active U.S. Military and State Dept. Pet must be 10 weeks old (domestic), 16 weeks (international to US), 15 weeks (EU).",
+    notes: "Long list of country exclusions — always confirm by phone before booking. Notable update: Delta now allows small dogs, cats and household birds in cabin to Ireland on true Delta-operated flights (e.g. JFK ⇄ DUB direct, $200 each way, payable at check-in). NOT permitted on codeshares — make sure the flight is operated by Delta itself. Pets cannot travel cargo or checked baggage on this route. Notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Some third-party sites still list Ireland as banned — that information is out of date. JFK → CDG is also a verified working cabin route. Cargo only available to active U.S. Military and State Dept. Pet must be 10 weeks old (domestic), 16 weeks (international to US), 15 weeks (EU).",
     intl: "Yes (restricted)",
     verified: "May 2026",
-    link: "https://www.delta.com/us/en/pet-travel/overview",
+    link: "https://www.delta.com/us/en/pet-travel/international-connection-pet-travel",
   },
   {
     name: "United",
@@ -121,7 +146,7 @@ const AIRLINES = [
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes", korea: "yes" },
     fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
     weight: "No weight limit — pet must fit in carrier under the seat",
-    carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
+    carrier: "Hard: 17.5 × 12 × 9 in. Soft: 18 × 11 × 11 in",
     notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. United is one of very few airlines accepting cabin pets US↔Japan direct (no weight limit). Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
     intl: "Yes (restricted)",
     verified: "May 2026",
@@ -198,49 +223,49 @@ const AIRLINES = [
   {
     name: "Hawaiian Airlines",
     scope: "hawaii-only",
-    tags: ["us", "korea"],
-    cabin: "Cabin OUT of Hawaii ✓ — but limited routes INTO Hawaii",
-    cabinStatus: "conditional",
-    direction: "Cabin allowed: inter-island Hawaii flights AND flights LEAVING Hawaii to US mainland. Cabin NOT allowed: flights INTO Hawaii from the mainland (cargo only — Hawaii's strict quarantine rules), AND no cabin to/from JFK, BOS, AUS, SLC, PPG. No international cabin at all.",
+    tags: ["us", "korea", "japan"],
+    cabin: "Cabin US mainland ↔ Hawaii ✓ — both directions, with Hawaii prep",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: inter-island Hawaii flights AND flights between Hawaii and the US Mainland (both directions — with Direct Airport Release prep done in advance, your pet can arrive in cabin into Honolulu). Cabin NOT allowed: routes to/from JFK, BOS, AUS, SLC, and PPG (American Samoa); no international cabin at all. Now part of Alaska Air Group — pet bookings handled via Alaska/Hawaiian Air Cargo combined system.",
     originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    fee: "$35 inter-island / $100 mainland–Hawaii (decreased from $125 in Jan 2026)",
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    fee: "$35 inter-island / $100 mainland–Hawaii (down from $125 for flights departing Jan 2, 2026 onwards)",
     weight: "25 lb combined (pet + carrier) — most generous in U.S.",
-    carrier: "Soft: 16 × 10 × 9.5 in",
-    notes: "Asymmetric route rules — pets can leave Hawaii cabin but not arrive cabin. Cabin not accepted at all on routes to/from JFK, BOS, AUS, SLC, PPG. No international cabin. Hawaii's strict quarantine rules apply — 120-day default unless 4+ months Direct Airport Release prep is completed.",
+    carrier: "Soft: 17 × 11 × 9.5 in (or 17 × 12.5 × 8.5 in per Chewy variant)",
+    notes: "Cabin works both directions — but Hawaii is the only rabies-free state in the US, so entering with a pet (cabin or cargo) requires Direct Airport Release prep started 4+ months before, including an FAVN rabies titer test 30+ days before travel. Without DAR prep, your pet is subject to up to 120 days of quarantine at Hawaii Animal Quarantine. Cabin not accepted on routes to/from JFK, BOS, AUS, SLC, or PPG. Acquired by Alaska Air Group in October 2024 — pet bookings now part of the joint network.",
     intl: "No (in-cabin)",
     verified: "May 2026",
     link: "https://hawaiianair.custhelp.com/app/answers/detail/a_id/659/~/pets-traveling-in-the-cabin",
   },
   {
     name: "Air Canada",
-    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico", "korea"],
+    tags: ["canada", "uk-out", "us", "longhaul", "caribbean", "mexico", "korea", "india"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic, US/Canada, Europe, and OUT of UK (LHR, Edinburgh). Cabin NOT allowed: INTO UK (cargo only), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
-    fee: "CAD $50–$59 domestic / $100–$118 intl",
+    direction: "Cabin allowed: domestic Canada, US, continental Europe, and OUT of UK (LHR, Edinburgh — same asymmetric pattern as KLM/Lufthansa). Cabin NOT allowed: INTO UK (cargo only — UK government rule for pet entry), Australia, NZ, Hawaii, Ireland, Hong Kong, South Africa, Jamaica, Barbados, Trinidad & Tobago. Important June 2025 rule change: only SOFT-sided carriers accepted in cabin — hard kennels no longer permitted.",
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes" },
+    fee: "CAD $50–$60 domestic / $100–$120 international",
     weight: "Pet + carrier max 22 lb (10 kg)",
-    carrier: "Soft-sided. Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — sometimes smaller depending on aircraft",
-    notes: "Important: cabin rules are directional. Pets CAN fly with you in cabin from London Heathrow or Edinburgh TO Canada (verified — many UK pet owners use this as the route out). What's blocked is the return leg — UK government rules mean pets can ONLY enter the UK as cargo, not as cabin or checked baggage. Aircraft-specific carrier sizes — confirm at booking. Combined weight strictly enforced.",
+    carrier: "Soft-sided only (since June 2025). Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — varies by aircraft, confirm at booking",
+    notes: "Soft-sided carriers only since 1 June 2025 (Air Canada formalised this; hard-sided had always been a poor fit for the under-seat space anyway). Cabin rules are directional like other major European carriers: pets CAN fly with you in cabin from London Heathrow or Edinburgh TO Canada, but the return leg into UK is cargo-only because UK government rules block pets entering as cabin or checked baggage. Confirm directly at booking. Aircraft-specific carrier sizes — confirm at booking. Combined weight strictly enforced. Pet booking required within 24 hours of buying your own ticket.",
     intl: "Yes",
     verified: "May 2026",
-    link: "https://www.aircanada.com/us/en/aco/home/plan/special-assistance/pets.html",
+    link: "https://www.aircanada.com/ca/en/aco/home/plan/special-assistance/pets.html",
   },
   {
     name: "Air Transat",
     tags: ["canada", "uk-out", "longhaul", "mexico"],
-    cabin: "Cabin OUT of UK ✓ (Manchester / Glasgow only)",
+    cabin: "Cabin OUT of UK ✓ (Manchester / Glasgow only) — but cargo only to/from Ireland",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: Canada, US, Europe, and OUT of UK from Manchester (MAN) and Glasgow (GLA) — NOT Gatwick. Cabin NOT allowed: into UK (cargo only).",
+    direction: "Cabin allowed: Canada, US, Europe, and OUT of UK from Manchester (MAN) and Glasgow (GLA) — NOT Gatwick. Cabin NOT allowed: into UK (cargo only); to AND from the Republic of Ireland (cargo only on Air Transat — they previously allowed cabin out of Dublin but no longer do); Jamaica.",
     originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
     destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
-    fee: "CAD $50–$120 depending on route",
-    weight: "Pet + carrier max 17.6 lb (8 kg)",
-    carrier: "Soft-sided. Max 16 × 9 × 9 in (40 × 23 × 23 cm)",
-    notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Air Transat operates this from Manchester (MAN) and Glasgow (GLA) only — NOT Gatwick. Like Air Canada, pets can't fly cabin into the UK on return.",
-    intl: "Yes (transatlantic)",
+    fee: "CAD $50 (US routes) / CAD $100 (Europe & UK routes) one-way, paid ≥24h in advance — about $15 higher if paid at the airport. Plus a CAD $30 CFIA inspection fee on arrival into Canada (waived from the US).",
+    weight: "Pet + carrier max 17 lb (8 kg)",
+    carrier: "Soft-sided. Max 17 × 9.5 × 10 in (43 × 24 × 25 cm)",
+    notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Air Transat operates this from Manchester (MAN) and Glasgow (GLA) only — NOT Gatwick. Like Air Canada, pets can't fly cabin into the UK on return. IMPORTANT: Air Transat is cargo-only to AND from the Republic of Ireland — they previously allowed cabin pets out of Dublin but changed this policy. Reserve ≥24h before departure; book 72h+ for travel to Caribbean / South America destinations. Banned breeds include Pit Bulls, Staffies, Mastiff, Tosa, Akita, Rottweiler, Doberman and wolf-hybrids.",
+    intl: "Yes (transatlantic — not to/from Ireland in cabin)",
     verified: "May 2026",
     link: "https://www.airtransat.com/en-CA/travel-information/special-services/pets-and-service-dogs",
   },
@@ -278,19 +303,19 @@ const AIRLINES = [
   },
   {
     name: "Air India",
-    tags: ["india", "europe", "us", "canada", "longhaul", "korea"],
-    cabin: "Cabin India ↔ USA / Europe / Asia ✓ — NOT to UK / Australia",
-    cabinStatus: "yes",
-    direction: "Air India's 2026 'Paws on Board' programme allows cabin pets up to 10 kg (combined with carrier) on 80+ domestic and international routes. Cabin allowed: domestic India, India ↔ USA (direct: DEL/BOM/BLR/HYD/MAA ↔ JFK/SFO/IAD/ORD), India ↔ Europe (Frankfurt, Paris, Amsterdam, London cargo-only), India ↔ Asia. Cabin NOT allowed: India ↔ UK (cargo hold only — UK government embargo), India ↔ UAE (departing India, pets must go cargo; arriving in India from UAE has cabin options).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    fee: "₹7,500 domestic India / $140 short-haul international / $160 medium-haul / non-refundable",
+    tags: ["india", "europe", "longhaul", "korea"],
+    cabin: "Cabin domestic India + India ↔ Europe (excl UK) / Asia ✓ — NOT to USA, Canada, UK, Australia",
+    cabinStatus: "conditional",
+    direction: "Air India's 2026 'Paws on Board' programme allows cabin pets up to 10 kg (combined with carrier) across 80+ sectors. Cabin allowed: domestic India, India ↔ Europe excluding the UK (e.g. Frankfurt, Paris, Amsterdam, Israel), India ↔ Asia (UAE, Oman, Turkey, Maldives, Bahrain, Hong Kong, Japan, Korea, China, Saudi Arabia, Thailand, Singapore, Kenya, Philippines, Vietnam, Myanmar, Qatar, Nepal, Bangladesh, Sri Lanka, Kuwait, Mauritius, Malaysia, Indonesia). Cabin AND cargo NOT allowed (Air India's own page): USA, Canada, Australia — Air India does not transport pets to/from these countries in any form. UK: cargo only at London Heathrow (LHR) and London Gatwick (LGW); no pet service at all from Birmingham (BHX). UAE: cabin permitted only on the UAE → India direction; the reverse (India → UAE) is barred in cabin.",
+    originAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    fee: "₹7,500 domestic India / $140 short-haul international (UAE, Oman, Turkey, Maldives, Bahrain, Hong Kong, Japan, Korea, China, Saudi Arabia, Thailand, Singapore, Kenya, Philippines, Vietnam, Myanmar, Qatar, Nepal, Bangladesh, Sri Lanka, Kuwait, Mauritius, Malaysia, Indonesia) / $160 medium-haul (Europe excluding UK, Israel) / non-refundable. Cargo (10–32 kg): ₹16,000 domestic / $350 international.",
     weight: "Pet + carrier max 10 kg (22 lb) for cabin — generous compared to most carriers' 8 kg",
     carrier: "Soft-sided only in cabin, max 17 × 10 × 9 in (43 × 25 × 23 cm), ventilated on 3 sides, leakproof. IATA-compliant hard crates required for cargo hold (10–32 kg pets).",
-    notes: "Book via Air India customer support or city booking office at least 48 hours before departure (reduced from 72 hrs in 2026). Confirmation requires submitted paperwork. Pet sits in last aisle row, economy only. Max 2 pets per flight, seated 5 rows apart if both present. Brachycephalic breeds allowed in cabin but not in cargo (welfare reasons).",
-    intl: "Yes — including direct India ↔ USA cabin pet routes (rare for any carrier)",
+    notes: "IMPORTANT: Air India does not transport pets to or from the USA, Canada or Australia in any form — not cabin, not checked baggage, not cargo. The UK is cargo-only (LHR and LGW; no pet service at all from BHX). Two further rules narrow what's possible on the allowed sectors: (1) Ultra Long Haul (ULH) flights have NO cabin pets even when the destination is otherwise eligible — Air India's longest sectors are excluded for pet welfare; (2) Air India does NOT accept pets from other airlines on connecting flights — pet connections only work Air India → Air India. If you're routing via Europe to reach the US/Canada/UK/Australia, you'll need a single non-Air-India through-ticket (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Book Air India cabin via customer support or city booking office at least 48 hours before departure (reduced from 72 hrs in 2026). Pet sits in last aisle row, economy only. Max 2 pets per flight, seated 5 rows apart. Wheelchair passengers and adults travelling with infants cannot carry pets in cabin (cargo only in such cases). Brachycephalic breeds allowed in cabin but not in cargo (welfare reasons).",
+    intl: "Yes — India ↔ Europe (excl UK) / Asia in cabin. No service to USA/Canada/Australia. UK cargo-only at LHR/LGW.",
     verified: "May 2026",
-    link: "https://www.airindia.com/in/en/frequently-asked-questions/pet-travel.html",
+    link: "https://www.airindia.com/in/en/travel-information/travelling-with-pets.html",
   },
   {
     name: "LOT Polish Airlines",
@@ -329,7 +354,7 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "us", "longhaul"],
     cabin: "Cabin OUT of UK ✓ — best for UK → Portugal",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO UK or Ireland (cargo only — UK/Ireland government rule).",
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO the UK (cargo only — UK government rule). Ireland is not the UK and has no such ban, but TAP's own cabin position for Dublin isn't clearly confirmed — check directly if you need it.",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     fee: "€75 short-haul · €200 long-haul (US, Brazil)",
@@ -348,7 +373,7 @@ const AIRLINES = [
     direction: "Cabin allowed: OUT of the UK (London Heathrow, Manchester) to Abu Dhabi, OUT of the USA to Abu Dhabi, India ↔ Abu Dhabi (Delhi, Mumbai, Bangalore, Chennai), Europe ↔ Abu Dhabi (most major cities), Canada ↔ Abu Dhabi. All under 8 kg combined. Cabin NOT allowed: INTO the UK (London, Manchester) and INTO the USA — Etihad's country-restrictions page lists these as 'flights to' only, meaning the inbound direction is blocked while flying OUT to Abu Dhabi is permitted. Also no cabin to/from Australia (Sydney), Hong Kong, Maldives, South Africa, Bali, and several Indian airports (Ahmedabad, Jaipur, Kochi, Kozhikode, Thiruvananthapuram). And NEVER into Dubai (DXB) — UAE law requires cargo into DXB for all airlines.",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "yes", canada: "yes", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    fee: "Promo: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
+    fee: ETIHAD_PROMO_FEE_FULL,
     weight: "Pet + carrier max 8 kg (17.6 lb) — economy under-seat OR buy adjacent seat for bigger carrier",
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
     notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Per Etihad's official country-restrictions page, the UK and USA are listed as 'flights to' restrictions — meaning cabin pets flying OUT of the UK (LHR, MAN) or OUT of the US to Abu Dhabi are permitted, while the inbound direction is not. Always confirm your specific route directly with Etihad when booking. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
@@ -373,28 +398,60 @@ const AIRLINES = [
     link: "https://www.turkishairlines.com/en-us/any-questions/traveling-with-pets/",
   },
   {
-    name: "Iberia",
-    tags: ["europe", "us", "longhaul", "mexico"],
-    cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
+    name: "Aeroflot",
+    tags: ["russia", "longhaul", "india", "uae"],
+    cabin: "Cabin ✓ — but limited destinations since Feb 2022 airspace closures",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including Spain ↔ EU, Spain ↔ Ireland (Madrid–Dublin), Spain ↔ USA (JFK/MIA/ORD/BOS via Madrid), Spain ↔ Latin America. Cabin NOT allowed (both directions): UK (LHR, MAN, EDI, LGW — Iberia uses IAG Cargo to/from UK). Snub-nosed breeds allowed cabin only (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "no" },
+    direction: "Cabin allowed: Aeroflot is genuinely pet-friendly — 8 kg combined under-seat and (notably) a second 15 kg carrier on the adjacent seat if you buy it as an extra fare. Routes are limited though, since Russian airspace was closed to most Western carriers (and vice versa) in February 2022. As of 2026 Aeroflot serves about 17 mostly non-Western destinations including UAE/Dubai, India (Delhi, Mumbai, Goa), China, Egypt, Turkey, Maldives, Sri Lanka, Iran, Belarus, Kazakhstan and other former-USSR states. Cabin NOT allowed (no service): UK, US, Canada, EU, Australia, NZ — these airspaces are closed to Aeroflot.",
+    originAllowed: { uk: "no", us: "no", eu: "no", india: "yes", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "no", india: "yes", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    fee: "€61 domestic / €75 international (cabin); €15kg-seat fare for the extra-seat option",
+    weight: "Pet + carrier max 8 kg under seat. Up to 15 kg if you buy a second seat for the pet (adjacent-seat container option)",
+    carrier: "Soft-sided ≤126 cm total dimensions, or rigid ≤44 × 30 × 26 cm. Larger limits for the adjacent-seat carrier.",
+    notes: "Aeroflot has expanded its cabin pet service since 2024 — passengers can now bring TWO containers (one under-seat at 8 kg, one on the adjacent paid seat at up to 15 kg). Genuinely useful for owners of slightly-too-big-for-cabin dogs, but only on the routes Aeroflot still flies. For Western pet owners moving in/out of Russia, the practical reality is: very few options exist, sanctions/airspace closures make it complicated, and most pet-relocation work is done by specialists overland into Russia from Turkey or via Central Asia. If you need to fly cabin with a pet between, say, Dubai, Delhi or Istanbul and Moscow, this is one of the only options. Reserve at least 36 hours before. Brachycephalic breeds banned from cabin.",
+    intl: "Yes (limited to ~17 destinations)",
+    verified: "May 2026",
+    link: "https://www.aeroflot.ru/us-en/information/preparation/special_transportation/animals",
+  },
+  {
+    name: "Iberia",
+    tags: ["europe", "us", "longhaul", "mexico", "uk-out"],
+    cabin: "Cabin EU/transatlantic ✓ — UK-out OK from Heathrow/Manchester/Edinburgh, UK-in cargo only",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: most international routes including Spain ↔ EU, Spain ↔ Ireland (Madrid–Dublin), Spain ↔ USA (JFK/MIA/ORD/BOS via Madrid), Spain ↔ Latin America. Iberia DOES carry cabin pets OUT of UK from Heathrow, Manchester, Edinburgh — but NOT Gatwick (Iberia's own UK page is explicit: cabin pets blocked on Gatwick arrivals and departures, plus blocked on flights INTO any UK airport). Cabin NOT allowed: INTO UK (cargo only via IAG Cargo). Snub-nosed breeds allowed cabin only (not hold).",
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "no" },
     fee: "€35 within Spain · €50 Europe / Africa / Middle East · €150 America / Asia",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined",
     carrier: "Soft-sided. Max 45 × 35 × 25 cm (sum of dimensions ≤105 cm)",
-    notes: "Spain's flag carrier, hub at Madrid (MAD). The most-used cabin pet airline for Spanish + Latin American routes. Notably, Iberia DOES carry cabin pets to Ireland — Madrid ⇄ Dublin — unlike the UK, which is cargo-only. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia Booking Offices ≥48 hours before flight. Snub-nosed breeds are cabin-only (banned from hold). For UK travel, use a workaround via Eurotunnel + ferry.",
+    notes: "Spain's flag carrier, hub at Madrid (MAD). The most-used cabin pet airline for Spanish + Latin American routes. Notably, Iberia DOES carry cabin pets to Ireland — Madrid ⇄ Dublin — unlike the UK, which is cargo-only. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia Booking Offices ≥48 hours before flight. Snub-nosed breeds are cabin-only (banned from hold). Important Gatwick caveat: cabin pets blocked at LGW even outbound, so use Heathrow / Manchester / Edinburgh to fly out of UK.",
     intl: "Yes (extensive)",
     verified: "May 2026",
     link: "https://www.iberia.com/us/fly-with-iberia/pets/",
   },
   {
-    name: "ITA Airways",
-    tags: ["europe", "us", "longhaul"],
-    cabin: "Cabin EU/transatlantic ✓ — but NOT to UK",
+    name: "Finnair",
+    tags: ["europe", "us", "longhaul", "japan", "korea"],
+    cabin: "Cabin EU/transatlantic/Asia ✓ — but NOT to UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: domestic Italy (up to 12 kg combined!), Italy ↔ EU, Italy ↔ USA (JFK/MIA/ORD/LAX/BOS via Rome FCO), Italy ↔ Tokyo / Buenos Aires / Sao Paulo. Cabin NOT allowed (both directions): UK (cargo only). Snub-nosed cabin OK (not hold).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "no" },
+    direction: "Cabin allowed: Finland ↔ EU (including Ireland — HEL ⇄ DUB), Finland ↔ USA (HEL ⇄ JFK/LAX/ORD/SEA), Finland ↔ Asia (Japan/Korea/Thailand/Singapore via Helsinki). Cabin NOT allowed (both directions): UK (LHR, MAN), Hong Kong, UAE/Dubai, Australia — these are cargo-only on Finnair. Rabbits, tortoises, hedgehogs allowed in cabin from EU countries only.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    fee: "€60–130 cabin (short-haul ~€60, long-haul ~€130). Hold: €90 short-haul, €300 intercontinental",
+    weight: "Pet + carrier max 8 kg (17.6 lb) combined",
+    carrier: "Soft-sided max 55 × 40 × 23 cm (Finnair). Norra: 55 × 40 × 20 cm. Hard 35 × 30 × 20 cm",
+    notes: "Finland's flag carrier, hub at Helsinki (HEL). A genuine option for Ireland — HEL ⇄ DUB carries cabin pets, unlike most US carriers. Also one of the few airlines flying cabin pets US ⇄ Helsinki ⇄ Japan/Korea via the short polar route. No fit-to-fly certificate required (refreshingly simple). Dogs entering Finland or Ireland need a tapeworm treatment 24–120 hours before arrival. Add pet at booking under Travel Extras; manual confirmation required. Regional flights operated by partner Norra have slightly tighter carrier sizes — check aircraft type. Two pet carriers max per flight (per cabin class), book early.",
+    intl: "Yes (extensive)",
+    verified: "May 2026",
+    link: "https://www.finnair.com/en/pets-on-finnair-flights",
+  },
+  {
+    name: "ITA Airways",
+    tags: ["europe", "us", "longhaul", "uk-out"],
+    cabin: "Cabin EU/transatlantic ✓ — UK-out OK from Heathrow, UK-in cargo only",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Italy (up to 12 kg combined!), Italy ↔ EU, Italy ↔ USA (JFK/MIA/ORD/LAX/BOS via Rome FCO), Italy ↔ Tokyo / Buenos Aires / Sao Paulo. ITA also carries cabin pets OUT of UK from Heathrow (same asymmetric pattern as KLM/AF/Lufthansa — traveller-confirmed including London City Airport). Cabin NOT allowed: INTO UK (cargo only via IAG Cargo). Snub-nosed cabin OK (not hold).",
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "yes", korea: "no" },
     fee: "€73 domestic Italy · €95 Europe / North Africa · €210 N. America · €230 S. America / Japan",
     weight: "Domestic Italy: 12 kg combined. International: 8 kg combined",
@@ -504,16 +561,16 @@ const AIRLINES = [
   },
   {
     name: "SAS Scandinavian Airlines",
-    tags: ["europe", "us", "longhaul"],
-    cabin: "Cabin ✓ — strong network covering Nordics, Europe, US, Asia",
+    tags: ["europe", "us", "longhaul", "uk-out"],
+    cabin: "Cabin ✓ — strong network. UK-out OK from Heathrow, UK-in cargo only.",
     cabinStatus: "yes",
-    direction: "Cabin allowed: SAS allows small cats and dogs in cabin on flights to 25+ countries including the US, China, Japan, Morocco, Turkey, and across Europe. Three hubs: Copenhagen (CPH), Stockholm (ARN), and Oslo (OSL). Cabin NOT allowed: brachycephalic-breed restrictions apply per destination; pets to Iceland and Svalbard have separate rules (Svalbard dogs only, requires permit; no cats to Svalbard).",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
-    fee: "€55 domestic / €70–149 international depending on route (highest fees to China and long-haul Asia)",
+    direction: "Cabin allowed: SAS allows small cats and dogs in cabin on flights to 25+ countries including the US, China, Japan, Morocco, Turkey, and across Europe. Three hubs: Copenhagen (CPH), Stockholm (ARN), and Oslo (OSL). Cabin pets ARE permitted OUT of UK from Heathrow (same asymmetric pattern as KLM/AF/Lufthansa). Cabin NOT allowed: INTO UK (cargo only — UK government rule). Brachycephalic-breed restrictions apply per destination. Pets to Iceland and Svalbard have separate rules (Svalbard dogs only, requires permit; no cats to Svalbard). Confirm Ireland route specifically — SAS lists Ireland as served, but cabin policy on Irish routes can be inconsistent.",
+    originAllowed: { uk: "yes", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "no" },
+    fee: "€55–99 cabin (depending on route, highest for long-haul Asia/US)",
     weight: "Pet + carrier max 8 kg (17.6 lb) combined for cabin",
     carrier: "Soft-sided, max 40 × 25 × 23 cm (15.7 × 9.8 × 9 in). Counts as your carry-on bag.",
-    notes: "Book at least 24 hours in advance — space is limited per flight. Two pets of the same species who know each other can share one carrier if combined weight stays under 8 kg. No cabin pets in exit row or bulkhead seats. SAS does NOT fly cabin pets to/from the UK (UK government embargo applies, like all airlines).",
+    notes: "Book at least 24 hours in advance — space is limited per flight. Two pets of the same species who know each other can share one carrier if combined weight stays under 8 kg. No cabin pets in exit row, bulkhead seats, or Business class. UK is asymmetric: cabin pet allowed OUT of London Heathrow (verified pattern across major EU carriers), but UK-arrival is cargo-only because of UK government rules. Connect at CPH/ARN/OSL for onward cabin to most of the world. Norway/Sweden bilateral arrangement: rabies vaccine NOT required for pet movement Norway↔Sweden specifically.",
     intl: "Yes (extensive network)",
     verified: "May 2026",
     link: "https://www.flysas.com/us-en/travel-info/travel-with-pets/cabin",
@@ -545,7 +602,7 @@ const AIRLINES = [
     fee: "Korea↔Japan/China/Taiwan: $100. Other Asia: $150. Asia↔Americas or Europe/ME/Africa/Oceania: $200. Domestic KRW 30,000.",
     weight: "Pet + carrier max 7 kg (15.4 lb) for cabin. Verified against Korean Air's official Travel With Pets policy May 2026.",
     carrier: "Soft: max 32 × 45 × 19 cm (12.5 × 17.5 × 7.5 in). Hard: same. Soft carriers can be up to 26 cm tall if they compress to 19 cm.",
-    notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo.",
+    notes: "Book at least 48 hrs before international, 24 hrs before domestic. Hub: Seoul Incheon (ICN). The Japan ↔ Korea ↔ rest-of-world path is one of the best ways into/out of Japan in cabin, since JAL and ANA don't carry cabin pets. Max 1 cabin pet per passenger, plus up to 2 in cargo. Important aircraft restriction: pets are NOT accepted on Boeing 737 aircraft for international flights — check the equipment when booking, especially on shorter Asia routes.",
     intl: "Yes (extensive network)",
     verified: "May 2026",
     link: "https://www.koreanair.com/contents/plan-your-travel/special-assistance/travel-with-pets",
@@ -561,23 +618,23 @@ const AIRLINES = [
     fee: "Domestic Korea: 30,000 KRW (~$23). International: 100,000–200,000 KRW (~$75–150).",
     weight: "Pet + carrier max 9 kg (20 lb) — the most generous limit among Korean cabin-pet airlines",
     carrier: "Hard: max 37 cm wide × 23 cm tall. Soft: up to 26 cm tall. T'carriers can be purchased at check-in from Korean airports.",
-    notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point.",
+    notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point. Heads-up: T'Way Air is rebranding to Trinity Airways (announced 9 September 2025, follow-up 25 March 2026) — the rebrand is in transition, and the airline has cut several routes May–October 2026 amid financial restructuring. Confirm your specific route is still operating before booking, and watch for the brand change at the airport.",
     intl: "Yes (limited Asia routes + ZAG)",
     verified: "May 2026",
     link: "https://www.twayair.com/app/serviceInfo/contents/1148",
   },
   {
     name: "Aeromexico",
-    tags: ["mexico", "us", "japan", "south-america", "longhaul", "korea"],
-    cabin: "Cabin ✓ — including Japan ↔ Mexico direct (rare)",
-    cabinStatus: "yes",
-    direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Europe (Madrid, Paris, Amsterdam), and notably Mexico ↔ Japan (one of very few airlines offering cabin pets to Tokyo direct). Snub-nosed breeds allowed in cabin (more flexible than Volaris). Cabin NOT allowed: UK.",
-    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "yes", "central-america": "yes", korea: "yes" },
-    fee: "Mexico domestic: $35. Mexico ↔ US: $125. International long-haul: $200–250.",
-    weight: "Pet + carrier max 9 kg (20 lb)",
-    carrier: "Soft: max 40 × 30 × 21 cm. Hard: max 40 × 28 × 22 cm. Must fit under the seat.",
-    notes: "Aeromexico is one of the very few airlines that allows cabin pets on flights to Japan (alongside United for US routes and Korean carriers for Korea routes). MEX ↔ NRT direct is the Pacific cabin pet route via Mexico. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo.",
+    tags: ["mexico", "us", "south-america", "central-america", "caribbean"],
+    cabin: "Cabin ✓ — but only on flights under 6 hours (a real limit, not a guideline)",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Mexico, Mexico ↔ US, Mexico ↔ Central/South America, Mexico ↔ Caribbean — all under Aeromexico's hard 6-hour cabin pet rule. Cabin NOT allowed: UK (cargo only). Important: Aeromexico's published policy restricts cabin pets to flights with a duration of 6 hours or less, which excludes most transpacific (Tokyo, Seoul) and transatlantic (Paris, Amsterdam, Madrid, Rome) routes. Aeromexico's own example page does cite Mexico City–Paris as an example route, so there may be exceptions on specific aircraft — but for now treat the 6-hour rule as the default. Snub-nosed breeds are accepted in cabin (more flexible than Volaris).",
+    originAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "no", "central-america": "yes", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", japan: "no", "central-america": "yes", korea: "no" },
+    fee: "Mexico domestic: $1,350–1,700 MXN (~$80–100). Mexico ↔ US: ~$162. International long-haul (where allowed): $162–168 each segment.",
+    weight: "Pet + carrier max 9 kg (20 lb) — verified against Aeromexico's official Pets in Cabin page, May 2026",
+    carrier: "Soft or hard: max 40 × 30 × 20 cm (16 × 12 × 8 in). Must fit under the seat.",
+    notes: "Aeromexico's 6-hour rule is the headline catch — most third-party guides describe Aeromexico as offering cabin pets to Japan and Europe, but the airline's own policy contradicts that for any flight over 6 hours. We've previously listed Mexico City–Tokyo as a cabin pet route; that route now appears to have been suspended in early 2026 anyway. Pets must be at least 8 weeks old; brachycephalic breeds welcome in cabin but not cargo. If you're booking a transatlantic Aeromexico route (Paris, Amsterdam, Madrid, Rome), call the airline and confirm cabin pet acceptance in writing before booking — written confirmation matters because the published rule contradicts the example page.",
     intl: "Yes",
     verified: "May 2026",
     link: "https://www.aeromexico.com/en-us/travel-information/pets-in-cabin",
@@ -666,7 +723,7 @@ const DIRECT_ROUTES = [
   { from: "Paris (CDG)", to: "Miami (MIA)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Paris (CDG)", to: "Delhi (DEL)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Paris→India is a strong cabin route — Air France accepts cabin pets and connects to the India AQCS NOC system.", tags: ["europe", "india"] },
   { from: "Paris (CDG)", to: "Vancouver (YVR)", duration: "10h", note: "Air France / Air Canada. ✓ Cabin.", tags: ["europe", "canada"] },
-  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France / Aeromexico. ✓ Cabin (under 8 kg).", tags: ["europe", "mexico"] },
+  { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France direct ✓ Cabin (under 8 kg). Aeromexico is also published here but its 6-hour cabin pet rule excludes transatlantic — written confirmation essential if booking on AM.", tags: ["europe", "mexico"] },
 
   // ═══════ FROM LISBON ═══════
   { from: "Lisbon (LIS)", to: "New York (JFK)", duration: "7h 30m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). TAP is one of the better cabin-pet airlines for transatlantic — more flexibility than some US carriers.", tags: ["europe", "us"] },
@@ -684,41 +741,41 @@ const DIRECT_ROUTES = [
   { from: "Newark (EWR)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark's main direct cabin to Europe — good alternative to JFK for NJ/CT pet owners.", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Paris (CDG)", duration: "7h 30m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Oslo (OSL)", duration: "8h", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Direct US east coast → Norway cabin route. Tapeworm treatment for dogs required 24–120 hrs before arrival.", tags: ["us", "europe"] },
-  { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Newark direct to Mumbai.", tags: ["us", "india"] },
+  { from: "Newark (EWR)", to: "Mumbai (BOM)", duration: "15h direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). The cabin path is via a European hub: EWR → FRA (Lufthansa) → BOM (Lufthansa cabin both legs — single-carrier through-ticket) or EWR → CDG (Air France) → BOM (Air France cabin both legs — single-carrier through-ticket).", tags: ["us", "india"] },
 
   // ═══════ FROM SAN FRANCISCO ═══════
   { from: "San Francisco (SFO)", to: "Frankfurt (FRA)", duration: "11h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). West coast to Europe direct — long flight, consider an overnight in Europe before onward connections.", tags: ["us", "europe"] },
   { from: "San Francisco (SFO)", to: "Paris (CDG)", duration: "11h", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
-  { from: "San Francisco (SFO)", to: "Delhi (DEL)", duration: "16h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). The shortest US west coast → India cabin route. Book via Air India customer support 48 hrs ahead; AQCS NOC must be ready before boarding.", tags: ["us", "india"] },
-  { from: "San Francisco (SFO)", to: "Mumbai (BOM)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Mumbai.", tags: ["us", "india"] },
-  { from: "San Francisco (SFO)", to: "Bengaluru (BLR)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). One of the few direct cabin options to South India.", tags: ["us", "india"] },
-  { from: "San Francisco (SFO)", to: "Hyderabad (HYD)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct SFO→Hyderabad.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Delhi (DEL)", duration: "16h 30m direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). The cabin path is via a European hub: SFO → FRA (Lufthansa) → DEL (Lufthansa cabin both legs — single-carrier through-ticket) or SFO → CDG (Air France) → DEL (Air France cabin both legs — single-carrier through-ticket).", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Mumbai (BOM)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: SFO → FRA → BOM (Lufthansa cabin both legs) or SFO → CDG → BOM (Air France cabin both legs).", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Bengaluru (BLR)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). BLR is one of the harder Indian cities to reach in cabin: Lufthansa specifically excludes Bangalore from cabin pets, so the workable cabin path is SFO → CDG → BLR (Air France cabin both legs, Air France serves BLR) or SFO → FRA → DEL/BOM (Lufthansa) then domestic Air India BLR.", tags: ["us", "india"] },
+  { from: "San Francisco (SFO)", to: "Hyderabad (HYD)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: SFO → FRA → HYD (Lufthansa) or SFO → CDG → DEL/BOM (Air France) then domestic Air India HYD.", tags: ["us", "india"] },
   { from: "San Francisco (SFO)", to: "Tokyo (NRT)", duration: "11h", note: "United. ✓ Cabin direct (no weight limit, carrier-bound, $150). One of very few cabin pet routes to Japan — JAL and ANA don't carry cabin pets. New SFO↔Haneda daily service launches Sept 2026.", tags: ["us", "japan"] },
   { from: "San Francisco (SFO)", to: "Tokyo (HND)", duration: "11h", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026 on 787-10. Haneda is closer to central Tokyo than Narita.", tags: ["us", "japan"] },
   { from: "San Francisco (SFO)", to: "Osaka (KIX)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). 5 weekly flights from Oct 2026 — direct to Osaka Kansai, an approved pet entry port.", tags: ["us", "japan"] },
 
   // ═══════ FROM SEATTLE ═══════
-  { from: "Seattle (SEA)", to: "San Francisco (SFO)", duration: "2h 20m", note: "Alaska Airlines / Delta. ✓ Cabin ($100 each way). The crucial domestic leg for Seattle travellers heading to India — connect at SFO to Air India's direct cabin route to DEL/BOM/BLR/HYD. Same-airline booking preferred to avoid re-check.", tags: ["us"] },
-  { from: "Seattle (SEA)", to: "Frankfurt (FRA)", duration: "10h 30m", note: "Lufthansa / Condor. ✓ Cabin (under 8 kg). Seattle's main direct cabin route to Europe — onward to India via Lufthansa (except Bangalore — Lufthansa specifically excludes BLR; use Air India SFO instead).", tags: ["us", "europe"] },
+  { from: "Seattle (SEA)", to: "San Francisco (SFO)", duration: "2h 20m", note: "Alaska Airlines / Delta. ✓ Cabin ($100 each way). Useful domestic feeder for Seattle travellers connecting onward in cabin (e.g. United SFO→Tokyo for Japan-bound trips). For India, route via Europe instead — Seattle→Frankfurt (Lufthansa) or Seattle→Amsterdam (KLM/Delta) then onward cabin to India.", tags: ["us"] },
+  { from: "Seattle (SEA)", to: "Frankfurt (FRA)", duration: "10h 30m", note: "Lufthansa / Condor. ✓ Cabin (under 8 kg). Seattle's main direct cabin route to Europe — onward to India via Lufthansa (except Bangalore — Lufthansa specifically excludes BLR; for BLR, route via Paris on Air France instead).", tags: ["us", "europe"] },
   { from: "Seattle (SEA)", to: "Amsterdam (AMS)", duration: "9h 45m", note: "Delta / KLM. ✓ Cabin (under 8 kg). Seattle's direct to Amsterdam — onward KLM cabin to most major Indian cities.", tags: ["us", "europe"] },
   { from: "Seattle (SEA)", to: "Paris (CDG)", duration: "10h", note: "Delta / Air France. ✓ Cabin (under 8 kg). Direct to Paris — onward Air France cabin to Delhi/Mumbai.", tags: ["us", "europe"] },
   { from: "Seattle (SEA)", to: "Vancouver (YVR)", duration: "1h", note: "Alaska Airlines. ✓ Cabin ($100 each way). Short domestic-style hop to Canada.", tags: ["us", "canada"] },
 
   // ═══════ FROM JFK ═══════
-  { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). East coast → India direct.", tags: ["us", "india"] },
-  { from: "New York (JFK)", to: "Mumbai (BOM)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). JFK→Mumbai direct cabin.", tags: ["us", "india"] },
+  { from: "New York (JFK)", to: "Delhi (DEL)", duration: "14h 30m direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: JFK → FRA (Lufthansa) → DEL or JFK → CDG (Air France) → DEL — both legs in cabin under 8 kg.", tags: ["us", "india"] },
+  { from: "New York (JFK)", to: "Mumbai (BOM)", duration: "16h direct (Air India does not transport pets) / ~21h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: JFK → FRA (Lufthansa) → BOM or JFK → CDG (Air France) → BOM — both legs in cabin under 8 kg.", tags: ["us", "india"] },
 
   // ═══════ FROM CHICAGO ═══════
   { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
   { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
-  { from: "Chicago (ORD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Midwest direct to India.", tags: ["us", "india"] },
+  { from: "Chicago (ORD)", to: "Delhi (DEL)", duration: "14h 30m direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: ORD → FRA (Lufthansa) → DEL or ORD → CDG (Air France) → DEL — both legs in cabin under 8 kg.", tags: ["us", "india"] },
   { from: "Chicago (ORD)", to: "Tokyo (NRT)", duration: "13h", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026 on Boeing 787-9. One of very few cabin pet paths Chicago→Japan.", tags: ["us", "japan"] },
 
   // ═══════ FROM WASHINGTON DULLES ═══════
   { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
   { from: "Washington (IAD)", to: "Paris (CDG)", duration: "7h 45m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
   { from: "Washington (IAD)", to: "Munich (MUC)", duration: "9h 15m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Munich is Lufthansa's second hub — a strong onward cabin connection point for Europe.", tags: ["us", "europe"] },
-  { from: "Washington (IAD)", to: "Delhi (DEL)", duration: "14h 30m", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Dulles direct to India.", tags: ["us", "india"] },
+  { from: "Washington (IAD)", to: "Delhi (DEL)", duration: "14h 30m direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: IAD → FRA (Lufthansa) → DEL or IAD → CDG (Air France) → DEL — both legs in cabin under 8 kg.", tags: ["us", "india"] },
 
   // ═══════ FROM CAPE TOWN ═══════
   { from: "Cape Town (CPT)", to: "Johannesburg (JNB)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. Domestic South Africa only. Submit Lift's Dog-in-Cabin form 7+ days ahead. No cats. International SA travel is cargo-only on all airlines.", tags: ["south-africa"] },
@@ -731,27 +788,27 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM DELHI ═══════
   { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
-  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined).", tags: ["india", "europe"] },
+  { from: "Delhi (DEL)", to: "Paris (CDG)", duration: "9h", note: "Air India 'Paws on Board' / Air France. ✓ Cabin direct (under 10 kg Air India / under 8 kg Air France). DEL→CDG is on Air India's permitted-cabin list (Europe excluding the UK).", tags: ["india", "europe"] },
   { from: "Delhi (DEL)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin route from Delhi to Abu Dhabi.", tags: ["india", "dubai"] },
   { from: "Delhi (DEL)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / Air India. ✓ Cabin. Delhi→Frankfurt is one of the main India→Europe cabin routes.", tags: ["india", "europe"] },
-  { from: "Delhi (DEL)", to: "San Francisco (SFO)", duration: "16h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). The shortest direct India→US west coast cabin route — book via Air India customer support 48 hrs ahead. For Seattle, connect SFO→SEA on Alaska/Delta after a layover.", tags: ["india", "us"] },
-  { from: "Delhi (DEL)", to: "New York (JFK)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct US east coast option.", tags: ["india", "us"] },
-  { from: "Delhi (DEL)", to: "Chicago (ORD)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct Midwest US option.", tags: ["india", "us"] },
-  { from: "Delhi (DEL)", to: "Washington (IAD)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Direct DC option.", tags: ["india", "us"] },
-  { from: "Delhi (DEL)", to: "Toronto (YYZ)", duration: "14h", note: "Air India 'Paws on Board' / Air Canada. ✓ Cabin direct (under 10 kg combined). For Canada-bound travellers — Air Canada also flies the route.", tags: ["india", "canada"] },
+  { from: "Delhi (DEL)", to: "San Francisco (SFO)", duration: "16h direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: DEL → FRA (Lufthansa cabin both legs) → SFO (Lufthansa) or DEL → CDG (Air France cabin both legs) → SFO (Air France) — both legs in cabin. For Seattle, continue SFO→SEA in cabin on Alaska/Delta after a layover.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "New York (JFK)", duration: "15h direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: DEL → FRA (Lufthansa cabin both legs) → JFK (Lufthansa) or DEL → CDG (Air France cabin both legs) → JFK (Air France) — both legs in cabin.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Chicago (ORD)", duration: "15h direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: DEL → FRA (Lufthansa cabin both legs) → ORD (Lufthansa) or DEL → CDG (Air France cabin both legs) → ORD (Air France) — both legs in cabin.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Washington (IAD)", duration: "15h direct (Air India does not transport pets) / ~20h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: DEL → FRA (Lufthansa cabin both legs) → IAD (Lufthansa) or DEL → CDG (Air France cabin both legs) → IAD (Air France) — both legs in cabin.", tags: ["india", "us"] },
+  { from: "Delhi (DEL)", to: "Toronto (YYZ)", duration: "14h direct (Air Canada cabin) / Air India direct cargo only", note: "Air Canada. ✓ Cabin direct (under 10 kg combined) — Air Canada serves DEL→YYZ in cabin. Air India also operates the route but only as cargo (Air India's own policy excludes cabin pets to Canada).", tags: ["india", "canada"] },
 
   // ═══════ FROM MUMBAI ═══════
   { from: "Mumbai (BOM)", to: "Frankfurt (FRA)", duration: "9h", note: "Lufthansa / Air India. ✓ Cabin (under 8 kg Lufthansa / under 10 kg Air India). Mumbai is one of India's six approved pet-entry airports — works for both departures and arrivals.", tags: ["india", "europe"] },
   { from: "Mumbai (BOM)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
   { from: "Mumbai (BOM)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France / Air India. ✓ Cabin.", tags: ["india", "europe"] },
-  { from: "Mumbai (BOM)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Mumbai's direct US west coast cabin route.", tags: ["india", "us"] },
-  { from: "Mumbai (BOM)", to: "New York (JFK)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Mumbai's direct US east coast cabin route.", tags: ["india", "us"] },
-  { from: "Mumbai (BOM)", to: "Newark (EWR)", duration: "15h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Alternative US east coast option via Newark.", tags: ["india", "us"] },
+  { from: "Mumbai (BOM)", to: "San Francisco (SFO)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: BOM → FRA (Lufthansa cabin both legs) → SFO (Lufthansa) or BOM → CDG (Air France cabin both legs) → SFO (Air France) — both legs in cabin.", tags: ["india", "us"] },
+  { from: "Mumbai (BOM)", to: "New York (JFK)", duration: "15h direct (Air India does not transport pets) / ~21h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: BOM → FRA (Lufthansa cabin both legs) → JFK (Lufthansa) or BOM → CDG (Air France cabin both legs) → JFK (Air France) — both legs in cabin.", tags: ["india", "us"] },
+  { from: "Mumbai (BOM)", to: "Newark (EWR)", duration: "15h direct (Air India does not transport pets) / ~21h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: BOM → FRA (Lufthansa cabin both legs) → EWR (Lufthansa) or BOM → CDG (Air France cabin both legs) → EWR (Air France) — both legs in cabin.", tags: ["india", "us"] },
 
   // ═══════ FROM BENGALURU ═══════
   { from: "Bengaluru (BLR)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
   { from: "Bengaluru (BLR)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
-  { from: "Bengaluru (BLR)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Note: Lufthansa specifically EXCLUDES Bangalore from cabin pets, but Air India's direct route is fully cabin-eligible.", tags: ["india", "us"] },
+  { from: "Bengaluru (BLR)", to: "San Francisco (SFO)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). BLR is harder than DEL/BOM in cabin: Lufthansa specifically excludes Bangalore from cabin pets, so the workable cabin path is BLR → CDG (Air France) → SFO (Air France) — both legs in cabin under 8 kg.", tags: ["india", "us"] },
 
   // ═══════ FROM CHENNAI ═══════
   { from: "Chennai (MAA)", to: "Frankfurt (FRA)", duration: "10h", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
@@ -763,33 +820,33 @@ const DIRECT_ROUTES = [
   // ═══════ FROM HYDERABAD ═══════
   { from: "Hyderabad (HYD)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
   { from: "Hyderabad (HYD)", to: "Abu Dhabi (AUH)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
-  { from: "Hyderabad (HYD)", to: "San Francisco (SFO)", duration: "17h", note: "Air India 'Paws on Board'. ✓ Cabin direct (under 10 kg combined). Hyderabad has a direct US west coast cabin route via Air India.", tags: ["india", "us"] },
+  { from: "Hyderabad (HYD)", to: "San Francisco (SFO)", duration: "17h direct (Air India does not transport pets) / ~22h+ via Europe", note: "✗ No direct cabin route — Air India does not carry pets to/from the US in any form (cabin, baggage or cargo). Use a European hub: HYD → FRA (Lufthansa) → SFO (Lufthansa) or HYD → CDG (Air France) → SFO (Air France) — both legs in cabin under 8 kg.", tags: ["india", "us"] },
 
   // ═══════ FROM TOKYO (NARITA) ═══════
   { from: "Tokyo (NRT)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). One of the very few cabin pet routes OUT of Japan. JAL and ANA don't carry cabin pets at all.", tags: ["japan", "us"] },
   { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026.", tags: ["japan", "us"] },
-  { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan"] },
-  { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). One of very few cabin pet routes out of Japan — Aeromexico flies Tokyo↔Mexico City directly with cabin pets accepted.", tags: ["japan", "mexico"] },
+  { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan", "korea"] },
+  { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. Cargo only if Aeromexico resumes the route, and only via specialist freight forwarder. For Japan→Mexico cabin, route via US/Korea instead.", tags: ["japan", "mexico"] },
 
   // ═══════ FROM TOKYO (HANEDA) ═══════
   { from: "Tokyo (HND)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Daily service from Sept 2026. Haneda is closer to central Tokyo than Narita.", tags: ["japan", "us"] },
-  { from: "Tokyo (HND)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Shortest Japan↔Korea cabin route from central Tokyo.", tags: ["japan"] },
+  { from: "Tokyo (HND)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Shortest Japan↔Korea cabin route from central Tokyo.", tags: ["japan", "korea"] },
 
   // ═══════ FROM OSAKA (KANSAI) ═══════
   { from: "Osaka (KIX)", to: "San Francisco (SFO)", duration: "10h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). 5 weekly flights from Oct 2026. Osaka is an approved pet entry port.", tags: ["japan", "us"] },
-  { from: "Osaka (KIX)", to: "Seoul (ICN)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Direct Korea cabin connection from Osaka.", tags: ["japan"] },
+  { from: "Osaka (KIX)", to: "Seoul (ICN)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Direct Korea cabin connection from Osaka.", tags: ["japan", "korea"] },
 
   // ═══════ FROM SEOUL ═══════
-  { from: "Seoul (ICN)", to: "Tokyo (NRT)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Reverse of the Japan→Korea cabin route. Onward Korean Air connects to 30+ countries in cabin.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "Tokyo (HND)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Direct to Tokyo's closer-to-city airport.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "Osaka (KIX)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin.", tags: ["japan"] },
-  { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us"] },
+  { from: "Seoul (ICN)", to: "Tokyo (NRT)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Reverse of the Japan→Korea cabin route. Onward Korean Air connects to 30+ countries in cabin.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "Tokyo (HND)", duration: "2h 30m", note: "Korean Air / Asiana. ✓ Cabin (under 7 kg). Direct to Tokyo's closer-to-city airport.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "Osaka (KIX)", duration: "1h 50m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin.", tags: ["japan", "korea"] },
+  { from: "Seoul (ICN)", to: "San Francisco (SFO)", duration: "11h", note: "Korean Air. ✓ Cabin direct ($200, under 7 kg). The Korea→US route for travellers connecting from Japan via Seoul.", tags: ["japan", "us", "korea"] },
 
   // ═══════ FROM MEXICO CITY ═══════
-  { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✓ Cabin direct (under 9 kg combined, $200–250). The Mexico→Japan cabin route — rare and useful for Latin American travellers heading to Japan.", tags: ["mexico", "japan"] },
+  { from: "Mexico City (MEX)", to: "Tokyo (NRT)", duration: "14h 30m", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. For Mexico→Japan in cabin, position to US west coast and fly United (e.g. LAX/SFO → HND/NRT direct, no weight limit, $150).", tags: ["mexico", "japan"] },
 
   // ═══════ FROM ABU DHABI ═══════
-  { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same $399 promo through May 2026.", tags: ["dubai", "india"] },
+  { from: "Abu Dhabi (AUH)", to: "Delhi / Mumbai", duration: "3h 30m", note: `Etihad. ✓ Cabin (under 8 kg). The return leg of the Etihad cabin route — same ${ETIHAD_PROMO_SHORT}.`, tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Delhi (DEL)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Delhi.", tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Mumbai (BOM)", duration: "3h", note: "Etihad. ✓ Cabin (under 8 kg). Direct cabin AUH→Mumbai.", tags: ["dubai", "india"] },
   { from: "Abu Dhabi (AUH)", to: "Bengaluru (BLR)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["dubai", "india"] },
@@ -811,9 +868,10 @@ const DIRECT_ROUTES = [
   { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward. Cabin pets can also fly INTO Ireland — Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry them — though options inbound are fewer. Connects onward across Europe.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). KLM also carries cabin pets the other way, Amsterdam → Dublin — one of the few confirmed cabin routes into Ireland. Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin OUT of Ireland (under 8 kg). Onward connections across Europe and beyond.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "New York (JFK)", duration: "7h 30m", note: "Delta. ✓ Cabin direct to the US for small dogs, cats and household birds ($200 each way, payable at check-in). Must be a true Delta-operated flight (DL45 daily) — not an Aer Lingus or JetBlue codeshare, since those carriers don't take cabin pets. Soft-sided carrier max 18 × 11 × 11 in (45 × 28 × 28 cm), must fit under seat. Aircraft is usually a Boeing 767-400 or A330-300, both with confirmed under-seat space. Pets cannot travel cargo or checked baggage on this route, cabin only. Notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Some third-party policy lists still show Ireland as banned on Delta — that information is out of date; confirm directly with Delta Reservations at booking.", tags: ["us"] },
 
   // ═══════ FROM LONDON ═══════
-  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: "Etihad. ✓ Cabin OUT of UK (under 8 kg) — Etihad's restrictions block 'flights to London/Manchester' (inbound), not flights out. Promo $399 per segment through May 2026. The cabin route into the UAE — AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.", tags: ["uk-out", "dubai"] },
+  { from: "London (LHR)", to: "Abu Dhabi (AUH)", duration: "7h 30m", note: `Etihad. ✓ Cabin OUT of UK (under 8 kg) — Etihad's restrictions block 'flights to London/Manchester' (inbound), not flights out. ${ETIHAD_PROMO_SHORT}. The cabin route into the UAE — AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.`, tags: ["uk-out", "dubai"] },
   { from: "London (LHR)", to: "Amsterdam (AMS)", duration: "1h 15m", note: "KLM. ✓ Cabin out of UK (under 8 kg). KLM hub for onward cabin flights to USA, India.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Frankfurt (FRA)", duration: "1h 35m", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg). Frankfurt Animal Lounge available for cargo connections.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Istanbul (IST)", duration: "3h 50m", note: "Turkish Airlines. ✓ Cabin out of UK (under 8 kg, economy only since April 2026).", tags: ["uk-out", "europe"] },
@@ -844,7 +902,6 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM BARCELONA ═══════
   { from: "Barcelona (BCN)", to: "Madrid (MAD)", duration: "1h 10m", note: "Iberia Express / Vueling. ✓ Cabin (under 8 kg, €35 within Spain).", tags: ["europe"] },
-  { from: "Barcelona (BCN)", to: "Paris (CDG)", duration: "1h 55m", note: "Vueling / Air France. ✓ Cabin (under 8 kg). BCN is a strong Vueling hub — one of the best European cabin options.", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "Amsterdam (AMS)", duration: "2h 20m", note: "Vueling / KLM. ✓ Cabin (under 8 kg).", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "Frankfurt (FRA)", duration: "2h 20m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "New York (JFK)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150 to Americas). Barcelona's own transatlantic cabin route — a good alternative to Madrid for US-bound travel.", tags: ["us", "europe"] },
@@ -874,7 +931,7 @@ const DIRECT_ROUTES = [
   { from: "Tokyo (NRT)", to: "Oslo (OSL)", duration: "11h 30m", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Reverse of the OSL→NRT cabin route. Tapeworm treatment for dogs required before Norway entry. SAS is one of the very few airlines offering cabin pets Tokyo→Europe direct.", tags: ["japan", "europe"] },
 
   // ═══════ FROM MANCHESTER ═══════
-  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: "Etihad. ✓ Cabin out of UK (under 8 kg). Promo $399 segment through May 2026.", tags: ["uk-out", "dubai"] },
+  { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: `Etihad. ✓ Cabin out of UK (under 8 kg). ${ETIHAD_PROMO_SHORT}.`, tags: ["uk-out", "dubai"] },
   { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
 
   // ═══════ FROM VANCOUVER ═══════
@@ -928,8 +985,8 @@ const DIRECT_ROUTES = [
   { from: "Amsterdam (AMS)", to: "Lima (LIM)", duration: "12h 30m", note: "KLM. ✓ Cabin (under 8 kg). Dutch gateway to Peru.", tags: ["europe", "south-america"] },
 
   // ═══════ MEXICO → SOUTH AMERICA cabin ═══════
-  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "Aeromexico. ✓ Cabin (under 9 kg).", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "Aeromexico, LATAM. ✓ Cabin (under 7-9 kg).", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Buenos Aires (EZE)", duration: "10h", note: "LATAM (via São Paulo or Santiago) ✓ Cabin — the reliable bet. Aeromexico is published direct but its 6-hour cabin pet rule excludes a 10-hour flight; written confirmation essential if booking on AM.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "Lima (LIM)", duration: "6h", note: "LATAM ✓ Cabin (under 7-9 kg). Aeromexico is also published here but its 6-hour rule sits right on the edge — LATAM is the cleaner cabin bet.", tags: ["mexico", "south-america"] },
 
   // ═══════ FROM MONTEGO BAY ═══════
   { from: "Montego Bay (MBJ)", to: "Miami (MIA)", duration: "1h 50m", note: "JetBlue, AA, Delta. ✓ Cabin (under 20 lb on JetBlue). Returning to US: standard CDC Dog Import Form (Jamaica is NOT on CDC high-risk list).", tags: ["caribbean", "us"] },
@@ -955,6 +1012,7 @@ const DIRECT_ROUTES = [
 
   { from: "New York (JFK)", to: "Abu Dhabi (AUH)", duration: "12h 45m", note: "Etihad. ✓ Cabin OUT of the US (under 8 kg) — Etihad's restrictions block 'flights to the USA', not flights out. The cabin route into the UAE; AUH is 90 min from Dubai by road. Confirm your route with Etihad when booking.", tags: ["us", "dubai"] },
   { from: "New York (JFK)", to: "Amsterdam (AMS)", duration: "7h 30m", note: "KLM. ✓ Cabin (under 8 kg). Strong onward hub for India / continental Europe.", tags: ["us", "europe"] },
+  { from: "New York (JFK)", to: "Dublin (DUB)", duration: "6h 35m", note: "Delta. ✓ Cabin direct to Ireland on true Delta-operated flights (DL44 daily) — small dogs, cats and household birds, $200 each way payable at check-in. Not Aer Lingus or JetBlue codeshares — those carriers don't take cabin pets. Soft-sided carrier max 18 × 11 × 11 in (45 × 28 × 28 cm). Aircraft usually Boeing 767-400 or A330-300. Cabin only (no cargo or checked baggage on this route). Dogs entering Ireland need an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival, and you must notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Confirm directly with Delta Reservations — some third-party policy lists still show Ireland as banned, but that's out of date.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Frankfurt (FRA)", duration: "7h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Larger carrier allowance than most (55×40×23 cm).", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Istanbul (IST)", duration: "10h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for cabin onward to Europe, India, Africa.", tags: ["us", "europe"] },
   { from: "New York (JFK)", to: "Lisbon (LIS)", duration: "7h 15m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). Snub-nosed breeds welcome.", tags: ["us", "europe"] },
@@ -995,7 +1053,7 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM SÃO PAULO ═══════
   { from: "São Paulo (GRU)", to: "Miami (MIA)", duration: "8h 30m", note: "LATAM cabin (under 7 kg) — note: cabin pet service on this route currently suspended due to CDC dog rules; verify status before booking. American Airlines: cargo only (PetEmbark). Brazil's main US gateway — daily.", tags: ["south-america", "us"] },
-  { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg, ~USD 200). Direct overnight.", tags: ["south-america", "us"] },
+  { from: "São Paulo (GRU)", to: "New York (JFK)", duration: "10h", note: "LATAM cabin (under 7 kg, ~USD 200) — note: cabin pet service on US ↔ Brazil routes currently suspended due to CDC dog rules; verify status with LATAM before booking. Direct overnight when operating.", tags: ["south-america", "us"] },
   { from: "São Paulo (GRU)", to: "Madrid (MAD)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin. The main South America → Europe cabin route. Onward to most of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Paris (CDG)", duration: "11h 30m", note: "Air France, LATAM. ✓ Cabin. Onward to all of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Buenos Aires (EZE)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin (LATAM under 7 kg). The main intra-South-America cabin pet hop.", tags: ["south-america"] },
@@ -1029,11 +1087,11 @@ const DIRECT_ROUTES = [
 
   // ═══════ TO SOUTH AMERICA from elsewhere ═══════
   { from: "Mexico City (MEX)", to: "Bogotá (BOG)", duration: "4h 30m", note: "Aeromexico, Avianca. ✓ Cabin. Mexico ↔ Colombia cabin hop.", tags: ["mexico", "south-america"] },
-  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "Aeromexico, LATAM. ✓ Cabin. Mexico ↔ Brazil cabin direct.", tags: ["mexico", "south-america"] },
+  { from: "Mexico City (MEX)", to: "São Paulo (GRU)", duration: "9h 30m", note: "LATAM ✓ Cabin — the reliable bet for Mexico ↔ Brazil. Aeromexico is published direct but its 6-hour cabin pet rule excludes a 9.5-hour flight; written confirmation essential if booking on AM.", tags: ["mexico", "south-america"] },
   { from: "Madrid (MAD)", to: "Buenos Aires (EZE)", duration: "12h", note: "Iberia, LATAM, Aerolineas Argentinas. ✓ Cabin. Reverse of EZE→MAD — Spain is Latin America's main European gateway.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "São Paulo (GRU)", duration: "10h 30m", note: "Iberia, LATAM. ✓ Cabin.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Bogotá (BOG)", duration: "10h", note: "Iberia, Avianca. ✓ Cabin.", tags: ["europe", "south-america"] },
-  { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM. ✓ Cabin (under 7 kg).", tags: ["us", "south-america"] },
+  { from: "New York (JFK)", to: "São Paulo (GRU)", duration: "10h", note: "LATAM cabin (under 7 kg) — note: cabin pet service on US ↔ Brazil routes currently suspended due to CDC dog rules; verify status with LATAM before booking.", tags: ["us", "south-america"] },
 
   // ═══════ COPA AIRLINES VIA PANAMA — deeper South America cabin routes ═══════
   { from: "Miami (MIA)", to: "Panama City (PTY)", duration: "2h 50m", note: "Copa Airlines. ✓ Cabin (under 10 kg, $125 international). Copa's main US gateway — best onward connections to deeper South America (Uruguay, Paraguay, Bolivia, Ecuador).", tags: ["us", "central-america"] },
@@ -1052,6 +1110,32 @@ const DIRECT_ROUTES = [
   { from: "Montevideo (MVD)", to: "Bogotá (BOG)", duration: "6h 30m", note: "Avianca. ✓ Cabin (under 10 kg). Reverse of BOG→MVD.", tags: ["south-america"] },
   { from: "Montevideo (MVD)", to: "Panama City (PTY)", duration: "7h 30m", note: "Copa Airlines. ✓ Cabin (under 10 kg). Reverse of PTY→MVD.", tags: ["south-america", "central-america"] },
   { from: "Montevideo (MVD)", to: "Buenos Aires (EZE)", duration: "1h", note: "LATAM, Aerolineas Argentinas. ✓ Cabin. Short cross-river hop.", tags: ["south-america"] },
+  // ─── European city pairs added May 2026 — featuring the four new airports
+  //     (DUS, HAM, STR, ATH). Each includes a real airline, current cabin
+  //     status, fee/weight where known, and the meaningful catch.
+  { from: "Düsseldorf (DUS)", to: "Newark (EWR)", duration: "9h", note: "United Airlines. ✓ Cabin (under 9 kg combined). One of the few US ↔ German routes that doesn't require connecting through Frankfurt or Munich. United fee $125 each way. Practical for German-speaking US relocators in the Rhine-Ruhr corridor.", tags: ["us", "europe"] },
+  { from: "Düsseldorf (DUS)", to: "London Heathrow (LHR)", duration: "1h 30m", note: "Lufthansa, British Airways. UK cabin entry is BLOCKED on all airlines (UK government rule, cargo only via IAG Cargo). LHR → DUS is fine in cabin on Lufthansa for European travellers leaving the UK.", tags: ["europe", "uk"] },
+  { from: "Hamburg (HAM)", to: "Copenhagen (CPH)", duration: "1h", note: "SAS, Lufthansa. ✓ Cabin (8 kg). The quickest cabin hop between northern Germany and Scandinavia — useful for SAS connections onward to Oslo, Stockholm and US East Coast.", tags: ["europe"] },
+  { from: "Hamburg (HAM)", to: "Frankfurt (FRA)", duration: "1h 10m", note: "Lufthansa. ✓ Cabin (8 kg). Most long-haul cabin trips out of Hamburg connect through Frankfurt. Lufthansa fee €60 short-haul.", tags: ["europe"] },
+  { from: "Stuttgart (STR)", to: "Munich (MUC)", duration: "55m", note: "Lufthansa. ✓ Cabin (8 kg). Short connection to Lufthansa's southern hub for onward US/Asia cabin pet travel.", tags: ["europe"] },
+  { from: "Stuttgart (STR)", to: "Amsterdam (AMS)", duration: "1h 30m", note: "KLM. ✓ Cabin (8 kg). KLM's preferred routing for Stuttgart-area travellers heading to the US, Canada or India — connect at Schiphol.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Frankfurt (FRA)", duration: "3h", note: "Lufthansa, Aegean (codeshare). ✓ Cabin (8 kg). The best onward cabin pet route from Greece to North America — connect at Frankfurt for direct Lufthansa cabin flights to JFK, ORD, IAD, MIA.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Paris CDG (CDG)", duration: "3h 30m", note: "Air France, Aegean (codeshare). ✓ Cabin (8 kg). Strong cabin pet option from Greece — Air France hub at CDG connects to most cabin pet destinations worldwide.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Istanbul (IST)", duration: "1h 30m", note: "Turkish Airlines, Aegean. ✓ Cabin (8 kg). Useful first leg for Greek travellers heading to Middle East, India, Russia or Central Asia via Istanbul.", tags: ["europe"] },
+  { from: "Athens (ATH)", to: "Thessaloniki (SKG)", duration: "55m", note: "Aegean, SKY express. ✓ Cabin (8 kg, Aegean fee €20). Greece's main domestic cabin pet route. Important: many Greek island airports are NOT approved pet entry points — ATH or SKG is usually your only legal Greek arrival airport from outside the EU.", tags: ["europe"] },
+
+  // ═══════ FROM / TO RUSSIA — Aeroflot only ═══════
+  // Russian airspace closures since Feb 2022 mean Aeroflot is essentially the
+  // only cabin-pet option for Russia routes. The practical Western-traveller
+  // pairs are Russia ↔ UAE and Russia ↔ India.
+  { from: "Moscow (SVO)", to: "Dubai (DXB)", duration: "5h 30m", note: "Aeroflot. ✓ Cabin (8 kg under-seat, +15 kg adjacent-seat option). One of the few Russia ↔ Western-friendly cabin pet routes still operating. Dubai is cargo-only on arrival for most other airlines; Aeroflot is the cabin exception.", tags: ["russia", "dubai"] },
+  { from: "Moscow (SVO)", to: "Delhi (DEL)", duration: "6h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). India needs the AQCS NOC on arrival.", tags: ["russia", "india"] },
+  { from: "Moscow (SVO)", to: "Mumbai (BOM)", duration: "7h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). AQCS NOC required.", tags: ["russia", "india"] },
+  { from: "Moscow (SVO)", to: "Istanbul (IST)", duration: "3h", note: "Aeroflot, Turkish Airlines. ✓ Cabin (8 kg). Istanbul is a useful hub for onward cabin connections — Turkish flies cabin pets to most of Europe and Asia.", tags: ["russia", "europe"] },
+  { from: "Dubai (DXB)", to: "Moscow (SVO)", duration: "5h 30m", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). Russia requires an export health certificate (5-day validity) and microchip-linked rabies vaccine.", tags: ["dubai", "russia"] },
+  { from: "Delhi (DEL)", to: "Moscow (SVO)", duration: "6h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). India's AQCS export documentation needed for departure.", tags: ["india", "russia"] },
+  { from: "Mumbai (BOM)", to: "Moscow (SVO)", duration: "7h", note: "Aeroflot. ✓ Cabin (8 kg + adjacent-seat 15 kg option). AQCS export documentation required.", tags: ["india", "russia"] },
+  { from: "Istanbul (IST)", to: "Moscow (SVO)", duration: "3h", note: "Aeroflot, Turkish Airlines. ✓ Cabin (8 kg). Useful hop for Western travellers routing via Turkey — Turkish Airlines connects most of Europe cabin-direct into Istanbul.", tags: ["europe", "russia"] },
 ];
 
 const WORKAROUND_ROUTES_TABLE = [
@@ -1233,6 +1317,24 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "SWISS (≤ 8 kg, soft carrier ≤ 55×40×23 cm) and Air France (≤ 8 kg, carrier ≤ 46×28×24 cm) both fly cabin pets on this short hop. Reserve the pet's place at booking.",
     tags: ["europe"],
   },
+  {
+    from: "Berlin (BER)", to: "Frankfurt (FRA)", duration: "1h 15m",
+    legs: [{ route: "Berlin (BER) → Frankfurt (FRA)", time: "1h 15m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets on this domestic German hop (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). Note that easyJet and Ryanair, also frequent on this route, do not take cabin pets.",
+    tags: ["europe"],
+  },
+  {
+    from: "Berlin (BER)", to: "Munich (MUC)", duration: "1h 10m",
+    legs: [{ route: "Berlin (BER) → Munich (MUC)", time: "1h 10m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets Berlin–Munich (≤ 8 kg incl. carrier, soft carrier ≤ 55×40×23 cm, register at least 72 hours ahead). Munich is a strong hub for onward cabin connections.",
+    tags: ["europe"],
+  },
+  {
+    from: "London (LHR)", to: "Berlin (BER)", duration: "1h 55m",
+    legs: [{ route: "London (LHR) → Berlin (BER)", time: "1h 55m", airline: "Lufthansa ✓ Cabin" }],
+    note: "Lufthansa carries cabin pets OUT of the UK to Berlin (≤ 8 kg incl. carrier, register at least 72 hours ahead). Remember the cabin ban is on flights INTO the UK — leaving the UK in the cabin is fine.",
+    tags: ["uk-out", "europe"],
+  },
 
   // UK → USA via Europe (cabin all the way)
   {
@@ -1358,7 +1460,7 @@ const WORKAROUND_ROUTES_TABLE = [
     legs: [
       { route: "JFK → Paris CDG", time: "7h 45m", airline: "Air France ✓ Cabin" },
       { route: "Layover at CDG", time: "3–4h", airline: "Recommended buffer for pet handover" },
-      { route: "Paris CDG → Abu Dhabi AUH", time: "6h 45m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "Paris CDG → Abu Dhabi AUH", time: "6h 45m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
     ],
     note: "No direct US ↔ UAE cabin flight exists on any airline. The cabin route uses Paris (or Frankfurt/Amsterdam/Zurich) as the pivot, then Etihad onward to Abu Dhabi. Abu Dhabi is 90 min from Dubai by road.",
     tags: ["us", "dubai", "europe"],
@@ -1382,7 +1484,7 @@ const WORKAROUND_ROUTES_TABLE = [
     to: "Dubai (DXB)",
     duration: "~9h total + 90min drive",
     legs: [
-      { route: "LHR → Abu Dhabi AUH", time: "7h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "LHR → Abu Dhabi AUH", time: "7h 30m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
       { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
     ],
     note: "Etihad is the only airline that allows cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. From AUH it's a 90-minute drive to Dubai. The neat thing about this route: you fly direct from Heathrow with your pet in cabin and skip a stopover entirely. Manchester also works (same Etihad cabin policy).",
@@ -1394,7 +1496,7 @@ const WORKAROUND_ROUTES_TABLE = [
     to: "Dubai (DXB)",
     duration: "~5h total + 90min drive",
     legs: [
-      { route: "DEL/BOM → Abu Dhabi AUH", time: "3h 30m", airline: "Etihad ✓ Cabin ($399 promo through May 2026)" },
+      { route: "DEL/BOM → Abu Dhabi AUH", time: "3h 30m", airline: `Etihad ✓ Cabin (${ETIHAD_PROMO_SHORT})` },
       { route: "AUH → Dubai (taxi)", time: "~90 min", airline: "AED 250 taxi, pet with you" },
     ],
     note: "No airline allows cabin pets INTO Dubai (DXB) — UAE law. The workaround: fly cabin into Abu Dhabi on Etihad (cabin from Delhi, Mumbai, Bangalore, and Chennai all permitted), then 90-minute road transfer to Dubai. Etihad cabin from Indian airports outside those four is NOT permitted (Ahmedabad, Jaipur, Kochi excluded).",
@@ -1609,13 +1711,15 @@ const REGION_HUBS = {
   "south-africa": ["Johannesburg (JNB)", "Cape Town (CPT)"],
   "south-america": ["São Paulo (GRU)", "Buenos Aires (EZE)", "Santiago (SCL)", "Bogotá (BOG)", "Lima (LIM)", "Montevideo (MVD)"],
   "central-america": ["Panama City (PTY)"],
-  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)", "Seoul Incheon (ICN)"],
+  "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)"],
+  "korea": ["Seoul Incheon (ICN)"],
+  "russia": ["Moscow (SVO)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan", "korea": "South Korea", "russia": "Russia",
 };
 
 // Reverse-index: 3-letter airport code → region, built from REGION_HUBS.
@@ -1728,7 +1832,13 @@ const AIRPORTS = [
     note: "Baltimore/Washington Thurgood Marshall (BWI) is a focus city for Southwest, with mostly domestic and limited international service. For Europe, India or the UK there's no direct cabin pet route — connect via a major gateway (JFK, IAD, BOS) for transatlantic cabin carriers. BWI has four pet relief areas — two pre-security (near Concourse E by the international terminal, and by the Hourly Garage) and two post-security (the B/C Connector and Concourse C)." },
   { code: "SFO", city: "San Francisco", region: "us", cabinOut: true, cabinIn: true },
   { code: "SEA", city: "Seattle", region: "us", cabinOut: true, cabinIn: true,
-    note: "Seattle-Tacoma (SEA) is Alaska Airlines' hub. Cabin pets are easy for domestic and limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). For India, Europe, or UK there's no direct cabin pet route — connect via SFO (Air India to/from India), or via FRA/AMS/CDG (Lufthansa/KLM/Air France to Europe and onward to India). The terminal has post-security pet relief areas at Concourse B and the International Arrivals Facility, plus four pre-security pet potty locations." },
+    note: "Seattle-Tacoma (SEA) is Alaska Airlines' hub. Cabin pets are easy for domestic and limited international (Canada, Mexico, Costa Rica, Bahamas, Japan, Hawaii). For India, Europe, or UK there's no direct cabin pet route from Seattle — connect via FRA/AMS/CDG (Lufthansa/KLM/Air France in cabin to Europe, onward in cabin to India). The terminal has post-security pet relief areas at Concourse B and the International Arrivals Facility, plus four pre-security pet potty locations." },
+  { code: "IAH", city: "Houston", region: "us", cabinOut: true, cabinIn: true, note: "Houston George Bush Intercontinental (IAH) is a major United hub with strong cabin-pet links into Latin America — Avianca and others fly cabin pets onward to South America." },
+  { code: "DFW", city: "Dallas/Fort Worth", region: "us", cabinOut: true, cabinIn: true, note: "Dallas/Fort Worth (DFW) is American Airlines' largest hub. Cabin pets are straightforward for domestic, plus Mexico/Caribbean/Central America. For Europe, India or the UK there's no direct cabin pet route — American doesn't carry cabin pets transatlantic, so connect via JFK or BOS for KLM/Air France/Lufthansa onward. For unaccompanied pet shipments to Europe, DFW is one of the strongest US origins via American PetEmbark or Lufthansa Cargo." },
+  { code: "AUS", city: "Austin", region: "us", cabinOut: true, cabinIn: true, note: "Austin–Bergstrom (AUS) is a growing US tech hub with limited international service. For cabin pet domestic and Mexico routes this works well; for Europe, India or the UK there's no direct cabin pet route — connect via DFW, JFK or IAD for transatlantic carriers. Lower-volume than DFW but a viable origin for owners in central Texas." },
+  { code: "SLC", city: "Salt Lake City", region: "us", cabinOut: true, cabinIn: true, note: "Salt Lake City (SLC) is a major Delta hub. Cabin pets are straightforward for domestic and many international routes; for Europe, India or the UK there's no direct cabin pet route — connect via a transatlantic gateway (JFK, BOS, ATL) for cabin carriers onward." },
+  { code: "CLT", city: "Charlotte", region: "us", cabinOut: true, cabinIn: true, note: "Charlotte Douglas (CLT) is one of American Airlines' largest hubs. Cabin pets are easy for domestic routes; for Europe, India or the UK, connect via a transatlantic gateway (JFK, BOS, PHL) for a cabin carrier onward." },
+  { code: "PIT", city: "Pittsburgh", region: "us", cabinOut: true, cabinIn: true, note: "Pittsburgh (PIT) is mostly domestic with limited international service. For Europe, India or the UK there's no direct cabin pet route — connect via a major gateway (JFK, IAD, BOS) for transatlantic cabin carriers." },
   // Canada
   { code: "YYZ", city: "Toronto", region: "canada", cabinOut: true, cabinIn: true },
   { code: "YUL", city: "Montreal", region: "canada", cabinOut: true, cabinIn: true },
@@ -1752,10 +1862,23 @@ const AIRPORTS = [
   { code: "OSL", city: "Oslo", region: "europe", cabinOut: true, cabinIn: true, note: "Oslo Gardermoen is Norway's ONLY airport approved for pet entry (the only other pet entry point is the Storskog land border in the north). SAS hub. Norway is in the EEA — follows EU pet passport rules but with extras for dogs: tapeworm treatment 24-120 hours before entry (Echinococcus multilocularis), and seven dog breeds are banned including Pit Bull and wolf hybrids." },
   { code: "CPH", city: "Copenhagen", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Denmark follows EU pet passport rules — no tapeworm requirement (unlike Norway/Finland/Ireland/Malta). Strong cabin pet connectivity across Europe and to the US." },
   { code: "ARN", city: "Stockholm Arlanda", region: "europe", cabinOut: true, cabinIn: true, note: "SAS hub. Sweden follows EU pet passport rules. Pet movement Sweden↔Norway specifically doesn't require a rabies vaccine (bilateral arrangement)." },
+  { code: "HEL", city: "Helsinki", region: "europe", cabinOut: true, cabinIn: true, note: "Finnair hub. Finland follows EU pet passport rules with a tapeworm-treatment requirement for dogs (24–120 hours before arrival), same as Ireland, Norway and Malta. A useful Nordic gateway with cabin pet connections to the US East/West coasts and Asia (Japan/Korea) via the polar route." },
   { code: "VIE", city: "Vienna", region: "europe", cabinOut: true, cabinIn: true, note: "Austrian Airlines hub (Lufthansa Group). Austria follows EU pet passport rules — no tapeworm requirement. Strong cabin pet connectivity across Europe." },
+  { code: "BUD", city: "Budapest", region: "europe", cabinOut: true, cabinIn: true, note: "Budapest Ferenc Liszt International — Hungary's only Travellers' Point of Entry for pets and the country's main Border Inspection Post for commercial pet imports. Hungary follows EU pet passport rules with no tapeworm requirement, no breed bans, no quarantine for compliant pets. Cabin pet connections via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Air France (Paris) and LOT (Warsaw). Hungary requires a bilingual Hungarian/English health certificate for non-EU origins — request this when scheduling USDA endorsement." },
+  { code: "PRG", city: "Prague", region: "europe", cabinOut: true, cabinIn: true, note: "Prague Václav Havel — the Czech Republic's primary international airport and main pet entry point. Czechia follows EU pet passport rules with no tapeworm requirement, no breed bans, no quarantine. Strong cabin pet connectivity via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Air France (Paris) and LOT (Warsaw). Bilingual Czech/English health certificate required for non-EU origins." },
   { code: "BRU", city: "Brussels", region: "europe", cabinOut: true, cabinIn: true, note: "Brussels Airlines hub (Lufthansa Group). Belgium follows EU pet passport rules — no tapeworm requirement." },
   { code: "MXP", city: "Milan Malpensa", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Italy's main international airport. Italy follows EU pet passport rules — no tapeworm requirement. Served for cabin pets by ITA Airways and the Lufthansa Group carriers." },
   { code: "GVA", city: "Geneva", region: "europe", cabinOut: true, cabinIn: true, note: "SWISS hub. Switzerland follows EU-aligned pet rules — no tapeworm requirement. A short cabin hop to most West-European hubs." },
+  { code: "IST", city: "Istanbul", region: "europe", cabinOut: true, cabinIn: true, note: "Turkish Airlines hub — a strong connection point between Asia, Europe and the Americas. Pet rooms at the airport include a pet toilet, useful on layovers. Türkiye follows its own pet import rules — check requirements for an actual stop versus a transit." },
+  { code: "SVO", city: "Moscow Sheremetyevo", region: "russia", cabinOut: true, cabinIn: true, note: "Aeroflot's main hub. Western airspace restrictions since Feb 2022 mean only Aeroflot and a few Middle Eastern / Asian carriers operate cabin pet flights through SVO. Russia is a rabies-controlled country; entering from the EU requires an export health certificate within 5 days of travel and a microchip-linked rabies vaccination. Leaving Russia with a pet requires Rosselkhoznadzor export documentation. Most Western pet owners moving to or from Russia use overland routes via Turkey or Central Asia rather than commercial flights." },
+  { code: "OPO", city: "Porto", region: "europe", cabinOut: true, cabinIn: true, note: "Northern Portugal's main airport, served by TAP Air Portugal. Portugal follows EU pet passport rules — no tapeworm requirement." },
+  { code: "WAW", city: "Warsaw", region: "europe", cabinOut: true, cabinIn: true, note: "LOT Polish Airlines hub. LOT has one of the lowest cabin-pet fees on the market, making Warsaw a cost-effective connection point. Poland follows EU pet passport rules — no tapeworm requirement." },
+  { code: "BER", city: "Berlin", region: "europe", cabinOut: true, cabinIn: true, note: "Berlin Brandenburg (BER) is served for cabin pets by Lufthansa and Eurowings (note: easyJet and Ryanair, also big at BER, do NOT carry cabin pets — assistance dogs only). Germany follows EU pet passport rules — no tapeworm requirement. A well-connected hub for onward cabin travel across Europe." },
+  { code: "DUS", city: "Düsseldorf", region: "europe", cabinOut: true, cabinIn: true, note: "Düsseldorf is Lufthansa's third-largest German hub and a major Eurowings base, with strong cabin pet connections to the rest of Europe and direct cabin routes to the US (United via EWR and IAD). Germany follows EU pet passport rules — no tapeworm requirement, but be aware of Germany's breed bans (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes are prohibited from entry regardless of paperwork). Cabin-pet check-in at DUS is at the regular Lufthansa counters." },
+  { code: "HAM", city: "Hamburg", region: "europe", cabinOut: true, cabinIn: true, note: "Hamburg Airport publishes its own pet-travel guidance and is a comfortable smaller German hub, with cabin pet connections via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Eurowings, and SAS to Scandinavia. Germany follows EU pet passport rules with no tapeworm requirement — but the same German breed bans apply (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes). No direct long-haul cabin routes from HAM — most US/Asia trips connect via FRA or MUC." },
+  { code: "STR", city: "Stuttgart", region: "europe", cabinOut: true, cabinIn: true, note: "Stuttgart serves southern Germany — useful for the Baden-Württemberg region. Cabin pet connections via Lufthansa (Frankfurt/Munich), KLM (Amsterdam), Air France (Paris), and Eurowings. Germany follows EU pet passport rules with no tapeworm requirement; the same German breed bans apply (Pit Bull Terrier, Staffordshire Bull Terrier, American Staffordshire and mixes). All long-haul trips connect via FRA or MUC." },
+  { code: "ATH", city: "Athens", region: "europe", cabinOut: true, cabinIn: true, note: "Athens Eleftherios Venizelos is Greece's main international airport and the primary Greek pet-entry point — with a dedicated pet check-in counter. Aegean Airlines (the Greek flag carrier, not currently catalogued on this site) is the dominant cabin-pet operator out of Athens, with 8 kg limit and €20 domestic / €50 international fees — among the lowest in Europe. Long-haul cabin connections via Lufthansa (Frankfurt/Munich), Air France (Paris), KLM (Amsterdam), and Turkish Airlines (Istanbul). Greece follows EU pet passport rules with no tapeworm requirement. Useful note: many Greek island airports are NOT approved pet entry points — most island trips require landing in Athens or Thessaloniki first." },
+  { code: "SKG", city: "Thessaloniki", region: "europe", cabinOut: true, cabinIn: true, note: "Thessaloniki Macedonia Airport is Greece's second-largest airport and the country's second approved pet entry point (alongside Athens). Aegean and SKY express are the main Greek carriers; Lufthansa and Eurowings provide cabin pet connections to/from Germany. Useful for northern Greece arrivals and as the legal entry point when island destinations don't allow pet entry directly. Greece follows EU pet passport rules with no tapeworm requirement." },
   // India
   { code: "DEL", city: "Delhi", region: "india", cabinOut: true, cabinIn: true, note: "Delhi is one of India's six approved pet-entry airports." },
   { code: "BOM", city: "Mumbai", region: "india", cabinOut: true, cabinIn: true, note: "Mumbai is one of India's six approved pet-entry airports." },
@@ -1775,9 +1898,12 @@ const AIRPORTS = [
   { code: "SDQ", city: "Santo Domingo, Dominican Republic", region: "caribbean", cabinOut: true, cabinIn: true, note: "The DR is on the CDC high-risk rabies list — US travellers must prepare the return paperwork BEFORE leaving the US." },
   // Hawaii
   { code: "HNL", city: "Honolulu", region: "hawaii", cabinOut: true, cabinIn: true, note: "Honolulu is the only animal port of entry for Hawaii. Hawaii's rabies-free import programme needs 4+ months of prep." },
+  { code: "OGG", city: "Kahului — Maui", region: "hawaii", cabinOut: true, cabinIn: true, note: "Maui's main airport. Pets entering Hawaii still clear animal inspection at Honolulu first — Kahului is reached on an inter-island cabin hop after that." },
   // South Africa
   { code: "JNB", city: "Johannesburg", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
   { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
+  { code: "DUR", city: "Durban", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
+  { code: "GRJ", city: "George", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
   // South America — LATAM and Avianca are the primary cabin pet carriers (both 10kg combined limit, brachycephalic excluded from cargo). Aeromexico provides Mexico ↔ SA connections.
   { code: "GRU", city: "São Paulo Guarulhos", region: "south-america", cabinOut: true, cabinIn: true, note: "São Paulo Guarulhos (GRU) is South America's largest hub. LATAM is the primary cabin pet carrier (10 kg combined). Brazil's entry rules are relatively lenient: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, no microchip or titer required for most origin countries." },
   { code: "EZE", city: "Buenos Aires Ezeiza", region: "south-america", cabinOut: true, cabinIn: true, note: "Buenos Aires Ezeiza (EZE) is Argentina's main international airport. LATAM and Aerolineas Argentinas serve cabin pets. Argentina requires ISO microchip, rabies vaccine, SENASA-endorsed health certificate, and import permit." },
@@ -1788,9 +1914,9 @@ const AIRPORTS = [
   { code: "PTY", city: "Panama City", region: "central-america", cabinOut: true, cabinIn: true, note: "Panama City Tocumen (PTY) is Copa Airlines' hub and the key cabin pet transit point for deeper South American destinations like Montevideo, Asunción, and La Paz. Copa is the dominant operator; pets transit through the airport on Copa-operated itineraries without needing to enter Panama formally." },
   // Japan — pets can enter at 11 designated ports; we list the major five.
   // Critical note: JAL and ANA do NOT carry cabin pets on any route. Cabin
-  // routes in/out of Japan exist on United (US ↔ Japan), Korean carriers
-  // (Japan ↔ Korea), and Aeromexico (Japan ↔ Mexico) only.
-  { code: "NRT", city: "Tokyo Narita", region: "japan", cabinOut: true, cabinIn: true, note: "Narita is Japan's main international gateway and one of 11 approved pet entry ports. JAL and ANA do not carry cabin pets — for cabin into/out of Japan, use United (US routes), Korean carriers (Korea routes), or Aeromexico (Mexico routes). Other airlines are cargo-only." },
+  // routes in/out of Japan exist on United (US ↔ Japan) and Korean carriers
+  // (Japan ↔ Korea, with onward Korean Air to ~30 countries) only.
+  { code: "NRT", city: "Tokyo Narita", region: "japan", cabinOut: true, cabinIn: true, note: "Narita is Japan's main international gateway and one of 11 approved pet entry ports. JAL and ANA do not carry cabin pets — for cabin into/out of Japan, use United (US direct) or Korean carriers (Korea + onward via Korean Air's wider cabin network). Other airlines are cargo-only." },
   { code: "HND", city: "Tokyo Haneda", region: "japan", cabinOut: true, cabinIn: true, note: "Haneda is Tokyo's domestic-heavy airport but has growing international cabin pet support via Korean carriers and United. Approved pet entry port." },
   { code: "KIX", city: "Osaka Kansai", region: "japan", cabinOut: true, cabinIn: true, note: "Osaka's main international airport, one of 11 approved pet entry ports. Cabin pets via Korean carriers and select international routes." },
   { code: "NGO", city: "Nagoya Chubu", region: "japan", cabinOut: true, cabinIn: true, note: "Nagoya Chubu Centrair is an approved pet entry port. Limited international cabin options." },
@@ -1799,7 +1925,7 @@ const AIRPORTS = [
   // pet travel its main relevance is as the hub for Korean carriers (Korean Air,
   // T'Way, Air Premia) that fly cabin pets to/from Japan when JAL/ANA won't. Listed
   // under japan region so it surfaces when planning Japan-related cabin routes.
-  { code: "ICN", city: "Seoul Incheon", region: "japan", cabinOut: true, cabinIn: true, note: "Seoul Incheon is Korean Air's hub. Listed in the Japan region tag for cabin pet planning purposes — Korea ↔ Japan via Korean carriers (Korean Air, T'Way Air, Air Premia) is one of the main cabin paths to/from Japan, since JAL and ANA don't carry cabin pets. Note T'Way does not permit pet transit in Korea — Japan-Korea must be point-to-point, not a connection." },
+  { code: "ICN", city: "Seoul Incheon", region: "korea", cabinOut: true, cabinIn: true, note: "Seoul Incheon is Korean Air's hub. Korea ↔ Japan via Korean carriers (Korean Air, T'Way Air, Air Premia) is one of the main cabin paths to/from Japan, since JAL and ANA don't carry cabin pets. Korean Air also runs cabin pets onward to the US and a wider network. Note T'Way does not permit pet transit in Korea — Japan-Korea must be point-to-point, not a connection." },
 ];
 
 const airportByCode = (code) => AIRPORTS.find((a) => a.code === code);
@@ -1822,7 +1948,10 @@ const airportLabel = (code) => {
 // - Cabin OUT of the UK/Ireland to Europe IS allowed (Air France, KLM, Lufthansa).
 // - Etihad: cabin OUT of Abu Dhabi to Europe allowed; cabin INTO the UAE blocked
 //   on "flights to" the UAE — Dubai (DXB) is cargo-only for all airlines.
-// - Air India: cargo-only to/from the UK; cabin allowed DEPARTING the UAE.
+// - Air India: cargo-only to/from the UK (LHR/LGW only — no pet service from BHX);
+//   no service of any kind to/from USA, Canada or Australia; cabin allowed
+//   DEPARTING the UAE (UAE→India only — reverse direction blocked); Ultra
+//   Long Haul flights have no cabin pets even when otherwise eligible.
 // - Transatlantic cabin works between European hubs and major US cities
 //   (Air France, KLM, Lufthansa, Delta, etc.).
 const REGION_PAIR_STRATEGIES = {
@@ -1878,14 +2007,23 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then a land/sea crossing into ${d} — Eurotunnel Le Shuttle or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes.`,
   }),
-  "india>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Confirm the long-haul leg's cabin availability before booking — if it can't be confirmed as cabin, that portion becomes cargo.`,
-  }),
+  "india>uk-out": (o, d) => {
+    const isBLR = o.includes("(BLR)");
+    return {
+      legs: [
+        {
+          route: `${o} → Frankfurt (FRA) or Paris (CDG)`,
+          time: "8–9h",
+          airline: isBLR
+            ? "Air India / Air France ✓ Cabin (under 8–10 kg) — Lufthansa excludes Bangalore, so route via Paris"
+            : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)",
+        },
+        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
+      ],
+      note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Air India, Lufthansa and Air France all carry cabin pets on India ↔ Europe sectors${isBLR ? " (Lufthansa excludes Bangalore — use Air France via Paris instead)" : ""}.`,
+    };
+  },
   "dubai>uk-out": (o, d) => ({
     legs: [
       { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
@@ -1927,41 +2065,54 @@ const REGION_PAIR_STRATEGIES = {
   // route restated — including it created duplicate cards. If a specific origin
   // airport has no direct AUH route, the honest answer is the drive-to-a-
   // qualifying-airport logic, not a fake one-leg workaround.
-  "india>dubai": (o, d) => ({
-    legs: [
-      { route: `${o} → Europe (Frankfurt / Paris)`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
-      { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin" },
-    ],
-    note: `Air India blocks cabin pets on flights India→UAE, so the workaround routes via Europe. Confirm the India→Europe leg's cabin availability. Alternatively this is a cargo move. Note: UAE→India in cabin IS allowed (the block is one-directional).`,
-  }),
+  "india>dubai": (o, d) => {
+    const isBLR = o.includes("(BLR)");
+    return {
+      legs: [
+        {
+          route: `${o} → Europe (Frankfurt / Paris)`,
+          time: "8–9h",
+          airline: isBLR
+            ? "Air India / Air France ✓ Cabin (under 8–10 kg) — Lufthansa excludes Bangalore"
+            : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)",
+        },
+        { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin" },
+      ],
+      note: `Air India blocks cabin pets on flights India→UAE, so the workaround routes via Europe. Air India, Lufthansa and Air France all carry cabin pets on India ↔ Europe sectors${isBLR ? " (Lufthansa excludes Bangalore — use Air France via Paris)" : ""}; from Europe, Etihad carries you on to Abu Dhabi in cabin. Note: UAE→India in cabin IS allowed (the block is one-directional).`,
+    };
+  },
 
   // ----- INTO India (no direct cabin from UK; via Europe) -----
   "uk-out>india": (o, d) => {
     const isHeathrow = o.includes("(LHR)");
+    const isBLR = d.includes("(BLR)");
+    const longHaulAirline = isBLR
+      ? "Air France ✓ Cabin (under 8 kg) — Lufthansa excludes Bangalore, route via Paris"
+      : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)";
     const legs = isHeathrow
       ? [
           { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
           { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
         ]
       : [
           { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
           { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
           { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: "Confirm cabin acceptance with the operating airline" },
+          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
         ];
     return {
       legs,
-      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Confirm the second leg's cabin availability; India also needs the AQCS NOC and entry via one of six approved airports.`,
+      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors${isBLR ? " (Lufthansa excludes Bangalore — route via Paris on Air France)" : ""}. India needs the AQCS NOC and entry via one of six approved airports.`,
     };
   },
   "us>india": (o, d) => ({
     legs: [
       { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "7–9h", airline: "Lufthansa / Air France ✓ Cabin" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–9h", airline: "Air India 'Paws on Board' / confirm with operating airline" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Same carrier as your first leg ✓ Cabin (single-carrier through-ticket — see note)" },
     ],
-    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India. Air India flies cabin pets from Europe (e.g. CDG → Delhi). India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
+    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India on the SAME carrier (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Air India does not accept pet connections from other airlines, so any path that puts Air India on the second leg won't work for a through-ticket. Book it as one ticket on Lufthansa or Air France. India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
   }),
 
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
@@ -2172,7 +2323,7 @@ const REGION_PAIR_STRATEGIES = {
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
       { route: `Hub → ${d}`, time: "8–10h", airline: "Lufthansa / Air France / Delta ✓ Cabin" },
     ],
-    note: `India→USA in cabin routes via a European hub — there's no direct cabin route (Air India is cargo-only to the US, and the 'India→Tokyo→US' cabin route is a myth, JAL/ANA don't take cabin pets internationally). For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
+    note: `India→USA in cabin routes via a European hub on a single carrier — there's no direct cabin route (Air India does not transport pets to/from the USA in any form, and the 'India→Tokyo→US' cabin route is a myth — JAL/ANA don't take cabin pets internationally). Book Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris — a single through-ticket avoids the interline issue. For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
   }),
   "india>mexico": (o, d) => ({
     legs: [
@@ -2650,14 +2801,14 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "2-6h", airline: "American, Delta, United, Aeromexico, JetBlue, Spirit, Volaris (no brachy) ✓ Cabin" };
       note = "Mexico → US in cabin is one of the easiest cross-border routes. CDC Dog Import Form online (dogs only, cats exempt). Mexico is NOT on the CDC high-risk rabies list.";
     } else if (isToEurope) {
-      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Aeromexico (to MAD), Iberia, Air France, KLM ✓ Cabin" };
-      note = "Aeromexico Mexico City → Madrid is the direct cabin route. Iberia, Air France, KLM also run cabin pets MEX → Europe. EU Health Certificate (10 days) plus rabies 21+ days required.";
+      leg = { route: `${o} → ${d}`, time: "10-12h", airline: "Iberia, Air France, KLM ✓ Cabin (transatlantic). Aeromexico is published as 6-hour cabin pet max, but its own page examples Mexico City → Paris — confirm by phone before booking on Aeromexico." };
+      note = "Iberia (Madrid), Air France (Paris), KLM (Amsterdam) are the safer cabin pet bets MEX → Europe — these are transatlantic specialists where cabin pets are standard. Aeromexico's published policy restricts cabin pets to flights under 6 hours, which would exclude transatlantic — but their own example page does mention Mexico City → Paris, so written confirmation is essential. EU Health Certificate (10 days) plus rabies 21+ days required.";
     } else if (dLower.includes("tokyo") || dLower.includes("nrt") || dLower.includes("hnd")) {
-      leg = { route: `${o} → Tokyo (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      note = "Aeromexico MEX → NRT direct cabin is one of the very few Pacific cabin pet routes. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
+      leg = { route: `${o} → ${d}`, time: "14h+", airline: "✗ No direct cabin option from Mexico. Position to US west coast first." };
+      note = "There is no direct cabin pet route MEX → Japan. Aeromexico's MEX-NRT route appears suspended as of Feb 2026, and even when operating, Aeromexico's published 6-hour cabin pet limit would exclude this route. Instead: fly Mexico → US west coast (LAX/SFO) on Aeromexico/Volaris/American with cabin pet, then United LAX/SFO → Tokyo (NRT/HND) direct. Japan import paperwork (180-day rabies titer wait, ISO microchip before first rabies, FAVN test) is the binding constraint — start preparation 7+ months ahead.";
     } else {
-      leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin" };
-      note = "Aeromexico has the broadest cabin pet network from Mexico. For deeper South America, connect via Panama City on Copa. For Japan, Aeromexico direct.";
+      leg = { route: `${o} → ${d}`, time: "varies", airline: "Aeromexico, Volaris (no brachy), or US carrier connection ✓ Cabin (within 6-hour rule)" };
+      note = "Aeromexico has the broadest cabin pet network from Mexico for routes under 6 hours. For deeper South America, connect via Panama City on Copa. For Japan, position to US west coast then United.";
     }
     return { legs: [leg], note };
   },
@@ -2682,10 +2833,10 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${arrivalPort}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
       hub = "Korea ↔ Japan is one of the best cabin pet paths for Japan entry. Korean Air's max cabin weight is 7 kg, T'Way's is 9 kg.";
     } else if (isFromMexico) {
-      leg = { route: `${o} → Tokyo Narita (NRT)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      hub = "Aeromexico Mexico City → NRT direct cabin is one of the very few Pacific cabin pet routes. Snub-nosed breeds welcome in cabin.";
+      leg = { route: `${o} → Tokyo (HND/NRT)`, time: "16-18h via US", airline: "✗ No direct cabin route. Route via LAX/SFO on Aeromexico/Volaris (cabin), then United LAX/SFO → Tokyo (cabin direct)." };
+      hub = "There is no direct cabin pet route Mexico → Japan. Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and Aeromexico's 6-hour cabin pet limit would exclude this route anyway. Position to US west coast on Aeromexico cabin, then United LAX/SFO → Tokyo direct cabin (no weight limit, $150).";
     } else {
-      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN), Aeromexico (from Mexico)" };
+      leg = { route: `${o} → ${arrivalPort}`, time: "varies — long-haul", airline: "Most international airlines are CARGO-ONLY into Japan. Cabin: United (from US), Korean Air/T'Way (via Seoul ICN)" };
       hub = "Route via Korea on Korean Air or via the US on United — most other airlines (JAL, ANA, Lufthansa, BA, Air France, KLM) are cargo-only into Japan.";
     }
     return {
@@ -2707,8 +2858,8 @@ const FALLBACK_STRATEGIES = {
       leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), Air Premia ✓ Cabin" };
       note = "Japan → Korea is a short, well-served cabin route — and from Seoul you can connect onward on Korean Air's 30+ country cabin network.";
     } else if (isToMexico) {
-      leg = { route: `${o} → Mexico City (MEX)`, time: "13h", airline: "Aeromexico ✓ Cabin (under 9 kg)" };
-      note = "Aeromexico Japan → Mexico City direct cabin route. Mexico is one of the easier entry countries for pets.";
+      leg = { route: `${o} → Mexico City (MEX)`, time: "16-18h via US", airline: "✗ No direct cabin. Route via US west coast on United (Japan→LAX/SFO cabin direct), then Aeromexico/Volaris LAX/SFO→MEX (cabin)." };
+      note = "Aeromexico's MEX-NRT direct appears suspended as of Feb 2026, and even if it resumes, Aeromexico's published 6-hour cabin pet limit would exclude this route. Route Japan → US west coast on United (cabin direct, no weight limit), then onward to Mexico City on Aeromexico or Volaris.";
     } else {
       // For UK, EU, other destinations — need a connection via Korea or US
       leg = { route: `${o} → Seoul (ICN) → ${d}`, time: "varies", airline: "Leg 1: Korean Air ✓ Cabin (under 7 kg). Leg 2: Korean Air cabin connection (or other carrier)" };
@@ -2734,12 +2885,18 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa"]];
   if (destRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii"]];
   if (destRegion === "japan") return [FALLBACK_STRATEGIES["japan"]];
+  // Korea uses the same strategy infrastructure as Japan — the japan handlers
+  // already include Korea-aware logic (isFromKorea, isToKorea branches) and
+  // the cabin pet path Korea ↔ rest-of-world runs on Korean Air, which has
+  // the same role in our advice as United does for the US.
+  if (destRegion === "korea") return [FALLBACK_STRATEGIES["japan"]];
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (destRegion === "mexico") return [FALLBACK_STRATEGIES["mexico"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
+  if (originRegion === "korea") return [FALLBACK_STRATEGIES["japan-out"]];
   if (originRegion === "south-america") return [FALLBACK_STRATEGIES["south-america-out"]];
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
@@ -2894,7 +3051,9 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(ICN)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "Japan"],
+    "korea": ["Seoul", "Busan", "(ICN)", "(GMP)", "(PUS)", "Korea", "South Korea"],
+    "russia": ["Moscow", "St Petersburg", "Saint Petersburg", "(SVO)", "(DME)", "(VKO)", "(LED)", "Russia"],
   };
   const fromInOriginRegion = (field) =>
     (originRegionKeywords[oA.region] || []).some((kw) => field.includes(kw));
@@ -3062,8 +3221,8 @@ const CHECKLIST_DATA = {
         items: [
           "ISO 11784/11785 microchip implanted (must be before the rabies vaccine)",
           "Rabies vaccination — must be ≥21 days before entry to Ireland",
-          "If inbound to Ireland: pets cannot fly in cabin — plan the France→Ireland ferry, the UK landbridge, or cargo",
-          "If outbound from Ireland: book your cabin pet slot with Aer Lingus or an EU carrier",
+          "If inbound to Ireland: cabin pets can fly in on Iberia (Madrid → Dublin) or KLM (Amsterdam → Dublin) — otherwise plan the France→Ireland ferry, the UK landbridge, or cargo",
+          "If outbound from Ireland: book your cabin pet slot with an EU carrier (KLM, Iberia, Air France or Lufthansa) — note Aer Lingus and Ryanair do not take cabin pets",
           "Book your ferry (Irish Ferries / Brittany Ferries) well in advance — pet cabins sell out",
         ],
       },
@@ -3785,7 +3944,7 @@ const CHECKLIST_DATA = {
         items: [
           "Bring ALL originals: Form AC with USDA endorsement, original titer test result, vaccination records, microchip certificate, AQS Approval of Import Inspection, passport.",
           "Book flights to arrive in Japan BEFORE 5 PM — pets arriving after 5 PM cannot be released from their crate until customs reopens the next day.",
-          "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan), Korean carriers (Japan ↔ Korea), Aeromexico (Japan ↔ Mexico).",
+          "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan direct, no weight limit), Korean carriers (Japan ↔ Korea, then onward via Korean Air's wider cabin network).",
         ],
       },
       {
@@ -4003,30 +4162,27 @@ const DIRECTIONAL_CHECKLISTS = {
       ],
     },
     arriving: {
-      title: "Arriving in the UK — important: no cabin pet flights INTO the UK",
-      restriction: "⚠ Cabin entry into the UK is not permitted on any commercial airline (UK government rule, all carriers, not the airline's choice). All inbound pets must enter as IATA-compliant cargo OR via the Eurotunnel / ferry pet-friendly land routes from Europe.",
+      title: "Arriving in the UK — the cabin workaround",
+      restriction: "⚠ No commercial airline flies pets in the cabin INTO the UK — it's a UK government rule, not an airline policy. The cabin workaround: fly your pet in cabin to mainland Europe, then cross the Channel by Eurotunnel or pet-friendly ferry with the pet beside you. That's what this checklist covers.",
       sections: [
         {
-          title: "Option 1 — The cabin workaround (Paris pivot)",
+          title: "The cabin workaround (Paris pivot)",
           items: [
-            "Fly cabin into a continental EU airport (Paris CDG most common; also Amsterdam, Frankfurt, Lisbon)",
-            "Train/drive/taxi to Calais, France",
-            "Eurotunnel Le Shuttle (35 min) to Folkestone — pets stay in your car",
-            "Drive 1.5 hours to London",
-            "Pet stays with you the whole way — this is the standard cabin-pets workaround for UK entry",
+            "Fly cabin into a continental EU airport — Paris CDG is most common (Air France from many origins); Amsterdam (KLM), Frankfurt (Lufthansa) and Lisbon (TAP) also work",
+            "Land at the EU hub, then train, drive or pet-taxi to Calais, France",
+            "Eurotunnel Le Shuttle (35 min) Calais → Folkestone — pets stay in your car the whole crossing",
+            "Drive 1.5 hours from Folkestone to London",
+            "Pet stays with you the whole way — this is the standard cabin-pets route into Britain",
           ],
         },
         {
-          title: "Option 2 — Cargo via Heathrow",
+          title: "If your pet is too large for cabin",
           items: [
-            "Book with an IATA-approved pet shipper (BA, Virgin, Lufthansa Cargo)",
-            "Pet enters via Heathrow Animal Reception Centre",
-            "Allow 6–8 hours for clearance after landing",
-            "Standard UK paperwork still applies: ISO microchip, rabies ≥21 days, AHC, tapeworm treatment (dogs)",
+            "Pets over 8 kg (including carrier) can't fly cabin on the carriers that allow cabin out of mainland Europe. If yours is over that threshold, the practical options narrow to a cargo booking, the QM2 transatlantic crossing, or driving from a closer European hub. Cargo into the UK uses IAG Cargo (BA), Virgin Cargo or Lufthansa Cargo via the Heathrow Animal Reception Centre — separate from anything on this cabin-focused site, so confirm directly with a pet shipper.",
           ],
         },
         {
-          title: "Universal UK entry requirements (both routes)",
+          title: "Universal UK entry requirements",
           items: [
             "ISO 11784/11785 microchip — implanted FIRST, before rabies vaccine",
             "Rabies vaccine ≥21 days old (no upper limit if boosters kept current)",
@@ -4797,16 +4953,43 @@ function getChecklist(routeId, direction) {
   return CHECKLIST_DATA[routeId] || CHECKLIST_DATA.generic;
 }
 
+// Filter a single-country checklist by pet type. Used by the standalone
+// Checklist tool in country mode so the dog/cat chip works there too.
+// Returns the input unchanged if petType is "both" or unspecified.
+function filterChecklistByPet(checklist, petType) {
+  if (!checklist || !petType || petType === "both") return checklist;
+  const filteredSections = checklist.sections
+    .map((sec) => {
+      const sectionLevel = petAppliesTo("", sec.title);
+      // Drop the entire dog-only or cat-only section if it doesn't match.
+      if (sectionLevel === "dog" && petType === "cat") return null;
+      if (sectionLevel === "cat" && petType === "dog") return null;
+      const items = sec.items.filter((rawItem) => {
+        const text = typeof rawItem === "string" ? rawItem : rawItem.text;
+        const applies = petAppliesTo(text, sec.title);
+        if (petType === "dog" && applies === "cat") return false;
+        if (petType === "cat" && applies === "dog") return false;
+        return true;
+      });
+      if (items.length === 0) return null;
+      return { ...sec, items };
+    })
+    .filter(Boolean);
+  return { ...checklist, sections: filteredSections };
+}
+
 // Map a planner REGION id to its checklist-data id.
 const REGION_TO_CHECKLIST_ID = {
   "uk-out": "uk", "ireland": "ireland", "us": "usa", "canada": "canada",
   "mexico": "mexico", "europe": "europe", "india": "india", "dubai": "uae",
   "caribbean": null,        // per-island — handled specially below
-  "hawaii": null,           // uses generic + Hawaii note
+  "hawaii": "hawaii",       // CHECKLIST_DATA.hawaii exists — use it
   "south-africa": "south_africa",
   "south-america": "south_america",
   "central-america": null,  // No dedicated checklist — Panama is mainly used as transit; uses generic
   "japan": "japan",
+  "korea": null,            // No dedicated checklist yet — Korean Air carriage rules + standard rabies paperwork; uses generic
+  "russia": null,           // Sanctions complexity — uses generic + Russia note
 };
 
 // ----- Item-level classification helpers for the merged route checklist -----
@@ -4828,6 +5011,8 @@ const ROUTE_FACTS = {
   "south-america": { name: "South America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "central-america": { name: "Central America", cdcHighRisk: false, euMember: false, ukOrIreland: false, perCountry: true },
   "japan":       { name: "Japan", cdcHighRisk: false, euMember: false, ukOrIreland: false, isRabiesFree: true, strictImport: true },
+  "korea":       { name: "South Korea", cdcHighRisk: false, euMember: false, ukOrIreland: false },
+  "russia":      { name: "Russia", cdcHighRisk: false, euMember: false, ukOrIreland: false },
 };
 
 // Transit-only essentials per region. When a workaround route briefly crosses
@@ -5075,18 +5260,24 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
   }
 
   // Generic "research destination's import requirements" — replace with the
-  // specific things that matter for this destination.
+  // specific things that matter for this destination. Keep these to a
+  // one-line headline — the full paperwork timeline lives in the
+  // "Entering [X]" chapter below, so dumping it again here just creates
+  // repetition.
   if (t.includes("research destination") || t.includes("research the destination") || t.includes("destination country's import")) {
-    if (dest.isUS) return `For the US: complete the CDC Dog Import Form online (free, valid 6 months, multi-entry). Dog must be at least 6 months old at entry, ISO-microchipped, healthy on arrival. ${origin.cdcHighRisk === true ? "Plus the high-risk-country extras flagged above." : ""}`;
-    if (destRegion === "uk-out") return `The UK doesn't allow cabin pets on any commercial flight — your pet has to fly into mainland Europe and cross by land (Eurotunnel) or sea (ferry). Paperwork: ISO microchip, rabies vaccine ≥21 days old, Animal Health Certificate from accredited vet within 10 days of entry, tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "ireland") return `Ireland is not the UK — cabin pets CAN fly in. Iberia (Madrid→Dublin) and KLM (Amsterdam→Dublin) both carry them; beyond those, the France→Ireland ferry is the reliable route. Paperwork: ISO microchip, rabies vaccine ≥21 days old, EU Health Certificate (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC), tapeworm treatment for dogs 24–120 hrs before arrival.`;
-    if (destRegion === "europe") return `For Europe: ISO microchip first, then rabies vaccine, then a 21-day waiting period before entry. EU Health Certificate from an accredited vet within 10 days of travel (or an EU pet passport if you're an EU resident — GB residents now need a GB AHC, not a pet passport).`;
-    if (destRegion === "dubai") return `For the UAE: you cannot fly your pet in cabin into Dubai (DXB) under any airline — UAE law. The only cabin entry is via Etihad to Abu Dhabi (AUH), then a 90-minute road transfer. MOCCAE import permit required, plus health certificate and rabies titer test depending on origin.`;
-    if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — ISO microchip, two rabies vaccines, FAVN rabies blood test from an approved lab at least 30 days before arrival, and AQS-279 form submitted to the Animal Industry Division. Plan 4–5 months ahead. Honolulu (HNL) is the only port of entry.`;
-    if (destRegion === "canada") return `For Canada: a current rabies certificate from your vet is usually all that's needed for dogs and cats over 3 months old. No USDA endorsement required if coming from the US. Confirm details with the CFIA before travel.`;
-    if (destRegion === "mexico") return `For Mexico: SENASICA Health Certificate from an accredited vet within 10 days of travel, rabies vaccine on record. No quarantine. Cats and dogs over 3 months only.`;
-    if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is required for pet entry. ISO microchip, current rabies vaccine, recent health certificate. Quarantine waived only if all paperwork is in order on arrival.`;
-    if (destRegion === "south-africa") return `For South Africa: import permit from the Department of Agriculture, ISO microchip, rabies titer test, health certificate. Pet travels as manifested cargo — no cabin option internationally.`;
+    if (dest.isUS) return `For the US: the CDC Dog Import Form is the central piece. ${origin.cdcHighRisk === true ? `${origin.name} is on the high-risk list, so extra rabies paperwork applies.` : "Paperwork timeline below."}`;
+    if (destRegion === "uk-out") return `For the UK: no airline carries pets in cabin into the UK — the route is always cabin into mainland Europe, then Eurotunnel or a ferry. The paperwork timeline is detailed below.`;
+    if (destRegion === "ireland") return `For Ireland: cabin pets CAN fly in (Iberia Madrid→Dublin and KLM Amsterdam→Dublin), or take the France→Ireland ferry. The paperwork timeline is detailed below.`;
+    if (destRegion === "europe") return `For Europe: microchip BEFORE rabies vaccine, then a 21-day waiting period. EU Health Certificate or EU pet passport (the latter only if you're an EU resident). Paperwork timeline below.`;
+    if (destRegion === "dubai") return `For the UAE: cabin only via Etihad to Abu Dhabi (AUH); Dubai (DXB) is cargo-only on every airline (UAE law). Paperwork timeline below.`;
+    if (destRegion === "hawaii") return `For Hawaii: the Direct Airport Release programme — plan 4–5 months ahead because of the FAVN titer + 30-day wait. Honolulu (HNL) is the only port of entry. Paperwork timeline below.`;
+    if (destRegion === "canada") return `For Canada: usually just a current rabies certificate for dogs and cats over 3 months. No USDA endorsement needed coming from the US. Paperwork timeline below.`;
+    if (destRegion === "mexico") return `For Mexico: SENASICA Health Certificate within 10 days, current rabies, no quarantine. Paperwork timeline below.`;
+    if (destRegion === "india") return `For India: a no-objection certificate (NOC) from the Animal Quarantine Station is the make-or-break document. Paperwork timeline below.`;
+    if (destRegion === "south-africa") return `For South Africa: import permit + ISO microchip + rabies titer. No cabin option internationally — pet travels as manifested cargo. Paperwork timeline below.`;
+    if (destRegion === "japan") return `For Japan: the 180-day rabies titer waiting period is the binding constraint — start ≥7 months ahead. Paperwork timeline below.`;
+    if (destRegion === "south-america" || destRegion === "central-america") return `For ${dest.name}: rules differ by country. Paperwork timeline below covers the universal essentials.`;
+    if (destRegion === "korea") return `For South Korea: microchip + rabies + health certificate. Some origins need a rabies titer. Paperwork timeline below.`;
   }
 
   // Generic "Research destination's import rules — especially for UK..." style items.
@@ -5124,26 +5315,66 @@ function petAppliesTo(itemText, sectionTitle) {
   return "both";
 }
 
+// Filter "If outbound from X" / "If inbound to X" items by chapter side.
+// Returns true if the item is relevant to the chapter being built, false to
+// drop it. Items without a direction conditional are always relevant.
+//
+// Logic:
+//   "If outbound from X" / "If outbound to ..."  → only relevant in the
+//     LEAVING (origin) chapter — that's where the pet is departing.
+//   "If inbound to X" / "If arriving in X"  → only relevant in the
+//     ENTERING (destination) chapter — that's where the pet is arriving.
+//   "If going to non-EU" / "If destination is ..."  → these are about the
+//     destination, so only relevant in the LEAVING chapter (the user reads
+//     "if going to" while preparing to depart).
+function isRelevantConditional(itemText, side) {
+  const t = (itemText || "").toLowerCase();
+  // Patterns starting with "If outbound" — outbound is a departure
+  // statement, only relevant when reading the Leaving chapter.
+  if (t.startsWith("if outbound")) {
+    return side === "origin";
+  }
+  // Patterns starting with "If inbound to X" / "If arriving" — these
+  // describe arrival rules, only relevant in the Entering chapter.
+  if (t.startsWith("if inbound") || t.startsWith("if arriving")) {
+    return side === "destination";
+  }
+  // "If going to ..." and "If destination is ..." — directional advice
+  // read at the origin side while planning the trip.
+  if (t.startsWith("if going to") || t.startsWith("if destination") || t.startsWith("if your destination")) {
+    return side === "origin";
+  }
+  // Default: not a directional conditional — keep it.
+  return true;
+}
+
 // Map a section title to a chronological bucket. Earlier prep first.
 // Returns { order, label } so we can sort and re-label consistently.
 function timelineBucket(sectionTitle) {
   const t = (sectionTitle || "").toLowerCase();
 
   // Order is "weeks/months before" → smaller number = further out in time.
-  // We pick the most specific match first.
+  // We pick the most specific match first. Labels include the most-asked
+  // timing windows (10-day cert, 24–120hr tapeworm) so the reader sees the
+  // binding constraints without hunting in the items.
   if (t.includes("6 months") || t.includes("5+ months") || t.includes("4+ months")) return { order: 0, label: "5–6 months before" };
   if (t.includes("3 months") || t.includes("2 months")) return { order: 5, label: "2–3 months before" };
-  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before" };
-  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "4 weeks before" };
-  if (t.includes("2 weeks") || t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "1–2 weeks before" };
-  if (t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
+  if (t.includes("8 weeks") || t.includes("6 weeks") || t.includes("6+ weeks") || t.includes("1–2 months")) return { order: 10, label: "6–8 weeks before — vet, microchip, rabies" };
+  if (t.includes("4 weeks") || t.includes("4–6 weeks") || t.includes("2+ weeks")) return { order: 20, label: "2–4 weeks before — carrier, bookings, paperwork prep" };
+  if (t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "10 days before — health certificate signed" };
+  if (t.includes("2 weeks")) return { order: 30, label: "10 days before — health certificate signed" };
+  if (t.includes("24") && t.includes("120")) return { order: 40, label: "24–120 hours before arrival — tapeworm (dogs only, UK/IE/NO/FI/MT)" };
+  // "Day before" — final-night packing, nail trim, last-minute prep.
+  if (t.includes("day before") || t.includes("night before")) return { order: 45, label: "The day before — packing & final prep" };
+  // Travel day buckets — "Day of flight", "Travel day", "At the airport", etc.
+  if (t.includes("day of") || t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
+  // Security and onboard fall into the same travel-day band.
+  if (t.includes("security") || t.includes("onboard") || t.includes("on board") || t.includes("in flight")) return { order: 55, label: "At security & onboard" };
 
-  // Generic guidance, "first — understand", "if you're flying with a cat" etc.
-  // Stuff that doesn't have a clear timing — bucket as "good to know".
-  if (t.includes("first") || t.includes("understand") || t.includes("flying with a")) return { order: -10, label: "Good to know" };
-
-  // Anything else gets a safe middle bucket.
-  return { order: 25, label: "Anytime / general prep" };
+  // Non-time-bound general guidance and "if you're flying with a..." sections.
+  // Single bucket so the document doesn't end up with both "Good to know" and
+  // "Anytime / general prep" — they're the same thing functionally.
+  return { order: -10, label: "Anytime / general prep" };
 }
 
 // Normalise an item string for duplicate detection across the two countries.
@@ -5159,6 +5390,28 @@ function normalizeItem(s) {
     .replace(/[^\w\s]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+// Map an item to a CANONICAL key for cross-chapter dedupe. Two items about
+// the same underlying concept (e.g. "ISO microchip" and "ISO 11784/11785
+// microchip implanted before rabies") should resolve to the same key so we
+// don't repeat the same step in both Leaving and Entering chapters.
+// Returns null if no canonical concept matches — in that case the item is
+// treated as unique and uses its full normalised text as the key.
+function canonicalConceptKey(text) {
+  const t = (text || "").toLowerCase();
+  // Universal prep that belongs ONCE on origin side, not repeated at dest.
+  if (t.includes("microchip") && (t.includes("iso") || t.includes("implant"))) return "concept:microchip";
+  if (t.includes("rabies") && (t.includes("vaccin") || t.includes("shot"))) return "concept:rabies";
+  if (t.includes("vet") && (t.includes("health check") || t.includes("appointment") || t.includes("examin"))) return "concept:vet-health-check";
+  if (t.includes("titer") || t.includes("titre") || t.includes("favn") || t.includes("rnatt")) return "concept:rabies-titer";
+  if (t.includes("snub") || t.includes("brachy") || t.includes("flat-faced")) return "concept:brachy-warning";
+  if (t.includes("book") && (t.includes("cabin pet") || t.includes("pet space") || t.includes("airline by phone"))) return "concept:book-airline";
+  // Tapeworm — same concept whether origin or dest mentions it.
+  if (t.includes("tapeworm")) return "concept:tapeworm";
+  // AHC / health cert is destination-specific (each country issues its own
+  // type) — don't unify across countries. Return null so they stay distinct.
+  return null;
 }
 
 // Build a route-specific checklist. Multi-chapter model: "Leaving [origin]"
@@ -5227,8 +5480,33 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originId = REGION_TO_CHECKLIST_ID[originRegion];
   const destId = REGION_TO_CHECKLIST_ID[destRegion];
 
-  const originChecklist = originId ? getChecklist(originId, "departing") : null;
-  const destChecklist = destId ? getChecklist(destId, "arriving") : null;
+  // Resolve the directional (departing/arriving) checklist AND the base
+  // checklist for each side. Some directional checklists (notably UK
+  // arriving) hold entry-option content that's all "Anytime / general prep"
+  // — they tell you WHAT routes work, not WHEN to do each step. Merging
+  // the base CHECKLIST_DATA on top gives us BOTH the entry options AND
+  // the time-bound paperwork timeline (6 weeks → 10 days → 24-120hrs →
+  // travel day). Without this merge, "Entering the UK" emits the options
+  // into Anytime/general prep at the top, then leaves the actual chapter
+  // empty.
+  const mergeChecklists = (directional, base) => {
+    if (!directional && !base) return null;
+    if (!directional) return base;
+    if (!base) return directional;
+    return {
+      ...directional,
+      sections: [...directional.sections, ...base.sections],
+    };
+  };
+  const originDirectional = originId ? getChecklist(originId, "departing") : null;
+  const originBase = originId ? (CHECKLIST_DATA[originId] || null) : null;
+  const destDirectional = destId ? getChecklist(destId, "arriving") : null;
+  const destBase = destId ? (CHECKLIST_DATA[destId] || null) : null;
+  // Only merge if the two are actually different objects (directional may
+  // fall back to base when no directional variant exists, in which case
+  // merging would duplicate every section).
+  const originChecklist = originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase);
+  const destChecklist = destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase);
   const generic = CHECKLIST_DATA.generic;
 
   // Resolve airlines from the route's legs so we can flag the carrier-size
@@ -5259,6 +5537,14 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
         if (petType === "dog" && applies === "cat") return;
         if (petType === "cat" && applies === "dog") return;
 
+        // Directional conditional filter. Many checklist items are written
+        // as "If outbound from X: ..." or "If inbound to X: ..." because the
+        // base CHECKLIST_DATA serves both country-mode departing AND arriving
+        // views. In a route checklist, the direction is fixed — so an item
+        // tagged "outbound from UK" should only appear in the LEAVING UK
+        // chapter, never in ENTERING UK, and vice versa.
+        if (!isRelevantConditional(text, side)) return;
+
         // Tip? Demote out of the timeline into the tips box.
         if (isTip(text)) { tips.add(text); return; }
 
@@ -5276,7 +5562,11 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
 
         // De-dupe based on the FINAL text (post-rewrite). Two different generic
         // items can rewrite to the same concrete answer — keep one copy.
-        const key = normalizeItem(finalText);
+        // We use a CANONICAL concept key when one exists (so "ISO microchip"
+        // and "ISO 11784/11785 microchip implanted before rabies" both resolve
+        // to "concept:microchip" and dedupe across chapters) — falling back to
+        // the normalised text for items where no concept matches.
+        const key = canonicalConceptKey(finalText) || normalizeItem(finalText);
 
         // Origin-chapter items get recorded so destination can suppress duplicates.
         if (side === "origin") {
@@ -5307,8 +5597,51 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const originSections = buildChapter(originWithGeneric, "origin");
   const destSections = buildChapter(destChecklist, "destination");
 
-  // Assemble: chapter divider, origin sections, chapter divider, destination sections, tips.
+  // Anytime/general prep — pull from BOTH chapters and merge into ONE top
+  // section. Otherwise the document ends up with "Anytime / general prep"
+  // appearing twice (once after Leaving X, once after Entering Y), which
+  // is repetitive and confusing. Time-bound buckets stay in their chapter.
+  const ANYTIME_ORDER = -10;
+  const anytimeItems = [];
+  const anytimeKeys = new Set();
+  const collectAnytime = (chapterSections) => {
+    chapterSections.forEach((bucket) => {
+      if (bucket.label !== "Anytime / general prep") return;
+      bucket.items.forEach((it) => {
+        const k = canonicalConceptKey(it) || normalizeItem(it);
+        if (anytimeKeys.has(k)) return;
+        anytimeKeys.add(k);
+        anytimeItems.push(it);
+      });
+    });
+  };
+  collectAnytime(originSections);
+  collectAnytime(destSections);
+
+  // Strip the Anytime bucket from the per-chapter section lists so it isn't
+  // emitted again under the chapter dividers.
+  const stripAnytime = (chapterSections) =>
+    chapterSections.filter((bucket) => bucket.label !== "Anytime / general prep");
+  const originTimed = stripAnytime(originSections);
+  const destTimed = stripAnytime(destSections);
+
+  // Assemble: anytime block at top, carriers, origin chapter, transit, destination chapter, tips.
   const sections = [];
+
+  // ANYTIME / GENERAL PREP — at the very top. Non-time-bound advice that
+  // applies regardless of when in the timeline you read it: species tips,
+  // booking notes, carrier acclimation. One section, not two.
+  if (anytimeItems.length > 0) {
+    sections.push({
+      title: "Anytime / general prep",
+      divider: true,
+      items: [`Read these first. They apply throughout the trip, not on a specific date.`],
+    });
+    sections.push({
+      title: "General prep",
+      items: anytimeItems,
+    });
+  }
 
   // CARRIERS chapter — at the TOP because the carrier dimensions are
   // airline-specific and you need to know them BEFORE you buy a carrier.
@@ -5344,24 +5677,22 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
   }
 
-  // Origin chapter header.
-  sections.push({
-    title: `Leaving ${originLabel}`,
-    divider: true,
-    items: [`Prep for departure from ${originLabel}. Time-ordered — earliest prep first.`],
-  });
-  originSections.forEach((s) => {
-    if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
-  });
+  // Origin chapter — time-bound items only (anytime already pulled out).
+  if (originTimed.length > 0) {
+    sections.push({
+      title: `Leaving ${originLabel}`,
+      divider: true,
+      items: [`Time-bound steps for departure — earliest prep first.`],
+    });
+    originTimed.forEach((s) => {
+      if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
+    });
+  }
 
   // Transit chapters — one per region the pet legally enters between origin
   // and destination. Each is briefer than a full arrival chapter (transit-only
   // essentials). Filtered to exclude origin and destination themselves, and
   // de-duplicated so the same transit region only appears once.
-  //
-  // We pass the route's legs into getTransitNotes so it can tailor the chapter
-  // to the SPECIFIC transit country (e.g. "France (Paris)" vs generic "Europe")
-  // and surface country-specific gotchas (breed bans, tapeworm requirements).
   const seenTransits = new Set([originRegion, destRegion]);
   const transitChapters = [];
   for (const tr of transitRegions) {
@@ -5369,7 +5700,6 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     seenTransits.add(tr);
     const notes = getTransitNotes(tr, originRegion, legs);
     if (!notes) continue;
-    // notes is now an object: { label, items }
     transitChapters.push({
       region: tr,
       label: notes.label || (ROUTE_FACTS[tr] ? ROUTE_FACTS[tr].name : tr),
@@ -5388,20 +5718,63 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
   });
 
-  // Destination chapter header.
-  if (destSections.length > 0 || destChecklist) {
+  // Destination chapter — time-bound items only. Subhead names the actual
+  // headline rules (paperwork + any binding constraint) so the reader knows
+  // WHAT'S inside, not just THAT this is the destination chapter.
+  if (destTimed.length > 0 || destChecklist) {
+    const destFact = ROUTE_FACTS[destRegion];
+    const destSubhead = (() => {
+      // UK / Ireland — paperwork + tapeworm window + UK's no-cabin rule.
+      if (destRegion === "uk-out") return `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
+      if (destRegion === "ireland") return `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
+      // India is CDC high-risk; the catch-all below handles that line.
+      if (destFact && destFact.cdcHighRisk) return `Microchip, rabies, NOC from the Animal Quarantine Station, and CDC-high-risk paperwork for return to the US.`;
+      // Strict-import destinations.
+      if (destRegion === "japan") return `Microchip-first, two rabies vaccines, FAVN titer + 180-day wait, AQS advance notification, and Form A/C paperwork.`;
+      if (destRegion === "hawaii") return `Direct Airport Release programme: microchip, two rabies vaccines, FAVN titer ≥30 days pre-arrival, AQS-279 form — plan 4–5 months ahead.`;
+      // US — CDC dog import is the headline.
+      if (destRegion === "us") return `CDC Dog Import Form (online, free, valid 6 months), microchip, dog ≥6 months old. Extra rabies paperwork if origin is high-risk.`;
+      // Europe — paperwork ordering matters.
+      if (destRegion === "europe") return `Microchip BEFORE rabies, ≥21-day rabies wait, EU Health Certificate (or EU pet passport if you're an EU resident).`;
+      // UAE — Etihad-to-AUH is the cabin path, Dubai is cargo-only.
+      if (destRegion === "dubai") return `MOCCAE import permit, health certificate, rabies titer (origin-dependent). Cabin entry only via Etihad to Abu Dhabi; Dubai is cargo-only.`;
+      // Canada — usually the simplest.
+      if (destRegion === "canada") return `Current rabies certificate for dogs and cats over 3 months old. No USDA endorsement needed coming from the US.`;
+      // Mexico — short list.
+      if (destRegion === "mexico") return `SENASICA Health Certificate within 10 days of travel, current rabies, no quarantine. Cats and dogs over 3 months.`;
+      // South Africa — cargo-only internationally, import permit + titer.
+      if (destRegion === "south-africa") return `Import permit from the Department of Agriculture, microchip, rabies titer, health certificate. Pet travels as manifested cargo — no cabin internationally.`;
+      // Caribbean (when picked by airport — DR, Jamaica, Bahamas).
+      if (destRegion === "caribbean") return `Each island differs (Bahamas, Jamaica, Dominican Republic each have their own permit + paperwork). Confirm with the specific country's Department of Agriculture.`;
+      // South / Central America — perCountry, so flag that.
+      if (destRegion === "south-america") return `Rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Check the specific country's requirements.`;
+      if (destRegion === "central-america") return `Rules differ by country. Health certificate + rabies vaccination are universal; some require an import permit.`;
+      // Korea — limited data but flag what we know.
+      if (destRegion === "korea") return `Microchip, rabies ≥30 days, health certificate from origin, optional rabies titer for some origins.`;
+      // Russia — sanctions-era complexity.
+      if (destRegion === "russia") return `Veterinary certificate F1, microchip, rabies vaccine. Sanctions and limited flights make routing tricky — confirm with the specific airline.`;
+      return `Entry requirements and paperwork for ${destLabel}.`;
+    })();
     sections.push({
       title: `Entering ${destLabel}`,
       divider: true,
-      items: [`Prep specific to entering ${destLabel}. Duplicates from earlier chapters are not repeated.`],
+      items: [destSubhead],
     });
-    destSections.forEach((s) => {
+    destTimed.forEach((s) => {
       if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
     });
   }
 
   // Tips — at the very end, clearly labelled as optional comfort suggestions.
-  if (tips.size > 0) {
+  // Filter against the Anytime block so any tip that already appears in
+  // "General prep" doesn't also appear in "Tips" — the user shouldn't see
+  // the same item twice with two different framings. Use the canonical
+  // concept key when one exists so wording variations don't slip through.
+  const dedupedTips = [...tips].filter((tip) => {
+    const k = canonicalConceptKey(tip) || normalizeItem(tip);
+    return !anytimeKeys.has(k);
+  });
+  if (dedupedTips.length > 0) {
     sections.push({
       title: "Travel-day tips & comfort suggestions",
       divider: true,
@@ -5409,7 +5782,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     });
     sections.push({
       title: "Tips",
-      items: [...tips],
+      items: dedupedTips,
     });
   }
 
@@ -5423,8 +5796,8 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   }
 
   return {
-    title: `${originLabel} → ${destLabel} pet-travel checklist`,
-    subtitle: petType === "dog" ? "For a dog" : petType === "cat" ? "For a cat" : "For a dog and a cat",
+    title: `${originLabel} → ${destLabel} — pet-travel checklist`.replace(/^the\s+/i, "The "),
+    subtitle: petType === "dog" ? "Dog edition" : petType === "cat" ? "Cat edition" : "For dogs and cats",
     sections,
     restriction,
     isRouteChecklist: true,
@@ -5440,7 +5813,7 @@ function openChecklistPrintable(data) {
     ? `<div style="background:#fef3c7;border-left:3px solid #d97706;padding:14px 18px;margin:24px 0;font-family:'Fraunces',serif;font-style:italic;color:#78350f;border-radius:2px;">${data.restriction}</div>`
     : "";
   const subtitleHtml = data.subtitle
-    ? `<p class="subtitle">${data.subtitle} · Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`
+    ? `<p class="subtitle"><strong style="font-style:normal;color:#1c1917;">${data.subtitle}.</strong> Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`
     : `<p class="subtitle">Print this, stick it to the fridge, tick things off as you go. Generated from petsincabin.com.</p>`;
 
   const html = `<!DOCTYPE html>
@@ -5908,7 +6281,7 @@ function assess(answers) {
       severity: "impossible",
       title: "No cabin entry to Dubai — cargo only into DXB",
       detail: "Every pet entering Dubai (DXB) must arrive as manifested cargo, regardless of airline. This is UAE federal law applying to all carriers.",
-      workaround: "The cabin workaround DOES exist via Abu Dhabi: Etihad accepts cabin pets under 8 kg into Abu Dhabi (AUH) — the only airline that does. Promo fee currently $399/segment through May 2026 (down from $1,500). From AUH, it's a 90-minute taxi (around AED 250) to Dubai. See the LHR/Mumbai/JFK → Abu Dhabi routes. For larger pets: cargo into DXB via Emirates SkyCargo + Dubai Kennels & Cattery (DKC) as broker.",
+      workaround: `The cabin workaround DOES exist via Abu Dhabi: Etihad accepts cabin pets under 8 kg into Abu Dhabi (AUH) — the only airline that does. ${ETIHAD_PROMO_WORKAROUND}. From AUH, it's a 90-minute taxi (around AED 250) to Dubai. See the LHR/Mumbai/JFK → Abu Dhabi routes. For larger pets: cargo into DXB via Emirates SkyCargo + Dubai Kennels & Cattery (DKC) as broker.`,
     });
     warnings.push({
       title: "MOCCAE permit valid only 30 days",
@@ -5972,20 +6345,27 @@ function SectionLabel({ children, num }) {
 
 const NAV_SECTIONS = [
   { id: "top", label: "Home", num: "" },
+  // Start — first questions, personalised tools
   { id: "intake", label: "Can my pet fly?", num: "I" },
   { id: "planner", label: "Journey planner", num: "✦" },
-  { id: "airlines", label: "Airlines", num: "II" },
-  { id: "routes", label: "Routes", num: "III" },
-  { id: "destinations", label: "Difficult destinations", num: "IV" },
+  { id: "timeline", label: "Timeline & checklist", num: "II" },
+  // Research — compare and choose
+  { id: "airlines", label: "Airlines", num: "III" },
+  { id: "routes", label: "Routes", num: "IV" },
   { id: "quarantine", label: "Quarantine", num: "⚠" },
-  { id: "timeline", label: "Timeline", num: "V" },
-  { id: "checklist", label: "Checklist", num: "✓" },
+  { id: "destinations", label: "Difficult destinations", num: "V" },
+  // Prepare — paperwork and tips
   { id: "documents", label: "Paperwork", num: "VI" },
   { id: "tips", label: "Tips", num: "VII" },
+  // Travel — final mile
+  { id: "gear", label: "Travel gear", num: "VIII" },
   { id: "travel-day", label: "Airport day", num: "★" },
+  // Last resort
+  { id: "operators", label: "Pet Jets & Cargo", num: "IX" },
+  // Connect
   { id: "stories", label: "Stories", num: "✻" },
-  { id: "contact", label: "Contact", num: "VIII" },
   { id: "about", label: "About", num: "✦" },
+  { id: "contact", label: "Contact", num: "X" },
 ];
 
 function NavBar({ onStartIntake }) {
@@ -6127,12 +6507,12 @@ function NavBar({ onStartIntake }) {
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-14 h-14 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-16 h-16 rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
             <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "21px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "22px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
@@ -6145,6 +6525,11 @@ function NavBar({ onStartIntake }) {
                 {"BY THEO'S MUM".split("").map((ch, i) => (
                   <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
+              </span>
+              <span
+                className="block w-full text-center text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+              >
+                Updated {LAST_UPDATED}
               </span>
             </div>
           </button>
@@ -6171,12 +6556,12 @@ function NavBar({ onStartIntake }) {
             <img
               src="/logo.png"
               alt="Pets in Cabin"
-              className="w-[72px] h-[72px] rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
+              className="w-[96px] h-[96px] rounded-full object-cover flex-shrink-0 group-hover:opacity-85 transition-opacity shadow-sm"
             />
             <div className="flex flex-col items-start gap-1">
               <span
                 className="font-serif text-stone-900 group-hover:text-amber-700 transition-colors leading-none"
-                style={{ fontSize: "24px", fontWeight: 600, letterSpacing: "-0.02em" }}
+                style={{ fontSize: "26px", fontWeight: 600, letterSpacing: "-0.02em" }}
               >
                 Pets in Cabin
               </span>
@@ -6189,6 +6574,11 @@ function NavBar({ onStartIntake }) {
                 {"BY THEO'S MUM".split("").map((ch, i) => (
                   <span key={i} aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>
                 ))}
+              </span>
+              <span
+                className="block w-full text-center text-[9px] uppercase tracking-[0.18em] text-stone-400 leading-none font-sans whitespace-nowrap mt-0.5"
+              >
+                Updated {LAST_UPDATED}
               </span>
             </div>
           </button>
@@ -6306,7 +6696,7 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-6 md:pt-8 pb-10 md:pb-24 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-6 md:pt-8 pb-10 md:pb-12 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
@@ -6326,7 +6716,7 @@ function Hero({ onStart }) {
         </h1>
 
         <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-10">
-          Every airline has different rules. Every country has different paperwork. We sort through it so you and your animal arrive together — calm, prepared, and on the same flight.
+          Can your dog or cat fly in the cabin with you? Every airline has different rules, and every country has different paperwork. We sort through it so you and your pet arrive together — calm, prepared, and on the same flight.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center">
@@ -6381,7 +6771,7 @@ function Hero({ onStart }) {
         <div className="grid grid-cols-3 gap-8 mt-10 pt-8 border-t border-stone-300 max-w-2xl mx-auto">
           {[
             { num: "08", label: "Quick questions" },
-            { num: "32", label: "Airlines compared" },
+            { num: "34", label: "Airlines compared" },
             { num: "14", label: "Tricky destinations" },
           ].map((s, i) => (
             <div key={i} className="text-center">
@@ -6911,7 +7301,7 @@ function Assessment({ answers, onReset }) {
   return (
     <section ref={sectionRef} id="assessment-result" className="py-20 px-6 md:px-12 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="II.">Your assessment</SectionLabel>
+        <SectionLabel num="✦">Your assessment</SectionLabel>
 
         <div className="bg-stone-50 border border-stone-300 mb-12">
           {/* TOP: Trip summary + restart */}
@@ -7208,8 +7598,8 @@ const DESTINATIONS = [
     id: "japan",
     flag: "🇯🇵",
     name: "Japan",
-    headline: "Strict import rules + JAL/ANA cargo-only. Three cabin paths exist.",
-    rule: "Japan's two flag carriers — JAL and ANA — DO NOT carry pets in cabin on any flight (international or domestic). Pets are cargo only on both. Cabin pets to/from Japan exist on just three paths: United (US ↔ Japan direct, no weight limit), Korean Air / T'Way / Air Premia (Japan ↔ Korea cabin, then onward via Korean Air's wider cabin network), and Aeromexico (Mexico City ↔ Tokyo direct). Plus: Japan's pet import process is one of the strictest in the world — 180-day wait after a passing rabies titer test, plus a 40-day AQS Advance Notification deadline. Get any step wrong and your pet faces up to 180 days quarantine at your expense. Plan 7+ months ahead.",
+    headline: "Strict import rules + JAL/ANA cargo-only. Two cabin paths exist.",
+    rule: "Japan's two flag carriers — JAL and ANA — DO NOT carry pets in cabin on any flight (international or domestic). Pets are cargo only on both. Cabin pets to/from Japan exist on just two paths: United (US ↔ Japan direct, no weight limit), and Korean Air / T'Way / Air Premia (Japan ↔ Korea cabin, then onward via Korean Air's wider cabin network). Aeromexico previously offered a Mexico City ↔ Tokyo direct service that some guides describe as cabin pet–friendly, but Aeromexico's own published policy restricts cabin pets to flights under 6 hours, and the MEX-NRT route itself appears to have been suspended in early 2026. Plus: Japan's pet import process is one of the strictest in the world — 180-day wait after a passing rabies titer test, plus a 40-day AQS Advance Notification deadline. Get any step wrong and your pet faces up to 180 days quarantine at your expense. Plan 7+ months ahead.",
     workarounds: [
       {
         title: "US ↔ Japan: United direct (the cleanest cabin path)",
@@ -7224,10 +7614,10 @@ const DESTINATIONS = [
         cost: "Japan↔Korea on Korean Air: $100. Korea↔elsewhere: $150–$200.",
       },
       {
-        title: "Mexico/Latin America ↔ Japan: Aeromexico direct",
+        title: "Mexico / Latin America → Japan: route via US west coast",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aeromexico flies cabin pets MEX ↔ NRT direct — one of the few Pacific cabin pet routes. Combined pet+carrier weight 9 kg. Snub-nosed breeds welcome in cabin. Useful for Latin American travellers OR as a routing option for US travellers who can position to Mexico City cheaply.",
-        cost: "$200–$250 each way long-haul international.",
+        body: "There is no direct cabin pet route Mexico/Latin America → Japan. Aeromexico's MEX-NRT service appears suspended as of early 2026 and Aeromexico's 6-hour cabin rule would exclude it anyway. Position to a US west coast hub (LAX/SFO) on Aeromexico, Volaris or American in cabin, then United LAX/SFO → Tokyo direct (cabin, no weight limit, $150).",
+        cost: "Mexico→US segment: ~$162 (Aeromexico). US→Japan segment: $150 (United). Total ~$315 each way.",
       },
       {
         title: "Start the import clock at least 7 months out",
@@ -7242,7 +7632,7 @@ const DESTINATIONS = [
         cost: "Domestic onward to non-entry airports is fine after clearance.",
       },
     ],
-    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Most international airlines are cargo-only into Japan (JAL, ANA, Lufthansa, KLM, BA, Singapore) — cabin options are limited to United (from US), Korean carriers (from/via Korea), and Aeromexico (from Mexico).",
+    paperwork: "ISO 11784/11785 microchip (BEFORE first rabies vaccine), two rabies vaccines, FAVN/RNATT titer test ≥0.5 IU/ml, 180-day waiting period (blood draw date = Day 0), AQS Advance Notification ≥40 days before arrival, vet clinical exam within 10 days of boarding, USDA-endorsed Form A and Form C. Forms must be perfect: no erasing, no correction fluid, microchip number on every document, vaccine product/manufacturer details listed. Cabin options into Japan are limited to United (from US) and Korean carriers (from/via Korea); most other international airlines are cargo-only.",
   },
   {
     id: "ireland",
@@ -7300,20 +7690,14 @@ const DESTINATIONS = [
     id: "india",
     flag: "🇮🇳",
     name: "India",
-    headline: "Cabin to/from India — easier than ever in 2026.",
-    rule: "India is now one of the better destinations for cabin pet travel. Air India's 2026 'Paws on Board' programme accepts cabin pets up to 10 kg on direct flights between India and the USA (DEL/BOM/BLR/HYD ↔ JFK/SFO/IAD/ORD/EWR), Europe, and Canada. The exceptions: cabin NOT allowed to/from the UK (cargo only — UK government embargo) or departing India to UAE. Six approved entry airports for pets only: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad. AQCS NOC is required for every entry.",
+    headline: "Cabin to/from India — workable via Europe in 2026.",
+    rule: "India has good cabin options for Europe, Asia and domestic travel, but the long-haul cabin paths run via Europe — not direct on Air India to the US. Air India's 'Paws on Board' programme accepts cabin pets up to 10 kg across 80+ sectors including domestic India, India ↔ Europe (excluding the UK) and India ↔ Asia. Three Air India rules close down the long-haul options: (1) Air India does not transport pets to or from the USA, Canada or Australia in any form (cabin, baggage or cargo); (2) the UK is cargo-only and only at LHR and LGW — no pet service at all from Birmingham (BHX); (3) Ultra Long Haul flights are excluded from cabin even when the destination is otherwise eligible. Six approved entry airports for pets into India: Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad. AQCS NOC required for every entry.",
     workarounds: [
       {
-        title: "India → USA: now direct via Air India",
+        title: "India ↔ USA / Canada: route via Europe (single-carrier through-ticket)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Air India Paws on Board direct cabin flights to JFK, SFO, IAD, ORD, EWR from Delhi, Mumbai, Bengaluru, and Hyderabad. 10 kg combined weight limit — more generous than the 8 kg on European carriers. Book via Air India customer support 48 hours ahead. For Seattle: connect SFO → SEA on Alaska/Delta after arrival.",
-        cost: "$140 short-haul intl / $160 medium-haul / non-refundable",
-      },
-      {
-        title: "India → USA via Europe: 5 alternative cabin paths",
-        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "If Air India direct doesn't fit your schedule, cabin via Europe works on Lufthansa (FRA, except BLR — Lufthansa specifically excludes Bangalore), KLM (AMS), Air France (CDG), SWISS (ZRH), and LOT Polish (WAW). Both legs cabin under 8 kg. Book single through-ticket. Allow 3+ hours at the European hub.",
-        cost: "Two-leg cabin fees combined: $200–$500. LOT Polish is the cheapest (€70 to USA).",
+        body: "No direct cabin route exists — Air India does not carry pets to/from the US or Canada at all, and no other airline operates a direct India ↔ US cabin pet route. The working pattern is two cabin legs on the same carrier via a European hub: Lufthansa end-to-end via Frankfurt (FRA — but Lufthansa excludes Bangalore), Air France end-to-end via Paris (CDG), KLM via Amsterdam, SWISS via Zurich, or LOT Polish via Warsaw. A SINGLE-carrier through-ticket matters because Air India explicitly does not accept pets connecting from other airlines, so any path that puts Air India on one leg won't work for the long-haul transfer. Allow 3+ hours at the European hub (overnight is gentler).",
+        cost: "Two-leg cabin fees combined: $200–$500. LOT Polish is often cheapest (≈€70 USA leg).",
       },
       {
         title: "India ↔ UK: cargo only (no exceptions)",
@@ -7336,7 +7720,7 @@ const DESTINATIONS = [
       {
         title: "Myth check: 'My cousin did India → LAX direct in cabin'",
         icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
-        body: "I get asked this often. The honest answer: as of May 2026, no airline operates a direct India → USA or India → Canada cabin pet route. Air India explicitly excludes those routes (cargo only). Qatar and Emirates don't allow cabin pets at all. Etihad accepts cabin pets only to/from Abu Dhabi — NOT to the USA. JAL and ANA via Tokyo don't allow cabin pets internationally. What most 'direct in cabin' stories actually were: (1) pet flew as checked baggage (same plane, in the hold) and was collected at baggage claim; (2) the trip involved a European stopover that felt direct; or (3) a pre-2021 emotional support animal flight, which isn't allowed any more. Always ask: was the pet under the seat with you, or did you pick them up at a baggage carousel?",
+        body: "I get asked this often. The honest answer: as of May 2026, no airline operates a direct India → USA or India → Canada cabin pet route. Air India does not transport pets to/from those destinations at all (not cabin, not baggage, not cargo). Qatar and Emirates don't allow cabin pets anywhere. Etihad accepts cabin pets only to/from Abu Dhabi — NOT to the USA. JAL and ANA via Tokyo don't allow cabin pets internationally. What most 'direct in cabin' stories actually were: (1) pet flew as checked baggage (same plane, in the hold) and was collected at baggage claim; (2) the trip involved a European stopover that felt direct; or (3) a pre-2021 emotional support animal flight, which isn't allowed any more. Always ask: was the pet under the seat with you, or did you pick them up at a baggage carousel?",
         cost: "—",
       },
     ],
@@ -7353,7 +7737,7 @@ const DESTINATIONS = [
         title: "The Abu Dhabi back door — Etihad cabin (this is THE route)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
         body: "Etihad is the only airline accepting cabin pets INTO the UAE — and only into Abu Dhabi (AUH), not Dubai. Combined pet + carrier max 8 kg (17.6 lb). Carrier max 40 × 40 × 22 cm under-seat (or 50 × 43 × 50 cm if you buy the adjacent seat). All other UAE requirements still apply (MOCCAE permit, microchip, rabies, etc.). Abu Dhabi to Dubai is a 90-minute drive — taxis are easy, around AED 250. Note: Etihad cabin is NOT allowed on USA, UK, Australia or Hong Kong routes.",
-        cost: "PROMO: $399 per segment (bookings before end of May 2026). Standard: $1,500 per segment.",
+        cost: ETIHAD_PROMO_COST_DETAIL,
       },
       {
         title: "Myth check: 'I heard you can fly cabin to Dubai now'",
@@ -7574,9 +7958,9 @@ const DESTINATIONS = [
         cost: "USD 125 international · USD 25 domestic Panama.",
       },
       {
-        title: "Aeromexico Mexico ↔ South America cabin direct",
+        title: "Aeromexico Mexico ↔ South America cabin — under 6 hours only",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Aeromexico links Mexico City to São Paulo, Buenos Aires, Santiago, Bogotá, and Lima with cabin pets (9 kg combined). Useful for travellers connecting through Mexico from the US or Asia. Snub-nosed breeds welcome in cabin.",
+        body: "Aeromexico flies Mexico City to Bogotá (4h 30m) in cabin comfortably under its 6-hour rule. Lima (6h) sits on the edge. São Paulo, Buenos Aires and Santiago (8–10h) are excluded — use LATAM or Copa via Panama for those. Snub-nosed breeds welcome in cabin where Aeromexico is viable.",
         cost: "USD 200–250 long-haul international.",
       },
       {
@@ -7588,6 +7972,46 @@ const DESTINATIONS = [
     ],
     paperwork: "Brazil: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, parasite treatment, additional vaccines (Distemper/Hepatitis/Parvovirus/Leptospirosis for dogs; FVRCP for cats). No microchip required. Argentina/Uruguay/Chile/Peru: ISO microchip, rabies 30+ days, official veterinary authority health certificate (SENASA-endorsed for Argentina/Peru, MGAP-recognised for Uruguay, SAG import permit pre-arranged 30+ days ahead for Chile). Colombia: ICA inspection on arrival, ISO microchip recommended, banned breeds (Pit Bull, Staffordshire, American Staffordshire) refused entry by law. All countries: pets must be 4+ months old for international cabin travel. Returning to the US: standard CDC Dog Import Form for dogs (Brazil/Argentina/Uruguay/Chile/Peru/Colombia NOT on CDC high-risk list as of 2026).",
   },
+  {
+    id: "russia-ukraine",
+    flag: "🇷🇺",
+    name: "Russia & Ukraine",
+    headline: "Wartime airspace closures make the obvious routes impossible.",
+    rule: "Since February 2022, most Western airlines have suspended flights to Russia and Russian airspace is closed to UK/US/EU/Canadian carriers. Ukrainian airspace is closed to commercial flights entirely. There is no straightforward way to fly with a pet between Western countries and Russia/Ukraine. The pathways that do exist are limited and require careful planning. We're including this section because we're seeing real searches for it — but be aware the picture changes with the security situation.",
+    workarounds: [
+      {
+        title: "Aeroflot via a third country (Russia)",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Aeroflot still carries cabin pets (8 kg under-seat, or up to 15 kg if you buy a second seat) on its remaining ~17-country network — UAE/Dubai, Turkey/Istanbul, India/Delhi/Mumbai, China, Egypt, the Maldives, Iran, Belarus, Kazakhstan and other former-USSR states. So a UK/EU pet owner moving to Russia would typically fly cabin from Heathrow to Istanbul or Dubai on a Western carrier, then connect onto Aeroflot for the Moscow leg. Two separate tickets, two pet bookings, two sets of paperwork — but each leg is cabin.",
+        cost: "London → Istanbul (Turkish Airlines cabin): ~£300–£600 + ~$70 pet fee. Istanbul → Moscow (Aeroflot cabin): from ~€200 + €75 pet fee. Allow a day's buffer between flights.",
+      },
+      {
+        title: "Overland into Ukraine via Poland",
+        icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
+        body: "With no commercial flights into Ukraine, the actual route most pet owners use is: fly cabin into Warsaw (LOT or Lufthansa from across Europe), then take the train or a pet-friendly long-distance bus from Warsaw or Rzeszów over the border into Lviv or Kyiv. Polish State Railways (PKP) accept small pets in a carrier free; medium dogs need a muzzle and lead. Border crossings can be slow (3–8+ hours) and unpredictable depending on the security situation. Verify the route is operating before you book — this changes.",
+        cost: "Warsaw → Kyiv train: ~€40–80 per person. Pet: free (carrier) or small fee. Total travel time London → Kyiv: realistically 2 days.",
+      },
+      {
+        title: "Specialist pet relocators only",
+        icon: <ScrollText className="w-4 h-4" strokeWidth={1.75} />,
+        body: "For pet owners actually moving long-term to or from Russia or Ukraine, the practical answer is to use a specialist relocation company who handle the documentation, the routing through Turkey/Central Asia/Poland, and the border timing. This is not a journey to attempt DIY unless you have lived experience in the region and current ground intelligence on which crossings are open. IPATA-listed shippers serving Russia and Ukraine exist but are limited — start by emailing 3–4 and comparing routes.",
+        cost: "International relocation via specialist: €3,000–€8,000+ depending on origin and animal size.",
+      },
+      {
+        title: "Documentation: this is the hard part",
+        icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Both countries require ISO microchip, rabies vaccination (Russia: 30 days–12 months before travel; Ukraine: 21 days–12 months), a rabies titer test from an EU-approved lab, and an international veterinary certificate issued within 5–10 days of travel. Returning to the EU from either country adds the serological-test waiting period (3 months from blood draw to entry) because Russia and Ukraine are not on the EU's listed-country list. Start paperwork at least 4 months out.",
+        cost: "Microchip + rabies + titer + certificate: ~£250–£500 in the UK; equivalent in EUR elsewhere.",
+      },
+      {
+        title: "If you're leaving Ukraine with a pet (wartime concessions)",
+        icon: <Info className="w-4 h-4" strokeWidth={1.75} />,
+        body: "Since 2022, the EU and UK have allowed Ukrainian refugees with pets to enter under relaxed paperwork — typically arriving first, completing the missing documentation (microchip, rabies, titer) on arrival under official supervision. Check the latest published rules from your destination country's veterinary authority before relying on this — the concessions get extended and updated periodically. For UK arrivals, contact APHA's pet team in advance.",
+        cost: "Typically waived for refugees; standard fees apply for non-refugee travel.",
+      },
+    ],
+    paperwork: "Russia: ISO microchip BEFORE rabies vaccination, rabies vaccine 30 days to 12 months before travel (no 3-year recognition), rabies titer test (FAVN) for entries from rabies-affected countries, international veterinary certificate within 5 days of travel, Rosselkhoznadzor inspection on arrival/departure. Ukraine: ISO microchip, rabies vaccine 30 days to 12 months before, rabies titer test administered at least 3 months before entry, international health certificate within 10 days of travel. Re-entering EU/UK from either country: serological test result must precede entry by 3 months. Border crossings into Ukraine are subject to wartime checks — verify the route is operating before you commit.",
+  },
 ];
 
 function DifficultDestinations() {
@@ -7597,7 +8021,7 @@ function DifficultDestinations() {
   return (
     <section id="destinations" className="py-20 px-6 md:px-12 bg-stone-100 border-t border-stone-300">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="IV.">Difficult destinations</SectionLabel>
+        <SectionLabel num="V.">Difficult destinations</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           Where the rules get strange — and how clever owners get through.
@@ -7710,7 +8134,7 @@ function DifficultDestinations() {
                       Read the complete Japan pet travel guide →
                     </h4>
                     <p className="text-amber-50/90 leading-relaxed text-sm">
-                      The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, three cabin pet paths (United, Korean carriers, Aeromexico), and 11 approved entry ports — all on one page.
+                      The 7-month timeline, FAVN titer and 180-day wait, AQS Advance Notification, the two main cabin pet paths (United from the US, Korean carriers from/via Korea), and 11 approved entry ports — all on one page.
                     </p>
                   </a>
                 )}
@@ -7924,6 +8348,7 @@ function AirlineGrid() {
     { id: "japan", label: "Japan", flag: "🇯🇵" },
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // The "Into UK / Ireland" and "Into Australia / NZ" filters are special —
@@ -8679,12 +9104,22 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
     if (presetDest && presetDest.key !== dest) setDest(presetDest.key);
   }, [presetDest, dest]);
 
+  // If origin and destination match (someone changed dest to match origin),
+  // bump origin to the first non-destination option so the form stays valid.
+  useEffect(() => {
+    if (origin === dest) {
+      const fallback = TW_TRIP_COUNTRIES.find((c) => c.key !== dest);
+      if (fallback) setOrigin(fallback.key);
+    }
+  }, [origin, dest]);
+
   // The stopover dropdown options. When the parent passes route-specific
   // stopoverOptions (the actual workaround hubs for this route), use those;
-  // otherwise fall back to the full country list.
+  // otherwise fall back to the full country list excluding the destination
+  // and origin (you can't stop over in your own start or end country).
   const stopoverChoices = stopoverOptions && stopoverOptions.length > 0
     ? stopoverOptions
-    : TW_TRIP_COUNTRIES;
+    : TW_TRIP_COUNTRIES.filter((c) => c.key !== dest && c.key !== origin);
 
   // If the available stopover choices change and the current pick is no
   // longer valid, clear it.
@@ -8817,7 +9252,7 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
                 onChange={(e) => setOrigin(e.target.value)}
                 className="mt-1 w-full border border-stone-300 rounded-sm px-3 py-2 bg-white text-stone-900"
               >
-                {TW_TRIP_COUNTRIES.map((c) => (
+                {TW_TRIP_COUNTRIES.filter((c) => c.key !== dest).map((c) => (
                   <option key={c.key} value={c.key}>{c.name}</option>
                 ))}
               </select>
@@ -8923,12 +9358,21 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
               callback. Puts the dated tapeworm line into the checklist that
               shows on screen AND the printable PDF. */}
           {result && onAddToChecklist && (
-            <div>
+            <div className="space-y-3">
               {addedToChecklist ? (
-                <div className="flex items-center gap-2 text-sm text-green-800 bg-green-100 border border-green-300 rounded-sm px-4 py-3">
-                  <Check className="w-4 h-4 flex-shrink-0" strokeWidth={2.5} />
-                  <span>Added to your checklist below — it's in the printable PDF too.</span>
-                </div>
+                <>
+                  <div className="flex items-center gap-2 text-sm text-green-800 bg-green-100 border border-green-300 rounded-sm px-4 py-3">
+                    <Check className="w-4 h-4 flex-shrink-0" strokeWidth={2.5} />
+                    <span>Added to your checklist below — it's in the printable PDF too.</span>
+                  </div>
+                  <a
+                    href="#checklist"
+                    className="inline-flex items-center gap-2 bg-stone-900 text-amber-50 px-5 py-3 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors rounded-sm"
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    Jump to my checklist
+                  </a>
+                </>
               ) : (
                 <button
                   onClick={() => onAddToChecklist(result)}
@@ -8977,27 +9421,48 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
 function Checklist() {
   const sections = [
     {
+      title: "If you're flying with a dog",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Practice the turn-around test at home: your dog must stand up, turn around and lie down inside the carrier without touching walls or ceiling",
+        "If your dog is over 20 lb combined with the carrier, most US airlines are out — Lufthansa, Air Canada and Iberia are your friends",
+        "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
+        "Adaptil pheromone spray on the carrier (never on the dog) 15 minutes before you head out — vets aren't selling snake oil here",
+        "Tapeworm treatment — required for dogs entering the UK, Ireland, Norway, Finland or Malta, given by a vet 24–120 hours before arrival. Cats and ferrets are exempt. The journey planner calculates the exact dates for your trip",
+      ],
+    },
+    {
+      title: "If you're flying with a cat",
+      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
+      items: [
+        "Start carrier acclimation weeks ahead — leave it out as a normal den, never something that appears only on travel day. That ship sails fast with cats",
+        "Line the carrier with unwashed bedding from home — cats orient by smell, and familiar scent settles them faster than anything else",
+        "Feliway pheromone spray (the cat version of Adaptil) on the carrier 15 minutes before you leave — never directly on the cat",
+        "Fit a well-adjusted harness BEFORE travel day and practise it — a loose cat in airport security is the scariest moment imaginable, prevent it",
+        "Don't feed within 4 hours of departure — cats are particularly prone to travel-sickness",
+        "Cats go quiet and still when stressed, not vocal — check on them gently through the carrier mesh, but don't assume silence means everything's fine",
+      ],
+    },
+    {
       title: "Six weeks before",
       icon: <Stethoscope className="w-5 h-5" strokeWidth={1.5} />,
       items: [
         "Vet visit: confirm your pet is healthy enough to fly — and ask about breed-specific airline restrictions before you book anything",
         "ISO 11784/11785 microchip implanted (if not already) — must be implanted BEFORE the rabies shot for international, or you may have to start over",
-        "Rabies vaccine administered — most countries need a 21-30 day wait after the shot, the UK and EU specifically require 21 days minimum",
-        "Research the destination country's rules — every country differs, some need 3-6 months lead time (Japan, Hawaii, Australia, Jamaica)",
-        "Book your flight AND phone the airline to reserve a pet spot — most cap at 2-7 pets per cabin, fills fast on popular routes",
-        "If snub-nosed (Frenchie, Pug, Bulldog, Persian cat) — start looking at airlines NOW, summer embargoes are wide and many cargo holds are off-limits",
+        "Rabies vaccine administered — most countries need a 21–30 day wait after the shot; the UK and EU specifically require 21 days minimum",
+        "Research the destination country's rules — every country differs, some need 3–6 months lead time (Japan, Hawaii, Australia, Jamaica)",
+        "Book your flight AND phone the airline to reserve a pet spot — most cap at 2–7 pets per cabin, fills fast on popular routes",
       ],
     },
     {
       title: "Two weeks before",
       icon: <ScrollText className="w-5 h-5" strokeWidth={1.5} />,
       items: [
-        "Buy the airline-compliant carrier (soft-sided is usually better) — let your pet sleep in it at home with a familiar blanket so it smells like them",
-        "Practice short car rides or trips in the carrier — calm carrier-day is built weeks earlier, not on the morning of",
+        "Buy the airline-compliant carrier — soft-sided is usually better. Double-check dimensions against your specific airline AND aircraft (under-seat space varies by plane, not just airline)",
         "Schedule the government-accredited vet visit for the health certificate — timing varies, usually within 10 days of travel, sometimes 48 hours",
+        "Going to the UK, Ireland, Norway, Finland or Malta with a dog? Book the tapeworm-treatment vet visit now — it has to land in the 24–120 hour window before arrival, and that vet has to be available on the right date",
         "Complete destination-specific forms (CDC for US, AHC for UK, EU pet passport, MOCCAE for UAE, MGAP for Uruguay, AQS Form for Japan, etc.)",
         "Confirm climate / temperature embargoes — many airlines refuse pets above 85°F or below 20°F, and brachy breeds face wider seasonal bans",
-        "Double-check carrier dimensions against your specific airline AND specific aircraft — the under-seat space varies by plane type, not just airline",
       ],
     },
     {
@@ -9005,8 +9470,8 @@ function Checklist() {
       icon: <Luggage className="w-5 h-5" strokeWidth={1.5} />,
       items: [
         "Light meal 3–4 hours before flight; water available right up until departure — empty stomachs cause anxiety, full ones cause accidents at altitude",
-        "Walk your dog or let your cat use the box right before leaving home — airport pet relief areas are often hidden, dirty, or non-existent",
-        "Pad the carrier with absorbent puppy pads — bring 3-4 spares and change them at the gate if needed, no shame in that",
+        "Get your pet outside (or to the litter tray) right before you leave home — airport pet-relief areas are often hidden, dirty, or non-existent",
+        "Pad the carrier with absorbent puppy pads — bring 3–4 spares and change them at the gate if needed, no shame in that",
         "Pack: food, collapsible water bowl, leash, waste bags, vet records (originals + photocopies), comfort item, calming spray, treats",
         "Arrive 2.5–3 hours early — pet check-in is in person at the counter, never online, and the turn-around test always takes longer than expected",
         "Charge your phone fully and bring a portable battery — you'll be juggling paperwork, carrier, and luggage with both hands full",
@@ -9024,43 +9489,19 @@ function Checklist() {
         "Window seat preferred — slightly more under-seat depth, away from cart traffic, and you can control the light through the window",
       ],
     },
-    {
-      title: "If you're flying with a dog",
-      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
-      items: [
-        "Walk them properly 2-3 hours before leaving — a tired dog in a carrier is a sleeping dog; a fresh one is an anxious one stuck in a small space",
-        "Adaptil pheromone spray on the carrier (never on the dog) 15 minutes before you head out — it actually works, vets aren't selling snake oil here",
-        "Brachycephalic breeds (Bulldogs, Pugs, Frenchies, Boston Terriers) — cabin only, never cargo. Avoid summer travel even in cabin if you can",
-        "Practice the turn-around test at home: dog must stand up, turn around, lie down inside the carrier without touching walls or ceiling",
-        "If your dog is over 20 lb combined with the carrier — most US airlines are out. Lufthansa, Air Canada, and Iberia are your friends",
-        "Bring poop bags AND a small bottle of water for cleanup — accidents happen, and you'll want to handle it discreetly without making a scene at the gate",
-      ],
-    },
-    {
-      title: "If you're flying with a cat",
-      icon: <PawPrint className="w-5 h-5" strokeWidth={1.5} />,
-      items: [
-        "Start carrier acclimation WEEKS ahead — leave it out as a normal den, never something that appears only on travel day, that ship sails fast with cats",
-        "Feliway pheromone spray (the cat version of Adaptil) on the carrier 15 minutes before you leave — never directly on the cat, they'll hate you for it",
-        "Line the carrier with unwashed bedding from home — cats orient by smell, and familiar scent settles them faster than literally anything else",
-        "Fit a well-adjusted harness BEFORE travel day and practise it — a loose cat in airport security is the scariest moment imaginable, prevent it",
-        "Don't feed within 4 hours of departure — cats are particularly prone to travel-sickness, and an empty carrier on landing is a much better outcome",
-        "Cats go quiet and still when stressed, not vocal — check on them gently through the carrier mesh, but don't assume silence means everything's fine",
-      ],
-    },
   ];
 
   return (
     <section id="timeline" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
-        <SectionLabel num="V.">The timeline</SectionLabel>
+        <SectionLabel num="II.">The timeline</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-4 max-w-3xl">
           What to do, and when.
         </h2>
 
         <p className="font-serif italic text-stone-600 text-lg mb-10 max-w-2xl">
-          A general timeline below — or grab the printable checklist tailored to your route.
+          Dog-specific and cat-specific tips first, then a general timeline — six weeks out, two weeks out, the day of, and security. For a version tailored to your exact route, with your tapeworm window calculated and the right paperwork for your destination, <a href="#planner" className="not-italic text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">use the journey planner</a>.
         </p>
 
         <div id="checklist" className="scroll-mt-24">
@@ -9096,6 +9537,7 @@ function ChecklistDownload() {
   const [mode, setMode] = useState("route"); // "route" or "country"
   const [route, setRoute] = useState("generic");
   const [direction, setDirection] = useState("departing"); // "departing" or "arriving"
+  const [petType, setPetType] = useState(null); // "dog" | "cat" | "both" | null — null forces user to pick
   // Route mode: airport-level origin + destination (codes)
   const [originCode, setOriginCode] = useState("");
   const [destCode, setDestCode] = useState("");
@@ -9120,7 +9562,9 @@ function ChecklistDownload() {
     { id: "south-america", label: "South America", flag: "🌎" },
     { id: "central-america", label: "Central America", flag: "🌎" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
   const clAirportsByRegion = CL_REGIONS.map((r) => ({
     region: r,
@@ -9145,21 +9589,26 @@ function ChecklistDownload() {
     }
   }, [mode, originCode, destCode, effectiveDirection]);
 
-  // The checklist data shown depends on the mode.
+  // The checklist data shown depends on the mode. We don't compute it until
+  // the user has picked a pet type (dog/cat/both) — there's no sensible
+  // default, and forcing a pick keeps the filter honest.
   let data;
-  if (mode === "route") {
+  if (!petType) {
+    data = null;
+  } else if (mode === "route") {
     if (originAirport && destAirport) {
       data = buildRouteChecklist(
         originAirport.region,
         destAirport.region,
         REGION_LABELS_SHORT[originAirport.region] || originAirport.region,
-        REGION_LABELS_SHORT[destAirport.region] || destAirport.region
+        REGION_LABELS_SHORT[destAirport.region] || destAirport.region,
+        petType
       );
     } else {
       data = null; // nothing selected yet
     }
   } else {
-    data = getChecklist(route, effectiveDirection);
+    data = filterChecklistByPet(getChecklist(route, effectiveDirection), petType);
   }
 
   const hasDirectionalContent = mode === "country" &&
@@ -9214,6 +9663,42 @@ function ChecklistDownload() {
         >
           By single country
         </button>
+      </div>
+
+      {/* Pet-type chip — filters the checklist items to dog-only, cat-only,
+          or both. No default — the user must pick so the filter is honest
+          (the wrong default would mean someone with a cat sees dog-specific
+          content they don't need, and vice versa). */}
+      <div className="mb-6">
+        <div className="text-xs uppercase tracking-widest text-stone-400 mb-2">
+          Flying with{!petType && <span className="ml-2 normal-case tracking-normal text-amber-400 italic">— pick one to start</span>}
+        </div>
+        <div className="inline-flex border border-stone-700 bg-stone-800">
+          <button
+            onClick={() => setPetType("dog")}
+            className={`px-4 py-2 text-sm transition-all ${
+              petType === "dog" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            🐕 Dog
+          </button>
+          <button
+            onClick={() => setPetType("cat")}
+            className={`px-4 py-2 text-sm transition-all border-l border-stone-700 ${
+              petType === "cat" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            🐈 Cat
+          </button>
+          <button
+            onClick={() => setPetType("both")}
+            className={`px-4 py-2 text-sm transition-all border-l border-stone-700 ${
+              petType === "both" ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+            }`}
+          >
+            Both
+          </button>
+        </div>
       </div>
 
       {mode === "route" ? (
@@ -9282,17 +9767,6 @@ function ChecklistDownload() {
               explains the deadlines and the prepaid return label so it doesn't catch you out.
             </div>
           )}
-
-          <div className="flex justify-end">
-            <button
-              onClick={openPrintable}
-              disabled={!data}
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
-            >
-              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       ) : (
         <div className="space-y-4">
@@ -9378,46 +9852,62 @@ function ChecklistDownload() {
             </div>
           )}
 
-          <div className="flex justify-end">
-            <button
-              onClick={openPrintable}
-              disabled={!data}
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
-            >
-              <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
           {(route === "dominican_republic" || route === "jamaica" || route === "bahamas") && (
             <div className="mt-1 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
               <strong className="text-amber-300 not-italic">Note on Caribbean coverage:</strong> we've built checklists for three of the most-asked Caribbean destinations (Bahamas, Jamaica, Dominican Republic). The Caribbean has 25+ countries with varying rules — if yours isn't listed, always check the destination's official Department of Agriculture site and confirm with your airline directly.
             </div>
           )}
-
-          {/* TAPEWORM CALCULATOR — shows when the destination is one of the
-              5 countries that require the treatment. Works off the route-mode
-              destination airport, or the country-mode destination. */}
-          {(() => {
-            // Resolve the destination tapeworm-country, if any.
-            let twDest = null;
-            if (mode === "route" && destCode) {
-              twDest = twCountryForAirport(destCode);
-            } else if (mode === "country") {
-              const COUNTRY_ROUTE_TO_TW = {
-                uk: "UK", ireland: "IE", norway: "NO",
-              };
-              twDest = COUNTRY_ROUTE_TO_TW[route] || null;
-            }
-            if (!twDest) return null;
-            return (
-              <div className="mt-2">
-                <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
-              </div>
-            );
-          })()}
         </div>
       )}
+
+      {/* TAPEWORM CALCULATOR — shows in BOTH modes when the destination is
+          one of the 5 countries that require the treatment (UK, Ireland,
+          Norway, Finland, Malta). Route mode resolves via airport code;
+          country mode maps the picked country to its tapeworm-rule key. */}
+      {(() => {
+        let twDest = null;
+        if (mode === "route" && destCode) {
+          twDest = twCountryForAirport(destCode);
+        } else if (mode === "country") {
+          const COUNTRY_ROUTE_TO_TW = {
+            uk: "UK", ireland: "IE", norway: "NO",
+          };
+          twDest = COUNTRY_ROUTE_TO_TW[route] || null;
+        }
+        if (!twDest) return null;
+        return (
+          <div className="mt-6">
+            <TapewormWindow destKey={twDest} checklistAnchor="checklist" />
+          </div>
+        );
+      })()}
+
+      {/* JOURNEY PLANNER CTA — shown after both airports are picked in route
+          mode. The journey planner does more than the checklist (route legs,
+          carriers, workarounds, tailored tapeworm dates) so this is the
+          honest next step once the user has selected a real route. */}
+      {mode === "route" && originAirport && destAirport && (
+        <div className="mt-6 bg-stone-800 border-l-2 border-amber-500 px-4 py-3 text-sm text-stone-300 leading-relaxed">
+          Want carriers named, route legs mapped, and the tapeworm window dated to your flight?{" "}
+          <a href="#planner" className="text-amber-300 underline decoration-amber-500/50 underline-offset-2 hover:text-amber-200">Run this trip through the journey planner</a> — it builds a full plan with everything in one place.
+        </div>
+      )}
+
+      {/* OPEN & PRINT — the panel's primary action, kept at the very bottom
+          so the read order is: pick filters → see contextual notes → see
+          tapeworm calc if applicable → see journey-planner upsell → print.
+          A mid-panel placement made the button look orphaned between info
+          boxes. */}
+      <div className="mt-6 flex justify-end">
+        <button
+          onClick={openPrintable}
+          disabled={!data}
+          className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:opacity-30 disabled:cursor-not-allowed text-white px-5 py-2.5 transition-colors"
+        >
+          <span className="uppercase tracking-widest text-xs font-medium">Open & print</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 }
@@ -9503,7 +9993,9 @@ function JourneyPlanner() {
     { id: "south-america", label: "South America", flag: "🌎" },
     { id: "central-america", label: "Central America", flag: "🌎" },
     { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // Map a region to its checklist tab id.
@@ -10813,8 +11305,13 @@ function Routes() {
     { id: "mexico", label: "Mexico", flag: "🇲🇽" },
     { id: "dubai", label: "Dubai / UAE", flag: "🇦🇪" },
     { id: "caribbean", label: "Caribbean", flag: "🌴" },
+    { id: "south-america", label: "South America", flag: "🇧🇷" },
+    { id: "central-america", label: "Central America", flag: "🇵🇦" },
+    { id: "japan", label: "Japan", flag: "🇯🇵" },
+    { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
+    { id: "russia", label: "Russia", flag: "🇷🇺" },
   ];
 
   // Extract a clean grouping key from "City (CODE)" or "City / City" strings
@@ -10853,7 +11350,9 @@ function Routes() {
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
-    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "Seoul", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "(ICN)", "Japan"],
+    "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],
+    "korea": ["Seoul", "Busan", "(ICN)", "(GMP)", "(PUS)", "Korea", "South Korea"],
+    "russia": ["Moscow", "St Petersburg", "Saint Petersburg", "(SVO)", "(DME)", "(VKO)", "(LED)", "Russia"],
   };
 
   // Check whether a single field value (e.g. "London (LHR)") belongs to a region
@@ -11505,7 +12004,7 @@ function Documents() {
             {
               title: "GB Animal Health Certificate (AHC)",
               when: "Leaving the UK for EU / many destinations",
-              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 4 months for EU travel and 4 months for re-entry. Since 22 April 2026, this is the required document for GB residents travelling to the EU — an EU pet passport can no longer be used for that. A new AHC is needed for each outbound trip.",
+              detail: "Issued by a UK-based Official Veterinarian (OV) within 10 days of travel. Valid 6 months for EU onward travel and return (extended from 4 months in April 2026). Since 22 April 2026, this is the required document for GB residents travelling to the EU — an EU pet passport can no longer be used for that, even if it was issued before. A new AHC is needed for each outbound trip.",
               link: { url: "https://www.gov.uk/take-pet-abroad", label: "gov.uk/take-pet-abroad" },
             },
             {
@@ -11633,7 +12132,7 @@ function Tips() {
             {
               tag: "On food",
               title: "Light meal, 3–4 hours out — and toilet time.",
-              body: "Don't fly your pet hungry, but don't fly them full. A small meal 3–4 hours before departure is the sweet spot. Make sure they've pooped and peed properly BEFORE you enter the airport (airport pet relief areas are often tiny patches of fake grass dogs see right through). Freeze a little water in the carrier dish so it melts gradually.",
+              body: "Don't fly your pet hungry, but don't fly them full. A small meal 3–4 hours before departure is the sweet spot — enough to settle their stomach, not so much that turbulence becomes a problem. Make sure they've pooped and peed properly BEFORE you enter the airport (airport pet relief areas are often tiny patches of fake grass that dogs see right through — and security lines kill any chance of a real wee). Walk them somewhere green near the drop-off zone before you check in. Skip the bigger water bowl right before; freeze a little water in the carrier dish so it melts gradually mid-flight without sloshing.",
             },
             {
               tag: "On treats during the flight",
@@ -11648,17 +12147,32 @@ function Tips() {
             {
               tag: "On the unexpected",
               title: "Have a Plan B.",
-              body: "Save your destination's nearest 24-hour vet in your phone before you leave — and the one near your origin airport too, in case of a same-day issue at check-in. Pack copies of vaccination records in a clear Ziploc inside the carrier (not buried in your suitcase), and have photos of everything on your phone. If you're connecting, build in at least 90 minutes between flights — pet relief areas are usually a long hike from gates, and pet check-in counters at connection hubs are often unstaffed or shared with oversized baggage. The single most useful thing on a delayed travel day: a pre-packed pouch with two days' worth of pet food in a sealed bag, in case checked baggage is rerouted while you stay with your pet. And for a big, can't-fail move — an international relocation, say — think hard before booking the cheapest non-changeable fare. Pets do occasionally get refused at the gate: a carrier that's a centimetre too tall, a paperwork query, or the flight's pet quota already full. On a rigid fare that's your ticket gone. A changeable fare costs more, but it means that if your pet is turned away you can rebook and try again another day instead of losing everything. It won't re-secure the pet slot itself — that's a separate, often phone-only booking — but it buys you the time and room to regroup. For a once-in-a-lifetime move, treat the fare premium as cheap insurance.",
+              body: "Save the destination's nearest 24-hour vet in your phone before you leave — and one near your origin airport too. Keep copies of vaccination records in a Ziploc inside the carrier (not buried in your suitcase) and on your phone. If you're connecting, build in at least 90 minutes — pet relief areas are usually a long hike from gates. And for a once-in-a-lifetime move, think hard before booking the cheapest non-changeable fare: pets do occasionally get refused at the gate (a carrier a centimetre too tall, a paperwork query, the pet quota already full), and on a rigid fare that's your ticket gone. A changeable fare costs more, but it means you can regroup and try again. Treat the premium as cheap insurance.",
+            },
+            {
+              tag: "On summer travel",
+              title: "Heat embargoes are real — and they can ground your pet.",
+              body: "Most airlines refuse pets — cabin or cargo — when ground temperatures at any point in the itinerary exceed roughly 85°F / 29°C. Some run full summer-long embargoes (American bans pet cargo May–Sept on many routes); others decide flight-by-flight on the day. Owners get caught out: you book your July move months ahead, then your pet's refused at check-in because the forecast at the origin, destination, or connection is too hot. If you're moving June through early September, the right play is an early-morning departure to clear the heat window, plus a routing that avoids midsummer hotspots — Phoenix, Dallas, Houston, Madrid, Athens. Confirm your route's policy with the airline and keep a fallback date.",
             },
             {
               tag: "On comfort items",
               title: "Bring a piece of home.",
-              body: "Pack a small teddy or favourite toy alongside their blanket — something soft that smells of you and home. A collapsible silicone water bowl (I got mine from Amazon for under £10) takes up almost no space and is invaluable for hotel stops, layovers, and the airport. Skip glass or hard ceramic — they're heavy and ban-prone.",
+              body: "Pack a small teddy or favourite toy alongside their blanket — something soft that smells of you and home, not a fresh shop-bought version. The familiar scent does more for an animal's stress than any expensive carrier accessory. A collapsible silicone water bowl (I got mine from Amazon for under £10) takes up almost no space and is invaluable for hotel stops, long layovers, and the airport. Skip glass or hard ceramic — they're heavy, breakable, and security tends to query them. A few sealed pouches of their normal food go in your carry-on too: airline meals (and 24-hour kennels at connection hubs) can't be trusted to match your pet's usual diet.",
             },
             {
               tag: "On bringing pet food",
               title: "Most countries restrict pet food at the border.",
-              body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly.",
+              body: "Check your destination's rules before packing pet food. The US, for example, requires commercial pet food to be made in the US — I couldn't bring Theo's food in, so we transitioned him onto a US brand before travel to avoid a sudden diet change on arrival. A few sealed treats in my handbag came through with no issues. For UK/EU, most commercial sealed dog food is allowed but check the country's APHIS/border-control page. Plan to buy your pet's food on arrival, or research equivalent brands at your destination before you fly — and ideally start the switch a week or two ahead, since abrupt diet changes plus the stress of travel is a guaranteed upset stomach.",
+            },
+            {
+              tag: "On sedation",
+              title: "Don't sedate your pet for the flight.",
+              body: "Almost every airline, the IATA, the American Veterinary Medical Association and every reputable vet specifically warn against this — and yet it remains one of the most common things owners ask about. At altitude, sedatives interact unpredictably with reduced cabin pressure, can suppress your pet's ability to balance themselves in the carrier (leading to injury), and slow their breathing and heart rate dangerously. A sedated animal also can't communicate distress to you. If your pet is anxious about travel, talk to your vet about acclimatisation training and (for dogs only) Adaptil, a calming pheromone product that's pharmacologically inert and safe. For cats, Feliway. Crate training over weeks beats medication on the day.",
+            },
+            {
+              tag: "On booking",
+              title: "Booking your ticket does NOT book the pet.",
+              body: "This is the single most common DIY mistake. You click 'book flight' online with the pet ticked, get a confirmation email, assume your pet is on the plane — and then arrive at the airport to find the pet quota was full, or no pet booking exists at all. Almost every airline that carries cabin pets requires a separate phone call to a reservations team to actually secure the pet's space, often within 24-48 hours of buying your own ticket. The website 'add a pet' tickbox is typically a flag for the airline to call you, not a confirmation. Book your own seat, then immediately call. Get a confirmation number for the pet. Email yourself the booking reference. Treat it as two separate transactions even when they sit on one itinerary.",
             },
             {
               tag: "For cat owners",
@@ -11674,6 +12188,21 @@ function Tips() {
               tag: "For cat owners",
               title: "Bring a piece of unwashed bedding from home.",
               body: "Cats orient by smell more than sight — familiar scent settles them faster than anything else you can pack. Line the carrier with a piece of bedding that already smells like them and their territory. Resist the urge to wash it fresh before travel day: the slightly used blanket is the point. Pair it with their favourite small toy if they have one. A carrier they've slept in for weeks, lined with their own scent, turns 'unknown box' into 'my known place that happens to be moving today' — and many cats sleep through the entire flight as a result.",
+            },
+            {
+              tag: "On preparation",
+              title: "Photograph your pet the week before you fly.",
+              body: "Take a clear photo of your pet — face-on, side-on, and one showing any distinctive markings — within a week of departure. Also photograph their microchip number, rabies certificate, and vaccination records. If the worst happens at an unfamiliar airport — a slipped harness at security, an open carrier, a panic-bolt from a strange handler — the staff and local authorities will work faster with a recent photo than with your description through tears. Keep the photos on your phone AND emailed to yourself, so you can access them if your phone dies. It's a 5-minute job most pet owners never do until they wish they had.",
+            },
+            {
+              tag: "On preparation",
+              title: "Check your microchip's frequency before international travel.",
+              body: "Microchips come in two frequencies: the international standard (ISO 11784/11785, 134.2 kHz) and the older American 125 kHz format. EU, UK, Australian, and most international scanners only read ISO chips — a US 125 kHz chip will scan as 'no chip detected' at Heathrow or Frankfurt, which can mean refused entry or quarantine. If your pet was chipped in the US before 2014-ish, check the chip number format: a 15-digit number starting with the country code is ISO; a 9 or 10-digit format usually isn't. If it isn't ISO, get a second ISO chip implanted at least a month before travel — having both is fine; the new one becomes the one of record.",
+            },
+            {
+              tag: "On arrival",
+              title: "The first 48 hours is decompression, not exploration.",
+              body: "When you arrive at the destination, your pet has just spent a long flight in a carrier, in unfamiliar smells, with no idea what's happening. Resist the urge to celebrate by walking them around the new neighbourhood, introducing them to new people, or letting them off-leash in the new garden. The rescue world calls it the 'rule of 3' — three days to decompress, three weeks to settle, three months to feel at home. For the first 48 hours: one quiet room, their familiar carrier and bedding accessible, water always available, food in small amounts, short on-leash toilet trips only. The bigger the move, the more this matters — they'll come out of the den when they're ready.",
             },
           ].map((t, i) => (
             <div key={i}>
@@ -11771,6 +12300,265 @@ function TravelDay() {
   );
 }
 
+function Gear() {
+  const trackOut = (kind, name) => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
+    }
+  };
+
+  return (
+    <section id="gear" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-serif italic text-amber-700 text-2xl">VIII</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">Travel gear</span>
+          <div className="flex-1 h-px bg-stone-300" />
+        </div>
+
+        <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4 max-w-3xl">
+          The kit worth packing
+        </h2>
+        <p className="font-serif text-lg text-stone-700 max-w-2xl mb-4 leading-relaxed">
+          A short list of the travel gear that genuinely earned its place.
+        </p>
+        <p className="text-sm text-stone-500 italic mb-12 leading-relaxed max-w-2xl">
+          No affiliates, no sponsorships — these are simply things I bought and used
+          myself preparing for our own move. The links go to the products; I earn
+          nothing from them.
+        </p>
+
+        <div className="space-y-5">
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A soft-sided cabin carrier</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              The single most important buy. It must be soft-sided and fit under the
+              seat — aim for no larger than 46 × 28 × 24 cm, which clears even the
+              strictest airline limit. Good ventilation on at least two sides and a
+              waterproof base. <strong>Sherpa</strong> is the long-established,
+              widely-used airline-carrier brand — it even makes airline-specific
+              versions — and is the safe default if you're unsure.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="https://www.amazon.com/dp/B0002YHWAU" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-sherpa-deluxe")}
+                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+                Sherpa Original Deluxe →
+              </a>
+              <a href="https://amzn.eu/d/05rKHmmt" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-1")}
+                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+                Carrier option two →
+              </a>
+              <a href="https://amzn.eu/d/08Vyy4qB" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("gear", "carrier-2")}
+                 className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+                Carrier option three →
+              </a>
+            </div>
+          </div>
+
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A collapsible water bowl</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              A flat-folding silicone bowl weighs nothing and clips to a bag — useful
+              at every layover and pet-relief area.
+            </p>
+            <a href="https://www.amazon.com/dp/B0CMXCGHXV" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("gear", "collapsible-bowl")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              See it on Amazon →
+            </a>
+          </div>
+
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">A travel water bottle with a fold-out bowl</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              A bottle with a flip-out trough lets your pet drink one-handed mid-journey
+              without spills — handy on a long transit.
+            </p>
+            <a href="https://www.amazon.com/dp/B09F5ZYV7M" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("gear", "water-bottle")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              See it on Amazon →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Operators() {
+  const trackOut = (kind, name) => {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
+    }
+  };
+
+  return (
+    <section id="operators" className="py-20 px-6 md:px-12">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-6">
+          <span className="font-serif italic text-amber-700 text-2xl">IX</span>
+          <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">When all else fails: operators</span>
+          <div className="flex-1 h-px bg-stone-300" />
+        </div>
+
+        <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-4 max-w-3xl">
+          When the cabin isn't an option
+        </h2>
+        <p className="font-serif text-lg text-stone-700 max-w-2xl mb-4 leading-relaxed">
+          Sometimes the cabin route just doesn't work — the dog is too big, the
+          journey isn't suitable, or the timing won't line up. If that's you, and the
+          budget allows it, these are operators I reached out to for quotes while
+          planning our own trip. They are companies I'd be comfortable booking, based
+          on my own research and the conversations I had with them.
+        </p>
+        <p className="text-sm text-stone-500 italic mb-12 leading-relaxed max-w-2xl">
+          No affiliates, no referral deals — I earn nothing from these. They are
+          simply the operators I actually contacted before settling on our own
+          Miami → Paris → Eurotunnel route. Always get your own written quote.
+        </p>
+
+        <div className="mb-10">
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Shared international pet jet flights — pay per seat</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-4">
+            These services fly your pet in the cabin with no carrier and no size
+            limit — ideal for a large dog that can't fly cabin commercially. They are
+            not whole-plane private charters: you buy a seat, not the aircraft, and
+            you share the flight with other pet owners and their pets (worth knowing
+            if your dog is anxious or reactive around other animals). As a rough
+            guide, a seat from the US to the UK or Paris typically runs <strong>around
+            $8,000–$11,000</strong> — confirm the current fare directly, as it varies
+            with route, date and demand. Route networks change often, so always check
+            the operator's site for what's flying now. Operators I contacted:
+          </p>
+          <div className="space-y-3">
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://air.bark.co/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "Bark Air")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                Bark Air →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Dog-focused service with a strong North America–Europe network.
+                Popular routes include New York to London, Paris, Lisbon and Madrid,
+                plus US domestic hops; new European routes to Dublin, Stockholm,
+                Athens and Berlin are being added through 2026.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.k9jets.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "K9 Jets")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                K9 Jets →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Transatlantic focus, built around the US–UK corridor. Popular routes
+                include New Jersey to the London area, plus Paris, Lisbon and Milan,
+                and Canadian links from Toronto and Vancouver.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.vicunaair.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-jet", "Vicuna Air")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                Vicuna Air →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Offers a supervised solo option, where a trained concierge travels
+                with your pet if you can't. Popular routes cover London, New York,
+                Los Angeles, San Francisco, Paris and Dubai, with Milan, Frankfurt
+                and Toronto listed as coming soon.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-10">
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Manifested cargo — when a route is cargo-only, or you can't fly with your pet</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+            Some journeys are cargo-only whatever you do — every pet flying into the
+            UK, for example, or a dog too large for any cabin. Cargo is also the path
+            when <em>you</em> aren't flying with your pet (unaccompanied moves —
+            think a job relocation where your pet follows on a later date, or a
+            family member shipping a dog home from abroad). Pets travel in a
+            temperature-controlled, pressurised hold, usually booked through a
+            professional pet-shipping agent who handles the crate, paperwork and
+            customs. As a rough guide, expect <strong>around $300–$2,000</strong> for
+            a domestic move (ground or air) and <strong>roughly $2,000–$8,000+</strong>
+            for an international door-to-door relocation — strict-entry destinations
+            sit at the higher end.
+          </p>
+          <p className="text-stone-600 text-sm leading-relaxed mb-3">
+            The three big international live-animal cargo operators are
+            <strong> Lufthansa Cargo </strong>(via Frankfurt's Animal Lounge — the
+            gold-standard transit facility), <strong>KLM Cargo</strong> (via
+            Amsterdam's Animal Hotel) and <strong>American PetEmbark</strong> (US
+            domestic and transatlantic from DFW, MIA, JFK, ORD). All three accept
+            bookings only via a freight forwarder — you don't book direct as a
+            private individual. The IPATA directory below lists vetted, scam-screened
+            shippers; contact three or four for comparison quotes (anyone quoting
+            wildly under the band above is a red flag).
+          </p>
+          <a href="https://www.ipata.org/find-ipata-pet-shippers" target="_blank" rel="noopener noreferrer"
+             onClick={() => trackOut("cargo", "IPATA directory")}
+             className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+            Find a vetted pet shipper — IPATA directory →
+          </a>
+        </div>
+
+        <div>
+          <h3 className="font-serif text-2xl text-stone-900 mb-1">Pet taxis — door-to-door road transport</h3>
+          <p className="text-stone-600 text-sm leading-relaxed mb-4">
+            A regional option rather than a long-haul one: pet taxis cover the UK and
+            mainland Europe by road, useful for the final leg into the UK once your
+            pet has arrived in Europe by cabin or jet. Fares are quoted per journey,
+            not per person, and depend on distance, the number of passengers and bags,
+            and your pet. The Channel crossing is usually charged on top. Always get
+            your own written quote — figures move with season and route.
+          </p>
+          <div className="space-y-3">
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                ElitePetTaxi →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £780 plus
+                the Channel crossing for a door-to-door trip from the Paris area
+                into the UK. That was the quote at the time — prices change with
+                distance, your pet and the season, so get your own.
+              </p>
+            </div>
+            <div className="bg-white border border-stone-200 rounded-sm p-4">
+              <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
+                 onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
+                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                PetMoves Abroad →
+              </a>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Door-to-door pet transport across the UK and Europe.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, when I enquired they quoted roughly £685 plus
+                the Channel crossing for the same door-to-door trip from the Paris
+                area into the UK. With the crossing around £300 at the time, that
+                came to about £985 one way. That was the quote at the time — prices
+                change with distance, your pet and the season, so get your own.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 function Stories() {
   const [open, setOpen] = useState(true);
 
@@ -12057,7 +12845,7 @@ function Contact() {
   return (
     <section id="contact" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-3xl mx-auto">
-        <SectionLabel num="VIII.">Get in touch</SectionLabel>
+        <SectionLabel num="X.">Get in touch</SectionLabel>
 
         <h2 className="font-serif text-5xl text-stone-900 mb-6 leading-tight">
           Got a question? Ask me anything.
@@ -12242,6 +13030,95 @@ const COUNTRY_GUIDES = [
   { slug: "/central-america-pet-travel", flag: "🌎", name: "Central America", blurb: "Costa Rica, Panama, and the routes through." },
 ];
 
+function WhatsNew() {
+  // Recent verified rule changes from airlines and regulators only — not
+  // site housekeeping. Order matters: most consequential first. Keep this
+  // short and pruned each time something material changes.
+  const ITEMS = [
+    {
+      date: "22 Apr 2026",
+      headline: "EU pet passport rules changed for non-EU residents",
+      body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
+      tag: "EU",
+    },
+    {
+      date: "May 2026",
+      headline: "Delta now carries cabin pets to Ireland",
+      body: "Delta's own international travel page confirms cabin pet travel to the Republic of Ireland on true Delta-operated flights (JFK ⇄ DUB direct, $200 each way at check-in, advance notification required to petmove@agriculture.gov.ie). Most third-party policy lists still show Ireland as banned on Delta — that information is out of date.",
+      tag: "Delta",
+    },
+    {
+      date: "Jun 2025",
+      headline: "Air Canada formalised soft-sided-only cabin carriers",
+      body: "Air Canada's news page confirmed that from 1 June 2025, hard-sided kennels are no longer accepted under the seat on flights operated by Air Canada, Rouge or Express. Soft-sided had long been the recommendation; this makes it a firm rule. Combined weight limit (pet + carrier) stays at 10 kg.",
+      tag: "Air Canada",
+    },
+    {
+      date: "Summer 2026",
+      headline: "ITA Airways: dogs up to 30 kg in cabin",
+      body: "Italy's civil aviation authority (ENAC) approved a new rule allowing medium and large dogs in the cabin on selected 'large pet-friendly' domestic Italian flights. ITA Airways is the first carrier rolling it out; an extra seat purchase is required. Watch for the public booking launch through summer 2026.",
+      tag: "ITA",
+    },
+  ];
+
+  return (
+    <section id="whats-new" className="py-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-baseline gap-3 mb-3">
+          <span className="text-xs uppercase tracking-[0.25em] text-amber-700 font-medium">
+            What's new
+          </span>
+          <span className="font-serif italic text-stone-500 text-sm">
+            recent rule changes &amp; site updates
+          </span>
+        </div>
+
+        <h2 className="font-serif text-3xl md:text-4xl text-stone-900 mb-3 leading-tight">
+          The rules keep changing. We keep checking.
+        </h2>
+        <p className="font-serif text-stone-600 text-lg leading-relaxed mb-10 max-w-2xl">
+          Pet-travel rules shift constantly — and most online guides go out of date within months. Here are the most consequential changes we've verified recently, with the source we used.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {ITEMS.map((item, i) => (
+            <div
+              key={i}
+              className="bg-white border border-stone-200 p-5 rounded-sm"
+            >
+              <div className="flex items-baseline gap-2 mb-2">
+                <span className="text-xs uppercase tracking-[0.2em] text-amber-700 font-medium">
+                  {item.date}
+                </span>
+                <span className="text-xs uppercase tracking-[0.2em] text-stone-400">·</span>
+                <span className="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {item.tag}
+                </span>
+              </div>
+              <h3 className="font-serif text-xl text-stone-900 mb-2 leading-snug">
+                {item.headline}
+              </h3>
+              <p className="text-sm text-stone-700 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-baseline justify-between gap-4 mt-8">
+          <p className="font-serif italic text-stone-500 text-sm max-w-2xl">
+            Spotted something out of date? Email <a href="mailto:petincabinguide@gmail.com" className="text-amber-700 hover:text-amber-600">petincabinguide@gmail.com</a> and we'll verify and fix it.
+          </p>
+          <a
+            href="/updates"
+            className="text-xs uppercase tracking-[0.2em] text-amber-700 hover:text-amber-600 transition-colors whitespace-nowrap"
+          >
+            View full archive →
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SiteToolsOverview() {
   // The site's tools, each as name + one line + jump link. Helps a new
   // visitor see everything on offer instead of discovering tools by scrolling.
@@ -12359,7 +13236,7 @@ function BackToTop() {
   // all the way back to the hero.
   const SECTION_IDS = [
     "intake", "planner", "airlines", "routes", "destinations",
-    "quarantine", "timeline", "checklist", "documents", "tips",
+    "quarantine", "timeline", "documents", "tips",
     "travel-day", "stories", "contact",
   ];
 
@@ -12550,6 +13427,8 @@ export default function PetTravel() {
 
       <Hero onStart={startIntake} />
 
+      <WhatsNew />
+
       <SiteToolsOverview />
 
       <div id="intake-anchor" />
@@ -12582,6 +13461,8 @@ export default function PetTravel() {
       <Documents />
       <Tips />
       <TravelDay />
+      <Gear />
+      <Operators />
       <Stories />
       <Contact />
       <Footer />

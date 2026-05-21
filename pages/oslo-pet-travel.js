@@ -258,7 +258,7 @@ export default function OsloPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Oslo → UK</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  No cabin pet flights to the UK from anywhere — UK government embargo. Use the Paris pivot: SAS or Norwegian to CDG, then Eurotunnel Le Shuttle from Calais to Folkestone. See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full route.
+                  No cabin pet flights to the UK from anywhere — UK government embargo. Fly cabin from Oslo to a mainland EU hub (Paris CDG via SAS or Norwegian, Amsterdam via KLM/SAS, Frankfurt via Lufthansa/SAS), then cross by Eurotunnel Le Shuttle (Calais → Folkestone) or a UK-government-approved ferry (DFDS Amsterdam IJmuiden → Newcastle is a useful direct option from the Netherlands). See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full route.
                 </p>
               </div>
               <div>

@@ -8,7 +8,7 @@ export default function UAEPetTravel() {
         <title>Flying with a Pet to/from the UAE (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to the UAE — Dubai or Abu Dhabi — takes real planning. A MOCCAE import permit, manifested cargo (not the cabin), ISO microchip, full vaccinations, and a rabies titer test from high-risk countries. The complete, verified picture, including the banned breeds list."
+          content="Bringing a dog or cat to the UAE — Dubai or Abu Dhabi — takes real planning. Cabin pets in via Abu Dhabi on Etihad (some routes excluded); cargo in via Dubai. Plus the MOCCAE import permit, ISO microchip, full vaccinations, and a rabies titer test from high-risk countries. The complete, verified picture, including the banned breeds list."
         />
         <link rel="canonical" href="https://www.petsincabin.com/uae-pet-travel" />
       </Head>
@@ -54,14 +54,14 @@ export default function UAEPetTravel() {
               <a href="#the-short-answer" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The short answer</a>
               <a href="#permit" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The MOCCAE permit</a>
               <a href="#paperwork" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Microchip &amp; vaccines</a>
-              <a href="#cargo" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Cargo, not cabin</a>
+              <a href="#cargo" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Cabin or cargo</a>
               <a href="#breeds" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Banned breeds</a>
               <a href="#arrival" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Airports &amp; arrival</a>
             </div>
           </div>
 
           <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-8">
-            The UAE is a strict-import destination, and it carries a hard truth that surprises many owners: pets cannot enter the UAE in the cabin. Under the rules, an imported dog or cat must travel as manifested cargo. The process also needs an import permit obtained in advance, a precise microchip-then-vaccinate sequence, and — from many countries — a rabies titer test. None of it is impossible, but it all needs planning.
+            The UAE is a strict-import destination, and the rules are particular. Pets entering Dubai (DXB) travel as manifested cargo on every airline — but pets entering Abu Dhabi (AUH) can travel in the cabin on Etihad from most origins (UK, US, Australia and a few other routes are excluded). The process also needs an import permit obtained in advance, a precise microchip-then-vaccinate sequence, and — from many countries — a rabies titer test. None of it is impossible, but it all needs planning.
           </p>
 
           <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
@@ -74,18 +74,18 @@ export default function UAEPetTravel() {
           <section id="the-short-answer" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">01 · The short answer</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Possible — but it's a planned, cargo-only move
+              Possible — cabin via Abu Dhabi on Etihad, or cargo via Dubai
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              The UAE is firmly in the strict-import camp, and the cabin is not an option for arrivals.
+              The UAE is firmly in the strict-import camp on paperwork — but Etihad's cabin route into AUH means the cabin option is real for many travellers.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Bringing a pet into the UAE means working through several requirements in the right order: an import permit from MOCCAE obtained before travel, an ISO-standard microchip, a rabies vaccination given after the microchip, full core vaccinations, and — from countries the UAE classes as high-risk for rabies — a rabies antibody titer test. Crucially, the pet must travel as manifested cargo, not in the cabin or as checked baggage.
+              Bringing a pet into the UAE means working through several requirements in the right order: an import permit from MOCCAE obtained before travel, an ISO-standard microchip, a rabies vaccination given after the microchip, full core vaccinations, and — from countries the UAE classes as high-risk for rabies — a rabies antibody titer test. The paperwork is the same whether the pet travels cabin or cargo.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The UAE also limits individuals to two pets per person per year, and bans a list of dog breeds outright. This guide walks through the permit, the microchip-and-vaccine sequence, the cargo rule, the banned-breed list, and what happens on arrival.
+              For the flight itself: Etihad is the only airline that carries cabin pets into the UAE, and only into Abu Dhabi (AUH), with weight up to 8 kg total including the carrier. Some origins are excluded (notably the UK, US, Australia, Hong Kong, Johannesburg). For excluded origins and for any entry via Dubai (DXB), pets travel as manifested cargo via Emirates SkyCargo or Etihad Cargo. The UAE also limits individuals to two pets per person per year, and bans a list of dog breeds outright. This guide walks through the permit, the microchip-and-vaccine sequence, the cabin-vs-cargo split, the banned-breed list, and what happens on arrival.
             </p>
           </section>
 
@@ -137,30 +137,34 @@ export default function UAEPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              On arrival, port officials will want a valid health certificate from your country's veterinary authority — endorsed by the relevant government body, such as USDA endorsement for pets from the US, and valid for a short window after issue — plus the vaccination record showing the microchip number, the pet's full description, and every vaccine's name, manufacturer, batch number and date.
+              On arrival, port officials will want a valid health certificate from your country's veterinary authority — endorsed by the relevant government body, such as <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300">USDA endorsement</Link> for pets from the US, and valid for a short window after issue — plus the vaccination record showing the microchip number, the pet's full description, and every vaccine's name, manufacturer, batch number and date.
             </p>
           </section>
 
-          {/* Cargo, not cabin */}
+          {/* Cabin vs cargo */}
           <section id="cargo" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · Cargo, not cabin</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · Cabin via Abu Dhabi, cargo via Dubai</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Pets enter the UAE as manifested cargo
+              Etihad cabin to Abu Dhabi, or cargo to Dubai
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
-              This is the rule that most changes how you plan the trip.
+              This is the rule that most changes how you plan the trip — but Etihad's cabin route into Abu Dhabi is the one exception.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Under UAE rules, an imported cat or dog must travel as manifested cargo, shipped according to IATA Live Animals Regulations — not in the cabin, and not as checked baggage. For owners used to flying a small dog or cat in the cabin, this is the biggest adjustment: the pet travels in the aircraft hold in an IATA-compliant crate, and you will usually arrange it through an IATA-registered pet shipper rather than booking it yourself.
+              Under UAE government import rules, every imported cat or dog must clear MOCCAE (Ministry of Climate Change and Environment) inspection at the port of entry and the underlying paperwork (import permit, health certificate, microchip, rabies) is the same regardless of how the pet arrives. What that does NOT mean — and is widely mis-reported — is that pets cannot enter the UAE in cabin. They can, on one airline only.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              There is a nuance worth knowing. Etihad does allow pets to fly <em>out</em> of Abu Dhabi in the cabin on some routes — so a pet <em>leaving</em> the UAE may have a cabin option. But that does not change the <em>import</em> side: bringing a pet <em>into</em> the UAE is cargo-only.
+              <strong>Etihad is the only airline that carries pets in cabin INTO the UAE, and only into Abu Dhabi (AUH).</strong> Pets (cat or dog) up to 8 kg total including the carrier, at least 16 weeks old, travel under the seat in Economy or Business. Some routes are excluded — Etihad does NOT allow cabin pets on flights from the UK, USA, Australia, Hong Kong, Johannesburg or several South and South-East Asian origins. Outside those exclusions, Etihad's cabin route works in both directions. AUH is roughly 90 minutes by road from Dubai.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>Dubai International (DXB) is cargo-only for pets on every airline.</strong> Emirates does not accept pets in cabin or as checked baggage to/from DXB at all — pets to Dubai travel as manifested cargo via Emirates SkyCargo (booked separately, usually through an IATA-registered pet shipper). For an actual cabin trip into the UAE, your route must be via AUH on Etihad.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              Dubai International (DXB) handles pets through its cargo terminal for all airlines. Because of this, pet journeys involving the cabin are generally planned around Abu Dhabi (AUH) rather than Dubai — but for an import, the cargo process applies whichever UAE airport you use.
+              For routes Etihad excludes (UK, US, Australia, etc.), the practical pattern is to fly cabin to a permitted hub Etihad serves (e.g. an EU hub or a Gulf neighbour) and connect onward — or, if your only origin option is excluded, accept that the trip will be cargo end-to-end via Emirates SkyCargo or Etihad Cargo. Always confirm the exact route with Etihad directly before booking.
             </p>
           </section>
 

@@ -165,22 +165,22 @@ export default function SeattlePetTravel() {
           <section id="sea-to-uk" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · SEA to the UK</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              No direct cabin route. Use the Paris pivot.
+              No direct cabin route. Fly to mainland Europe and cross.
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
               The UK bans cabin pets on commercial flights. The workaround is well-trodden.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The route:</strong> SEA → CDG (Air France/Delta direct), overnight in Paris with your pet, then Eurotunnel Le Shuttle Calais → Folkestone with the pet in your car. Total journey about 20 hours including the channel crossing.
+              <strong>The route:</strong> SEA → a mainland EU hub in cabin (Paris CDG on Air France/Delta direct is most common; Amsterdam AMS via Delta/KLM also direct from SEA), overnight at the hub with your pet, then Eurotunnel Le Shuttle (Calais → Folkestone) or a UK-government-approved ferry (DFDS Amsterdam IJmuiden → Newcastle is a useful direct option from AMS). Total journey about 20 hours including the channel crossing.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Eurotunnel pet booking:</strong> from around £24 per pet each way, advance booking required (don't show up without one). Pet stays in your car for the 35-minute crossing.
+              <strong>Eurotunnel pet booking:</strong> from around £24 per pet each way, advance booking required (don't show up without one). Pet stays in your car for the 35-minute crossing. Channel and North Sea ferries (DFDS/P&O/Stena/Brittany) charge roughly £15–£30 per pet each way; pet-friendly cabin space is limited so book early.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full Paris-pivot detail, including paperwork requirements and the alternative ferry routes.
+              See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full mainland-Europe detail, including paperwork requirements and every approved Channel and North Sea ferry crossing.
             </p>
           </section>
 
@@ -270,7 +270,7 @@ export default function SeattlePetTravel() {
 
               <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">Cabin out of Seattle to Europe is possible — but UK still needs the Paris Pivot.</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Cabin out of Seattle to Europe is possible — but UK arrivals need a mainland EU hub + Eurotunnel or ferry crossing.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

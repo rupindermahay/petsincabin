@@ -197,7 +197,7 @@ export default function IndiaPetTravel() {
             </p>
 
             <ul className="font-serif text-stone-700 leading-relaxed mb-4 space-y-1.5 ml-5 list-disc">
-              <li>A <strong>Certification of US-issued Rabies Vaccination form</strong>, completed by a USDA-accredited vet before you left the US (only applicable if your pet is returning to the US after a trip to India)</li>
+              <li>A <strong>Certification of US-issued Rabies Vaccination form</strong>, completed by a <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300">USDA-accredited vet</Link> before you left the US (only applicable if your pet is returning to the US after a trip to India)</li>
               <li>OR a <strong>foreign-vet rabies titer (FAVN) test</strong>, with a reservation at a CDC-registered Animal Care Facility on arrival</li>
             </ul>
 
@@ -214,14 +214,14 @@ export default function IndiaPetTravel() {
           <section id="india-to-uk" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">06 · India to the UK</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              No cabin pet flights to the UK — it's the Paris pivot
+              No cabin pet flights to the UK — fly to mainland Europe and cross
             </h2>
             <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
               The UK government bans cabin pets on commercial flights. The workaround is fly to mainland Europe, then cross by land or sea.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              From India, fly cabin to Paris CDG (Air France or Air India both serve this in cabin), Frankfurt (Lufthansa or Air India), or Amsterdam (KLM). Then take the Eurotunnel Le Shuttle (Calais → Folkestone) or a ferry to the UK. You stay with your pet the whole way. Since the second leg is overland and not another flight, the interline restriction on Air India doesn't bite here — pick whichever first-leg airline suits your origin city.
+              From India, fly cabin to Paris CDG (Air France or Air India both serve this in cabin), Frankfurt (Lufthansa or Air India), Amsterdam (KLM), or Lisbon (TAP). Then take the Eurotunnel Le Shuttle (Calais → Folkestone) or a UK-government-approved ferry (DFDS/P&O Calais → Dover, DFDS Amsterdam IJmuiden → Newcastle, Stena Hook of Holland → Harwich, or Brittany Ferries Bilbao/Santander → Portsmouth/Plymouth). You stay with your pet the whole way. Since the second leg is overland and not another flight, the interline restriction on Air India doesn't bite here — pick whichever first-leg airline suits your origin city.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
@@ -229,7 +229,7 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The Paris-pivot route also works in reverse (UK → India). See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full Eurotunnel/ferry detail.
+              This mainland-Europe route also works in reverse (UK → India). See the <Link href="/uk-pet-travel" className="text-amber-700 underline decoration-amber-300">UK pet travel guide</Link> for the full Eurotunnel/ferry detail.
             </p>
           </section>
 
@@ -283,7 +283,7 @@ export default function IndiaPetTravel() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">The Paris Pivot workaround for cabin into the UK.</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Fly cabin to a mainland EU hub, then cross by Eurotunnel or ferry — the workaround for cabin into the UK.</div>
               </Link>
 
               <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">

@@ -196,7 +196,7 @@ export default function FlyingWithAFrenchBulldog() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              <strong>Paperwork:</strong> eastbound to Southampton needs microchip, current rabies, EU Pet Passport or UK AHC, tapeworm treatment 24–120 hours before disembarking. Westbound to New York needs USDA health certificate and rabies proof. Cunard's pre-sailing team will walk you through the exact paperwork about 5 months ahead — they do this constantly.
+              <strong>Paperwork:</strong> eastbound to Southampton needs microchip, current rabies, EU Pet Passport or UK AHC, tapeworm treatment 24–120 hours before disembarking. Westbound to New York needs a <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300">USDA-endorsed health certificate</Link> and rabies proof. Cunard's pre-sailing team will walk you through the exact paperwork about 5 months ahead — they do this constantly.
             </p>
           </section>
 
@@ -412,7 +412,7 @@ export default function FlyingWithAFrenchBulldog() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
                 <div className="font-serif text-base text-stone-900 mb-1">UK guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">The Paris Pivot is the standard way to get a Frenchie into the UK in cabin.</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Fly cabin into a mainland EU hub, then cross by Eurotunnel or ferry — the standard cabin route into the UK for any breed.</div>
               </Link>
 
               <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">

@@ -8,7 +8,7 @@ export default function UKPetTravel() {
         <title>Flying a Dog or Cat in Cabin to the UK: Why You Can't (and the Workarounds That Do) | Pets in Cabin</title>
         <meta
           name="description"
-          content="No airline flies pets in the cabin into the UK — it's a government rule, not an airline one. Here's why, plus the verified workaround routes (Paris pivot, ferry, pet taxi) that get your dog or cat to Britain without the cargo hold."
+          content="No airline flies pets in the cabin into the UK — it's a government rule, not an airline one. Here's why, plus the verified workaround routes (mainland EU hub + Eurotunnel, Channel and North Sea ferries, pet taxi) that get your dog or cat to Britain without the cargo hold."
         />
         <link rel="canonical" href="https://www.petsincabin.com/uk-pet-travel" />
       </Head>
@@ -92,12 +92,15 @@ export default function UKPetTravel() {
           {/* Workaround 1 — Paris Pivot */}
           <div className="bg-white border border-stone-200 rounded-sm p-6 mb-5">
             <div className="text-xs uppercase tracking-widest text-amber-700 mb-2">Workaround 1 · The favourite</div>
-            <h3 className="font-serif text-xl text-stone-900 mb-3">The Paris Pivot</h3>
+            <h3 className="font-serif text-xl text-stone-900 mb-3">EU hub + Eurotunnel (the "Paris Pivot" is the famous one)</h3>
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Fly into Paris (CDG) in the cabin — Air France, KLM, Lufthansa or another EU carrier will all take a pet in the cabin to Paris. Then a pet taxi or rental car from Paris to Calais, around three hours. Cross the Channel on <strong>Eurotunnel Le Shuttle</strong> from Calais to Folkestone: your pet stays in the car with you for the 35-minute crossing. Drive on into London. This is the route most savvy owners use, and the one most UK pet importers will quote you.
+              Fly into Paris CDG in the cabin — Air France, KLM, Lufthansa or another EU carrier will all take a pet in the cabin. Then a pet taxi or rental car from Paris to Calais, around three hours. Cross the Channel on <strong>Eurotunnel Le Shuttle</strong> from Calais to Folkestone: your pet stays in the car with you for the 35-minute crossing. Drive on into London. This is the route most savvy owners use, and the one most UK pet importers will quote you.
+            </p>
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>Frankfurt</strong> (Lufthansa) and <strong>Amsterdam</strong> (KLM) and <strong>Lisbon</strong> (TAP) work the same way — fly cabin to the hub, drive to Calais, take the Eurotunnel. Use whichever hub your origin city flies to most directly. Frankfurt→Calais is the longer drive (7–8h, consider an overnight stop); Amsterdam→Calais is roughly the same as Paris.
             </p>
             <div className="text-sm text-stone-500 border-t border-stone-100 pt-3">
-              <strong className="text-stone-700">Rough cost:</strong> Eurotunnel pet fee from ~£24 per pet each way (the vehicle ticket is separate, roughly £115–£229 one way for the car) · pet taxi Paris–Calais £300–£600 · plan a full day, 8–10 hours door to door.
+              <strong className="text-stone-700">Rough cost:</strong> Eurotunnel pet fee from ~£24 per pet each way (the vehicle ticket is separate, roughly £115–£229 one way for the car) · pet taxi hub-to-Calais £300–£600 · plan a full day, 8–10 hours door to door from Paris (longer from Frankfurt).
             </div>
           </div>
 
@@ -131,7 +134,7 @@ export default function UKPetTravel() {
           </h2>
           <div className="space-y-4 font-serif text-stone-700 leading-relaxed mb-8">
             <p>
-              The shape is always the same: get to a European hub in the cabin, then do the land crossing. From any major US gateway — JFK, Boston, Chicago, Miami, LA — you can fly cabin to Paris on Air France or Delta, then pivot. From Canada, Air Canada takes cabin pets to Paris, then Eurotunnel. From India, the route runs through continental Europe first (Air India is cargo-only to the UK, and the UK wall applies on top). From Abu Dhabi, Etihad carries cabin pets out to a European hub, and the tunnel does the rest.
+              The shape is always the same: get to a European hub in the cabin, then do the land crossing. From any major US gateway — JFK, Boston, Chicago, Miami, LA — you can fly cabin to Paris on Air France or Delta, or to Amsterdam on KLM/Delta, then cross the Channel. From Canada, Air Canada takes cabin pets to Paris, then Eurotunnel. From India, the route runs through continental Europe first (Air India is cargo-only to the UK, and the UK wall applies on top — Air France, Lufthansa, SWISS, KLM or Etihad-via-AUH all carry cabin pets out of India to an EU hub). From Abu Dhabi, Etihad carries cabin pets out to a European hub, and the tunnel or a ferry does the rest.
             </p>
             <p>
               In every case the long-haul leg needs to be confirmed as cabin-eligible with the airline before you book — but the final Europe-to-UK leg always keeps your pet with you.

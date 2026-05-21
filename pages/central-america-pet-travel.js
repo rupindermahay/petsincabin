@@ -207,7 +207,7 @@ export default function CentralAmericaPetTravel() {
               <div>
                 <div className="text-xs uppercase tracking-widest text-amber-700 mb-1">10 days before</div>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  USDA-endorsed health certificate (US origins). EU vet certificate (EU origins). Issued by accredited vet, endorsed by official veterinary authority. Internal/external parasite treatment, recorded on the certificate.
+                  <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300">USDA-endorsed health certificate</Link> (US origins). EU vet certificate (EU origins). Issued by accredited vet, endorsed by official veterinary authority. Internal/external parasite treatment, recorded on the certificate.
                 </p>
               </div>
               <div>

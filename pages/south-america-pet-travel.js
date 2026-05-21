@@ -177,7 +177,7 @@ export default function SouthAmericaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Required:</strong> rabies vaccine administered at least 21 days before travel (for pets over 3 months old); USDA-endorsed Veterinary Health Certificate completed within 10 days of departure; vet examination confirming the pet is healthy; parasite treatment (internal and external) shortly before travel, recorded on the health certificate; additional vaccines depending on origin (Distemper, Hepatitis, Parvovirus, Leptospirosis for dogs; FVRCP for cats).
+              <strong>Required:</strong> rabies vaccine administered at least 21 days before travel (for pets over 3 months old); <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300">USDA-endorsed Veterinary Health Certificate</Link> completed within 10 days of departure; vet examination confirming the pet is healthy; parasite treatment (internal and external) shortly before travel, recorded on the health certificate; additional vaccines depending on origin (Distemper, Hepatitis, Parvovirus, Leptospirosis for dogs; FVRCP for cats).
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

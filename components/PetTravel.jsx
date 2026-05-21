@@ -3165,7 +3165,7 @@ const CHECKLIST_DATA = {
           "Current rabies vaccine — for UK entry the rule is ≥21 days old; other destinations have their own minimum wait (commonly 21–30 days). Check the destination chapter for its specific rule.",
           "If outbound from UK: <a href=\"https://www.gov.uk/take-pet-abroad\" target=\"_blank\" rel=\"noopener noreferrer\">GB Animal Health Certificate (AHC)</a> booking with vet — required for EU destinations (this is the GOVERNMENT export document — see the note above on how it differs from the airline's fit-to-fly)",
           "If outbound to a NON-EU country (Canada, USA, UAE, etc.): you do NOT need the GB AHC. Instead, you need (a) your airline's required 'fit to fly' certificate, (b) any destination country paperwork (e.g. <a href=\"https://www.cdc.gov/importation/dogs/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">CDC Dog Import Form</a> for USA), and (c) for some destinations a <a href=\"https://www.gov.uk/export-health-certificates\" target=\"_blank\" rel=\"noopener noreferrer\">DEFRA Export Health Certificate</a> — start the application early as it's processed by an OV (Official Veterinarian)",
-          "If inbound to UK: pets cannot fly in cabin — book cargo OR plan Paris pivot. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
+          "If inbound to UK: pets cannot fly in cabin — the cabin route is via mainland Europe (Paris CDG, Amsterdam, Frankfurt or Lisbon), then Eurotunnel or a pet-friendly ferry. Cargo into Heathrow is the alternative for pets too large for cabin. <a href=\"https://petition.parliament.uk/petitions/750817\" target=\"_blank\" rel=\"noopener noreferrer\">Sign the UK petition to change this rule</a>",
           "Book <a href=\"https://www.leshuttle.com/uk-en/travelling-with-us/travelling-with-pets\" target=\"_blank\" rel=\"noopener noreferrer\">LeShuttle (Eurotunnel)</a> / ferry well in advance if doing land crossing",
         ],
       },
@@ -3206,7 +3206,7 @@ const CHECKLIST_DATA = {
         items: [
           "Good news: cats do NOT need the tapeworm treatment — that's a dogs-only UK/Ireland requirement",
           "Everything else is the same: ISO microchip, rabies ≥21 days before entry, health certificate",
-          "No cabin into the UK applies to cats too — you'll still do the Paris pivot or cargo",
+          "No cabin into the UK applies to cats too — you'll fly cabin into a mainland EU hub (Paris, Amsterdam, Frankfurt or Lisbon) and cross by Eurotunnel or ferry",
           "On the Eurotunnel crossing the cat stays in its carrier in the car — bring a familiar-smelling blanket",
           "Use Feliway (cat pheromone) in the carrier, never Adaptil — and keep a harness on for the Pet Reception checks",
         ],
@@ -4270,7 +4270,7 @@ const DIRECTIONAL_CHECKLISTS = {
       restriction: "⚠ No commercial airline flies pets in the cabin INTO the UK — it's a UK government rule, not an airline policy. The cabin workaround: fly your pet in cabin to mainland Europe, then cross the Channel by Eurotunnel or pet-friendly ferry with the pet beside you. That's what this checklist covers.",
       sections: [
         {
-          title: "The cabin workaround (Paris pivot)",
+          title: "The cabin workaround — fly to mainland Europe, cross by land or sea",
           items: [
             "Fly cabin into a continental EU airport — Paris CDG is most common (Air France from many origins); Amsterdam (KLM), Frankfurt (Lufthansa) and Lisbon (TAP) also work",
             "Land at the EU hub, then train, drive or pet-taxi to Calais, France",

@@ -11733,6 +11733,31 @@ function JourneyPlanner() {
                   grouped.push(g);
                 }
               });
+              // Per-airline card split (mirror of the logic in pushDirects).
+              // When a single direct-route entry names multiple cabin-friendly
+              // airlines for the same airport pair (e.g. "Air France / Delta"
+              // on CDG→JFK), split it into one card per airline so the user
+              // picks an airline-route, not a "whichever-airline" route. Each
+              // split card carries _splitAirline so the card UI scopes its
+              // carrier specs to just that airline.
+              const splitGrouped = [];
+              grouped.forEach((g) => {
+                const primary = g.routes[0];
+                const airlinesInNote = primary && !primary.legs ? findAllAirlinesInText(primary.note || "") : [];
+                if (airlinesInNote.length > 1 && !primary._airlineFromLeg) {
+                  airlinesInNote.forEach((airline) => {
+                    splitGrouped.push({
+                      key: `${g.key}|||${airline.name}`,
+                      from: g.from,
+                      to: g.to,
+                      duration: g.duration,
+                      routes: [{ ...primary, _splitAirline: airline }],
+                    });
+                  });
+                } else {
+                  splitGrouped.push(g);
+                }
+              });
               return (
                 <div className="mb-8">
                   <div className="flex items-baseline gap-3 mb-2">
@@ -11745,9 +11770,9 @@ function JourneyPlanner() {
                         const allTrain = directMatches.length > 0 &&
                           directMatches.every((r) => r.mode === "train");
                         const word = allTrain ? "Direct route" : "Direct cabin route";
-                        return grouped.length === 1
+                        return splitGrouped.length === 1
                           ? word
-                          : `${word.replace("route", "routes")} · ${grouped.length} options`;
+                          : `${word.replace("route", "routes")} · ${splitGrouped.length} options`;
                       })()}
                     </h4>
                   </div>
@@ -11760,7 +11785,7 @@ function JourneyPlanner() {
                     </div>
                   )}
                   <div className="space-y-3">
-                    {grouped.map((g, i) => {
+                    {splitGrouped.map((g, i) => {
                       const routeId = `direct:${i}`;
                       const isSelected = selectedRouteId === routeId;
                       return (
@@ -12079,14 +12104,34 @@ function JourneyPlanner() {
                     if (seen.has(key)) seen.get(key).routes.push(r);
                     else { const g = { key, from: r.from, to: r.to, duration: r.duration, routes: [r] }; seen.set(key, g); grouped.push(g); }
                   });
+                  // Per-airline split (same logic as Option 1 above) — keeps
+                  // selection IDs aligned with selectableRoutes' altDirect: prefix.
+                  const splitGrouped = [];
+                  grouped.forEach((g) => {
+                    const primary = g.routes[0];
+                    const airlinesInNote = primary && !primary.legs ? findAllAirlinesInText(primary.note || "") : [];
+                    if (airlinesInNote.length > 1 && !primary._airlineFromLeg) {
+                      airlinesInNote.forEach((airline) => {
+                        splitGrouped.push({
+                          key: `${g.key}|||${airline.name}`,
+                          from: g.from,
+                          to: g.to,
+                          duration: g.duration,
+                          routes: [{ ...primary, _splitAirline: airline }],
+                        });
+                      });
+                    } else {
+                      splitGrouped.push(g);
+                    }
+                  });
                   return (
                     <div className="mb-6">
                       <div className="flex items-baseline gap-3 mb-3">
                         <span className="text-emerald-400 text-base">✓</span>
-                        <h4 className="font-serif text-lg text-stone-100">Direct cabin {grouped.length === 1 ? "route" : `routes · ${grouped.length} options`}</h4>
+                        <h4 className="font-serif text-lg text-stone-100">Direct cabin {splitGrouped.length === 1 ? "route" : `routes · ${splitGrouped.length} options`}</h4>
                       </div>
                       <div className="space-y-2">
-                        {grouped.map((g, i) => {
+                        {splitGrouped.map((g, i) => {
                           const routeId = `altDirect:${i}`;
                           const isSelected = selectedRouteId === routeId;
                           return (

@@ -1978,6 +1978,19 @@ const REGION_PAIR_STRATEGIES = {
       ],
       note: `Via Frankfurt: fly cabin ${o} → Frankfurt on Lufthansa, then drive to Calais and cross — the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover, both UK-government-approved pet routes. The Frankfurt→Calais drive is longer than from Paris, so consider an overnight in Frankfurt or along the way. Good if Lufthansa's schedule or pricing from your city beats Air France.`,
     }),
+    // Via AMSTERDAM (EUROTUNNEL) — KLM/Delta, then drive AMS → Calais and
+    // Eurotunnel/ferry. Same crossing as Paris, different EU hub. Useful when
+    // KLM's schedule beats Air France or when the user already plans to land
+    // at AMS but wants the faster Channel crossing rather than the 16h DFDS.
+    (o, d) => ({
+      label: "Via Amsterdam (Eurotunnel)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Layover at Amsterdam AMS", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Amsterdam (Eurotunnel option): fly cabin ${o} → Amsterdam on KLM, then drive ~3.5h Amsterdam → Calais and cross — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m). Both UK-government-approved pet routes; your pet stays in the car for the crossing. Same Channel crossing as the Paris route, just from a different EU hub — useful when KLM's schedule from ${o} beats Air France's.`,
+    }),
     // Via AMSTERDAM — KLM, then the DFDS overnight ferry direct to Newcastle.
     // No drive through France: the ferry IS the crossing.
     (o, d) => ({
@@ -1988,50 +2001,166 @@ const REGION_PAIR_STRATEGIES = {
         { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
       ],
-      note: `Via Amsterdam: fly cabin ${o} → Amsterdam on KLM, then take the DFDS overnight ferry from IJmuiden directly to Newcastle — a UK-government-approved pet route. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels (~£30 per pet each way; foot-passenger pet bookings are by phone, not online). It lands in the north of England, so it suits Scotland or northern England better than London. Dogs still need tapeworm treatment 24–120h before UK arrival.`,
+      note: `Via Amsterdam (Newcastle ferry): fly cabin ${o} → Amsterdam on KLM, then take the DFDS overnight ferry from IJmuiden directly to Newcastle — a UK-government-approved pet route. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels (~£30 per pet each way; foot-passenger pet bookings are by phone, not online). It lands in the north of England, so it suits Scotland or northern England better than London. Dogs still need tapeworm treatment 24–120h before UK arrival.`,
     }),
   ],
-  "europe>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Calais (drive/train)`, time: "varies", airline: "Pet stays with you" },
-      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
-      { route: `Folkestone / Dover → ${d}`, time: "1h 30m+", airline: "Pet stays with you" },
-    ],
-    note: `If you're already in Europe, crossing the Channel by land/sea is the easiest way into the UK — your pet stays with you the whole way. From Calais: the Eurotunnel Le Shuttle (35 min) or a DFDS/P&O ferry to Dover (~1h 30m), both UK-government-approved pet routes. No cabin flight INTO the UK exists on any airline.`,
-  }),
-  "canada>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "7–8h", airline: "Air France / Lufthansa ✓ Cabin" },
-      { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `No cabin flight goes INTO the UK. From ${o}, fly cabin to a European hub, then a land/sea crossing into ${d} — Eurotunnel Le Shuttle or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes.`,
-  }),
+  "europe>uk-out": [
+    // Via Calais (Eurotunnel or short Channel ferry)
+    (o, d) => ({
+      label: "Via Calais (Eurotunnel or Dover ferry)",
+      legs: [
+        { route: `${o} → Calais (drive/train)`, time: "varies", airline: "Pet stays with you" },
+        { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+        { route: `Folkestone / Dover → ${d}`, time: "1h 30m+", airline: "Pet stays with you" },
+      ],
+      note: `If you're already in Europe, the Channel crossing at Calais is the fastest way into the UK — your pet stays with you the whole way. From Calais: the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet), both UK-government-approved pet routes.`,
+    }),
+    // Via Amsterdam-Newcastle DFDS — for users near or in the Netherlands or for Scotland/N. England destinations
+    (o, d) => ({
+      label: "Via Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Amsterdam IJmuiden ferry terminal (drive)`, time: "varies", airline: "Pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `If you're near the Netherlands or heading to Scotland / northern England, the DFDS overnight ferry from Amsterdam IJmuiden to Newcastle skips the Channel drive entirely. Pets travel in pet-friendly cabins or kennels (~£30 per pet each way; foot passengers welcome). Lands in northern England.`,
+    }),
+  ],
+  "canada>uk-out": [
+    // Via PARIS
+    (o, d) => ({
+      label: "Via Paris",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "7–8h", airline: "Air France / Air Canada ✓ Cabin" },
+        { route: "Layover at Paris CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: fly cabin ${o} → Paris on Air France or Air Canada, then drive ~3h Paris → Calais and cross — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m). Both UK-government-approved pet routes; your pet stays in the car for the crossing.`,
+    }),
+    // Via FRANKFURT
+    (o, d) => ({
+      label: "Via Frankfurt",
+      legs: [
+        { route: `${o} → Frankfurt (FRA)`, time: "8h", airline: "Lufthansa / Air Canada ✓ Cabin" },
+        { route: "Layover at Frankfurt FRA", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Frankfurt: fly cabin ${o} → Frankfurt on Lufthansa or Air Canada, then drive to Calais and cross — the Eurotunnel Le Shuttle or a DFDS/P&O ferry to Dover, both UK-government-approved pet routes. The Frankfurt→Calais drive is longer than from Paris, so consider an overnight stop along the way.`,
+    }),
+    // Via AMSTERDAM (Eurotunnel)
+    (o, d) => ({
+      label: "Via Amsterdam (Eurotunnel)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "KLM / Air Canada ✓ Cabin" },
+        { route: "Layover at Amsterdam AMS", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Amsterdam (Eurotunnel option): fly cabin ${o} → Amsterdam on KLM or Air Canada, then drive ~3.5h Amsterdam → Calais and cross by Eurotunnel or DFDS/P&O ferry. Same Channel crossing as the Paris route, just from a different EU hub — useful when KLM's schedule from ${o} beats Air France's.`,
+    }),
+    // Via AMSTERDAM (DFDS Newcastle ferry)
+    (o, d) => ({
+      label: "Via Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "KLM / Air Canada ✓ Cabin" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam (Newcastle ferry): fly cabin ${o} → Amsterdam, then take the DFDS overnight ferry from IJmuiden directly to Newcastle — a UK-government-approved pet route. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels (~£30 per pet each way). It lands in the north of England, so it suits Scotland or northern England better than London.`,
+    }),
+  ],
   "india>uk-out": (o, d) => {
     const isBLR = o.includes("(BLR)");
-    return {
+    const out = [
+      // Via PARIS — Air France or Air India
+      {
+        label: "Via Paris",
+        legs: [
+          { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+          { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+        ],
+        note: `Via Paris: fly cabin ${o} → Paris on Air France or Air India, then drive ~3h Paris → Calais and cross — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m). Both UK-government-approved pet routes. Air India is the only single-carrier through option for the long-haul leg into Paris, but Air France works as the single-carrier alternative.`,
+      },
+    ];
+    // Frankfurt only available from non-BLR origins (Lufthansa excludes BLR).
+    if (!isBLR) {
+      out.push({
+        label: "Via Frankfurt",
+        legs: [
+          { route: `${o} → Frankfurt (FRA)`, time: "8–9h", airline: "Lufthansa / Air India ✓ Cabin (under 8 kg)" },
+          { route: "Layover at Frankfurt FRA", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
+        ],
+        note: `Via Frankfurt: fly cabin ${o} → Frankfurt on Lufthansa or Air India, then drive ~7–8h Frankfurt → Calais and cross by Eurotunnel or DFDS/P&O ferry. Both UK-government-approved pet routes. The drive is longer than from Paris, so consider an overnight stop along the way.`,
+      });
+    }
+    // Via Amsterdam (Eurotunnel)
+    out.push({
+      label: "Via Amsterdam (Eurotunnel)",
       legs: [
-        {
-          route: `${o} → Frankfurt (FRA) or Paris (CDG)`,
-          time: "8–9h",
-          airline: isBLR
-            ? "Air India / Air France ✓ Cabin (under 8–10 kg) — Lufthansa excludes Bangalore, so route via Paris"
-            : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)",
-        },
-        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-        { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
+        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
+        { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
-      note: `Two walls: Air India is cargo-only for the UK, AND no airline flies cabin pets INTO the UK. Route is ${o} → continental Europe, then a land/sea crossing into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Air India, Lufthansa and Air France all carry cabin pets on India ↔ Europe sectors${isBLR ? " (Lufthansa excludes Bangalore — use Air France via Paris instead)" : ""}.`,
-    };
+      note: `Via Amsterdam (Eurotunnel option): fly cabin ${o} → Amsterdam on KLM or Air India, then drive ~3.5h Amsterdam → Calais and cross by Eurotunnel or DFDS/P&O ferry. Same Channel crossing as the Paris route, just from a different EU hub.`,
+    });
+    // Via Amsterdam (DFDS Newcastle)
+    out.push({
+      label: "Via Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam (Newcastle ferry): fly cabin ${o} → Amsterdam, then take the DFDS overnight ferry from IJmuiden directly to Newcastle. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels. Lands in northern England — best suited to Scotland or northern England.`,
+    });
+    return out;
   },
-  "dubai>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `Etihad takes cabin pets OUT of Abu Dhabi to Europe. From a European hub, a land/sea crossing brings your pet into ${d} — Eurotunnel or a DFDS/P&O ferry from Calais. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
-  }),
+  "dubai>uk-out": [
+    // Via PARIS
+    (o, d) => ({
+      label: "Via Paris",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: Etihad takes cabin pets out of Abu Dhabi to Paris CDG, then drive ~3h to Calais and cross by Eurotunnel or DFDS/P&O ferry. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
+    }),
+    // Via FRANKFURT
+    (o, d) => ({
+      label: "Via Frankfurt",
+      legs: [
+        { route: `${o} → Frankfurt (FRA)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: "Layover at Frankfurt FRA", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Frankfurt: Etihad takes cabin pets out of Abu Dhabi to Frankfurt, then drive to Calais and cross. The Frankfurt→Calais drive is longer than from Paris, so plan an overnight stop. Start at Abu Dhabi (AUH) — Dubai (DXB) is cargo-only for all airlines.`,
+    }),
+    // Via AMSTERDAM (Eurotunnel)
+    (o, d) => ({
+      label: "Via Amsterdam (Eurotunnel)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Amsterdam (Eurotunnel option): Etihad to Amsterdam, then drive ~3.5h Amsterdam → Calais and cross. Same Channel crossing as the Paris route, just from a different EU hub. Start at Abu Dhabi (AUH).`,
+    }),
+    // Via AMSTERDAM (DFDS Newcastle)
+    (o, d) => ({
+      label: "Via Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam (Newcastle ferry): Etihad to Amsterdam, then DFDS overnight ferry IJmuiden → Newcastle. The advantage: no drive through Belgium and France. Lands in northern England. Start at Abu Dhabi (AUH).`,
+    }),
+  ],
 
   // ----- INTO Ireland (limited cabin: Iberia MAD→DUB, else Europe + ferry) -----
   "us>ireland": (o, d) => ({
@@ -2222,14 +2351,42 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `Caribbean→Europe routes via a US gateway. The transatlantic leg carries cabin pets. Note: if you're flying a dog that originated in the Dominican Republic, the CDC high-risk rules mean you need the US-issued Rabies Certification prepared before you left for the Caribbean — confirm this with your vet before the trip.`,
   }),
-  "caribbean>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
-      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `Caribbean to the UK is a three-leg journey — no airline flies cabin pets INTO the UK directly. The route is Caribbean → US gateway → European hub → a land/sea crossing into the UK (Eurotunnel or a DFDS/P&O ferry from Calais, both UK-government-approved pet routes). Long but fully in cabin and with you at every step. Build in at least one overnight stop.`,
-  }),
+  "caribbean>uk-out": [
+    // Via PARIS
+    (o, d) => ({
+      label: "Via US gateway + Paris",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+        { route: `US gateway → Paris (CDG)`, time: "7–9h", airline: "Air France / Delta ✓ Cabin" },
+        { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: Caribbean → US gateway → Paris on Air France/Delta, then drive ~3h Paris → Calais and cross by Eurotunnel or DFDS/P&O ferry. Long but fully in cabin and with you at every step. Build in at least one overnight stop. Note: if you're flying a dog that originated in the Dominican Republic, the CDC high-risk rules mean you need the US-issued Rabies Certification prepared before you left for the Caribbean.`,
+    }),
+    // Via AMSTERDAM (Eurotunnel)
+    (o, d) => ({
+      label: "Via US gateway + Amsterdam (Eurotunnel)",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+        { route: `US gateway → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Amsterdam (Eurotunnel option): Caribbean → US gateway → Amsterdam on KLM/Delta, then drive ~3.5h Amsterdam → Calais and cross by Eurotunnel or DFDS/P&O ferry. Useful when KLM/Delta's transatlantic schedule beats Air France.`,
+    }),
+    // Via AMSTERDAM (Newcastle ferry)
+    (o, d) => ({
+      label: "Via US gateway + Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+        { route: `US gateway → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam (Newcastle ferry): Caribbean → US gateway → Amsterdam, then DFDS overnight ferry IJmuiden → Newcastle. The advantage: no drive through Belgium and France. Lands in northern England — best suited to Scotland or northern England. Build in at least one overnight stop in the US or Amsterdam.`,
+    }),
+  ],
 
   // ----- MEXICO outbound -----
   "mexico>us": (o, d) => ({
@@ -2251,14 +2408,42 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `Mexico→Canada is relatively direct. Air Canada and Aeromexico serve the main pairs in cabin. Canada is one of the easier destinations: current rabies certificate is the core requirement.`,
   }),
-  "mexico>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
-      { route: `US gateway → Paris (CDG) or Amsterdam (AMS)`, time: "7–9h", airline: "Air France / KLM ✓ Cabin" },
-      { route: "Hub → Calais, then Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you" },
-    ],
-    note: `Mexico to the UK is three legs — no airline flies cabin pets into the UK. Route via the US, then a European hub, then a land/sea crossing into the UK (Eurotunnel or a DFDS/P&O ferry from Calais). Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
-  }),
+  "mexico>uk-out": [
+    // Via PARIS
+    (o, d) => ({
+      label: "Via US gateway + Paris",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+        { route: `US gateway → Paris (CDG)`, time: "7–9h", airline: "Air France / Delta ✓ Cabin" },
+        { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: Mexico → US gateway → Paris on Air France/Delta, then drive ~3h Paris → Calais and cross by Eurotunnel or DFDS/P&O ferry. Build in at least one overnight stop. UK paperwork: ISO microchip, rabies ≥21 days, AHC from an accredited vet.`,
+    }),
+    // Via AMSTERDAM (Eurotunnel)
+    (o, d) => ({
+      label: "Via US gateway + Amsterdam (Eurotunnel)",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+        { route: `US gateway → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Amsterdam (Eurotunnel option): Mexico → US gateway → Amsterdam on KLM/Delta, then drive ~3.5h Amsterdam → Calais and cross by Eurotunnel or DFDS/P&O ferry. Useful when KLM's transatlantic schedule beats Air France.`,
+    }),
+    // Via AMSTERDAM (Newcastle ferry)
+    (o, d) => ({
+      label: "Via US gateway + Amsterdam (Newcastle ferry)",
+      legs: [
+        { route: `${o} → Miami (MIA) or New York (JFK)`, time: "3–4h", airline: "Aeromexico / American ✓ Cabin" },
+        { route: `US gateway → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+        { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+        { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Via Amsterdam (Newcastle ferry): Mexico → US gateway → Amsterdam → DFDS overnight ferry IJmuiden → Newcastle. The advantage: no drive through Belgium and France. Lands in northern England.`,
+    }),
+  ],
 
   // ----- IRELAND outbound (cabin OUT of Ireland is fine — Dublin to Europe) -----
   "ireland>europe": (o, d) => ({
@@ -2267,14 +2452,28 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `Cabin out of Ireland is straightforward. Air France (to Paris), KLM (to Amsterdam) and Lufthansa (to Frankfurt) all take cabin pets out of Dublin, and Iberia flies the cabin route to Madrid. From any of those hubs you can connect onward across Europe in cabin.`,
   }),
-  "ireland>uk-out": (o, d) => ({
-    legs: [
-      { route: `${o} → Cherbourg or Roscoff (ferry)`, time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
-      { route: "France → Calais", time: "varies", airline: "Pet stays with you" },
-      { route: "Eurotunnel → UK", time: "35m", airline: "Pet stays in car" },
-    ],
-    note: `The cleanest Ireland→UK pet route avoids flying altogether: the direct Ireland→France ferry, then drive to Calais and Eurotunnel into the UK. Alternatively the short Dublin/Rosslare → Holyhead ferry crosses straight to Wales — pets stay in your vehicle. No cabin flight into the UK exists, but the ferry routes make this an easy land+sea journey.`,
-  }),
+  "ireland>uk-out": [
+    // OPTION A: short ferry direct to Wales — most travellers' realistic option
+    (o, d) => ({
+      label: "Direct ferry to Wales (the short route)",
+      legs: [
+        { route: `${o} → Dublin or Rosslare port (drive)`, time: "varies", airline: "Pet stays with you" },
+        { route: "Ferry: Dublin/Rosslare → Holyhead", time: "~3h 15m", airline: "Irish Ferries / Stena — pet stays in vehicle or pet-friendly area" },
+        { route: "Holyhead → onward UK (drive/train)", time: "varies", airline: "Pet stays with you" },
+      ],
+      note: `Direct Holyhead ferry: drive to Dublin or Rosslare port, take the short ~3h 15m Irish Ferries or Stena Line crossing to Holyhead in Wales, and continue overland. The cheapest and fastest Ireland→UK pet route — pets stay in your vehicle. No cabin flight into the UK exists, but this short ferry avoids flying altogether.`,
+    }),
+    // OPTION B: longer route via France — only relevant if combining with EU travel
+    (o, d) => ({
+      label: "Via France + Eurotunnel (only if combining with EU trip)",
+      legs: [
+        { route: `${o} → Cherbourg or Roscoff (ferry)`, time: "~18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly cabin or stays in vehicle" },
+        { route: "France → Calais (drive)", time: "5–7h", airline: "Pet stays with you" },
+        { route: "Eurotunnel Calais → Folkestone", time: "35m", airline: "Pet stays in car" },
+      ],
+      note: `Via France: the longer Ireland → Cherbourg/Roscoff ferry (~18h), then drive across France to Calais, then Eurotunnel into the UK. Only worth it if you're combining this with EU travel on the same trip — the short Dublin → Holyhead ferry above is faster and cheaper for a direct Ireland→UK pet journey.`,
+    }),
+  ],
   "ireland>canada": (o, d) => ({
     legs: [
       { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "1h 30m–2h", airline: "Air France / Lufthansa ✓ Cabin out of Dublin" },
@@ -5284,7 +5483,7 @@ function getTransitNotes(region, originRegion, legs = []) {
     if (specific) {
       if (specific.country === "France") {
         countryGotchas.push(
-          `⚠️ France-specific: Category 1 breeds (Pit Bull / American Staffordshire Terrier without pedigree, Mastiff/Boerboel, Tosa) are <strong>banned entirely from import and transit</strong> under French law — your dog will not be allowed off the plane. Category 2 breeds (pedigreed Staffordshire Terriers, Rottweilers and lookalikes) need a permit, muzzle, civil liability insurance, and behaviour evaluation. Air France itself refuses Category 1 entirely, so a Paris-pivot route is a non-starter for these breeds.`
+          `⚠️ France-specific: Category 1 breeds (Pit Bull / American Staffordshire Terrier without pedigree, Mastiff/Boerboel, Tosa) are <strong>banned entirely from import and transit</strong> under French law — your dog will not be allowed off the plane. Category 2 breeds (pedigreed Staffordshire Terriers, Rottweilers and lookalikes) need a permit, muzzle, civil liability insurance, and behaviour evaluation. Air France itself refuses Category 1 entirely, so any route routing through France (Paris CDG, ORY, NCE) is a non-starter for these breeds — use Amsterdam, Frankfurt or Lisbon as the EU hub instead.`
         );
       }
       if (specific.country === "Germany") {
@@ -5854,11 +6053,24 @@ function canonicalConceptKey(text) {
   const t = (text || "").toLowerCase();
   // Universal prep that belongs ONCE on origin side, not repeated at dest.
   if (t.includes("microchip") && (t.includes("iso") || t.includes("implant"))) return "concept:microchip";
-  if (t.includes("rabies") && (t.includes("vaccin") || t.includes("shot"))) return "concept:rabies";
-  if (t.includes("vet") && (t.includes("health check") || t.includes("appointment") || t.includes("examin"))) return "concept:vet-health-check";
+  if (t.includes("rabies") && (t.includes("vaccin") || t.includes("shot") || t.includes("vaccine current") || t.includes("vaccine valid"))) return "concept:rabies";
+  // Vet visit / vet appointment / vet health check — all the same step.
+  // Catches "Vet visit — confirm pet is healthy enough to fly", "Vet
+  // appointment for full health check", "vet examines pet", "vet exam".
+  if (t.includes("vet") && (t.includes("health check") || t.includes("appointment") || t.includes("examin") || t.includes("vet exam") || t.includes("vet visit") || t.includes("healthy enough"))) return "concept:vet-health-check";
   if (t.includes("titer") || t.includes("titre") || t.includes("favn") || t.includes("rnatt")) return "concept:rabies-titer";
   if (t.includes("snub") || t.includes("brachy") || t.includes("flat-faced")) return "concept:brachy-warning";
-  if (t.includes("book") && (t.includes("cabin pet") || t.includes("pet space") || t.includes("airline by phone"))) return "concept:book-airline";
+  // Booking the airline / reserving cabin pet space — all the same step.
+  // Catches "Book your flight AND call airline to reserve a pet spot",
+  // "Book cabin pet space directly with airline by phone", "Reserve cabin
+  // pet space", "Call airline to confirm a pet spot".
+  if (
+    (t.includes("book") || t.includes("reserve") || t.includes("call airline"))
+    && (t.includes("cabin pet") || t.includes("pet space") || t.includes("pet spot") || t.includes("airline by phone") || t.includes("reserve a pet") || t.includes("call airline"))
+  ) return "concept:book-airline";
+  // NOTE: carrier dimensions and weight limits are intentionally NOT deduped —
+  // they're important enough to repeat on every checklist (origin and
+  // destination) as a visual reminder. Don't add carrier-purchase here.
   // Tapeworm — same concept whether origin or dest mentions it.
   if (t.includes("tapeworm")) return "concept:tapeworm";
   // AHC / health cert is destination-specific (each country issues its own
@@ -10656,34 +10868,62 @@ function JourneyPlanner() {
   // NOT offer pass-through US gateways (Miami, JFK) — nobody schedules a
   // UK-tapeworm vet visit at a US layover — nor the origin/destination
   // themselves. Returns null only if the route doesn't transit Europe at all.
+  // SCOPED to the user's CURRENTLY SELECTED route. If they picked "Via Paris",
+  // only Paris should appear as a stopover option — not Frankfurt or Amsterdam.
+  // Falls back to scanning all matching workarounds only when no route has
+  // been selected yet (initial render before auto-select fires).
   const tapewormStopovers = useMemo(() => {
     if (!workaroundMatches || workaroundMatches.length === 0) return null;
 
-    // Does any workaround actually transit Europe? (Tags carry transit
-    // regions; leg text mentioning Calais/Paris/Frankfurt/Amsterdam counts.)
-    const transitsEurope = workaroundMatches.some((r) => {
+    // Decide the scope. selectableRoutes is defined below, but its IDs are
+    // deterministic — `workaround:N` indexes into workaroundMatches[N] and
+    // `altWorkaround:N` indexes into altWorkarounds[N]. Parse the id to
+    // scope to ONLY that route. If no id yet (pre auto-select) or the id
+    // doesn't decode (direct routes), fall back to the full set.
+    const scope = (() => {
+      if (!selectedRouteId) return workaroundMatches;
+      const m = String(selectedRouteId).match(/^(workaround|altWorkaround):(\d+)$/);
+      if (!m) return workaroundMatches;
+      const list = m[1] === "altWorkaround" ? altWorkarounds : workaroundMatches;
+      const idx = Number(m[2]);
+      const item = list[idx];
+      return item ? [item] : workaroundMatches;
+    })();
+
+    // Does the scoped route(s) actually transit Europe?
+    const transitsEurope = scope.some((r) => {
       const tags = r.tags || (r.route && r.route.tags) || [];
       if (tags.includes("europe")) return true;
       const legs = (r.route && r.route.legs) || r.legs || [];
       return legs.some((leg) =>
-        /Calais|Paris|Frankfurt|Amsterdam|Eurotunnel|CDG|FRA|AMS/i.test(leg.route || "")
+        /Calais|Paris|Frankfurt|Amsterdam|Lisbon|Eurotunnel|CDG|FRA|AMS|LIS/i.test(leg.route || "")
       );
     });
     if (!transitsEurope) return null;
 
-    // The standard European hub floor — all CET, so `tz` is "FR" for each.
-    const out = [
-      { key: "CDG", tz: "FR", name: "Paris (CDG)" },
-      { key: "FRA", tz: "FR", name: "Frankfurt (FRA)" },
-      { key: "AMS", tz: "FR", name: "Amsterdam (AMS)" },
+    // Derive ONLY the hubs actually named in the scope's legs.
+    const out = [];
+    const seen = new Set();
+    const HUB_PATTERNS = [
+      { code: "CDG", name: "Paris (CDG)",     re: /Paris|CDG/i },
+      { code: "FRA", name: "Frankfurt (FRA)", re: /Frankfurt|FRA/i },
+      { code: "AMS", name: "Amsterdam (AMS)", re: /Amsterdam|AMS/i },
+      { code: "LIS", name: "Lisbon (LIS)",    re: /Lisbon|LIS/i },
     ];
-    const seen = new Set(out.map((o) => o.key));
 
-    // Surface any other specific European hub a leg explicitly names.
-    workaroundMatches.forEach((r) => {
+    scope.forEach((r) => {
       const legs = (r.route && r.route.legs) || r.legs || [];
       legs.forEach((leg) => {
-        (leg.route || "").match(/\b[A-Z]{3}\b/g)?.forEach((tok) => {
+        const text = leg.route || "";
+        HUB_PATTERNS.forEach((hub) => {
+          if (seen.has(hub.code)) return;
+          if (hub.re.test(text)) {
+            seen.add(hub.code);
+            out.push({ key: hub.code, tz: "FR", name: hub.name });
+          }
+        });
+        // Also catch any other European 3-letter hub code (MAD, FCO, ZRH, BCN etc.).
+        (text.match(/\b[A-Z]{3}\b/g) || []).forEach((tok) => {
           if (seen.has(tok) || tok === origin || tok === destination) return;
           const ap = airportByCode(tok);
           if (!ap || ap.region !== "europe") return;
@@ -10692,8 +10932,9 @@ function JourneyPlanner() {
         });
       });
     });
-    return out;
-  }, [workaroundMatches, origin, destination]);
+
+    return out.length > 0 ? out : null;
+  }, [workaroundMatches, altWorkarounds, selectedRouteId, origin, destination]);
 
   const checklistId = destAirport ? REGION_TO_CHECKLIST[destAirport.region] : null;
 

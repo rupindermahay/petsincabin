@@ -6382,12 +6382,18 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   collectAnytime(originSections);
   collectAnytime(destSections);
 
-  // Strip the Anytime bucket from the per-chapter section lists so it isn't
-  // emitted again under the chapter dividers.
+  // Promote Anytime to a top-level chapter only when it actually has substance
+  // (2+ items). For routes where the only "Anytime" item is a single thing
+  // like a country's official-sources note, a lonely 1-item black band reads
+  // like an orphan — leave that one item in its natural chapter (Leaving X or
+  // Entering Y) instead. Either way, drop the bucket from the per-chapter
+  // section lists if we're going to emit it as a top-level chapter below.
+  const ANYTIME_MIN_FOR_TOP_CHAPTER = 2;
+  const promoteAnytime = anytimeItems.length >= ANYTIME_MIN_FOR_TOP_CHAPTER;
   const stripAnytime = (chapterSections) =>
     chapterSections.filter((bucket) => bucket.label !== "Anytime / general prep");
-  const originTimed = stripAnytime(originSections);
-  const destTimed = stripAnytime(destSections);
+  const originTimed = promoteAnytime ? stripAnytime(originSections) : originSections;
+  const destTimed = promoteAnytime ? stripAnytime(destSections) : destSections;
 
   // Assemble: carriers at top (alongside tapeworm in the planner), then
   // anytime block, origin chapter, transit, destination chapter, tips.
@@ -6433,8 +6439,10 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
 
   // ANYTIME / GENERAL PREP — after carriers. Non-time-bound advice that
   // applies regardless of when in the timeline you read it: species tips,
-  // booking notes, carrier acclimation. One section, not two.
-  if (anytimeItems.length > 0) {
+  // booking notes, carrier acclimation. One section, not two. Only promoted
+  // to a top-level chapter when it has 2+ items (see promoteAnytime above);
+  // otherwise the single item stays in its natural chapter.
+  if (promoteAnytime) {
     sections.push({
       title: "Anytime / general prep",
       divider: true,
@@ -12004,8 +12012,36 @@ function JourneyPlanner() {
                   // Pass the route's legs so getTransitNotes can identify the
                   // SPECIFIC transit country (e.g. France via CDG) and surface
                   // country-specific warnings (breed bans, tapeworm reqs).
-                  // Direct routes don't have legs — pass [] in that case.
-                  const routeLegs = (selectedRoute.route && selectedRoute.route.legs) || [];
+                  // For DIRECT routes there's no legs array — synthesize a
+                  // single leg from the route entry so resolveAirlinesFromLegs
+                  // can populate routeAirlines and the Carriers chapter renders.
+                  let routeLegs = (selectedRoute.route && selectedRoute.route.legs) || [];
+                  if (
+                    routeLegs.length === 0 &&
+                    selectedRoute.kind === "direct" &&
+                    selectedRoute.group &&
+                    selectedRoute.group.routes &&
+                    selectedRoute.group.routes[0]
+                  ) {
+                    const dr = selectedRoute.group.routes[0];
+                    // Try _airlineFromLeg first (set on promoted-from-workaround
+                    // entries). Otherwise scan the note for the first known
+                    // airline name. Last resort: leave airline blank — the
+                    // chapter still renders generically.
+                    let airlineText = dr._airlineFromLeg || "";
+                    if (!airlineText && dr.note) {
+                      const noteLower = dr.note.toLowerCase();
+                      const matched = AIRLINES.find((a) =>
+                        noteLower.includes(a.name.toLowerCase())
+                      );
+                      if (matched) airlineText = `${matched.name} ✓ Cabin`;
+                    }
+                    routeLegs = [{
+                      route: `${dr.from} → ${dr.to}`,
+                      time: dr.duration || "",
+                      airline: airlineText,
+                    }];
+                  }
 
                   const combined = buildRouteChecklist(
                     originAirport.region,

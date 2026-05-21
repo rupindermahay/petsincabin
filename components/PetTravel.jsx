@@ -2069,23 +2069,23 @@ const REGION_PAIR_STRATEGIES = {
       note: `Via Amsterdam (Newcastle ferry): fly cabin ${o} → Amsterdam, then take the DFDS overnight ferry from IJmuiden directly to Newcastle — a UK-government-approved pet route. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels (~£30 per pet each way). It lands in the north of England, so it suits Scotland or northern England better than London.`,
     }),
   ],
-  "india>uk-out": (o, d) => {
-    const isBLR = o.includes("(BLR)");
-    const out = [
-      // Via PARIS — Air France or Air India
-      {
-        label: "Via Paris",
-        legs: [
-          { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
-          { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
-        ],
-        note: `Via Paris: fly cabin ${o} → Paris on Air France or Air India, then drive ~3h Paris → Calais and cross — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m). Both UK-government-approved pet routes. Air India is the only single-carrier through option for the long-haul leg into Paris, but Air France works as the single-carrier alternative.`,
-      },
-    ];
-    // Frankfurt only available from non-BLR origins (Lufthansa excludes BLR).
-    if (!isBLR) {
-      out.push({
+  "india>uk-out": [
+    // Via PARIS — Air France or Air India
+    (o, d) => ({
+      label: "Via Paris",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+        { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
+      ],
+      note: `Via Paris: fly cabin ${o} → Paris on Air France or Air India, then drive ~3h Paris → Calais and cross — the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m). Both UK-government-approved pet routes. Air India is the only single-carrier through option for the long-haul leg into Paris, but Air France works as the single-carrier alternative.`,
+    }),
+    // Via FRANKFURT — returns null for BLR origins (Lufthansa excludes Bangalore).
+    // Null-returning strategies are filtered out by generateWorkarounds /
+    // strategiesFor consumers downstream.
+    (o, d) => {
+      if (o.includes("(BLR)")) return null;
+      return {
         label: "Via Frankfurt",
         legs: [
           { route: `${o} → Frankfurt (FRA)`, time: "8–9h", airline: "Lufthansa / Air India ✓ Cabin (under 8 kg)" },
@@ -2093,10 +2093,10 @@ const REGION_PAIR_STRATEGIES = {
           { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
         ],
         note: `Via Frankfurt: fly cabin ${o} → Frankfurt on Lufthansa or Air India, then drive ~7–8h Frankfurt → Calais and cross by Eurotunnel or DFDS/P&O ferry. Both UK-government-approved pet routes. The drive is longer than from Paris, so consider an overnight stop along the way.`,
-      });
-    }
+      };
+    },
     // Via Amsterdam (Eurotunnel)
-    out.push({
+    (o, d) => ({
       label: "Via Amsterdam (Eurotunnel)",
       legs: [
         { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
@@ -2104,9 +2104,9 @@ const REGION_PAIR_STRATEGIES = {
         { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
       note: `Via Amsterdam (Eurotunnel option): fly cabin ${o} → Amsterdam on KLM or Air India, then drive ~3.5h Amsterdam → Calais and cross by Eurotunnel or DFDS/P&O ferry. Same Channel crossing as the Paris route, just from a different EU hub.`,
-    });
+    }),
     // Via Amsterdam (DFDS Newcastle)
-    out.push({
+    (o, d) => ({
       label: "Via Amsterdam (Newcastle ferry)",
       legs: [
         { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
@@ -2115,9 +2115,8 @@ const REGION_PAIR_STRATEGIES = {
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
       ],
       note: `Via Amsterdam (Newcastle ferry): fly cabin ${o} → Amsterdam, then take the DFDS overnight ferry from IJmuiden directly to Newcastle. The advantage: no drive through Belgium and France, and DFDS carries pets in pet-friendly cabins or kennels. Lands in northern England — best suited to Scotland or northern England.`,
-    });
-    return out;
-  },
+    }),
+  ],
   "dubai>uk-out": [
     // Via PARIS
     (o, d) => ({
@@ -3165,6 +3164,10 @@ function generateWorkarounds(origin, destination) {
     .forEach((destHub) => {
       strategies.forEach((strategy) => {
         const built = strategy(originHub, destHub);
+        // Strategies may return null to opt out of a specific origin (e.g.
+        // india>uk-out's Frankfurt branch returns null for BLR origins since
+        // Lufthansa excludes Bangalore). Skip those.
+        if (!built || !built.legs) return;
         // Infer transit regions from the leg routes so the per-route
         // checklist picks up transit-country paperwork (e.g. France's EU
         // rules for a US→UK route that pivots through Paris).
@@ -3204,20 +3207,25 @@ function generateWorkaroundsForAirportPair(originCode, destCode) {
   if (!strategies.length) return [];
   const oLabel = `${oA.city} (${oA.code})`;
   const dLabel = `${dA.city} (${dA.code})`;
-  return strategies.map((strategy) => {
-    const built = strategy(oLabel, dLabel);
-    const transitRegions = inferTransitRegionsFromLegs(built.legs, oA.region, dA.region);
-    return {
-      from: oLabel,
-      to: dLabel,
-      duration: "see legs",
-      legs: built.legs,
-      note: built.note,
-      label: built.label || null,
-      generated: true,
-      tags: [oA.region, dA.region, ...transitRegions],
-    };
-  });
+  return strategies
+    .map((strategy) => {
+      const built = strategy(oLabel, dLabel);
+      // Strategies may return null to opt out (e.g. india>uk-out's Frankfurt
+      // for BLR). Skip those rather than crashing on built.legs.
+      if (!built || !built.legs) return null;
+      const transitRegions = inferTransitRegionsFromLegs(built.legs, oA.region, dA.region);
+      return {
+        from: oLabel,
+        to: dLabel,
+        duration: "see legs",
+        legs: built.legs,
+        note: built.note,
+        label: built.label || null,
+        generated: true,
+        tags: [oA.region, dA.region, ...transitRegions],
+      };
+    })
+    .filter(Boolean);
 }
 
 // Find the hand-written direct route(s) for an exact airport pair.

@@ -642,6 +642,22 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://www.aeromexico.com/en-us/travel-information/pets-in-cabin",
   },
+  {
+    name: "Aegean Airlines",
+    tags: ["uk-out", "europe", "longhaul"],
+    cabin: "Cabin allowed across Europe and short-haul — but cargo only INTO UK",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: domestic Greece, intra-Europe, and OUT of UK (LHR → Athens, cabin or hold; Gatwick is cargo only). Star Alliance member; Olympic Air codeshare uses the same pet policy. Cabin NOT allowed: INTO UK (only Heathrow is served, and only as cargo); to Dubai or Abu Dhabi (UAE law applies regardless of airline — cargo only).",
+    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    fee: "€35 domestic · €65 international (per Aegean's own page)",
+    weight: "Pet + carrier max 8 kg (17.6 lb)",
+    carrier: "Soft-sided. Max 55×40×23 cm (A320 family) or 40×25×25 cm on DH8-100 and ATR aircraft — confirm aircraft type when booking",
+    notes: "Greek flag carrier — Star Alliance member since 2010. Most flexible cabin pet policy among Greek carriers, with one of the lowest fees in Europe. Cats and dogs only. Book at least 2 hours before flight (online or call center; €8 service fee for call-center bookings); limited pet spaces per flight on a first-come, first-served basis. A Live Animal Acceptance Checklist must be completed and signed at check-in. Olympic Air shares the same policy on codeshare flights. UK note: Heathrow is the only UK airport Aegean serves, and it's cargo-only — Gatwick is also cargo-only on the rare codeshare. UAE: cargo only both directions (Dubai/Abu Dhabi). Passengers travelling with an infant cannot bring a pet in cabin. Service dogs free with 48 hours notice.",
+    intl: "Yes (Europe + Middle East)",
+    verified: "May 2026",
+    link: "https://en.aegeanair.com/travel-info/travelling-with-aegean/special-assistance/traveling-with-pet/",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -5102,7 +5118,7 @@ const DIRECTIONAL_CHECKLISTS = {
             "EU pet passport is valid for life if rabies stays current — for EU residents (GB residents can no longer use one; they need a GB AHC)",
             "If returning to EU later: keep the pet passport current (rabies vaccine + microchip)",
             "Book cabin pet space (Air France, KLM, Lufthansa, SWISS, LOT, TAP, Iberia, ITA all support cabin)",
-            "Research destination's import rules — especially for UK (Eurotunnel workaround), USA (CDC Dog Import Form), UAE (MOCCAE permit)",
+            "Research the destination's import rules — every country has its own requirements (microchip, vaccinations, health certificate format, import permits, breed restrictions). Start with the destination's official animal-import page",
           ],
         },
         {
@@ -6324,11 +6340,22 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const destDirectional = destId ? getChecklist(destId, "arriving") : null;
   const destBase = destId ? (CHECKLIST_DATA[destId] || null) : null;
 
-  // Both sides merge directional + base. The section-level direction filter
-  // (sec.direction === "arrival" / "depart" / "us-leg") drops sections that
-  // don't apply on the current side or route, so merging always-on is safe.
-  const originChecklist = originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase);
-  const destChecklist = destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase);
+  // Only merge the flat CHECKLIST_DATA into the directional when the
+  // directional actually came from CHECKLIST_DATA (i.e. there's no
+  // DIRECTIONAL_CHECKLISTS entry, so getChecklist already fell back). When a
+  // real DIRECTIONAL_CHECKLISTS entry exists, that entry has been written for
+  // the specific direction — merging in the flat would dupe items AND leak
+  // items written for the OTHER direction (e.g. CHECKLIST_DATA.europe has
+  // arriving-Europe items like "EU Health Cert from US, GB AHC from UK"
+  // which we don't want in the departing-Europe view).
+  const hasOriginDirectional = !!(originId && DIRECTIONAL_CHECKLISTS[originId] && DIRECTIONAL_CHECKLISTS[originId].departing);
+  const hasDestDirectional = !!(destId && DIRECTIONAL_CHECKLISTS[destId] && DIRECTIONAL_CHECKLISTS[destId].arriving);
+  const originChecklist = hasOriginDirectional
+    ? originDirectional
+    : (originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase));
+  const destChecklist = hasDestDirectional
+    ? destDirectional
+    : (destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase));
   const generic = CHECKLIST_DATA.generic;
 
   // Resolve airlines from the route's legs so we can flag the carrier-size

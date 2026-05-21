@@ -4262,12 +4262,6 @@ const CHECKLIST_DATA = {
         ],
       },
       {
-        title: "Important note on broader Central America",
-        items: [
-          "This checklist covers Panama specifically. Other Central American destinations (Costa Rica, Guatemala, Belize, Honduras, El Salvador, Nicaragua) have their own paperwork and quarantine rules — verify with each country's veterinary authority before relying on the Panama timeline here.",
-        ],
-      },
-      {
         title: "Official sources",
         items: [
           "Panama's competent authority is MIDA (Ministerio de Desarrollo Agropecuario). For US travellers, USDA publishes the Panama-specific export requirements at <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
@@ -4334,10 +4328,10 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "The cabin workaround — fly to mainland Europe, cross by land or sea",
           items: [
             "Fly cabin into a continental EU airport — Paris CDG is most common (Air France from many origins); Amsterdam (KLM), Frankfurt (Lufthansa) and Lisbon (TAP) also work",
-            "Land at the EU hub, then train, drive or pet-taxi to Calais, France",
-            "Eurotunnel Le Shuttle (35 min) Calais → Folkestone — pets stay in your car the whole crossing",
-            "Drive 1.5 hours from Folkestone to London",
-            "Pet stays with you the whole way — this is the standard cabin-pets route into Britain",
+            "Then cross to the UK by one of: Eurotunnel (Calais → Folkestone, 35 min, pets stay in your car), a Channel ferry (Calais → Dover with DFDS or P&O, 90 min), a North Sea ferry (Amsterdam IJmuiden → Newcastle with DFDS, 16h overnight; or Hook of Holland → Harwich with Stena Line; or Rotterdam → Hull with P&O — all approved pet routes), or a Spain ferry (Bilbao or Santander → Portsmouth / Plymouth with Brittany Ferries, 24–36h)",
+            "Pet stays with you the whole crossing — for ferries, book a pet-friendly cabin or onboard kennel separately from the pet fee (per pet, each way)",
+            "Confirm the specific crossing is on the official UK gov approved route list before booking — the list is updated when operators change",
+            "If using the Channel crossing route: drive 1.5 hours from Folkestone or Dover into London",
           ],
         },
         {
@@ -5457,7 +5451,7 @@ function rewriteItemForRoute(itemText, originRegion, destRegion) {
     if (destRegion === "south-africa") return `For South Africa: import permit + ISO microchip + rabies titer. No cabin option internationally — pet travels as manifested cargo. Paperwork timeline below.`;
     if (destRegion === "japan") return `For Japan: the 180-day rabies titer waiting period is the binding constraint — start ≥7 months ahead. Paperwork timeline below.`;
     if (destRegion === "south-america") return `For ${dest.name}: rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Paperwork timeline below covers the universal essentials.`;
-    if (destRegion === "central-america") return `For ${dest.name}: Panama (PTY) has well-documented MIDA rules — microchip, rabies ≥30 days, parasite treatment, USDA-endorsed certificate. For other Central American countries verify with the specific country's authority. Paperwork timeline below.`;
+    if (destRegion === "central-america") return `For Panama: MIDA-administered rules — microchip, rabies ≥30 days, parasite treatment, USDA-endorsed certificate. No mandatory quarantine. Paperwork timeline below.`;
     if (destRegion === "korea") return `For South Korea: microchip + rabies + health certificate. Some origins need a rabies titer. Paperwork timeline below.`;
   }
 
@@ -5995,6 +5989,13 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   if (destTimed.length > 0 || destChecklist) {
     const destFact = ROUTE_FACTS[destRegion];
     const destSubhead = (() => {
+      // Per-country subhead (used when the airport override resolved to a
+      // specific country, e.g. NAS→bahamas, MBJ→jamaica, PUJ/SDQ→dominican_republic).
+      // Checked BEFORE the region-based subheads so the user gets a country-
+      // specific summary rather than a generic regional one.
+      if (destId === "bahamas") return `Import permit from the Bahamas Department of Agriculture (apply 6–8 weeks ahead), microchip, current rabies, health certificate from an accredited vet.`;
+      if (destId === "jamaica") return `Strict 6+ month process — start very early. Microchip, rabies vaccine + titer, import permit from Jamaica's Veterinary Services Division. Internal parasite treatment within set window.`;
+      if (destId === "dominican_republic") return `Health certificate within 10 days of travel, current rabies, microchip recommended. DR is on the CDC high-risk rabies list — US travellers must prepare US return paperwork BEFORE leaving the US.`;
       // UK / Ireland — paperwork + tapeworm window + UK's no-cabin rule.
       if (destRegion === "uk-out") return `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
       if (destRegion === "ireland") return `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
@@ -6015,11 +6016,9 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       if (destRegion === "mexico") return `SENASICA Health Certificate within 10 days of travel, current rabies, no quarantine. Cats and dogs over 3 months.`;
       // South Africa — cargo-only internationally, import permit + titer.
       if (destRegion === "south-africa") return `Import permit from the Department of Agriculture, microchip, rabies titer, health certificate. Pet travels as manifested cargo — no cabin internationally.`;
-      // Caribbean (when picked by airport — DR, Jamaica, Bahamas).
-      if (destRegion === "caribbean") return `Each island differs (Bahamas, Jamaica, Dominican Republic each have their own permit + paperwork). Confirm with the specific country's Department of Agriculture.`;
-      // South / Central America — perCountry, so flag that.
+      // South America — per country.
       if (destRegion === "south-america") return `Rules differ by country (Argentina SENASA, Brazil MAPA, Chile SAG, Peru SENASA, Colombia ICA). Check the specific country's requirements.`;
-      if (destRegion === "central-america") return `Panama: microchip, rabies ≥30 days, parasite treatment, USDA-endorsed health certificate. For other Central American countries, verify with the specific country's authority.`;
+      if (destRegion === "central-america") return `Panama: microchip, rabies ≥30 days, parasite treatment within 30 days, USDA-endorsed health certificate. No mandatory quarantine if paperwork is in order.`;
       // Korea — limited data but flag what we know.
       if (destRegion === "korea") return `Microchip, rabies ≥30 days, health certificate from origin, optional rabies titer for some origins.`;
       // Russia — sanctions-era complexity.

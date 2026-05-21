@@ -5331,7 +5331,12 @@ function timelineBucket(sectionTitle) {
   if (t.includes("10 days") || t.includes("7+ days") || t.includes("7 days") || t.includes("1 week")) return { order: 30, label: "10 days before — health certificate signed" };
   if (t.includes("2 weeks")) return { order: 30, label: "10 days before — health certificate signed" };
   if (t.includes("24") && t.includes("120")) return { order: 40, label: "24–120 hours before arrival — tapeworm (dogs only, UK/IE/NO/FI/MT)" };
-  if (t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
+  // "Day before" — final-night packing, nail trim, last-minute prep.
+  if (t.includes("day before") || t.includes("night before")) return { order: 45, label: "The day before — packing & final prep" };
+  // Travel day buckets — "Day of flight", "Travel day", "At the airport", etc.
+  if (t.includes("day of") || t.includes("travel day") || t.includes("travel-day") || t.includes("at the airport") || t.includes("arrival")) return { order: 50, label: "Travel day & arrival" };
+  // Security and onboard fall into the same travel-day band.
+  if (t.includes("security") || t.includes("onboard") || t.includes("on board") || t.includes("in flight")) return { order: 55, label: "At security & onboard" };
 
   // Non-time-bound general guidance and "if you're flying with a..." sections.
   // Single bucket so the document doesn't end up with both "Good to know" and

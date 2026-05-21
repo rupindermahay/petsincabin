@@ -11301,15 +11301,46 @@ function JourneyPlanner() {
           groupedDirects.push(g);
         }
       });
-      groupedDirects.forEach((g, i) => {
-        items.push({
-          id: `${prefix}:${i}`,
-          kind: "direct",
-          group: g,
-          from: g.from,
-          to: g.to,
-          tags: [],
-        });
+      // Split multi-airline routes into per-airline cards. If a direct route
+      // names multiple cabin-friendly carriers (e.g. "Delta and Air France"
+      // on JFK→CDG), the user picks ONE airline-route — carrier specs, fees,
+      // and booking are all per-airline. We split at the item-creation step
+      // so each airline gets its own selectable card with its own specs block.
+      // Duration and route geography stay shared (those are physics, not
+      // airline-dependent).
+      let cardIdx = 0;
+      groupedDirects.forEach((g) => {
+        const primary = g.routes[0];
+        const airlinesInNote = primary && !primary.legs ? findAllAirlinesInText(primary.note || "") : [];
+        if (airlinesInNote.length > 1 && !primary._airlineFromLeg) {
+          // Multi-airline direct route — emit one card per airline.
+          airlinesInNote.forEach((airline) => {
+            const splitGroup = {
+              key: `${g.key}|||${airline.name}`,
+              from: g.from,
+              to: g.to,
+              duration: g.duration,
+              routes: [{ ...primary, _splitAirline: airline }],
+            };
+            items.push({
+              id: `${prefix}:${cardIdx++}`,
+              kind: "direct",
+              group: splitGroup,
+              from: g.from,
+              to: g.to,
+              tags: [],
+            });
+          });
+        } else {
+          items.push({
+            id: `${prefix}:${cardIdx++}`,
+            kind: "direct",
+            group: g,
+            from: g.from,
+            to: g.to,
+            tags: [],
+          });
+        }
       });
     };
     const pushWorkarounds = (routes, prefix) => {
@@ -11805,7 +11836,11 @@ function JourneyPlanner() {
                                           <div className="text-stone-100">{g.from} → {g.to}</div>
                                           <div className="text-stone-500 text-xs">
                                             {g.duration}
-                                            {g.routes[0]._airlineFromLeg ? ` · ${g.routes[0]._airlineFromLeg}` : ""}
+                                            {g.routes[0]._splitAirline
+                                              ? ` · ${g.routes[0]._splitAirline.name} ✓ Cabin`
+                                              : g.routes[0]._airlineFromLeg
+                                                ? ` · ${g.routes[0]._airlineFromLeg}`
+                                                : ""}
                                           </div>
                                         </div>
                                       </div>
@@ -11820,9 +11855,14 @@ function JourneyPlanner() {
                                       (under 8 kg)." leave the card with no carrier
                                       context — even though full data exists in AIRLINES[].
                                       For multi-airline notes (e.g. "Air France / Delta"),
-                                      we render specs for both so the user can compare. */}
+                                      we render specs for both so the user can compare.
+                                      EXCEPT when _splitAirline is set — that means we've
+                                      already split this route into one card per airline
+                                      at the grouping step (see pushDirects). In that case
+                                      show only THAT airline's specs. */}
                                   {(() => {
-                                    const matched = findAllAirlinesInText(g.routes[0].note || "");
+                                    const split = g.routes[0]._splitAirline;
+                                    const matched = split ? [split] : findAllAirlinesInText(g.routes[0].note || "");
                                     if (matched.length === 0) return null;
                                     return (
                                       <div className="mt-3 pt-3 border-t border-stone-700/60 space-y-4">
@@ -12235,6 +12275,12 @@ function JourneyPlanner() {
                     // airline name. Last resort: leave airline blank — the
                     // chapter still renders generically.
                     let airlineText = dr._airlineFromLeg || "";
+                    if (!airlineText && dr._splitAirline) {
+                      // Per-airline split card — scope the leg's airline to
+                      // just the picked one so the Carriers chapter in the
+                      // generated checklist matches the card the user chose.
+                      airlineText = `${dr._splitAirline.name} ✓ Cabin`;
+                    }
                     if (!airlineText && dr.note) {
                       const allMatched = findAllAirlinesInText(dr.note);
                       if (allMatched.length > 0) {

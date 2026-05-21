@@ -906,7 +906,7 @@ const DIRECT_ROUTES = [
   { from: "Barcelona (BCN)", to: "Frankfurt (FRA)", duration: "2h 20m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe"] },
   { from: "Barcelona (BCN)", to: "New York (JFK)", duration: "9h 15m", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150 to Americas). Barcelona's own transatlantic cabin route — a good alternative to Madrid for US-bound travel.", tags: ["us", "europe"] },
   { from: "Barcelona (BCN)", to: "Miami (MIA)", duration: "10h", note: "Level (Iberia group). ✓ Cabin (under 8 kg, €150). Check Level's pet policy when booking — always call to confirm a pet space, not just select online.", tags: ["us", "europe"] },
-  { from: "Barcelona (BCN)", to: "London (LHR)", duration: "2h 15m", note: "Iberia / Vueling / BA. ✓ Cabin OUT of Spain — note cabin INTO the UK is not possible on any airline (UK government rule). This route works as the first leg of a Paris Pivot workaround.", tags: ["uk-out", "europe"] },
+  { from: "Barcelona (BCN)", to: "London (LHR)", duration: "2h 15m", note: "Iberia / Vueling / BA. ✗ Cabin INTO the UK is not possible on any airline (UK government rule). The same airlines all carry cabin pets LHR → BCN (the reverse direction). For BCN → UK in cabin, fly to a continental EU hub (Paris CDG, Amsterdam, Frankfurt or Lisbon) on Vueling/Iberia, then cross by Eurotunnel or pet-friendly ferry.", tags: ["uk-out", "europe"] },
 
   // ═══════ FROM VALENCIA ═══════
   { from: "Valencia (VLC)", to: "Madrid (MAD)", duration: "1h", note: "Iberia / Air Nostrum. ✓ Cabin (under 8 kg, €35 within Spain). Short domestic hop.", tags: ["europe"] },
@@ -7639,7 +7639,7 @@ function Assessment({ answers, onReset }) {
     verdictIcon = <AlertTriangle className="w-7 h-7 text-red-800" strokeWidth={1.75} />;
     verdictHeadline = "This route isn't possible in cabin";
     const impossibleCount = allFlags.filter((f) => f.severity === "impossible").length;
-    verdictSummary = `${impossibleCount === 1 ? "There's a fundamental block" : `There are ${impossibleCount} fundamental blocks`} that cabin travel can't resolve on its own — but most have workarounds. Read each blocker below carefully: where a cabin workaround exists (e.g. Paris Pivot for UK, Abu Dhabi for UAE), we've noted it. Where cabin is genuinely off the table, we've suggested cargo or pet-relocation options.`;
+    verdictSummary = `${impossibleCount === 1 ? "There's a fundamental block" : `There are ${impossibleCount} fundamental blocks`} that cabin travel can't resolve on its own — but most have workarounds. Read each blocker below carefully: where a cabin workaround exists (e.g. mainland EU hub + Eurotunnel/ferry for UK, Abu Dhabi for UAE), we've noted it. Where cabin is genuinely off the table, we've suggested cargo or pet-relocation options.`;
   } else if (hasOnlyFixableFlags) {
     verdictColor = "text-orange-700";
     verdictBg = "bg-orange-50";
@@ -7945,7 +7945,7 @@ function Assessment({ answers, onReset }) {
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Next steps</div>
             <p className="text-stone-700 leading-relaxed mb-4">
               {hasImpossible
-                ? "Read the cabin-not-possible blockers carefully — most have a workaround. The journey planner will show you the exact cabin route or workaround for your specific airports (Paris Pivot for UK, Abu Dhabi for UAE, European hubs for India ↔ USA). If cargo is the only option, the destination tab lists cargo-friendly airlines."
+                ? "Read the cabin-not-possible blockers carefully — most have a workaround. The journey planner will show you the exact cabin route or workaround for your specific airports (mainland EU hub + Eurotunnel/ferry for UK, Abu Dhabi for UAE, European hubs for India ↔ USA). If cargo is the only option, the destination tab lists cargo-friendly airlines."
                 : hasOnlyFixableFlags
                 ? "Work through the fixable blockers above first (microchip, vaccine, age). Once they're resolved, come back and re-run the assessment. In the meantime, use the journey planner to start mapping your route."
                 : hasWarnings
@@ -7984,16 +7984,16 @@ const DESTINATIONS = [
     rule: "Every commercial flight into the UK requires pets to travel as manifested cargo (booked separately, in the hold) — never in the cabin. Eurostar also bans pets on all routes through the Channel Tunnel. The only exception is registered assistance dogs.",
     workarounds: [
       {
-        title: "The Paris Pivot",
+        title: "EU hub + Eurotunnel (the \"Paris Pivot\" is the canonical version)",
         icon: <Train className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Fly into Paris (CDG) in cabin on Air France, KLM, Lufthansa or another EU carrier. Take a pet taxi or rental car from Paris to Calais (~3 hours). Cross the Channel via Eurotunnel Le Shuttle from Calais to Folkestone — your pet stays in the car with you for the 35-minute crossing. Drive on to London. This is the route most savvy owners use.",
-        cost: "Eurotunnel pet fee: from ~£24 per pet each way (the vehicle ticket is separate — roughly £115–£229 one way for the car) · Pet taxi Paris–Calais: £300–£600 · Total day: 8–10 hours.",
+        body: "Fly into a mainland EU hub in cabin — Paris CDG (Air France, KLM, Lufthansa, Delta) is the most-used, but Amsterdam AMS (KLM/Delta), Frankfurt FRA (Lufthansa), and Lisbon LIS (TAP) work the same way. Take a pet taxi or rental car from the hub to Calais (~3 hours from Paris, ~3.5h from AMS, 7–8h from Frankfurt). Cross the Channel via Eurotunnel Le Shuttle from Calais to Folkestone — your pet stays in the car with you for the 35-minute crossing. Drive on to London. This is the route most savvy owners use.",
+        cost: "Eurotunnel pet fee: from ~£24 per pet each way (vehicle ticket separate — roughly £115–£229 one way) · Pet taxi hub-to-Calais: £300–£600 depending on hub · Total day: 8–10 hours from Paris (longer from Frankfurt).",
       },
       {
         title: "The Ferry Route",
         icon: <Ship className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Brittany Ferries, DFDS, P&O, and Stena Line all run pet-friendly ferries from France/Netherlands/Spain to the UK. Many now have dedicated pet-friendly cabins where your dog or cat can stay with you the whole crossing — far less stressful than the hold. Routes from Caen, Cherbourg, Hoek van Holland, and Bilbao are popular.",
-        cost: "£40–£200 per pet depending on route and cabin type.",
+        body: "Brittany Ferries, DFDS, P&O, and Stena Line all run pet-friendly ferries from France, the Netherlands and Spain to the UK. Many now have dedicated pet-friendly cabins where your dog or cat can stay with you the whole crossing — far less stressful than the hold. Popular routes: Calais → Dover (DFDS/P&O, 90 min), Amsterdam IJmuiden → Newcastle (DFDS overnight 16h — best for foot passengers from AMS), Hoek van Holland → Harwich (Stena), Rotterdam → Hull (P&O), Caen/Cherbourg → Portsmouth (Brittany), Bilbao/Santander → Portsmouth/Plymouth (Brittany).",
+        cost: "£15–£200 per pet depending on route, cabin type and whether you bring a car.",
       },
       {
         title: "Pet Taxi (Door to Door)",
@@ -12256,6 +12256,18 @@ const WORKAROUND_ROUTES = [
     fees: "Airline fee + ~£30 per pet each way (cabin/kennel)",
     bestFor: "Anyone heading to Scotland or northern England — no Channel drive, foot passengers welcome with pets, pet stays with you on the boat. Book pet-friendly cabin early (limited).",
     weight: "No hard weight limit on DFDS — large dogs welcome",
+    accent: "rose",
+  },
+  {
+    title: "Frankfurt → UK via Eurotunnel (Lufthansa route)",
+    summary: "Cabin into Frankfurt on Lufthansa, then drive across",
+    legs: [
+      { from: "🇺🇸 / 🇮🇳", to: "🇩🇪 FRA", duration: "Varies", airline: "Lufthansa", note: "Cabin" },
+      { from: "🇩🇪 FRA", to: "🇬🇧 UK", duration: "7–8h via car + Eurotunnel", airline: "Drive + Eurotunnel / ferry", note: "Pet stays in car" },
+    ],
+    fees: "Airline fee + £25–£60 Eurotunnel (or ~£15 DFDS Calais ferry)",
+    bestFor: "When Lufthansa's schedule or fare from your origin beats Air France/KLM. Frankfurt→Calais is a longer drive than Paris→Calais — consider an overnight stop along the way.",
+    weight: "No weight limit on Eurotunnel — any size dog",
     accent: "rose",
   },
 ];

@@ -4746,7 +4746,7 @@ const DIRECTIONAL_CHECKLISTS = {
         {
           title: "10 days before",
           items: [
-            "Get destination-appropriate health certificate (EU Health Cert from US, GB AHC from UK, etc.)",
+            "Get the origin country's destination-appropriate health certificate — your government-accredited vet issues this, naming the EU as destination. The form name varies by origin country (USDA APHIS-endorsed EU Health Certificate from US, GB Animal Health Certificate from UK, etc.)",
             "USDA APHIS endorsement (US only) — same day as vet certificate ideally",
             "Re-confirm airline cabin booking by phone",
           ],
@@ -5042,7 +5042,7 @@ const DIRECTIONAL_CHECKLISTS = {
           title: "Travel day",
           items: [
             "Bring originals: rabies + health certificate",
-            "Bahamas is CDC-rabies-FREE — US return is among the simplest (just CDC Dog Import Form)",
+            "If returning to US later: Bahamas is CDC-rabies-FREE — US return is among the simplest (just CDC Dog Import Form)",
             "Arrive 3 hours early",
           ],
         },
@@ -5600,7 +5600,98 @@ function isRelevantConditional(itemText, side, originRegion, destRegion) {
     return originRegion === "uk-out" && destRegion === "us";
   }
 
+  // "(US only)" / "(UK only)" / "(EU only)" parenthetical scope markers —
+  // the item explicitly says it only applies to a specific origin/destination.
+  // Only relevant when the route matches the named scope.
+  if (t.includes("(us only)") || t.includes("(usa only)")) {
+    return originRegion === "us" || destRegion === "us";
+  }
+  if (t.includes("(uk only)")) {
+    return originRegion === "uk-out" || destRegion === "uk-out";
+  }
+  if (t.includes("(eu only)") || t.includes("(europe only)")) {
+    return originRegion === "europe" || destRegion === "europe" || originRegion === "ireland" || destRegion === "ireland";
+  }
+  if (t.includes("(canada only)")) {
+    return originRegion === "canada" || destRegion === "canada";
+  }
+  if (t.includes("(japan only)")) {
+    return originRegion === "japan" || destRegion === "japan";
+  }
+
   // Default: not a directional/destination conditional — keep it.
+  return true;
+}
+
+// Section-level filter: drop entire sections whose titles imply an origin or
+// destination condition that doesn't match the current route.
+//
+// Examples:
+//   "Returning to US"      → only relevant when originRegion === "us"
+//                            (the section describes US return paperwork, only
+//                            applicable if the user will return to the US)
+//   "Departing FROM India" → only relevant when origin is India (side="origin")
+//   "From UK section"      → only relevant when originRegion === "uk-out"
+//
+// Returns true if the section is relevant, false to drop it entirely.
+function isRelevantSection(sectionTitle, side, originRegion, destRegion) {
+  const t = (sectionTitle || "").toLowerCase();
+
+  // "Returning to US" / "Returning to the US" / "Returning to USA" — the user
+  // is planning a return leg to the US, so this section is only relevant when
+  // the actual ORIGIN is the US (they're going somewhere and coming back).
+  if (t.startsWith("returning to us") || t.startsWith("returning to the us") || t.startsWith("returning to usa")) {
+    return originRegion === "us";
+  }
+  if (t.startsWith("returning to uk") || t.startsWith("returning to the uk")) {
+    return originRegion === "uk-out";
+  }
+  if (t.startsWith("returning to eu") || t.startsWith("returning to europe")) {
+    return originRegion === "europe";
+  }
+
+  // "Departing FROM X" — only relevant when building the ORIGIN chapter for X.
+  if (t.startsWith("departing from india")) {
+    return side === "origin" && originRegion === "india";
+  }
+  if (t.startsWith("departing from japan")) {
+    return side === "origin" && originRegion === "japan";
+  }
+  if (t.startsWith("departing from uk") || t.startsWith("departing from the uk")) {
+    return side === "origin" && originRegion === "uk-out";
+  }
+  if (t.startsWith("departing from us") || t.startsWith("departing from the us") || t.startsWith("departing from usa")) {
+    return side === "origin" && originRegion === "us";
+  }
+  // Generic "Departing from X" with an unknown country — keep by default but
+  // log via console (silent in production).
+  if (t.startsWith("departing from ")) {
+    return side === "origin";
+  }
+
+  // "On arrival in X" — only relevant on the destination side for X.
+  if (t.startsWith("on arrival in india")) {
+    return side === "destination" && destRegion === "india";
+  }
+  if (t.startsWith("on arrival in japan")) {
+    return side === "destination" && destRegion === "japan";
+  }
+  if (t.startsWith("on arrival in ")) {
+    return side === "destination";
+  }
+
+  // "From US" / "From UK" / "From EU" — origin-side conditional sections.
+  if (t.startsWith("from us") || t.startsWith("from the us") || t.startsWith("from usa")) {
+    return originRegion === "us";
+  }
+  if (t.startsWith("from uk") || t.startsWith("from the uk")) {
+    return originRegion === "uk-out";
+  }
+  if (t.startsWith("from eu") || t.startsWith("from europe")) {
+    return originRegion === "europe";
+  }
+
+  // Default: section is relevant.
   return true;
 }
 
@@ -5763,14 +5854,32 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       sections: [...directional.sections, ...base.sections],
     };
   };
+
+  // Some base checklists are ENTRY-focused — every section describes what's
+  // needed to enter the country, not to leave it. Caribbean (Bahamas, Jamaica,
+  // DR), Hawaii and Japan all fit this pattern. When the country is the
+  // ORIGIN, merging in its entry-focused base produces irrelevant content
+  // ("apply for Bahamas import permit" makes no sense when leaving Bahamas).
+  // For these, skip the base merge on the origin side. Destination side still
+  // benefits from the merge.
+  const ENTRY_FOCUSED_BASE = new Set([
+    "bahamas", "jamaica", "dominican_republic",
+    "hawaii", "japan", "south_africa", "korea", "central_america",
+  ]);
+
   const originDirectional = originId ? getChecklist(originId, "departing") : null;
   const originBase = originId ? (CHECKLIST_DATA[originId] || null) : null;
   const destDirectional = destId ? getChecklist(destId, "arriving") : null;
   const destBase = destId ? (CHECKLIST_DATA[destId] || null) : null;
-  // Only merge if the two are actually different objects (directional may
-  // fall back to base when no directional variant exists, in which case
-  // merging would duplicate every section).
-  const originChecklist = originDirectional === originBase ? originDirectional : mergeChecklists(originDirectional, originBase);
+
+  // For entry-focused-base countries on the origin side, use directional only.
+  // Otherwise merge as before.
+  const originChecklist = (() => {
+    if (originDirectional === originBase) return originDirectional;
+    if (originId && ENTRY_FOCUSED_BASE.has(originId)) return originDirectional || originBase;
+    return mergeChecklists(originDirectional, originBase);
+  })();
+  // Destination side always merges (base is correct context for arrival).
   const destChecklist = destDirectional === destBase ? destDirectional : mergeChecklists(destDirectional, destBase);
   const generic = CHECKLIST_DATA.generic;
 
@@ -5794,6 +5903,13 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
     const buckets = new Map(); // order -> { label, items, seenKeys }
 
     checklist.sections.forEach((sec) => {
+      // SECTION-LEVEL filter — some section titles imply a specific origin
+      // or destination ("Returning to US", "Departing FROM India", "From UK")
+      // and the entire section is irrelevant on routes that don't match.
+      // Drop the whole section before iterating items, so the bucket label
+      // doesn't appear empty either.
+      if (!isRelevantSection(sec.title, side, originRegion, destRegion)) return;
+
       const bucket = timelineBucket(sec.title);
       sec.items.forEach((rawItem) => {
         const text = typeof rawItem === "string" ? rawItem : rawItem.text;

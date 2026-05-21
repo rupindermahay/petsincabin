@@ -4162,30 +4162,27 @@ const DIRECTIONAL_CHECKLISTS = {
       ],
     },
     arriving: {
-      title: "Arriving in the UK — important: no cabin pet flights INTO the UK",
-      restriction: "⚠ Cabin entry into the UK is not permitted on any commercial airline (UK government rule, all carriers, not the airline's choice). All inbound pets must enter as IATA-compliant cargo OR via the Eurotunnel / ferry pet-friendly land routes from Europe.",
+      title: "Arriving in the UK — the cabin workaround",
+      restriction: "⚠ No commercial airline flies pets in the cabin INTO the UK — it's a UK government rule, not an airline policy. The cabin workaround: fly your pet in cabin to mainland Europe, then cross the Channel by Eurotunnel or pet-friendly ferry with the pet beside you. That's what this checklist covers.",
       sections: [
         {
-          title: "Option 1 — The cabin workaround (Paris pivot)",
+          title: "The cabin workaround (Paris pivot)",
           items: [
-            "Fly cabin into a continental EU airport (Paris CDG most common; also Amsterdam, Frankfurt, Lisbon)",
-            "Train/drive/taxi to Calais, France",
-            "Eurotunnel Le Shuttle (35 min) to Folkestone — pets stay in your car",
-            "Drive 1.5 hours to London",
-            "Pet stays with you the whole way — this is the standard cabin-pets workaround for UK entry",
+            "Fly cabin into a continental EU airport — Paris CDG is most common (Air France from many origins); Amsterdam (KLM), Frankfurt (Lufthansa) and Lisbon (TAP) also work",
+            "Land at the EU hub, then train, drive or pet-taxi to Calais, France",
+            "Eurotunnel Le Shuttle (35 min) Calais → Folkestone — pets stay in your car the whole crossing",
+            "Drive 1.5 hours from Folkestone to London",
+            "Pet stays with you the whole way — this is the standard cabin-pets route into Britain",
           ],
         },
         {
-          title: "Option 2 — Cargo via Heathrow",
+          title: "If your pet is too large for cabin",
           items: [
-            "Book with an IATA-approved pet shipper (BA, Virgin, Lufthansa Cargo)",
-            "Pet enters via Heathrow Animal Reception Centre",
-            "Allow 6–8 hours for clearance after landing",
-            "Standard UK paperwork still applies: ISO microchip, rabies ≥21 days, AHC, tapeworm treatment (dogs)",
+            "Pets over 8 kg (including carrier) can't fly cabin on the carriers that allow cabin out of mainland Europe. If yours is over that threshold, the practical options narrow to a cargo booking, the QM2 transatlantic crossing, or driving from a closer European hub. Cargo into the UK uses IAG Cargo (BA), Virgin Cargo or Lufthansa Cargo via the Heathrow Animal Reception Centre — separate from anything on this cabin-focused site, so confirm directly with a pet shipper.",
           ],
         },
         {
-          title: "Universal UK entry requirements (both routes)",
+          title: "Universal UK entry requirements",
           items: [
             "ISO 11784/11785 microchip — implanted FIRST, before rabies vaccine",
             "Rabies vaccine ≥21 days old (no upper limit if boosters kept current)",

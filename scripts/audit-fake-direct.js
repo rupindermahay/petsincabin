@@ -39,6 +39,22 @@ const path = require("path");
 
 const DEFAULT_PATH = "components/PetTravel.jsx";
 
+// SOURCE OF TRUTH: this regex set is mirrored in components/PetTravel.jsx
+// (DISQUALIFYING_AIRLINE_PATTERNS constant) and scripts/audit-fake-direct.js.
+// Update BOTH if changing.
+//
+// Patterns that mark a leg's airline string as ADMITTING the leg isn't really
+// a single direct flight. The negative lookaheads after `\bvia\b` prevent
+// false positives on legitimate explanatory phrasing like "via the route",
+// "via a hub", or "via Seoul is the cabin workaround".
+const DISQUALIFYING_AIRLINE_PATTERNS = [
+  [/\bvia\b(?!\s+the\s+route|\s+a\s+hub|\s+seoul\s+is\s+the\s+cabin)/i, "admits via routing"],
+  [/cargo[- ]?only/i, "admits cargo only"],
+  [/no direct(?!ly|\s+from)/i, "admits no direct"],
+  [/✗/, "flagged with ✗"],
+  [/position to/i, "admits position-to-hub"],
+];
+
 function main(filePath) {
   const resolved = path.resolve(filePath);
   if (!fs.existsSync(resolved)) {
@@ -67,16 +83,11 @@ function main(filePath) {
   const legPattern = /\{\s*route:\s*(?:`([^`]+)`|"([^"]+)")\s*,\s*time:\s*(?:`([^`]+)`|"([^"]+)")\s*,\s*airline:\s*(?:`([^`]+)`|"([^"]+)")/gs;
 
   // Tell-tales that the airline string admits the leg isn't really direct.
-  // The negative-lookaheads after \bvia\b prevent flagging legitimate
-  // explanatory text like "via Seoul is the cabin workaround" inside the
-  // korea handler's note-style airline string.
-  const badPhrases = [
-    [/\bvia\b(?!\s+the\s+route|\s+a\s+hub|\s+seoul\s+is\s+the\s+cabin)/i, "admits via routing"],
-    [/cargo[- ]?only/i, "admits cargo only"],
-    [/no direct(?!ly|\s+from)/i, "admits no direct"],
-    [/✗/, "flagged with ✗"],
-    [/position to/i, "admits position-to-hub"],
-  ];
+  // Patterns live at module top (DISQUALIFYING_AIRLINE_PATTERNS) — mirrored
+  // from components/PetTravel.jsx. The negative lookaheads after `\bvia\b`
+  // prevent flagging legitimate explanatory text like "via Seoul is the
+  // cabin workaround" inside the korea handler's note-style airline string.
+  const badPhrases = DISQUALIFYING_AIRLINE_PATTERNS;
 
   const issues = [];
   let m;

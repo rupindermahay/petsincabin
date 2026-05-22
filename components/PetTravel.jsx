@@ -81,10 +81,39 @@ function isTransitLeg(legRoute) {
 }
 
 
+// SOURCE OF TRUTH: this regex set is mirrored in components/PetTravel.jsx
+// (DISQUALIFYING_AIRLINE_PATTERNS constant) and scripts/audit-fake-direct.js.
+// Update BOTH if changing.
+//
+// Patterns that mark a leg's airline string as ADMITTING the leg isn't really
+// a single direct flight — e.g. "via Seoul", "cargo only", "no direct",
+// "✗ no cabin", "position to". A leg whose airline string matches any of
+// these is structurally a workaround, not a direct flight, regardless of
+// what its `route:` field says.
+//
+// The `\bvia\b` pattern uses negative lookaheads to avoid flagging legitimate
+// explanatory text like "via the route", "via a hub", or "via Seoul is the
+// cabin workaround" — phrasings that appear in note-style airline strings
+// where "via" is descriptive rather than admissive.
+const DISQUALIFYING_AIRLINE_PATTERNS = [
+  /\bvia\b(?!\s+the\s+route|\s+a\s+hub|\s+seoul\s+is\s+the\s+cabin)/i,
+  /cargo[- ]?only/i,
+  /no direct(?!ly|\s+from)/i,
+  /✗/,
+  /position to/i,
+];
+
+// True when the airline string has no disqualifying markers — i.e. the leg
+// can be honestly described as a direct flight on the named airline.
+function airlineStringIsClean(airline) {
+  return !DISQUALIFYING_AIRLINE_PATTERNS.some((p) => p.test(airline || ""));
+}
+
+
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "21 May 2026";
+const LAST_UPDATED = "22 May 2026";
 
 // ---------- DATA ----------
 
@@ -2922,22 +2951,124 @@ const EU_HUBS_REGEX = /\b(cdg|paris|ams|amsterdam|fra|frankfurt|muc|munich|mad|m
 const US_HUBS_REGEX = /\b(jfk|ewr|new york|newark|iad|washington|dulles|mia|miami|atl|atlanta|ord|chicago|dfw|dallas|lax|los angeles|sfo|san francisco|iah|houston|bos|boston|sea|seattle|msp|minneapolis|phl|philadelphia|den|denver|clt|charlotte|mco|orlando|las|las vegas)\b/i;
 const CA_HUBS_REGEX = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/i;
 
+// Per-hub options for the transatlantic via-hub workaround. Each entry
+// carries:
+//   - transatlanticTime: a band fallback (e.g. "9-11h") used when no
+//     concrete per-destination time has been verified yet
+//   - routeTimes: a lookup of US-airport-IATA → verified concrete time
+//     (e.g. "11h 30m"). Populated in Ship 2 (data session). When a
+//     concrete time exists for the user's specific US endpoint, the card
+//     displays the total journey time including layover. When empty, the
+//     band fallback renders as today.
+//   - mctMinutes: the conservative minimum connection time at this hub,
+//     used when computing the layover-inclusive total. Verify against
+//     each carrier's published connection guidance before locking.
 const EU_HUB_OPTIONS = [
-  { code: "FRA", city: "Frankfurt (FRA)", carrier: "Lufthansa", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-11h" },
-  { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m" },
-  { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h" },
-  { code: "MAD", city: "Madrid (MAD)", carrier: "Iberia", weight: "≤ 8 kg incl. carrier", posTime: "2-4h", transatlanticTime: "8-12h 30m" },
-  { code: "FCO", city: "Rome (FCO)", carrier: "ITA Airways", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-13h" },
-  { code: "ZRH", city: "Zurich (ZRH)", carrier: "SWISS", weight: "≤ 8 kg incl. carrier", posTime: "1-3h", transatlanticTime: "8-12h" },
+  { code: "FRA", city: "Frankfurt (FRA)", carrier: "Lufthansa", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-11h", routeTimes: {}, mctMinutes: 60 },
+  { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m", routeTimes: {}, mctMinutes: 75 },
+  { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h", routeTimes: {}, mctMinutes: 60 },
+  { code: "MAD", city: "Madrid (MAD)", carrier: "Iberia", weight: "≤ 8 kg incl. carrier", posTime: "2-4h", transatlanticTime: "8-12h 30m", routeTimes: {}, mctMinutes: 75 },
+  { code: "FCO", city: "Rome (FCO)", carrier: "ITA Airways", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-13h", routeTimes: {}, mctMinutes: 75 },
+  { code: "ZRH", city: "Zurich (ZRH)", carrier: "SWISS", weight: "≤ 8 kg incl. carrier", posTime: "1-3h", transatlanticTime: "8-12h", routeTimes: {}, mctMinutes: 50 },
 ];
+
+// --- Duration helpers --------------------------------------------------
+//
+// Used by the per-hub `routeTimes` table to compute a concrete end-to-end
+// total when verified per-destination times exist. Bands (e.g. "9-11h") and
+// non-numeric values (e.g. "varies") return null — totals are only computed
+// when EVERY input is a concrete number. Without these helpers, the data
+// surface couldn't be incrementally upgraded from bands to concrete totals.
+
+// Accepts shapes like "11h 30m", "9h", "45m", "11.5h". Returns minutes as a
+// number, or null if the input is a band (e.g. "9-11h"), a placeholder
+// (e.g. "varies"), or otherwise non-numeric.
+function parseDurationToMinutes(str) {
+  if (typeof str !== "string") return null;
+  const trimmed = str.trim();
+  if (!trimmed) return null;
+  // Reject bands and ranges — "9-11h", "8 to 11h", "~", etc.
+  if (/[-–]\s*\d/.test(trimmed)) return null;
+  if (/\bto\b/i.test(trimmed)) return null;
+  const m = trimmed.match(/^\s*(\d+(?:\.\d+)?)\s*h(?:\s*(\d+)\s*m)?\s*$/i);
+  if (m) {
+    const hours = parseFloat(m[1]);
+    const mins = m[2] ? parseInt(m[2], 10) : 0;
+    if (isNaN(hours) || isNaN(mins)) return null;
+    return Math.round(hours * 60 + mins);
+  }
+  const mOnly = trimmed.match(/^\s*(\d+)\s*m\s*$/i);
+  if (mOnly) return parseInt(mOnly[1], 10);
+  return null;
+}
+
+// Inverse: minutes → "11h 30m" / "9h" / "45m".
+function formatMinutesAsDuration(minutes) {
+  if (typeof minutes !== "number" || !isFinite(minutes) || minutes < 0) return null;
+  const total = Math.round(minutes);
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  if (h === 0) return `${m}m`;
+  if (m === 0) return `${h}h`;
+  return `${h}h ${m}m`;
+}
 
 // Build a single transatlantic-via-hub route. Used both by the cabin-direct
 // fallback (when called directly) and by the resolver (which generates one
 // card per hub in EU_HUB_OPTIONS).
+//
+// When the user's US endpoint is a known IATA code AND that code is in this
+// hub's `routeTimes` lookup, the transatlantic leg renders with a concrete
+// time (e.g. "11h 30m") and the route carries a `totalDisplay` field summing
+// the transatlantic leg + the hub's minimum connection time. When the lookup
+// misses, the leg falls back to the band (e.g. "9-11h") and no total is
+// attached — matching the pre-Ship-2 behaviour.
 function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
   const hub = EU_HUB_OPTIONS.find((h) => h.code === hubCode) || EU_HUB_OPTIONS[0];
   const oIsHub = EU_HUBS_REGEX.test(o) || US_HUBS_REGEX.test(o) || CA_HUBS_REGEX.test(o);
   const dIsHub = EU_HUBS_REGEX.test(d) || US_HUBS_REGEX.test(d) || CA_HUBS_REGEX.test(d);
+
+  // Resolve the US-side IATA from whichever label represents the US endpoint.
+  // For Europe → US the US endpoint is `d`; for US → Europe it's `o`. Only
+  // matches when the label is a known US hub airport — secondary US airports
+  // route via a US hub on a domestic leg and don't have a direct
+  // transatlantic time of their own.
+  const usLabel = oRegion === "europe" ? d : o;
+  const usCodeMatch = usLabel.match(/\(([A-Z]{3})\)/);
+  const usCode = usCodeMatch ? usCodeMatch[1] : null;
+  const concreteTransatlantic = usCode && hub.routeTimes && hub.routeTimes[usCode]
+    ? hub.routeTimes[usCode]
+    : null;
+  // Effective time shown on the transatlantic leg — concrete when available,
+  // band otherwise.
+  const transatlanticDisplay = concreteTransatlantic || hub.transatlanticTime;
+
+  // Compute totalDisplay only when:
+  //   - the transatlantic leg has a concrete time, AND
+  //   - the hub has an mctMinutes value to add as the layover.
+  // For single-leg (both hubs) routes there's no layover; the total is just
+  // the transatlantic time. For multi-leg via-hub routes the total = the
+  // concrete transatlantic time + the hub's minimum connection time. Note
+  // the positioning leg ("posTime" — e.g. "2-3h") and domestic connection
+  // ("varies") are NOT summed: they're bands/placeholders and would force
+  // the total back to a band. The "incl. layover" wording in the render
+  // layer signals that the total covers the long-haul leg + layover, not
+  // every positioning movement.
+  let totalDisplay = null;
+  let totalIncludesLayover = false;
+  if (concreteTransatlantic) {
+    const tatMinutes = parseDurationToMinutes(concreteTransatlantic);
+    if (tatMinutes != null) {
+      const isSingleLeg = oIsHub && dIsHub;
+      if (isSingleLeg) {
+        totalDisplay = formatMinutesAsDuration(tatMinutes);
+        totalIncludesLayover = false;
+      } else if (typeof hub.mctMinutes === "number") {
+        totalDisplay = formatMinutesAsDuration(tatMinutes + hub.mctMinutes);
+        totalIncludesLayover = true;
+      }
+    }
+  }
 
   if (oRegion === "europe") {
     // Europe → US/Canada via the chosen hub on its primary carrier
@@ -2945,7 +3076,7 @@ function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
     if (!oIsHub) {
       legs.push({ route: `${o} → ${hub.city}`, time: hub.posTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
     }
-    legs.push({ route: `${hub.city} → ${dIsHub ? d : "Chicago O'Hare (ORD), New York (JFK), or Washington Dulles (IAD)"}`, time: hub.transatlanticTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    legs.push({ route: `${hub.city} → ${dIsHub ? d : "Chicago O'Hare (ORD), New York (JFK), or Washington Dulles (IAD)"}`, time: transatlanticDisplay, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
     if (!dIsHub) {
       legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
     }
@@ -2953,6 +3084,8 @@ function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
       legs,
       note: `Via ${hub.city} on ${hub.carrier} — one of the main EU hubs with a transatlantic cabin pet network. ${hub.carrier}'s carrier weight limit is ${hub.weight}. Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
       label: `Via ${hub.city.split(" (")[0]} (${hub.carrier})`,
+      totalDisplay,
+      totalIncludesLayover,
     };
   } else {
     // US/Canada → Europe via the chosen hub
@@ -2960,7 +3093,7 @@ function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
     if (!oIsHub) {
       legs.push({ route: `${o} → Chicago O'Hare (ORD), New York (JFK), or Washington Dulles (IAD)`, time: "varies (domestic connection)", airline: "United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
     }
-    legs.push({ route: `${oIsHub ? o : "US hub"} → ${dIsHub ? d : hub.city}`, time: hub.transatlanticTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    legs.push({ route: `${oIsHub ? o : "US hub"} → ${dIsHub ? d : hub.city}`, time: transatlanticDisplay, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
     if (!dIsHub) {
       legs.push({ route: `${hub.city} → ${d}`, time: hub.posTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
     }
@@ -2968,6 +3101,8 @@ function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
       legs,
       note: `Via ${hub.city} on ${hub.carrier} — one of the main EU hubs with a transatlantic cabin pet network. ${hub.carrier}'s carrier weight limit is ${hub.weight}. Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
       label: `Via ${hub.city.split(" (")[0]} (${hub.carrier})`,
+      totalDisplay,
+      totalIncludesLayover,
     };
   }
 }
@@ -3616,6 +3751,8 @@ function generateWorkarounds(origin, destination) {
           label: built.label || null,
           generated: true,
           tags: [origin, destination, ...transitRegions],
+          totalDisplay: built.totalDisplay || null,
+          totalIncludesLayover: !!built.totalIncludesLayover,
         });
       });
     });
@@ -3658,6 +3795,8 @@ function generateWorkaroundsForAirportPair(originCode, destCode) {
         label: built.label || null,
         generated: true,
         tags: [oA.region, dA.region, ...transitRegions],
+        totalDisplay: built.totalDisplay || null,
+        totalIncludesLayover: !!built.totalIncludesLayover,
       };
     })
     .filter(Boolean);
@@ -11473,7 +11612,17 @@ function JourneyPlanner() {
       const hasCrossing = r.legs.some(
         (l) => isTransit(l.route) && CROSSING_LEG.test(l.route || "")
       );
-      return !hasCrossing;
+      if (hasCrossing) return false;
+      // ALSO require every flight leg's airline string to pass the
+      // DISQUALIFYING_AIRLINE_PATTERNS check. A leg whose airline text says
+      // "via Seoul", "cargo only", "no direct", "✗", or "position to" is
+      // structurally NOT a direct flight on the named airline regardless of
+      // what its `route` field claims. This is the audit-script-mirror
+      // layer: same regex set both flags fake-direct routes statically
+      // (scripts/audit-fake-direct.js) AND prevents promotion of such
+      // routes to the emerald direct-render path here at runtime.
+      const allLegsClean = flightLegs.every((l) => airlineStringIsClean(l.airline));
+      return allLegsClean;
     };
     const push = (r, kind) => {
       const k = dedupeKey(r);
@@ -11501,6 +11650,12 @@ function JourneyPlanner() {
           legs: r.legs,
           _airlineFromLeg: flightLeg.airline,
           _promoted: true,
+          // Carry the strategy-computed total onto the promoted entry so the
+          // direct-render path (Ship 1B) can display "Total: ~X" when
+          // routeTimes data is concrete. Null on promotion is fine — Ship 1B
+          // render path checks for presence before displaying.
+          totalDisplay: r.totalDisplay || null,
+          totalIncludesLayover: !!r.totalIncludesLayover,
         });
         return;
       }

@@ -2905,6 +2905,73 @@ const isCargoOnly = (airport) =>
 // mainland with its strict quarantine programme. Hand-writing 30+ near-
 // identical functions adds no value — these generic builders give an
 // accurate answer for any origin.
+// ============================================================================
+// Transatlantic hub options for the cabin-direct fallback.
+//
+// When a secondary-airport pair (e.g. SKG→LAX) has no direct cabin flight,
+// we generate one card per EU hub option. Each card represents a real
+// per-hub itinerary: hop to that hub on its primary carrier, then the
+// transatlantic on the same carrier. This means the generated checklist
+// scopes to ONE airline per card, and the user picks their preferred
+// routing rather than seeing a conflated list.
+//
+// Times are scheduled-flight approximations from each carrier's own
+// timetable (mainstream cabin pet carriers, all under 8 kg combined).
+// ============================================================================
+const EU_HUBS_REGEX = /\b(cdg|paris|ams|amsterdam|fra|frankfurt|muc|munich|mad|madrid|bcn|barcelona|fco|rome|mxp|milan|zrh|zurich|lis|lisbon|ist|istanbul|cph|copenhagen|arn|stockholm|hel|helsinki|dub|dublin|vie|vienna|bru|brussels|lhr|london)\b/i;
+const US_HUBS_REGEX = /\b(jfk|ewr|new york|newark|iad|washington|dulles|mia|miami|atl|atlanta|ord|chicago|dfw|dallas|lax|los angeles|sfo|san francisco|iah|houston|bos|boston|sea|seattle|msp|minneapolis|phl|philadelphia|den|denver|clt|charlotte|mco|orlando|las|las vegas)\b/i;
+const CA_HUBS_REGEX = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/i;
+
+const EU_HUB_OPTIONS = [
+  { code: "FRA", city: "Frankfurt (FRA)", carrier: "Lufthansa", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-11h" },
+  { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m" },
+  { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h" },
+  { code: "MAD", city: "Madrid (MAD)", carrier: "Iberia", weight: "≤ 8 kg incl. carrier", posTime: "2-4h", transatlanticTime: "8-12h 30m" },
+  { code: "FCO", city: "Rome (FCO)", carrier: "ITA Airways", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-13h" },
+  { code: "ZRH", city: "Zurich (ZRH)", carrier: "SWISS", weight: "≤ 8 kg incl. carrier", posTime: "1-3h", transatlanticTime: "8-12h" },
+];
+
+// Build a single transatlantic-via-hub route. Used both by the cabin-direct
+// fallback (when called directly) and by the resolver (which generates one
+// card per hub in EU_HUB_OPTIONS).
+function buildTransatlanticViaHub(o, d, oRegion, hubCode) {
+  const hub = EU_HUB_OPTIONS.find((h) => h.code === hubCode) || EU_HUB_OPTIONS[0];
+  const oIsHub = EU_HUBS_REGEX.test(o) || US_HUBS_REGEX.test(o) || CA_HUBS_REGEX.test(o);
+  const dIsHub = EU_HUBS_REGEX.test(d) || US_HUBS_REGEX.test(d) || CA_HUBS_REGEX.test(d);
+
+  if (oRegion === "europe") {
+    // Europe → US/Canada via the chosen hub on its primary carrier
+    const legs = [];
+    if (!oIsHub) {
+      legs.push({ route: `${o} → ${hub.city}`, time: hub.posTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    }
+    legs.push({ route: `${hub.city} → ${dIsHub ? d : "Chicago O'Hare (ORD), New York (JFK), or Washington Dulles (IAD)"}`, time: hub.transatlanticTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    if (!dIsHub) {
+      legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+    }
+    return {
+      legs,
+      note: `Via ${hub.city} on ${hub.carrier} — one of the main EU hubs with a transatlantic cabin pet network. ${hub.carrier}'s carrier weight limit is ${hub.weight}. Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
+      label: `Via ${hub.city.split(" (")[0]} (${hub.carrier})`,
+    };
+  } else {
+    // US/Canada → Europe via the chosen hub
+    const legs = [];
+    if (!oIsHub) {
+      legs.push({ route: `${o} → Chicago O'Hare (ORD), New York (JFK), or Washington Dulles (IAD)`, time: "varies (domestic connection)", airline: "United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
+    }
+    legs.push({ route: `${oIsHub ? o : "US hub"} → ${dIsHub ? d : hub.city}`, time: hub.transatlanticTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    if (!dIsHub) {
+      legs.push({ route: `${hub.city} → ${d}`, time: hub.posTime, airline: `${hub.carrier} ✓ Cabin (${hub.weight})` });
+    }
+    return {
+      legs,
+      note: `Via ${hub.city} on ${hub.carrier} — one of the main EU hubs with a transatlantic cabin pet network. ${hub.carrier}'s carrier weight limit is ${hub.weight}. Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
+      label: `Via ${hub.city.split(" (")[0]} (${hub.carrier})`,
+    };
+  }
+}
+
 const FALLBACK_STRATEGIES = {
   // Any destination = South Africa
   "south-africa": (o, d) => ({
@@ -2928,6 +2995,11 @@ const FALLBACK_STRATEGIES = {
   // an honest 2-leg via-hub journey when either endpoint isn't a major
   // intercontinental hub. It is a SAFETY NET: specific hand-written direct
   // routes always take priority and render with the real airline named.
+  //
+  // For the secondary-airport transatlantic case (e.g. SKG→LAX, OPO→JFK),
+  // the resolver at strategiesFor() generates multiple cards — one per EU
+  // hub option — so the user can pick their preferred routing. Each card
+  // is built by the helper buildTransatlanticViaHub() defined below.
   "cabin-direct": (o, d, oRegion, dRegion) => {
     // Same-region European hop. For these, "direct" is usually safe to
     // assume — intra-Europe network is dense and most pairs have
@@ -2937,16 +3009,7 @@ const FALLBACK_STRATEGIES = {
       (["us", "canada"].includes(oRegion) && ["europe"].includes(dRegion)) ||
       (["europe"].includes(oRegion) && ["us", "canada"].includes(dRegion));
 
-    // Intercontinental hub sets. These are airports that genuinely have
-    // multiple direct intercontinental cabin pet routes — anything outside
-    // these lists is a secondary airport that almost certainly doesn't
-    // have a direct flight to the other region.
-    const EU_HUBS = /\b(cdg|paris|ams|amsterdam|fra|frankfurt|muc|munich|mad|madrid|bcn|barcelona|fco|rome|mxp|milan|zrh|zurich|lis|lisbon|ist|istanbul|cph|copenhagen|arn|stockholm|hel|helsinki|dub|dublin|vie|vienna|bru|brussels|lhr|london)\b/i;
-    const US_HUBS = /\b(jfk|ewr|new york|newark|iad|washington|dulles|mia|miami|atl|atlanta|ord|chicago|dfw|dallas|lax|los angeles|sfo|san francisco|iah|houston|bos|boston|sea|seattle|msp|minneapolis|phl|philadelphia|den|denver|clt|charlotte|mco|orlando|las|las vegas)\b/i;
-    const CA_HUBS = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/i;
-
     if (isIntraEurope) {
-      // Intra-Europe — most pairs have someone direct. Keep "direct" framing.
       return {
         legs: [{ route: `${o} → ${d}`, time: "~1h–3h 30m (short-haul)", airline: "Lufthansa Group, Air France-KLM, Iberia or Vueling ✓ Cabin (≤ 8 kg)" }],
         note: `This is a direct cabin-pet corridor — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
@@ -2954,9 +3017,8 @@ const FALLBACK_STRATEGIES = {
     }
 
     if (transatlantic) {
-      // Check which endpoints are intercontinental hubs vs secondary.
-      const oIsHub = EU_HUBS.test(o) || US_HUBS.test(o) || CA_HUBS.test(o);
-      const dIsHub = EU_HUBS.test(d) || US_HUBS.test(d) || CA_HUBS.test(d);
+      const oIsHub = EU_HUBS_REGEX.test(o) || US_HUBS_REGEX.test(o) || CA_HUBS_REGEX.test(o);
+      const dIsHub = EU_HUBS_REGEX.test(d) || US_HUBS_REGEX.test(d) || CA_HUBS_REGEX.test(d);
 
       if (oIsHub && dIsHub) {
         // Both endpoints are major hubs — direct cabin route genuinely exists.
@@ -2966,51 +3028,10 @@ const FALLBACK_STRATEGIES = {
         };
       }
 
-      // At least one endpoint isn't a hub — no direct flight. Route via
-      // a hub on the European side (where the cabin-pet network is densest).
-      // For Europe origin: position to a European hub first, then transatlantic.
-      // For US/Canada origin: transatlantic to a European hub, then onward
-      // into Europe to the user's secondary airport.
-      if (oRegion === "europe") {
-        // Europe → US/Canada via European hub
-        const oNotHub = !oIsHub;
-        const dNotHub = !dIsHub;
-        const legs = [];
-        if (oNotHub) {
-          legs.push({ route: `${o} → European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
-          legs.push({ route: `European hub → ${dIsHub ? d : "US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)"}`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          if (dNotHub) {
-            legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          }
-        } else {
-          // Origin IS a hub but destination isn't.
-          legs.push({ route: `${o} → US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          legs.push({ route: `US/Canada hub → ${d}`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
-        }
-        return {
-          legs,
-          note: `No airline flies ${o} → ${d} direct in cabin. The cabin path goes via a European hub (Lufthansa from Frankfurt/Munich, Air France from Paris CDG, KLM from Amsterdam, Iberia from Madrid) for the transatlantic leg, then a domestic US/Canada connection if your final destination isn't itself a major hub. All legs are mainstream cabin pet airlines (≤ 8 kg combined). Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
-        };
-      } else {
-        // US/Canada → Europe via hub
-        const oNotHub = !oIsHub;
-        const dNotHub = !dIsHub;
-        const legs = [];
-        if (oNotHub) {
-          legs.push({ route: `${o} → US/Canada hub (JFK/IAD/MIA/ORD/LAX/SFO/YYZ)`, time: "varies (domestic connection)", airline: "American, Delta, United, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          legs.push({ route: `US/Canada hub → ${dIsHub ? d : "European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)"}`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          if (dNotHub) {
-            legs.push({ route: `European hub → ${d}`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
-          }
-        } else {
-          legs.push({ route: `${o} → European hub (Frankfurt/Paris/Amsterdam/Madrid/Rome)`, time: "8-11h", airline: "Lufthansa, Air France-KLM, United, American, Delta, or Air Canada ✓ Cabin (≤ 8 kg)" });
-          legs.push({ route: `European hub → ${d}`, time: "1-3h", airline: "Lufthansa Group, Air France-KLM, Iberia, or local carrier ✓ Cabin (≤ 8 kg)" });
-        }
-        return {
-          legs,
-          note: `No airline flies ${o} → ${d} direct in cabin. The cabin path goes via a US/Canada gateway and a European hub (Lufthansa from Frankfurt/Munich, Air France from Paris CDG, KLM from Amsterdam, Iberia from Madrid for the transatlantic leg). All legs are mainstream cabin pet airlines (≤ 8 kg combined). Reserve pet spots on each leg separately — cabin slots per flight are capped.`,
-        };
-      }
+      // Secondary-airport case: the resolver generates multiple per-hub
+      // cards via buildTransatlanticViaHub. If we reach this branch directly
+      // (called from outside the resolver), default to the Frankfurt routing.
+      return buildTransatlanticViaHub(o, d, oRegion, "FRA");
     }
 
     // Other long-haul corridors (UAE, India, etc.) — keep honest direct framing.
@@ -3336,6 +3357,11 @@ const FALLBACK_STRATEGIES = {
   // 30+ country direct network. UK and UAE are cargo-only on Korean Air (UK
   // also blocks cabin entry under government rules). Australia/NZ not
   // handled at all by Korean Air for pets.
+  // WARNING: Korea is handled HERE in FALLBACK_STRATEGIES, not in
+  // REGION_PAIR_STRATEGIES. Do not delete this handler thinking
+  // REGION_PAIR_STRATEGIES covers Korea pairs — it does not. The resolver
+  // sites that wire to these handlers carry matching warning comments.
+  // See DECISIONS_LOG.md #14.
   "korea": (o, d) => {
     const isFromUS = /jfk|lax|mia|ord|sfo|bos|iah|dfw|atl|sea|new york|miami|los angeles|chicago|san francisco|boston|houston|dallas|atlanta|seattle|washington|iad/i.test(o || "");
     const isFromJapan = /nrt|hnd|kix|ngo|fuk|tokyo|osaka|kansai|nagoya|fukuoka/i.test(o || "");
@@ -3343,7 +3369,11 @@ const FALLBACK_STRATEGIES = {
     const isFromUK = /lhr|lgw|man|edi|gla|london|manchester|edinburgh|glasgow/i.test(o || "");
     let leg, hub;
     if (isFromUS) {
-      leg = { route: `${o} → Seoul Incheon (ICN)`, time: "13-15h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
+      let estTime = "13-15h";
+      if (/JFK|EWR|NEW YORK|NEWARK|IAD|DULLES|WASHINGTON|ATL|ATLANTA|MIA|MIAMI|BOS|BOSTON|PHL|PHILADELPHIA/i.test(o || "")) estTime = "~14h";
+      else if (/LAX|LOS ANGELES|SFO|SAN FRANCISCO|SEA|SEATTLE/i.test(o || "")) estTime = "~12h 30m";
+      else if (/ORD|CHICAGO|DFW|DALLAS|IAH|HOUSTON/i.test(o || "")) estTime = "~14h";
+      leg = { route: `${o} → Seoul Incheon (ICN)`, time: estTime, airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
       hub = "Korean Air operates direct cabin pet flights from JFK, LAX, SFO, IAD, ATL, SEA, DFW to ICN. Hard-sided carrier max 45 × 32 × 19 cm; soft-sided up to 25 cm tall if it compresses to 19 cm.";
     } else if (isFromJapan) {
       leg = { route: `${o} → Seoul Incheon (ICN)`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
@@ -3362,10 +3392,20 @@ const FALLBACK_STRATEGIES = {
       hub = "Korean Air is cargo-only out of the UK. The cabin workaround: cross the Channel via Eurostar (pet-friendly cabin) or Eurotunnel Le Shuttle to Paris/Amsterdam, then Korean Air, Air France, or KLM direct to Seoul. Two separate tickets.";
     } else {
       // Europe (excl UK) / elsewhere → Korea. Korean Air operates direct cabin
-      // from CDG, FRA, AMS, MAD, FCO, ZRH, LIS, IST. For non-hub EU origins,
-      // a positioning leg to a hub is needed first — but most named EU
-      // destinations the user will pick map to one of these hubs directly.
-      leg = { route: `${o} → Seoul Incheon (ICN)`, time: "10-14h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
+      // from CDG, FRA, AMS, MAD, FCO, ZRH, LIS, IST. Flight times vary by
+      // hub — use a destination-cluster-specific estimate where the user's
+      // origin matches a known Korean Air longhaul route.
+      let estTime = "10-14h"; // safe band for unmatched hubs
+      const oUpper = (o || "").toUpperCase();
+      if (/CDG|PARIS/i.test(o || "")) estTime = "~13h";
+      else if (/FRA|FRANKFURT|MUC|MUNICH/i.test(o || "")) estTime = "~11h 30m";
+      else if (/AMS|AMSTERDAM|BRU|BRUSSELS/i.test(o || "")) estTime = "~12h";
+      else if (/MAD|MADRID|BCN|BARCELONA/i.test(o || "")) estTime = "~14h";
+      else if (/FCO|ROME|MXP|MILAN/i.test(o || "")) estTime = "~12h";
+      else if (/ZRH|ZURICH|VIE|VIENNA/i.test(o || "")) estTime = "~11h 30m";
+      else if (/LIS|LISBON|OPO|PORTO/i.test(o || "")) estTime = "~13h 30m";
+      else if (/IST|ISTANBUL/i.test(o || "")) estTime = "~10h";
+      leg = { route: `${o} → Seoul Incheon (ICN)`, time: estTime, airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
       hub = "Korean Air operates direct cabin from CDG (Paris), FRA (Frankfurt), AMS (Amsterdam), MAD (Madrid), FCO (Rome), ZRH (Zurich), LIS (Lisbon), IST (Istanbul). Air France (CDG), Lufthansa (FRA, MUC), and KLM (AMS) also operate cabin direct on these same routes — Korean Air is usually cheapest at $200, but check which airline best suits your booking. From non-hub EU airports, you'll need a positioning flight to a hub first.";
     }
     return {
@@ -3384,7 +3424,11 @@ const FALLBACK_STRATEGIES = {
     const isToUK = /lhr|lgw|man|edi|gla|london|manchester|edinburgh|glasgow/i.test(d || "");
     let leg, note;
     if (isToUS) {
-      leg = { route: `${o} → ${d}`, time: "13-15h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
+      let estTime = "13-15h";
+      if (/JFK|EWR|NEW YORK|NEWARK|IAD|DULLES|WASHINGTON|ATL|ATLANTA|MIA|MIAMI|BOS|BOSTON|PHL|PHILADELPHIA/i.test(d || "")) estTime = "~14h";
+      else if (/LAX|LOS ANGELES|SFO|SAN FRANCISCO|SEA|SEATTLE/i.test(d || "")) estTime = "~12h 30m";
+      else if (/ORD|CHICAGO|DFW|DALLAS|IAH|HOUSTON/i.test(d || "")) estTime = "~14h";
+      leg = { route: `${o} → ${d}`, time: estTime, airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200 fee)" };
       note = "Korean Air operates direct cabin pet flights ICN → JFK, LAX, SFO, IAD, ATL, SEA, DFW. CDC Dog Import Form online for US entry (dogs only). South Korea is a low-risk country under CDC rules.";
     } else if (isToJapan) {
       leg = { route: `${o} → ${d}`, time: "2-3h", airline: "Korean Air (7 kg), T'Way (9 kg), or Air Premia ✓ Cabin" };
@@ -3404,7 +3448,16 @@ const FALLBACK_STRATEGIES = {
       note = "No airline flies cabin pets INTO the UK (UK government rule). The cabin path: Korean Air, Air France, or KLM to a European hub (Paris or Amsterdam are the most convenient), then Eurotunnel Le Shuttle (Calais → Folkestone, 35min) or DFDS/P&O ferry (Calais → Dover, 90min) — both UK-government-approved pet routes. UK requires ISO microchip, rabies 21+ days, tapeworm treatment 24-120 hours before entry.";
     } else {
       // Europe (excl UK) / elsewhere — Korean Air direct cabin to major hubs.
-      leg = { route: `${o} → ${d}`, time: "10-14h", airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
+      let estTime = "10-14h";
+      if (/CDG|PARIS/i.test(d || "")) estTime = "~13h";
+      else if (/FRA|FRANKFURT|MUC|MUNICH/i.test(d || "")) estTime = "~11h 30m";
+      else if (/AMS|AMSTERDAM|BRU|BRUSSELS/i.test(d || "")) estTime = "~12h";
+      else if (/MAD|MADRID|BCN|BARCELONA/i.test(d || "")) estTime = "~14h";
+      else if (/FCO|ROME|MXP|MILAN/i.test(d || "")) estTime = "~12h";
+      else if (/ZRH|ZURICH|VIE|VIENNA/i.test(d || "")) estTime = "~11h 30m";
+      else if (/LIS|LISBON|OPO|PORTO/i.test(d || "")) estTime = "~13h 30m";
+      else if (/IST|ISTANBUL/i.test(d || "")) estTime = "~10h";
+      leg = { route: `${o} → ${d}`, time: estTime, airline: "Korean Air ✓ Cabin (under 7 kg incl. carrier, $200)" };
       note = "Korean Air operates direct cabin from ICN to CDG (Paris), FRA (Frankfurt), AMS (Amsterdam), MAD (Madrid), FCO (Rome), ZRH (Zurich), LIS (Lisbon), IST (Istanbul). Air France, Lufthansa, and KLM also operate cabin direct from Seoul. Australia and New Zealand are not handled by Korean Air for pets — those need a different routing entirely.";
     }
     return {
@@ -3451,6 +3504,10 @@ function strategiesFor(originRegion, destRegion) {
   // Korea has its own handlers. Previously Korea routes were misrouted
   // through the japan handlers, which built routes via Japanese airports —
   // producing broken cards like ICN→CDG showing "Seoul→Seoul" as leg 1.
+  // WARNING: Do not add 'europe>korea' or other Korea pairs to
+  // REGION_PAIR_STRATEGIES — REGION_PAIR_STRATEGIES is checked first and
+  // would silently bypass the dedicated korea/korea-out handlers in
+  // FALLBACK_STRATEGIES. See DECISIONS_LOG.md #14.
   if (destRegion === "korea") return [FALLBACK_STRATEGIES["korea"]];
   if (destRegion === "south-america") return [FALLBACK_STRATEGIES["south-america"]];
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
@@ -3478,8 +3535,43 @@ function strategiesFor(originRegion, destRegion) {
   {
     const CABIN_DIRECT_REGIONS = new Set(["us", "canada", "europe", "dubai", "india", "uk-out", "caribbean"]);
     if (CABIN_DIRECT_REGIONS.has(originRegion) && CABIN_DIRECT_REGIONS.has(destRegion)) {
-      // Wrap so the region-aware fallback receives the regions even though the
-      // strategy invoker only passes (origin, destination) labels.
+      // For transatlantic secondary-airport pairs (e.g. SKG→LAX, OPO→JFK)
+      // we generate ONE STRATEGY PER EU HUB so the journey planner produces
+      // selectable per-hub cards. Each card represents a real per-airline
+      // routing (FRA on Lufthansa, CDG on Air France, AMS on KLM, etc.) so
+      // the user picks the hub that suits them and the generated checklist
+      // scopes to that airline's specs. Both-hub or intra-EU pairs fall
+      // through to the single-strategy default.
+      const transatlantic =
+        (["us", "canada"].includes(originRegion) && originRegion !== "uk-out" && destRegion === "europe") ||
+        (originRegion === "europe" && ["us", "canada"].includes(destRegion));
+      if (transatlantic) {
+        return [
+          // Default cabin-direct strategy fires ONLY when both endpoints are
+          // intercontinental hubs (true direct corridor — e.g. JFK→CDG).
+          // For secondary-airport pairs, this returns null so the 6 per-hub
+          // strategies below are the sole output. Without this guard, the
+          // default's own FRA-via fallback would duplicate the FRA per-hub
+          // card for secondary-airport pairs.
+          (o, d) => {
+            const oIsHub = EU_HUBS_REGEX.test(o) || US_HUBS_REGEX.test(o) || CA_HUBS_REGEX.test(o);
+            const dIsHub = EU_HUBS_REGEX.test(d) || US_HUBS_REGEX.test(d) || CA_HUBS_REGEX.test(d);
+            if (!(oIsHub && dIsHub)) return null;
+            return FALLBACK_STRATEGIES["cabin-direct"](o, d, originRegion, destRegion);
+          },
+        ].concat(
+          // Per-hub strategies — one card per EU hub option, fired only when
+          // at least one endpoint is a secondary airport. Both-hub pairs see
+          // these return null, leaving only the default direct card above.
+          EU_HUB_OPTIONS.map((hub) => (o, d) => {
+            const oIsHub = EU_HUBS_REGEX.test(o) || US_HUBS_REGEX.test(o) || CA_HUBS_REGEX.test(o);
+            const dIsHub = EU_HUBS_REGEX.test(d) || US_HUBS_REGEX.test(d) || CA_HUBS_REGEX.test(d);
+            if (oIsHub && dIsHub) return null;
+            return buildTransatlanticViaHub(o, d, originRegion, hub.code);
+          })
+        );
+      }
+      // Non-transatlantic cabin-direct pairs: single default strategy.
       return [(o, d) => FALLBACK_STRATEGIES["cabin-direct"](o, d, originRegion, destRegion)];
     }
   }
@@ -6007,6 +6099,42 @@ function rewriteItemForRoute(itemText, originRegion, destRegion, originLabel) {
       vetPhrase = "CFIA-accredited vet";
       endorsePhrase = "CFIA (Canadian Food Inspection Agency)";
     }
+
+    // ---- PATTERN A: "If from US: ..." prefix items
+    // These are US-only helpers. For non-US origins they're confusing noise.
+    // Suppress entirely by returning empty string (caller filters empties).
+    if (/^\s*if from us:/i.test(itemText) && originRegion !== "us") {
+      return "";
+    }
+
+    // ---- PATTERN B: "(US only)" suffix items
+    // Same — US-only helpers, suppress for non-US origins.
+    if (/\(us only\)/i.test(itemText) && originRegion !== "us") {
+      return "";
+    }
+
+    // ---- PATTERN C: Multi-jurisdiction inline items
+    // Pattern: "... — USDA APHIS endorsement (US), CFIA (Canada),
+    // competent authority in EU member states. ..."
+    // Rewrite to name ONLY the relevant authority for the origin.
+    if (/usda apha?is endorsement \(us\), cfia \(canada\)/i.test(itemText)) {
+      if (originRegion === "us") {
+        // Keep US-named, simplify
+        return itemText.replace(/USDA APHIS endorsement \(US\), CFIA \(Canada\), competent authority in EU member states/i, "USDA APHIS endorsement");
+      } else if (originRegion === "canada") {
+        return itemText.replace(/USDA APHIS endorsement \(US\), CFIA \(Canada\), competent authority in EU member states/i, "CFIA (Canadian Food Inspection Agency) endorsement");
+      } else if (originRegion === "uk-out") {
+        return itemText.replace(/USDA APHIS endorsement \(US\), CFIA \(Canada\), competent authority in EU member states/i, "APHA (UK Animal and Plant Health Agency) endorsement");
+      } else if (originRegion === "europe" && endorsePhrase) {
+        return itemText.replace(/USDA APHIS endorsement \(US\), CFIA \(Canada\), competent authority in EU member states/i, `endorsement by ${endorsePhrase}`);
+      } else if (originRegion === "ireland" && endorsePhrase) {
+        return itemText.replace(/USDA APHIS endorsement \(US\), CFIA \(Canada\), competent authority in EU member states/i, `endorsement by ${endorsePhrase}`);
+      }
+      // Other origins: keep the multi-jurisdiction text as honest "we don't know"
+      // — the user can read the (US)/(Canada)/EU branches and pick.
+    }
+
+    // ---- PATTERN D: original simple replacements
     // If we have an origin-specific phrase, swap it in. Otherwise keep
     // the original "or country-equivalent" hedge — better honest than wrong.
     if (vetPhrase && endorsePhrase) {
@@ -12037,16 +12165,16 @@ function JourneyPlanner() {
                               : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-emerald-500 hover:ring-2 hover:ring-emerald-500/30 cursor-pointer"
                           }`}
                         >
+                          {g.routes[0]._splitAirline && (
+                            <div className="text-xs uppercase tracking-widest text-amber-300 mb-1">
+                              via {g.routes[0]._splitAirline.name}
+                            </div>
+                          )}
                           <div className="flex items-center gap-2 flex-wrap mb-2">
                             <span className="font-serif text-base text-stone-100">{g.from}</span>
                             <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
                             <span className="font-serif text-base text-stone-100">{g.to}</span>
                             <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
-                            {g.routes[0]._splitAirline && (
-                              <span className="text-xs uppercase tracking-widest text-amber-300 ml-2 px-2 py-0.5 bg-amber-950/60 border border-amber-700/50 rounded-sm">
-                                via {g.routes[0]._splitAirline.name}
-                              </span>
-                            )}
                             {isSelected && (
                               <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
                                 <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected
@@ -12390,16 +12518,16 @@ function JourneyPlanner() {
                                   : "bg-stone-800 border border-stone-700 hover:bg-stone-700/80 hover:border-emerald-500 hover:ring-2 hover:ring-emerald-500/30 cursor-pointer"
                               }`}
                             >
+                              {g.routes[0]._splitAirline && (
+                                <div className="text-xs uppercase tracking-widest text-amber-300 mb-1">
+                                  via {g.routes[0]._splitAirline.name}
+                                </div>
+                              )}
                               <div className="flex items-center gap-2 flex-wrap mb-1.5">
                                 <span className="font-serif text-base text-stone-100">{g.from}</span>
                                 <ArrowRight className="w-3.5 h-3.5 text-stone-500" strokeWidth={2} />
                                 <span className="font-serif text-base text-stone-100">{g.to}</span>
                                 <span className="text-xs text-stone-500 ml-1">· {g.duration}</span>
-                                {g.routes[0]._splitAirline && (
-                                  <span className="text-xs uppercase tracking-widest text-amber-300 ml-2 px-2 py-0.5 bg-amber-950/60 border border-amber-700/50 rounded-sm">
-                                    via {g.routes[0]._splitAirline.name}
-                                  </span>
-                                )}
                                 {isSelected && (
                                   <span className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-widest text-emerald-400 font-bold">
                                     <Check className="w-3.5 h-3.5" strokeWidth={3} /> Selected

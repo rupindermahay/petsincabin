@@ -12365,6 +12365,12 @@ function JourneyPlanner() {
                                       );
                                     })}
                                   </div>
+                                  {g.routes[0].totalDisplay && (
+                                    <div className="text-sm font-medium text-stone-300 mb-2">
+                                      Total: ~{g.routes[0].totalDisplay}
+                                      {g.routes[0].totalIncludesLayover ? " (incl. layover)" : ""}
+                                    </div>
+                                  )}
                                   <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                                 </>
                               ) : (
@@ -12396,6 +12402,12 @@ function JourneyPlanner() {
                                       </div>
                                     </div>
                                   </div>
+                                  {g.routes[0].totalDisplay && (
+                                    <div className="text-sm font-medium text-stone-300 mb-2">
+                                      Total: ~{g.routes[0].totalDisplay}
+                                      {g.routes[0].totalIncludesLayover ? " (incl. layover)" : ""}
+                                    </div>
+                                  )}
                                   {!g.routes[0]._splitAirline && (
                                     <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                                   )}
@@ -12595,6 +12607,12 @@ function JourneyPlanner() {
                             );
                           })}
                         </div>
+                        {r.totalDisplay && (
+                          <div className="text-sm font-medium text-stone-300 mb-2">
+                            Total: ~{r.totalDisplay}
+                            {r.totalIncludesLayover ? " (incl. layover)" : ""}
+                          </div>
+                        )}
                         <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                         {!isSelected && (
                           <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-amber-300 bg-amber-900/50 border border-amber-700 px-3 py-1.5">
@@ -12689,6 +12707,12 @@ function JourneyPlanner() {
                                   </span>
                                 )}
                               </div>
+                              {g.routes[0].totalDisplay && (
+                                <div className="text-sm font-medium text-stone-300 mb-2">
+                                  Total: ~{g.routes[0].totalDisplay}
+                                  {g.routes[0].totalIncludesLayover ? " (incl. layover)" : ""}
+                                </div>
+                              )}
                               {g.routes.length === 1 ? (
                                 <p className="text-stone-400 text-sm leading-relaxed">{g.routes[0].note}</p>
                               ) : (
@@ -12781,6 +12805,12 @@ function JourneyPlanner() {
                                 );
                               })}
                             </div>
+                            {r.totalDisplay && (
+                              <div className="text-sm font-medium text-stone-300 mb-2">
+                                Total: ~{r.totalDisplay}
+                                {r.totalIncludesLayover ? " (incl. layover)" : ""}
+                              </div>
+                            )}
                             <p className="text-stone-400 text-sm leading-relaxed">{r.note}</p>
                             {!isSelected && (
                               <span className="mt-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-bold text-amber-300 bg-amber-900/50 border border-amber-700 px-3 py-1.5">
@@ -13430,7 +13460,12 @@ function Routes() {
                               </span>
                             )}
                           </div>
-                          {r.duration && r.duration !== "see legs" && (
+                          {r.totalDisplay ? (
+                            <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
+                              Total: ~{r.totalDisplay}
+                              {r.totalIncludesLayover ? " (incl. layover)" : ""}
+                            </div>
+                          ) : r.duration && r.duration !== "see legs" && (
                             <div className="text-amber-700 font-medium text-sm uppercase tracking-widest">
                               Total: {r.duration}
                             </div>

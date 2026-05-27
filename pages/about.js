@@ -89,7 +89,7 @@ export default function About() {
             <div className="mt-8 bg-amber-50 border border-amber-200 rounded-sm p-6">
               <div className="font-serif text-xl text-stone-900 mb-2">If this site helped you</div>
               <p className="text-base text-stone-600 mb-4 leading-relaxed">
-                Pets in Cabin is free, and it's a one-person project — I research the airlines, check the country rules, and keep it all up to date myself. There are no ads and nothing behind a paywall. If the guide saved you some stress or a wrong turn, you can buy me a coffee. It's entirely optional, and the guide stays exactly the same either way — but it's a lovely thing to receive, and it helps keep everything maintained and accurate.
+                Pets in Cabin is free, ad-free and built by one person. If you'd like to leave a tip, there's a coffee button below — totally optional, and the guide is the same either way.
               </p>
               <a
                 href="https://ko-fi.com/theosmum"

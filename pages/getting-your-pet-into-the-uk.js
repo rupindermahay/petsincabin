@@ -177,6 +177,10 @@ export default function GettingYourPetIntoTheUK() {
             <p className="font-serif text-stone-700 leading-relaxed">
               This is the route most people use, simply because the CDG–Calais drive is the shortest of the three hubs. If you would rather not drive it yourself, a door-to-door pet taxi (see below) covers exactly this route — collecting you at CDG and delivering you and your pet to your UK address.
             </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mt-4">
+              One premium variant worth knowing about: <strong>La Compagnie</strong>, an all-business-class boutique airline, flies Newark (EWR) to Paris Orly (ORY) and is the only carrier in the world that pairs transatlantic cabin pets with business-class floor space. Pet fee is €200 each way, weight limit 8 kg. Round-trip business-class fares typically run $2,400–$3,000 — materially more than Air France economy (around $700) but roughly comparable to other carriers' standard business class, so the upgrade pays you in pet comfort rather than money saved. From Orly, the drive to Calais is broadly the same as from CDG (around two-and-a-half to three hours), and the Channel crossing logic is identical. Sensible if you'd be booking business class anyway, or if a quieter, more spacious long-haul leg matters for your pet — otherwise the standard Air France CDG route is the more economical choice.
+            </p>
           </section>
 
           {/* Via Frankfurt */}

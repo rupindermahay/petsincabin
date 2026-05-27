@@ -9182,27 +9182,27 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-6 md:pt-8 pb-10 md:pb-12 px-6 md:px-12 overflow-hidden">
+    <header className="relative pt-4 md:pt-8 pb-8 md:pb-12 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
       }} />
 
       <div className="relative max-w-5xl mx-auto text-center">
-        <div className="flex items-center gap-2 mb-7">
+        <div className="flex items-center gap-2 mb-4 md:mb-7">
           <span className="text-xs uppercase tracking-widest text-stone-500">By Theo's Mum</span>
           <div className="flex-1 h-px bg-stone-300 mx-3" />
           <span className="text-xs uppercase tracking-widest text-stone-500">Vol. I · 2026</span>
         </div>
 
-        <h1 className="font-serif text-6xl md:text-8xl leading-[0.95] text-stone-900 mb-8">
+        <h1 className="font-serif text-5xl md:text-8xl leading-[0.95] text-stone-900 mb-6 md:mb-8">
           A field guide to flying<br />
           <span className="italic text-stone-600">with your pet</span>,<br />
           in the cabin.
         </h1>
 
-        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-10">
-          Can your dog or cat fly in the cabin with you? Every airline has different rules, and every country has different paperwork. We sort through it so you and your pet arrive together — calm, prepared, and on the same flight.
+        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10">
+          Can your dog or cat fly in the cabin with you? We sort through every airline's rules and every country's paperwork so you arrive together — calm, prepared, and on the same flight.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center">

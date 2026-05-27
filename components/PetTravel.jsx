@@ -6099,6 +6099,358 @@ const DIRECTIONAL_CHECKLISTS = {
       ],
     },
   },
+  // Hawaii — directional split added 27 May 2026. Inbound is a 5+ month FAVN/
+  // microchip/titer process treating Hawaii as a rabies-free international
+  // destination. Outbound is just a US domestic flight with no extra paperwork
+  // — the flat structure misled users planning to fly OUT of Hawaii into
+  // thinking they needed the same months-of-prep timeline. See DECISIONS_LOG.
+  hawaii: {
+    departing: {
+      title: "Departing Hawaii — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing Hawaii is straightforward — Hawaii's strict rabies-free import rules are entirely about pets COMING IN. Going out, there's nothing Hawaii-specific to do.",
+            "If you're flying to the US mainland, this is a domestic US flight. If you're flying onward to an international destination (Japan, Australia, etc.), the destination's rules apply — start from that country's checklist.",
+            "Hawaiian Airlines is the dominant carrier from Hawaii — cabin pets accepted on its mainland US flights and inter-island routes. United, Alaska, American and Delta also carry cabin pets out of Honolulu (HNL).",
+          ],
+        },
+        {
+          title: "2 weeks before",
+          items: [
+            "Book cabin pet space directly with the airline — Hawaiian Airlines, United, Alaska, American or Delta. Confirm by phone, not just online.",
+            "Vet 'fit to fly' health certificate appointment for travel day (most US airlines want this within 10 days of departure).",
+            "If onward destination is international (Japan, Australia, EU, etc.) — start that destination's checklist process in parallel; it's likely the bigger lead-time item.",
+            "Make sure your pet's carrier meets the airline's size limit and your pet can stand and turn in it.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet's 'fit to fly' health certificate signed (10-day validity on most airlines).",
+            "Re-confirm airline cabin pet booking by phone.",
+            "Inter-island onward travel needs no Hawaii AQS paperwork on the way out — it's mainland-bound or international that matters.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring health certificate originals.",
+            "Arrive 2.5–3 hours early at HNL — pet check-in is in person at the airline's special-services counter.",
+            "Hawaiian Airlines has a dedicated pet-handling process at HNL; allow extra time at check-in.",
+            "Pet relief areas are available pre-security at HNL — use them before going airside.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the same airline-side process as dogs out of Hawaii — no special Hawaii paperwork required.",
+            "At HNL security the cat must come out of the carrier — fit and practise a harness at home.",
+            "Give litter tray access right up until you leave home; no food within ~4 hours of departure.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Hawaii — the 5+ month process",
+      restriction: "⚠ Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state. The Direct Airport Release ('5-Day-Or-Less') program needs 4–5 MONTHS of preparation. Without it, your pet faces up to 120 days of quarantine on arrival. Honolulu (HNL) is the only animal port of entry.",
+      sections: [
+        {
+          title: "First — understand what Hawaii is",
+          items: [
+            "Hawaii is rabies-free and treats every arriving pet like an international entry — even though it's a US state. The official authority is Hawaii's Department of Agriculture & Biosecurity — see their <a href=\"https://dab.hawaii.gov/ai/aqs/aqs-info/\" target=\"_blank\" rel=\"noopener noreferrer\">Animal Quarantine Information page</a> for forms and current requirements.",
+            "The goal is the 'Direct Airport Release' (or '5-Day-Or-Less') program — without it, your pet faces up to 120 days of quarantine on arrival",
+            "This needs 4–5 MONTHS of preparation — it is the single longest lead time of any US destination",
+            "Honolulu (HNL) is the only animal port of entry — you cannot fly a pet directly into Maui, Kona, or any other island from outside Hawaii",
+          ],
+        },
+        {
+          title: "5+ months before",
+          items: [
+            "Confirm your pet has an ISO 11784/11785 compatible microchip — implanted BEFORE the rabies blood test",
+            "Ensure two rabies vaccinations are on record (two separate shots in your pet's lifetime, more than 30 days apart)",
+            "Have your vet draw blood for the FAVN/OIE rabies antibody test and send it to an approved lab",
+            "The waiting period after a successful test result must be observed — this is what drives the long timeline",
+          ],
+        },
+        {
+          title: "1–2 months before",
+          items: [
+            "Most recent rabies vaccine must be current and given at least 30 days before arrival",
+            "Submit the completed Dog & Cat Import Form (AQS-279) and the original rabies certificates to the Animal Industry Division",
+            "Pay the Direct Airport Release fee",
+            "Book your pet's cabin space — Hawaiian Airlines and others carry cabin pets OUT of Hawaii and inter-island, but routes INTO Hawaii are more limited and some are cargo-only",
+            "Arrange the flight to arrive during Airport Animal Quarantine Holding Facility inspection hours",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet health check — confirm your pet is fit to fly",
+            "Treat for ticks within 14 days of arrival (required) and document it",
+            "Re-confirm your pet's cabin booking by phone",
+            "Print all paperwork: import form confirmation, both rabies certificates, microchip records, FAVN test result",
+          ],
+        },
+        {
+          title: "Travel day & arrival",
+          items: [
+            "Bring ALL original documents — Hawaii inspects paperwork carefully on arrival",
+            "Your pet is inspected at the Airport Animal Quarantine Holding Facility at Honolulu (HNL)",
+            "If everything is in order, your pet is released the same day — that's the 'Direct Airport Release'",
+            "If any document is missing or wrong, your pet goes into quarantine — there is no flexibility, so triple-check everything beforehand",
+            "Inter-island onward travel is straightforward once your pet has cleared at Honolulu",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the exact same Direct Airport Release program as dogs — microchip, two rabies vaccines, FAVN test, the lot",
+            "There is no shortcut or lighter process for cats entering Hawaii",
+            "At airport security on the mainland the cat must come out of the carrier — fit and practise a harness at home",
+            "Give litter tray access up until you leave home; no food within ~4 hours of departure",
+          ],
+        },
+      ],
+    },
+  },
+  // Japan — directional split added 27 May 2026. Inbound is the 180-day FAVN
+  // wait + AQS Advance Notification + Form AC chain. Outbound is comparatively
+  // light: AQS Export Quarantine Certificate (apply ~2 weeks ahead) + the
+  // destination country's import paperwork. Most airlines won't carry cabin
+  // pets out of Japan in either direction — JAL and ANA are cargo-only;
+  // United and Korean carriers are the main cabin options. The previous
+  // flat structure had a single "Departing FROM Japan (export)" section
+  // mixed into otherwise-arrival content. See DECISIONS_LOG.
+  japan: {
+    departing: {
+      title: "Departing Japan — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing Japan is comparatively light on Japan-side paperwork — the AQS export inspection is the main step. The harder part is usually the destination country's import rules (especially if returning to a rabies-free destination like the UK, Australia or NZ).",
+            "Cabin pet options out of Japan are limited. JAL and ANA do not carry cabin pets on ANY flight (cargo only). United (Japan ↔ US, no cabin weight limit) and Korean carriers (Japan ↔ Korea, then onward via Korean Air's wider cabin network) are the main cabin paths.",
+            "Japan's authority is the Animal Quarantine Service (AQS). Their <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/export-dog.html\" target=\"_blank\" rel=\"noopener noreferrer\">English export guide</a> walks through the export-inspection process.",
+          ],
+        },
+        {
+          title: "2+ weeks before",
+          items: [
+            "Apply for export inspection from AQS — JAL and ANA recommend at least 2 weeks before flight if going cargo. Cabin booking with United or a Korean carrier should be made just as early — pet seats are limited per flight.",
+            "Start the destination country's import process in parallel. Many countries require Japan to issue paperwork in a specific format — confirm with your destination's competent authority before AQS issues the certificate.",
+            "AQS issues Export Quarantine Certificate — valid 180 days.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Vet's 'fit to fly' health check (most airlines want this within 10 days; some within 72 hours).",
+            "Re-confirm cabin booking by phone with United or your Korean carrier.",
+            "If destination country requires an import permit (e.g. UK, Australia, NZ, Hawaii), confirm it's issued and valid for your travel date.",
+            "Most international airlines won't carry cabin pets out of Japan. Verify your specific flight and aircraft accept pets — especially if your itinerary includes a JAL or ANA codeshare segment.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of: AQS Export Quarantine Certificate, microchip record, rabies vaccination records, destination's import permit (if required), vet's fit-to-fly letter.",
+            "AQS at the departure port verifies pet against the export certificate before check-in.",
+            "Arrive 3 hours early — pet check-in is in person, and AQS verification adds time.",
+            "Destination country may have additional checks on arrival — bring extra photocopies of all originals.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the same AQS export process as dogs — same Export Quarantine Certificate, same 2-week lead time.",
+            "Cats are exempt from the post-arrival municipal registration that applies to dogs in Japan — so you don't need to deregister.",
+            "Most international cabin pet options for Japan are dog-policy-led — confirm the carrier accepts cats specifically (most do, but verify).",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Japan — the 180-day process",
+      restriction: "⚠ Japan requires a 180-day waiting period after a passing rabies titer test before your pet can arrive. The clock starts from the blood draw date, not from when the result comes back. Arriving even one day early triggers detention quarantine for the remaining days, at the owner's expense. Plan backwards from your intended arrival date.",
+      sections: [
+        {
+          title: "7 months before",
+          items: [
+            "Confirm your origin country's category: Japan classifies countries as 'designated' (rabies-free — Iceland, Australia, NZ, Fiji, Hawaii, Guam) or 'non-designated' (everywhere else). Non-designated requires the full 180-day process below; designated countries can skip the titer and waiting period.",
+            "Plan backwards from intended arrival date: blood draw for rabies titer must be ≥180 days before arrival in Japan, and that's the hard floor.",
+            "Identify your entry airport — Japan has 11 approved animal entry ports: New Chitose (CTS), Narita (NRT), Haneda (HND), Chubu/Nagoya (NGO), Kansai/Osaka (KIX), Itami (ITM), Kobe (UKB), Kitakyushu (KKJ), Fukuoka (FUK), Kagoshima (KOJ), Naha (OKA). Anywhere else, your pet will be refused entry.",
+          ],
+        },
+        {
+          title: "6 months before",
+          items: [
+            "ISO 11784/11785 microchip implanted — and it MUST be implanted BEFORE the first rabies vaccination or the vaccine is invalid. If your pet already has a microchip, verify it's ISO compliant; if it's not, bring a microchip reader with you.",
+            "First rabies vaccine — must be administered when the pet is at least 91 days old (12 weeks is 84 days, which is below Japan's minimum and would invalidate the timeline).",
+            "Second rabies vaccine — at least 30 days after the first.",
+          ],
+        },
+        {
+          title: "5–6 months before",
+          items: [
+            "Rabies antibody titer test (FAVN or RFFIT) — blood draw at a Japan-approved laboratory (Kansas State University Rabies Lab is the standard US destination).",
+            "Result must show antibody level ≥0.5 IU/ml. Keep the ORIGINAL lab report — required on arrival.",
+            "If titer fails: re-vaccinate, wait 30 days, re-test. The 180-day waiting clock starts only from a passing test.",
+            "180-day wait begins from the blood draw date (Day 0) — pet must arrive in Japan on Day 180 or later. Arriving even one day early triggers detention quarantine for the remaining days, owner pays.",
+          ],
+        },
+        {
+          title: "40+ days before arrival",
+          items: [
+            "Submit <a href=\"https://www.maff.go.jp/aqs/english/animal/dog/import-other.html\" target=\"_blank\" rel=\"noopener noreferrer\">Advance Notification Form</a> to the AQS office at your intended port of arrival — by mail or fax. Forms differ for dogs vs cats.",
+            "Notification includes: microchip number, vaccination dates and vaccine details, blood draw date and titer result, pet's physical measurements (length and height), home address, destination address in Japan, copy of passport.",
+            "Submissions less than 40 days before arrival are generally not accepted — this can block entry entirely regardless of other paperwork.",
+            "AQS reviews and issues 'Approval of Import Inspection' — required for boarding.",
+            "If quarantine facility at your chosen port is full on your date, AQS may direct you to change port or date.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "USDA-accredited (or country-equivalent) vet performs final clinical inspection and completes Form A (animal info) and Form C (health certificate). Dogs: confirm free of rabies and leptospirosis symptoms. Cats: confirm free of rabies symptoms.",
+            "AQS recommends emailing a draft of the completed form for review BEFORE getting government endorsement — catches errors that would otherwise trigger detention.",
+            "USDA APHIS (or country equivalent) endorses Form AC. No erasing, no correction fluid, no pencil. Missing endorsement stamp, missing microchip number, or missing vaccine product/manufacturer details are major detention triggers.",
+            "Tick, tapeworm, nematode, and cestode treatment.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring ALL originals: Form AC with USDA endorsement, original titer test result, vaccination records, microchip certificate, AQS Approval of Import Inspection, passport.",
+            "Book flights to arrive in Japan BEFORE 5 PM — pets arriving after 5 PM cannot be released from their crate until customs reopens the next day.",
+            "Most international flights to Japan are cargo only — JAL and ANA do not carry cabin pets on any flight. Cabin options: United (US ↔ Japan direct, no weight limit), Korean carriers (Japan ↔ Korea, then onward via Korean Air's wider cabin network).",
+          ],
+        },
+        {
+          title: "On arrival in Japan",
+          items: [
+            "Proceed to AQS at the arrival port — pets cleared in under 12 hours if paperwork is perfect (this is what AQS calls 'quarantine' but is really just inspection time).",
+            "AQS officer scans microchip, verifies it matches every document exactly, reviews titer result and Form AC.",
+            "If anything is missing or wrong, pet is detained at AQS facility for up to 180 days at owner's expense (boarding, feeding, transport, vet visits).",
+            "Once cleared, AQS issues Import Quarantine Certificate — keep this permanently.",
+            "Within 30 days of arrival, register the dog with your local municipal office and present the Import Quarantine Certificate. Dogs must receive annual rabies booster under Japan's Rabies Prevention Law.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the same AQS process as dogs — microchip, two rabies vaccines, FAVN titer, 180-day wait, Form AC.",
+            "Cats don't have the dog-specific leptospirosis check on Form C.",
+            "Most international cabin pet options for Japan are dog-policy-led — confirm the carrier accepts cats specifically (most do, but verify).",
+            "Cats are exempt from the post-arrival municipal registration that applies to dogs.",
+          ],
+        },
+      ],
+    },
+  },
+  // Russia — directional split added 27 May 2026. Export uses Russian Form
+  // No. 1 issued by State Veterinary Service, swapped for international Form
+  // No. 5a at the border by Rosselkhoznadzor. Import uses foreign vet
+  // certificate reissued as Form No. 6.1 at the border. Different paperwork
+  // chains. Plus 2022 airspace closures mean cabin options differ by direction
+  // (Aeroflot dominant out of Moscow SVO; Western airlines limited). The
+  // previous flat structure had two clearly-labelled directional sections
+  // mixed into a single flat checklist. See DECISIONS_LOG.
+  russia: {
+    departing: {
+      title: "Departing Russia — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing Russia means working through Rosselkhoznadzor (the Federal Service for Veterinary and Phytosanitary Surveillance) AND the State Veterinary Service. Two separate paperwork steps: Russian Form No. 1 issued by the State Veterinary Service, then exchanged for international Form No. 5a by Rosselkhoznadzor at the airport border control. The destination country's import paperwork is required in parallel.",
+            "Cabin options out of Russia are restricted by 2022 airspace closures. Aeroflot operates cabin pets out of Moscow Sheremetyevo (SVO). Some Etihad, Turkish and Emirates routes via Moscow remain viable. Most Western carriers do not operate to/from Russia — confirm cabin pet acceptance on the specific airline before booking.",
+            "Russia's authority is Rosselkhoznadzor. Site is in Russian; use translation. For US travellers, USDA APHIS publishes the Russia-specific health certificate at <a href=\"https://www.aphis.usda.gov/pet-travel/us-to-another-country-export/pet-travel-us-russian-federation\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel Russia</a>.",
+          ],
+        },
+        {
+          title: "6 weeks before",
+          items: [
+            "ISO microchip implanted (if not already) — must be recorded in the international pet passport AND on the veterinary certificate.",
+            "Rabies vaccination current — must be ≥30 days old at departure and ≤12 months old. International pet passport must record it.",
+            "Book cabin pet space directly with the airline. Aeroflot is the main cabin option; cabin allowed under 8 kg with adjacent-seat 15 kg option.",
+            "Start the destination country's import process in parallel — destination's rules likely apply alongside Russia's export rules.",
+          ],
+        },
+        {
+          title: "5 days before",
+          items: [
+            "Obtain Russian Veterinary Certificate Form No. 1 from the State Veterinary Service within 5 days of departure.",
+            "If destination is EU or other countries with their own health certificate requirements, get the destination country's certificate at the same vet visit.",
+            "Confirm by phone that the airline still has your cabin booking — sanctions and route changes mean schedules shift.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals (not photocopies) of: international pet passport, microchip record, rabies vaccine record, Russian Veterinary Certificate Form No. 1, destination country's certificate (if required).",
+            "At the airport border control, Rosselkhoznadzor exchanges Form No. 1 for international Form No. 5a (free) — bring time for this step.",
+            "Arrive 3 hours early — pet check-in is in person, plus the border-control paperwork swap adds time.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the same paperwork chain as dogs — Form No. 1 → Form No. 5a swap, international pet passport.",
+            "Some breeds restricted to/from Russia: wolf hybrids, Savannah and Bengal cats less than 5 generations from the wild are not permitted under standard rules.",
+            "At Russian airport security the cat must come out of the carrier — fit and practise a harness at home.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Russia — pet cabin checklist",
+      restriction: "⚠ 2022 airspace closures changed which airlines can fly cabin pets into Russia. Aeroflot via Moscow Sheremetyevo (SVO) is the main route. Some Etihad, Turkish and Emirates routes via Moscow remain viable. Most Western carriers do not operate to/from Russia — confirm cabin pet acceptance on the specific airline before booking.",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Russia's authority is Rosselkhoznadzor (Federal Service for Veterinary and Phytosanitary Surveillance). At the Russian border control, Rosselkhoznadzor reissues your foreign veterinary certificate as Russian Form No. 6.1 (or a similar import form depending on the entry point).",
+            "If travelling with 3 or more pets, an import permit from Rosselkhoznadzor is required. Up to 2 pets per person needs no permit.",
+            "Site is in Russian; use translation. For US travellers, USDA APHIS publishes the Russia-specific health certificate at <a href=\"https://www.aphis.usda.gov/pet-travel/us-to-another-country-export/pet-travel-us-russian-federation\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel Russia</a>.",
+          ],
+        },
+        {
+          title: "6 weeks before",
+          items: [
+            "ISO microchip implanted (if not already) — must be recorded in the international pet passport AND on the veterinary certificate.",
+            "Rabies vaccination — must be ≥30 days old at entry and ≤12 months old. International pet passport must record it.",
+            "If travelling with 3+ pets: apply for an import permit from Rosselkhoznadzor.",
+            "Book cabin pet space directly with the airline — Aeroflot via Moscow Sheremetyevo (SVO) is the main cabin option; cabin allowed under 8 kg with adjacent-seat 15 kg option.",
+          ],
+        },
+        {
+          title: "Within 5 days of entering Russia",
+          items: [
+            "Health certificate or international pet passport showing a clinical examination by an official veterinarian within 5 days of travel (some Russian carriers and airports accept up to 14 days — confirm with the specific airline).",
+            "The certificate must clearly identify your pet by microchip number, and must be in English plus the origin country's language (or accompanied by a translation).",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals (not photocopies) of: microchip record, rabies vaccine record, international pet passport, health certificate.",
+            "At the Russian border control, Rosselkhoznadzor reissues your foreign veterinary certificate as Russian Form No. 6.1.",
+            "Arrive 3 hours early — pet check-in is in person, plus the border-control paperwork step adds time.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow the same paperwork chain as dogs — microchip, rabies, vet exam, international pet passport.",
+            "Some breeds restricted: wolf hybrids, Savannah and Bengal cats less than 5 generations from the wild are not permitted under standard rules.",
+            "Give litter tray access up until you leave home; no food within ~4 hours of departure.",
+          ],
+        },
+      ],
+    },
+  },
 };
 
 // Get the right checklist based on route + direction. Falls back to single CHECKLIST_DATA for routes

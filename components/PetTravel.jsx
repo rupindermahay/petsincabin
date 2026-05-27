@@ -351,19 +351,19 @@ const AIRLINES = [
   },
   {
     name: "LOT Polish Airlines",
-    tags: ["uk-out", "europe", "india", "us", "longhaul", "korea"],
-    cabin: "Cabin OUT of UK ✓ — and India ↔ USA via Warsaw",
+    tags: ["europe", "india", "us", "longhaul", "korea"],
+    cabin: "Cabin ✓ — strong on EU↔Asia and EU↔US via Warsaw — but UK is cargo-only",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Warsaw), India (Delhi) ↔ USA via Warsaw both legs. Cabin NOT allowed: INTO UK (cargo only — UK government rule).",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    direction: "Cabin allowed: most international routes via Warsaw, including Europe ↔ USA, Europe ↔ India, Europe ↔ China, Europe ↔ Japan. Domestic Poland. Within EU. Cabin NOT allowed: United Kingdom (LOT's own published policy says 'For flights to the United Kingdom, animals may be transported only as cargo' — both directions). United Arab Emirates (cargo only). Iceland (no animal transport on Iceland routes at all). Brachycephalic breeds are prohibited in the baggage hold but allowed in cabin if they meet weight requirements.",
+    originAllowed: { uk: "no (cargo only — LOT's own published rule)", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
+    destinationAllowed: { uk: "no (cargo only — LOT's own published rule)", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "€12 domestic · €50 Europe/Middle East · €70 USA/Canada/China/Japan",
     weight: "Pet + carrier max 8 kg (17 lb)",
-    carrier: "Soft-sided. Max 55×40×20 cm (B787/B737)",
-    notes: "Under-rated cabin option for long-haul. Flies UK → Warsaw → onward to USA, India, China, Japan — all legs cabin-friendly. One of the cheapest international cabin fees on the market (€70 to USA). Reserve by phone or via Manage My Booking.",
-    intl: "Yes (most routes)",
-    verified: "May 2026",
-    link: "https://www.lot.com/uk/en/journey/special-services/traveling-with-pets",
+    carrier: "Soft-sided. Max 55×40×20 cm (B787/B737); 45×30×20 cm (E70/E75/E90/E95)",
+    notes: "Strong cabin option for EU↔Asia and EU↔US routes via Warsaw — and one of the cheapest international cabin fees on the market (€70 to USA). LOT operates Warsaw → Delhi, Warsaw → US (JFK, ORD, LAX, MIA), Warsaw → Tokyo, Warsaw → Seoul, Warsaw → Beijing — all in cabin under 8 kg. IMPORTANT: LOT is cargo-only to the United Kingdom per LOT's own published policy — there is no cabin pet option on LOT's London (LHR) routes in either direction. For dogs flying to the USA from high-risk countries (e.g. India), LOT only accepts on flights to JFK, LAX or MIA (CDC rule); cats have no high-risk restriction. Cats specifically must be booked through LOT's Contact Center, not Manage My Booking. CDC documents required 48 hours before US-bound flights. Brachycephalic breeds permitted in cabin if under 8 kg combined, but never in hold.",
+    intl: "Yes (extensive — but NOT UK in cabin)",
+    verified: "May 2026 — UK cargo-only confirmed against LOT's own published page (lot.com/us/en/journey/special-services/traveling-with-pets/pet-in-cabin)",
+    link: "https://www.lot.com/us/en/journey/special-services/traveling-with-pets/pet-in-cabin",
   },
   {
     name: "SWISS",
@@ -515,16 +515,16 @@ const AIRLINES = [
     tags: ["south-america", "europe", "caribbean", "us", "mexico"],
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). Cabin TEMPORARILY SUSPENDED on US↔Brazil, Bolivia, Ecuador, Peru and Colombia due to CDC dog import rules. NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
-    originAllowed: { us: "yes (Brazil/Peru/Ecuador/Colombia routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
-    destinationAllowed: { us: "yes (some routes suspended — verify)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
+    direction: "Cabin allowed: Economy and Premium Economy on LATAM-operated routes only (no codeshares, no connections with other airlines). Strongest for South America — domestic Brazil (São Paulo, Rio, Brasília), domestic Chile (Santiago and regional), and regional hops between Brazil, Chile, Argentina, Peru, Uruguay, Ecuador and Colombia. Also LATAM's own long-haul routes from South America to Europe (Madrid, Frankfurt, Rome, Lisbon). US ↔ Brazil/Bolivia/Ecuador/Peru/Colombia routes operate but dogs must meet CDC import rules (6+ months, microchip, CDC Dog Import Form, rabies vaccination per high-risk-country requirements). NOT available to/from the UK, Australia, New Zealand, South Africa or the Galapagos.",
+    originAllowed: { us: "yes (CDC dog import rules apply — dogs from high-risk countries must comply)", canada: "no", uk: "no", eu: "yes (LATAM-operated long-haul only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { us: "yes (CDC dog import rules apply — dogs from high-risk countries must comply)", canada: "no", uk: "no", eu: "yes (LATAM-operated only)", india: "no", caribbean: "yes", uae: "no", "south-america": "yes", mexico: "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Cabin: BRL 200 domestic Brazil · ~USD 200 regional South America · ~USD 250 long-haul (to Europe). Hold fees are separate and weight-banded.",
     weight: "Pet + carrier combined max 7 kg for cabin. Soft carrier max 40 × 28 × 25 cm. Hard kennel max 36 × 33 × 19 cm. Cabin pets carried on A319/A320/A321/A350 and B777 aircraft.",
     carrier: "Soft-sided carrier (max 40 × 28 × 25 cm) or hard kennel (max 36 × 33 × 19 cm). No wheels. Must be leak-proof and well-ventilated. Pet must be able to stand, turn and move without touching walls or ceiling.",
     notes: "LATAM is THE cabin-pet carrier for South America — if you're moving within Brazil, Chile, or between South American countries, this is the airline. Key restrictions: LATAM-operated flights ONLY — no codeshares, no connections to/from other airlines (a connection on Delta or any partner voids the pet booking). Minimum 16 weeks old (6 months for US travel). Brachycephalic breeds not accepted in the hold but CAN travel in cabin if they meet size requirements. Dangerous breeds banned from both. Book through LATAM's Contact Center or WhatsApp — not online — up to 4 hours before a cabin flight. Arrive 3 hours early for domestic Brazil, 4 hours for international. Within Brazil you need a health certificate (issued within 10 days) and proof of rabies vaccine with the 21-day waiting period observed.",
     intl: "Yes — South America domestic and regional, plus LATAM-operated long-haul to Europe",
-    verified: "May 2026",
-    link: "https://www.latamairlines.com/us/en/experience/prepare-your-trip/pets-transportation/cabin",
+    verified: "May 2026 — audited against LATAM's own current FAQ page (latamairlines.com/us/en/help-center/faq/pets/transport/airplaine-flight); 2024-era US-route 'suspended' language removed in favour of current CDC-compliance framing",
+    link: "https://www.latamairlines.com/us/en/help-center/faq/pets/transport/airplaine-flight",
   },
   {
     name: "Avianca",
@@ -620,7 +620,7 @@ const AIRLINES = [
     carrier: "Sherpa-style soft carrier, max 43 × 31 × 20 cm (17 × 12 × 8 in) — must compress to these dimensions if soft.",
     notes: "Up to 3 very small puppies or kittens can share one carrier as 'one animal' if combined weight is under 8 kg. Cargo hold available for larger pets on connecting flights within Norway only (Oslo Gardermoen ↔ Bergen ↔ Trondheim). Norse Atlantic (the long-haul subsidiary, US/Caribbean routes) does NOT carry pets — service dogs only.",
     intl: "Limited to Schengen / EU",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Norwegian's own page (norwegian.com/en/travel-info/baggage/travelling-with-pets/); all claims match Tier 1",
     link: "https://www.norwegian.com/en/travel-info/baggage/travelling-with-pets/",
   },
   {
@@ -1059,7 +1059,10 @@ const DIRECT_ROUTES = [
   { from: "London (LHR)", to: "Porto (OPO)", duration: "2h 35m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg). Northern Portugal direct.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Rome (FCO)", duration: "2h 45m", note: "ITA Airways. ✓ Cabin out of UK (under 8 kg). Italy's main cabin pet hub.", tags: ["uk-out", "europe"] },
   { from: "London (LHR)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined).", tags: ["uk-out", "canada"] },
-  { from: "London (LHR)", to: "Warsaw (WAW)", duration: "2h 25m", note: "LOT Polish. ✓ Cabin out of UK (under 8 kg). Cheapest long-haul connection (€70 LOT onward to USA).", tags: ["uk-out", "europe"] },
+  // LHR→WAW LOT Polish deleted 27 May 2026 (Decision #30): LOT's own published
+  // page (lot.com/.../traveling-with-pets/pet-in-cabin) states "For flights to
+  // the United Kingdom, animals may be transported only as cargo." Same #22
+  // pattern as Air Transat #27. UK is cargo-only on LOT in both directions.
   { from: "London (LHR)", to: "Zurich (ZRH)", duration: "1h 50m", note: "SWISS. ✓ Cabin out of UK (under 8 kg). Snub-nosed breeds OK in cabin.", tags: ["uk-out", "europe"] },
 
   // ═══════ FROM LOS ANGELES ═══════
@@ -5322,7 +5325,7 @@ const DIRECTIONAL_CHECKLISTS = {
             "ISO 11784/11785 microchip implanted (if not already)",
             "Rabies vaccine ≥21 days old before departure",
             "Book GB Animal Health Certificate (AHC) appointment with an Official Veterinarian (OV)",
-            "Book cabin pet space with the airline (Air Canada, Air France/KLM, Lufthansa, SWISS, LOT, TAP, Etihad, Turkish, Iberia, ITA — economy only on most)",
+            "Book cabin pet space with the airline (Air Canada, Air France/KLM, Lufthansa, SWISS, TAP, Etihad, Turkish, Iberia, ITA — economy only on most)",
             "Tapeworm treatment timing: 24–120 hrs before arrival if destination is Ireland, Malta, Finland, or Norway (dogs only)",
           ],
         },
@@ -10242,7 +10245,7 @@ const DESTINATIONS = [
       {
         title: "Cabin out of Heathrow — the most overlooked UK option",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Most UK pet owners assume they can't fly with their pet in cabin. They can — just not on British Airways or Virgin (cargo only). Several airlines accept cabin pets DEPARTING from London Heathrow (LHR): Air France (to Paris), KLM (to Amsterdam), Lufthansa (to Frankfurt/Munich), SWISS (to Zurich), LOT Polish (to Warsaw), TAP Air Portugal (to Lisbon), and Air Canada (to Toronto/Montreal). All combined max 8–10 kg. From any of these European hubs you can connect onward cabin-friendly to the US, India, or most of the world. CRITICAL: This is Heathrow only — Gatwick (LGW) blocks cabin pet departures on all airlines.",
+        body: "Most UK pet owners assume they can't fly with their pet in cabin. They can — just not on British Airways or Virgin (cargo only). Several airlines accept cabin pets DEPARTING from London Heathrow (LHR): Air France (to Paris), KLM (to Amsterdam), Lufthansa (to Frankfurt/Munich), SWISS (to Zurich), TAP Air Portugal (to Lisbon), and Air Canada (to Toronto/Montreal). All combined max 8–10 kg. From any of these European hubs you can connect onward cabin-friendly to the US, India, or most of the world. CRITICAL: This is Heathrow only — Gatwick (LGW) blocks cabin pet departures on all airlines.",
         cost: "Pet fee per leg: €50–€200. Two-leg long-haul: €100–€400 total.",
       },
       {
@@ -15565,7 +15568,7 @@ function Stories() {
           <div className="font-serif text-lg text-stone-800 leading-[1.8] space-y-6">
 
             <p>
-              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing most people assume is that you can't. The hard wall is actually one-way: <strong>no airline allows cabin pets INTO the UK</strong> (UK government rule — that's the inbound restriction). But OUT of the UK is a different story. Several airlines do allow cabin pets on departing flights from Heathrow — Air Canada, Air France, KLM, Lufthansa, SWISS, LOT Polish, TAP, Etihad and Turkish. Most pet owners don't know this. It's the route nobody talks about.
+              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing most people assume is that you can't. The hard wall is actually one-way: <strong>no airline allows cabin pets INTO the UK</strong> (UK government rule — that's the inbound restriction). But OUT of the UK is a different story. Several airlines do allow cabin pets on departing flights from Heathrow — Air Canada, Air France, KLM, Lufthansa, SWISS, TAP, Etihad and Turkish. Most pet owners don't know this. It's the route nobody talks about.
             </p>
 
             <p>

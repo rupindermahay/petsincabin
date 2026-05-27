@@ -10843,15 +10843,15 @@ function TapewormWindow({ destKey = null, onResult = null, defaultOpen = false, 
     <div className="border-2 border-amber-400 bg-amber-100 rounded-sm overflow-hidden shadow-sm">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left hover:bg-amber-200/70 transition-colors"
+        className="w-full flex items-center justify-between gap-3 px-5 py-3 text-left hover:bg-amber-200/70 transition-colors"
       >
-        <div>
-          <div className="font-serif text-stone-900 text-lg">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="font-serif text-stone-900 text-base">
             Tapeworm treatment timing
-          </div>
-          <div className="text-sm text-stone-700">
-            Dogs entering {presetDest ? presetDest.name : "the UK, Ireland, Norway, Malta or Finland"} need a vet-recorded treatment in a strict time window. Work out yours.
-          </div>
+          </span>
+          <span className="text-sm text-stone-700">
+            — dogs entering {presetDest ? presetDest.name : "UK / Ireland / Norway / Malta / Finland"} need it in a strict window. Work out yours.
+          </span>
         </div>
         <span className="text-amber-800 text-2xl flex-shrink-0 font-medium" aria-hidden="true">
           {open ? "−" : "+"}
@@ -12348,48 +12348,66 @@ function JourneyPlanner() {
               });
               return transitsUS;
             })() && (
-              <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
-                <p className="text-stone-300 text-sm leading-relaxed mb-3">
-                  Flying a pet <span className="text-amber-300 font-medium">out of the US</span> — whether the trip starts there or transits a US gateway —
-                  the health certificate has to be endorsed (stamped) by USDA
-                  APHIS before the US-departure leg. It generates a lot of
-                  forum panic, most of it avoidable. Our guide explains where
-                  the step sits, the deadlines that actually apply, and the
-                  prepaid return label.
-                </p>
-                <a
-                  href="/usda-endorsement-guide"
-                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
-                >
-                  <FileCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  The USDA endorsement guide
-                </a>
-              </div>
+              <details className="group bg-stone-800 border border-stone-700 rounded-sm mb-6 [&_summary::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none px-5 py-3 flex items-center justify-between gap-3 hover:bg-stone-750 transition-colors">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="font-serif text-stone-100 text-base">
+                      USDA endorsement needed
+                    </span>
+                    <span className="text-sm text-stone-400">
+                      — pet is flying <span className="text-amber-300">out of the US</span>. Required step before US-departure.
+                    </span>
+                  </div>
+                  <span className="text-amber-400 text-xl flex-shrink-0 font-medium" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <div className="px-5 pb-5 pt-1 border-t border-stone-700">
+                  <p className="text-stone-300 text-sm leading-relaxed mb-3 mt-3">
+                    The health certificate has to be endorsed (stamped) by USDA APHIS before the US-departure leg. It generates a lot of forum panic, most of it avoidable. Our guide explains where the step sits, the deadlines that actually apply, and the prepaid return label.
+                  </p>
+                  <a
+                    href="/usda-endorsement-guide"
+                    className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                  >
+                    <FileCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    The USDA endorsement guide
+                  </a>
+                </div>
+              </details>
             )}
 
             {/* Dublin note — when the journey ends in Ireland, flag the
                 onward Dublin→Britain ferry, since many people landing in
                 Dublin actually need to reach Great Britain. */}
             {origin !== destination && destAirport?.region === "ireland" && (
-              <div className="bg-stone-800 border border-stone-700 rounded-sm p-5 mb-6">
-                <p className="text-stone-300 text-sm leading-relaxed mb-3">
-                  Landing in <span className="text-amber-300 font-medium">Dublin</span> but
-                  really heading to <span className="text-amber-300 font-medium">Britain</span>?
-                  Once your pet is in Dublin — Iberia carries cabin pets
-                  Madrid → Dublin — the Dublin → Holyhead ferry (~3h 15m,
-                  Irish Ferries or Stena Line) takes you across, with pets
-                  free or low-cost and foot passengers welcome. It's a
-                  genuine back route into Britain when no in-cabin flight
-                  into the UK exists.
-                </p>
-                <a
-                  href="/getting-your-pet-into-the-uk#ireland"
-                  className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
-                >
-                  <Ship className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  The Dublin ferry route
-                </a>
-              </div>
+              <details className="group bg-stone-800 border border-stone-700 rounded-sm mb-6 [&_summary::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none px-5 py-3 flex items-center justify-between gap-3 hover:bg-stone-750 transition-colors">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="font-serif text-stone-100 text-base">
+                      Onward to Britain?
+                    </span>
+                    <span className="text-sm text-stone-400">
+                      — Dublin → Holyhead ferry is the back route into the UK.
+                    </span>
+                  </div>
+                  <span className="text-amber-400 text-xl flex-shrink-0 font-medium" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
+                <div className="px-5 pb-5 pt-1 border-t border-stone-700">
+                  <p className="text-stone-300 text-sm leading-relaxed mb-3 mt-3">
+                    Once your pet is in <span className="text-amber-300 font-medium">Dublin</span> — Iberia carries cabin pets Madrid → Dublin — the Dublin → Holyhead ferry (~3h 15m, Irish Ferries or Stena Line) takes you across, with pets free or low-cost and foot passengers welcome. It's a genuine back route into Britain when no in-cabin flight into the UK exists.
+                  </p>
+                  <a
+                    href="/getting-your-pet-into-the-uk#ireland"
+                    className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                  >
+                    <Ship className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    The Dublin ferry route
+                  </a>
+                </div>
+              </details>
             )}
 
             {/* DRIVE-TO card. When the chosen origin can reach the destination

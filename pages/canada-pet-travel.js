@@ -8,7 +8,7 @@ export default function CanadaPetTravel() {
         <title>Flying with a Pet to/from Canada (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to Canada, or flying out with a pet? The full picture — Air Canada and Air Transat cabin policies, the simple rabies-certificate paperwork (no titer, no quarantine), CBSA border inspection, and the cabin routes through Toronto, Montreal and Vancouver."
+          content="Bringing a dog or cat to Canada, or flying out with a pet? The full picture — Air Canada cabin policy and Air Transat's cargo-only rule for UK/Ireland, the simple rabies-certificate paperwork (no titer, no quarantine), CBSA border inspection, and the cabin routes through Toronto, Montreal and Vancouver."
         />
         <link rel="canonical" href="https://www.petsincabin.com/canada-pet-travel" />
       </Head>
@@ -146,7 +146,7 @@ export default function CanadaPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Air Transat</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  A useful cabin option from the UK, flying into Toronto from Manchester and Glasgow (not London Gatwick). Air Transat's cabin pet limit is a combined 8 kg.
+                  Canadian leisure carrier with cabin pets on most routes — Canada to mainland EU (France, Spain, Italy, Portugal, Belgium, Netherlands, Greece, Switzerland), within Canada, Canada–US, and Canada to Mexico/Caribbean. <strong>Not the UK or Republic of Ireland</strong> though — Air Transat's own page is explicit that "cats and dogs will be accepted as cargo only" on flights to either country. Service dogs (certified, trained) are accepted in cabin to UK/Ireland; non-service pets to those countries must travel as cargo. For a cabin pet between the UK and Canada, Air Canada from LHR or EDI is the working option. Air Transat's cabin pet limit is a combined 8 kg.
                 </p>
               </div>
               <div>
@@ -169,7 +169,7 @@ export default function CanadaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>From Europe:</strong> Air Canada flies cabin pets London (LHR) to Montreal (about 7h 30m) and Toronto, and Air Transat flies Manchester and Glasgow to Toronto. Paris and Frankfurt connect cabin-to-cabin to Vancouver, Montreal and Toronto. Montreal to Paris (about 7h 15m) is the most popular direct cabin route between Canada and the EU.
+              <strong>From Europe:</strong> Air Canada flies cabin pets London (LHR) to Montreal (about 7h 30m) and Toronto, and from Edinburgh (EDI) direct to Toronto. From Paris and Frankfurt the connections are cabin-to-cabin onward to Vancouver, Montreal and Toronto. Montreal to Paris (about 7h 15m) is the most popular direct cabin route between Canada and the EU. <strong>Note on Air Transat:</strong> while Air Transat carries cabin pets on Canada↔mainland-EU routes, the UK and Republic of Ireland are cargo only on Air Transat per their own published policy — for a cabin pet between the UK and Canada use Air Canada (LHR or EDI).
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

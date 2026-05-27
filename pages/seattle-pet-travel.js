@@ -120,7 +120,7 @@ export default function SeattlePetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Why no direct option:</strong> Air India does not transport pets to or from the USA in any form (not cabin, not baggage, not cargo) — and the airline does not accept pet connections from other airlines, so any path that tries to use Air India on the second leg won't work for a through-ticket. That makes a single-carrier European route the only practical way.
+              <strong>Why no direct option:</strong> Air India does not allow cabin pets on flights to or from the USA (per their own published policy — checked baggage or cargo on direct Air India flights may still be possible, but cabin is what most readers want), and the airline does not accept pet connections from other airlines, so any path that tries to use Air India on the second leg won't work for a through-ticket. That makes a single-carrier European route the only practical way for cabin travel.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

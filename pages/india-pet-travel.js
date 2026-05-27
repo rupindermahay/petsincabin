@@ -88,7 +88,7 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The exclusions matter.</strong> Air India does NOT transport pets to or from the USA, Canada or Australia in any form — not cabin, not checked baggage, not cargo. The UK is cargo only and only at London Heathrow (LHR) and Gatwick (LGW); there is no pet service at all from Birmingham (BHX). And cabin is barred on flights departing India and arriving in the UAE — though UAE → India in cabin is permitted. There's also a separate Ultra Long Haul cabin ban that rules out cabin on Air India's longest sectors even when the destination is otherwise eligible.
+              <strong>The exclusions matter.</strong> Air India does NOT allow cabin pets on flights to or from the USA, Canada, Australia or the United Kingdom — per their own published policy, pets to/from these four countries can only travel as checked baggage or cargo on direct Air India flights, never in cabin. The UK is further restricted to London Heathrow (LHR) and Gatwick (LGW); there is no pet service at all from Birmingham (BHX). And cabin is barred on flights departing India and arriving in the UAE — though UAE → India in cabin is permitted. There's also a separate Ultra Long Haul cabin ban that rules out cabin on Air India's longest sectors even when the destination is otherwise eligible.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

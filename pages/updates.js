@@ -5,6 +5,33 @@ import Link from "next/link";
 // site housekeeping. The homepage "What's New" block surfaces the
 // most recent few of these; this page is the permanent archive.
 
+// ⏰ Etihad promo expiry — mirrors components/PetTravel.jsx lines 14-30.
+// IMPORTANT: this evaluates at module load — at Vercel build time for
+// statically-generated pages, or at server-start for SSR. The flip from
+// active → expired therefore requires a fresh deploy on or after 1 June
+// 2026; it is NOT a true runtime auto-flip.
+// See also: components/PetTravel.jsx lines 6-13 (optimistic comment block,
+// known to be misleading) and lines 14-30 (matching constants), plus
+// DECISIONS_LOG.md entry on build-time vs runtime flip semantics.
+const ETIHAD_PROMO_EXPIRY = new Date("2026-05-31T23:59:59Z");
+const ETIHAD_PROMO_ACTIVE = new Date() <= ETIHAD_PROMO_EXPIRY;
+
+const ETIHAD_UPDATE = ETIHAD_PROMO_ACTIVE
+  ? {
+      date: "Apr 2026",
+      tag: "Etihad",
+      headline: "Etihad launched a $399 promotional cabin pet fare",
+      body: "Until 31 May 2026, Etihad's Pets Onboard service is reduced to $399 per flight segment (booking + travel both within the promo window). Etihad remains the only UAE carrier offering cabin pet travel. Post-promo, the standard rate is significantly higher.",
+      source: "Etihad newsroom, April 2026",
+    }
+  : {
+      date: "Apr 2026",
+      tag: "Etihad",
+      headline: "Etihad ran a $399 promotional cabin pet fare",
+      body: "Through 31 May 2026, Etihad's Pets Onboard service was reduced to $399 per flight segment (booking + travel both within the promo window). Etihad remains the only UAE carrier offering cabin pet travel. The standard rate is now around $1,500 per segment.",
+      source: "Etihad newsroom, April 2026",
+    };
+
 const RULE_CHANGES = [
   {
     date: "22 Apr 2026",
@@ -13,13 +40,7 @@ const RULE_CHANGES = [
     body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
     source: "EU Commission travel-with-pets guidance",
   },
-  {
-    date: "Apr 2026",
-    tag: "Etihad",
-    headline: "Etihad launched a $399 promotional cabin pet fare",
-    body: "Until 31 May 2026, Etihad's Pets Onboard service is reduced to $399 per flight segment (booking + travel both within the promo window). Etihad remains the only UAE carrier offering cabin pet travel. Post-promo, the standard rate is significantly higher.",
-    source: "Etihad newsroom, April 2026",
-  },
+  ETIHAD_UPDATE,
   {
     date: "Apr–May 2026",
     tag: "Alaska Airlines",

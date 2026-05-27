@@ -1100,6 +1100,17 @@ const DIRECT_ROUTES = [
   { from: "Edinburgh (EDI)", to: "Lisbon (LIS)", duration: "3h 15m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg combined, ~€80). TAP hub — onward cabin to most of TAP's network, particularly strong for Brazil and other Portuguese-speaking destinations.", tags: ["uk-out", "europe"] },
   { from: "Edinburgh (EDI)", to: "Toronto (YYZ)", duration: "7h", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined). Edinburgh is on Air Canada's verified UK departures list (LHR + EDI). Daily year-round on the Boeing 787. WestJet also operates this route year-round but is not currently catalogued on this site for cabin pets — verify with WestJet directly if you'd prefer them. YYZ is a strong Air Canada onward cabin hub for US east coast / Florida.", tags: ["uk-out", "canada"] },
 
+  // ═══════ FROM GLASGOW ═══════
+  // Project Glasgow (May 2026): GLA's verified cabin-out picture is much thinner
+  // than Edinburgh's. Only KLM (AMS, daily year-round) is in DIRECT_ROUTES.
+  // Lufthansa GLA→FRA is currently operating direct per lufthansa.com but was
+  // flagged by Lufthansa Group in early 2026 for possible Zurich-via routing in
+  // the 2026 summer schedule (irreg.lufthansaexperts.com). Until that's stable,
+  // the Lufthansa GLA→FRA claim lives in the AIRPORTS[] note with explicit
+  // caveat language but NOT in DIRECT_ROUTES — we don't want the planner to
+  // surface a 1-flight card for a route that may be rerouted.
+  { from: "Glasgow (GLA)", to: "Amsterdam (AMS)", duration: "1h 30m", note: "KLM. ✓ Cabin out of UK (under 8 kg combined, ~€75). Glasgow's main solid cabin route — AMS connects onward in cabin to most of KLM's network, including the only cabin route into Dublin (KLM AMS→DUB). Daily year-round.", tags: ["uk-out", "europe"] },
+
   // ═══════ FROM VANCOUVER ═══════
   { from: "Vancouver (YVR)", to: "Frankfurt (FRA)", duration: "9h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). West-coast Canada direct cabin to Europe.", tags: ["canada", "europe"] },
   { from: "Vancouver (YVR)", to: "Toronto (YYZ)", duration: "4h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined). Connect at YYZ for onward cabin routes.", tags: ["canada"] },
@@ -1909,16 +1920,25 @@ const ROUTES = [...DIRECT_ROUTES, ...WORKAROUND_ROUTES_TABLE];
 
 // Key airports per region — the minimum floor the planner guarantees.
 const REGION_HUBS = {
-  // UK cabin-out hubs: Heathrow, Manchester and Edinburgh. Gatwick (LGW) is
-  // deliberately excluded — the carriers that fly cabin pets out of the UK
+  // UK cabin-out hubs: Heathrow, Manchester, Edinburgh and Glasgow. Gatwick (LGW)
+  // is deliberately excluded — the carriers that fly cabin pets out of the UK
   // (Air France, KLM, Lufthansa, SWISS, TAP, Etihad, Turkish, Air Transat)
-  // operate that service from LHR, MAN and (for KLM, Air France, Lufthansa,
-  // SAS, Iberia, Finnair, TAP) EDI — NOT Gatwick. Including LGW here would
-  // generate workarounds implying a cabin route that doesn't exist.
+  // operate that service from LHR, MAN, EDI and (KLM + Lufthansa only) GLA —
+  // NOT Gatwick. Including LGW here would generate workarounds implying a
+  // cabin route that doesn't exist.
   // Edinburgh added May 2026 (Project Tartan): EDI has its own cabin departures
   // on KLM (AMS), Air France (CDG), Lufthansa (FRA/MUC), SAS (CPH), Iberia (MAD),
-  // Finnair (HEL) and TAP (LIS) per each carrier's published policy.
-  "uk-out": ["London (LHR)", "Manchester (MAN)", "Edinburgh (EDI)"],
+  // Finnair (HEL), TAP (LIS) and Air Canada (YYZ) per each carrier's published policy.
+  // Glasgow added May 2026 (Project Glasgow): GLA has just two verified cabin
+  // carriers — KLM (AMS, daily year-round, solid) and Lufthansa (FRA, with a
+  // 2026 summer-schedule caveat re possible Zurich rerouting). For most
+  // destinations Glasgow falls back to Edinburgh via the driveTo logic in
+  // AIRPORTS[]; Glasgow is intentionally NOT made hub-capable in `uk-out>us` or
+  // `uk-out>india` planner branches because both planner-branch destinations
+  // would need a Lufthansa or Air France connection out of Glasgow that we
+  // can't promise (Glasgow has no Air France direct cabin route, and the
+  // Lufthansa GLA route may be rerouted via Zurich in summer 2026).
+  "uk-out": ["London (LHR)", "Manchester (MAN)", "Edinburgh (EDI)", "Glasgow (GLA)"],
   "ireland": ["Dublin (DUB)"],
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)", "Seattle (SEA)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
@@ -2053,6 +2073,15 @@ const AIRPORTS = [
     // Waverley to London Kings Cross is ~4h 30m and carries pets free in cabin
     // on UK domestic services — usually the better option than driving.
     driveTo: { code: "LHR", conditionalOnNoDirect: true, text: "When Edinburgh has no direct cabin option, Heathrow opens up far more routes. Edinburgh → London by road is around 7 hours, but the LNER train from Edinburgh Waverley to London Kings Cross is roughly 4h 30m and carries pets free in cabin on UK domestic services (max 2 small pets per passenger, in a carrier). For most owners the train beats driving — and either route leaves you in central London ready to connect onward to Heathrow." } },
+  { code: "GLA", city: "Glasgow", region: "uk-out", cabinOut: true, cabinIn: false,
+    note: "Glasgow has one solid direct cabin route: KLM to Amsterdam, daily year-round, which connects onward in cabin to most of KLM's network including the only cabin route into Dublin (KLM AMS→DUB). Lufthansa also operates GLA → Frankfurt direct on its published cabin policy — but note: Lufthansa announced in early 2026 that some Frankfurt→Glasgow flights would be rerouted via Zurich during the summer schedule, so confirm directly with Lufthansa that your specific date is a direct flight before booking. Beyond KLM and Lufthansa, Glasgow's cabin-out picture is much thinner than Edinburgh's — Edinburgh has seven EU cabin carriers plus Air Canada to Toronto, Glasgow effectively has one or two. For most cabin destinations, Edinburgh is a better departure airport than Glasgow.",
+    arrivalNote: "Glasgow IS on the UK government's approved pet-entry list — Air France-KLM Martinair Cargo, Emirates SkyCargo, TUI Airways, United, and Air Transat Cargo (charter section) are all approved into Glasgow as cargo (gov.uk, updated April 2026). But the same UK rule applies: no cabin pets INTO the UK on any airline, Glasgow included. Pets arriving from outside the UK/Ireland must come as manifested cargo via one of those approved carriers, or by ferry / pet-friendly transport via the Channel.",
+    // driveTo with conditionalOnNoDirect: Glasgow's cabin options are limited to
+    // KLM AMS (solid) and Lufthansa FRA (with caveats). For everything else,
+    // Edinburgh is the natural fallback — only ~1 hour by car from Glasgow, much
+    // closer than London. ScotRail's Glasgow Queen Street → Edinburgh Waverley
+    // train is ~50 minutes and carries pets free in cabin on UK domestic services.
+    driveTo: { code: "EDI", conditionalOnNoDirect: true, text: "When Glasgow has no direct cabin option, Edinburgh is the natural next step — only about 1 hour by car (M8 motorway) or 50 minutes by ScotRail train (Glasgow Queen Street → Edinburgh Waverley, with pets free in cabin on UK domestic services). Edinburgh has cabin departures on KLM, Air France, Lufthansa, SAS, Iberia, Finnair, TAP and Air Canada — for most destinations Edinburgh will have a direct cabin route Glasgow doesn't." } },
   // Ireland
   { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: true, note: "Cabin pets fly both ways through Dublin. Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry cabin pets in, and several EU carriers fly cabin pets out of Dublin. Ireland is not the UK — there is no legal ban on cabin pets — though cabin options into Ireland are fewer than mainland EU.", arrivalNote: "Ireland is NOT the UK — it does allow cabin pets. Two confirmed cabin routes in: Iberia from Madrid and KLM from Amsterdam. Cabin options into Ireland are still limited compared with mainland Europe, so also consider the Dublin ferry routes if your departure city has no direct cabin flight. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival." },
   // United States
@@ -2436,13 +2465,15 @@ const REGION_PAIR_STRATEGIES = {
   }),
   "uk-out>ireland": (o, d) => {
     const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
-    if (isEDI) {
+    const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+    if (isEDI || isGLA) {
+      const hubName = isGLA ? "Glasgow" : "Edinburgh";
       return {
         legs: [
           { route: `${o} → Amsterdam AMS`, time: "1h 30m", airline: "KLM ✓ Cabin" },
           { route: `Amsterdam AMS → ${d}`, time: "1h 30m", airline: "KLM ✓ Cabin" },
         ],
-        note: `Aer Lingus carries pets EDI→DUB but only in the hold — not the cabin. The cabin path is via a European hub on a single carrier through-ticket: KLM via Amsterdam (or Iberia via Madrid as an alternative — both KLM AMS→DUB and Iberia MAD→DUB are the only confirmed cabin routes INTO Ireland). Dog needs EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival.`,
+        note: `Aer Lingus carries pets ${isGLA ? "GLA" : "EDI"}→DUB but only in the hold — not the cabin. The cabin path is via Amsterdam on a KLM single-carrier through-ticket. ${isEDI ? "Edinburgh also has Iberia via Madrid as an alternative (Iberia MAD→DUB is the only other confirmed cabin route into Ireland). " : "Glasgow doesn't have an Iberia cabin route, so KLM via Amsterdam is the practical option from GLA. "}Dog needs EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival.`,
       };
     }
     return {
@@ -2483,26 +2514,41 @@ const REGION_PAIR_STRATEGIES = {
   "uk-out>india": (o, d) => {
     const isHeathrow = o.includes("(LHR)");
     const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
-    const isHubCapable = isHeathrow || isEDI; // both have direct cabin to FRA/CDG
+    const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+    const isHubCapable = isHeathrow || isEDI || isGLA; // all have direct cabin to an EU hub
     const isBLR = d.includes("(BLR)");
+    // Glasgow has only KLM→AMS cabin direct. KLM operates onward cabin to India
+    // (DEL, BOM, BLR all in KLM's network). So GLA users get a clean KLM
+    // single-carrier path via Amsterdam — no Lufthansa/Frankfurt option from
+    // Glasgow (Lufthansa GLA→FRA has the 2026 summer-routing caveat).
     const longHaulAirline = isBLR
       ? "Air France ✓ Cabin (under 8 kg) — Lufthansa excludes Bangalore, route via Paris"
       : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)";
-    const legs = isHubCapable
-      ? [
-          { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: isEDI ? "1h 50m–2h" : "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
-          { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
-        ]
-      : [
-          { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
-          { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
-          { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-          { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
-        ];
+    let legs;
+    if (isGLA) {
+      legs = [
+        { route: `${o} → Amsterdam (AMS)`, time: "1h 30m", airline: "KLM ✓ Cabin out of the UK" },
+        { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket recommended)" },
+      ];
+    } else if (isHubCapable) {
+      legs = [
+        { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: isEDI ? "1h 50m–2h" : "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
+      ];
+    } else {
+      legs = [
+        { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+        { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
+      ];
+    }
+    const hubName = isGLA ? "Glasgow" : (isEDI ? "Edinburgh" : "Heathrow");
     return {
       legs,
-      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHubCapable ? `Fly cabin OUT of ${isEDI ? "Edinburgh" : "Heathrow"}` : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors${isBLR ? " (Lufthansa excludes Bangalore — route via Paris on Air France)" : ""}. India needs the AQCS NOC and entry via one of six approved airports.`,
+      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHubCapable ? `Fly cabin OUT of ${hubName}` : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. ${isGLA ? "Glasgow's only verified cabin-out route is KLM to Amsterdam, and KLM operates onward cabin to Delhi, Mumbai and Bengaluru — a single KLM through-ticket is the cleanest path. " : ""}${!isGLA && isBLR ? "Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors (Lufthansa excludes Bangalore — route via Paris on Air France). " : (!isGLA ? "Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors. " : "")}India needs the AQCS NOC and entry via one of six approved airports.`,
     };
   },
   "us>india": (o, d) => ({
@@ -2517,17 +2563,28 @@ const REGION_PAIR_STRATEGIES = {
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
   "uk-out>us": [
     (o, d) => {
-      // The European-hub cabin route is verified from Heathrow and Edinburgh.
-      // Manchester has no direct cabin to AMS/CDG, so MAN users still need to
-      // route via Heathrow first.
+      // The European-hub cabin route is verified from Heathrow, Edinburgh, and
+      // Glasgow (KLM-only). Manchester has no direct cabin to AMS/CDG, so MAN
+      // users still need to route via Heathrow first.
       const isHeathrow = o.includes("(LHR)");
       const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
-      const isHubCapable = isHeathrow || isEDI;
+      const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+      const isHubCapable = isHeathrow || isEDI || isGLA;
+      // Glasgow has only KLM→AMS verified as cabin-direct. Edinburgh has
+      // multiple EU carriers. Heathrow has the broadest set. Adapt the
+      // first-leg description accordingly.
+      const firstLegHub = isGLA
+        ? "Amsterdam (AMS)"
+        : "Paris (CDG) or Amsterdam (AMS)";
+      const firstLegAirline = isGLA
+        ? "KLM ✓ Cabin out of the UK"
+        : "Air France / KLM ✓ Cabin out of the UK";
+      const firstLegTime = isGLA ? "1h 30m" : (isEDI ? "1h 30m–1h 50m" : "1h 20m");
       const legs = isHubCapable
         ? [
-            { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: isEDI ? "1h 30m–1h 50m" : "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+            { route: `${o} → ${firstLegHub}`, time: firstLegTime, airline: firstLegAirline },
             { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-            { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+            { route: `Hub → ${d}`, time: "7–11h", airline: isGLA ? "KLM or Delta ✓ Cabin (single-carrier KLM through-ticket recommended)" : "Air France / KLM / Delta ✓ Cabin" },
           ]
         : [
             { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
@@ -2535,18 +2592,25 @@ const REGION_PAIR_STRATEGIES = {
             { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
             { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
           ];
+      const hubName = isGLA ? "Glasgow" : (isEDI ? "Edinburgh" : "Heathrow");
       return {
         label: "Via a European hub",
         legs,
         note: isHubCapable
-          ? `There's no direct cabin route out of the UK to the US — but flying cabin OUT of ${isEDI ? "Edinburgh" : "Heathrow"} to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. ${isEDI ? "Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin — the European-hub path is the practical cabin route." : ""} A longer layover (or overnight in Paris/Amsterdam) is gentler than a same-day connection.`
-          : `The European-hub cabin route runs from Heathrow and Edinburgh — the UK's main cabin-pet departure airports. From ${o.split(" (")[0]}, get to Heathrow first (drive, or the cabin options from your airport are limited), then cabin to a European hub and onward to ${d}.`,
+          ? `There's no direct cabin route out of the UK to the US — but flying cabin OUT of ${hubName} to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. ${isEDI ? "Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin — the European-hub path is the practical cabin route. " : ""}${isGLA ? "Glasgow's only verified cabin-out route is KLM to Amsterdam, so a KLM single-carrier through-ticket GLA → AMS → US is the cleanest option. " : ""}A longer layover (or overnight in Paris/Amsterdam) is gentler than a same-day connection.`
+          : `The European-hub cabin route runs from Heathrow, Edinburgh and Glasgow — the UK's cabin-pet departure airports. From ${o.split(" (")[0]}, get to Heathrow first (drive, or the cabin options from your airport are limited), then cabin to a European hub and onward to ${d}.`,
       };
     },
     (o, d) => {
       const isHeathrow = o.includes("(LHR)");
       const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
       const isHubCapable = isHeathrow || isEDI;
+      // Glasgow has no Air Canada cabin-direct (LHR + EDI only per AC's
+      // verified UK list). Don't surface this strategy for GLA users — the
+      // KLM-via-AMS route in the first strategy is cleaner. Returning null
+      // here removes the card; the resolver only renders non-null strategies.
+      if (isGLA) return null;
       return {
         label: isEDI ? "Via Toronto (Air Canada)" : "Via Montreal (Air Canada)",
         legs: [
@@ -15008,9 +15072,9 @@ function WhatsNew() {
   const ITEMS = [
     {
       date: "27 May 2026",
-      headline: "Edinburgh (EDI) added as a UK cabin-pet departure airport",
-      body: "Edinburgh joins Heathrow and Manchester as a verified UK cabin-pet departure airport. KLM (Amsterdam), Air France (CDG), Lufthansa (FRA/MUC), SAS (CPH), Iberia (MAD), Finnair (HEL) and TAP (LIS) all carry cabin pets out of EDI on their published policies. The journey planner, route cards and checklists are now Edinburgh-aware. Cabin INTO the UK is still blocked on all airlines (UK government rule), Edinburgh included.",
-      tag: "Edinburgh",
+      headline: "Edinburgh (EDI) and Glasgow (GLA) added as UK cabin-pet departure airports",
+      body: "Edinburgh joins Heathrow and Manchester as a verified UK cabin-pet departure airport — KLM (Amsterdam), Air France (CDG), Lufthansa (FRA/MUC), SAS (CPH), Iberia (MAD), Finnair (HEL), TAP (LIS) and Air Canada (YYZ) all carry cabin pets out of EDI on their published policies. Glasgow has KLM direct to Amsterdam — fewer carriers than Edinburgh, but for travellers in the west of Scotland often the right airport. The journey planner, route cards and checklists are now Edinburgh- and Glasgow-aware. Cabin INTO the UK is still blocked on all airlines (UK government rule), both Scottish airports included.",
+      tag: "Scotland",
     },
     {
       date: "22 Apr 2026",

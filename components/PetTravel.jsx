@@ -507,7 +507,7 @@ const AIRLINES = [
     carrier: "Purpose-built soft-sided carrier, max 55 × 35 × 28 cm. Lined with puppy pads. Must fit fully under the window seat. Dog stays inside the carrier at all times — including in the terminal.",
     notes: "South Africa's only in-cabin pet option — and it's domestic-only. Dogs only (no cats), one dog per adult passenger, dog must be 10+ weeks old and rabies-vaccinated if over 3 months. IMPORTANT: don't book your flight first — submit Lift's Dog-in-Cabin Request Form at least 7 days before travel; they confirm availability within 24 business hours, then book it for you. The window seat is blocked for the dog and you sit in the adjacent middle seat. Arrive 2 hours early. Dog seats per flight are limited — request early. For international travel to or from South Africa, pets must travel as manifested cargo (see the South Africa tab in Difficult Destinations).",
     intl: "No — domestic South Africa only",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Lift's own page (lift.co.za/LIFT-Extras/travelling-with-small-dogs); all claims match Tier 1",
     link: "https://www.lift.co.za/LIFT-Extras/travelling-with-small-dogs",
   },
   {
@@ -531,15 +531,15 @@ const AIRLINES = [
     tags: ["south-america", "us", "europe", "caribbean", "mexico"],
     cabin: "Cabin ✓ — Colombia hub, strong South / Central America coverage",
     cabinStatus: "yes",
-    direction: "Cabin allowed: dogs and cats up to 10 kg combined on most international and domestic routes. Strong network: Colombia, Peru, Ecuador, Costa Rica, El Salvador, plus connections to Brazil, Argentina, Chile, Mexico, US, Canada, Spain. Cabin NOT allowed: UK (cargo only — Animal Reception Centre rules), Galapagos Islands (live animal transport prohibited), Aruba and Curaçao (except permanent moves to Curaçao). Brachycephalic dog and cat breeds: cabin only — never accepted in the hold due to breathing risk.",
-    originAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
-    destinationAllowed: { uk: "no (cargo only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    direction: "Cabin allowed: dogs and cats up to 10 kg combined on most international and domestic routes. Strong network: Colombia, Peru, Ecuador, Costa Rica, El Salvador, plus connections to Brazil, Argentina, Chile, Mexico, US, Canada, Spain. Cabin NOT allowed: United Kingdom (Avianca's own page states 'Due to Animal Reception Centre restrictions, this service is not available for flights to the United Kingdom' — meaning Avianca does NOT carry pets to the UK at all, not even as cargo), Galapagos Islands (live animal transport prohibited), Aruba and Curaçao (except permanent moves to Curaçao). Brachycephalic dog and cat breeds: cabin only — never accepted in the hold due to breathing risk. Business Class on B787 aircraft: pets/ESAs not permitted.",
+    originAllowed: { uk: "no (Avianca does not carry pets to UK)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no (Avianca does not carry pets to UK)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
     fee: "Cabin: ~USD 19–29 domestic Colombia (COP 75,000–115,000) · ~USD 160 to/from North America · USD 180–200 to/from Europe. Hold: ~USD 50–70 domestic / USD 225–245 international depending on route.",
     weight: "Pet + carrier max 10 kg (22 lb) combined for cabin. Up to 70 kg combined in the hold (size restrictions apply). Minimum age 4 months (2 months for domestic Colombia routes).",
     carrier: "Soft-sided only for cabin, max 56 × 36 × 25 cm (22 × 14 × 10 in). Waterproof fabric, well-ventilated, leak-proof. Must fit under seat. For hold travel: rigid IATA-compliant kennel.",
-    notes: "Avianca is the natural cabin carrier for the northern half of South America — Colombia, Peru, Ecuador, plus Central America. Hub at Bogotá El Dorado (BOG). Important: Avianca does NOT permit transit with pets on connecting flights with codeshare partners — must be Avianca-operated end to end (including TACA, Avianca Costa Rica, Avianca Peru, Avianca Ecuador). Pit Bull, American Pit Bull Terrier, Staffordshire Terrier, and American Staffordshire Terrier are banned from import to Colombia by law (Article 108-E). Avianca will refuse these breeds on Colombia-bound flights. Brachycephalic dogs can travel in cabin (signed cabin/hold form required at airport) but never in cargo. Max 1 pet per passenger in cabin, max 6 pets per flight (including ESAs). Book 48+ hours in advance through Avianca Contact Center.",
-    intl: "Yes — South America, Central America, Caribbean, North America, Europe (Madrid/Barcelona)",
-    verified: "May 2026",
+    notes: "Avianca is the natural cabin carrier for the northern half of South America — Colombia, Peru, Ecuador, plus Central America. Hub at Bogotá El Dorado (BOG). Important: Avianca does NOT permit transit with pets on connecting flights with codeshare partners — must be Avianca-operated end to end (including TACA, Avianca Costa Rica, Avianca Peru, Avianca Ecuador). Pit Bull, American Pit Bull Terrier, Staffordshire Terrier, and American Staffordshire Terrier are banned from import to Colombia by law (Article 108-E). Avianca will refuse these breeds on Colombia-bound flights. Brachycephalic dogs can travel in cabin (signed cabin/hold form required at airport) but never in cargo. Pets not permitted in Business Class on B787 aircraft (seat configuration). Max 1 pet per passenger in cabin, max 6 pets per flight (including ESAs). Book 48+ hours in advance through Avianca Contact Center. UK note: Avianca's own published page is explicit that UK service is not available — neither cabin nor cargo. For a UK-direction route from South America, use a different carrier or route via the US.",
+    intl: "Yes — South America, Central America, Caribbean, North America, Europe (Madrid/Barcelona). Not UK.",
+    verified: "May 2026 — audited against Avianca's own page (avianca.com/en/information-and-help/pet-transport/ and ayuda.avianca.com); UK service unavailable (not even cargo) corrected from prior 'cargo only' framing",
     link: "https://www.avianca.com/en/information-and-help/pet-transport/",
   },
   {
@@ -555,7 +555,7 @@ const AIRLINES = [
     carrier: "Soft-sided only for cabin, max 45 × 27 × 27 cm (18 × 11 × 11 in). Well-ventilated, leak-proof, must fit under the seat with the pet able to stand and turn around. Hard-sided not permitted for cabin.",
     notes: "Copa is THE cabin pet route to deeper South America — especially useful for Montevideo (Uruguay), Asunción (Paraguay), and Santa Cruz (Bolivia), all of which lack direct US cabin routes. Typical routing: US → Panama City (PTY) → onward South American hub. Max 3 cabin pets per flight (book 48+ hours ahead). Pets not allowed in Business Class (seat configuration). Brachycephalic dogs accepted in cabin only — never in cargo (Copa specifically restricts upper-airway-obstruction breeds from the hold). Banned cargo breeds: Pit Bull Terrier, American Staffordshire Terrier, English Bulldog, Canary Catch Dog, Argentine Dogo, Cane Corso, Brasilian Fila. Health certificate and rabies vaccination required for international cabin pets.",
     intl: "Yes — Americas-wide (US, Canada, Mexico, Central America, Caribbean, all of South America)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Copa's published policy text and current pet pages; all claims match Tier 1 (carrier 45×27×27 / 10 kg / 3 cabin pets per flight / $125 international $25 domestic / Economy and Premium Economy only)",
     link: "https://www.copaair.com/en-us/travel-information/special-assistance/traveling-with-pets/",
   },
   {
@@ -563,16 +563,16 @@ const AIRLINES = [
     tags: ["europe"],
     cabin: "Cabin ✓ — small dogs and cats across Europe",
     cabinStatus: "yes",
-    direction: "Cabin allowed: dogs, cats, birds (not birds of prey) and turtles across Vueling's European network — Spain domestics, and routes between Spain and the rest of Europe. Cabin NOT allowed: flights to/from the UK and Iceland (Vueling does not carry pets on those routes at all). Vueling has no hold or cargo option — cabin is the only way, so larger pets can't fly Vueling.",
-    originAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
-    destinationAllowed: { us: "no", canada: "no", uk: "no", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    direction: "Cabin allowed: dogs, cats, birds (not birds of prey) and turtles across Vueling's European network — Spain domestics, and routes between Spain and the rest of Europe, including Ireland. Cabin NOT allowed: flights to/from the UK and Iceland (Vueling does not carry pets on those routes at all). Vueling has no hold or cargo option — cabin is the only way, so larger pets can't fly Vueling.",
+    originAllowed: { us: "no", canada: "no", uk: "no", ireland: "yes", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { us: "no", canada: "no", uk: "no", ireland: "yes", eu: "yes", india: "no", caribbean: "no", uae: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
     fee: "~€50 domestic Spain · ~€60 international and Canary Islands",
     weight: "Pet + carrier combined max 10 kg (8 kg on Iberia-operated flights). Soft carrier max 45 × 39 × 21 cm.",
     carrier: "Soft-sided, non-rigid carrier only, max 45 × 39 × 21 cm. Must have ventilation holes and a waterproof base. Goes under the seat in front. Homemade carriers not accepted. Up to 2 cats or dogs of the same species/litter may share one carrier if within the weight limit.",
-    notes: "Vueling is one of the easiest cabin-pet airlines in Europe — a key carrier for Spain (Barcelona, Madrid, Valencia) and Spain↔Europe routes. No breed restrictions, brachycephalic breeds welcome in cabin. Microchip and EU pet passport with rabies vaccine (21+ days old) required. You can book the pet online during booking via the Fly Light fare — no need to call. Max 5 pets per flight (2 on Iberia-operated flights). Selecting a pet disables seat selection — your seat is assigned at check-in. Remember: no UK or Iceland routes, and no hold option at all.",
-    intl: "Yes — across Europe (not UK or Iceland)",
-    verified: "May 2026",
-    link: "https://www.vueling.com/en/vueling-services/prepare-your-trip/pets-on-board",
+    notes: "Vueling is one of the easiest cabin-pet airlines in Europe — a key carrier for Spain (Barcelona, Madrid, Valencia) and Spain↔Europe routes. No breed restrictions, brachycephalic breeds welcome in cabin. Microchip and EU pet passport with rabies vaccine (21+ days old) required. You can book the pet online during booking via the Fly Light fare — no need to call. Max 5 pets per flight (2 on Iberia-operated flights). Selecting a pet disables seat selection — your seat is assigned at check-in. Ireland-bound flights: dogs need tapeworm treatment 24-120h before arrival; if departing a non-EU/non-Schengen origin, also a rabies titer test and pre-notification to petmove@agriculture.gov.ie. Remember: no UK or Iceland routes, and no hold option at all.",
+    intl: "Yes — across Europe including Ireland (not UK or Iceland)",
+    verified: "May 2026 — audited clean against Vueling's own help page (help.vueling.com/hc/en-gb/articles/19798818168337-Fly-with-my-Pet); 10 kg / 45×39×21 cm / soft only / Ireland tapeworm rule all confirmed against Tier 1",
+    link: "https://help.vueling.com/hc/en-gb/articles/19798818168337-Fly-with-my-Pet",
   },
   {
     name: "Volaris",
@@ -583,12 +583,12 @@ const AIRLINES = [
     direction: "Cabin allowed: small dogs and cats across Volaris's network — domestic Mexico, Mexico↔US, and Mexico↔Central America (Guatemala, El Salvador, Costa Rica, Honduras) and Colombia. Cabin NOT allowed: a long list of breeds is banned outright, including all brachycephalic dogs and cats — this is stricter than Aeromexico, which allows flat-faced breeds in cabin.",
     originAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
     destinationAllowed: { us: "yes", canada: "no", uk: "no", eu: "no", india: "no", caribbean: "no", uae: "no", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "no" },
-    fee: "Varies by route — typically ~$150 USD per kennel each way · lower for domestic Mexico",
-    weight: "Pet + carrier combined max ~12 kg. Carrier max 44 × 30 × 19 cm.",
-    carrier: "Max 44 × 30 × 19 cm, must fit under the seat. For dogs the carrier may be soft or rigid; for cats it MUST be rigid plastic. Fully enclosed, no perforated floor, no wheels. Secured with a plastic strap provided at the airport. Pet stays inside the whole flight.",
-    notes: "Volaris is Mexico's big low-cost carrier — useful for domestic Mexico and Mexico↔US/Central America cabin travel. The key limitation versus Aeromexico: Volaris bans a long list of breeds entirely (all brachycephalic dogs and cats, plus pit bull types, mastiffs, and others) — neither cabin nor checked. Minimum 4 months old. One pet per passenger. Owner must sit in a window seat, not an exit row. Book through Volaris directly. Arrive 2 hours early domestic, 3 hours international.",
+    fee: "Varies by route — typically ~$150 USD per kennel each way (1650 MXN low season / 1900 MXN high season per Tier-2) · lower for domestic Mexico",
+    weight: "Pet + carrier combined max 12 kg (26 lb) — confirmed against Volaris's own page. Carrier max 44 × 30 × 19 cm.",
+    carrier: "Max 44 × 30 × 19 cm, must fit under the seat. Volaris's binding Terms & Conditions PDF says: for dogs the carrier may be soft (cloth) or rigid (plastic); for cats it MUST be rigid (plastic). The newer customer-facing page ('fabric, rigid plastic, or bubble') is less restrictive — confirm with Volaris which version applies to your booking. Fully enclosed, no perforated floor, no wheels. Secured with a plastic strap provided at the airport. Pet stays inside the whole flight.",
+    notes: "Volaris is Mexico's big low-cost carrier — useful for domestic Mexico and Mexico↔US/Central America cabin travel. The key limitation versus Aeromexico: Volaris bans a long list of breeds entirely (all brachycephalic dogs and cats, plus pit bull types, mastiffs, and others) — neither cabin nor checked. Minimum 4 months old. One pet per passenger. Owner must sit in a window seat, not an exit row. Book through Volaris directly. Arrive 2 hours early domestic, 3 hours international. NOTE: cabin weight was raised from 10 kg to 12 kg in a recent policy update; older Tier-2 sources still cite 10 kg.",
     intl: "Yes — Mexico, US, Central America, Colombia",
-    verified: "May 2026",
+    verified: "May 2026 — audited against Volaris's own page (cms.volaris.com/en/travel-info/optional-services/fly-with-your-pet/) plus binding T&C PDF; 12 kg cabin limit confirmed; carrier-type discrepancy between PDF (cats rigid only) and current page (soft OK for cats) noted",
     link: "https://cms.volaris.com/en/travel-info/optional-services/fly-with-your-pet/",
   },
   {
@@ -1181,7 +1181,13 @@ const DIRECT_ROUTES = [
   { from: "Houston (IAH)", to: "Bogotá (BOG)", duration: "5h", note: "Avianca. ✓ Cabin (under 10 kg). United also serves this route but cabin pet acceptance varies — verify.", tags: ["us", "south-america"] },
 
   // ═══════ EUROPE → SOUTH AMERICA cabin routes ═══════
-  { from: "London (LHR)", to: "Bogotá (BOG)", duration: "11h 30m", note: "Avianca. ✓ Cabin (under 10 kg combined) OUT of the UK. Pet cabin departures from the UK are fine — only INBOUND to the UK is blocked. Colombia bans Pit Bull/AmStaff breeds by law.", tags: ["uk-out", "south-america"] },
+  // LHR→BOG Avianca deleted 27 May 2026 (Decision #31): Avianca's own published
+  // page (avianca.com/en/information-and-help/pet-transport/) states "Due to
+  // Animal Reception Centre restrictions, this service is not available for
+  // flights to the United Kingdom" — meaning Avianca does NOT carry pets to
+  // the UK at all, not even as cargo. Same #22 pattern as Air Transat #27 and
+  // LOT #30. For UK→Colombia cabin, route via Madrid (Iberia direct MAD→BOG)
+  // or any LHR cabin-out hub with onward connection on Avianca-operated metal.
   { from: "London (LHR)", to: "São Paulo (GRU)", duration: "11h 30m", note: "British Airways: cargo only. LATAM cabin (under 7 kg) where operated. Otherwise via Madrid (Iberia) or Frankfurt (Lufthansa) cabin connection.", tags: ["uk-out", "south-america"] },
   { from: "Madrid (MAD)", to: "Lima (LIM)", duration: "12h", note: "Iberia, LATAM. ✓ Cabin (under 7-8 kg). Spanish gateway to Peru.", tags: ["europe", "south-america"] },
   { from: "Madrid (MAD)", to: "Santiago (SCL)", duration: "13h", note: "Iberia, LATAM. ✓ Cabin (under 7-8 kg). Spain ↔ Chile direct cabin.", tags: ["europe", "south-america"] },
@@ -3412,7 +3418,7 @@ const FALLBACK_STRATEGIES = {
         hubDescription = "Avianca runs direct cabin pet routes from JFK, MIA, LAX, IAH, BOS, ORD, MCO into Bogotá. American Airlines and LATAM are cargo only on this route — Avianca is your cabin option.";
       } else if (isFromEurope) {
         legs = [{ route: `${o} → Bogotá El Dorado (BOG)`, time: "10h+", airline: "Avianca or Iberia ✓ Cabin (under 10 kg)" }];
-        hubDescription = "Avianca direct from Madrid and London. Iberia direct from Madrid. Both carry cabin pets.";
+        hubDescription = "Avianca direct from Madrid. Iberia direct from Madrid. Both carry cabin pets. NOTE: Avianca does not carry pets on UK routes — for UK→Bogotá, route via Madrid (Iberia) instead.";
       } else {
         legs = [
           { route: `${o} → US gateway (MIA / JFK / IAH)`, time: "varies", airline: "Avianca ✓ Cabin or position via your own carrier" },
@@ -10411,7 +10417,7 @@ const DESTINATIONS = [
       {
         title: "Avianca cabin pets — northern South America specialist",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Avianca's hub is Bogotá (BOG). Cabin weight 10 kg combined — the most generous Latin American limit. Strong network across Colombia, Peru, Ecuador, Costa Rica, plus connections to Brazil, Argentina, Chile, Uruguay (BOG → MVD direct), Mexico, US, and Spain. Cabin NOT allowed to UK (cargo only), Galapagos (live animals prohibited), Aruba/Curaçao (except permanent moves). Brachycephalic dogs cabin-only — never in cargo.",
+        body: "Avianca's hub is Bogotá (BOG). Cabin weight 10 kg combined — the most generous Latin American limit. Strong network across Colombia, Peru, Ecuador, Costa Rica, plus connections to Brazil, Argentina, Chile, Uruguay (BOG → MVD direct), Mexico, US, and Spain. NOT available to UK (Avianca's own page states 'this service is not available for flights to the United Kingdom' — not even cargo). Also unavailable: Galapagos (live animals prohibited), Aruba/Curaçao (except permanent moves). Brachycephalic dogs cabin-only — never in cargo.",
         cost: "USD 160 to/from North America · USD 180–200 to/from Europe · COP 75,000–115,000 (~$19-29) domestic Colombia.",
       },
       {

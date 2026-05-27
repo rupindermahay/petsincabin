@@ -577,8 +577,9 @@ export default function RouteComparison() {
 
           {/* DESKTOP — CSS grid rows (NOT a <table>) so every cell in a row
               is the same height, which lets the totals anchor to the bottom
-              and align across the row. Breaks out past the reading column. */}
-          <div className="hidden md:block md:-mx-12 lg:-mx-24 xl:-mx-32 text-sm">
+              and align across the row. Sits inside the page's max-w-6xl
+              reading column. */}
+          <div className="hidden md:block text-sm">
             {/* Header row */}
             <div className="grid grid-cols-[22%_26%_26%_26%] border-b-2 border-stone-300">
               <div className="text-left font-sans text-[11px] uppercase tracking-[0.12em] text-stone-500 font-semibold py-2.5 pr-3">

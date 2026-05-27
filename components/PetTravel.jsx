@@ -687,6 +687,22 @@ const AIRLINES = [
     verified: "May 2026",
     link: "https://en.aegeanair.com/travel-info/travelling-with-aegean/special-assistance/traveling-with-pet/",
   },
+  {
+    name: "La Compagnie",
+    tags: ["europe", "us", "longhaul"],
+    cabin: "Cabin ✓ — all-business-class transatlantic, very limited network",
+    cabinStatus: "yes",
+    direction: "Cabin allowed: Newark (EWR) ↔ Paris Orly (ORY) year-round, Newark ↔ Milan Malpensa (MXP) year-round, Newark ↔ Nice (NCE) seasonal. That is the entire La Compagnie network — three transatlantic routes, all business-class only, all carrying cabin pets on La Compagnie's published policy. The airline doesn't operate to/from the UK, Ireland, or anywhere outside that three-city network, so it isn't a route option for any other pair.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
+    fee: "€200 per journey (€400 / $500 round-trip) — flat rate regardless of route. Ticket cost is separate (see notes).",
+    weight: "Pet + carrier max 8 kg combined (reduced from 15 kg in October 2024 to align with EU rules)",
+    carrier: "Soft-sided. Max 55 × 35 × 25 cm (22 × 14 × 10 in)",
+    notes: "All-business-class boutique airline — every seat on the Airbus A321neo fleet is a lie-flat business seat. The pet differentiator: because it's a single-cabin business product, your pet gets the floor space of a business-class seat rather than a cramped economy footwell, and you can stay near them the whole 7–8 hour flight. No other transatlantic carrier offers this — Air France/Delta cabin pets are economy-class only on the equivalent CDG↔JFK route. COST FRAMING (important): La Compagnie round-trip Newark↔Paris Orly typically runs $2,400–$3,000 (lower in promo sales, ~$2,500 round-trip; higher peak). That's 3–4× the price of Air France economy (which itself carries cabin pets for ~€75 each way), and roughly comparable to other carriers' standard business-class fares. So it's NOT a budget option — it's a premium option that happens to be the most pet-friendly premium option. Worth it if you'd already be booking business class anyway, or if your pet's comfort on a long-haul flight is a clear priority and the extra cost fits your trip. Pet booking must be made at least 48 hours before departure (via 'My Reservations' or customer service); max 4 pets per flight (low cap — book early). Dogs and cats only (dwarf rabbits were previously permitted but the policy has tightened). Pet carrier counts as your cabin baggage. With pet placed at your feet, you can't fully recline the seat to bed mode. Service is from JFK's competitor airport Newark, EWR — about 40 min from midtown Manhattan, just like JFK. Paris service is from Orly (ORY), not CDG — slightly different ground logistics: Orly is south of Paris and a touch closer to central Paris than CDG, with onward train via Orlyval + RER B.",
+    intl: "Yes (3 routes only)",
+    verified: "May 2026",
+    link: "https://www.lacompagnie.com/en/plan/special-services",
+  },
 ];
 
 // Airlines that explicitly DO NOT allow pets in cabin — kept here so people searching for them find the answer.
@@ -895,6 +911,14 @@ const DIRECT_ROUTES = [
   { from: "Paris (CDG)", to: "Vancouver (YVR)", duration: "10h", note: "Air France / Air Canada. ✓ Cabin.", tags: ["europe", "canada"] },
   { from: "Paris (CDG)", to: "Guadalajara (GDL)", duration: "11h", note: "Air France direct ✓ Cabin (under 8 kg). Aeromexico is also published here but its 6-hour cabin pet rule excludes transatlantic — written confirmation essential if booking on AM.", tags: ["europe", "mexico"] },
 
+  // ═══════ FROM PARIS ORLY ═══════
+  // La Compagnie operates all-business-class transatlantic from Orly (not CDG).
+  // Only carrier in the world that pairs business-class floor space with cabin pets.
+  { from: "Paris Orly (ORY)", to: "Newark (EWR)", duration: "8h", note: "La Compagnie. ✓ Cabin (under 8 kg). All-business-class boutique service — pet gets lie-flat-cabin floor space rather than economy footwell. €200/$220 pet fee. Round-trip business-class fares typically $2,400–$3,000 (premium pricing — not a budget option, comparable to other carriers' business class). Useful if you'd be booking business anyway.", tags: ["europe", "us"] },
+
+  // ═══════ FROM MILAN ═══════
+  { from: "Milan (MXP)", to: "Newark (EWR)", duration: "9h", note: "La Compagnie. ✓ Cabin (under 8 kg). All-business-class service — same premium framing as the Orly-Newark route. Italy follows EU pet passport rules with no tapeworm requirement.", tags: ["europe", "us"] },
+
   // ═══════ FROM LISBON ═══════
   { from: "Lisbon (LIS)", to: "New York (JFK)", duration: "7h 30m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg). TAP is one of the better cabin-pet airlines for transatlantic — more flexibility than some US carriers.", tags: ["europe", "us"] },
   { from: "Lisbon (LIS)", to: "Miami (MIA)", duration: "8h 45m", note: "TAP Air Portugal. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
@@ -910,6 +934,8 @@ const DIRECT_ROUTES = [
   // ═══════ FROM NEWARK ═══════
   { from: "Newark (EWR)", to: "Frankfurt (FRA)", duration: "8h", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Newark's main direct cabin to Europe — good alternative to JFK for NJ/CT pet owners.", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Paris (CDG)", duration: "7h 30m", note: "Air France / United. ✓ Cabin (under 8 kg).", tags: ["us", "europe"] },
+  { from: "Newark (EWR)", to: "Paris Orly (ORY)", duration: "7h 30m", note: "La Compagnie. ✓ Cabin (under 8 kg). All-business-class boutique service — pet gets lie-flat-cabin floor space rather than economy footwell. €200/$220 pet fee. Round-trip business-class fares typically $2,400–$3,000 (premium pricing — not a budget option, comparable to other carriers' business class). The cabin-pet-friendliest transatlantic carrier if you'd be booking business anyway.", tags: ["us", "europe"] },
+  { from: "Newark (EWR)", to: "Milan (MXP)", duration: "8h 30m", note: "La Compagnie. ✓ Cabin (under 8 kg). All-business-class service — same premium framing as the Newark-Orly route. Italy follows EU pet passport rules with no tapeworm requirement.", tags: ["us", "europe"] },
   { from: "Newark (EWR)", to: "Oslo (OSL)", duration: "8h", note: "SAS. ✓ Cabin (under 8 kg, ~€149). Direct US east coast → Norway cabin route. Tapeworm treatment for dogs required 24–120 hrs before arrival.", tags: ["us", "europe"] },
 
   // ═══════ FROM SAN FRANCISCO ═══════
@@ -1613,6 +1639,23 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "If you're already in Europe (Paris, Amsterdam, Brussels) crossing the Channel by land is by far the easiest way to bring your pet INTO the UK. From Calais you have two UK-government-approved crossings: the Eurotunnel Le Shuttle (35 min, ~£24 per pet) or a DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Pet stays in the car either way. The same workflow applies departing from AMS or BRU (just a longer drive to Calais).",
     tags: ["europe", "uk-out"],
   },
+  // USA → UK via Paris Orly on La Compagnie (premium business-class alternative
+  // to the standard CDG variant above). Same Channel-crossing logic, different
+  // first leg — La Compagnie offers business-class floor space for the pet on
+  // the transatlantic leg, which no other carrier does.
+  {
+    from: "Newark (EWR)",
+    to: "London / UK (premium, via Paris Orly)",
+    duration: "~15h total (incl. ground)",
+    legs: [
+      { route: "EWR → Paris Orly (ORY)", time: "8h", airline: "La Compagnie ✓ Cabin in business-class (under 8 kg, €200 each way pet fee)" },
+      { route: "ORY → Calais (drive/taxi)", time: "2h 30m–3h", airline: "Pet stays with you" },
+      { route: "Eurotunnel Le Shuttle, or DFDS / P&O ferry — both Calais → UK", time: "35m–1h 30m", airline: "Pet stays in car" },
+      { route: "Folkestone / Dover → London (drive)", time: "1h 30m", airline: "Pet stays with you" },
+    ],
+    note: "Premium variant of the standard USA→UK Paris workaround. La Compagnie is the only carrier in the world that offers transatlantic cabin pets with business-class floor space — a clear upgrade over the economy footwell on Air France or Delta CDG→JFK. Cost framing matters: La Compagnie round-trip Newark↔Orly typically runs $2,400–$3,000 in business, vs ~$700 round-trip on Air France economy (or $3,000–$5,000+ on Air France business class). So it's 3–4× the price of the economy Air France route but roughly comparable to other carriers' business class — sensible if you'd be booking business anyway, or if a quieter, more spacious long-haul leg matters for your pet. From Orly the Channel-crossing logic is identical to the CDG route: drive to Calais, Eurotunnel (35 min, ~£24 per pet) or DFDS/P&O ferry to Dover (~1h 30m, ~£15 per pet). Orly is south of Paris and slightly closer to Calais than CDG by road. Max 4 pets per La Compagnie flight — book the pet seat at least 48 hours before departure.",
+    tags: ["us", "uk-out", "europe"],
+  },
   // USA → UK via Amsterdam (KLM hub + direct Amsterdam–Newcastle ferry — no
   // drive through France needed; the pet travels with you the whole way).
   {
@@ -2113,6 +2156,8 @@ const AIRPORTS = [
   { code: "GDL", city: "Guadalajara", region: "mexico", cabinOut: true, cabinIn: true },
   // Europe
   { code: "CDG", city: "Paris CDG", region: "europe", cabinOut: true, cabinIn: true },
+  { code: "ORY", city: "Paris Orly", region: "europe", cabinOut: true, cabinIn: true,
+    note: "Paris Orly is Paris's second airport, south of the city — historically domestic and short-haul, but increasingly relevant for cabin pets because La Compagnie's all-business-class transatlantic flights to Newark (EWR) operate from Orly, not CDG. La Compagnie is the only carrier in the world that offers transatlantic cabin pets with business-class floor space — useful if you'd already be booking business anyway. Ground logistics: Orly is south of central Paris, slightly closer than CDG, with onward transit via the Orlyval tram + RER B train. For pet owners crossing the Channel to/from the UK by Eurotunnel or ferry, Orly's distance to Calais is roughly the same as CDG's (around 2h 30m by road). For Air France cabin routes, CDG remains the primary Paris airport — Orly's Air France domestic and short-haul routes carry cabin pets too, but the long-haul cabin network is from CDG." },
   { code: "AMS", city: "Amsterdam", region: "europe", cabinOut: true, cabinIn: true },
   { code: "FRA", city: "Frankfurt", region: "europe", cabinOut: true, cabinIn: true },
   { code: "MUC", city: "Munich", region: "europe", cabinOut: true, cabinIn: true,
@@ -15077,6 +15122,12 @@ function WhatsNew() {
       tag: "Scotland",
     },
     {
+      date: "27 May 2026",
+      headline: "La Compagnie added — business-class cabin pets across the Atlantic",
+      body: "La Compagnie is the only carrier in the world that pairs transatlantic cabin pets with business-class floor space — every seat on its Airbus A321neo fleet is lie-flat. It operates Newark (EWR) to Paris Orly (ORY) year-round, plus EWR↔Milan and seasonal EWR↔Nice. Pet fee €200 each way, weight limit 8 kg, max 4 pets per flight. Cost framing: round-trip business fares typically $2,400–$3,000 — much more than Air France economy but roughly comparable to other carriers' business class. Sensible if you'd already be booking business or if pet comfort on a long flight is a priority. Site now covers it.",
+      tag: "La Compagnie",
+    },
+    {
       date: "22 Apr 2026",
       headline: "EU pet passport rules changed for non-EU residents",
       body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
@@ -15087,12 +15138,6 @@ function WhatsNew() {
       headline: "Delta now carries cabin pets to Ireland",
       body: "Delta's own international travel page confirms cabin pet travel to the Republic of Ireland on true Delta-operated flights (JFK ⇄ DUB direct, $200 each way at check-in, advance notification required to petmove@agriculture.gov.ie). Most third-party policy lists still show Ireland as banned on Delta — that information is out of date.",
       tag: "Delta",
-    },
-    {
-      date: "Jun 2025",
-      headline: "Air Canada formalised soft-sided-only cabin carriers",
-      body: "Air Canada's news page confirmed that from 1 June 2025, hard-sided kennels are no longer accepted under the seat on flights operated by Air Canada, Rouge or Express. Soft-sided had long been the recommendation; this makes it a firm rule. Combined weight limit (pet + carrier) stays at 10 kg.",
-      tag: "Air Canada",
     },
   ];
 

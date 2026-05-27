@@ -410,7 +410,7 @@ const AIRLINES = [
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
     notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Per Etihad's official country-restrictions page, the UK and USA are listed as 'flights to' restrictions — meaning cabin pets flying OUT of the UK (LHR, MAN) or OUT of the US to Abu Dhabi are permitted, while the inbound direction is not. Always confirm your specific route directly with Etihad when booking. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
     intl: "Yes (Abu Dhabi-routed only)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Etihad's own routes-restrictions page (etihad.com/.../travelling-with-pets). Etihad's text distinguishes carefully between 'Flights to X' (inbound only) and 'Flights to/from X' (both directions): the UK entry is 'Flights to London and Manchester' (to-only, so outbound cabin from LHR/MAN is permitted), and similarly USA is 'Flights to the USA' (to-only). Compare with bidirectional blocks: Sydney 'to/from', Bali 'to/from', Hanoi 'to/from', Johannesburg 'to/from', Bangkok 'to/from', etc. The to-only wording is a deliberate distinction in Etihad's text — Tier-2 paraphrase sources often collapse 'to' into 'to/from' which would be a misread.",
     link: "https://www.etihad.com/en-us/plan/travel-companion/travelling-with-pets",
   },
   {
@@ -426,7 +426,7 @@ const AIRLINES = [
     carrier: "Soft-sided. Max 40 × 30 × 23 cm (L × W × H) under-seat",
     notes: "Strong Istanbul-hub option for Asia-Europe-Americas connections. Pet rooms at Istanbul (IST) airport include a pet toilet — useful for layovers. Frequent IST flights to most Indian cities. Good for India → Europe → USA routings via Istanbul. ECONOMY ONLY (no cabin pets in business since April 2026). Reserve at least 6 hours before, recommended 48+ hours for international.",
     intl: "Yes (most routes)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Turkish Airlines' own page: 'Pets cannot be transported on Turkish Airlines flights with England as the final destination' (to-only, so cabin OUT from LHR/MAN to Istanbul permitted, confirmed via PetTravel.com). Business class cabin ban from April 2026 confirmed against multiple sources.",
     link: "https://www.turkishairlines.com/en-us/any-questions/traveling-with-pets/",
   },
   {
@@ -490,7 +490,7 @@ const AIRLINES = [
     carrier: "Soft-sided. Max 55 × 40 × 23 cm international (slightly larger than most). 24 × 40 × 30 cm domestic Italy.",
     notes: "Italy's flag carrier, hub at Rome Fiumicino (FCO). One of the most pet-friendly European carriers. As of 2026, ITA is piloting 'large pet-friendly' flights allowing pets up to 30 kg in cabin on selected DOMESTIC Italy routes (summer 2026 launch — extra seat purchase required). Book pet space ≥48 hours before via Customer Center.",
     intl: "Yes",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against ITA's own pages and Tier-1 corroboration: pets blocked TO UK only (assistance dogs exempt), cabin OUT permitted from LHR (and London City LCY per Travelnuity March 2026); ENAC 'large pet-friendly' 30 kg domestic Italy summer 2026 launch confirmed.",
     link: "https://www.ita-airways.com/us/en/book-and-prepare/other-requests/travelling-with-pets",
   },
   {
@@ -604,7 +604,7 @@ const AIRLINES = [
     carrier: "Soft-sided, max 40 × 25 × 23 cm (15.7 × 9.8 × 9 in). Counts as your carry-on bag.",
     notes: "Book at least 24 hours in advance — space is limited per flight. Two pets of the same species who know each other can share one carrier if combined weight stays under 8 kg. No cabin pets in exit row, bulkhead seats, or Business class. UK is asymmetric: cabin pet allowed OUT of London Heathrow (verified pattern across major EU carriers), but UK-arrival is cargo-only because of UK government rules. Connect at CPH/ARN/OSL for onward cabin to most of the world. Norway/Sweden bilateral arrangement: rabies vaccine NOT required for pet movement Norway↔Sweden specifically.",
     intl: "Yes (extensive network)",
-    verified: "May 2026",
+    verified: "May 2026 — Tier-1 from SAS's own page (flysas.com/.../travel-with-animals/): 'When you travel to or via certain countries, you may only transport pets as cargo, for example China, the UK and the UAE.' Most natural read is that 'to or via UK' = inbound/transit cargo only (matching universal UK rule for cabin-in), with cabin-out from LHR permitted — and this matches the well-documented Tier-2 pattern across multiple sources. Note: unlike Iberia/Aegean/TAP, SAS's own page does NOT contain an explicit 'From the UK / departing UK' carve-out; the cabin-out claim rests on the universal pattern. If SAS later changes wording to 'to or from' the UK (i.e. matches LOT/Avianca cargo-both-directions pattern), site needs to remove uk-out tag and delete UK→CPH/ARN/OSL DIRECT_ROUTES entries.",
     link: "https://www.flysas.com/us-en/travel-info/travel-with-pets/cabin",
   },
   {

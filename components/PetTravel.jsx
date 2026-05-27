@@ -12327,48 +12327,55 @@ function JourneyPlanner() {
                 where the transatlantic leg leaves a US airport. */}
             {(() => {
               if (origin === destination) return false;
+              // USDA endorsement is a US-EXPORT step — pet LEAVING the US.
+              // Two cases when it applies:
+              //   (1) Journey ORIGIN is in the US — pet departs from a US airport on leg 1.
+              //   (2) Journey TRANSITS a US gateway — a workaround leg has a US airport
+              //       on the LEFT of the arrow (e.g. Mexico → US → Europe, where leg 2
+              //       is "JFK → CDG"). The pet leaves the US on that transit leg.
+              // It does NOT apply when the pet merely ARRIVES in the US (e.g. LHR→JFK
+              // direct, or LHR→AMS→JFK workaround — the US airport is a destination,
+              // not a departure point).
               if (originAirport?.region === "us") return true;
-              // Check if the selected route (or any candidate route) has a
-              // US-departing leg beyond Leg 1. Workaround routes store legs
-              // at r.route.legs (not r.legs); direct routes don't have legs.
               const routesToScan = selectedRoute
                 ? [selectedRoute]
                 : selectableRoutes;
+              // Match a US airport code on the LEFT side of the arrow only.
+              // Word-boundary ensures e.g. "LHR" doesn't accidentally match.
+              const US_DEPARTING_LEG = /\b(?:MIA|JFK|EWR|ORD|LAX|SFO|IAD|ATL|DFW|MSP|SEA|BOS|US gateway)\b[^→]*→/;
               const transitsUS = routesToScan.some((r) => {
                 if (!r) return false;
                 const legs = (r.route && r.route.legs) || r.legs || [];
                 if (legs.length < 2) return false;
                 return legs.some((leg, idx) => {
-                  if (idx === 0) return false; // Leg 1's departure is the journey origin
+                  if (idx === 0) return false; // Leg 1's departure is the journey origin (already covered above)
                   const route = (leg.route || "").toString();
-                  // Match common US-gateway patterns in leg descriptions
-                  return /US gateway|MIA|JFK|EWR|ORD|LAX|SFO|IAD|ATL|DFW|MSP|SEA|BOS/.test(route)
-                    && /→/.test(route);
+                  return US_DEPARTING_LEG.test(route);
                 });
               });
               return transitsUS;
             })() && (
-              <details className="group bg-stone-800 border border-stone-700 rounded-sm mb-6 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="cursor-pointer list-none px-5 py-3 flex items-center justify-between gap-3 hover:bg-stone-750 transition-colors">
+              <details className="group border-2 border-amber-400 bg-amber-100 rounded-sm overflow-hidden shadow-sm mb-6 [&_summary::-webkit-details-marker]:hidden">
+                <summary className="cursor-pointer list-none px-5 py-3 flex items-center justify-between gap-3 hover:bg-amber-200/70 transition-colors">
                   <div className="flex items-baseline gap-2 flex-wrap">
-                    <span className="font-serif text-stone-100 text-base">
+                    <span className="font-serif text-stone-900 text-base">
                       USDA endorsement needed
                     </span>
-                    <span className="text-sm text-stone-400">
-                      — pet is flying <span className="text-amber-300">out of the US</span>. Required step before US-departure.
+                    <span className="text-sm text-stone-700">
+                      — pet is flying <span className="text-amber-800 font-medium">out of the US</span>. Required step before US-departure.
                     </span>
                   </div>
-                  <span className="text-amber-400 text-xl flex-shrink-0 font-medium" aria-hidden="true">
+                  <span className="text-amber-800 text-xl flex-shrink-0 font-medium" aria-hidden="true">
                     +
                   </span>
                 </summary>
-                <div className="px-5 pb-5 pt-1 border-t border-stone-700">
-                  <p className="text-stone-300 text-sm leading-relaxed mb-3 mt-3">
+                <div className="px-5 pb-5 pt-1 border-t-2 border-amber-300">
+                  <p className="text-stone-800 text-sm leading-relaxed mb-3 mt-3">
                     The health certificate has to be endorsed (stamped) by USDA APHIS before the US-departure leg. It generates a lot of forum panic, most of it avoidable. Our guide explains where the step sits, the deadlines that actually apply, and the prepaid return label.
                   </p>
                   <a
                     href="/usda-endorsement-guide"
-                    className="inline-flex items-center gap-2 bg-amber-50 text-stone-900 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-amber-100 transition-colors rounded-sm"
+                    className="inline-flex items-center gap-2 bg-stone-900 text-amber-50 px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition-colors rounded-sm"
                   >
                     <FileCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
                     The USDA endorsement guide
@@ -12724,18 +12731,25 @@ function JourneyPlanner() {
             {/* No direct route, but a workaround exists — one clear card.
                 If the destination also has a cabin-arrival warning (UK, etc.)
                 that explanation is merged in here rather than shown as a
-                separate stacked block, to avoid repeating "no direct route". */}
+                separate stacked block, to avoid repeating "no direct route".
+                Visual weight: this is the HEADLINE message of the result set
+                — the user needs to register "this isn't a one-flight trip"
+                before scanning workarounds. Border-2 amber on dark, larger
+                text, plane-X icon to anchor the meaning. */}
             {!hasDirect && workaroundMatches.length > 0 && origin !== destination && (
-              <div className="bg-stone-800 border-l-2 border-amber-500 p-5 mb-6">
-                {destCabinWarning ? (
-                  <p className="text-stone-300 text-sm leading-relaxed">
-                    <strong className="text-stone-100">No direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> {destCabinWarning} But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
-                  </p>
-                ) : (
-                  <p className="text-stone-300 text-sm leading-relaxed">
-                    <strong className="text-stone-100">There's no direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.</strong> But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
-                  </p>
-                )}
+              <div className="border-2 border-amber-500 bg-stone-900 rounded-sm p-5 mb-6 shadow-md">
+                <div className="flex items-start gap-3">
+                  <span className="text-amber-400 text-2xl flex-shrink-0 leading-none mt-0.5" aria-hidden="true">✕</span>
+                  <div>
+                    <div className="font-serif text-stone-50 text-lg leading-snug mb-2">
+                      No direct cabin route for your pet from {airportLabel(effectiveOrigin)} to {airportLabel(destination)}.
+                    </div>
+                    <p className="text-stone-300 text-sm leading-relaxed">
+                      {destCabinWarning ? <>{destCabinWarning} </> : null}
+                      But you're not stuck — here {workaroundMatches.length === 1 ? "is the workaround" : "are the workarounds"} that get you and your pet there together, in the cabin, leg by leg.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 

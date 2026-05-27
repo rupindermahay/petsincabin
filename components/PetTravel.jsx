@@ -6451,6 +6451,499 @@ const DIRECTIONAL_CHECKLISTS = {
       ],
     },
   },
+  // Ireland — directional split added 27 May 2026 (batch 2). Inbound has the
+  // 24-120h tapeworm window (dogs only) AND the structural "no cabin INTO
+  // Ireland" wall — only KLM AMS→DUB and Iberia MAD→DUB carry cabin pets
+  // into Dublin; everything else is ferry, UK landbridge, or cargo. Outbound
+  // is straightforward: book an EU cabin carrier (KLM, Iberia, Air France,
+  // Lufthansa — never Aer Lingus or Ryanair, both cargo-only), get the
+  // AHC/pet passport, fly. The previous flat structure mixed routing
+  // realities specific to inbound with general prep that applies both ways.
+  ireland: {
+    departing: {
+      title: "Departing Ireland — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing Ireland: book an EU cabin carrier — KLM (Dublin → Amsterdam), Iberia (Dublin → Madrid), Air France or Lufthansa from elsewhere in the EU if you're transiting. Aer Lingus and Ryanair are cargo-only for pets — they do not take pets in the cabin on any route.",
+            "If your final destination is OUTSIDE the EU, start that country's checklist process in parallel — Ireland's rules cover the Ireland-side paperwork, but the destination's rules are likely the bigger lead-time item (especially for the US, UK, Australia or rabies-free destinations).",
+            "Ireland's authority is the Department of Agriculture, Food and the Marine (DAFM). Verify current outbound requirements at <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">pettravel.gov.ie</a>.",
+          ],
+        },
+        {
+          title: "6 weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (if not already, and must be BEFORE rabies vaccine).",
+            "Rabies vaccine — must be ≥21 days old before departure if the destination requires it (most do).",
+            "Book your cabin pet slot with the chosen EU carrier (KLM, Iberia, Air France, Lufthansa). Pet seats are limited per flight — call the airline directly.",
+            "If your destination needs an import permit (Australia, NZ, Japan, Hawaii etc.), apply early. Some have multi-month lead times.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Get the EU pet passport (if you live in Ireland/EU) or an EU Animal Health Certificate from an accredited vet for travel outside the EU.",
+            "<strong>Note — two separate documents:</strong> the AHC/passport is the GOVERNMENT document proving your pet meets the destination's import rules. Your airline separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. The AHC often satisfies both — confirm with your specific airline.",
+            "Re-confirm your cabin pet booking by phone.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring original documents (not just phone photos) for border checks at both Dublin and the EU hub.",
+            "Arrive 3 hours early — pet check-in is in person at the carrier's special-services counter.",
+            "If transiting through an EU hub, the layover counts as 'within the EU' so no extra border checks — you only present documents on arrival at your final destination.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow identical EU baseline: microchip, rabies ≥21 days, EU pet passport / AHC.",
+            "Cats skip the tapeworm treatment — that's a dogs-only rule for UK/Ireland/Norway/Finland/Malta destinations (i.e. it applies inbound to those countries, not outbound from Ireland).",
+            "At Dublin security the cat must come out of the carrier — fit and practise a harness at home.",
+            "Use Feliway in the carrier 15 minutes before departure, never directly on the cat.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Ireland — the cabin reality",
+      restriction: "⚠ Cabin pets INTO Ireland are limited: only KLM (Amsterdam → Dublin) and Iberia (Madrid → Dublin) carry cabin pets into Dublin. Aer Lingus and Ryanair are cargo-only. If you're not on those two routes, plan the France→Ireland ferry, the UK landbridge (drive + Holyhead ferry), or a cargo booking.",
+      sections: [
+        {
+          title: "First — understand the routing reality",
+          items: [
+            "Cabin pets INTO Ireland: only KLM (AMS → DUB) and Iberia (MAD → DUB). That's the entire list. Aer Lingus and Ryanair carry pets only as cargo on Ireland-bound routes.",
+            "If you can't make those two cabin routes work, the alternatives are: ferry from France (Cherbourg/Roscoff → Rosslare with Brittany Ferries or Irish Ferries — 14-18h, pets in pet-friendly cabin or kennel); UK landbridge (fly cabin into LHR ban so workaround needed, drive to Holyhead, ferry Dublin — bears the UK's own cabin-in restrictions); or cargo via Aer Lingus or other airlines into Dublin.",
+            "Ireland's authority is the Department of Agriculture, Food and the Marine (DAFM). The official Pet Travel Portal at <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">pettravel.gov.ie</a> gives requirements tailored to your country of origin.",
+          ],
+        },
+        {
+          title: "6 weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (must be before the rabies vaccine).",
+            "Rabies vaccination — must be ≥21 days before entry to Ireland.",
+            "Book your KLM (via Amsterdam) or Iberia (via Madrid) cabin pet slot. These are the only cabin routes into Ireland — book early, pet seats are limited per flight.",
+            "If using the ferry route: book Irish Ferries or Brittany Ferries well in advance — pet cabins sell out, especially in summer.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Get the EU Animal Health Certificate from an accredited vet (or EU pet passport if you have one).",
+            "If coming from the UK: a GB Animal Health Certificate covers the trip.",
+            "<strong>Note — two separate documents:</strong> the Animal Health Certificate is the GOVERNMENT document proving your pet meets Ireland's import rules. Your airline separately wants a 'fit to fly' vet letter — confirm with your specific airline.",
+            "Confirm ferry or cargo booking.",
+          ],
+        },
+        {
+          title: "24–120 hours before Ireland arrival (dogs only)",
+          items: [
+            "Tapeworm treatment by a vet — REQUIRED for dogs (not cats).",
+            "Treatment must be recorded in the health certificate or pet passport.",
+            "Without it, your dog can be refused entry or detained.",
+            "Exemption: dogs coming directly from the UK, Finland, Malta or Norway do NOT need the tapeworm treatment (those countries are already Echinococcus-free).",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Carry all original documents (not just phone photos) for border checks.",
+            "Allow extra time at the ferry pet check-in if going that route.",
+            "Bring water, a familiar blanket, and comfort items for the long crossing if on the ferry.",
+            "At Dublin airport, present documents at the Animal Reception area — paperwork is checked before customs.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats skip the tapeworm treatment — that's a dogs-only rule for Ireland (same as the UK).",
+            "Everything else is identical: ISO microchip, rabies ≥21 days before entry, EU health certificate.",
+            "The limited-cabin-into-Ireland reality applies to cats too — KLM and Iberia accept cabin cats on the AMS→DUB and MAD→DUB routes respectively; everything else is ferry or cargo.",
+            "On the ferry the cat stays in its carrier in the vehicle or a pet-friendly cabin — bring a familiar blanket.",
+            "Feliway in a covered carrier, harness fitted for the ferry check-in.",
+          ],
+        },
+      ],
+    },
+  },
+  // South Africa — directional split added 27 May 2026 (batch 2). The
+  // structural reality: domestic Lift cabin (small dogs only) works in EITHER
+  // direction within SA. International is cargo-only in both directions but
+  // the paperwork chain differs by direction (into SA: import permit + origin's
+  // health cert + extra origin-dependent tests; out of SA: rabies titer +
+  // State Vet health cert + destination's wait rules e.g. EU's 3-month-
+  // post-titer requirement). The previous flat structure handled both
+  // directions in a single "international (in or out)" section without
+  // distinguishing the paperwork chain. Both directional checklists keep
+  // the Lift domestic content because it applies symmetrically.
+  south_africa: {
+    departing: {
+      title: "Departing South Africa — pet cabin & cargo checklist",
+      sections: [
+        {
+          title: "First — understand the two very different cases",
+          items: [
+            "DOMESTIC within South Africa: small dogs CAN fly in the cabin — Lift is the only airline that allows it (dogs under 7 kg, no cats). The Lift section below covers that.",
+            "INTERNATIONAL out of South Africa: there is NO cabin option on any airline — pets travel as manifested cargo. The international section below tells you what to gather and who to contact.",
+            "Work out which case you're in before you do anything else — the prep is completely different.",
+          ],
+        },
+        {
+          title: "Domestic cabin travel (Lift) — 2+ weeks before",
+          items: [
+            "Confirm your dog is under 7 kg and a cat is not involved (Lift cabin is small dogs only).",
+            "Confirm your dog is at least 10 weeks old.",
+            "Rabies vaccination up to date (legally required for all SA dogs over 3 months).",
+            "Get a purpose-built soft-sided carrier — max 55 × 35 × 28 cm — and let your dog get used to it.",
+            "Consult your vet to confirm your dog is fit to fly in cabin.",
+          ],
+        },
+        {
+          title: "Domestic cabin travel (Lift) — 7+ days before",
+          items: [
+            "Do NOT book your flight independently first.",
+            "Submit Lift's Dog-in-Cabin Request Form at least 7 days before travel.",
+            "Wait for Lift Customer Support to confirm availability (within 24 business hours).",
+            "Accept the quote — the dog's booking costs the same as the adult fare (less taxes).",
+            "Lift completes the booking for you — window seat blocked for the dog, you in the adjacent middle seat.",
+          ],
+        },
+        {
+          title: "Domestic cabin travel (Lift) — travel day",
+          items: [
+            "Arrive at least 2 hours before departure.",
+            "Go to the LIFT check-in counters with your dog in its carrier.",
+            "Bring proof of rabies vaccination.",
+            "Line the carrier with puppy training pads / absorbent sheets.",
+            "Dog stays inside the carrier at all times — including in the terminal and onboard.",
+          ],
+        },
+        {
+          title: "International cargo OUT of SA — the honest version",
+          items: [
+            "No airline flies cabin pets out of South Africa — this will be a cargo move, full stop. Start 4–6 months ahead — international SA pet travel is slow.",
+            "ISO microchip — required by most destinations and necessary for the State Vet health certificate.",
+            "Rabies titer test (FAVN, ≥0.5 IU/ml) — required for nearly every destination outside Africa. Sample drawn in SA, sent to an approved lab abroad.",
+            "Many destinations require a waiting period AFTER a passing titer. The EU/UK requires a 3-month wait. Australia, NZ, Japan and Hawaii require 6 months or longer. Plan backwards from your intended arrival date.",
+            "State Veterinary Services issues the export health certificate close to departure. This needs to align exactly with the destination country's required template.",
+            "IMPORTANT: exact crate specs, cargo booking process, timings and costs vary by airline and route — confirm every detail directly with the airline's cargo division or a professional pet relocation company before committing to dates.",
+            "Don't rely on general guidance for a cargo move — get specifics for your exact route.",
+          ],
+        },
+        {
+          title: "Official sources",
+          items: [
+            "South Africa's animal-export authority is the Department of Agriculture (DALRRD) and its State Veterinary Services. Verify current requirements at <a href=\"https://www.dalrrd.gov.za/\" target=\"_blank\" rel=\"noopener noreferrer\">dalrrd.gov.za</a>. For pets travelling from SA to the US, the USDA APHIS country page is a reliable cross-reference: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in South Africa — pet cabin & cargo checklist",
+      restriction: "⚠ No airline flies cabin pets INTO South Africa from outside the country — international pets travel as manifested cargo. The State Veterinary import permit is the first piece of paperwork and drives the whole timeline. Domestic Lift cabin (small dogs only) works for onward travel within SA after arrival.",
+      sections: [
+        {
+          title: "First — understand the two very different cases",
+          items: [
+            "INTERNATIONAL into South Africa: there is NO cabin option on any airline — pets travel as manifested cargo. The international section below tells you what to gather.",
+            "DOMESTIC onward travel within SA after arrival: small dogs CAN fly in the cabin on Lift (under 7 kg, no cats) — useful for moving on from Johannesburg/Cape Town to elsewhere in the country.",
+            "Work out which case you're in before you do anything else — the prep is completely different.",
+          ],
+        },
+        {
+          title: "International cargo INTO SA — 4-6 months before",
+          items: [
+            "Apply for the South African veterinary import permit from State Veterinary Services. This is the first piece of paperwork and drives the whole timeline.",
+            "ISO 11784/11785 microchip implanted (required for SA entry).",
+            "Rabies vaccine — must be 30 days to 1 year old at entry.",
+            "Rabies antibody titer test (FAVN, ≥0.5 IU/ml) — required for most origins. SA requires a waiting period after a passing titer.",
+            "Origin-dependent extra tests — varies by country (e.g. Brucella canis for some, Leishmania for others). Check the SA import permit carefully — it will specify origin-specific requirements.",
+            "Government-vet-endorsed health certificate from origin country (USDA APHIS for US, AHC for UK, EU vet for EU origins).",
+          ],
+        },
+        {
+          title: "1-2 months before arrival",
+          items: [
+            "Confirm cargo booking with the airline's cargo division or a professional pet relocation company.",
+            "Confirm the import permit is still valid — check the expiry date on the permit.",
+            "Pre-arrange clearance at OR Tambo (JNB) or Cape Town (CPT) — most international pet arrivals come through JNB.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals (not photocopies) of: import permit, origin's vet certificate, microchip record, rabies vaccine record, titer result.",
+            "Pet is processed at the airport cargo facility — not the passenger terminal.",
+            "Allow 3-6 hours for inspection and release on arrival.",
+            "Pet relocation companies can handle the airport clearance step on your behalf — useful if you're arriving on the same flight.",
+          ],
+        },
+        {
+          title: "Domestic cabin travel (Lift) for onward travel",
+          items: [
+            "Once your pet is in SA, Lift can carry small dogs (under 7 kg) in cabin on domestic SA routes.",
+            "Submit Lift's Dog-in-Cabin Request Form at least 7 days before the onward flight.",
+            "Bring proof of rabies vaccination at check-in.",
+            "Dog stays in the carrier throughout the airport and the flight — purpose-built soft-sided carrier, max 55 × 35 × 28 cm.",
+          ],
+        },
+        {
+          title: "Official sources",
+          items: [
+            "South Africa's animal-import authority is the Department of Agriculture (DALRRD) and its State Veterinary Services, which issue the veterinary import permit. Verify current requirements at <a href=\"https://www.dalrrd.gov.za/\" target=\"_blank\" rel=\"noopener noreferrer\">dalrrd.gov.za</a>. For pets travelling from the US, the USDA APHIS country page is a reliable cross-reference: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
+          ],
+        },
+      ],
+    },
+  },
+  // Norway — directional split added 27 May 2026 (batch 2). Inbound has the
+  // tapeworm-72h (dogs only) + entry-only-via-OSL/Storskog + non-listed-third-
+  // country titer with 3-month wait. Outbound is just standard EU baseline +
+  // destination's rules. The previous flat structure mixed inbound-specific
+  // routing rules with outbound-relevant general prep.
+  norway: {
+    departing: {
+      title: "Departing Norway — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing Norway: book SAS or Norwegian (the two main carriers from Oslo Gardermoen with cabin pets). For onward connections, you can reach most of Europe direct in cabin.",
+            "If your destination is outside the EU/EEA, start that country's checklist process in parallel — Norway's rules cover the Norway-side paperwork, but the destination's rules drive timing.",
+            "Norway↔Sweden has a special bilateral exemption — pets travelling between these two countries do NOT need a rabies vaccine. Other destinations require the standard EU baseline.",
+            "Norway's authority is the Norwegian Food Safety Authority (Mattilsynet). See their <a href=\"https://www.mattilsynet.no/en/animals\" target=\"_blank\" rel=\"noopener noreferrer\">animals section</a> for current outbound requirements.",
+          ],
+        },
+        {
+          title: "4+ weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (if not already). Tattoos accepted as ID only if applied before 3 July 2011 with continuous rabies vaccine records since.",
+            "Rabies vaccine current (if destination requires it).",
+            "If destination is the UK, Ireland, Finland, or Malta (other tapeworm-required countries), the tapeworm treatment will need to happen 24-120 hours before that destination's arrival — schedule with your vet.",
+            "EU pet passport (if you have one) or EU Health Certificate for your destination — issued by your vet in Norway.",
+            "Book cabin pet space with SAS or Norwegian by phone.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Health certificate completed and signed by an accredited vet.",
+            "<strong>Note — two separate documents:</strong> the EU Health Certificate / pet passport is the GOVERNMENT document proving your pet meets the destination's import rules. Your airline separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. Often the same document satisfies both — confirm with your specific airline.",
+            "Re-confirm SAS or Norwegian cabin booking by phone.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of: pet passport or EU Health Certificate, vaccination records, microchip certificate.",
+            "If destination requires the tapeworm treatment (UK, Ireland, Finland, Malta), bring the dated treatment record.",
+            "Arrive 3 hours early — pet check-in is in person at the SAS/Norwegian special-services counter.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats follow identical EU baseline: microchip, rabies, EU pet passport / Health Certificate.",
+            "Cats are exempt from the tapeworm treatment everywhere — it's dog-only.",
+            "Kittens under 12 weeks cannot be vaccinated against rabies — they can't travel to destinations that require it without the full 21-day post-vaccine wait.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in Norway — pet cabin checklist",
+      restriction: "⚠ Pets enter Norway ONLY via Oslo Airport (OSL) Gardermoen or the Storskog land border in northern Norway. Other airports turn pets away. Dogs need tapeworm treatment 24-120 hours before arrival. Failure to deworm: minimum NOK 7,000 fine and 24-hour quarantine at owner's expense.",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Norway is in the EEA (not the EU) but follows the EU pet passport system — same microchip + rabies vaccine baseline as any EU country. Norway's official authority is the Norwegian Food Safety Authority (Mattilsynet) — see their <a href=\"https://www.mattilsynet.no/en/animals/guide-travelling-with-pets-to-norway\" target=\"_blank\" rel=\"noopener noreferrer\">official guide to travelling with pets to Norway</a>.",
+            "Pets enter Norway ONLY via Oslo Airport (OSL) Gardermoen or the Storskog land border in northern Norway. Other airports turn pets away.",
+            "Norway BANS seven dog breeds outright: Pit Bull Terrier, American Staffordshire Terrier, Fila Brasileiro, Tosa Inu, Dogo Argentino, Czechoslovakian Wolfdog, and all wolf-dog hybrids. Mixed-breeds resembling these may need documentation.",
+            "Pets travelling Norway↔Sweden specifically do not need a rabies vaccine (special bilateral exemption).",
+          ],
+        },
+        {
+          title: "4+ weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (if not already). Tattoos accepted as ID only if applied before 3 July 2011 with continuous rabies vaccine records since.",
+            "Rabies vaccine — pet must be at least 12 weeks old when first vaccinated; ≥21 days must have passed before entry to Norway.",
+            "If coming from a 'non-listed third country' (most of the world outside EU/EEA/listed countries): rabies antibody titer test (≥0.5 IU/ml), then a 3-month wait before entry. Once passed, the titer is valid indefinitely as long as rabies boosters stay current.",
+            "EU pet passport (if you live in the EU/EEA) OR EU Health Certificate for Norway (from elsewhere) — issued by your origin country vet.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Health certificate completed and signed by an accredited vet (EU Health Certificate template for Norway). The certificate must clearly identify your pet by microchip number.",
+            "<strong>Note — two separate documents:</strong> the EU Health Certificate / pet passport is the GOVERNMENT document proving your pet meets Norway's import rules. Your airline (SAS, Norwegian) separately wants a 'fit to fly' vet letter confirming your pet is healthy enough to travel. The health certificate often satisfies both, but some airlines insist on a separate fit-to-fly letter — confirm with your specific airline.",
+            "Re-confirm SAS or Norwegian cabin booking by phone.",
+          ],
+        },
+        {
+          title: "1–5 days before (dogs only)",
+          items: [
+            "Tapeworm treatment for Echinococcus multilocularis — administered by a vet 24–120 hours (1–5 days) before arrival in Norway. Active ingredient must be praziquantel.",
+            "Treatment date and time MUST be recorded by the vet in the pet passport or health certificate.",
+            "Exemption: dogs coming directly from Finland, Malta, or Ireland do NOT need the tapeworm treatment (those countries are already Echinococcus-free).",
+            "Failure to deworm: minimum NOK 7,000 fine and 24-hour quarantine at owner's expense.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of: pet passport or EU Health Certificate, vaccination records, microchip certificate, tapeworm treatment record (dogs).",
+            "On arrival at Oslo Gardermoen, follow the RED channel in the customs area. Present the animal and documents to Norwegian Customs.",
+            "If documents are in order: cleared on the spot — no quarantine.",
+            "If anything is missing: pet may be returned to origin, quarantined until conditions are met, or in severe cases destroyed. Owner is financially liable for all rule violations.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Cats do NOT need tapeworm treatment — that requirement is dog-only.",
+            "All other rules (microchip, rabies, EU pet passport, ≥21-day wait after vaccine) apply identically to cats.",
+            "Kittens under 12 weeks cannot be vaccinated against rabies — they can't enter Norway without the full 21-day post-vaccine wait.",
+          ],
+        },
+      ],
+    },
+  },
+  // South America — directional split added 27 May 2026 (batch 2). The
+  // existing flat content already had `direction: "arrival"` and `direction:
+  // "us-leg"` markers on sections — the original author understood the
+  // asymmetry but didn't formalise the split. Inbound varies dramatically
+  // by country (Brazil, Argentina, Uruguay, Chile, Colombia, Peru each have
+  // their own paperwork). Outbound to the US uses CDC Dog Import Form + the
+  // 2025 US-Issued Rabies Vaccination form change. Both directions share the
+  // microchip + rabies + cabin-pet-airline-booking baseline.
+  south_america: {
+    departing: {
+      title: "Departing South America — pet cabin checklist",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Departing South America: the destination country's import rules are the bigger lead-time item. South America's own export side is generally straightforward — origin country's vet health certificate, plus a parasite treatment record.",
+            "All major airlines flying cabin pets in South America cap at 10 kg combined (LATAM 7 kg on some aircraft, Avianca 10 kg, Copa 10 kg). Brachycephalic dogs can fly cabin but NOT cargo on LATAM, Avianca, or Copa.",
+            "If returning to the US: standard CDC Dog Import Form is online and valid 6 months for multiple entries to the same port. The 2025 Certification of US-Issued Rabies Vaccination form replaces the health certificate for US-vaccinated dogs returning home.",
+          ],
+        },
+        {
+          title: "4+ weeks before",
+          items: [
+            "Confirm your pet meets the destination's microchip rule (most destinations require ISO 11784/11785).",
+            "Rabies vaccine current — most destinations require ≥21-30 days since vaccination, some require ≥30 days for non-rabies-free destinations.",
+            "Book your LATAM, Avianca, or Copa cabin pet spot for the departure leg — call the Contact Center, not online. All three airlines require their own metal (no codeshare partners).",
+            "If destination needs an import permit (e.g. EU, UK, Australia), start that process now — the South America-side prep is comparatively quick but the destination's permit may take weeks.",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Origin country's veterinary health certificate (each South American country has its own template — Brazil uses MAPA's, Argentina uses SENASA's, etc.).",
+            "Health certificate must be issued within 10 days of travel and confirm the pet is free of infectious and parasitic diseases.",
+            "Internal and external parasite treatment (typically Drontal + Frontline) administered shortly before travel — record on the health certificate.",
+            "If returning to the US: prepare the CDC Dog Import Form online (free, takes a few minutes) and the Certification of US-Issued Rabies Vaccination form if your dog was originally US-vaccinated.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of: vet health certificate, rabies vaccine certificate, microchip record, parasite treatment record, destination's import permit (if required), CDC forms (if returning to US).",
+            "Arrive 3+ hours early for international departures — pet check-in is a separate counter at most South American hubs.",
+            "Confirm cabin pet booking by phone with LATAM/Avianca/Copa 24–48 hours before departure (space is limited per flight).",
+          ],
+        },
+        {
+          title: "Returning to the US — CDC forms",
+          items: [
+            "Standard CDC Dog Import Form (online, valid 6 months for multiple entries to same port).",
+            "Certification of US-Issued Rabies Vaccination form (replaces health certificate for US-vaccinated dogs as of 2025).",
+            "Dog must be 6+ months old and microchip detectable on arrival.",
+            "Cats: no CDC requirements specific to cats — easier on the return.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Same paperwork as dogs (microchip, rabies, health certificate) but no breed restrictions.",
+            "Cats are exempt from CDC's US re-entry forms — easier on the return.",
+            "Brachycephalic cat breeds (Persians, Himalayans, Exotic Shorthair) follow the same cabin rules as other cats on LATAM/Avianca/Copa — no specific brachycephalic ban for cats.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Arriving in South America — pet cabin checklist",
+      restriction: "⚠ Each South American country has its own rules. Brazil is the most lenient (no microchip required, no titer, 21-day post-rabies wait). Argentina, Uruguay, Chile, Peru, and Colombia require ISO microchips and import permits. Chile and Peru need pre-trip permits — apply 30+ days ahead.",
+      sections: [
+        {
+          title: "First — understand",
+          items: [
+            "Each South American country has its own rules. Brazil is the most lenient (no microchip required, no titer, 21-day post-rabies wait). Argentina, Uruguay, Chile, Peru, and Colombia require ISO microchips and import permits.",
+            "All major airlines flying cabin pets in South America cap at 10 kg combined (LATAM 7 kg on some aircraft, Avianca 10 kg, Copa 10 kg). Brachycephalic dogs can fly cabin but NOT cargo on LATAM, Avianca, or Copa.",
+            "Colombia bans the import of Pit Bull, American Staffordshire Terrier, Staffordshire Terrier, and crosses by law (Article 108-E). These breeds CANNOT enter Colombia regardless of paperwork.",
+            "Uruguay has no direct US cabin pet route — connect via Copa (Panama City), Avianca (Bogotá), or LATAM (São Paulo / Buenos Aires).",
+          ],
+        },
+        {
+          title: "4+ weeks before",
+          items: [
+            "ISO 11784/11785 microchip implanted (required for Argentina, Uruguay, Chile, Peru, Colombia; recommended for Brazil even though not required).",
+            "Rabies vaccine: at least 21 days before travel for Brazil; at least 30 days for Argentina, Uruguay, Chile, Peru, Colombia.",
+            "Apply for the destination country's import permit if required: Chile (SAG) and Peru (SENASA) need pre-trip permits — apply 30+ days ahead. Argentina (SENASA) and Uruguay (MGAP) verify at the airport but documentation must be in order.",
+            "Book your LATAM, Avianca, or Copa cabin pet spot — call the Contact Center, not online. All three airlines require their own metal (no codeshare partners).",
+          ],
+        },
+        {
+          title: "10 days before",
+          items: [
+            "Veterinary health certificate from your origin country's official authority (USDA APHIS for US origins, AHC for UK origins, EU vet for EU origins).",
+            "Health certificate must be issued within 10 days of travel and confirm the pet is free of infectious and parasitic diseases.",
+            "Internal and external parasite treatment (typically Drontal + Frontline) administered shortly before travel — record on the health certificate.",
+            "For Brazil: confirm with your vet that vaccinations are on the standard list (Distemper, Hepatitis, Parvovirus, Leptospirosis, Parainfluenza for dogs; FVRCP for cats).",
+            "For Uruguay: MGAP requires the health certificate to be endorsed by the official veterinary authority of the origin country.",
+          ],
+        },
+        {
+          title: "Travel day",
+          items: [
+            "Bring originals of: health certificate (USDA-endorsed or equivalent), rabies vaccine certificate, microchip implant records, import permit (Chile/Peru), and parasite treatment record.",
+            "Arrive 3+ hours early for international departures — pet check-in is a separate counter at most South American hubs.",
+            "Confirm cabin pet booking by phone with LATAM/Avianca/Copa 24–48 hours before departure (space is limited per flight).",
+          ],
+        },
+        {
+          title: "On arrival",
+          items: [
+            "Brazil: present documents at the customs (Receita Federal) and agriculture (MAPA/VIGIAGRO) counter on arrival. No quarantine if documents are in order.",
+            "Argentina: SENASA inspection at EZE — present documentation, inspection typically 15–30 minutes.",
+            "Uruguay: MGAP inspection at MVD on arrival. No quarantine if documents are in order.",
+            "Chile: SAG inspection mandatory; documentation strict. If your import permit isn't pre-arranged, your pet will be detained.",
+            "Colombia: ICA inspection; banned breed verification on arrival.",
+            "Peru: SENASA inspection at LIM. Health certificate from origin country must be present.",
+          ],
+        },
+        {
+          title: "If you're flying with a cat",
+          items: [
+            "Same paperwork as dogs (microchip, rabies, health certificate) but no breed restrictions.",
+            "Brazil exempts cats under 90 days old from rabies if from a low-risk origin (Brazil itself is medium-risk).",
+            "Brachycephalic cat breeds (Persians, Himalayans, Exotic Shorthair) follow the same cabin rules as other cats on LATAM/Avianca/Copa.",
+          ],
+        },
+        {
+          title: "Official sources",
+          items: [
+            "Each South American country has its own animal-health authority (e.g. MAPA in Brazil, SENASA in Argentina and Peru, SAG in Chile, ICA in Colombia). The reliable single starting point for the country's current requirements is the destination country's veterinary authority directly. US travellers can use the USDA APHIS country directory: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>.",
+          ],
+        },
+      ],
+    },
+  },
 };
 
 // Get the right checklist based on route + direction. Falls back to single CHECKLIST_DATA for routes

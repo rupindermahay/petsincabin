@@ -113,7 +113,7 @@ function airlineStringIsClean(airline) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "22 May 2026";
+const LAST_UPDATED = "27 May 2026";
 
 // ---------- DATA ----------
 
@@ -1085,6 +1085,21 @@ const DIRECT_ROUTES = [
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: `Etihad. ✓ Cabin out of UK (under 8 kg). ${ETIHAD_PROMO_SHORT}.`, tags: ["uk-out", "dubai"] },
   { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
 
+  // ═══════ FROM EDINBURGH ═══════
+  // Project Tartan (May 2026): EDI's direct cabin-out routes verified against each
+  // carrier's published policy. Edinburgh has no direct transatlantic cabin route
+  // — Virgin Atlantic flies several US destinations from EDI but is assistance-
+  // dogs-only in cabin. The cabin path to North America is EDI → EU hub → US.
+  { from: "Edinburgh (EDI)", to: "Amsterdam (AMS)", duration: "1h 30m", note: "KLM. ✓ Cabin out of UK (under 8 kg combined, ~€75). Scotland's primary EU cabin route — AMS connects onward to most of KLM's network in cabin, including the only cabin route into Dublin (KLM AMS→DUB).", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Paris (CDG)", duration: "1h 50m", note: "Air France. ✓ Cabin out of UK (under 8 kg combined, ~€75). CDG connects onward in cabin to most of Air France's network, including India (DEL/BOM/BLR), the US (JFK/IAD/ORD/SFO) and Latin America.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg combined, ~€70). FRA is Lufthansa's main hub — onward cabin to most of the world. Edinburgh is on the UK government's pet-approved list for Lufthansa (gov.uk, updated March 2026).", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Munich (MUC)", duration: "2h 15m", note: "Lufthansa. ✓ Cabin out of UK (under 8 kg combined, ~€70). MUC is Lufthansa's second hub — strong onward cabin connections, particularly to Eastern Europe and Asia.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Copenhagen (CPH)", duration: "2h", note: "SAS. ✓ Cabin out of UK (under 8 kg combined). SAS hub — onward cabin to Scandinavia, Iceland (via Reykjavik), and selected US/Asia routes. Note: SAS does NOT permit cabin pets in Business class on North America or Asia flights — economy only for those onward connections.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Madrid (MAD)", duration: "2h 50m", note: "Iberia. ✓ Cabin out of UK (under 8 kg combined, ~€40 within Schengen). Edinburgh is one of three UK airports Iberia accepts for cabin pets (LHR, MAN, EDI — not LGW). MAD connects in cabin to the rest of Iberia's network, notably the only cabin route into Dublin (Iberia MAD→DUB), Latin America, and US east coast.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Helsinki (HEL)", duration: "3h", note: "Finnair. ✓ Cabin out of UK (under 8 kg combined, ~€80). Finnair hub — useful for onward cabin connections within northern Europe. Finland is rabies-free and requires tapeworm treatment for dogs 24-120h before arrival.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Lisbon (LIS)", duration: "3h 15m", note: "TAP Air Portugal. ✓ Cabin out of UK (under 8 kg combined, ~€80). TAP hub — onward cabin to most of TAP's network, particularly strong for Brazil and other Portuguese-speaking destinations.", tags: ["uk-out", "europe"] },
+  { from: "Edinburgh (EDI)", to: "Toronto (YYZ)", duration: "7h", note: "Air Canada. ✓ Cabin out of UK (under 10 kg combined). Edinburgh is on Air Canada's verified UK departures list (LHR + EDI). Daily year-round on the Boeing 787. WestJet also operates this route year-round but is not currently catalogued on this site for cabin pets — verify with WestJet directly if you'd prefer them. YYZ is a strong Air Canada onward cabin hub for US east coast / Florida.", tags: ["uk-out", "canada"] },
+
   // ═══════ FROM VANCOUVER ═══════
   { from: "Vancouver (YVR)", to: "Frankfurt (FRA)", duration: "9h 45m", note: "Air Canada. ✓ Cabin (under 10 kg combined). West-coast Canada direct cabin to Europe.", tags: ["canada", "europe"] },
   { from: "Vancouver (YVR)", to: "Toronto (YYZ)", duration: "4h 30m", note: "Air Canada. ✓ Cabin (under 22 lb combined). Connect at YYZ for onward cabin routes.", tags: ["canada"] },
@@ -1602,6 +1617,62 @@ const WORKAROUND_ROUTES_TABLE = [
     note: "An alternative to the Paris route, and a documented way US owners move pets to the UK in cabin. Fly cabin to Amsterdam on KLM (or Delta), then take the DFDS overnight ferry from Amsterdam (IJmuiden) directly to Newcastle — a UK-government-approved pet route. The big advantage: no drive through Belgium and France, and DFDS takes foot passengers with pets, so you don't need a car. Book a pet-friendly cabin so your dog is with you (~£30 per pet each way; cabins limited — book early). It lands you in the north of England, so it suits Scotland or northern England better than London. Dogs still need the tapeworm treatment 24–120h before arrival.",
     tags: ["us", "uk-out", "europe"],
   },
+  // Project Tartan (May 2026): Edinburgh-specific cabin workarounds. Edinburgh
+  // has direct cabin departures to multiple EU hubs but no transatlantic cabin
+  // route of its own. For US-bound users, the path is EDI → EU hub → US, all
+  // legs in cabin on KLM/Delta or Air France single-carrier. For UK-bound users
+  // arriving into Scotland, the practical entry route is via the Amsterdam-
+  // Newcastle ferry (UK-approved pet route, no Channel crossing needed) then
+  // train or drive north to Edinburgh.
+  {
+    from: "Edinburgh (EDI)",
+    to: "New York (JFK)",
+    duration: "~12h total",
+    legs: [
+      { route: "EDI → Amsterdam AMS", time: "1h 30m", airline: "KLM ✓ Cabin" },
+      { route: "Layover at AMS", time: "2–3h", airline: "Recommended buffer for pet handover" },
+      { route: "Amsterdam AMS → New York JFK", time: "8h", airline: "KLM or Delta ✓ Cabin (single-carrier through-ticket recommended)" },
+    ],
+    note: "Edinburgh has no direct transatlantic cabin route — Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin. The cabin workaround is EDI → an EU hub → US, both legs in cabin. KLM via Amsterdam is the cleanest because it's a single carrier across both segments (book as one through-ticket). Air France via Paris CDG works the same way. Same-day connection is fine for an under-8 kg pet, but a longer layover (or overnight in Amsterdam) is gentler.",
+    tags: ["uk-out", "us", "europe"],
+  },
+  {
+    from: "Edinburgh (EDI)",
+    to: "Dublin (DUB)",
+    duration: "~5h total",
+    legs: [
+      { route: "EDI → Amsterdam AMS", time: "1h 30m", airline: "KLM ✓ Cabin" },
+      { route: "Layover at AMS", time: "1–2h", airline: "Schengen-to-Schengen transit" },
+      { route: "Amsterdam AMS → Dublin DUB", time: "1h 30m", airline: "KLM ✓ Cabin (one of only two cabin routes INTO Ireland)" },
+    ],
+    note: "The direct EDI→DUB flight is on Aer Lingus, but Aer Lingus carries pets in the hold only, not the cabin. To fly Edinburgh → Dublin in cabin, route via Amsterdam on KLM or via Madrid on Iberia (both KLM AMS→DUB and Iberia MAD→DUB are the only confirmed cabin routes into Ireland — see Iberia option as an alternative). Single-carrier through-ticket recommended. Dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival in Ireland.",
+    tags: ["uk-out", "ireland", "europe"],
+  },
+  {
+    from: "Edinburgh (EDI)",
+    to: "Dublin (DUB) via Madrid",
+    duration: "~7h total",
+    legs: [
+      { route: "EDI → Madrid MAD", time: "2h 50m", airline: "Iberia ✓ Cabin" },
+      { route: "Layover at MAD", time: "1–2h", airline: "Schengen-to-Schengen transit" },
+      { route: "Madrid MAD → Dublin DUB", time: "2h 45m", airline: "Iberia ✓ Cabin (one of only two cabin routes INTO Ireland)" },
+    ],
+    note: "Alternative to the KLM-via-Amsterdam route. Iberia is the other carrier with a confirmed cabin route into Dublin (MAD→DUB), and Iberia accepts cabin pets out of Edinburgh (LHR, MAN, EDI — not LGW). Single-carrier through-ticket recommended. Slightly longer total time than via AMS but gives travellers a Spain option. Dog needs an EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival in Ireland.",
+    tags: ["uk-out", "ireland", "europe"],
+  },
+  {
+    from: "USA (major airports)",
+    to: "Edinburgh / Scotland (via Amsterdam + Newcastle ferry)",
+    duration: "~30h total (incl. overnight ferry + drive north)",
+    legs: [
+      { route: "JFK / BOS / ORD / IAD / MIA → Amsterdam AMS", time: "7–9h", airline: "KLM or Delta ✓ Cabin" },
+      { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
+      { route: "Ferry: DFDS overnight, Amsterdam → Newcastle", time: "~17h", airline: "Pet in a pet-friendly cabin or onboard kennel" },
+      { route: "Newcastle → Edinburgh", time: "2h by car or 1h 30m by LNER train", airline: "Pet stays with you — LNER carries pets free in cabin" },
+    ],
+    note: "For US owners moving a pet to Scotland: Edinburgh is an approved UK pet-entry airport for cargo, but no cabin route exists into any UK airport. The most pet-friendly route to Edinburgh is via the Amsterdam → Newcastle DFDS ferry (a UK-government-approved pet entry), then a short hop north. The full journey keeps the pet with you the entire way — no cargo hold, no Channel drive. From Newcastle, the LNER train to Edinburgh Waverley takes about 1h 30m and carries pets free in cabin on UK domestic services (max 2 per passenger, in a carrier). Dog needs tapeworm treatment 24–120h before UK arrival.",
+    tags: ["us", "uk-out", "europe"],
+  },
   // USA → UAE (no direct cabin to UAE — go via Europe to Abu Dhabi)
   {
     from: "New York (JFK)",
@@ -1838,12 +1909,16 @@ const ROUTES = [...DIRECT_ROUTES, ...WORKAROUND_ROUTES_TABLE];
 
 // Key airports per region — the minimum floor the planner guarantees.
 const REGION_HUBS = {
-  // UK cabin-out hubs: Heathrow and Manchester ONLY. Gatwick (LGW) is
+  // UK cabin-out hubs: Heathrow, Manchester and Edinburgh. Gatwick (LGW) is
   // deliberately excluded — the carriers that fly cabin pets out of the UK
   // (Air France, KLM, Lufthansa, SWISS, TAP, Etihad, Turkish, Air Transat)
-  // operate that service from LHR and MAN, NOT Gatwick. Including LGW here
-  // would generate workarounds implying a cabin route that doesn't exist.
-  "uk-out": ["London (LHR)", "Manchester (MAN)"],
+  // operate that service from LHR, MAN and (for KLM, Air France, Lufthansa,
+  // SAS, Iberia, Finnair, TAP) EDI — NOT Gatwick. Including LGW here would
+  // generate workarounds implying a cabin route that doesn't exist.
+  // Edinburgh added May 2026 (Project Tartan): EDI has its own cabin departures
+  // on KLM (AMS), Air France (CDG), Lufthansa (FRA/MUC), SAS (CPH), Iberia (MAD),
+  // Finnair (HEL) and TAP (LIS) per each carrier's published policy.
+  "uk-out": ["London (LHR)", "Manchester (MAN)", "Edinburgh (EDI)"],
   "ireland": ["Dublin (DUB)"],
   "us": ["New York (JFK)", "Newark (EWR)", "Boston (BOS)", "Chicago (ORD)", "Miami (MIA)", "Los Angeles (LAX)", "Washington (IAD)", "San Francisco (SFO)", "Seattle (SEA)"],
   "canada": ["Toronto (YYZ)", "Montreal (YUL)", "Vancouver (YVR)"],
@@ -1968,6 +2043,16 @@ const AIRPORTS = [
   { code: "NCL", city: "Newcastle", region: "uk-out", cabinOut: false, cabinIn: false,
     note: "Newcastle has no cabin-pet flights of its own — the carriers that take pets in the cabin out of the UK fly from Heathrow and Manchester. But Newcastle has something no other UK airport has: the DFDS overnight ferry to Amsterdam, which carries pets. For getting a pet to or from mainland Europe, that ferry is Newcastle's real route.",
     arrivalNote: "No airline flies cabin pets INTO the UK — but Newcastle is the UK port for the DFDS overnight ferry from Amsterdam (docking at North Shields), which DOES carry pets in pet-friendly cabins or onboard kennels. For a pet arriving from mainland Europe, that ferry makes Newcastle one of the most pet-practical ways into the UK — no cargo hold, no Channel drive." },
+  { code: "EDI", city: "Edinburgh", region: "uk-out", cabinOut: true, cabinIn: false,
+    note: "Edinburgh is Scotland's main international airport and one of only four UK airports with its own direct cabin-pet departures (alongside Heathrow, Manchester and — via Iberia — selected other UK routes). KLM (Amsterdam), Air France (Paris CDG), Lufthansa (Frankfurt / Munich), SAS (Copenhagen), Iberia (Madrid), Finnair (Helsinki) and TAP (Lisbon) all carry cabin pets out of Edinburgh on their published policies. For long-haul, Edinburgh has no transatlantic cabin pet route of its own — Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin; the practical cabin path to North America is EDI → an EU hub on a cabin-friendly carrier, then onward in cabin (e.g. EDI → AMS → JFK with KLM/Delta, both legs in cabin).",
+    arrivalNote: "Edinburgh IS on the UK government's approved pet-entry list — Air Canada, Air France KLM Martinair Cargo, Atlantic Airways, Delta, Emirates SkyCargo, Etihad, Lufthansa, Qatar Airways, TUI, Turkish Airlines, United and WestJet are all approved into Edinburgh as cargo (gov.uk, updated 30 March 2026). But the same UK rule applies: no cabin pets INTO the UK on any airline, Edinburgh included. Pets arriving from outside the UK/Ireland must come as manifested cargo via one of those approved carriers, or by ferry / pet-friendly transport via the Channel.",
+    // driveTo with conditionalOnNoDirect: Edinburgh has its own cabin departures
+    // (AMS, CDG, FRA, etc), so we suggest LHR only when there's NO direct cabin
+    // route from EDI to the destination. Important: Edinburgh-LHR by road is ~7
+    // hours, much longer than Manchester-LHR (~4h). The LNER train from Edinburgh
+    // Waverley to London Kings Cross is ~4h 30m and carries pets free in cabin
+    // on UK domestic services — usually the better option than driving.
+    driveTo: { code: "LHR", conditionalOnNoDirect: true, text: "When Edinburgh has no direct cabin option, Heathrow opens up far more routes. Edinburgh → London by road is around 7 hours, but the LNER train from Edinburgh Waverley to London Kings Cross is roughly 4h 30m and carries pets free in cabin on UK domestic services (max 2 small pets per passenger, in a carrier). For most owners the train beats driving — and either route leaves you in central London ready to connect onward to Heathrow." } },
   // Ireland
   { code: "DUB", city: "Dublin", region: "ireland", cabinOut: true, cabinIn: true, note: "Cabin pets fly both ways through Dublin. Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry cabin pets in, and several EU carriers fly cabin pets out of Dublin. Ireland is not the UK — there is no legal ban on cabin pets — though cabin options into Ireland are fewer than mainland EU.", arrivalNote: "Ireland is NOT the UK — it does allow cabin pets. Two confirmed cabin routes in: Iberia from Madrid and KLM from Amsterdam. Cabin options into Ireland are still limited compared with mainland Europe, so also consider the Dublin ferry routes if your departure city has no direct cabin flight. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival." },
   // United States
@@ -2349,13 +2434,25 @@ const REGION_PAIR_STRATEGIES = {
     ],
     note: `From Europe you have two ways in: a direct cabin flight if your city has one (Iberia flies Madrid → Dublin, KLM flies Amsterdam → Dublin), or the direct France→Ireland ferry — your pet stays with you for the crossing.`,
   }),
-  "uk-out>ireland": (o, d) => ({
-    legs: [
-      { route: `${o} → Holyhead (drive across to Wales)`, time: "4–6h", airline: "Pet stays with you" },
-      { route: `Ferry Holyhead → ${d}`, time: "3h 15m", airline: "Irish Ferries / Stena Line — pet-friendly" },
-    ],
-    note: `The short hop: drive to Holyhead in Wales, then the ferry to Dublin. Both UK and Ireland pet rules apply.`,
-  }),
+  "uk-out>ireland": (o, d) => {
+    const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+    if (isEDI) {
+      return {
+        legs: [
+          { route: `${o} → Amsterdam AMS`, time: "1h 30m", airline: "KLM ✓ Cabin" },
+          { route: `Amsterdam AMS → ${d}`, time: "1h 30m", airline: "KLM ✓ Cabin" },
+        ],
+        note: `Aer Lingus carries pets EDI→DUB but only in the hold — not the cabin. The cabin path is via a European hub on a single carrier through-ticket: KLM via Amsterdam (or Iberia via Madrid as an alternative — both KLM AMS→DUB and Iberia MAD→DUB are the only confirmed cabin routes INTO Ireland). Dog needs EU pet passport (or AHC) plus tapeworm treatment 24–120 hours before arrival.`,
+      };
+    }
+    return {
+      legs: [
+        { route: `${o} → Holyhead (drive across to Wales)`, time: "4–6h", airline: "Pet stays with you" },
+        { route: `Ferry Holyhead → ${d}`, time: "3h 15m", airline: "Irish Ferries / Stena Line — pet-friendly" },
+      ],
+      note: `The short hop: drive to Holyhead in Wales, then the ferry to Dublin. Both UK and Ireland pet rules apply.`,
+    };
+  },
 
   // ----- INTO the UAE -----
   // NOTE: there are NO workaround strategies for *>dubai here. The cabin route
@@ -2385,13 +2482,15 @@ const REGION_PAIR_STRATEGIES = {
   // ----- INTO India (no direct cabin from UK; via Europe) -----
   "uk-out>india": (o, d) => {
     const isHeathrow = o.includes("(LHR)");
+    const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+    const isHubCapable = isHeathrow || isEDI; // both have direct cabin to FRA/CDG
     const isBLR = d.includes("(BLR)");
     const longHaulAirline = isBLR
       ? "Air France ✓ Cabin (under 8 kg) — Lufthansa excludes Bangalore, route via Paris"
       : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)";
-    const legs = isHeathrow
+    const legs = isHubCapable
       ? [
-          { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
+          { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: isEDI ? "1h 50m–2h" : "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
           { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
           { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
         ]
@@ -2403,7 +2502,7 @@ const REGION_PAIR_STRATEGIES = {
         ];
     return {
       legs,
-      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHeathrow ? "Fly cabin OUT of Heathrow" : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors${isBLR ? " (Lufthansa excludes Bangalore — route via Paris on Air France)" : ""}. India needs the AQCS NOC and entry via one of six approved airports.`,
+      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHubCapable ? `Fly cabin OUT of ${isEDI ? "Edinburgh" : "Heathrow"}` : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors${isBLR ? " (Lufthansa excludes Bangalore — route via Paris on Air France)" : ""}. India needs the AQCS NOC and entry via one of six approved airports.`,
     };
   },
   "us>india": (o, d) => ({
@@ -2418,13 +2517,15 @@ const REGION_PAIR_STRATEGIES = {
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
   "uk-out>us": [
     (o, d) => {
-      // The European-hub cabin route is verified from Heathrow. If the user
-      // picked another UK airport (e.g. Manchester), route via Heathrow first
-      // rather than asserting a cabin flight we can't verify from that airport.
+      // The European-hub cabin route is verified from Heathrow and Edinburgh.
+      // Manchester has no direct cabin to AMS/CDG, so MAN users still need to
+      // route via Heathrow first.
       const isHeathrow = o.includes("(LHR)");
-      const legs = isHeathrow
+      const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isHubCapable = isHeathrow || isEDI;
+      const legs = isHubCapable
         ? [
-            { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
+            { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: isEDI ? "1h 30m–1h 50m" : "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
             { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
             { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
           ]
@@ -2437,22 +2538,30 @@ const REGION_PAIR_STRATEGIES = {
       return {
         label: "Via a European hub",
         legs,
-        note: isHeathrow
-          ? `There's no direct cabin route out of the UK to the US — but flying cabin OUT of Heathrow to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. A longer layover (or overnight in Paris) is gentler than a same-day connection.`
-          : `The European-hub cabin route runs from Heathrow — the UK's main cabin-pet departure airport. From ${o.split(" (")[0]}, get to Heathrow first (drive, or the cabin options from your airport are limited), then cabin to a European hub and onward to ${d}.`,
+        note: isHubCapable
+          ? `There's no direct cabin route out of the UK to the US — but flying cabin OUT of ${isEDI ? "Edinburgh" : "Heathrow"} to a European hub works, and the transatlantic carriers take cabin pets onward to ${d}. ${isEDI ? "Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin — the European-hub path is the practical cabin route." : ""} A longer layover (or overnight in Paris/Amsterdam) is gentler than a same-day connection.`
+          : `The European-hub cabin route runs from Heathrow and Edinburgh — the UK's main cabin-pet departure airports. From ${o.split(" (")[0]}, get to Heathrow first (drive, or the cabin options from your airport are limited), then cabin to a European hub and onward to ${d}.`,
       };
     },
     (o, d) => {
       const isHeathrow = o.includes("(LHR)");
+      const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isHubCapable = isHeathrow || isEDI;
       return {
-        label: "Via Montreal (Air Canada)",
+        label: isEDI ? "Via Toronto (Air Canada)" : "Via Montreal (Air Canada)",
         legs: [
-          { route: isHeathrow ? `${o} → Montreal (YUL)` : `${o} → London Heathrow (LHR) → Montreal (YUL)`, time: "7h 30m", airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)" },
-          { route: "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
-          { route: `Montreal → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
+          {
+            route: isHubCapable ? `${o} → ${isEDI ? "Toronto (YYZ)" : "Montreal (YUL)"}` : `${o} → London Heathrow (LHR) → Montreal (YUL)`,
+            time: isEDI ? "7h" : "7h 30m",
+            airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)",
+          },
+          { route: isEDI ? "Overnight in Toronto" : "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
+          { route: `${isEDI ? "Toronto" : "Montreal"} → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
         ],
         note: isHeathrow
           ? `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of Heathrow to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy.`
+          : isEDI
+          ? `Air Canada flies EDI → Toronto daily year-round, and Edinburgh is on Air Canada's verified UK departures list (alongside Heathrow). The overnight in Toronto is what makes the long journey gentle — pet recovers, you recover, then the short hop onward to ${d} the next morning is straightforward. The European-hub route above (KLM via AMS, Air France via CDG) is the alternative — single carrier across both legs but adds the Atlantic crossing to leg 2.`
           : `Air Canada's UK cabin departures run from Heathrow. From ${o.split(" (")[0]}, get to Heathrow first — or, from Manchester specifically, Air Transat flies Manchester→Toronto in cabin and you connect onward from there. The overnight stop in Canada is what makes the long journey gentle.`,
       };
     },
@@ -3822,7 +3931,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
   // roughly a single country, so europe is excluded here.
   if (oA.region === "europe") return [];
   const originRegionKeywords = {
-    "uk-out": ["London", "Manchester", "Newcastle", "(LHR)", "(MAN)", "(LGW)", "(NCL)", "UK"],
+    "uk-out": ["London", "Manchester", "Newcastle", "Edinburgh", "Glasgow", "(LHR)", "(MAN)", "(LGW)", "(NCL)", "(EDI)", "(GLA)", "UK"],
     "ireland": ["Dublin", "(DUB)", "Ireland"],
     "us": ["New York", "Miami", "Chicago", "Los Angeles", "Boston", "Newark", "Washington", "Baltimore", "San Francisco", "Seattle", "(JFK)", "(EWR)", "(BOS)", "(ORD)", "(MIA)", "(LAX)", "(IAD)", "(BWI)", "(SFO)", "(SEA)", "USA"],
     "canada": ["Toronto", "Montreal", "Vancouver", "(YYZ)", "(YUL)", "(YVR)", "Canada"],
@@ -14898,6 +15007,12 @@ function WhatsNew() {
   // short and pruned each time something material changes.
   const ITEMS = [
     {
+      date: "27 May 2026",
+      headline: "Edinburgh (EDI) added as a UK cabin-pet departure airport",
+      body: "Edinburgh joins Heathrow and Manchester as a verified UK cabin-pet departure airport. KLM (Amsterdam), Air France (CDG), Lufthansa (FRA/MUC), SAS (CPH), Iberia (MAD), Finnair (HEL) and TAP (LIS) all carry cabin pets out of EDI on their published policies. The journey planner, route cards and checklists are now Edinburgh-aware. Cabin INTO the UK is still blocked on all airlines (UK government rule), Edinburgh included.",
+      tag: "Edinburgh",
+    },
+    {
       date: "22 Apr 2026",
       headline: "EU pet passport rules changed for non-EU residents",
       body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
@@ -14914,12 +15029,6 @@ function WhatsNew() {
       headline: "Air Canada formalised soft-sided-only cabin carriers",
       body: "Air Canada's news page confirmed that from 1 June 2025, hard-sided kennels are no longer accepted under the seat on flights operated by Air Canada, Rouge or Express. Soft-sided had long been the recommendation; this makes it a firm rule. Combined weight limit (pet + carrier) stays at 10 kg.",
       tag: "Air Canada",
-    },
-    {
-      date: "Summer 2026",
-      headline: "ITA Airways: dogs up to 30 kg in cabin",
-      body: "Italy's civil aviation authority (ENAC) approved a new rule allowing medium and large dogs in the cabin on selected 'large pet-friendly' domestic Italian flights. ITA Airways is the first carrier rolling it out; an extra seat purchase is required. Watch for the public booking launch through summer 2026.",
-      tag: "ITA",
     },
   ];
 

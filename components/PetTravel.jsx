@@ -287,18 +287,18 @@ const AIRLINES = [
   },
   {
     name: "Air Transat",
-    tags: ["canada", "uk-out", "longhaul", "mexico"],
-    cabin: "Cabin OUT of UK ✓ (Manchester / Glasgow only) — but cargo only to/from Ireland",
+    tags: ["canada", "longhaul", "mexico"],
+    cabin: "Cabin within Canada/US/Mexico/EU (non-UK/Ireland) ✓ — UK & Ireland are cargo only",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: Canada, US, Europe, and OUT of UK from Manchester (MAN) and Glasgow (GLA) — NOT Gatwick. Cabin NOT allowed: into UK (cargo only); to AND from the Republic of Ireland (cargo only on Air Transat — they previously allowed cabin out of Dublin but no longer do); Jamaica.",
-    originAllowed: { uk: "yes", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
-    destinationAllowed: { uk: "no", us: "no", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
-    fee: "CAD $50 (US routes) / CAD $100 (Europe & UK routes) one-way, paid ≥24h in advance — about $15 higher if paid at the airport. Plus a CAD $30 CFIA inspection fee on arrival into Canada (waived from the US).",
+    direction: "Cabin allowed: within Canada, Canada↔US, Canada↔mainland EU (Belgium, France, Greece, Italy, Netherlands, Portugal, Spain, Switzerland), Canada↔Mexico/Caribbean/Central & South America. Cabin NOT allowed (both directions): UK (Air Transat's own page states 'To United Kingdom and Republic of Ireland, cats and dogs will be accepted as cargo only'); Republic of Ireland (same cargo-only rule); Jamaica (not accepted in any class). Cabin in cabin on Air Transat is ALSO restricted to service animals (trained, certified) for some other routes — confirm at booking. Service dogs are accepted on UK and Ireland flights in cabin; non-service pets to those countries are cargo-only.",
+    originAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "no", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "no", korea: "no" },
+    fee: "CAD $50 (US routes) / CAD $100 (Europe routes — non-UK/Ireland) one-way, paid ≥24h in advance — about $15 higher if paid at the airport. Plus a CAD $30 CFIA inspection fee on arrival into Canada (waived from the US).",
     weight: "Pet + carrier max 17 lb (8 kg)",
     carrier: "Soft-sided. Max 17 × 9.5 × 10 in (43 × 24 × 25 cm)",
-    notes: "Another Canadian carrier that allows pets in cabin OUT of the UK — handy if you live closer to Manchester or Glasgow than London. Air Transat operates this from Manchester (MAN) and Glasgow (GLA) only — NOT Gatwick. Like Air Canada, pets can't fly cabin into the UK on return. IMPORTANT: Air Transat is cargo-only to AND from the Republic of Ireland — they previously allowed cabin pets out of Dublin but changed this policy. Reserve ≥24h before departure; book 72h+ for travel to Caribbean / South America destinations. Banned breeds include Pit Bulls, Staffies, Mastiff, Tosa, Akita, Rottweiler, Doberman and wolf-hybrids.",
-    intl: "Yes (transatlantic — not to/from Ireland in cabin)",
-    verified: "May 2026",
+    notes: "Canadian leisure carrier (Montreal hub) with cabin pets allowed on most of its network — but NOT on UK or Republic of Ireland flights, where Air Transat's own published page is explicit: 'To United Kingdom and Republic of Ireland, cats and dogs will be accepted as cargo only on Air Transat flights — advance arrangements are required.' Service dogs (certified, trained to assist with a disability) are accepted in cabin to UK and Ireland; non-service pets to those countries must travel as cargo. For UK travellers looking for a Canadian cabin pet route, the working options are Air Canada from LHR or EDI — not Air Transat. Air Transat does NOT operate cabin pets to Jamaica at all (not even as cargo). For routes where cabin IS allowed (Canada↔Mexico, Canada↔Caribbean, Canada↔mainland EU), reserve ≥24h before departure; banned breeds include Pit Bulls, Staffies, Mastiff, Tosa, Akita, Rottweiler, Doberman and wolf-hybrids.",
+    intl: "Yes (transatlantic — NOT UK or Ireland in cabin)",
+    verified: "May 2026 — UK/Ireland cargo-only confirmed against Air Transat's own published page",
     link: "https://www.airtransat.com/en-CA/travel-information/special-services/pets-and-service-dogs",
   },
   {
@@ -1109,7 +1109,9 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM MANCHESTER ═══════
   { from: "Manchester (MAN)", to: "Abu Dhabi (AUH)", duration: "7h 45m", note: `Etihad. ✓ Cabin out of UK (under 8 kg). ${ETIHAD_PROMO_SHORT}.`, tags: ["uk-out", "dubai"] },
-  { from: "Manchester (MAN)", to: "Toronto (YYZ)", duration: "7h 45m", note: "Air Transat. ✓ Cabin out of UK (under 8 kg). Manchester/Glasgow only — not Gatwick.", tags: ["uk-out", "canada"] },
+  // Air Transat MAN→YYZ deleted 27 May 2026: Air Transat's own page is explicit that
+  // "To United Kingdom and Republic of Ireland, cats and dogs will be accepted as cargo
+  // only on Air Transat flights." See DECISIONS_LOG #27 for the audit-correctness fix.
 
   // ═══════ FROM EDINBURGH ═══════
   // Project Tartan (May 2026): EDI's direct cabin-out routes verified against each
@@ -2089,7 +2091,7 @@ const AIRPORTS = [
   // United Kingdom
   { code: "LHR", city: "London Heathrow", region: "uk-out", cabinOut: true, cabinIn: false, note: "Heathrow is the UK's main cabin-pet departure airport — most UK-out cabin carriers operate here.", arrivalNote: "No airline flies cabin pets INTO the UK — Heathrow included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel." },
   { code: "MAN", city: "Manchester", region: "uk-out", cabinOut: true, cabinIn: false,
-    note: "Manchester has a couple of direct cabin routes of its own (Etihad to Abu Dhabi, Air Transat to Toronto).",
+    note: "Manchester has one direct cabin route of its own: Etihad to Abu Dhabi. For Canada from Manchester, Air Transat is cargo-only to UK and Ireland per their own published policy — Air Canada from LHR or EDI is the working cabin option to Canada.",
     arrivalNote: "No airline flies cabin pets INTO the UK — Manchester included. Pets arriving in the UK must come in as manifested cargo, or by ferry or pet-friendly transport via the Channel.",
     // driveTo with conditionalOnNoDirect: Manchester CAN do a few cabin routes,
     // but for any destination it can't reach directly, driving to Heathrow
@@ -2671,7 +2673,7 @@ const REGION_PAIR_STRATEGIES = {
           ? `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of Heathrow to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy.`
           : isEDI
           ? `Air Canada flies EDI → Toronto daily year-round, and Edinburgh is on Air Canada's verified UK departures list (alongside Heathrow). The overnight in Toronto is what makes the long journey gentle — pet recovers, you recover, then the short hop onward to ${d} the next morning is straightforward. The European-hub route above (KLM via AMS, Air France via CDG) is the alternative — single carrier across both legs but adds the Atlantic crossing to leg 2.`
-          : `Air Canada's UK cabin departures run from Heathrow. From ${o.split(" (")[0]}, get to Heathrow first — or, from Manchester specifically, Air Transat flies Manchester→Toronto in cabin and you connect onward from there. The overnight stop in Canada is what makes the long journey gentle.`,
+          : `Air Canada's UK cabin departures run from Heathrow and Edinburgh. From ${o.split(" (")[0]}, the path is to reach LHR or EDI first (drive, train, or short hop). The overnight stop in Canada is what makes the long journey gentle.`,
       };
     },
   ],
@@ -4500,7 +4502,7 @@ const CHECKLIST_DATA = {
           "Vet appointment for full health check",
           "ISO microchip implanted (recommended; not strictly required for entry but airlines need it)",
           "Rabies vaccine ≥30 days old (for adult dogs)",
-          "Book cabin pet space with airline (Air Canada / Air Transat from UK; AC / AA / Delta / United / WestJet within North America)",
+          "Book cabin pet space with airline (Air Canada from UK; AC / AA / Delta / United / WestJet within North America)",
         ],
       },
       {
@@ -4508,7 +4510,7 @@ const CHECKLIST_DATA = {
         items: [
           "Vet-issued international health certificate (<a href=\"https://inspection.canada.ca/animal-health/terrestrial-animals/imports/pets/eng/1326600389775/1326600500578\" target=\"_blank\" rel=\"noopener noreferrer\">CFIA</a> recommends within 10 days of arrival). Make sure your vet confirms your pet is examined, free from contagious disease, and 'fit to fly' — this same certificate doubles as the airline's fit-to-fly requirement.",
           "If from US: USDA-accredited vet only — APHIS endorsement NOT required for Canada (saves time)",
-          "If from UK: a vet 'fit to fly' letter is what you need — there is NO Animal Health Certificate equivalent for Canada (the GB AHC is EU-only). Most airlines (Air Canada, Air Transat) want this letter issued within 10 days of travel.",
+          "If from UK: a vet 'fit to fly' letter is what you need — there is NO Animal Health Certificate equivalent for Canada (the GB AHC is EU-only). Air Canada wants this letter issued within 10 days of travel.",
           "If from elsewhere: country-specific government health certificate",
           "Re-confirm airline cabin pet booking by phone",
         ],
@@ -9395,7 +9397,7 @@ const DESTINATIONS = [
       {
         title: "Cabin out of Heathrow — the most overlooked UK option",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Most UK pet owners assume they can't fly with their pet in cabin. They can — just not on British Airways or Virgin (cargo only). Several airlines accept cabin pets DEPARTING from London Heathrow (LHR): Air France (to Paris), KLM (to Amsterdam), Lufthansa (to Frankfurt/Munich), SWISS (to Zurich), LOT Polish (to Warsaw), TAP Air Portugal (to Lisbon), Air Canada (to Toronto/Montreal), and Air Transat (Manchester/Glasgow only). All combined max 8–10 kg. From any of these European hubs you can connect onward cabin-friendly to the US, India, or most of the world. CRITICAL: This is Heathrow only — Gatwick (LGW) blocks cabin pet departures on all airlines.",
+        body: "Most UK pet owners assume they can't fly with their pet in cabin. They can — just not on British Airways or Virgin (cargo only). Several airlines accept cabin pets DEPARTING from London Heathrow (LHR): Air France (to Paris), KLM (to Amsterdam), Lufthansa (to Frankfurt/Munich), SWISS (to Zurich), LOT Polish (to Warsaw), TAP Air Portugal (to Lisbon), and Air Canada (to Toronto/Montreal). All combined max 8–10 kg. From any of these European hubs you can connect onward cabin-friendly to the US, India, or most of the world. CRITICAL: This is Heathrow only — Gatwick (LGW) blocks cabin pet departures on all airlines.",
         cost: "Pet fee per leg: €50–€200. Two-leg long-haul: €100–€400 total.",
       },
       {
@@ -9995,7 +9997,7 @@ function AirlineGrid() {
             <div>
               <div className="font-serif text-stone-900 mb-1">Direction matters more than people realise.</div>
               <p className="text-stone-700 text-sm leading-relaxed">
-                Several airlines (especially Air Canada and Air Transat) allow pets in cabin in <strong>one direction but not the other</strong> — usually because of the destination country's rules, not the airline's. For example: pets <em>can</em> fly cabin OUT of the UK on Air Canada, but cannot fly cabin INTO the UK with any airline (UK government rule). Tap any card to see direction-specific rules in the "Direction matters" section.
+                Several airlines (especially Air Canada) allow pets in cabin in <strong>one direction but not the other</strong> — usually because of the destination country's rules, not the airline's. For example: pets <em>can</em> fly cabin OUT of the UK on Air Canada, but cannot fly cabin INTO the UK with any airline (UK government rule). Tap any card to see direction-specific rules in the "Direction matters" section.
               </p>
             </div>
           </div>
@@ -14698,7 +14700,7 @@ function Stories() {
           <div className="font-serif text-lg text-stone-800 leading-[1.8] space-y-6">
 
             <p>
-              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing most people assume is that you can't. The hard wall is actually one-way: <strong>no airline allows cabin pets INTO the UK</strong> (UK government rule — that's the inbound restriction). But OUT of the UK is a different story. Several airlines do allow cabin pets on departing flights from Heathrow — Air Canada, Air France, KLM, Lufthansa, SWISS, LOT Polish, TAP, Etihad, Turkish, and Air Transat from Manchester. Most pet owners don't know this. It's the route nobody talks about.
+              When you live in the UK and want to fly internationally with a small dog in the cabin, the first thing most people assume is that you can't. The hard wall is actually one-way: <strong>no airline allows cabin pets INTO the UK</strong> (UK government rule — that's the inbound restriction). But OUT of the UK is a different story. Several airlines do allow cabin pets on departing flights from Heathrow — Air Canada, Air France, KLM, Lufthansa, SWISS, LOT Polish, TAP, Etihad and Turkish. Most pet owners don't know this. It's the route nobody talks about.
             </p>
 
             <p>

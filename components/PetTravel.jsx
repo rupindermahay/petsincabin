@@ -13194,6 +13194,21 @@ function JourneyPlanner() {
                   const PREVIEW_ITEMS = 2; // items shown per section before "show all"
 
                   let inTipsBlock = false;
+                  // Detect when the selected route's origin airport differs
+                  // from the user's effective origin (i.e. user picked SFO but
+                  // the only matching route is LAX→DEL from a region-level
+                  // workaround). The route card itself already flags this via
+                  // `r._kind === "region"`, but the checklist header was showing
+                  // the route's origin without acknowledging it isn't the user's.
+                  // Extract the route's origin code from `selectedRoute.from`
+                  // (e.g. "Los Angeles (LAX)" → "LAX") and compare to the
+                  // effective origin code. When they differ, the checklist
+                  // header gets the same adaptation note as the route card.
+                  const routeFromCode = (() => {
+                    const m = (selectedRoute.from || "").match(/\(([A-Z]{3})\)/);
+                    return m ? m[1] : null;
+                  })();
+                  const isAdaptedOrigin = routeFromCode && routeFromCode !== effectiveOrigin;
                   return (
                     <div id="planner-tailored-checklist" className="bg-amber-950/40 border-2 border-amber-700 p-5 md:p-6 scroll-mt-24">
                       {/* HEADER — explains what this is + download CTA at the TOP */}
@@ -13204,6 +13219,11 @@ function JourneyPlanner() {
                           <div className="font-serif text-stone-100 text-xl mb-1">
                             {airportLabel(selectedRoute.from || origin)} → {airportLabel(selectedRoute.to || destination)}
                           </div>
+                          {isAdaptedOrigin && (
+                            <div className="text-xs text-amber-300/90 italic mb-2 leading-relaxed">
+                              Routed from a different airport in the same country — adapt the first leg to start from {airportLabel(effectiveOrigin)}.
+                            </div>
+                          )}
                           <p className="text-stone-300 text-sm leading-relaxed">
                             {totalItems} items across {sectionCount} stages, covering every country your pet legally enters on this route.
                           </p>
@@ -15176,7 +15196,7 @@ function WhatsNew() {
   ];
 
   return (
-    <section id="whats-new" className="py-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
+    <section id="whats-new" className="pt-10 pb-16 md:pt-12 md:pb-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-3">
           <span className="text-xs uppercase tracking-[0.25em] text-amber-700 font-medium">

@@ -386,15 +386,15 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "us", "longhaul"],
     cabin: "Cabin OUT of UK ✓ — best for UK → Portugal",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Lisbon/Porto, 184 flights per week from Heathrow). Cabin NOT allowed: INTO the UK (cargo only — UK government rule). Ireland is not the UK and has no such ban, but TAP's own cabin position for Dublin isn't clearly confirmed — check directly if you need it.",
-    originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
-    destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR/MAN/EDI → Lisbon/Porto). TAP's own page is explicit on the direction asymmetry: 'Flights to the United Kingdom: Pets cannot be transported in the cabin or the aircraft's hold (on direct routes or with stopovers), except for assistance pets'. Outbound from UK is fine on standard prep (microchip + rabies ≥21 days + Defra-endorsed health certificate). Cabin NOT allowed: INTO the UK (cabin AND hold blocked on TAP itself — assistance pets only). Also blocked outbound: London Gatwick (LGW) and any Northern Ireland airport, per TAP's own carve-out list.",
+    originAllowed: { uk: "yes (LHR/MAN/EDI only — not LGW, not Northern Ireland)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
+    destinationAllowed: { uk: "no (TAP blocks pets cabin AND hold to UK — assistance only)", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "no", mexico: "no", "south-america": "yes", "central-america": "no", japan: "no", korea: "no" },
     fee: "€75 short-haul · €200 long-haul (US, Brazil)",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "Soft-sided, max 45 × 30 × 23 cm (~18 × 12 × 9 in)",
-    notes: "The flag carrier of Portugal — and the most popular option for UK pet owners moving to Portugal (Lisbon, Porto, Faro). Flies LHR → Lisbon in cabin daily. Lisbon is also a good connection hub for onward cabin flights to USA, Brazil, and Morocco. Reserve at least 48 hours ahead by phone. Snub-nosed breeds: cabin allowed.",
-    intl: "Yes",
-    verified: "May 2026",
+    notes: "The flag carrier of Portugal — and a popular option for UK pet owners moving to Portugal (Lisbon, Porto, Faro). Flies LHR → Lisbon in cabin. Lisbon is also a useful connection hub for onward cabin flights to USA, Brazil, and Morocco. Reserve at least 48 hours ahead by phone. Snub-nosed breeds: cabin allowed. IMPORTANT — UK direction asymmetry per TAP's own page: cabin and hold both blocked TO the UK (only assistance pets); cabin outbound FROM the UK is permitted EXCEPT from Gatwick (LGW) or any Northern Ireland airport. Use Heathrow, Manchester, or Edinburgh for TAP cabin departures. NOTE: occasional customer-service confusion has been reported — agents sometimes interpret 'pets can't fly to UK' as 'pets can't fly UK at all'; if you get this on the phone, escalate or cite TAP's own published rule (flytap.com/.../traveling-with-animals/pets). Brazil specifics per TAP: entry to Brazil requires an International Veterinary Certificate (IVC) — the EU pet passport is NOT valid for Brazil entry. TAP does NOT carry pets on connecting flights operated by GOL (G3) or Azul (AD) — applies to all flights operated by those carriers, so book onward Brazilian domestic on TAP metal or split the trip. Portugal as final destination from non-EU origin: arrival notification form must be submitted to the Portuguese authorities at least 48 hours before arrival. Ireland-bound flights: TAP enforces Ireland's 24-hour DAFM Advance Notice rule (see Ireland checklist for detail). Useful puppy exception per TAP: pets aged 10-12 weeks travelling to Portugal or Spain (or in cabin) only need a basic health bulletin + vet certificate, not the full EU pet passport — a real time-saver for short-trip moves to Iberia with a young pup.",
+    intl: "Yes (most routes)",
+    verified: "May 2026 — audited clean against TAP's own page (flytap.com/en-us/information/traveling-with-animals/pets); UK direction asymmetry explicit in the published text (cabin AND hold blocked TO UK; cabin OUT permitted from LHR/MAN/EDI but not LGW or Northern Ireland)",
     link: "https://www.flytap.com/en-us/information/traveling-with-animals/pets",
   },
   {
@@ -458,7 +458,7 @@ const AIRLINES = [
     carrier: "Soft-sided. Max 45 × 35 × 25 cm (sum of dimensions ≤105 cm)",
     notes: "Spain's flag carrier, hub at Madrid (MAD). The most-used cabin pet airline for Spanish + Latin American routes. Notably, Iberia DOES carry cabin pets to Ireland — Madrid ⇄ Dublin — unlike the UK, which is cargo-only. A dog entering Ireland needs an EU pet passport (or AHC) plus a tapeworm treatment 24–120 hours before arrival. Book pet space via Iberia Booking Offices ≥48 hours before flight. Snub-nosed breeds are cabin-only (banned from hold). Important Gatwick caveat: cabin pets blocked at LGW even outbound, so use Heathrow / Manchester / Edinburgh to fly out of UK.",
     intl: "Yes (extensive)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Iberia's own page (iberia.com/es/fly-with-iberia/pets/); cabin OK outbound from LHR/MAN/EDI confirmed (only inbound TO these airports blocked, which is the universal UK rule); LGW blocked both directions confirmed; hold blocked on all UK routes both directions confirmed",
     link: "https://www.iberia.com/us/fly-with-iberia/pets/",
   },
   {
@@ -684,7 +684,7 @@ const AIRLINES = [
     carrier: "Soft-sided. Max 55×40×23 cm (A320 family) or 40×25×25 cm on DH8-100 and ATR aircraft — confirm aircraft type when booking",
     notes: "Greek flag carrier — Star Alliance member since 2010. Most flexible cabin pet policy among Greek carriers, with one of the lowest fees in Europe. Cats and dogs only. Book at least 2 hours before flight (online or call center; €8 service fee for call-center bookings); limited pet spaces per flight on a first-come, first-served basis. A Live Animal Acceptance Checklist must be completed and signed at check-in. Olympic Air shares the same policy on codeshare flights. UK note: Heathrow is the only UK airport Aegean serves, and it's cargo-only — Gatwick is also cargo-only on the rare codeshare. UAE: cargo only both directions (Dubai/Abu Dhabi). Passengers travelling with an infant cannot bring a pet in cabin. Service dogs free with 48 hours notice.",
     intl: "Yes (Europe + Middle East)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Aegean's own page (en.aegeanair.com/.../traveling-with-pet/); cabin OUT from LHR permitted, only LHR served for UK, LGW cargo only, hold blocked TO UK, UAE cargo only both directions — all matches site",
     link: "https://en.aegeanair.com/travel-info/travelling-with-aegean/special-assistance/traveling-with-pet/",
   },
   {
@@ -1272,7 +1272,7 @@ const DIRECT_ROUTES = [
   { from: "São Paulo (GRU)", to: "Paris (CDG)", duration: "11h 30m", note: "Air France, LATAM. ✓ Cabin. Onward to all of Europe.", tags: ["south-america", "europe"] },
   { from: "São Paulo (GRU)", to: "Buenos Aires (EZE)", duration: "3h", note: "LATAM, Aerolineas Argentinas, GOL. ✓ Cabin (LATAM under 7 kg). The main intra-South-America cabin pet hop.", tags: ["south-america"] },
   { from: "São Paulo (GRU)", to: "Santiago (SCL)", duration: "4h 30m", note: "LATAM. ✓ Cabin. Brazil ↔ Chile is the South America cabin pet workhorse.", tags: ["south-america"] },
-  { from: "São Paulo (GRU)", to: "Lisbon (LIS)", duration: "10h", note: "TAP Portugal, LATAM. ✓ Cabin. Brazil-Portugal cultural/migration corridor — busy cabin route.", tags: ["south-america", "europe"] },
+  { from: "São Paulo (GRU)", to: "Lisbon (LIS)", duration: "10h", note: "TAP Portugal, LATAM. ✓ Cabin. Brazil-Portugal cultural/migration corridor — busy cabin route. TAP-specific: Brazilian Health Certificate / IVC required (60-day validity window); on TAP, do NOT book onward Brazilian domestic on GOL (G3) or Azul (AD) — TAP doesn't carry pets on those connecting carriers.", tags: ["south-america", "europe"] },
 
   // ═══════ FROM BUENOS AIRES ═══════
   { from: "Buenos Aires (EZE)", to: "Miami (MIA)", duration: "9h", note: "LATAM cabin (under 7 kg). American Airlines: cargo only — does NOT accept cabin pets on US-Argentina routes. Direct US east coast.", tags: ["south-america", "us"] },
@@ -4250,6 +4250,14 @@ const CHECKLIST_DATA = {
         ],
       },
       {
+        title: "≥24 hours before arrival — Advance Notice Portal (inbound only)",
+        items: [
+          "If arriving in Ireland: submit the Advance Notice form via Ireland's official Pet Travel Portal at <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">pettravel.gov.ie</a> at least 24 hours before arrival (ideally a week ahead). Include microchip number, travel details, vaccination history, point of entry (DUB, SNN, ORK).",
+          "Many airlines (including TAP, Iberia, KLM) will not confirm boarding until Ireland's veterinary compliance check is arranged via this Advance Notice.",
+          "Dogs with cropped (or partially cropped) ears: Ireland banned this practice in 2023; importing such a dog requires an additional electronic permit ≥5 days before travel plus a stamped veterinary certificate confirming medical reason for cropping.",
+        ],
+      },
+      {
         title: "24–120 hours before Ireland arrival",
         items: [
           "Tapeworm treatment by a vet — REQUIRED for dogs only (not cats)",
@@ -6544,6 +6552,15 @@ const DIRECTIONAL_CHECKLISTS = {
             "If coming from the UK: a GB Animal Health Certificate covers the trip.",
             "<strong>Note — two separate documents:</strong> the Animal Health Certificate is the GOVERNMENT document proving your pet meets Ireland's import rules. Your airline separately wants a 'fit to fly' vet letter — confirm with your specific airline.",
             "Confirm ferry or cargo booking.",
+          ],
+        },
+        {
+          title: "≥24 hours before arrival — Advance Notice Portal",
+          items: [
+            "Submit Ireland's Advance Notice form to the destination port/airport authorities at least 24 hours before arrival (ideally a week in advance) via the official Pet Travel Portal at <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">pettravel.gov.ie</a>. You'll receive a confirmation — bring it to check-in.",
+            "Many airlines (including TAP, Iberia, KLM and others) will not confirm boarding for your pet until Ireland's veterinary compliance check has been arranged via this Advance Notice.",
+            "Include in the form: pet microchip number, travel details, vaccination history, and point of entry (DUB, SNN, ORK, etc.).",
+            "Dogs with cropped (or partially cropped) ears: Ireland banned this practice in 2023; to import such a dog you need an additional import permit applied for electronically ≥5 days before travel, plus a stamped veterinary certificate confirming the cropping was for medical reasons.",
           ],
         },
         {

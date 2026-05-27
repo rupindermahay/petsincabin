@@ -225,7 +225,7 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The ferry version lands in the north of England, so it suits anyone heading for Scotland or northern England better than someone bound for London. Either way, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered below.
+              The ferry version lands in the north of England, so it suits anyone heading for Scotland or northern England better than someone bound for London. For Edinburgh specifically, Newcastle to Edinburgh is about 1h 30m on the LNER train (pets travel free in cabin on UK domestic services, max 2 small pets per passenger in a carrier) or roughly 2 hours by road. Either way, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered below.
             </p>
           </section>
 

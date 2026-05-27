@@ -34,6 +34,13 @@ const ETIHAD_UPDATE = ETIHAD_PROMO_ACTIVE
 
 const RULE_CHANGES = [
   {
+    date: "27 May 2026",
+    tag: "Edinburgh",
+    headline: "Edinburgh (EDI) added as a UK cabin-pet departure airport",
+    body: "Edinburgh joins Heathrow and Manchester as a verified UK cabin-pet departure airport — KLM (to Amsterdam), Air France (Paris CDG), Lufthansa (Frankfurt/Munich), SAS (Copenhagen), Iberia (Madrid), Finnair (Helsinki) and TAP (Lisbon) all carry cabin pets out of Edinburgh on their published policies. EDI is also on the UK government's pet-approved list for cargo-into-UK with Air Canada, Air France-KLM Martinair Cargo, Atlantic Airways, Delta, Emirates SkyCargo, Etihad, Lufthansa, Qatar Airways, TUI, Turkish Airlines, United and WestJet — though, as with every UK airport, no cabin pets INTO the UK on any airline. The journey planner, route cards, dropdowns and checklists are now Edinburgh-aware; a Scottish traveller picking EDI gets the same depth of coverage as one picking LHR. Virgin Atlantic flies EDI to several US cities but is assistance-dogs-only in cabin — for transatlantic cabin pets from Edinburgh, the path is EDI → an EU hub → US on a single carrier (KLM via Amsterdam or Air France via Paris).",
+    source: "gov.uk approved air routes (updated 30 March 2026); each airline's own published policy",
+  },
+  {
     date: "22 Apr 2026",
     tag: "EU",
     headline: "EU pet passport rules changed for non-EU residents",

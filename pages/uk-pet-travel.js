@@ -67,7 +67,7 @@ export default function UKPetTravel() {
               The UK requires every pet entering the country on a commercial flight to travel as <strong>manifested cargo</strong> — booked separately, travelling in the hold, processed through an Animal Reception Centre on arrival. There is no in-cabin option and no checked-baggage option. The only exception is a registered assistance dog.
             </p>
             <p>
-              This catches people out because it's <em>directional</em>. You can fly out of the UK with your pet in the cabin — Heathrow to Paris, to Frankfurt, to Lisbon, to Toronto — on plenty of airlines. It's only the inbound leg that's blocked. So a route that worked beautifully on the way out simply doesn't exist on the way home.
+              This catches people out because it's <em>directional</em>. You can fly out of the UK with your pet in the cabin — Heathrow to Paris, to Frankfurt, to Lisbon, to Toronto — on plenty of airlines. Manchester and Edinburgh also have their own direct cabin departures (Etihad from Manchester to Abu Dhabi; KLM, Air France, Lufthansa, SAS, Iberia, Finnair and TAP from Edinburgh to their respective EU hubs). It's only the inbound leg that's blocked. So a route that worked beautifully on the way out simply doesn't exist on the way home.
             </p>
             <p>
               And to close off the obvious question: <strong>Eurostar does not carry pets either</strong>. The train through the Channel Tunnel bans them on every route. The tunnel itself is part of the answer — but not the passenger train.

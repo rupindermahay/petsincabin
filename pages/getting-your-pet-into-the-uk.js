@@ -27,7 +27,7 @@ export default function GettingYourPetIntoTheUK() {
           className="border-b border-stone-300 px-6 md:px-12 py-4"
           style={{ backgroundColor: "rgba(250, 246, 237, 0.98)" }}
         >
-          <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2.5 group">
               <img src="/logo.png" alt="Pets in Cabin" className="w-8 h-8 rounded-full object-cover" />
               <span className="font-serif font-semibold text-stone-800 group-hover:text-amber-700 transition-colors" style={{ letterSpacing: "-0.02em" }}>
@@ -40,7 +40,7 @@ export default function GettingYourPetIntoTheUK() {
           </div>
         </nav>
 
-        <main className="max-w-4xl mx-auto px-6 py-8 md:py-12">
+        <main className="max-w-6xl mx-auto px-6 py-8 md:py-12">
           <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
             The complete guide
           </div>
@@ -84,11 +84,7 @@ export default function GettingYourPetIntoTheUK() {
             </h2>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              It's a UK government rule, not an airline policy you can sweet-talk your way around — every pet flying into Britain rides as cargo, in the hold, no exceptions, Heathrow included. So nobody flies their pet <em>in</em>. What thousands of people do instead: fly the pet in the cabin to Europe, then cross the Channel by land or sea with the pet right beside them.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed">
-              That's the whole trick. The rest of this page is just <em>which</em> way to make that crossing — compared, costed and timed, so you can pick yours and get on with it.
+              It's a UK government rule, not an airline policy you can sweet-talk your way around — every pet flying into Britain rides as cargo, in the hold, no exceptions, Heathrow included. So nobody flies their pet <em>in</em>. What thousands of people do instead: fly the pet in the cabin to Europe, then cross the Channel by land or sea with the pet right beside them. The rest of this page is just <em>which</em> way to make that crossing — compared, costed and timed.
             </p>
 
             <p className="font-serif italic text-stone-600 text-sm leading-relaxed mt-4">
@@ -121,27 +117,22 @@ export default function GettingYourPetIntoTheUK() {
 
             <RouteComparison />
 
-            <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
-              <strong>How to read these costs.</strong> Every figure above is for a <em>single one-way crossing</em>. Two things people miss: first, the <em>vehicle ticket</em> (roughly £89–£230 for a car on the Calais–Dover ferry, more in peak summer) is the real cost — the pet fee of ~£15–£24 is only the surcharge for the dog on top of it. Second, the ferry and Eurotunnel both charge <em>per vehicle, not per person</em>: one car carries up to nine passengers for the same fare, so you, a sibling and the dog travel on one vehicle ticket plus one pet fee — not three fares. But if someone drives out from the UK to collect you, that is <em>two</em> crossings to pay for (their outbound trip and the return with you), each with its own vehicle ticket and — on the leg the pet is aboard — its own pet fee. Budget for the round trip, not a single leg.
-            </p>
-
-            <p className="font-sans text-xs text-stone-500 leading-relaxed mb-3">
-              <strong>How the pet-taxi total is built.</strong> The figures above show the pet-taxi driving fare <em>plus</em> the vehicle crossing ticket — because the crossing is almost always charged on top of the driving fare, not bundled into it. The crossing ticket is the same one a self-driver buys, and its price changes daily with demand, so treat the total as a guide. A few operators do quote a single all-in price with the crossing included — so always ask, in writing: <em>"Does your fare include the Channel crossing ticket and tolls, or are those extra?"</em>
-            </p>
-
-            <div className="bg-white border border-stone-300 rounded-sm p-5 mb-3">
-              <div className="font-serif text-lg text-stone-900 mb-2">The costs that ambush you — read this before you budget</div>
+            <div className="bg-white border border-stone-300 rounded-sm p-5 mb-3 mt-4">
+              <div className="font-serif text-lg text-stone-900 mb-2">Reading the costs — the bit guides leave out</div>
               <p className="font-serif text-stone-700 leading-relaxed text-sm mb-3">
-                Here's the trap: every guide quotes the <em>pet's</em> crossing fee — that cheery "from £24" for the Eurotunnel — and stops there. But the pet fee is the tiny number. The one that actually stings is <strong>your own crossing ticket</strong>. The pet doesn't cross on its own; it crosses in a vehicle, and that vehicle needs a ticket.
+                The pet fee is the small number. The vehicle crossing ticket is the big one — and almost every guide quotes only the first.
               </p>
               <ul className="font-serif text-stone-700 leading-relaxed text-sm space-y-1.5 ml-5 list-disc mb-3">
-                <li><strong>The vehicle crossing itself.</strong> A one-way standard Eurotunnel fare for a car is roughly £115–£229 — and one-way movers can't use the cheap return-only "day trip" deals. The fare covers the car and up to 9 passengers, so it's per <em>car</em>, not per person — but it's still the biggest single line, and it's <em>on top</em> of the ~£24 pet fee.</li>
-                <li><strong>Car hire, if you don't bring your own.</strong> A one-way rental dropped in another country carries a hefty one-way drop fee, plus fuel and tolls across France or Belgium.</li>
-                <li><strong>An overnight stop.</strong> The Frankfurt route especially is a long day — most people build in a hotel night, and it has to be a pet-friendly one.</li>
-                <li><strong>Ferry cabins and per-pet fees.</strong> On the Amsterdam, Spain and longer France crossings, a pet-friendly cabin isn't the pet fee — it's a separate, often pricey, booking (priced per cabin). And the pet fee on a ferry is charged <em>per pet, each way</em> — unlike the Eurotunnel vehicle ticket, which is one price for the whole car. Two pets means two pet fees.</li>
+                <li><strong>Vehicle ticket.</strong> Eurotunnel ~£115–£229 one way for a car; Calais–Dover ferry similar. The car ticket covers up to 9 passengers — so it's per car, not per person.</li>
+                <li><strong>Pet fee.</strong> A modest surcharge on top: ~£15–£24 each way on Eurotunnel and short Channel ferries, ~£30–£50 on the longer Brittany Ferries and DFDS Amsterdam crossings — and it's charged <em>per pet, each way</em>.</li>
+                <li><strong>Round trips, not single legs.</strong> If someone drives out from the UK to collect you, that's two crossings — outbound and return — each with its own vehicle ticket. Budget for both.</li>
+                <li><strong>One-way car hire.</strong> Picking up at CDG and dropping in the UK adds a hefty one-way drop fee plus fuel and tolls.</li>
+                <li><strong>Overnight on the Frankfurt route.</strong> A long day; most people split it with a pet-friendly hotel.</li>
+                <li><strong>Pet-friendly cabin on longer ferries.</strong> Booked and priced as a cabin (per cabin, ~£75–£200 for four berths), separate from and on top of the pet fee. Effectively mandatory on the 24–36-hour Spain crossings.</li>
+                <li><strong>Pet-taxi quotes.</strong> The crossing is normally charged on top of the driving fare — same ticket either way. Ask outright: <em>"Does your fare include the Channel crossing and tolls, or are those extra?"</em></li>
               </ul>
               <p className="font-serif text-stone-700 leading-relaxed text-sm">
-                None of this is hidden by anyone trying to trick you — it's just rarely added up in one place. So do add it up. The realistic all-in cost of the overland routes is the vehicle crossing <em>plus</em> the pet fee <em>plus</em> car hire/fuel <em>plus</em> any overnight — easily several hundred pounds before you've factored the flight. And if you use a pet taxi, the crossing ticket is normally charged on top of the driving fare — it's the same ticket either way — so when you compare a pet-taxi quote against driving it yourself, make sure both totals include that crossing. Ask the operator outright whether the crossing, pet fee and tolls are in their number.
+                The realistic all-in is vehicle crossing <em>plus</em> pet fee <em>plus</em> car hire or pet-taxi driving fare <em>plus</em> any overnight. Add it up before you commit.
               </p>
             </div>
 
@@ -167,19 +158,11 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Fly your pet in the cabin to Paris Charles de Gaulle — Air France carries cabin pets up to 8 kg including the carrier on its long-haul network. From CDG, the route is overland to Calais (around three hours by road), then the Channel crossing into England.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The crossing has two approved options. The Eurotunnel Le Shuttle puts your car on a train at Calais (Coquelles) and arrives at Folkestone in about 35 minutes — your pet stays in the car the entire time. The pet fee is small, from around £24 each way; the cost that matters is the vehicle ticket itself, roughly £115–£229 one way for a car (it covers up to nine passengers). Alternatively a pet-friendly ferry runs Calais–Dover (DFDS, P&O or Irish Ferries) in about 90 minutes — the pet again stays in the vehicle, and the same logic applies: a modest pet fee on top of the vehicle fare. See the cost breakdown above so nothing ambushes your budget.
+              Fly your pet in the cabin to Paris Charles de Gaulle on Air France (cabin pets up to 8 kg including carrier). From CDG it's about three hours by road to Calais, then the Channel crossing into England — either the Eurotunnel Le Shuttle (Calais Coquelles → Folkestone, about 35 minutes, pet stays in the car) or a Calais–Dover ferry (DFDS, P&amp;O or Irish Ferries, about 90 minutes, also vehicle-stays-on-board). Most people pick this route because the CDG–Calais leg is the shortest of the three hubs. If you'd rather not drive, a door-to-door pet taxi (see below) runs the same route end to end.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              This is the route most people use, simply because the CDG–Calais drive is the shortest of the three hubs. If you would rather not drive it yourself, a door-to-door pet taxi (see below) covers exactly this route — collecting you at CDG and delivering you and your pet to your UK address.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mt-4">
-              One premium variant worth knowing about: <strong>La Compagnie</strong>, an all-business-class boutique airline, flies Newark (EWR) to Paris Orly (ORY) and is the only carrier in the world that pairs transatlantic cabin pets with business-class floor space. Pet fee is €200 each way, weight limit 8 kg. Round-trip business-class fares typically run $2,400–$3,000 — materially more than Air France economy (around $700) but roughly comparable to other carriers' standard business class, so the upgrade pays you in pet comfort rather than money saved. From Orly, the drive to Calais is broadly the same as from CDG (around two-and-a-half to three hours), and the Channel crossing logic is identical. Sensible if you'd be booking business class anyway, or if a quieter, more spacious long-haul leg matters for your pet — otherwise the standard Air France CDG route is the more economical choice.
+              One premium variant: <strong>La Compagnie</strong>, an all-business-class boutique airline, flies Newark (EWR) to Paris Orly (ORY) and is the only carrier in the world that pairs transatlantic cabin pets with business-class floor space (€200 each way, 8 kg limit). Round-trip business fares typically run $2,400–$3,000 — comparable to other carriers' standard business, so the upgrade buys pet comfort rather than money saved. From Orly the drive to Calais is roughly the same as from CDG, and the crossing logic is identical. Sensible if you'd be booking business anyway, or if a quieter long-haul leg matters for your pet.
             </p>
           </section>
 
@@ -194,15 +177,11 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Fly your pet in the cabin to Frankfurt on Lufthansa, which carries cabin pets up to 8 kg including the carrier. From Frankfurt the route is the same idea as Paris — drive to Calais, then Eurotunnel or a ferry to Dover — but the overland leg is longer, roughly seven to eight hours by road.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Because of that longer drive, many people split it with an overnight stop in Frankfurt or along the way, which also gives the pet a proper rest after the flight — just budget for a pet-friendly hotel. The crossing itself is identical to the Paris route: the small pet fee (from ~£24) sits on top of the vehicle crossing ticket (~£115–£229 one way for a car), whether you take the Eurotunnel or a Calais–Dover ferry.
+              Fly your pet in the cabin to Frankfurt on Lufthansa (cabin pets up to 8 kg including carrier). The crossing is the same idea as Paris — drive to Calais, then Eurotunnel or a Calais–Dover ferry — but the overland leg is longer: roughly seven to eight hours by road. Many people split it with an overnight stop, which also gives the pet a proper rest after the flight; budget for a pet-friendly hotel.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              Frankfurt earns its place when Lufthansa offers a better flight from your departure city than Air France or KLM — for many long-haul origins it does. Door-to-door pet taxi operators run the Frankfurt route too, typically quoting a Frankfurt-to-London journey of around 10–14 hours including comfort breaks.
+              Frankfurt earns its place when Lufthansa offers a better flight from your departure city than Air France or KLM — for many long-haul origins it does. Door-to-door pet taxi operators run the Frankfurt route too, typically quoting Frankfurt-to-London at around 10–14 hours including comfort breaks.
             </p>
           </section>
 
@@ -217,19 +196,11 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Fly your pet in the cabin to Amsterdam on KLM, then take a short taxi from Schiphol to the DFDS ferry terminal at IJmuiden. From there, the DFDS overnight ferry sails directly to Newcastle — a UK-approved pet route — in around 16 to 17 hours, docking at North Shields.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The appeal is that there's no white-knuckle motorway drive through Belgium and France — you let the boat do the work overnight. DFDS carries pets in pet-friendly cabins or onboard kennels, around £30 per pet each way on top of the cabin fare. One practical catch: foot passengers can't add a pet to the booking online — pet bookings on this route are made by phone with DFDS.
-            </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              There's also a faster version of the Amsterdam route. A door-to-door pet taxi from Schiphol doesn't take the slow ferry — it drives down through Belgium and France to the Eurotunnel, landing you in the UK in around seven to eight hours rather than seventeen. So Amsterdam gives you a genuine choice: the restful overnight boat, or the quicker overland drive with someone else at the wheel.
+              Fly your pet in the cabin to Amsterdam on KLM, then take a short taxi from Schiphol to the DFDS terminal at IJmuiden. The DFDS overnight ferry sails directly to Newcastle — a UK-approved pet route — in around 16–17 hours, docking at North Shields. No white-knuckle motorway through Belgium and France; the boat does the work overnight. DFDS carries pets in pet-friendly cabins or onboard kennels, around £30 per pet each way on top of the cabin fare. One practical catch: foot passengers can't add a pet to the booking online — pet bookings on this route are made by phone with DFDS.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              The ferry version lands in the north of England, so it suits anyone heading for Scotland or northern England better than someone bound for London. For Edinburgh specifically, Newcastle to Edinburgh is about 1h 30m on the LNER train (pets travel free in cabin on UK domestic services, max 2 small pets per passenger in a carrier) or roughly 2 hours by road. Either way, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered below.
+              There's also a faster version: a door-to-door pet taxi from Schiphol skips the slow ferry and drives via Belgium and France to the Eurotunnel, landing in the UK in about seven to eight hours rather than seventeen. The ferry version lands in the north of England, so it suits anyone bound for Scotland or northern England better than London. For Edinburgh specifically, Newcastle is about 1h 30m on the LNER train (pets travel free in cabin on UK domestic services, max 2 small pets per passenger in a carrier) or roughly 2 hours by road. Either way, dogs still need their tapeworm treatment in the 24–120 hour window before UK arrival — covered below.
             </p>
           </section>
 
@@ -439,11 +410,11 @@ export default function GettingYourPetIntoTheUK() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              There is a well-known ferry between Holyhead in Wales and Dublin — Stena Line and Irish Ferries both run it, the crossing is about 3 hours 15 minutes, it carries pets in pet-friendly cabins, kennels or in your vehicle, and foot passengers with pets are accepted (a foot passenger's pet must travel in a rigid carrier). It is a genuinely good pet crossing.
+              There is a well-known ferry between Holyhead in Wales and Dublin — Stena Line and Irish Ferries both run it, the crossing is about 3h 15m, it carries pets in pet-friendly cabins, kennels or in your vehicle, and foot passengers are accepted (the pet must travel in a rigid carrier). It is a genuinely good pet crossing.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              But it is worth being clear about direction. That ferry connects Great Britain and Ireland — it is not a route <em>into</em> the UK from continental Europe. If your destination is the Republic of Ireland, the cleanest way in is the direct France→Ireland ferry (Cherbourg or Roscoff to Rosslare or Dublin), which skips Great Britain altogether. The Holyhead–Dublin ferry only becomes relevant as an <em>onward</em> leg — for example, a pet that has come into Great Britain by one of the routes above and is then continuing to Ireland.
+              But it connects Great Britain and Ireland — it isn't a route <em>into</em> the UK from continental Europe. If your destination is the Republic of Ireland, the cleanest way in is the direct France→Ireland ferry (Cherbourg or Roscoff to Rosslare or Dublin), which skips Great Britain altogether. Cabin flights into Dublin exist — Iberia (Madrid→Dublin) and KLM (Amsterdam→Dublin) — but beyond those two routes the direct cabin options are few, so for many departure cities a pet bound for Ireland still comes in by sea (or as cargo). The dedicated Ireland section of the main guide covers it properly.
             </p>
 
             <div className="bg-amber-50 border-l-2 border-amber-500 p-5 mb-4">
@@ -451,13 +422,9 @@ export default function GettingYourPetIntoTheUK() {
                 <strong>Flown your pet into Dublin and now need Britain?</strong>
               </p>
               <p className="font-serif text-stone-700 leading-relaxed text-sm">
-                The same crossing works in reverse, and it is a genuinely useful route. If your pet has flown in-cabin into Dublin — Iberia carries cabin pets Madrid → Dublin and KLM carries them Amsterdam → Dublin — you can reach Britain by taking the <strong>Dublin → Holyhead ferry</strong> (Irish Ferries or Stena Line, about 3 hours 15 minutes), then continuing overland. Pets travel free or for a small fee in a kennel, pet-friendly cabin or your vehicle, and foot passengers with a pet in a rigid carrier are accepted — so no car is needed. Into Britain a dog needs an AHC, a GB pet health certificate, or a valid EU/NI pet passport with current rabies vaccination, plus tapeworm treatment 24–120 hours before arrival. In effect, a cabin flight into Dublin plus this ferry is a back route into Britain when no in-cabin flight into the UK exists.
+                The Holyhead ferry works in reverse and it's a genuinely useful onward route. Cabin flight into Dublin on Iberia or KLM, then <strong>Dublin → Holyhead ferry</strong> (Irish Ferries or Stena Line, about 3h 15m), then overland. Pets travel free or for a small fee in a kennel, pet-friendly cabin or your vehicle; foot passengers with a pet in a rigid carrier are accepted — so no car is needed. Into Britain a dog needs an AHC, a GB pet health certificate, or a valid EU/NI pet passport with current rabies vaccination, plus tapeworm treatment 24–120 hours before arrival. In effect, this is a back route into Britain when no in-cabin flight into the UK exists.
               </p>
             </div>
-
-            <p className="font-serif text-stone-700 leading-relaxed">
-              One thing worth knowing: Ireland is not the UK. Cabin pets <em>can</em> fly into Ireland — Iberia runs a cabin-pet service on Madrid → Dublin and KLM runs one on Amsterdam → Dublin — though beyond those two routes the direct cabin options are few, so for many departure cities a pet bound for Ireland still comes in by sea (or as cargo). If Ireland is your destination, the dedicated Ireland section of the main guide covers it properly.
-            </p>
           </section>
 
           <div className="h-px bg-stone-300 mb-12" />

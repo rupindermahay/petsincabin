@@ -65,9 +65,9 @@ const RULE_CHANGES = [
   {
     date: "Apr–May 2026",
     tag: "Alaska Airlines",
-    headline: "Alaska Airlines expanded its long-haul international network",
-    body: "Alaska launched year-round SEA ⇄ Seoul (April 2026), SEA ⇄ London Heathrow (May 2026) and SEA ⇄ Rome (April 2026), with SEA ⇄ Reykjavík seasonal from May 28. Most new routes carry cabin pets (UK arrivals remain cargo-only by UK government rule). This makes Alaska a genuine option for US West Coast → Europe / Asia cabin pet routes for the first time.",
-    source: "Alaska Airlines press release, March 2026",
+    headline: "Alaska Airlines expanded its long-haul passenger network — but not pet service",
+    body: "Alaska launched year-round SEA ⇄ Seoul (April 2026), SEA ⇄ London Heathrow (May 2026) and SEA ⇄ Rome (April 2026), with SEA ⇄ Reykjavík seasonal from May 28. These are PASSENGER routes only — Alaska's own pet pages list Europe (all), London, Japan (all) and Seoul as NOT pet-accepted, so none of the new long-haul routes carry cabin pets. For US West Coast → Asia pet travel, route via United (SEA→SFO then SFO→Tokyo cabin) or Korean Air to Seoul; for Europe/UK, connect via an EU hub on Delta/KLM/Lufthansa.",
+    source: "Alaska Airlines pet pages (alaskaair.com/content/travel-info/policies/pets-traveling-international), verified May 2026",
   },
   {
     date: "May 2026",

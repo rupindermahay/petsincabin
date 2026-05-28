@@ -85,7 +85,7 @@ export default function SeattlePetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Alaska Airlines</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  Seattle's hub airline. $100 each way for cabin pets. Soft carrier up to 17 × 11 × 9.5 in. Domestic plus growing international: Canada, Mexico, Costa Rica, Bahamas, Japan, Korea (new), Hawaii (with Direct Airport Release prep), plus the new long-haul SEA ↔ Rome and SEA ↔ London routes launched 2026. UK arrivals are still cargo-only by UK government rule. Max 3 cabin pets in First, 8 in Main per flight, first-come first-served. Dogs and cats only since June 2025.
+                  Seattle's hub airline. $100 each way for cabin pets. Soft carrier up to 17 × 11 × 9.5 in. Cabin pets to domestic US plus nearby international: Canada, Mexico, Costa Rica, Bahamas, Hawaii (with Direct Airport Release prep). IMPORTANT: Alaska's new long-haul passenger routes (SEA ↔ Tokyo, Seoul, Rome, London) do NOT carry pets — Alaska's own pet pages list Europe, London, Japan and Seoul as not pet-accepted (passenger route exists, no pet service). For Asia, route SEA → SFO then United SFO → Tokyo, or Korean Air to Seoul; for UK/Europe, connect via an EU hub. Max 3 cabin pets in First, 8 in Main per flight, first-come first-served. Dogs and cats only since June 2025.
                 </p>
               </div>
               <div>

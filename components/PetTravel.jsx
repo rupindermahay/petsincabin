@@ -149,7 +149,7 @@ const AIRLINES = [
     carrier: "Soft (recommended): 18 × 11 × 11 in. Hard: 19 × 13 × 9 in",
     notes: "Cabin only for general public — cargo limited to active U.S. Military and State Dept. NOT a transatlantic option (no cabin pets on Europe/Asia flights). Restrictions to/from PHX, TUS, LAS, PSP May–Sept.",
     intl: "Limited (Americas + Caribbean only)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against AA's own pet policy (aa.com pets page). $150 each-way cabin fee current (raised to $150 on 20 Feb 2024); carrier dims (soft 18×11×11, hard 19×13×9), 20 lb combined, no transatlantic/transpacific cabin, PHX/TUS/LAS/PSP May–Sept cargo restriction all match. No corrections.",
     link: "https://www.aa.com/i18n/travel-info/special-assistance/pets.jsp",
   },
   {
@@ -160,12 +160,12 @@ const AIRLINES = [
     direction: "Cabin allowed: domestic US, Canada, Puerto Rico, USVI, continental EU (Paris, Amsterdam, Rome, etc.) and the Republic of Ireland (Delta's own international-travel page confirms cabin pets to Dublin, with advance notification required to Ireland's Department of Agriculture). Cabin NOT allowed (both directions): UK, Australia, NZ, UAE/Dubai, Hong Kong, Hawaii, Brazil, Colombia, South Africa, Jamaica, Iceland, Barbados, Dakar, Dominican Republic.",
     originAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes", australia: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", ireland: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", "south-america": "no", "central-america": "yes", japan: "no", korea: "yes", australia: "no" },
-    fee: "$95 domestic / $200 international (including Dublin)",
+    fee: "$150 domestic (US/Canada/PR/USVI) / $200 international (including Dublin)",
     weight: "No stated weight; must fit under seat",
     carrier: "Soft-sided with 3+ ventilation panels (4 international). ~18 × 11 × 11 in",
     notes: "Long list of country exclusions — always confirm by phone before booking. Notable update: Delta now allows small dogs, cats and household birds in cabin to Ireland on true Delta-operated flights (e.g. JFK ⇄ DUB direct, $200 each way, payable at check-in). NOT permitted on codeshares — make sure the flight is operated by Delta itself. Pets cannot travel cargo or checked baggage on this route. Notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Some third-party sites still list Ireland as banned — that information is out of date. JFK → CDG is also a verified working cabin route. Cargo only available to active U.S. Military and State Dept. Pet must be 10 weeks old (domestic), 16 weeks (international to US), 15 weeks (EU).",
     intl: "Yes (restricted)",
-    verified: "May 2026",
+    verified: "May 2026 — audited against Delta's own pet-travel pages (delta.com/us/en/pet-travel/overview + /international-connection-pet-travel). Domestic in-cabin fee corrected $95 → $150 each way (US/Canada/PR/USVI; raised for tickets issued on/after 8 Apr 2025; international stays $200). Ireland cabin CONFIRMED via Delta's own page: 'For traveling in the cabin to the Republic of Ireland, customers must notify the Department of Agriculture in advance at petmove@agriculture.gov.ie.' Korea served + not on Delta's in-cabin exclusions list — held.",
     link: "https://www.delta.com/us/en/pet-travel/international-connection-pet-travel",
   },
   {

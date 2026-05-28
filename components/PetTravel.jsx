@@ -4938,6 +4938,61 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  australia_domestic: {
+    title: "Australia domestic pet travel checklist (Virgin Australia, Pets in Cabin)",
+    sections: [
+      {
+        title: "First — this is the DOMESTIC checklist",
+        items: [
+          "This covers flying your pet in the CABIN on a DOMESTIC Australian flight with Virgin Australia (e.g. Melbourne ↔ Gold Coast / Sunshine Coast). No microchip, rabies titer, import permit or quarantine is involved — that's all for INTERNATIONAL travel, not domestic hops.",
+          "If you're flying your pet INTO Australia from overseas, this is the wrong checklist — there is no cabin option on any airline; international arrival is cargo + mandatory quarantine. See the Australia tab in Difficult Destinations for the import permit, rabies titer (≥180 days), and Mickleham quarantine steps.",
+          "Adelaide and Launceston routes were announced for after Easter 2026 — confirm they're on-sale with Virgin before relying on them.",
+        ],
+      },
+      {
+        title: "2+ weeks before",
+        items: [
+          "Confirm your pet + carrier weighs under 8 kg total (this is the hard limit for cabin)",
+          { text: "Confirm your pet is eligible: small dogs and cats only. Note — cats are NOT yet accepted on the Melbourne–Gold Coast route (dogs only there); the Melbourne–Sunshine Coast route takes both", },
+          "Get an approved soft-sided, leak-proof carrier — max 44 × 26 × 28 cm — that fits under the seat, and let your pet get used to it",
+          "Check your pet is at least 8 weeks old and in good health (a brachycephalic/snub-nosed breed can still travel but is flagged for welfare — mention it when you book)",
+          "Consult your vet to confirm your pet is fit to fly in cabin",
+        ],
+      },
+      {
+        title: "Booking — as early as you can",
+        items: [
+          "Do NOT just book online — Pets in Cabin cannot be booked through the website",
+          "Call the Virgin Australia Guest Contact Centre on 13 67 89 to book the pet onto your flight",
+          "Book early: only 4 pets are allowed per flight, in designated window rows (seats 18A/18F/20A/20F)",
+          "Pay the Pets in Cabin fee — $149 per pet per flight (introductory), or 18,600 Velocity Points per sector, on top of your own fare",
+          "Confirm whether your specific route/date accepts your pet type (dog vs cat) before paying",
+        ],
+      },
+      {
+        title: "Travel day",
+        items: [
+          "Arrive with time to spare and check in at the Virgin Australia counter with your pet in its carrier",
+          "Line the carrier with absorbent pads in case of accidents",
+          "Your pet stays inside the carrier at all times — in the terminal (no airport lounges or food/beverage areas) and for the whole flight, stowed under the seat in front",
+          "Bring water and a familiar blanket; keep calming routines simple",
+        ],
+      },
+      {
+        title: "Larger pets, cats on Gold Coast, or other routes",
+        items: [
+          "If your pet is over 8 kg, or you need a route Pets in Cabin doesn't serve, Virgin Australia still carries pets as checked cargo on eligible domestic services through approved providers (e.g. Jetpets)",
+          "Cargo is a different process with its own crate and booking requirements — arrange it through the pet-transport provider, not the cabin booking line",
+        ],
+      },
+      {
+        title: "Official source",
+        items: [
+          "Confirm current routes, fees, carrier limits and pet-type eligibility on Virgin Australia's own Pets in Cabin page: <a href=\"https://www.virginaustralia.com/au/en/travel-info/specific-travel/pets/pets-in-cabin/\" target=\"_blank\" rel=\"noopener noreferrer\">virginaustralia.com · pets in cabin</a>. Details (especially the introductory fee and the route network) are expanding through 2026 — check before you book.",
+        ],
+      },
+    ],
+  },
   hawaii: {
     title: "Hawaii pet travel checklist",
     sections: [
@@ -7953,11 +8008,22 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // Resolve checklist IDs from region, with airport-level overrides for the
   // Caribbean where the region is null but the specific airport (e.g. MBJ
   // → Jamaica) maps to a country-specific checklist.
+  // DOMESTIC Australia (AU→AU, e.g. Melbourne→Gold Coast on Virgin) uses a
+  // short domestic-cabin checklist with NO international cruft (no microchip /
+  // rabies titer / import permit / quarantine). International →AU is a
+  // different beast (cargo + quarantine) and is NOT mapped here — see the
+  // Australia tab in Difficult Destinations. Guarding on BOTH regions being
+  // australia prevents the domestic checklist leaking onto an international
+  // arrival, and prevents the generic international checklist (microchip,
+  // CDC form, etc.) wrongly showing for a 2-hour domestic hop.
+  const isDomesticAU = originRegion === "australia" && destRegion === "australia";
   const originId =
+    (isDomesticAU ? "australia_domestic" : null) ||
     REGION_TO_CHECKLIST_ID[originRegion] ||
     AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.origin] ||
     null;
   const destId =
+    (isDomesticAU ? "australia_domestic" : null) ||
     REGION_TO_CHECKLIST_ID[destRegion] ||
     AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.dest] ||
     null;

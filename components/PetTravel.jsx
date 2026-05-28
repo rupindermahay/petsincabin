@@ -2614,54 +2614,132 @@ const REGION_PAIR_STRATEGIES = {
   },
 
   // ----- INTO India (no direct cabin from UK; via Europe) -----
-  "uk-out>india": (o, d) => {
-    const isHeathrow = o.includes("(LHR)");
-    const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
-    const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
-    const isHubCapable = isHeathrow || isEDI || isGLA; // all have direct cabin to an EU hub
-    const isBLR = d.includes("(BLR)");
-    // Glasgow has only KLM→AMS cabin direct. KLM operates onward cabin to India
-    // (DEL, BOM, BLR all in KLM's network). So GLA users get a clean KLM
-    // single-carrier path via Amsterdam — no Lufthansa/Frankfurt option from
-    // Glasgow (Lufthansa GLA→FRA has the 2026 summer-routing caveat).
-    const longHaulAirline = isBLR
-      ? "Air France ✓ Cabin (under 8 kg) — Lufthansa excludes Bangalore, route via Paris"
-      : "Air India / Lufthansa / Air France ✓ Cabin (under 8–10 kg)";
-    let legs;
-    if (isGLA) {
-      legs = [
-        { route: `${o} → Amsterdam (AMS)`, time: "1h 30m", airline: "KLM ✓ Cabin out of the UK" },
+  "uk-out>india": [
+    // Via Frankfurt (Lufthansa) — suppressed for BLR destinations (Lufthansa
+    // excludes Bangalore) AND for Glasgow origins (GLA→FRA has the 2026
+    // summer-routing caveat; GLA's clean cabin-out is KLM→AMS only).
+    (o, d) => {
+      const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+      const isBLR = d.includes("(BLR)");
+      if (isBLR || isGLA) return null;
+      const isHeathrow = o.includes("(LHR)");
+      const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isHubCapable = isHeathrow || isEDI;
+      const legs = isHubCapable
+        ? [
+            { route: `${o} → Frankfurt (FRA)`, time: isEDI ? "1h 50m–2h" : "1h 30m", airline: "Lufthansa ✓ Cabin out of the UK" },
+            { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `FRA → ${d}`, time: "8–9h", airline: "Lufthansa / Air India ✓ Cabin (under 8–10 kg)" },
+          ]
+        : [
+            { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+            { route: "LHR → Frankfurt (FRA)", time: "1h 30m", airline: "Lufthansa ✓ Cabin out of the UK" },
+            { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `FRA → ${d}`, time: "8–9h", airline: "Lufthansa / Air India ✓ Cabin (under 8–10 kg)" },
+          ];
+      return {
+        label: "Via Frankfurt (Lufthansa)",
+        legs,
+        note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHubCapable ? `Fly cabin OUT of ${isEDI ? "Edinburgh" : "Heathrow"}` : `Reach Heathrow first, then fly cabin`} to Frankfurt on Lufthansa, then onward to India on Lufthansa or Air India (single-carrier through-ticket recommended — Air India doesn't accept interline pet connections). India needs the AQCS NOC and entry via one of six approved airports.`,
+      };
+    },
+    // Via Paris (Air France) — the BLR-safe option, works from any UK origin.
+    (o, d) => {
+      const isHeathrow = o.includes("(LHR)");
+      const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+      const isBLR = d.includes("(BLR)");
+      const isHubCapable = isHeathrow || isEDI;
+      let legs;
+      if (isGLA) {
+        // GLA has no verified cabin-direct to CDG; route via LHR.
+        legs = [
+          { route: `${o} → London Heathrow (LHR)`, time: "1h 20m or drive", airline: "Reach Heathrow — Glasgow's clean cabin-out is KLM→Amsterdam (see that card)" },
+          { route: "LHR → Paris (CDG)", time: "1h 20m", airline: "Air France ✓ Cabin out of the UK" },
+          { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `CDG → ${d}`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+        ];
+      } else if (isHubCapable) {
+        legs = [
+          { route: `${o} → Paris (CDG)`, time: isEDI ? "1h 50m" : "1h 20m", airline: "Air France ✓ Cabin out of the UK" },
+          { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `CDG → ${d}`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+        ];
+      } else {
+        legs = [
+          { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+          { route: "LHR → Paris (CDG)", time: "1h 20m", airline: "Air France ✓ Cabin out of the UK" },
+          { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `CDG → ${d}`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+        ];
+      }
+      return {
+        label: "Via Paris (Air France)",
+        legs,
+        note: `${isBLR ? "For Bangalore this is the route to use — Lufthansa excludes BLR from cabin, Air France via Paris carries it. " : ""}Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. Fly cabin out of the UK to Paris on Air France, then onward to India on Air France or Air India (single-carrier through-ticket recommended). India needs the AQCS NOC and entry via one of six approved airports.`,
+      };
+    },
+    // Via Amsterdam (KLM) — the clean single-carrier path for Glasgow.
+    (o, d) => {
+      const isHeathrow = o.includes("(LHR)");
+      const isEDI = o.includes("(EDI)") || /edinburgh/i.test(o);
+      const isGLA = o.includes("(GLA)") || /glasgow/i.test(o);
+      const isHubCapable = isHeathrow || isEDI || isGLA; // GLA→AMS is verified KLM cabin-direct
+      const legs = isHubCapable
+        ? [
+            { route: `${o} → Amsterdam (AMS)`, time: isGLA ? "1h 30m" : (isEDI ? "1h 30m" : "1h"), airline: "KLM ✓ Cabin out of the UK" },
+            { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket recommended)" },
+          ]
+        : [
+            { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
+            { route: "LHR → Amsterdam (AMS)", time: "1h", airline: "KLM ✓ Cabin out of the UK" },
+            { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+            { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket recommended)" },
+          ];
+      return {
+        label: "Via Amsterdam (KLM)",
+        legs,
+        note: `${isGLA ? "Glasgow's cleanest path — KLM flies GLA→Amsterdam in cabin, and KLM operates onward cabin to Delhi, Mumbai and Bengaluru, so a single KLM through-ticket is the simplest option. " : ""}Air India is cargo-only to/from the UK. Fly cabin out of the UK to Amsterdam on KLM, then onward to India on KLM (single-carrier through-ticket — KLM carries cabin pets to DEL, BOM, BLR). India needs the AQCS NOC and entry via one of six approved airports.`,
+      };
+    },
+  ],
+  "us>india": [
+    // Via Frankfurt (Lufthansa) — suppressed for Bangalore (Lufthansa
+    // excludes BLR from cabin per its own policy, Decision #48).
+    (o, d) => {
+      if (d.includes("(BLR)")) return null;
+      return {
+        label: "Via Frankfurt (Lufthansa)",
+        legs: [
+          { route: `${o} → Frankfurt (FRA)`, time: "7–9h", airline: "Lufthansa ✓ Cabin (under 8 kg)" },
+          { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `FRA → ${d}`, time: "8–9h", airline: "Lufthansa ✓ Cabin (single-carrier through-ticket)" },
+        ],
+        note: `Lufthansa end-to-end via Frankfurt, booked as one through-ticket. Air India does not accept pet connections from other airlines, so a single-carrier ticket is what makes this work. India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad. For US exit: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+      };
+    },
+    // Via Paris (Air France) — the BLR-safe option.
+    (o, d) => ({
+      label: "Via Paris (Air France)",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "7–9h", airline: "Air France ✓ Cabin (under 8 kg)" },
+        { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `CDG → ${d}`, time: "8–9h", airline: "Air France ✓ Cabin (single-carrier through-ticket)" },
+      ],
+      note: `${d.includes("(BLR)") ? "For Bangalore this is the route to use — Lufthansa excludes BLR from cabin, but Air France via Paris carries it. " : ""}Air France end-to-end via Paris, booked as one through-ticket — Air India doesn't accept interline pet connections, so a single-carrier ticket matters. India needs the AQCS NOC and entry via one of six approved airports. For US exit: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+    }),
+    // Via Amsterdam (KLM).
+    (o, d) => ({
+      label: "Via Amsterdam (KLM)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM ✓ Cabin (under 8 kg)" },
         { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-        { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket recommended)" },
-      ];
-    } else if (isHubCapable) {
-      legs = [
-        { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: isEDI ? "1h 50m–2h" : "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
-        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-        { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
-      ];
-    } else {
-      legs = [
-        { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
-        { route: "LHR → Frankfurt (FRA) or Paris (CDG)", time: "1h 30m", airline: "Lufthansa / Air France ✓ Cabin out of the UK" },
-        { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-        { route: `Hub → ${d}`, time: "8–9h", airline: longHaulAirline },
-      ];
-    }
-    const hubName = isGLA ? "Glasgow" : (isEDI ? "Edinburgh" : "Heathrow");
-    return {
-      legs,
-      note: `Air India is cargo-only to/from the UK — no direct UK↔India cabin route exists. ${isHubCapable ? `Fly cabin OUT of ${hubName}` : `From ${o.split(" (")[0]}, get to Heathrow first, then fly cabin`} to a European hub, then onward toward India. ${isGLA ? "Glasgow's only verified cabin-out route is KLM to Amsterdam, and KLM operates onward cabin to Delhi, Mumbai and Bengaluru — a single KLM through-ticket is the cleanest path. " : ""}${!isGLA && isBLR ? "Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors (Lufthansa excludes Bangalore — route via Paris on Air France). " : (!isGLA ? "Air India, Lufthansa and Air France all carry cabin pets on Europe ↔ India sectors. " : "")}India needs the AQCS NOC and entry via one of six approved airports.`,
-    };
-  },
-  "us>india": (o, d) => ({
-    legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "7–9h", airline: "Lufthansa / Air France ✓ Cabin" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–9h", airline: "Same carrier as your first leg ✓ Cabin (single-carrier through-ticket — see note)" },
-    ],
-    note: `Route via a European hub: cabin ${o} → Europe, then Europe → India on the SAME carrier (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Air India does not accept pet connections from other airlines, so any path that puts Air India on the second leg won't work for a through-ticket. Book it as one ticket on Lufthansa or Air France. India needs the AQCS NOC and entry via Delhi, Mumbai, Chennai, Kolkata, Bengaluru or Hyderabad.`,
-  }),
+        { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket)" },
+      ],
+      note: `KLM end-to-end via Amsterdam, booked as one through-ticket. KLM carries cabin pets on its India routes (Delhi, Mumbai, Bengaluru). A single-carrier ticket avoids the Air India interline problem. India needs the AQCS NOC and entry via one of six approved airports. For US exit: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+    }),
+  ],
 
   // ----- INTO the US (from UK/Ireland — no direct cabin out of those into US) -----
   "uk-out>us": [
@@ -2967,14 +3045,41 @@ const REGION_PAIR_STRATEGIES = {
   }),
 
   // ----- INDIA outbound -----
-  "india>us": (o, d) => ({
-    legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
-      { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–10h", airline: "Lufthansa / Air France / Delta ✓ Cabin" },
-    ],
-    note: `India→USA in cabin routes via a European hub on a single carrier — there's no direct cabin route (Air India does not allow cabin pets to/from the USA, and the 'India→Tokyo→US' cabin route is a myth — JAL/ANA don't take cabin pets internationally). Book Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris — a single through-ticket avoids the interline issue. For US entry: dogs need the CDC Dog Import Form, and dogs must be 6+ months old.`,
-  }),
+  "india>us": [
+    // Via Frankfurt (Lufthansa) — suppressed for Bangalore origins.
+    (o, d) => {
+      if (o.includes("(BLR)")) return null;
+      return {
+        label: "Via Frankfurt (Lufthansa)",
+        legs: [
+          { route: `${o} → Frankfurt (FRA)`, time: "8–9h", airline: "Lufthansa ✓ Cabin (under 8 kg)" },
+          { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+          { route: `FRA → ${d}`, time: "8–10h", airline: "Lufthansa ✓ Cabin (single-carrier through-ticket)" },
+        ],
+        note: `Lufthansa end-to-end via Frankfurt, one through-ticket. There's no direct India→US cabin route — Air India doesn't carry cabin pets to/from the USA, and the 'India→Tokyo→US' cabin route is a myth (JAL/ANA don't take cabin pets internationally). For US entry: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+      };
+    },
+    // Via Paris (Air France) — BLR-safe.
+    (o, d) => ({
+      label: "Via Paris (Air France)",
+      legs: [
+        { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France ✓ Cabin (under 8 kg)" },
+        { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `CDG → ${d}`, time: "8–10h", airline: "Air France / Delta ✓ Cabin (single-carrier through-ticket recommended)" },
+      ],
+      note: `${o.includes("(BLR)") ? "For Bangalore this is the route to use — Lufthansa excludes BLR from cabin, Air France via Paris carries it. " : ""}Air France end-to-end via Paris, one through-ticket — Air India doesn't accept interline pet connections. There's no direct India→US cabin route. For US entry: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+    }),
+    // Via Amsterdam (KLM).
+    (o, d) => ({
+      label: "Via Amsterdam (KLM)",
+      legs: [
+        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM ✓ Cabin (under 8 kg)" },
+        { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
+        { route: `AMS → ${d}`, time: "8–10h", airline: "KLM / Delta ✓ Cabin (single-carrier through-ticket recommended)" },
+      ],
+      note: `KLM end-to-end via Amsterdam, one through-ticket. KLM carries cabin pets on its India routes (Delhi, Mumbai, Bengaluru). There's no direct India→US cabin route — Air India doesn't carry cabin pets to/from the USA. For US entry: dogs need the CDC Dog Import Form and must be 6+ months old.`,
+    }),
+  ],
   "india>mexico": (o, d) => ({
     legs: [
       { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },

@@ -511,6 +511,23 @@ const AIRLINES = [
     link: "https://www.lift.co.za/LIFT-Extras/travelling-with-small-dogs",
   },
   {
+    name: "Virgin Australia",
+    scope: "australia-domestic",
+    tags: [],
+    cabin: "Cabin ✓ — small dogs and cats, domestic Australia only",
+    cabinStatus: "conditional",
+    direction: "Cabin allowed: small dogs and cats (under 8 kg incl. carrier) on Virgin Australia's Pets in Cabin domestic flights only — launched Oct 2025 between Melbourne (MEL) and the Gold Coast (OOL) and Sunshine Coast (MCY), expanding to Adelaide (ADL) and Launceston (LST) during 2026. Cabin NOT allowed: any international route — Pets in Cabin is DOMESTIC Australia only. There is no cabin pet option flying INTO Australia from overseas on any airline; international pets arrive as manifested cargo with quarantine (see the Australia tab in Difficult Destinations).",
+    originAllowed: {},
+    destinationAllowed: {},
+    fee: "$149 per pet per flight (introductory), or 18,600 Velocity Points per sector — additional to your own fare.",
+    weight: "Pet + carrier max 8 kg. Carrier soft-sided, leak-proof, max 44 × 26 × 28 cm, fits under the seat.",
+    carrier: "Approved soft-sided carrier, max 44 × 26 × 28 cm. Pet stays inside for the whole flight and in the terminal (no airport lounges or food areas).",
+    notes: "Australia's first in-cabin pet service — and it's DOMESTIC-only, so it does not create any cabin route into or out of Australia internationally. Small dogs and cats only (note: cats are not yet accepted on the Melbourne–Gold Coast route — dogs only there). Max 4 pets per flight, seated in designated window rows (18A/18F/20A/20F). Bookings cannot be made online — call the Virgin Australia Guest Contact Centre on 13 67 89, and book early as pet seats are capped. Brachycephalic (snub-nosed) breeds are welcomed but flagged for welfare — confirm when booking. Larger pets and all international Australian travel continue via cargo (e.g. Jetpets). For getting a pet INTO Australia from abroad, see the Australia tab in Difficult Destinations — that's cargo + quarantine regardless of this service.",
+    intl: "No — domestic Australia only",
+    verified: "May 2026 — audited clean against Virgin Australia's own pages (virginaustralia.com Pets in Cabin + newsroom) and corroborating 2026 coverage. Pets in Cabin launched 16 Oct 2025 (MEL↔Gold Coast / Sunshine Coast), trial extended to 30 June 2026, intended ongoing, Adelaide + Launceston expansion announced for after Easter 2026. CONFIRMED: $149/flight or 18,600 Velocity Points, 8 kg incl. carrier, soft carrier 44×26×28 cm, dogs+cats (cats not yet on MEL–Gold Coast), 4 pets/flight, window-row seating, phone-only booking. DOMESTIC-only — does NOT change the international cabin-into-Australia rule (still cargo + quarantine). Added this session (chat 12) after the AKL→Australia FB question surfaced that the site had no Virgin Australia coverage and overstated 'no cabin on any flight'.",
+    link: "https://www.virginaustralia.com/au/en/travel-info/specific-travel/pets/pets-in-cabin/",
+  },
+  {
     name: "LATAM Airlines",
     tags: ["south-america", "europe", "caribbean", "us", "mexico"],
     cabin: "Cabin ✓ — small dogs and cats on LATAM-operated routes",
@@ -11123,6 +11140,11 @@ function AirlineGrid() {
                         🇿🇦 South Africa · domestic only
                       </span>
                     )}
+                    {a.scope === "australia-domestic" && (
+                      <span className="inline-block px-2.5 py-1 text-xs uppercase tracking-widest font-medium border bg-stone-100 text-stone-700 border-stone-300">
+                        🇦🇺 Australia · domestic only
+                      </span>
+                    )}
                   </div>
                   {/* Cabin from/to flag rows — shared CabinFlags component
                       (also used inside the comparison modal). Wrapped in a
@@ -11139,6 +11161,16 @@ function AirlineGrid() {
                         <Info className="w-4 h-4 text-stone-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
                         <span>
                           <strong className="text-stone-800">Domestic South Africa only.</strong> Small dogs under 7&nbsp;kg, in cabin, on Lift's dog-friendly routes (JNB · CPT · DUR · GRJ). No cats. There is <strong className="text-stone-800">no cabin option in or out of South Africa internationally</strong> on any airline — international pets travel as cargo.
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {a.scope === "australia-domestic" && (
+                    <div className="mb-3 pb-3 border-b border-stone-200">
+                      <div className="flex items-start gap-2 text-sm text-stone-600">
+                        <Info className="w-4 h-4 text-stone-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
+                        <span>
+                          <strong className="text-stone-800">Domestic Australia only.</strong> Small dogs and cats under 8&nbsp;kg, in cabin, on Virgin Australia's Pets in Cabin routes (MEL ↔ Gold Coast · Sunshine Coast, expanding to Adelaide &amp; Launceston in 2026). There is <strong className="text-stone-800">no cabin option flying into Australia from overseas</strong> on any airline — international pets arrive as cargo with quarantine.
                         </span>
                       </div>
                     </div>

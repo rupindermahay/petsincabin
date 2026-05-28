@@ -10013,7 +10013,7 @@ const DESTINATIONS = [
     flag: "🇦🇺",
     name: "Australia",
     headline: "Cargo only. Plus 10 days of quarantine.",
-    rule: "Australia treats pets as biosecurity risks. All pets must arrive in Melbourne (Tullamarine) as manifested cargo and complete a minimum 10-day quarantine at the Mickleham facility. There is no in-cabin option for any commercial passenger flight. Even pets from the U.S. need an import permit (3–6 month process).",
+    rule: "Australia treats incoming pets as biosecurity risks. All pets arriving from overseas must enter in Melbourne (Tullamarine) as manifested cargo and complete a minimum 10-day quarantine at the Mickleham facility. There is no in-cabin option for any international arrival (Virgin Australia introduced cabin pets in late 2025, but only on select DOMESTIC routes — it does not change the international rule). Even pets from the U.S. need an import permit (3–6 month process).",
     workarounds: [
       {
         title: "Plan in months, not weeks",
@@ -11014,7 +11014,7 @@ function AirlineGrid() {
             </div>
             <div className="p-6 md:p-8 space-y-5">
               <p className="font-serif text-lg text-stone-800 leading-relaxed">
-                Australia and New Zealand treat incoming pets as biosecurity risks. Every pet must arrive as <strong>manifested cargo</strong> and complete a <strong>minimum 10-day government quarantine</strong> on arrival. There is no in-cabin option on any commercial flight — and unlike the UK, there's no clever continent-hop that gets around it. This is the hard reality, not a route to optimise.
+                Australia and New Zealand treat incoming pets as biosecurity risks. Every pet arriving from overseas must come as <strong>manifested cargo</strong> and complete a <strong>minimum 10-day government quarantine</strong> on arrival. There is no in-cabin option for arriving internationally — and unlike the UK, there's no clever continent-hop that gets around it. (Virgin Australia began carrying cabin pets in late 2025, but only on select <em>domestic</em> Australian routes — it doesn't change the rules for arriving from abroad.) This is the hard reality, not a route to optimise.
               </p>
 
               <div className="bg-rose-50 border-l-2 border-rose-400 px-5 py-4">

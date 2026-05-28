@@ -9201,14 +9201,14 @@ function Hero({ onStart }) {
           in the cabin.
         </h1>
 
-        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-2xl mx-auto leading-relaxed mb-8 md:mb-10">
+        <p className="font-serif text-xl md:text-2xl text-stone-700 max-w-[800px] mx-auto leading-relaxed mb-8 md:mb-10">
           Can your dog or cat fly in the cabin with you? We sort through every airline's rules and every country's paperwork so you arrive together — calm, prepared, and on the same flight.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch justify-center max-w-[800px] mx-auto">
           <button
             onClick={onStart}
-            className="group flex items-center justify-between gap-4 bg-stone-900 text-cream-50 px-7 py-5 hover:bg-amber-700 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
+            className="group flex items-center justify-between gap-4 bg-stone-900 text-cream-50 px-7 py-5 hover:bg-amber-700 transition-colors duration-300 text-left flex-1 sm:max-w-[392px]"
             style={{ color: "#faf6ed" }}
           >
             <div className="flex flex-col gap-1.5">
@@ -9222,7 +9222,7 @@ function Hero({ onStart }) {
 
           <a
             href="#checklist"
-            className="group flex items-center justify-between gap-4 border-2 border-stone-900 text-stone-900 bg-transparent px-7 py-5 hover:bg-stone-900 hover:text-cream-50 transition-colors duration-300 text-left flex-1 sm:max-w-[340px]"
+            className="group flex items-center justify-between gap-4 border-2 border-stone-900 text-stone-900 bg-transparent px-7 py-5 hover:bg-stone-900 hover:text-cream-50 transition-colors duration-300 text-left flex-1 sm:max-w-[392px]"
           >
             <div className="flex flex-col gap-1.5">
               <span className="uppercase tracking-widest text-sm font-medium">What paperwork do I need?</span>
@@ -9236,10 +9236,12 @@ function Hero({ onStart }) {
 
         {/* Journey planner — full-width band beneath the two main CTAs.
             It's the most powerful tool on the site, so it gets its own
-            emphasis line rather than being squeezed into a third column. */}
+            emphasis line rather than being squeezed into a third column.
+            Width matches the two-CTA row above (max-w-[800px]) so the
+            three CTAs read as one coherent set. */}
         <a
           href="#planner"
-          className="group mt-4 flex items-center justify-between gap-4 bg-amber-700 text-cream-50 px-7 py-5 hover:bg-stone-900 transition-colors duration-300 text-left w-full max-w-[696px] mx-auto"
+          className="group mt-4 flex items-center justify-between gap-4 bg-amber-700 text-cream-50 px-7 py-5 hover:bg-stone-900 transition-colors duration-300 text-left w-full max-w-[800px] mx-auto"
           style={{ color: "#faf6ed" }}
         >
           <div className="flex items-center gap-3">

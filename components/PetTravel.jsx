@@ -10030,7 +10030,7 @@ const DESTINATIONS = [
       {
         title: "Fly via New Zealand?",
         icon: <MapIcon className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Tempting, but no — pets from NZ skip Australian quarantine, but only if they've lived in NZ for at least 6 months first. Not a useful workaround for short trips. There is no shortcut.",
+        body: "Two different cases, often confused. Pets that genuinely live in New Zealand fly to Australia as cargo with NO quarantine and no import permit — NZ is a 'Group 1' country and it's the easiest pet route into Australia that exists. But you can't use NZ as a shortcut: a pet coming from a third country must live in NZ for 180 days after its NZ quarantine before it qualifies for the no-quarantine path into Australia. So it only helps actual NZ residents, not as a hop-through from elsewhere.",
         cost: "—",
       },
     ],
@@ -10043,6 +10043,12 @@ const DESTINATIONS = [
     headline: "Cargo only. 10 days quarantine (except from Australia).",
     rule: "Like Australia, NZ requires pets to arrive as cargo into Auckland or Christchurch and complete 10 days minimum quarantine at an MPI-approved facility. Pets coming from Australia are exempt from quarantine. Air New Zealand requires bookings to go through approved pet shippers.",
     workarounds: [
+      {
+        title: "Leaving NZ for Australia is the easy direction",
+        icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
+        body: "If you're flying your pet OUT of NZ to Australia (Sydney, Brisbane, Gold Coast, anywhere on the mainland), it's cargo-only — no cabin option on any airline — but it's by far the simplest pet route into Australia: no import permit and NO quarantine on arrival, because NZ is an Australian 'Group 1' country. You'll still need the health-certificate steps (parasite treatments, vet exam, MPI/DAFF notification) and a cargo booking via a pet transport company (Air NZ and Qantas require this), but no permit and no quarantine. Note this only applies to pets genuinely living in NZ — not pets hopping through.",
+        cost: "Cargo + shipper fees; no quarantine cost.",
+      },
       {
         title: "The Australia Stopover",
         icon: <MapIcon className="w-4 h-4" strokeWidth={1.75} />,
@@ -11019,7 +11025,7 @@ function AirlineGrid() {
               </div>
 
               <p className="text-stone-600 text-sm leading-relaxed italic font-serif">
-                One genuine nuance: pets that have lived in New Zealand for 6+ months can enter Australia without quarantine, and vice-versa — but that only helps actual NZ/AU residents, not as a shortcut for a move from elsewhere. The full breakdown — costs, the permit process, approved shippers — is in the Difficult Destinations section.
+                One genuine nuance: a pet that genuinely lives in New Zealand can enter Australia with no import permit and no quarantine (NZ is an Australian "Group 1" country — it's the easiest pet route into Australia), and the reverse Australia→NZ is similarly quarantine-free. It's still cargo, not cabin. What doesn't work is using NZ as a shortcut from a third country — for that, the pet must live in NZ for 180 days first. The full breakdown — costs, the permit process, approved shippers — is in the Difficult Destinations section.
               </p>
 
               <div className="flex flex-wrap gap-3 pt-2">

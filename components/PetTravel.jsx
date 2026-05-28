@@ -7238,6 +7238,86 @@ const DIRECTIONAL_CHECKLISTS = {
       ],
     },
   },
+  // INTERNATIONAL Australia only. Domestic AU→AU is intercepted earlier by the
+  // isDomesticAU guard in buildRouteChecklist (→ australia_domestic) and never
+  // reaches here. arriving = the full import/quarantine project (180-day RNATT,
+  // BICON permit, Mickleham). departing = leaving Australia, where the
+  // DESTINATION's rules govern, NOT Australia's import process — so the 180-day
+  // RNATT/Mickleham arrival timeline must NOT show. This is the Hawaii/Japan
+  // (#28) directional pattern applied to Australia.
+  australia: {
+    departing: {
+      title: "Departing Australia — pet export checklist",
+      restriction: "⚠ There is NO cabin option flying internationally out of Australia on any airline — your pet travels as manifested cargo. The Australian side is comparatively light: a government-endorsed export health certificate plus your DESTINATION country's import rules, which are what actually drive the timeline. Do NOT confuse this with the 6-month inbound process — that 180-day RNATT / Mickleham quarantine timeline applies to pets coming INTO Australia, not leaving it.",
+      sections: [
+        {
+          title: "First — the destination's rules drive everything",
+          items: [
+            "Leaving Australia is governed by wherever you're going, not by Australia. Start your DESTINATION country's import checklist as early as possible — that's where the long-lead items (rabies titre, waiting periods, import permits) live.",
+            "The Australian export side itself is light: an endorsed export health certificate from an Australian government-accredited vet, plus meeting the destination's entry conditions.",
+            "There is no cabin option internationally out of Australia on any airline — this is a cargo move. Engage an IATA / IPATA-registered pet shipper early.",
+            "If your destination is the UK, EU, or another rabies-controlled region, the rabies titre and its waiting period (3 months for the EU; longer for some) is the gating step — plan backwards from your intended arrival date.",
+          ],
+        },
+        {
+          title: "Australian export side — closer to travel",
+          items: [
+            "Book the cargo space and an IATA-compliant crate through your pet shipper.",
+            "Government-endorsed export health certificate from an Australian Government-accredited veterinarian, issued to the destination country's required template and timing.",
+            "Complete any parasite treatments or pre-export tests the destination country specifies, on their schedule.",
+            "Confirm the destination's import permit (if required) is issued and in hand before travel.",
+            "Avoid the Dec–Feb Australian summer where possible — extreme heat can ground live-animal cargo.",
+          ],
+        },
+        {
+          title: "Official sources",
+          items: [
+            "The Australian export authority is DAFF — verify current export steps at <a href=\"https://www.agriculture.gov.au/biosecurity-trade/cats-dogs/exporting\" target=\"_blank\" rel=\"noopener noreferrer\">agriculture.gov.au · exporting cats and dogs</a>. But your binding requirements come from the DESTINATION country's veterinary authority — start there. For US-bound pets, cross-check the USDA APHIS / CDC import rules.",
+          ],
+        },
+      ],
+    },
+    arriving: {
+      title: "Australia pet import checklist (international arrival)",
+      restriction: "⚠ Australia is one of the strictest pet-import countries in the world, and the requirements are TIME-CRITICAL — the rabies (RNATT) blood test must be drawn at least 180 days before arrival, so this is a 6-month-minimum project that cannot be rushed. There is NO cabin option into Australia on any airline: every pet arrives as manifested cargo and completes a minimum 10-day quarantine at the Mickleham facility near Melbourne. This checklist is a high-level guide only — confirm every step against DAFF (the Australian government authority) and use an IATA-registered pet shipper. See the Australia tab in Difficult Destinations for the full picture.",
+      sections: [
+        {
+          title: "First — understand what you're committing to",
+          items: [
+            "All pets arriving from overseas enter as manifested cargo into Melbourne and complete a minimum 10-day quarantine at the Mickleham (Post Entry Quarantine) facility — there is no cabin or accompanied-baggage option on any airline.",
+            "The single most important constraint: the rabies neutralising antibody titre test (RNATT) must be drawn at least 180 days before your pet's arrival date. Miss this window and the trip cannot proceed — plan backwards from it.",
+            "Pets coming from New Zealand are a special 'Group 1' exception — no import permit and no quarantine (still cargo). This checklist is for all OTHER origins; if you're flying from NZ, see the New Zealand notes in Difficult Destinations instead.",
+            "Engage an IATA / IPATA-registered pet shipper early — the cargo booking, crate compliance and timing coordination are not realistically a DIY job for Australia.",
+          ],
+        },
+        {
+          title: "6+ months before — the long-lead items",
+          items: [
+            "ISO 11784/11785 microchip implanted (must be in place before the rabies vaccination to be valid)",
+            "Rabies vaccination administered (after the microchip)",
+            "Rabies (RNATT) blood test drawn at an approved lab — this starts the 180-day clock to your earliest possible arrival date",
+            "Apply for the import permit via DAFF (the Department of Agriculture, Fisheries and Forestry) — permits take time to process and must be in hand before travel",
+          ],
+        },
+        {
+          title: "Closer to travel",
+          items: [
+            "Book a quarantine place at the Mickleham facility as soon as you have the import permit — spaces are limited and gate your travel dates",
+            "Complete the required parasite treatments (internal and external) on the schedule the permit specifies",
+            "Government-endorsed export health certificate from your origin country's official veterinary authority (e.g. USDA-endorsed for US-origin pets)",
+            "Confirm the cargo booking and an IATA-compliant crate with your pet shipper",
+            "Avoid the Dec–Feb Australian summer if possible — extreme heat can ground live-animal cargo",
+          ],
+        },
+        {
+          title: "Official sources",
+          items: [
+            "Australia's pet-import authority is DAFF — verify the current step-by-step requirements at <a href=\"https://www.agriculture.gov.au/biosecurity-trade/cats-dogs\" target=\"_blank\" rel=\"noopener noreferrer\">agriculture.gov.au · cats and dogs</a>. For US-origin pets, cross-check the USDA APHIS country page: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. Requirements change — confirm before acting on any date-sensitive step.",
+          ],
+        },
+      ],
+    },
+  },
 };
 
 // Get the right checklist based on route + direction. Falls back to single CHECKLIST_DATA for routes
@@ -7286,11 +7366,13 @@ const REGION_TO_CHECKLIST_ID = {
   "japan": "japan",
   "korea": "korea",         // Verified APQA / QIA paperwork added in this build
   "russia": "russia",       // Verified Rosselkhoznadzor paperwork added in this build
-  // International →Australia uses the import/quarantine checklist. Domestic
-  // AU→AU is intercepted earlier by the isDomesticAU guard in
-  // buildRouteChecklist (→ australia_domestic), so this mapping only ever
-  // fires for an international arrival into Australia, which is exactly the
-  // case that needs the permit / 180-day RNATT / Mickleham quarantine steps.
+  // International Australia. Domestic AU→AU is intercepted earlier by the
+  // isDomesticAU guard in buildRouteChecklist (→ australia_domestic), so this
+  // mapping only fires for INTERNATIONAL Australia routes. Direction is then
+  // resolved by DIRECTIONAL_CHECKLISTS.australia (#-AU-directional): arriving →
+  // the permit / 180-day RNATT / Mickleham quarantine import checklist;
+  // departing → the lighter export checklist (destination's rules govern, no
+  // inbound 180-day/Mickleham prep). Both directions are cargo-only.
   "australia": "australia",
 };
 

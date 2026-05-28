@@ -176,12 +176,12 @@ const AIRLINES = [
     direction: "Cabin allowed: domestic US, Canada, Mexico, continental EU, and notably US ↔ Japan (SFO/ORD ↔ NRT/HND/KIX, with new routes launching Sept-Oct 2026). Cabin NOT allowed (both directions): Australia, Barbados, Cuba, Guam (one-way exception: cabin OK from Guam to Tokyo-Narita but not back), French Polynesia, Hawaii, Hong Kong, Iceland, India, Ireland, Jamaica, Marshall Islands, Micronesia, NZ, Palau, Philippines, Saint Kitts and Nevis, South Africa, Sweden, Trinidad and Tobago, UAE, UK.",
     originAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes", korea: "yes", australia: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "no", canada: "yes", uae: "no", caribbean: "yes", mexico: "yes", japan: "yes", "south-america": "no", "central-america": "yes", korea: "yes", australia: "no" },
-    fee: "$150 each way (plus $150 again for stopovers over 4 hours)",
+    fee: "$150 each way (plus $125 per stopover over 4h domestic / 24h international)",
     weight: "No weight limit — pet must fit in carrier under the seat",
-    carrier: "Hard: 17.5 × 12 × 9 in. Soft: 18 × 11 × 11 in",
+    carrier: "Hard: 17.5 × 12 × 7.5 in. Soft: 18 × 11 × 11 in",
     notes: "Pets in cabin only — PetSafe cargo program discontinued except for active U.S. Military and State Dept. United is one of very few airlines accepting cabin pets US↔Japan direct (no weight limit). Long destination ban list — always confirm by phone before booking. Reserve early; limited spots per flight.",
     intl: "Yes (restricted)",
-    verified: "May 2026",
+    verified: "May 2026 — audited against United's own traveling-with-pets page. Base $150 each-way fee current (raised $125→$150 on 26 Apr 2024). Corrected stopover sub-fee $150 → $125 (per qualifying layover: >4h domestic / >24h international) and hard-carrier height 9 → 7.5 in. US↔Japan cabin, no-weight-limit, and destination ban list all match Tier-1.",
     link: "https://www.united.com/en/us/fly/travel/traveling-with-pets.html",
   },
   {
@@ -215,7 +215,7 @@ const AIRLINES = [
     carrier: "18.5 × 8.5 × 13.5 in",
     notes: "Domestic only — no international, no Hawaii. Six pets per flight max.",
     intl: "No",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Southwest's own pets page (southwest.com/pets). $125 each-way US fee current ($35 Hawaii interisland); carrier 18.5×8.5×13.5, domestic + PR/USVI only, no cargo, 6 pets/flight all match. No corrections.",
     link: "https://www.southwest.com/pets/",
   },
   {
@@ -232,7 +232,7 @@ const AIRLINES = [
     carrier: "18 × 14 × 9 in",
     notes: "Domestic US, Puerto Rico, USVI, plus some Mexico, Central America, and select Caribbean / Latin America routes. Cabin pet eligibility varies by route and destination country rules. Pets must be at least 8 weeks old. Confirm your specific route by calling Spirit directly.",
     intl: "Limited",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Spirit's own pet policy (customersupport.spirit.com). $125 each-way fee, 40 lb combined weight (most generous among US carriers), soft-sided 18×14×9, domestic + PR/USVI + select Caribbean/Latin America, 8-week min age all match. No corrections.",
     link: "https://customersupport.spirit.com/en-us/category/article/KA-01181",
   },
   {

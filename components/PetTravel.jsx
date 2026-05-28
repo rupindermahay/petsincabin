@@ -113,7 +113,7 @@ function airlineStringIsClean(airline) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "27 May 2026";
+const LAST_UPDATED = "28 May 2026";
 
 // ---------- DATA ----------
 
@@ -989,6 +989,15 @@ const DIRECT_ROUTES = [
   { from: "Johannesburg (JNB)", to: "Cape Town (CPT)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg only, on Lift's dog-friendly flights. South Africa's busiest domestic route. Submit Lift's Dog-in-Cabin form 7+ days ahead, window seat is blocked for the dog. No cats, no international.", tags: ["south-africa"] },
   { from: "Johannesburg (JNB)", to: "Durban (DUR)", duration: "1h 5m", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. For dogs over 7 kg or cats: FlySafair PetLounge cargo, or SAA/Airlink checked baggage (domestic).", tags: ["south-africa"] },
   { from: "Johannesburg (JNB)", to: "George (GRJ)", duration: "2h", note: "Lift. ✓ Cabin — small dogs under 7 kg on dog-friendly flights. Domestic only. Note: no airline flies cabin pets internationally in or out of South Africa — see the South Africa tab in Difficult Destinations.", tags: ["south-africa"] },
+
+  // ═══════ AUSTRALIA DOMESTIC (Virgin Australia Pets in Cabin) ═══════
+  // Domestic-AU cabin only. International into/out of Australia is cargo + quarantine
+  // on every airline (see Australia in Difficult Destinations). ADL/LST announced for
+  // after Easter 2026 — not added as live routes until on-sale.
+  { from: "Melbourne (MEL)", to: "Gold Coast (OOL)", duration: "2h 15m", note: "Virgin Australia. ✓ Cabin — DOGS ONLY on this route currently (cats not yet accepted MEL–Gold Coast), under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book via Virgin's Guest Contact Centre (13 67 89), not online — 4 pets/flight, window rows. No cabin pet option flying INTO Australia from overseas (cargo + quarantine).", tags: ["australia"] },
+  { from: "Gold Coast (OOL)", to: "Melbourne (MEL)", duration: "2h 15m", note: "Virgin Australia. ✓ Cabin — dogs only on this route currently (no cats yet), under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows.", tags: ["australia"] },
+  { from: "Melbourne (MEL)", to: "Sunshine Coast (MCY)", duration: "2h 20m", note: "Virgin Australia. ✓ Cabin — small dogs AND cats under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book via Virgin's Guest Contact Centre (13 67 89), 4 pets/flight, designated window rows. No cabin pet option flying INTO Australia from overseas (cargo + quarantine).", tags: ["australia"] },
+  { from: "Sunshine Coast (MCY)", to: "Melbourne (MEL)", duration: "2h 20m", note: "Virgin Australia. ✓ Cabin — dogs and cats under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Adelaide and Launceston routes announced for after Easter 2026 — confirm on-sale before booking.", tags: ["australia"] },
 
   // ═══════ FROM DELHI ═══════
   { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
@@ -2030,12 +2039,22 @@ const REGION_HUBS = {
   "japan": ["Tokyo Narita (NRT)", "Tokyo Haneda (HND)", "Osaka Kansai (KIX)", "Nagoya Chubu (NGO)", "Fukuoka (FUK)"],
   "korea": ["Seoul Incheon (ICN)"],
   "russia": ["Moscow (SVO)"],
+  // Australia added May 2026 (chat 12): DOMESTIC cabin pets only, via Virgin
+  // Australia's Pets in Cabin service (launched Oct 2025). MEL is the network
+  // anchor; OOL (Gold Coast) and MCY (Sunshine Coast) are the live routes.
+  // Adelaide (ADL) and Launceston (LST) are ANNOUNCED for after Easter 2026 but
+  // not yet on-sale (pending airport approvals) — included as upcoming, flagged
+  // in route notes, NOT asserted as bookable today (Rule A: don't claim service
+  // that isn't live). CRITICAL: this is domestic-AU cabin ONLY. There is NO
+  // cabin pet route into or out of Australia internationally on any airline —
+  // international is cargo + quarantine (see Australia in DIFFICULT_DESTINATIONS).
+  "australia": ["Melbourne (MEL)", "Gold Coast (OOL)", "Sunshine Coast (MCY)"],
 };
 
 const REGION_LABELS_SHORT = {
   "uk-out": "the UK", "ireland": "Ireland", "us": "the US", "canada": "Canada",
   "mexico": "Mexico", "europe": "Europe", "india": "India", "dubai": "the UAE",
-  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan", "korea": "South Korea", "russia": "Russia",
+  "caribbean": "the Caribbean", "hawaii": "Hawaii", "south-africa": "South Africa", "south-america": "South America", "central-america": "Central America", "japan": "Japan", "korea": "South Korea", "russia": "Russia", "australia": "Australia",
 };
 
 // Reverse-index: 3-letter airport code → region, built from REGION_HUBS.
@@ -2241,6 +2260,17 @@ const AIRPORTS = [
   { code: "CPT", city: "Cape Town", region: "south-africa", cabinOut: false, cabinIn: false, note: "No airline flies cabin pets internationally in or out of South Africa — international travel is cargo-only. Cabin is domestic-only (Lift, small dogs)." },
   { code: "DUR", city: "Durban", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
   { code: "GRJ", city: "George", region: "south-africa", cabinOut: false, cabinIn: false, note: "Domestic cabin pets only (Lift, small dogs under 7 kg). No international cabin pet option in or out of South Africa — international travel is cargo-only." },
+  // Australia — DOMESTIC cabin pets only (Virgin Australia Pets in Cabin, from Oct 2025).
+  // cabinOut/cabinIn are false because they govern INTERNATIONAL hub-capability,
+  // and there is NO cabin pet route into or out of Australia internationally on any
+  // airline (cargo + quarantine — see Australia in DIFFICULT_DESTINATIONS). The
+  // domestic Virgin cabin reality lives in the notes + ROUTES + the australia
+  // FALLBACK_STRATEGIES handlers. Same modelling as South Africa.
+  { code: "MEL", city: "Melbourne", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia's Pets in Cabin anchor — small dogs and cats (under 8 kg incl. carrier) fly in cabin DOMESTICALLY from Melbourne to the Gold Coast and Sunshine Coast (Adelaide and Launceston announced for after Easter 2026). No international cabin pet option in or out of Australia on any airline — international travel is cargo with mandatory quarantine. Book via Virgin's Guest Contact Centre (13 67 89), not online." },
+  { code: "OOL", city: "Gold Coast", region: "australia", cabinOut: false, cabinIn: false, note: "Domestic cabin pets via Virgin Australia (Melbourne ↔ Gold Coast) — note: DOGS ONLY on the MEL–Gold Coast route currently (cats not yet accepted there). Under 8 kg incl. carrier. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
+  { code: "MCY", city: "Sunshine Coast", region: "australia", cabinOut: false, cabinIn: false, note: "Domestic cabin pets via Virgin Australia (Melbourne ↔ Sunshine Coast), dogs and cats under 8 kg incl. carrier. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
+  { code: "ADL", city: "Adelaide", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia announced Pets in Cabin service to/from Adelaide for after Easter 2026 (pending final airport approvals) — confirm it's on-sale before relying on it. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
+  { code: "LST", city: "Launceston", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia announced Pets in Cabin service to/from Launceston for after Easter 2026 (pending final airport approvals) — confirm it's on-sale before relying on it. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
   // South America — LATAM and Avianca are the primary cabin pet carriers (both 10kg combined limit, brachycephalic excluded from cargo). Aeromexico provides Mexico ↔ SA connections.
   { code: "GRU", city: "São Paulo Guarulhos", region: "south-america", cabinOut: true, cabinIn: true, note: "São Paulo Guarulhos (GRU) is South America's largest hub. LATAM is the primary cabin pet carrier (10 kg combined). Brazil's entry rules are relatively lenient: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, no microchip or titer required for most origin countries." },
   { code: "EZE", city: "Buenos Aires Ezeiza", region: "south-america", cabinOut: true, cabinIn: true, note: "Buenos Aires Ezeiza (EZE) is Argentina's main international airport. LATAM and Aerolineas Argentinas serve cabin pets. Argentina requires ISO microchip, rabies vaccine, SENASA-endorsed health certificate, and import permit." },
@@ -3352,6 +3382,20 @@ const FALLBACK_STRATEGIES = {
     ],
     note: `No airline flies cabin pets out of South Africa internationally — your pet travels as manifested cargo via an IATA-registered pet shipper. Plan ahead: the destination country's import paperwork (permits, health certificates, sometimes rabies titre tests) must all be in order before travel.`,
   }),
+  // Any origin = Australia (international arrival)
+  "australia": (o, d) => ({
+    legs: [
+      { route: `${o} → Australia (Sydney / Melbourne / Brisbane etc.)`, time: "varies — long-haul", airline: "⚠ Cargo only — no cabin option into Australia on any airline" },
+    ],
+    note: `There is no cabin pet route INTO Australia from overseas on any airline — international pets arrive as manifested cargo into Melbourne (Mickleham) and complete a minimum 10-day quarantine, arranged through an IATA-registered pet shipper. Australia requires an import permit (a 3–6 month process) and a rabies titre drawn ≥180 days before arrival — see the Australia tab in Difficult Destinations. NOTE: Virgin Australia DOES carry cabin pets, but only on DOMESTIC Australian routes (e.g. Melbourne ↔ Gold Coast / Sunshine Coast) — useful for an onward leg AFTER your pet has cleared into Australia, never for the international arrival itself.`,
+  }),
+  // Any origin = Australia (departing)
+  "australia-out": (o, d) => ({
+    legs: [
+      { route: `Australia → ${d}`, time: "varies — long-haul", airline: "⚠ Cargo only — no cabin option out of Australia internationally" },
+    ],
+    note: `No airline flies cabin pets out of Australia internationally — your pet travels as manifested cargo via an IATA-registered pet shipper, and the destination country's import paperwork must be in order first. (Virgin Australia's cabin pet service is DOMESTIC-only — Melbourne ↔ Gold Coast / Sunshine Coast, with Adelaide and Launceston announced for after Easter 2026 — so it can carry your pet on an Australian leg in cabin, but not on the international sector.)`,
+  }),
   // Generic cabin-direct fallback — for region pairs where a direct cabin
   // flight genuinely exists (US/Canada/Europe/UAE/India transatlantic and
   // similar corridors) but the EXACT airport pair the user picked has no
@@ -3878,6 +3922,7 @@ function strategiesFor(originRegion, destRegion) {
   if (destRegion === "central-america") return [FALLBACK_STRATEGIES["central-america"]];
   if (destRegion === "mexico") return [FALLBACK_STRATEGIES["mexico"]];
   if (destRegion === "russia") return [FALLBACK_STRATEGIES["russia"]];
+  if (destRegion === "australia") return [FALLBACK_STRATEGIES["australia"]];
   if (originRegion === "south-africa") return [FALLBACK_STRATEGIES["south-africa-out"]];
   if (originRegion === "hawaii") return [FALLBACK_STRATEGIES["hawaii-out"]];
   if (originRegion === "japan") return [FALLBACK_STRATEGIES["japan-out"]];
@@ -3886,6 +3931,7 @@ function strategiesFor(originRegion, destRegion) {
   if (originRegion === "central-america") return [FALLBACK_STRATEGIES["central-america-out"]];
   if (originRegion === "mexico") return [FALLBACK_STRATEGIES["mexico-out"]];
   if (originRegion === "russia") return [FALLBACK_STRATEGIES["russia-out"]];
+  if (originRegion === "australia") return [FALLBACK_STRATEGIES["australia-out"]];
   // Cabin-direct corridors — region pairs where a direct cabin flight
   // genuinely exists (US/Canada/Europe/UAE/India/UK-out/Caribbean and
   // similar). These pairs have no workaround strategy because they don't
@@ -4083,6 +4129,7 @@ function regionLevelHandWrittenWorkarounds(originCode, destCode) {
     "caribbean": ["Nassau", "Montego Bay", "Punta Cana", "Santo Domingo", "(NAS)", "(MBJ)", "(PUJ)", "(SDQ)", "Caribbean", "Bahamas", "Jamaica"],
     "hawaii": ["Honolulu", "(HNL)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "(JNB)", "(CPT)", "South Africa"],
+    "australia": ["Melbourne", "Gold Coast", "Sunshine Coast", "(MEL)", "(OOL)", "(MCY)", "Australia"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "(GRU)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "Japan"],
@@ -10866,6 +10913,7 @@ function AirlineGrid() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
     { id: "russia", label: "Russia", flag: "🇷🇺" },
+    { id: "australia", label: "Australia (domestic)", flag: "🇦🇺" },
   ];
 
   // The "Into UK / Ireland" and "Into Australia / NZ" filters are special —
@@ -12151,6 +12199,7 @@ function ChecklistDownload() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
     { id: "russia", label: "Russia", flag: "🇷🇺" },
+    { id: "australia", label: "Australia", flag: "🇦🇺" },
   ];
   const clAirportsByRegion = CL_REGIONS.map((r) => ({
     region: r,
@@ -12639,6 +12688,7 @@ function JourneyPlanner() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
     { id: "russia", label: "Russia", flag: "🇷🇺" },
+    { id: "australia", label: "Australia", flag: "🇦🇺" },
   ];
 
   // Map a region to its checklist tab id.
@@ -14334,6 +14384,7 @@ function Routes() {
     { id: "hawaii", label: "Hawaii", flag: "🌺" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
     { id: "russia", label: "Russia", flag: "🇷🇺" },
+    { id: "australia", label: "Australia (domestic)", flag: "🇦🇺" },
   ];
 
   // Extract a clean grouping key from "City (CODE)" or "City / City" strings
@@ -14370,6 +14421,7 @@ function Routes() {
     "mexico": ["Mexico City", "Cancún", "Cancun", "Guadalajara", "(MEX)", "(CUN)", "(GDL)", "Mexico"],
     "hawaii": ["Honolulu", "Kahului", "Maui", "Kauai", "(HNL)", "(OGG)", "Hawaii"],
     "south-africa": ["Johannesburg", "Cape Town", "Durban", "George", "(JNB)", "(CPT)", "(DUR)", "(GRJ)", "South Africa"],
+    "australia": ["Melbourne", "Gold Coast", "Sunshine Coast", "Adelaide", "Launceston", "Sydney", "Brisbane", "Perth", "(MEL)", "(OOL)", "(MCY)", "(ADL)", "(LST)", "(SYD)", "(BNE)", "(PER)", "Australia"],
     "south-america": ["São Paulo", "Sao Paulo", "Buenos Aires", "Santiago", "Bogotá", "Bogota", "Lima", "Montevideo", "Rio de Janeiro", "Quito", "(GRU)", "(GIG)", "(EZE)", "(SCL)", "(BOG)", "(LIM)", "(MVD)", "(UIO)", "South America", "Brazil", "Argentina", "Chile", "Colombia", "Peru", "Ecuador", "Uruguay"],
     "central-america": ["Panama City", "Panama", "(PTY)", "Central America"],
     "japan": ["Tokyo", "Osaka", "Nagoya", "Fukuoka", "Sapporo", "Naha", "Okinawa", "(NRT)", "(HND)", "(KIX)", "(NGO)", "(FUK)", "(ITM)", "(CTS)", "(OKA)", "Japan"],

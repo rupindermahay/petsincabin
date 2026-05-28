@@ -8473,7 +8473,9 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   }
 
   return {
-    title: `${originLabel} → ${destLabel} — pet-travel checklist`.replace(/^the\s+/i, "The "),
+    title: (isDomesticAU
+      ? `Domestic Australia — pet-travel checklist`
+      : `${originLabel} → ${destLabel} — pet-travel checklist`).replace(/^the\s+/i, "The "),
     subtitle: petType === "dog" ? "Dog edition" : petType === "cat" ? "Cat edition" : "For dogs and cats",
     sections,
     restriction,

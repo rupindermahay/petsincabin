@@ -909,7 +909,7 @@ const DIRECT_ROUTES = [
   { from: "Frankfurt (FRA)", to: "Chennai (MAA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Kolkata (CCU)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Hyderabad (HYD)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
-  { from: "Frankfurt (FRA)", to: "Valencia (VLC)", duration: "2h 30m", note: "Vueling / Lufthansa. ✓ Cabin (under 8 kg). Frankfurt→Valencia direct cabin.", tags: ["europe"] },
+  { from: "Frankfurt (FRA)", to: "Valencia (VLC)", duration: "2h 25m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt→Valencia direct cabin — Lufthansa flies it nonstop. (Vueling serves Valencia widely but routes Frankfurt via Barcelona, so it isn't a single-flight cabin option on this pair.)", tags: ["europe"] },
   { from: "Frankfurt (FRA)", to: "Oslo (OSL)", duration: "1h 55m", note: "Lufthansa / SAS. ✓ Cabin (under 8 kg). Lufthansa connects from Asia/India onward to Oslo. Tapeworm treatment required for dogs.", tags: ["europe"] },
 
   // ═══════ FROM MUNICH ═══════

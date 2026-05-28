@@ -8217,9 +8217,16 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
 
   // Generic prep: bake it into the ORIGIN chapter (it's all pre-travel).
   // We add it to the origin checklist's sections list virtually for the buildChapter call.
-  const originWithGeneric = originChecklist
-    ? { ...originChecklist, sections: [...generic.sections, ...originChecklist.sections] }
-    : generic;
+  // EXCEPTION: domestic Australia (AU→AU on Virgin) — the australia_domestic
+  // checklist is fully self-contained, and the generic baseline is INTERNATIONAL
+  // prep (ISO microchip, rabies-after-microchip-for-international, CDC Dog Import
+  // Form, USDA APHIS country research). None of that applies to a 2-hour domestic
+  // Australian cabin hop, so merging it in is actively misleading. Skip it.
+  const originWithGeneric = isDomesticAU
+    ? originChecklist
+    : (originChecklist
+        ? { ...originChecklist, sections: [...generic.sections, ...originChecklist.sections] }
+        : generic);
 
   const originSections = buildChapter(originWithGeneric, "origin");
   const destSections = buildChapter(destChecklist, "destination");
@@ -8341,9 +8348,9 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // Origin chapter — time-bound items only (anytime already pulled out).
   if (originTimed.length > 0) {
     sections.push({
-      title: `Leaving ${originLabel}`,
+      title: isDomesticAU ? `Your domestic Australia checklist` : `Leaving ${originLabel}`,
       divider: true,
-      items: [`Time-bound steps for departure — earliest prep first.`],
+      items: [isDomesticAU ? `Everything you need for your domestic Virgin Australia cabin flight — no import paperwork or quarantine applies.` : `Time-bound steps for departure — earliest prep first.`],
     });
     originTimed.forEach((s) => {
       if (s.items.length > 0) sections.push({ title: s.label, items: s.items });
@@ -8382,7 +8389,11 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // Destination chapter — time-bound items only. Subhead names the actual
   // headline rules (paperwork + any binding constraint) so the reader knows
   // WHAT'S inside, not just THAT this is the destination chapter.
-  if (destTimed.length > 0 || destChecklist) {
+  // EXCEPTION: domestic Australia (AU→AU) has no "entering" step — you're
+  // already in the country. The origin chapter holds the full self-contained
+  // domestic checklist, so suppress the redundant (and misleadingly-titled
+  // "Entry requirements for Australia") destination chapter entirely.
+  if (!isDomesticAU && (destTimed.length > 0 || destChecklist)) {
     const destFact = ROUTE_FACTS[destRegion];
     const destSubhead = (() => {
       // Per-country subhead (used when the airport override resolved to a

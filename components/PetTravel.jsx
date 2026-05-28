@@ -4993,6 +4993,46 @@ const CHECKLIST_DATA = {
       },
     ],
   },
+  australia: {
+    title: "Australia pet import checklist (international arrival)",
+    restriction: "⚠ Australia is one of the strictest pet-import countries in the world, and the requirements are TIME-CRITICAL — the rabies (RNATT) blood test must be drawn at least 180 days before arrival, so this is a 6-month-minimum project that cannot be rushed. There is NO cabin option into Australia on any airline: every pet arrives as manifested cargo and completes a minimum 10-day quarantine at the Mickleham facility near Melbourne. This checklist is a high-level guide only — confirm every step against DAFF (the Australian government authority) and use an IATA-registered pet shipper. See the Australia tab in Difficult Destinations for the full picture.",
+    sections: [
+      {
+        title: "First — understand what you're committing to",
+        items: [
+          "All pets arriving from overseas enter as manifested cargo into Melbourne and complete a minimum 10-day quarantine at the Mickleham (Post Entry Quarantine) facility — there is no cabin or accompanied-baggage option on any airline.",
+          "The single most important constraint: the rabies neutralising antibody titre test (RNATT) must be drawn at least 180 days before your pet's arrival date. Miss this window and the trip cannot proceed — plan backwards from it.",
+          "Pets coming from New Zealand are a special 'Group 1' exception — no import permit and no quarantine (still cargo). This checklist is for all OTHER origins; if you're flying from NZ, see the New Zealand notes in Difficult Destinations instead.",
+          "Engage an IATA / IPATA-registered pet shipper early — the cargo booking, crate compliance and timing coordination are not realistically a DIY job for Australia.",
+        ],
+      },
+      {
+        title: "6+ months before — the long-lead items",
+        items: [
+          "ISO 11784/11785 microchip implanted (must be in place before the rabies vaccination to be valid)",
+          "Rabies vaccination administered (after the microchip)",
+          "Rabies (RNATT) blood test drawn at an approved lab — this starts the 180-day clock to your earliest possible arrival date",
+          "Apply for the import permit via DAFF (the Department of Agriculture, Fisheries and Forestry) — permits take time to process and must be in hand before travel",
+        ],
+      },
+      {
+        title: "Closer to travel",
+        items: [
+          "Book a quarantine place at the Mickleham facility as soon as you have the import permit — spaces are limited and gate your travel dates",
+          "Complete the required parasite treatments (internal and external) on the schedule the permit specifies",
+          "Government-endorsed export health certificate from your origin country's official veterinary authority (e.g. USDA-endorsed for US-origin pets)",
+          "Confirm the cargo booking and an IATA-compliant crate with your pet shipper",
+          "Avoid the Dec–Feb Australian summer if possible — extreme heat can ground live-animal cargo",
+        ],
+      },
+      {
+        title: "Official sources",
+        items: [
+          "Australia's pet-import authority is DAFF — verify the current step-by-step requirements at <a href=\"https://www.agriculture.gov.au/biosecurity-trade/cats-dogs\" target=\"_blank\" rel=\"noopener noreferrer\">agriculture.gov.au · cats and dogs</a>. For US-origin pets, cross-check the USDA APHIS country page: <a href=\"https://www.aphis.usda.gov/pet-travel/by-country\" target=\"_blank\" rel=\"noopener noreferrer\">aphis.usda.gov · pet travel by country</a>. Requirements change — confirm before acting on any date-sensitive step.",
+        ],
+      },
+    ],
+  },
   hawaii: {
     title: "Hawaii pet travel checklist",
     sections: [
@@ -7141,6 +7181,12 @@ const REGION_TO_CHECKLIST_ID = {
   "japan": "japan",
   "korea": "korea",         // Verified APQA / QIA paperwork added in this build
   "russia": "russia",       // Verified Rosselkhoznadzor paperwork added in this build
+  // International →Australia uses the import/quarantine checklist. Domestic
+  // AU→AU is intercepted earlier by the isDomesticAU guard in
+  // buildRouteChecklist (→ australia_domestic), so this mapping only ever
+  // fires for an international arrival into Australia, which is exactly the
+  // case that needs the permit / 180-day RNATT / Mickleham quarantine steps.
+  "australia": "australia",
 };
 
 // When the region's checklist is null (Caribbean is the main case) we can
@@ -10979,7 +11025,7 @@ function AirlineGrid() {
     { id: "korea", label: "South Korea", flag: "🇰🇷" },
     { id: "south-africa", label: "South Africa", flag: "🇿🇦" },
     { id: "russia", label: "Russia", flag: "🇷🇺" },
-    { id: "australia", label: "Australia (domestic)", flag: "🇦🇺" },
+    { id: "australia-domestic", label: "Australia (domestic)", flag: "🇦🇺" },
   ];
 
   // The "Into UK / Ireland" and "Into Australia / NZ" filters are special —

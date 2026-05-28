@@ -322,15 +322,15 @@ const AIRLINES = [
     tags: ["uk-out", "europe", "india", "us", "longhaul", "mexico", "korea"],
     cabin: "Cabin OUT of UK ✓ — but cargo only INTO UK",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Frankfurt/Munich). Cabin NOT allowed: INTO UK (cargo only — UK government rule), into Australia, NZ, Hawaii.",
+    direction: "Cabin allowed: most international routes including OUT of UK (LHR → Frankfurt/Munich). Cabin NOT allowed: INTO UK (cargo only — UK government rule), into Australia, NZ, Hawaii, UAE. Lufthansa's own policy also reserves the right to refuse cabin pets on routes to the UK, Ireland and Bangalore (India) — Ireland-out and Bangalore in particular need written confirmation before booking (for Bangalore, route via Paris on Air France instead).",
     originAllowed: { uk: "yes", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes", australia: "no" },
     destinationAllowed: { uk: "no", us: "yes", eu: "yes", india: "yes", canada: "yes", uae: "no", caribbean: "no", mexico: "yes", "south-america": "yes", "central-america": "yes", japan: "yes", korea: "yes", australia: "no" },
     fee: "€70–€110 in Europe / €110–€300 long-haul",
     weight: "Pet + carrier max 8 kg (17.6 lb)",
     carrier: "55 × 40 × 23 cm (~21.7 × 15.7 × 9 in) — slightly larger than Air France",
-    notes: "Strong UK-out option: fly LHR → Frankfurt or Munich in cabin, connect onwards to most of the world (USA, India, Asia) all in cabin. Slightly larger carrier allowance than Air France/KLM. Frankfurt's Animal Lounge is the world's most advanced animal handling facility — comforting for cargo pets transferring through. NOTE: Gatwick (LGW) blocks cabin pets — use Heathrow.",
+    notes: "Strong UK-out option: fly LHR → Frankfurt or Munich in cabin, connect onwards to most of the world (USA, India, Asia) all in cabin. Slightly larger carrier allowance than Air France/KLM. Frankfurt's Animal Lounge is the world's most advanced animal handling facility — comforting for cargo pets transferring through. NOTE: Gatwick (LGW) blocks cabin pets — use Heathrow. Lufthansa's own policy reserves the right to refuse cabin pets on routes to the UK, Ireland and Bangalore (India): Bangalore is specifically excluded from cabin (for BLR, route via Paris on Air France instead), and Ireland is now on that refuse-list with travellers reporting cabin service withdrawn both directions — get written confirmation for any Dublin routing, or use KLM/Air France/Iberia out of Dublin.",
     intl: "Yes",
-    verified: "May 2026",
+    verified: "May 2026 — audited against Lufthansa's own pet pages (lufthansa.com/cd/en/travelling-with-animals + /animals-as-additional-carry-on-baggage). Tier-1 verbatim (Rule A, uk-out): 'Lufthansa also reserves the right to apply stricter regulations where necessary and refuse bookings on certain routes (such as to the UK, Ireland or Bangalore in India, for example) to exclude the animal from travel.' Cabin OUT of UK confirmed (LHR→FRA/MUC), cabin INTO UK blocked by gov.uk regardless. Weight 8 kg incl. carrier and carrier 55×40×23 cm both CONFIRMED. CORRECTIONS this audit (chat 12): (1) Bangalore (#22-pattern) — Lufthansa's own page names Bangalore as a route it refuses cabin pets on, and 5 site prose surfaces already said so, but two DIRECT_ROUTES (FRA→BLR, BLR→FRA) wrongly showed 'Lufthansa ✓ Cabin'; rewritten to Air France via Paris (CDG), matching prose. (2) Ireland — Lufthansa's page now lists Ireland among refusable routes (it formerly carried Ireland cabin-out; traveller reports confirm withdrawal both directions); DUB→FRA route + ireland>europe planner branch qualified to 'confirm with Lufthansa / use KLM/AF/Iberia instead' rather than asserting clean cabin. (3) UAE absent from direction string despite uae:'no' — added. eu key HELD 'yes' (continental EU cabin fine; Ireland is the sub-exclusion, captured in notes — a blanket eu→no would wrongly kill Germany/Spain/etc.). Fee bands left as-is (Tier-2 clusters €55 DE / €70–100 EU / €110–160 long intl; site's range workable, no marketed-claim error).",
     link: "https://www.lufthansa.com/us/en/travelling-with-animals",
   },
   {
@@ -888,7 +888,7 @@ const DIRECT_ROUTES = [
   { from: "Frankfurt (FRA)", to: "Miami (MIA)", duration: "10h", note: "Lufthansa. ✓ Cabin (under 8 kg).", tags: ["europe", "us"] },
   { from: "Frankfurt (FRA)", to: "Delhi (DEL)", duration: "8h", note: "Lufthansa / Air India. ✓ Cabin (under 8 kg Lufthansa / under 10 kg Air India). Frankfurt is one of the best hubs for Europe→India cabin travel.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Mumbai (BOM)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Mumbai is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
-  { from: "Frankfurt (FRA)", to: "Bengaluru (BLR)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
+  { from: "Paris (CDG)", to: "Bengaluru (BLR)", duration: "9h 30m", note: "Air France. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports. Note: Lufthansa specifically EXCLUDES Bangalore from cabin pets (per Lufthansa's own policy), so the Europe→BLR cabin route is via Paris on Air France, not via Frankfurt.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Chennai (MAA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Chennai is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Kolkata (CCU)", duration: "9h", note: "Lufthansa. ✓ Cabin (under 8 kg). Kolkata is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
   { from: "Frankfurt (FRA)", to: "Hyderabad (HYD)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Hyderabad is one of India's six approved pet-entry airports.", tags: ["europe", "india"] },
@@ -986,7 +986,7 @@ const DIRECT_ROUTES = [
   { from: "Mumbai (BOM)", to: "Paris (CDG)", duration: "9h 30m", note: "Air France / Air India. ✓ Cabin.", tags: ["india", "europe"] },
 
   // ═══════ FROM BENGALURU ═══════
-  { from: "Bengaluru (BLR)", to: "Frankfurt (FRA)", duration: "9h 30m", note: "Lufthansa. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports.", tags: ["india", "europe"] },
+  { from: "Bengaluru (BLR)", to: "Paris (CDG)", duration: "10h", note: "Air France. ✓ Cabin (under 8 kg). Bengaluru is one of India's six approved pet-entry airports. Note: Lufthansa specifically EXCLUDES Bangalore from cabin pets (per Lufthansa's own policy), so route BLR→Europe in cabin via Paris on Air France, not via Frankfurt.", tags: ["india", "europe"] },
   { from: "Bengaluru (BLR)", to: "Abu Dhabi (AUH)", duration: "3h 30m", note: "Etihad. ✓ Cabin (under 8 kg).", tags: ["india", "dubai"] },
 
   // ═══════ FROM CHENNAI ═══════
@@ -1045,7 +1045,7 @@ const DIRECT_ROUTES = [
   // ═══════ FROM DUBLIN ═══════
   { from: "Dublin (DUB)", to: "Paris (CDG)", duration: "2h", note: "Air France. ✓ Cabin OUT of Ireland (under 8 kg). Leaving Ireland in cabin is straightforward. Cabin pets can also fly INTO Ireland — Iberia (Madrid → Dublin) and KLM (Amsterdam → Dublin) both carry them — though options inbound are fewer. Connects onward across Europe.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "Amsterdam (AMS)", duration: "1h 50m", note: "KLM. ✓ Cabin OUT of Ireland (under 8 kg). KLM also carries cabin pets the other way, Amsterdam → Dublin — one of the few confirmed cabin routes into Ireland. Amsterdam is a strong onward cabin hub.", tags: ["europe"] },
-  { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa. ✓ Cabin OUT of Ireland (under 8 kg). Onward connections across Europe and beyond.", tags: ["europe"] },
+  { from: "Dublin (DUB)", to: "Frankfurt (FRA)", duration: "2h", note: "Lufthansa — but confirm before booking: Lufthansa's own policy now lists Ireland among the routes it reserves the right to refuse cabin pets on (alongside the UK and Bangalore), and travellers report it stopped carrying cabin pets in and out of Ireland. Get written confirmation from Lufthansa for your specific date, or use KLM (to Amsterdam), Air France (to Paris) or Iberia (to Madrid) out of Dublin instead — those remain solid cabin-out options.", tags: ["europe"] },
   { from: "Dublin (DUB)", to: "New York (JFK)", duration: "7h 30m", note: "Delta. ✓ Cabin direct to the US for small dogs, cats and household birds ($200 each way, payable at check-in). Must be a true Delta-operated flight (DL45 daily) — not an Aer Lingus or JetBlue codeshare, since those carriers don't take cabin pets. Soft-sided carrier max 18 × 11 × 11 in (45 × 28 × 28 cm), must fit under seat. Aircraft is usually a Boeing 767-400 or A330-300, both with confirmed under-seat space. Pets cannot travel cargo or checked baggage on this route, cabin only. Notify Ireland's Department of Agriculture at petmove@agriculture.gov.ie before departure. Some third-party policy lists still show Ireland as banned on Delta — that information is out of date; confirm directly with Delta Reservations at booking.", tags: ["us"] },
 
   // ═══════ FROM LONDON ═══════
@@ -2846,11 +2846,15 @@ const REGION_PAIR_STRATEGIES = {
   ],
 
   // ----- IRELAND outbound (cabin OUT of Ireland is fine — Dublin to Europe) -----
+  // Lufthansa dropped from the Ireland-out carrier list (May 2026 audit): Lufthansa's
+  // own policy now lists Ireland among routes it reserves the right to refuse cabin
+  // pets on (with the UK and Bangalore), and travellers report it stopped Ireland
+  // cabin service. Air France / KLM / Iberia remain solid cabin-out of Dublin.
   "ireland>europe": (o, d) => ({
     legs: [
-      { route: `${o} → ${d}`, time: "1h 30m–3h", airline: "Air France / KLM / Lufthansa ✓ Cabin out of Dublin" },
+      { route: `${o} → ${d}`, time: "1h 30m–3h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
     ],
-    note: `Cabin out of Ireland is straightforward. Air France (to Paris), KLM (to Amsterdam) and Lufthansa (to Frankfurt) all take cabin pets out of Dublin, and Iberia flies the cabin route to Madrid. From any of those hubs you can connect onward across Europe in cabin.`,
+    note: `Cabin out of Ireland is straightforward on Air France (to Paris), KLM (to Amsterdam) and Iberia (to Madrid) — all take cabin pets out of Dublin. From any of those hubs you can connect onward across Europe in cabin. (Lufthansa now lists Ireland among the routes it reserves the right to refuse cabin pets on, so confirm directly with Lufthansa before relying on a Frankfurt routing.)`,
   }),
   "ireland>uk-out": [
     // OPTION A: short ferry direct to Wales — most travellers' realistic option
@@ -2876,7 +2880,7 @@ const REGION_PAIR_STRATEGIES = {
   ],
   "ireland>canada": (o, d) => ({
     legs: [
-      { route: `${o} → Paris (CDG) or Frankfurt (FRA)`, time: "1h 30m–2h", airline: "Air France / Lufthansa ✓ Cabin out of Dublin" },
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 30m–2h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
       { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
       { route: `Hub → ${d}`, time: "7–9h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
     ],
@@ -2884,15 +2888,15 @@ const REGION_PAIR_STRATEGIES = {
   }),
   "ireland>india": (o, d) => ({
     legs: [
-      { route: `${o} → Frankfurt (FRA) or Paris (CDG)`, time: "1h 30m–2h", airline: "Lufthansa / Air France ✓ Cabin out of Dublin" },
+      { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 30m–2h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "8–9h", airline: "Lufthansa / Air France ✓ Cabin" },
+      { route: `Hub → ${d}`, time: "8–9h", airline: "Air France / KLM ✓ Cabin (for BLR, Air France via Paris — Lufthansa excludes Bangalore)" },
     ],
     note: `Ireland→India via a European hub, cabin all the way. You'll need India's AQCS NOC for the import side, and India only admits pets through six airports (Delhi, Mumbai, Chennai, Kolkata, Bengaluru, Hyderabad). Apply for the NOC 1–2 weeks ahead.`,
   }),
   "ireland>dubai": (o, d) => ({
     legs: [
-      { route: `${o} → Paris / Frankfurt / Amsterdam`, time: "1h 30m–2h", airline: "Air France / Lufthansa / KLM ✓ Cabin out of Dublin" },
+      { route: `${o} → Paris / Amsterdam`, time: "1h 30m–2h", airline: "Air France / KLM ✓ Cabin out of Dublin" },
       { route: "Layover at the European hub", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
       { route: "Hub → Abu Dhabi (AUH)", time: "6–7h", airline: "Etihad ✓ Cabin (under 8 kg)" },
     ],
@@ -4235,7 +4239,7 @@ const CHECKLIST_DATA = {
           "ISO 11784/11785 microchip implanted (must be before the rabies vaccine)",
           "Rabies vaccination — must be ≥21 days before entry to Ireland",
           "If inbound to Ireland: cabin pets can fly in on Iberia (Madrid → Dublin) or KLM (Amsterdam → Dublin) — otherwise plan the France→Ireland ferry, the UK landbridge, or cargo",
-          "If outbound from Ireland: book your cabin pet slot with an EU carrier (KLM, Iberia, Air France or Lufthansa) — note Aer Lingus and Ryanair do not take cabin pets",
+          "If outbound from Ireland: book your cabin pet slot with an EU carrier — KLM (Dublin → Amsterdam), Iberia (Dublin → Madrid) or Air France (Dublin → Paris) are the solid cabin-out options. Aer Lingus and Ryanair do not take cabin pets, and Lufthansa now lists Ireland among routes it reserves the right to refuse cabin pets on — confirm directly if you need a Frankfurt routing",
           "Book your ferry (Irish Ferries / Brittany Ferries) well in advance — pet cabins sell out",
         ],
       },
@@ -6483,7 +6487,7 @@ const DIRECTIONAL_CHECKLISTS = {
         {
           title: "First — understand",
           items: [
-            "Departing Ireland: book an EU cabin carrier — KLM (Dublin → Amsterdam), Iberia (Dublin → Madrid), Air France or Lufthansa from elsewhere in the EU if you're transiting. Aer Lingus and Ryanair are cargo-only for pets — they do not take pets in the cabin on any route.",
+            "Departing Ireland: book an EU cabin carrier — KLM (Dublin → Amsterdam), Iberia (Dublin → Madrid) or Air France (Dublin → Paris). Aer Lingus and Ryanair are cargo-only for pets — they do not take pets in the cabin on any route. Note: Lufthansa now lists Ireland among the routes it reserves the right to refuse cabin pets on, so don't rely on a Dublin → Frankfurt cabin booking without written confirmation.",
             "If your final destination is OUTSIDE the EU, start that country's checklist process in parallel — Ireland's rules cover the Ireland-side paperwork, but the destination's rules are likely the bigger lead-time item (especially for the US, UK, Australia or rabies-free destinations).",
             "Ireland's authority is the Department of Agriculture, Food and the Marine (DAFM). Verify current outbound requirements at <a href=\"https://www.pettravel.gov.ie/\" target=\"_blank\" rel=\"noopener noreferrer\">pettravel.gov.ie</a>.",
           ],
@@ -10150,7 +10154,7 @@ const DESTINATIONS = [
       {
         title: "Cabin OUT of Ireland is straightforward",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Leaving Ireland is easy. The EU flag carriers — KLM (to Amsterdam), Iberia (to Madrid), and reportedly Air France (to Paris) and Lufthansa (to Frankfurt) — accept cabin pets on flights departing Dublin to continental Europe, under 8 kg combined. Note that Aer Lingus and Ryanair, the two Irish carriers, do NOT take cabin pets at all — cargo only. From a European hub you can connect onward in cabin.",
+        body: "Leaving Ireland is easy. The EU flag carriers — KLM (to Amsterdam), Iberia (to Madrid) and Air France (to Paris) — accept cabin pets on flights departing Dublin to continental Europe, under 8 kg combined. Note that Aer Lingus and Ryanair, the two Irish carriers, do NOT take cabin pets at all — cargo only. Lufthansa now lists Ireland among the routes it reserves the right to refuse cabin pets on, so don't rely on a Dublin → Frankfurt cabin booking without confirming directly. From a European hub you can connect onward in cabin.",
         cost: "Cabin pet fee €50–€150 per leg with EU carriers.",
       },
       {

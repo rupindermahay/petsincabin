@@ -91,7 +91,7 @@ export default function SeattlePetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">Delta Air Lines</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  $95 each way domestic, $200 international (including the Dublin route). Cabin pets allowed to most European destinations (KLM/Air France codeshare onward) AND now direct to Ireland (JFK ⇄ DUB on true Delta-operated flights — verified May 2026). Delta does NOT allow cabin pets to/from UK, Hawaii, UAE, South Africa, or Hong Kong.
+                  $150 each way domestic (US/Canada/PR/USVI), $200 international (including the Dublin route). Cabin pets allowed to most European destinations (KLM/Air France codeshare onward) AND now direct to Ireland (JFK ⇄ DUB on true Delta-operated flights — verified May 2026). Delta does NOT allow cabin pets to/from UK, Hawaii, UAE, South Africa, or Hong Kong.
                 </p>
               </div>
               <div>

@@ -109,7 +109,7 @@ export default function CentralAmericaPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">US carriers (American, Delta, United, JetBlue, Spirit, Frontier)</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  All run cabin pets to Panama City, San José, Guatemala City, and other Central American hubs from US gateways (Miami, Houston, Atlanta, Newark, JFK). Unlike South America, where American and Delta are cabin-banned to most countries, Central America is open. Use whichever airline matches your existing miles or schedule. American: $150 each way; Delta: $95 domestic / $200 international; United: $150 each way.
+                  All run cabin pets to Panama City, San José, Guatemala City, and other Central American hubs from US gateways (Miami, Houston, Atlanta, Newark, JFK). Unlike South America, where American and Delta are cabin-banned to most countries, Central America is open. Use whichever airline matches your existing miles or schedule. American: $150 each way; Delta: $150 domestic / $200 international; United: $150 each way.
                 </p>
               </div>
               <div>

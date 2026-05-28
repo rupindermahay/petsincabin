@@ -246,10 +246,10 @@ const AIRLINES = [
     destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no" },
     fee: "~$99 each way",
     weight: "Pet must fit comfortably in carrier",
-    carrier: "18 × 14 × 8 in",
+    carrier: "Hard-sided max 18 × 14 × 8 in; soft-sided max 18 × 14 × 11 in (3 inches taller for soft). Soft-sided recommended per Frontier.",
     notes: "One of the cheapest pet fees, but US-domestic only — Frontier no longer accepts pets on international routes (service animals excepted). Cabin only; no cargo.",
     intl: "No (US domestic only)",
-    verified: "May 2026",
+    verified: "May 2026 (Tier-1 re-verified against flyfrontier.com FAQ, last modified 25 Mar 2026: 'flights within the U.S.' for pets; 'Only service dogs are allowed on international flights'; soft-sided carrier 18×14×11 in; hard-sided 18×14×8 in)",
     link: "https://www.flyfrontier.com/travel/travel-info/family-pets/",
   },
   {

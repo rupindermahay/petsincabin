@@ -8985,7 +8985,7 @@ function NavBar({ onStartIntake }) {
         borderBottom: "1px solid rgba(68,64,60,0.15)",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:pl-5 md:pr-10">
+      <div className="max-w-5xl mx-auto px-6 md:pl-5 md:pr-10">
 
         {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}
         <div className="flex md:hidden items-center justify-between py-3">

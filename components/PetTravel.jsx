@@ -198,7 +198,7 @@ const AIRLINES = [
     carrier: "17 × 12.5 × 8.5 in",
     notes: "JetPaws program. Strong cabin reach for North America and Latin America/Caribbean travellers. For destinations like Jamaica, Cayman Islands, Barbados — start the destination's import process 30+ days before travel (strict paperwork). Max 4 pets per flight — book early. No cargo service for pets. Confirm cabin eligibility for your specific route by calling JetBlue 800-JETBLUE.",
     intl: "Yes (Americas — no transatlantic cabin)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against JetBlue's own JetPaws pet policy + multiple corroborating 2026 sources. CONFIRMED: $125 each way (consistent regardless of distance/destination), pet + carrier max 20 lb (9 kg), carrier 17 × 12.5 × 8.5 in, in-cabin ONLY (no checked-baggage or cargo option), one pet per customer, 4 pets per flight. Domestic US + many Caribbean/Latin America/EU destinations. Note: one Tier-2 source (Chewy) cited $150 — JetBlue's own JetPaws materials and the weight of sources confirm $125; site's $125 holds. No #22-pattern corrections.",
     link: "https://www.jetblue.com/traveling-together/traveling-with-pets",
   },
   {
@@ -266,7 +266,7 @@ const AIRLINES = [
     carrier: "Soft: 17 × 11 × 9.5 in (or 17 × 12.5 × 8.5 in per Chewy variant)",
     notes: "Cabin works both directions — but Hawaii is the only rabies-free state in the US, so entering with a pet (cabin or cargo) requires Direct Airport Release prep started 4+ months before, including an FAVN rabies titer test 30+ days before travel. Without DAR prep, your pet is subject to up to 120 days of quarantine at Hawaii Animal Quarantine. Cabin not accepted on routes to/from JFK, BOS, AUS, SLC, or PPG. Acquired by Alaska Air Group in October 2024 — pet bookings now part of the joint network.",
     intl: "No (in-cabin)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Hawaiian Airlines' own help page (hawaiianair.custhelp.com). CONFIRMED CURRENT: cabin fee $100 each way mainland–Hawaii for flights departing on/after 2 Jan 2026 (Hawaiian's own page: \"Effective October 14, 2025 — an updated fee of $100 USD/CAD each way per kennel/carrier\"), $35 inter-island; combined pet + carrier max 25 lb (11 kg); soft-sided carrier; NOT accepted on international flights or to/from PPG/JFK/BOS/AUS/SLC. Rule-C note: Hawaiian's own carrier max is 16 × 10 × 9.5 in (40×25×24 cm); the site's 17×11×9.5/Chewy-variant dims are Tier-2 and slightly larger — conservative, not misleading; consider tightening to Hawaiian's figure. Fee (the highest-stakes figure) is correct. No #22-pattern corrections.",
     link: "https://hawaiianair.custhelp.com/app/answers/detail/a_id/659/~/pets-traveling-in-the-cabin",
   },
   {
@@ -282,7 +282,7 @@ const AIRLINES = [
     carrier: "Soft-sided only (since June 2025). Max 21.5 × 15.5 × 9 in (55 × 40 × 23 cm) — varies by aircraft, confirm at booking",
     notes: "Soft-sided carriers only since 1 June 2025 (Air Canada formalised this; hard-sided had always been a poor fit for the under-seat space anyway). Cabin rules are directional like other major European carriers: pets CAN fly with you in cabin from London Heathrow or Edinburgh TO Canada, but the return leg into UK is cargo-only because UK government rules block pets entering as cabin or checked baggage. Confirm directly at booking. Aircraft-specific carrier sizes — confirm at booking. Combined weight strictly enforced. Pet booking required within 24 hours of buying your own ticket.",
     intl: "Yes",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Air Canada's own page (aircanada.com/.../pets.html). CONFIRMED: cabin fee CAD $50–$60 domestic / $100–$120 international each way; pet + carrier max 22 lb (10 kg); soft-sided carriers MANDATORY since 1 June 2025 (Air Canada verbatim); carrier ~55×40×23 cm varies by aircraft; pet on codeshare/other-airline-operated legs NOT permitted (operating carrier's rules apply — Rule A relevance for connections). uk-out cabin / uk-in cargo holds (gov.uk). Hawaii is cabin+baggage-excluded (cargo only) on Air Canada — fix-on-sight candidate, not a claim error. No #22-pattern corrections.",
     link: "https://www.aircanada.com/ca/en/aco/home/plan/special-assistance/pets.html",
   },
   {
@@ -314,7 +314,7 @@ const AIRLINES = [
     carrier: "46 × 28 × 24 cm (~18 × 11 × 9 in), soft-sided only",
     notes: "One of the most popular cabin options OUT of the UK for travel to Europe or onwards. Combined carrier from LHR (NOT Gatwick — Gatwick blocks cabin pets). Connect at Paris/Amsterdam for cabin-friendly onward flights to USA, India, and most of the world. KLM also carries cabin pets Amsterdam → Dublin — one of the few confirmed cabin routes INTO Ireland (KLM's own site does not list an Ireland ban, and travellers report flying it; book the pet via My Trip and confirm when adding it). Not allowed in business class on intercontinental. Snub-nosed breeds: cabin OK; cargo banned for medical reasons.",
     intl: "Yes",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Air France's own page (airfrance.us travel-with-pet) + KLM parity. CONFIRMED: cabin pet + carrier max 8 kg (17.6 lb); fee €70 metropolitan France / €125 Europe-North Africa-Caribbean / €200 all other (site's \"~€75–€200\" range workable, no marketed-claim error); carrier 46×28×24 cm soft-sided; over 8 kg up to 75 kg travels in hold; add pet ≥24h before departure; Category-1 attack dogs banned entirely, Category-2 cargo-only. uk-out cabin / uk-in cargo holds (gov.uk). No #22-pattern corrections.",
     link: "https://wwws.airfrance.us/information/passagers/voyager-avec-son-animal-chien-chat",
   },
   {
@@ -346,7 +346,7 @@ const AIRLINES = [
     carrier: "Soft-sided only in cabin, max 17 × 10 × 9 in (43 × 25 × 23 cm), ventilated on 3 sides, leakproof. IATA-compliant hard crates required for cargo hold (10–32 kg pets).",
     notes: "IMPORTANT: Air India does not carry pets in cabin to or from the USA, Canada, Australia or the United Kingdom — per their own published policy, pets to/from these four countries can only travel as checked baggage or cargo on direct Air India flights, never in cabin. The UK is also restricted to LHR and LGW only (no pet service at all from Birmingham (BHX)). Two further rules narrow what's possible on the allowed cabin sectors: (1) Ultra Long Haul (ULH) flights have NO cabin pets even when the destination is otherwise eligible — Air India's longest sectors are excluded for pet welfare; (2) Air India does NOT accept pets from other airlines on connecting flights — pet connections only work Air India → Air India. If you're routing via Europe to reach the US/Canada/UK/Australia in cabin, you'll need a single non-Air-India through-ticket (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Book Air India cabin via customer support or city booking office at least 48 hours before departure (reduced from 72 hrs in 2026). Pet sits in last aisle row, economy only. Max 2 pets per flight, seated 5 rows apart. Wheelchair passengers and adults travelling with infants cannot carry pets in cabin (cargo only in such cases). Brachycephalic breeds allowed in cabin but not in cargo (welfare reasons).",
     intl: "Yes — India ↔ Europe (excl UK) / Asia in cabin. No service to USA/Canada/Australia. UK cargo-only at LHR/LGW.",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Air India's own pages (airindia.com travelling-with-pets + pet-travel FAQs). CONFIRMED: cabin pet + carrier max 10 kg / 22 lb (genuinely generous vs the 8 kg norm); domesticated dogs/cats only; all breeds allowed in cabin, brachycephalic barred from cargo; 48h advance booking; 2 pets max in economy per flight, seated toward rear with adjoining seat blocked; relaunched \"Paws on Board\" 22 Jan 2026. Rule-C note: Air India's OWN cabin carrier max is 46×46×30 cm — LARGER than the site's 43×25×23 cm (Tier-2/BringFido figure); site is under-stating the allowance (conservative, won't mislead). India ↔ Europe-excl-UK / Asia cabin; NOT to USA/Canada/UK/Australia. No #22-pattern corrections.",
     link: "https://www.airindia.com/in/en/travel-information/travelling-with-pets.html",
   },
   {
@@ -474,7 +474,7 @@ const AIRLINES = [
     carrier: "Soft-sided max 55 × 40 × 23 cm (Finnair). Norra: 55 × 40 × 20 cm. Hard 35 × 30 × 20 cm",
     notes: "Finland's flag carrier, hub at Helsinki (HEL). A genuine option for Ireland — HEL ⇄ DUB carries cabin pets, unlike most US carriers. Also one of the few airlines flying cabin pets US ⇄ Helsinki ⇄ Japan/Korea via the short polar route. No fit-to-fly certificate required (refreshingly simple). Dogs entering Finland or Ireland need a tapeworm treatment 24–120 hours before arrival. Add pet at booking under Travel Extras; manual confirmation required. Regional flights operated by partner Norra have slightly tighter carrier sizes — check aircraft type. Two pet carriers max per flight (per cabin class), book early.",
     intl: "Yes (extensive)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against Finnair's own page (finnair.com/us-en/pets-on-finnair-flights). CONFIRMED: cabin pet + carrier max 8 kg (17.6 lb); fee €60 intra-Europe (€65 if ≤6 days) / €120–130 intercontinental; hold €120 Europe / €600 intercontinental; carriers Finnair soft 55×40×23 / hard 35×30×20, Norra soft 55×40×20; UK/Hong Kong/UAE/Australia must ship as cargo (not cabin/baggage). WATCH (Rule C/D — NOT acted on): a Tier-2 source (PetAbroad) reports Finnair moving to a 25 cm height limit replacing the 8 kg rule, sourced to \"inside sources\" only — Finnair's own page still states 8 kg, so no change made; re-check Finnair's page if this surfaces officially. No #22-pattern corrections.",
     link: "https://www.finnair.com/en/pets-on-finnair-flights",
   },
   {
@@ -669,7 +669,7 @@ const AIRLINES = [
     carrier: "Hard: max 37 cm wide × 23 cm tall. Soft: up to 26 cm tall. T'carriers can be purchased at check-in from Korean airports.",
     notes: "T'Way's 9 kg weight limit beats Korean Air's 7 kg — useful for slightly larger small dogs. One pet stroller or car seat checks free per pet (including at gate). Max 6 pets per flight, one per adult. Important: no transit with pets in Korea — so Japan ↔ T'Way ↔ onward isn't a workable cabin route, only point-to-point. Heads-up: T'Way Air is rebranding to Trinity Airways (announced 9 September 2025, follow-up 25 March 2026) — the rebrand is in transition, and the airline has cut several routes May–October 2026 amid financial restructuring. Confirm your specific route is still operating before booking, and watch for the brand change at the airport.",
     intl: "Yes (limited Asia routes + ZAG)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against T'Way Air's policy (via Travelnuity + BringFido quoting T'Way; T'Way's English pet page is limited). CONFIRMED: cabin pet + carrier max 9 kg (the most generous Korean limit — confirmed, not a typo); fee 30,000 KRW domestic / 100,000–200,000 KRW international; carrier hard 37×23 cm / soft 26 cm height, three sides sum <115 cm; dogs/cats/birds ≥8 weeks; 6 pets/flight; NOT in Business Saver class. Domestic Korea + select international (Japan, Asia, Croatia). No cargo service. T'Way is \"partial/optional\" per AUDIT_AND_CROSSREF — not a live gap. No #22-pattern corrections.",
     link: "https://www.twayair.com/app/serviceInfo/contents/1148",
   },
   {
@@ -717,7 +717,7 @@ const AIRLINES = [
     carrier: "Soft-sided. Max 55 × 35 × 25 cm (22 × 14 × 10 in)",
     notes: "All-business-class boutique airline — every seat on the Airbus A321neo fleet is a lie-flat business seat. The pet differentiator: because it's a single-cabin business product, your pet gets the floor space of a business-class seat rather than a cramped economy footwell, and you can stay near them the whole 7–8 hour flight. No other transatlantic carrier offers this — Air France/Delta cabin pets are economy-class only on the equivalent CDG↔JFK route. COST FRAMING (important): La Compagnie round-trip Newark↔Paris Orly typically runs $2,400–$3,000 (lower in promo sales, ~$2,500 round-trip; higher peak). That's 3–4× the price of Air France economy (which itself carries cabin pets for ~€75 each way), and roughly comparable to other carriers' standard business-class fares. So it's NOT a budget option — it's a premium option that happens to be the most pet-friendly premium option. Worth it if you'd already be booking business class anyway, or if your pet's comfort on a long-haul flight is a clear priority and the extra cost fits your trip. Pet booking must be made at least 48 hours before departure (via 'My Reservations' or customer service); max 4 pets per flight (low cap — book early). Dogs and cats only (dwarf rabbits were previously permitted but the policy has tightened). Pet carrier counts as your cabin baggage. With pet placed at your feet, you can't fully recline the seat to bed mode. Service is from JFK's competitor airport Newark, EWR — about 40 min from midtown Manhattan, just like JFK. Paris service is from Orly (ORY), not CDG — slightly different ground logistics: Orly is south of Paris and a touch closer to central Paris than CDG, with onward train via Orlyval + RER B.",
     intl: "Yes (3 routes only)",
-    verified: "May 2026",
+    verified: "May 2026 — audited clean against La Compagnie's own page (lacompagnie.com/en/plan/special-services). CONFIRMED: cabin pet + carrier max 8 kg (reduced from 15 kg in Oct 2024 to align with EU rules); fee €200 per journey (€400 / $500 round trip), flat regardless of route; soft-sided carrier max 55×35×25 cm; cabin ONLY (no hold); 4 pets per flight; reservation ≥48h before departure; PETC sworn declaration required at check-in; all-business-class A321neo, EWR↔Paris Orly + EWR↔Milan + seasonal EWR↔Nice. No #22-pattern corrections.",
     link: "https://www.lacompagnie.com/en/plan/special-services",
   },
 ];

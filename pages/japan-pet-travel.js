@@ -85,7 +85,7 @@ export default function JapanPetTravel() {
               <div>
                 <h3 className="font-serif text-lg text-stone-900 mb-1.5">1. US ↔ Japan via United</h3>
                 <p className="font-serif text-stone-700 leading-relaxed">
-                  United accepts cabin pets US ↔ Japan with no weight limit (the pet just needs to fit in the carrier under the seat). $150 each way. From September-October 2026, United operates daily SFO to Tokyo (NRT and HND) and Osaka (KIX), plus twice-weekly Chicago ORD to Tokyo NRT. For Seattle travellers, fly Alaska/Delta SEA→SFO first, then connect to United.
+                  United accepts cabin pets US ↔ Japan with no weight limit (the pet just needs to fit in the carrier under the seat). $150 each way. United operates SFO to Tokyo Haneda (HND) daily and Osaka (KIX) five times weekly from autumn 2026, alongside its existing SFO→Narita service, plus daily year-round Chicago ORD to Tokyo Narita (NRT) from 24 October 2026. For Seattle travellers, fly Alaska/Delta SEA→SFO first, then connect to United.
                 </p>
               </div>
               <div>

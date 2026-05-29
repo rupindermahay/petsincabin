@@ -974,7 +974,7 @@ const DIRECT_ROUTES = [
   // ═══════ FROM CHICAGO ═══════
   { from: "Chicago (ORD)", to: "Frankfurt (FRA)", duration: "8h 45m", note: "Lufthansa. ✓ Cabin (under 8 kg). Frankfurt's Animal Lounge available for cargo connections.", tags: ["us", "europe"] },
   { from: "Chicago (ORD)", to: "Paris (CDG)", duration: "8h 30m", note: "Air France. ✓ Cabin (under 8 kg). Midwest's main direct cabin to Europe.", tags: ["us", "europe"] },
-  { from: "Chicago (ORD)", to: "Tokyo (NRT)", duration: "13h", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026 on Boeing 787-9. One of very few cabin pet paths Chicago→Japan.", tags: ["us", "japan"] },
+  { from: "Chicago (ORD)", to: "Tokyo (NRT)", duration: "13h", note: "United. ✓ Cabin direct (no weight limit, $150). Daily year-round service from 24 October 2026 on a Boeing 787-8 (complements United's existing ORD→Tokyo Haneda flights). One of very few cabin pet paths Chicago→Japan.", tags: ["us", "japan"] },
 
   // ═══════ FROM WASHINGTON DULLES ═══════
   { from: "Washington (IAD)", to: "Frankfurt (FRA)", duration: "8h 30m", note: "Lufthansa / United. ✓ Cabin (under 8 kg). Dulles's main direct cabin to Europe.", tags: ["us", "europe"] },
@@ -1028,7 +1028,7 @@ const DIRECT_ROUTES = [
 
   // ═══════ FROM TOKYO (NARITA) ═══════
   { from: "Tokyo (NRT)", to: "San Francisco (SFO)", duration: "9h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). One of the very few cabin pet routes OUT of Japan. JAL and ANA don't carry cabin pets at all.", tags: ["japan", "us"] },
-  { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Twice-weekly service from Sept 2026.", tags: ["japan", "us"] },
+  { from: "Tokyo (NRT)", to: "Chicago (ORD)", duration: "11h 30m", note: "United. ✓ Cabin direct (no weight limit, $150). Daily year-round service from 24 October 2026 (Boeing 787-8).", tags: ["japan", "us"] },
   { from: "Tokyo (NRT)", to: "Seoul (ICN)", duration: "2h 30m", note: "Korean Air / T'Way / Air Premia. ✓ Cabin (under 7 kg Korean Air / 9 kg T'Way). Cabin pet path Japan→Korea, useful as a connection to Korean Air's wider network (but not with T'Way: no pet transits).", tags: ["japan", "korea"] },
   { from: "Tokyo (NRT)", to: "Mexico City (MEX)", duration: "13h", note: "Aeromexico. ✗ Cabin NOT viable: Aeromexico's policy limits cabin pets to flights under 6 hours — and the MEX↔NRT route itself appears suspended as of February 2026. Cargo only if Aeromexico resumes the route, and only via specialist freight forwarder. For Japan→Mexico cabin, route via US/Korea instead.", tags: ["japan", "mexico"] },
 
@@ -10478,7 +10478,7 @@ const DESTINATIONS = [
       {
         title: "US ↔ Japan: United direct (the cleanest cabin path)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
-        body: "United is one of very few airlines accepting cabin pets US ↔ Japan direct. No weight limit (carrier-size-bound), $150 each way. Routes from SFO to NRT/HND/KIX (new Sept-Oct 2026 schedule), Chicago ORD to NRT (twice weekly from Sept 2026). For Seattle travellers, connect SEA→SFO on Alaska/Delta first, then United SFO→Tokyo.",
+        body: "United is one of very few airlines accepting cabin pets US ↔ Japan direct. No weight limit (carrier-size-bound), $150 each way. Routes from SFO to NRT/HND/KIX (new Sept-Oct 2026 schedule), Chicago ORD to NRT (daily year-round from 24 October 2026). For Seattle travellers, connect SEA→SFO on Alaska/Delta first, then United SFO→Tokyo.",
         cost: "$150 each way + a $150 layover fee for stopovers >4 hours.",
       },
       {

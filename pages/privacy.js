@@ -17,7 +17,7 @@ export default function Privacy() {
       <div
         className="min-h-screen text-stone-900"
         style={{
-          backgroundColor: "#faf6ed",
+          backgroundColor: "transparent",
           fontFamily: "'Inter', -apple-system, sans-serif",
         }}
       >

@@ -113,7 +113,7 @@ function airlineStringIsClean(airline) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "29 May 2026";
+const LAST_UPDATED = "30 May 2026";
 
 // ---------- DATA ----------
 
@@ -16540,6 +16540,8 @@ function Footer() {
           <span className="text-stone-400">Updated on {LAST_UPDATED}</span>
           <span>·</span>
           <span>Sources: CDC, USDA APHIS, IATA, individual airline policies</span>
+          <span>·</span>
+          <a href="/how-we-check" className="hover:text-amber-500 transition-colors">How we check</a>
           <span>·</span>
           <a href="/privacy" className="hover:text-amber-500 transition-colors">Privacy Policy</a>
         </div>

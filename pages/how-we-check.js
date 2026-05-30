@@ -49,11 +49,11 @@ export default function HowWeCheck() {
           </h1>
 
           <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-6">
-            Half the internet will cheerfully tell you an airline is &ldquo;pet-friendly.&rdquo; Lovely. But friendly isn&rsquo;t the question. The question is whether <em>this</em> airline takes a cabin pet on <em>this</em> route, in <em>this</em> direction, at your pet&rsquo;s weight — and that&rsquo;s where the cheerful answers tend to fall apart.
+            Plenty of sites will tell you an airline is &ldquo;pet-friendly,&rdquo; and that&rsquo;s a kind thing to know. But it&rsquo;s usually not the question that matters. What you really need is whether <em>this</em> airline takes a cabin pet on <em>this</em> route, in <em>this</em> direction, at your pet&rsquo;s weight — and that&rsquo;s where the easy answers tend to run out.
           </p>
 
           <p className="font-serif text-lg md:text-xl text-stone-700 leading-relaxed mb-10">
-            So here&rsquo;s the deal on how this site is put together. It&rsquo;s short. You&rsquo;ll be fine.
+            So here&rsquo;s how this site is put together, and how much to trust it. It&rsquo;s a quick read, promise.
           </p>
 
           {/* STRAIGHT FROM THE SOURCE */}

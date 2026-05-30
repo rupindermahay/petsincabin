@@ -2387,6 +2387,24 @@ const DIRECT_LEG_TIMES = {
     MIA: "2h", IAH: "2h 5m", CLT: "2h 40m", DFW: "2h 45m",
     ORD: "3h 45m", JFK: "4h 10m", EWR: "4h 10m", LAX: "4h 45m",
   },
+  // ----- Guadalajara (GDL) → US (verified chat 17; concrete-time pairs) -----
+  // GDL nonstop-serves LAX, ORD, IAH, DFW, SFO, MIA, CLT, SLC, SEA, EWR (mostly
+  // Volaris/Aeromexico). Concrete times below; MIA/CLT/SLC/SEA/EWR resolve to
+  // the honest band until individually timed. No nonstop: JFK, BOS, IAD, BWI,
+  // AUS, PIT → band.
+  GDL: {
+    IAH: "2h 20m", DFW: "2h 40m", LAX: "3h", ORD: "4h", SFO: "4h 20m",
+  },
+  // ----- Caribbean origins → US (verified chat 17; main MIA/JFK corridors) -----
+  // The Caribbean "1–4h" band is already accurate for most island→US gateways;
+  // concrete times added for the dominant Miami and JFK corridors. Uncatalogued
+  // island→city pairs fall back to the honest band.
+  MBJ: { MIA: "2h", JFK: "4h" },              // Montego Bay, Jamaica
+  SDQ: { MIA: "2h 25m" },                       // Santo Domingo, DR
+  PUJ: { MIA: "2h 40m" },                       // Punta Cana, DR
+  // NAS (Nassau) → MIA is a ~1h hop, well within the band → left to band.
+  // ----- South America origins → US (verified chat 17; Avianca BOG corridor) -----
+  BOG: { MIA: "3h 50m", JFK: "5h 50m" },        // Bogotá (Avianca direct US gateways)
 };
 // Resolve "${originLabel} → ${destLabel}" to a concrete nonstop time when the
 // pair is catalogued in DIRECT_LEG_TIMES; else return the honest fallback band.
@@ -2948,7 +2966,7 @@ const REGION_PAIR_STRATEGIES = {
   // ----- CARIBBEAN outbound -----
   "caribbean>us": (o, d) => ({
     legs: [
-      { route: `${o} → ${d}`, time: "1–4h", airline: "JetBlue / American / Delta ✓ Cabin" },
+      { route: `${o} → ${d}`, time: legPairTime(o, d, "1–4h"), airline: "JetBlue / American / Delta ✓ Cabin" },
     ],
     note: `Most Caribbean islands have direct cabin routes to major US gateways — this is straightforward. The complexity is on the RETURN: the Dominican Republic is CDC high-risk, so if you're flying dogs back to the US from there, you need the Certification of US-issued Rabies Vaccination prepared BEFORE you left the US. Bahamas is CDC-rabies-free, so re-entry is simple.`,
   }),
@@ -3814,7 +3832,7 @@ const FALLBACK_STRATEGIES = {
         ];
         note = "Brazil → US cabin via LATAM is currently suspended (CDC dog rules). The cabin workaround: via Madrid on Iberia, or via Panama City on Copa. Brazil → US needs USDA-accepted documentation; check current CDC dog rules.";
       } else if (oLower.includes("bogot") || oLower.includes("bog")) {
-        legs = [{ route: `${o} → ${d}`, time: "5-7h", airline: "Avianca ✓ Cabin (under 10 kg)" }];
+        legs = [{ route: `${o} → ${d}`, time: legPairTime(o, d, "5-7h"), airline: "Avianca ✓ Cabin (under 10 kg)" }];
         note = "Avianca direct from Bogotá to most US gateways (JFK, MIA, LAX, IAH, BOS, ORD, MCO) in cabin. Standard US re-entry: CDC Dog Import Form online (dogs only, cats exempt). Colombia is not on the CDC high-risk list.";
       } else if (oLower.includes("montevideo") || oLower.includes("mvd") || oLower.includes("buenos aires") || oLower.includes("eze")) {
         legs = [

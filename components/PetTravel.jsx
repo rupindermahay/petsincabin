@@ -11037,7 +11037,7 @@ const DESTINATIONS = [
       {
         title: "Documentation: this is the hard part",
         icon: <FileCheck className="w-4 h-4" strokeWidth={1.75} />,
-        body: "Both countries require ISO microchip, rabies vaccination (Russia: 30 days–12 months before travel; Ukraine: 21 days–12 months), a rabies titer test from an EU-approved lab, and an international veterinary certificate issued within 5–10 days of travel. Returning to the EU from either country adds the serological-test waiting period (3 months from blood draw to entry) because Russia and Ukraine are not on the EU's listed-country list. Start paperwork at least 4 months out.",
+        body: "Both countries require an ISO microchip, rabies vaccination (Russia: ≥30 days–12 months before travel; Ukraine: ≥21 days before travel), a rabies titer test from an EU-approved lab, and an international veterinary certificate issued within 5–10 days of travel. Returning to the EU from either country adds the serological-test waiting period (3 months from blood draw to entry) because Russia (removed from the EU's listed-country list in September 2024) and Ukraine are both non-listed countries. Start paperwork at least 4 months out.",
         cost: "Microchip + rabies + titer + certificate: ~£250–£500 in the UK; equivalent in EUR elsewhere.",
       },
       {
@@ -11047,7 +11047,7 @@ const DESTINATIONS = [
         cost: "Typically waived for refugees; standard fees apply for non-refugee travel.",
       },
     ],
-    paperwork: "Russia: ISO microchip BEFORE rabies vaccination, rabies vaccine 30 days to 12 months before travel (no 3-year recognition), rabies titer test (FAVN) for entries from rabies-affected countries, international veterinary certificate within 5 days of travel, Rosselkhoznadzor inspection on arrival/departure. Ukraine: ISO microchip, rabies vaccine 30 days to 12 months before, rabies titer test administered at least 3 months before entry, international health certificate within 10 days of travel. Re-entering EU/UK from either country: serological test result must precede entry by 3 months. Border crossings into Ukraine are subject to wartime checks — verify the route is operating before you commit.",
+    paperwork: "Russia: ISO microchip BEFORE rabies vaccination, rabies vaccine ≥30 days and ≤12 months before travel (no 3-year recognition), international veterinary certificate within 5 days of travel, Rosselkhoznadzor inspection on arrival/departure. Ukraine: ISO microchip, rabies vaccine ≥21 days before travel (Ukraine recognises the vaccine's own validity, including 3-year vaccines), a rabies titer test with blood drawn ≥30 days after vaccination and >3 months before entry (≥0.5 IU/ml, valid 12 months), international health certificate within 10 days of travel, and for dogs a tapeworm treatment 24–120 hours before arrival. Re-entering the EU/UK from either country: a rabies titer (serological) test result must precede entry by 3 months — both Russia (removed from the EU's listed-country list on 16 September 2024) and Ukraine are non-listed third countries, so the titer-plus-wait applies in that direction. Border crossings into Ukraine are subject to wartime checks — verify the route is operating before you commit.",
   },
 ];
 
@@ -11186,6 +11186,20 @@ function DifficultDestinations() {
                     </h4>
                     <p className="text-amber-50/90 leading-relaxed text-sm">
                       Country-by-country import rules for Brazil, Argentina, Chile, Peru, and Colombia. LATAM and Avianca cabin pet networks, banned breeds, and the easy-vs-hard country ranking — all on one page.
+                    </p>
+                  </a>
+                )}
+                {dest.id === "russia-ukraine" && (
+                  <a
+                    href="/russia-pet-travel"
+                    className="group block bg-amber-700 text-stone-50 p-7 hover:bg-amber-600 transition-colors"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-amber-200 mb-2">The full guide</div>
+                    <h4 className="font-serif text-2xl mb-2 group-hover:underline">
+                      Read the complete Russia &amp; Ukraine pet travel guide →
+                    </h4>
+                    <p className="text-amber-50/90 leading-relaxed text-sm">
+                      The two-leg Aeroflot cabin route via Istanbul, Dubai or Delhi, the Rosselkhoznadzor paperwork chain, the EU re-entry titre rule after Russia's 2024 de-listing, and Ukraine's overland route through Poland — all on one page.
                     </p>
                   </a>
                 )}
@@ -16610,6 +16624,7 @@ const COUNTRY_GUIDES = [
   { slug: "/seattle-pet-travel", flag: "🇺🇸", name: "Seattle / US Pacific NW", blurb: "Cabin hops including Seattle–Vancouver." },
   { slug: "/south-america-pet-travel", flag: "🌎", name: "South America", blurb: "Country-by-country across the continent." },
   { slug: "/central-america-pet-travel", flag: "🌎", name: "Central America", blurb: "Costa Rica, Panama, and the routes through." },
+  { slug: "/russia-pet-travel", flag: "🇷🇺", name: "Russia & Ukraine", blurb: "Closed airspace — the Aeroflot hub route, and Ukraine's land route." },
 ];
 
 function WhatsNew() {

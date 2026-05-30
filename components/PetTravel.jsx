@@ -2341,6 +2341,76 @@ function legTime(originLabel, hubCode, fallbackBand) {
   return specific || fallbackBand; // uncatalogued pair → band is honest
 }
 
+// ── DIRECT_LEG_TIMES — master origin→destination nonstop-leg time table ──────
+// Many strategy legs are "${o} → ${d}" or "Hub → ${d}" where the endpoints are
+// specific airports (oLabel/dLabel carry IATA codes, e.g. "Mexico City (MEX)").
+// A single flat band per region understated or overstated real legs (e.g. the
+// old via-Canada "2–4h" showed for YUL→SFO which is really ~6h 15m). This table
+// holds VERIFIED nonstop durations keyed ORIGINCODE→DESTCODE, and legPairTime()
+// resolves a leg to its concrete time when the pair is catalogued, else returns
+// the honest band. Pairs with NO nonstop service are deliberately absent → band
+// (an honest "varies" rather than a fabricated number). Same principle as
+// legTime() (which stays for the transatlantic EU-hub table).
+//
+// Verification log (chat 17+): fill region by region. A pair present here has
+// been checked against Tier-1 route data (airline schedules / flightconnections).
+//   ✓ Canada origins (YUL, YYZ) → US — fully swept.
+//   … Mexico, Central/South America, Caribbean, India, Japan, Korea — in progress.
+const DIRECT_LEG_TIMES = {
+  // ----- Canada hubs → US (verified chat 17) -----
+  YUL: {
+    JFK: "1h 45m", BOS: "1h 30m", PIT: "1h 40m", IAD: "1h 55m",
+    ORD: "2h 35m", DFW: "3h 45m", MIA: "3h 50m", IAH: "4h 30m",
+    AUS: "4h 35m", SEA: "5h 55m", LAX: "6h", SFO: "6h 15m",
+    // EWR, BWI, SLC, CLT: no nonstop from YUL → band (honest).
+  },
+  YYZ: {
+    PIT: "1h 20m", IAD: "1h 30m", JFK: "1h 45m", EWR: "1h 45m",
+    BOS: "1h 45m", ORD: "2h", CLT: "2h 5m", IAH: "3h 20m",
+    AUS: "3h 35m", DFW: "3h 35m", MIA: "3h 50m", SLC: "4h 30m",
+    SEA: "5h 30m", LAX: "5h 30m", SFO: "5h 40m",
+    // BWI: no nonstop from YYZ (connection-only) → band (honest).
+  },
+  // ----- Mexico City (MEX) → US (verified chat 17) -----
+  MEX: {
+    IAH: "2h 24m", DFW: "2h 43m", AUS: "3h", MIA: "3h 43m",
+    LAX: "3h 49m", CLT: "4h", SLC: "4h 25m", SFO: "4h 30m",
+    IAD: "4h 30m", ORD: "4h 30m", JFK: "4h 39m", BOS: "5h 20m",
+    SEA: "5h 30m",
+    // EWR, BWI, PIT: no nonstop from MEX → band (honest).
+  },
+  // ----- Cancún (CUN) → US (verified chat 17; major cabin-corridor pairs) -----
+  // CUN nonstop-serves ~all offered US cities (leisure megahub). Major pairs
+  // verified below; long-tail (BWI, AUS, PIT, SLC, SFO, SEA, BOS, IAD) still
+  // resolve to the honest band until individually checked.
+  CUN: {
+    MIA: "2h", IAH: "2h 5m", CLT: "2h 40m", DFW: "2h 45m",
+    ORD: "3h 45m", JFK: "4h 10m", EWR: "4h 10m", LAX: "4h 45m",
+  },
+};
+// Resolve "${originLabel} → ${destLabel}" to a concrete nonstop time when the
+// pair is catalogued in DIRECT_LEG_TIMES; else return the honest fallback band.
+// Either label may be generic (no IATA code) — then the band is the honest show.
+function legPairTime(originLabel, destLabel, fallbackBand) {
+  const om = (originLabel || "").match(/\(([A-Z]{3})\)/);
+  const dm = (destLabel || "").match(/\(([A-Z]{3})\)/);
+  const o = om ? om[1] : null;
+  const d = dm ? dm[1] : null;
+  if (!o || !d) return fallbackBand; // generic endpoint → band is honest
+  const row = DIRECT_LEG_TIMES[o];
+  const specific = row ? row[d] : null;
+  return specific || fallbackBand; // uncatalogued pair → band is honest
+}
+// Back-compat shim: the via-Canada leg passes a hub code + dest label. Express
+// it through the general table so there is one source of truth.
+function viaCanadaOnwardTime(canadaCode, destLabel, fallbackBand) {
+  const dm = (destLabel || "").match(/\(([A-Z]{3})\)/);
+  const d = dm ? dm[1] : null;
+  if (!d) return fallbackBand;
+  const row = DIRECT_LEG_TIMES[canadaCode];
+  return (row && row[d]) || fallbackBand;
+}
+
 const REGION_PAIR_STRATEGIES = {
   // ----- INTO the UK (cabin into UK impossible — via Europe + crossing) -----
   // Three distinct routes, one per European hub, each shown as its own card.
@@ -2821,7 +2891,7 @@ const REGION_PAIR_STRATEGIES = {
             airline: "Air Canada ✓ Cabin out of the UK (under 10 kg)",
           },
           { route: isEDI ? "Overnight in Toronto" : "Overnight in Montreal", time: "12+ hours", airline: "Dog-friendly hotel — strongly recommended" },
-          { route: `${isEDI ? "Toronto" : "Montreal"} → ${d}`, time: "2–4h", airline: "Air Canada / American / United ✓ Cabin" },
+          { route: `${isEDI ? "Toronto" : "Montreal"} → ${d}`, time: viaCanadaOnwardTime(isEDI ? "YYZ" : "YUL", d, "2–4h"), airline: "Air Canada / American / United ✓ Cabin" },
         ],
         note: isHeathrow
           ? `This is Theo's Mum's actual route. Air Canada flies cabin pets OUT of Heathrow to Montreal, and the overnight stop is what makes it work — pet recovers, you recover, then the short hop onward to ${d} the next morning is easy.`
@@ -2936,7 +3006,7 @@ const REGION_PAIR_STRATEGIES = {
   // ----- MEXICO outbound -----
   "mexico>us": (o, d) => ({
     legs: [
-      { route: `${o} → ${d}`, time: "2–4h", airline: "Aeromexico / American / Delta / United ✓ Cabin" },
+      { route: `${o} → ${d}`, time: legPairTime(o, d, "2–4h"), airline: "Aeromexico / American / Delta / United ✓ Cabin" },
     ],
     note: `Mexico→US is one of the easiest cross-border cabin routes. The complication is on return: dogs returning to the US from Mexico need the CDC Dog Import Form (Mexico is not on the high-risk list for dogs, so it's the standard form, no titer required). Cats don't need it.`,
   }),
@@ -2949,7 +3019,7 @@ const REGION_PAIR_STRATEGIES = {
   }),
   "mexico>canada": (o, d) => ({
     legs: [
-      { route: `${o} → ${d}`, time: "5–6h", airline: "Air Canada / Aeromexico ✓ Cabin" },
+      { route: `${o} → ${d}`, time: legPairTime(o, d, "5–6h"), airline: "Air Canada / Aeromexico ✓ Cabin" },
     ],
     note: `Mexico→Canada is relatively direct. Air Canada and Aeromexico serve the main pairs in cabin. Canada is one of the easier destinations: current rabies certificate is the core requirement.`,
   }),
@@ -11538,11 +11608,11 @@ function AirlineGrid() {
                   onClick={() => setExpanded(open ? null : a.name)}
                   className="w-full text-left p-6 hover:bg-white transition-colors"
                 >
-                  <div className="flex items-baseline justify-between gap-4 mb-3 pr-24">
+                  <div className="flex items-baseline gap-3 mb-3 pr-24">
                     <h3 className="font-serif text-2xl text-stone-900">
                       {a.name}
                     </h3>
-                    <span className="text-xs uppercase tracking-widest text-stone-500">
+                    <span className="text-xs uppercase tracking-widest text-stone-500 whitespace-nowrap">
                       {open ? "Close" : "Details"}
                     </span>
                   </div>
@@ -16899,7 +16969,7 @@ export default function PetTravel() {
     <div
       className="min-h-screen text-stone-900"
       style={{
-        backgroundColor: "transparent",
+        backgroundColor: "#faf6ed",
         fontFamily: "'Inter', -apple-system, sans-serif",
       }}
     >

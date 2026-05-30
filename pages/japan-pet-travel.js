@@ -15,7 +15,7 @@ export default function JapanPetTravel() {
 
       <div
         className="min-h-screen"
-        style={{ backgroundColor: "transparent", fontFamily: "'Inter', -apple-system, sans-serif" }}
+        style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}
       >
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap');

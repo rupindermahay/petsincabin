@@ -101,8 +101,8 @@ const RULE_CHANGES = [
     date: "Feb 2022 — ongoing",
     tag: "Russia / Ukraine",
     headline: "Western airspace closures continue to limit Russia and Ukraine routes",
-    body: "Russian airspace remains closed to UK, US, EU and Canadian carriers, and reciprocally Russia's own carriers (Aeroflot) cannot fly to most Western destinations. Ukrainian commercial airspace remains closed to passenger flights. The only realistic cabin route in or out of Russia is via Aeroflot's remaining ~17-country network through Istanbul, Dubai or Central Asia; in or out of Ukraine, the realistic route is overland from Poland via train or specialist road shipper.",
-    source: "Multiple — see Russia & Ukraine in Difficult Destinations",
+    body: "Russian airspace remains closed to UK, US, EU and Canadian carriers, and reciprocally Russia's own carriers (Aeroflot) cannot fly to most Western destinations. Ukrainian commercial airspace remains closed to passenger flights (EASA's conflict-zone advisory currently runs to at least 31 July 2026). The only realistic cabin route in or out of Russia is via Aeroflot's remaining ~17-country network through Istanbul, Dubai or Delhi; in or out of Ukraine, the realistic route is overland from Poland via train or specialist road shipper. One paperwork change worth flagging: Russia was removed from the EU's listed-country list on 16 September 2024, so — like Ukraine, which was never listed — a rabies titre test plus a three-month wait is now required to bring a pet back into the EU or UK from either country. Full detail on the new Russia & Ukraine guide.",
+    source: "Aeroflot, EASA, EU Commission, USDA APHIS — see the Russia & Ukraine guide",
   },
 ];
 

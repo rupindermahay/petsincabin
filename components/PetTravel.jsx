@@ -3556,8 +3556,22 @@ const FALLBACK_STRATEGIES = {
 
       if (oIsHub && dIsHub) {
         // Both endpoints are major hubs — direct cabin route genuinely exists.
+        // Resolve a SPECIFIC time from EU_HUB_OPTIONS.routeTimes when one side is
+        // a catalogued EU hub and the other a catalogued US city (either
+        // direction); else fall back to the long-haul band. Same single source
+        // of truth as legTime / buildTransatlanticViaHub. (DECISIONS_LOG #70.)
+        const oCodeM = o.match(/\(([A-Z]{3})\)/);
+        const dCodeM = d.match(/\(([A-Z]{3})\)/);
+        const oCode = oCodeM ? oCodeM[1] : null;
+        const dCode = dCodeM ? dCodeM[1] : null;
+        const euHub = EU_HUB_OPTIONS.find((h) => h.code === oCode) ||
+                      EU_HUB_OPTIONS.find((h) => h.code === dCode) || null;
+        const usCode = euHub && euHub.code === oCode ? dCode : oCode;
+        const directTime = (euHub && usCode && euHub.routeTimes && euHub.routeTimes[usCode])
+          ? euHub.routeTimes[usCode]
+          : "~7h–11h (long-haul)";
         return {
-          legs: [{ route: `${o} → ${d}`, time: "~7h–11h (long-haul)", airline: "Lufthansa, Air France-KLM, United, American or Delta ✓ Cabin (≤ 8 kg)" }],
+          legs: [{ route: `${o} → ${d}`, time: directTime, airline: "Lufthansa, Air France-KLM, United, American or Delta ✓ Cabin (≤ 8 kg)" }],
           note: `This is a direct cabin-pet corridor between two major intercontinental hubs — it's flown by mainstream carriers that take small dogs and cats in the cabin, typically up to 8 kg including the carrier. Because the exact flight time, fee and carrier-size limit differ between airlines, confirm those details with whichever carrier you book, and reserve your pet's place early — cabin spots per flight are capped and go quickly. For full per-airline policies, see the airline guide.`,
         };
       }

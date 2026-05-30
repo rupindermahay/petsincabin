@@ -2418,7 +2418,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "7–8h", airline: "Air France / Air Canada ✓ Cabin" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "7–8h"), airline: "Air France / Air Canada ✓ Cabin" },
         { route: "Layover at Paris CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2428,7 +2428,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Frankfurt",
       legs: [
-        { route: `${o} → Frankfurt (FRA)`, time: "8h", airline: "Lufthansa / Air Canada ✓ Cabin" },
+        { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "8h"), airline: "Lufthansa / Air Canada ✓ Cabin" },
         { route: "Layover at Frankfurt FRA", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2438,7 +2438,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Eurotunnel)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "KLM / Air Canada ✓ Cabin" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–8h"), airline: "KLM / Air Canada ✓ Cabin" },
         { route: "Layover at Amsterdam AMS", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2448,7 +2448,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Newcastle ferry)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "KLM / Air Canada ✓ Cabin" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–8h"), airline: "KLM / Air Canada ✓ Cabin" },
         { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
         { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
@@ -2461,7 +2461,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "8–9h"), airline: "Air France / Air India ✓ Cabin (under 8–10 kg)" },
         { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2475,7 +2475,7 @@ const REGION_PAIR_STRATEGIES = {
       return {
         label: "Via Frankfurt",
         legs: [
-          { route: `${o} → Frankfurt (FRA)`, time: "8–9h", airline: "Lufthansa / Air India ✓ Cabin (under 8 kg)" },
+          { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "8–9h"), airline: "Lufthansa / Air India ✓ Cabin (under 8 kg)" },
           { route: "Layover at Frankfurt FRA", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
           { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
         ],
@@ -2486,7 +2486,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Eurotunnel)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "8–9h"), airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
         { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2496,7 +2496,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Newcastle ferry)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "8–9h"), airline: "KLM / Air India ✓ Cabin (under 8 kg)" },
         { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
         { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
@@ -2509,7 +2509,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "7–8h"), airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
         { route: "Layover at Paris CDG", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2519,7 +2519,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Frankfurt",
       legs: [
-        { route: `${o} → Frankfurt (FRA)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "7–8h"), airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
         { route: "Layover at Frankfurt FRA", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2529,7 +2529,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Eurotunnel)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–8h"), airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
         { route: "Layover at Amsterdam AMS", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2539,7 +2539,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Newcastle ferry)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–8h"), airline: "Etihad ✓ Cabin out of Abu Dhabi (under 8 kg)" },
         { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
         { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
@@ -2554,7 +2554,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Madrid (Iberia direct cabin)",
       legs: [
-        { route: `${o} → Madrid (MAD)`, time: "8–11h", airline: "Iberia / American (Iberia codeshare) ✓ Cabin" },
+        { route: `${o} → Madrid (MAD)`, time: legTime(o, "MAD", "8–11h"), airline: "Iberia / American (Iberia codeshare) ✓ Cabin" },
         { route: `Madrid (MAD) → ${d}`, time: "2h 50m", airline: "Iberia ✓ Cabin" },
       ],
       note: `Iberia carries cabin pets Madrid → Dublin (under 8 kg) — combine with a Iberia-operated US → Madrid flight and the whole journey stays in cabin. No ferry, no UK landbridge. Iberia's carrier limit: 45 × 35 × 25 cm.`,
@@ -2563,7 +2563,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (KLM direct cabin)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–10h", airline: "KLM / Delta ✓ Cabin" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–10h"), airline: "KLM / Delta ✓ Cabin" },
         { route: `Amsterdam (AMS) → ${d}`, time: "1h 25m", airline: "KLM ✓ Cabin" },
       ],
       note: `KLM carries cabin pets Amsterdam → Dublin (under 8 kg). Pair with a KLM-operated US → Amsterdam transatlantic and stay in cabin start-to-finish. KLM carrier limit: 46 × 28 × 24 cm.`,
@@ -2572,7 +2572,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via France + direct France→Ireland ferry",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "7–11h"), airline: "Air France / Delta ✓ Cabin" },
         { route: "Drive to Cherbourg or Roscoff", time: "3–5h", airline: "Pet stays with you" },
         { route: `Ferry to Rosslare or ${d}`, time: "14–18h", airline: "Irish Ferries / Brittany Ferries — pet-friendly" },
       ],
@@ -2732,7 +2732,7 @@ const REGION_PAIR_STRATEGIES = {
       return {
         label: "Via Frankfurt (Lufthansa)",
         legs: [
-          { route: `${o} → Frankfurt (FRA)`, time: "7–9h", airline: "Lufthansa ✓ Cabin (under 8 kg)" },
+          { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "7–9h"), airline: "Lufthansa ✓ Cabin (under 8 kg)" },
           { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
           { route: `FRA → ${d}`, time: "8–9h", airline: "Lufthansa ✓ Cabin (single-carrier through-ticket)" },
         ],
@@ -2743,7 +2743,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris (Air France)",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "7–9h", airline: "Air France ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "7–9h"), airline: "Air France ✓ Cabin (under 8 kg)" },
         { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: `CDG → ${d}`, time: "8–9h", airline: "Air France ✓ Cabin (single-carrier through-ticket)" },
       ],
@@ -2753,7 +2753,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (KLM)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–9h"), airline: "KLM ✓ Cabin (under 8 kg)" },
         { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: `AMS → ${d}`, time: "8–9h", airline: "KLM ✓ Cabin (single-carrier through-ticket)" },
       ],
@@ -3072,7 +3072,7 @@ const REGION_PAIR_STRATEGIES = {
       return {
         label: "Via Frankfurt (Lufthansa)",
         legs: [
-          { route: `${o} → Frankfurt (FRA)`, time: "8–9h", airline: "Lufthansa ✓ Cabin (under 8 kg)" },
+          { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "8–9h"), airline: "Lufthansa ✓ Cabin (under 8 kg)" },
           { route: "Layover at Frankfurt", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
           { route: `FRA → ${d}`, time: "8–10h", airline: "Lufthansa ✓ Cabin (single-carrier through-ticket)" },
         ],
@@ -3083,7 +3083,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris (Air France)",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "8–9h", airline: "Air France ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "8–9h"), airline: "Air France ✓ Cabin (under 8 kg)" },
         { route: "Layover at Paris", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: `CDG → ${d}`, time: "8–10h", airline: "Air France / Delta ✓ Cabin (single-carrier through-ticket recommended)" },
       ],
@@ -3093,7 +3093,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (KLM)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "8–9h", airline: "KLM ✓ Cabin (under 8 kg)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "8–9h"), airline: "KLM ✓ Cabin (under 8 kg)" },
         { route: "Layover at Amsterdam", time: "3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: `AMS → ${d}`, time: "8–10h", airline: "KLM / Delta ✓ Cabin (single-carrier through-ticket recommended)" },
       ],
@@ -3231,7 +3231,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (KLM direct cabin)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–8h", airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–8h"), airline: "Air Canada ✓ Cabin (under 10 kg combined)" },
         { route: `Amsterdam (AMS) → ${d}`, time: "1h 25m", airline: "KLM ✓ Cabin" },
       ],
       note: `Cabin into Ireland is possible via KLM's Amsterdam → Dublin route (under 8 kg). Pair with Air Canada's cabin flight to AMS — the journey stays in cabin start to finish. KLM carrier limit: 46 × 28 × 24 cm.`,

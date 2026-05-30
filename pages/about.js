@@ -10,7 +10,7 @@ export default function About() {
         <link rel="canonical" href="https://www.petsincabin.com/about" />
       </Head>
 
-      <div className="min-h-screen" style={{ backgroundColor: "transparent", fontFamily: "'Inter', -apple-system, sans-serif" }}>
+      <div className="min-h-screen" style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap');
           .font-serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
@@ -73,7 +73,7 @@ export default function About() {
 
               <p><strong className="text-stone-800">What this site is:</strong> a practical, real-world guide to <strong>pets in cabin</strong> travel — which airlines actually allow it, what paperwork each country needs, which routes work and which don't, and the workarounds when your destination makes it difficult (looking at you, UK).</p>
 
-              <p><strong className="text-stone-800">What this site isn't:</strong> a substitute for checking the airline's current policy directly before you book. Rules change. I update things when I find errors, but always verify.</p>
+              <p><strong className="text-stone-800">What this site isn't:</strong> a substitute for checking the airline's current policy directly before you book. Rules change. I update things when I find errors, but always verify. (If you're curious how the information here gets checked in the first place, there's a <Link href="/how-we-check" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-600">how we check</Link> page.)</p>
 
               <p><strong className="text-stone-800">Who it's for:</strong> anyone trying to figure out how to fly internationally with a small dog or cat in the cabin — without the 14-tab spiral.</p>
             </div>
@@ -122,6 +122,7 @@ export default function About() {
             </div>
             <div className="flex gap-6 text-xs uppercase tracking-widest text-stone-400">
               <Link href="/" className="hover:text-amber-700 transition-colors">The guide</Link>
+              <Link href="/how-we-check" className="hover:text-amber-700 transition-colors">How we check</Link>
               <Link href="/privacy" className="hover:text-amber-700 transition-colors">Privacy</Link>
             </div>
           </div>

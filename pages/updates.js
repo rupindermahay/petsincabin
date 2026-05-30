@@ -118,7 +118,7 @@ export default function Updates() {
         <link rel="canonical" href="https://www.petsincabin.com/updates" />
       </Head>
 
-      <div className="min-h-screen" style={{ backgroundColor: "transparent", fontFamily: "'Inter', -apple-system, sans-serif" }}>
+      <div className="min-h-screen" style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}>
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap');
           .font-serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
@@ -207,6 +207,7 @@ export default function Updates() {
             <div className="flex gap-6 text-xs uppercase tracking-widest text-stone-400">
               <Link href="/" className="hover:text-amber-700 transition-colors">The guide</Link>
               <Link href="/about" className="hover:text-amber-700 transition-colors">About</Link>
+              <Link href="/how-we-check" className="hover:text-amber-700 transition-colors">How we check</Link>
               <Link href="/privacy" className="hover:text-amber-700 transition-colors">Privacy</Link>
             </div>
           </div>

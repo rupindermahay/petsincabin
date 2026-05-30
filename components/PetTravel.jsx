@@ -9440,7 +9440,7 @@ function NavBar({ onStartIntake }) {
         borderBottom: "1px solid rgba(68,64,60,0.15)",
       }}
     >
-      <div className="px-6 md:pl-5 md:pr-10">
+      <div className="px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
 
         {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}

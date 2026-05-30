@@ -437,12 +437,12 @@ const AIRLINES = [
     direction: "Cabin allowed: Aeroflot is genuinely pet-friendly — 8 kg combined under-seat and (notably) a second 15 kg carrier on the adjacent seat if you buy it as an extra fare. Routes are limited though, since Russian airspace was closed to most Western carriers (and vice versa) in February 2022. As of 2026 Aeroflot serves about 17 mostly non-Western destinations including UAE/Dubai, India (Delhi, Mumbai, Goa), China, Egypt, Turkey, Maldives, Sri Lanka, Iran, Belarus, Kazakhstan and other former-USSR states. Cabin NOT allowed (no service): UK, US, Canada, EU, Australia, NZ — these airspaces are closed to Aeroflot.",
     originAllowed: { uk: "no", us: "no", eu: "no", india: "yes", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no", australia: "no" },
     destinationAllowed: { uk: "no", us: "no", eu: "no", india: "yes", canada: "no", uae: "yes", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "no", korea: "no", australia: "no" },
-    fee: "€61 domestic / €75 international (cabin); €15kg-seat fare for the extra-seat option",
+    fee: "From ~€61 domestic; international cabin fee varies by destination (reported ~€75–€140) — confirm at booking; adjacent-seat option charged as the seat fare",
     weight: "Pet + carrier max 8 kg under seat. Up to 15 kg if you buy a second seat for the pet (adjacent-seat container option)",
     carrier: "Soft-sided ≤126 cm total dimensions, or rigid ≤44 × 30 × 26 cm. Larger limits for the adjacent-seat carrier.",
     notes: "Aeroflot has expanded its cabin pet service since 2024 — passengers can now bring TWO containers (one under-seat at 8 kg, one on the adjacent paid seat at up to 15 kg). Genuinely useful for owners of slightly-too-big-for-cabin dogs, but only on the routes Aeroflot still flies. For Western pet owners moving in/out of Russia, the practical reality is: very few options exist, sanctions/airspace closures make it complicated, and most pet-relocation work is done by specialists overland into Russia from Turkey or via Central Asia. If you need to fly cabin with a pet between, say, Dubai, Delhi or Istanbul and Moscow, this is one of the only options. Reserve at least 36 hours before. Brachycephalic breeds banned from cabin.",
     intl: "Yes (limited to ~17 destinations)",
-    verified: "May 2026 — audited against Aeroflot's published pet rules (aeroflot.ru) + Aeroflot's July-2025 cabin-expansion announcement + Travelnuity/BringFido/PetTravel. AUDITED CLEAN — no corrections. CONFIRMED: 8 kg under-seat cabin + the second adjacent-seat container up to 15 kg (Aeroflot's own announcement: 'the carrier placed under the seat should not exceed 8 kg; the container for the adjacent seat no more than 15 kg' — available on Aeroflot's own + Rossiya SU-code flights); carrier soft ≤126 cm total or rigid 44×30×26 cm; fees €61 domestic / €75 international cabin; brachycephalic BANNED from cabin (CONFIRMED — opposite of SWISS, and the site correctly distinguishes); ~17-destination non-Western network with UK/US/EU/Canada/AU/NZ closed to Aeroflot since the Feb-2022 airspace closures (current as of 2026). 36-hour reservation correct. Routes (SVO↔DXB/DEL/BOM/IST) and planner branch all consistent. No #22-pattern issues.",
+    verified: "May 2026 — audited against Aeroflot's July-2025 cabin-expansion announcement + Travelnuity/BringFido/PetTravel/iFLY. CONFIRMED: 8 kg under-seat cabin + the second adjacent-seat container up to 15 kg (Aeroflot's own announcement: 'the carrier placed under the seat should not exceed 8 kg; the container for the adjacent seat no more than 15 kg' — available on Aeroflot's own + Rossiya SU-code flights); carrier soft ≤126 cm total or rigid 44×30×26 cm; brachycephalic BANNED from cabin (CONFIRMED — opposite of SWISS, and the site correctly distinguishes); ~17-destination non-Western network with UK/US/EU/Canada/AU/NZ closed to Aeroflot since the Feb-2022 airspace closures (current as of 2026); 36-hour reservation correct. Routes (SVO↔DXB/DEL/BOM/IST) and planner branch all consistent. No #22-pattern issues. FEE — FLAGGED, not asserted: aeroflot.ru is geo-blocked from here so the international cabin fee could NOT be Tier-1 verified this pass. Tier-2 sources disagree: iFLY says flat €75, Travelnuity (newer, ~Apr 2026) says €85 OR €140 depending on destination. The record now shows a ~€75–€140 'confirm at booking' range rather than a false-precise €75. ACTION: Pin to read the fee off aeroflot.ru directly (accessible from the UK) and set a single confirmed figure/range as the source of truth.",
     link: "https://www.aeroflot.ru/us-en/information/preparation/special_transportation/animals",
   },
   {
@@ -2341,6 +2341,39 @@ function legTime(originLabel, hubCode, fallbackBand) {
   return specific || fallbackBand; // uncatalogued pair → band is honest
 }
 
+// Resolve the time for a "Hub → ${d}" leg where the hub is one OR several options
+// (e.g. "Paris (CDG) or Amsterdam (AMS)"). Reads each candidate hub's
+// EU_HUB_OPTIONS.routeTimes[destCode] (same single source of truth as legTime)
+// and returns: the single concrete time when only one hub serves the pair; a
+// TIGHT band built from the real per-hub values (min–max) when several do; or the
+// honest fallback band when the destination isn't catalogued for any of them.
+// This stops the bug where a multi-hub leg showed a wide generic band (e.g.
+// "7–11h") whose floor was LOWER than either hub's real time to that city (CDG→MIA
+// 8h 55m, AMS→MIA 9h 40m). `hubCodes` is an array like ["CDG","AMS"]; `destLabel`
+// is like "Miami (MIA)". Parses to total-minutes to sort/compare, re-renders the
+// extremes verbatim from the table so the displayed strings stay authoritative.
+function hubLegTime(hubCodes, destLabel, fallbackBand) {
+  const m = (destLabel || "").match(/\(([A-Z]{3})\)/);
+  const destCode = m ? m[1] : null;
+  if (!destCode || typeof EU_HUB_OPTIONS === "undefined") return fallbackBand;
+  const times = [];
+  for (const code of hubCodes) {
+    const hub = EU_HUB_OPTIONS.find((h) => h.code === code);
+    const t = hub && hub.routeTimes ? hub.routeTimes[destCode] : null;
+    if (t) times.push(t);
+  }
+  if (times.length === 0) return fallbackBand; // no catalogued hub→dest → band honest
+  if (times.length === 1) return times[0];     // single known time
+  const toMin = (s) => {
+    const h = /(\d+)\s*h/.exec(s);
+    const min = /(\d+)\s*m/.exec(s);
+    return (h ? +h[1] : 0) * 60 + (min ? +min[1] : 0);
+  };
+  const sorted = times.slice().sort((a, b) => toMin(a) - toMin(b));
+  const lo = sorted[0], hi = sorted[sorted.length - 1];
+  return lo === hi ? lo : `${lo}–${hi}`; // tight band from REAL extremes
+}
+
 // ── DIRECT_LEG_TIMES — master origin→destination nonstop-leg time table ──────
 // Many strategy legs are "${o} → ${d}" or "Hub → ${d}" where the endpoints are
 // specific airports (oLabel/dLabel carry IATA codes, e.g. "Mexico City (MEX)").
@@ -2873,13 +2906,13 @@ const REGION_PAIR_STRATEGIES = {
         ? [
             { route: `${o} → ${firstLegHub}`, time: firstLegTime, airline: firstLegAirline },
             { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-            { route: `Hub → ${d}`, time: "7–11h", airline: isGLA ? "KLM or Delta ✓ Cabin (single-carrier KLM through-ticket recommended)" : "Air France / KLM / Delta ✓ Cabin" },
+            { route: `Hub → ${d}`, time: hubLegTime(isGLA ? ["AMS"] : ["CDG", "AMS"], d, "7–11h"), airline: isGLA ? "KLM or Delta ✓ Cabin (single-carrier KLM through-ticket recommended)" : "Air France / KLM / Delta ✓ Cabin" },
           ]
         : [
             { route: `${o} → London Heathrow (LHR)`, time: "drive or short hop", airline: "Heathrow is the UK's main cabin-pet departure airport" },
             { route: "LHR → Paris (CDG) or Amsterdam (AMS)", time: "1h 20m", airline: "Air France / KLM ✓ Cabin out of the UK" },
             { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-            { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+            { route: `Hub → ${d}`, time: hubLegTime(["CDG", "AMS"], d, "7–11h"), airline: "Air France / KLM / Delta ✓ Cabin" },
           ];
       const hubName = isGLA ? "Glasgow" : (isEDI ? "Edinburgh" : "Heathrow");
       return {
@@ -2923,7 +2956,7 @@ const REGION_PAIR_STRATEGIES = {
     legs: [
       { route: `${o} → Paris (CDG) or Amsterdam (AMS)`, time: "1h 50m", airline: "Air France / KLM ✓ Cabin out of Ireland" },
       { route: "Layover at the European hub", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
-      { route: `Hub → ${d}`, time: "7–11h", airline: "Air France / KLM / Delta ✓ Cabin" },
+      { route: `Hub → ${d}`, time: hubLegTime(["CDG", "AMS"], d, "7–11h"), airline: "Air France / KLM / Delta ✓ Cabin" },
     ],
     note: `Cabin OUT of Ireland to a European hub works, then the transatlantic carriers fly cabin pets onward to ${d}.`,
   }),
@@ -11020,7 +11053,7 @@ const DESTINATIONS = [
         title: "Aeroflot via a third country (Russia)",
         icon: <Plane className="w-4 h-4" strokeWidth={1.75} />,
         body: "Aeroflot still carries cabin pets (8 kg under-seat, or up to 15 kg if you buy a second seat) on its remaining ~17-country network — UAE/Dubai, Turkey/Istanbul, India/Delhi/Mumbai, China, Egypt, the Maldives, Iran, Belarus, Kazakhstan and other former-USSR states. So a UK/EU pet owner moving to Russia would typically fly cabin from Heathrow to Istanbul or Dubai on a Western carrier, then connect onto Aeroflot for the Moscow leg. Two separate tickets, two pet bookings, two sets of paperwork — but each leg is cabin.",
-        cost: "London → Istanbul (Turkish Airlines cabin): ~£300–£600 + ~$70 pet fee. Istanbul → Moscow (Aeroflot cabin): from ~€200 + €75 pet fee. Allow a day's buffer between flights.",
+        cost: "London → Istanbul (Turkish Airlines cabin): ~£300–£600 + ~$70 pet fee. Istanbul → Moscow (Aeroflot cabin): from ~€200 + Aeroflot pet fee (varies by destination — confirm at booking). Allow a day's buffer between flights.",
       },
       {
         title: "Overland into Ukraine via Poland",

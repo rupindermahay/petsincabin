@@ -27,7 +27,7 @@ export default function Privacy() {
           body { font-family: 'Inter', sans-serif; }
         `}</style>
 
-        <nav className="border-b border-stone-300 px-6 md:px-12 py-4">
+        <nav className="border-b border-stone-300 px-6 md:pl-5 md:pr-10 py-4">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 group">
               <PawPrint className="w-5 h-5 text-stone-700 group-hover:text-amber-700 transition-colors" strokeWidth={1.5} />
@@ -42,7 +42,7 @@ export default function Privacy() {
           </div>
         </nav>
 
-        <main className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24">
+        <main className="max-w-3xl mx-auto px-6 md:pl-5 md:pr-10 py-16 md:py-24">
           <div className="text-xs uppercase tracking-[0.25em] text-stone-500 mb-6">Pets in Cabin</div>
 
           <h1 className="font-serif text-5xl md:text-6xl text-stone-900 mb-6 leading-tight">
@@ -222,7 +222,7 @@ export default function Privacy() {
           </div>
         </main>
 
-        <footer className="py-12 px-6 md:px-12 bg-stone-900 text-stone-400 border-t border-stone-800">
+        <footer className="py-12 px-6 md:pl-5 md:pr-10 bg-stone-900 text-stone-400 border-t border-stone-800">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-2 mb-4">
               <PawPrint className="w-5 h-5 text-amber-500" strokeWidth={1.5} />

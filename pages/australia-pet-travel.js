@@ -23,7 +23,7 @@ export default function AustraliaPetTravel() {
         `}</style>
 
         <nav
-          className="border-b border-stone-300 px-6 md:px-12 py-4"
+          className="border-b border-stone-300 px-6 md:pl-5 md:pr-10 py-4"
           style={{ backgroundColor: "rgba(250, 246, 237, 0.98)" }}
         >
           <div className="max-w-4xl mx-auto flex items-center justify-between">

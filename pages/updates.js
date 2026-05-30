@@ -125,7 +125,7 @@ export default function Updates() {
         `}</style>
 
         {/* Nav */}
-        <nav className="border-b border-stone-300 px-6 md:px-12 py-4" style={{ backgroundColor: "rgba(250, 246, 237, 0.98)" }}>
+        <nav className="border-b border-stone-300 px-6 md:pl-5 md:pr-10 py-4" style={{ backgroundColor: "rgba(250, 246, 237, 0.98)" }}>
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2.5 group">
               <img src="/logo.png" alt="Pets in Cabin" className="w-8 h-8 rounded-full object-cover" />

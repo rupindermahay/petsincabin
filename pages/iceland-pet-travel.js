@@ -23,7 +23,7 @@ export default function IcelandPetTravel() {
         `}</style>
 
         <nav
-          className="border-b border-stone-300 px-6 md:px-12 py-4"
+          className="border-b border-stone-300 px-6 md:pl-5 md:pr-10 py-4"
           style={{ backgroundColor: "rgba(250, 246, 237, 0.98)" }}
         >
           <div className="max-w-4xl mx-auto flex items-center justify-between">
@@ -311,7 +311,7 @@ export default function IcelandPetTravel() {
           </p>
         </main>
 
-        <footer className="border-t border-stone-300 py-10 px-6 md:px-12">
+        <footer className="border-t border-stone-300 py-10 px-6 md:pl-5 md:pr-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="font-serif italic text-stone-500 text-sm">
               Pets in Cabin · By Theo's Mum · <Link href="/privacy" className="underline decoration-stone-300 hover:text-amber-700 transition-colors">Privacy</Link>

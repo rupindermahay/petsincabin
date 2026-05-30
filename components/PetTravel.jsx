@@ -2321,6 +2321,26 @@ const airportLabel = (code) => {
 //   Long Haul flights have no cabin pets even when otherwise eligible.
 // - Transatlantic cabin works between European hubs and major US cities
 //   (Air France, KLM, Lufthansa, Delta, etc.).
+
+// Resolve a SPECIFIC leg flight time from the maintained EU_HUB_OPTIONS.routeTimes
+// table when the origin is a single known city, else fall back to the band.
+// Used by REGION_PAIR_STRATEGIES so a hub leg like "Miami (MIA) → Paris (CDG)"
+// shows the concrete "9h 55m" instead of a generic "7–11h" band — keeping these
+// hand-written strategy cards consistent with the planner's generated via-hub
+// cards (single source of truth = EU_HUB_OPTIONS.routeTimes). The band stays the
+// honest display whenever the origin is multi-city/generic or the pair is
+// uncatalogued. `originLabel` is like "Miami (MIA)"; `hubCode` is "CDG"/"FRA"/etc.
+function legTime(originLabel, hubCode, fallbackBand) {
+  const m = (originLabel || "").match(/\(([A-Z]{3})\)/);
+  const originCode = m ? m[1] : null;
+  if (!originCode) return fallbackBand; // generic/multi-origin → band is honest
+  const hub = (typeof EU_HUB_OPTIONS !== "undefined")
+    ? EU_HUB_OPTIONS.find((h) => h.code === hubCode)
+    : null;
+  const specific = hub && hub.routeTimes ? hub.routeTimes[originCode] : null;
+  return specific || fallbackBand; // uncatalogued pair → band is honest
+}
+
 const REGION_PAIR_STRATEGIES = {
   // ----- INTO the UK (cabin into UK impossible — via Europe + crossing) -----
   // Three distinct routes, one per European hub, each shown as its own card.
@@ -2329,7 +2349,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Paris",
       legs: [
-        { route: `${o} → Paris (CDG)`, time: "7–11h", airline: "Air France / Delta ✓ Cabin" },
+        { route: `${o} → Paris (CDG)`, time: legTime(o, "CDG", "7–11h"), airline: "Air France / Delta ✓ Cabin" },
         { route: "Layover at Paris CDG", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Paris → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2339,7 +2359,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Frankfurt",
       legs: [
-        { route: `${o} → Frankfurt (FRA)`, time: "8–10h", airline: "Lufthansa / United ✓ Cabin" },
+        { route: `${o} → Frankfurt (FRA)`, time: legTime(o, "FRA", "8–10h"), airline: "Lufthansa / United ✓ Cabin" },
         { route: "Layover at Frankfurt FRA", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Frankfurt → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "7–8h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2352,7 +2372,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Eurotunnel)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–9h"), airline: "KLM / Delta ✓ Cabin" },
         { route: "Layover at Amsterdam AMS", time: "2–3h+ (overnight gentler)", airline: "Pet handover buffer" },
         { route: "Drive + crossing: Amsterdam → Calais → Eurotunnel or DFDS/P&O ferry → UK", time: "5–6h", airline: "Pet stays with you — car + crossing" },
       ],
@@ -2363,7 +2383,7 @@ const REGION_PAIR_STRATEGIES = {
     (o, d) => ({
       label: "Via Amsterdam (Newcastle ferry)",
       legs: [
-        { route: `${o} → Amsterdam (AMS)`, time: "7–9h", airline: "KLM / Delta ✓ Cabin" },
+        { route: `${o} → Amsterdam (AMS)`, time: legTime(o, "AMS", "7–9h"), airline: "KLM / Delta ✓ Cabin" },
         { route: "Drive: Amsterdam Schiphol → DFDS ferry terminal, IJmuiden", time: "25m", airline: "Taxi — pet stays with you" },
         { route: "Ferry: DFDS overnight, Amsterdam (IJmuiden) → Newcastle", time: "~16h 45m", airline: "Pet in a pet-friendly cabin or onboard kennel" },
         { route: "Drive or train: Newcastle → onward UK", time: "varies", airline: "Pet stays with you" },
@@ -3330,7 +3350,7 @@ const CA_HUBS_REGEX = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/
 //     each carrier's published connection guidance before locking.
 const EU_HUB_OPTIONS = [
   { code: "FRA", city: "Frankfurt (FRA)", carrier: "Lufthansa", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-11h", routeTimes: { JFK: "8h 40m", EWR: "8h 25m", MIA: "9h 55m", BOS: "8h 30m", ORD: "9h 5m", ATL: "9h 35m", IAH: "11h 10m", IAD: "9h 5m", DEN: "10h 10m", LAX: "11h 30m", DFW: "11h", AUS: "10h 50m", SEA: "10h 35m", RDU: "9h 25m", STL: "9h 45m", DTW: "8h 45m", SFO: "11h 15m" }, mctMinutes: 60 },
-  { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m", routeTimes: { JFK: "8h 15m", EWR: "8h 30m", MIA: "9h 55m", LAX: "11h 25m", ATL: "9h 25m", IAD: "8h 40m", SFO: "11h 50m", ORD: "9h", BOS: "7h 50m", IAH: "10h 25m", DTW: "8h 50m", DFW: "10h 50m", SEA: "10h 50m", PHX: "11h", RDU: "9h 5m", MCO: "9h 45m" }, mctMinutes: 75 },
+  { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m", routeTimes: { JFK: "8h 15m", EWR: "8h 30m", MIA: "8h 55m", LAX: "11h 25m", ATL: "9h 25m", IAD: "8h 40m", SFO: "11h 50m", ORD: "9h", BOS: "7h 50m", IAH: "10h 25m", DTW: "8h 50m", DFW: "10h 50m", SEA: "10h 50m", PHX: "11h", RDU: "9h 5m", MCO: "9h 45m" }, mctMinutes: 75 },
   { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h", routeTimes: { JFK: "8h 10m", EWR: "7h 50m", LAX: "11h", MIA: "9h 40m", ATL: "9h 40m", ORD: "9h 25m", BOS: "7h 45m", IAH: "10h 40m", IAD: "8h 20m", SFO: "10h 55m", LAS: "10h 50m", AUS: "10h 30m", PDX: "10h" }, mctMinutes: 50 },
   { code: "MAD", city: "Madrid (MAD)", carrier: "Iberia", weight: "≤ 8 kg incl. carrier", posTime: "2-4h", transatlanticTime: "8-12h 30m", routeTimes: { JFK: "8h 55m", EWR: "8h 50m", BOS: "8h 5m", LAX: "11h 10m", ORD: "9h 55m", MIA: "10h 20m", DFW: "10h 35m", IAD: "9h 10m" }, mctMinutes: 75 },
   { code: "FCO", city: "Rome (FCO)", carrier: "ITA Airways", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-13h", routeTimes: { JFK: "10h 5m", MIA: "11h 55m", BOS: "9h 30m", LAX: "12h 45m", IAD: "9h", SFO: "12h 45m" }, mctMinutes: 75 },

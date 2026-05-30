@@ -9441,7 +9441,6 @@ function NavBar({ onStartIntake }) {
       }}
     >
       <div className="px-6 md:px-12">
-      <div className="max-w-5xl mx-auto">
 
         {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}
         <div className="flex md:hidden items-center justify-between py-3">
@@ -9558,7 +9557,6 @@ function NavBar({ onStartIntake }) {
             </a>
           </div>
         </div>
-      </div>
       </div>
 
       {/* Mobile menu — a normal in-flow dropdown. Capped to the viewport and

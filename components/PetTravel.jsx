@@ -9440,7 +9440,8 @@ function NavBar({ onStartIntake }) {
         borderBottom: "1px solid rgba(68,64,60,0.15)",
       }}
     >
-      <div className="max-w-5xl mx-auto px-6 md:pl-5 md:pr-10">
+      <div className="px-6 md:pl-5 md:pr-10">
+      <div className="max-w-5xl mx-auto">
 
         {/* MOBILE: logo + menu toggle on one row (desktop hides this) */}
         <div className="flex md:hidden items-center justify-between py-3">
@@ -9558,6 +9559,7 @@ function NavBar({ onStartIntake }) {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Mobile menu — a normal in-flow dropdown. Capped to the viewport and
           scrolls internally so the full list (all country guides) is reachable.
@@ -9637,7 +9639,7 @@ function NavBar({ onStartIntake }) {
 
 function Hero({ onStart }) {
   return (
-    <header className="relative pt-4 md:pt-8 pb-8 md:pb-12 px-6 md:pl-5 md:pr-10 overflow-hidden">
+    <header className="relative pt-4 md:pt-8 pb-8 md:pb-12 px-6 md:px-12 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 25% 20%, #1a1a1a 1px, transparent 1px), radial-gradient(circle at 75% 80%, #1a1a1a 1px, transparent 1px)",
         backgroundSize: "32px 32px"
@@ -9980,7 +9982,7 @@ function Intake({ answers, setAnswers, step, setStep, onComplete }) {
   };
 
   return (
-    <section ref={sectionRef} id="intake" className="py-10 px-6 md:pl-5 md:pr-10 bg-stone-100 border-y border-stone-300 scroll-mt-24">
+    <section ref={sectionRef} id="intake" className="py-10 px-6 md:px-12 bg-stone-100 border-y border-stone-300 scroll-mt-24">
       <div id="assessment" className="scroll-mt-24" />
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="I.">Can my pet fly in the cabin?</SectionLabel>
@@ -10242,7 +10244,7 @@ function Assessment({ answers, onReset }) {
   }
 
   return (
-    <section ref={sectionRef} id="assessment-result" className="py-20 px-6 md:pl-5 md:pr-10 scroll-mt-24">
+    <section ref={sectionRef} id="assessment-result" className="py-20 px-6 md:px-12 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="✦">Your assessment</SectionLabel>
 
@@ -10968,7 +10970,7 @@ function DifficultDestinations() {
   const dest = DESTINATIONS.find((d) => d.id === active);
 
   return (
-    <section id="destinations" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-100 border-t border-stone-300">
+    <section id="destinations" className="py-20 px-6 md:px-12 bg-stone-100 border-t border-stone-300">
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="V.">Difficult destinations</SectionLabel>
 
@@ -11317,7 +11319,7 @@ function AirlineGrid() {
       );
 
   return (
-    <section id="airlines" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-100 border-y border-stone-300">
+    <section id="airlines" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="III.">Airline pet policies</SectionLabel>
 
@@ -12513,7 +12515,7 @@ function Checklist() {
   ];
 
   return (
-    <section id="timeline" className="py-20 px-6 md:pl-5 md:pr-10">
+    <section id="timeline" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="II.">The timeline</SectionLabel>
 
@@ -13524,7 +13526,7 @@ function JourneyPlanner() {
   })).filter((g) => g.airports.length > 0);
 
   return (
-    <section ref={sectionRef} id="planner" className="py-12 md:py-20 px-6 md:pl-5 md:pr-10 bg-stone-900 text-stone-100 scroll-mt-24">
+    <section ref={sectionRef} id="planner" className="py-12 md:py-20 px-6 md:px-12 bg-stone-900 text-stone-100 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-4">
           <span className="font-serif italic text-amber-400/70 text-lg">✦</span>
@@ -14863,7 +14865,7 @@ function Routes() {
   const workaroundsGrouped = groupByCity(filteredWorkarounds, direction);
 
   return (
-    <section id="routes" className="py-20 px-6 md:pl-5 md:pr-10 bg-white border-y border-stone-300">
+    <section id="routes" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-400 text-lg">★</span>
@@ -15248,7 +15250,7 @@ const WORKAROUND_ROUTES = [
 
 function Workarounds() {
   return (
-    <section id="workarounds" className="py-20 px-6 md:pl-5 md:pr-10 bg-amber-50/30 border-y border-stone-300">
+    <section id="workarounds" className="py-20 px-6 md:px-12 bg-amber-50/30 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-400 text-lg">◆</span>
@@ -15403,7 +15405,7 @@ const QUARANTINE_COUNTRIES = [
 
 function QuarantineWatch() {
   return (
-    <section id="quarantine" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-50 border-y border-stone-300">
+    <section id="quarantine" className="py-20 px-6 md:px-12 bg-stone-50 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-400 text-lg">⚠</span>
@@ -15462,7 +15464,7 @@ function QuarantineWatch() {
 
 function Documents() {
   return (
-    <section id="documents" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-900 text-stone-50">
+    <section id="documents" className="py-20 px-6 md:px-12 bg-stone-900 text-stone-50">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-500 text-lg">VI.</span>
@@ -15598,7 +15600,7 @@ function Documents() {
 
 function Tips() {
   return (
-    <section id="tips" className="py-20 px-6 md:pl-5 md:pr-10">
+    <section id="tips" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
         <SectionLabel num="VII.">Hard-won wisdom</SectionLabel>
 
@@ -15727,7 +15729,7 @@ function TravelDay() {
   }
 
   return (
-    <section id="travel-day" className="py-20 px-6 md:pl-5 md:pr-10">
+    <section id="travel-day" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-amber-700 text-2xl">★</span>
@@ -15798,7 +15800,7 @@ function Gear() {
   };
 
   return (
-    <section id="gear" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-100 border-y border-stone-300">
+    <section id="gear" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-amber-700 text-2xl">VIII</span>
@@ -15887,7 +15889,7 @@ function Operators() {
   };
 
   return (
-    <section id="operators" className="py-20 px-6 md:pl-5 md:pr-10">
+    <section id="operators" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-amber-700 text-2xl">IX</span>
@@ -16053,7 +16055,7 @@ function Stories() {
   const [open, setOpen] = useState(true);
 
   return (
-    <section id="stories" className="py-20 px-6 md:pl-5 md:pr-10 bg-amber-50/40 border-y border-stone-300">
+    <section id="stories" className="py-20 px-6 md:px-12 bg-amber-50/40 border-y border-stone-300">
       <div className="max-w-3xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-400 text-lg">✻</span>
@@ -16245,7 +16247,7 @@ function ComingSoon() {
   ];
 
   return (
-    <section id="coming-soon" className="py-20 px-6 md:pl-5 md:pr-10 bg-white border-y border-stone-300">
+    <section id="coming-soon" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="font-serif italic text-stone-400 text-lg">∞</span>
@@ -16333,7 +16335,7 @@ function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 px-6 md:pl-5 md:pr-10 bg-stone-100 border-y border-stone-300">
+    <section id="contact" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-3xl mx-auto">
         <SectionLabel num="X.">Get in touch</SectionLabel>
 
@@ -16405,7 +16407,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="py-16 px-6 md:pl-5 md:pr-10 bg-stone-900 text-stone-400 border-t border-stone-800">
+    <footer className="py-16 px-6 md:px-12 bg-stone-900 text-stone-400 border-t border-stone-800">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <img
@@ -16554,7 +16556,7 @@ function WhatsNew() {
   ];
 
   return (
-    <section id="whats-new" className="pt-10 pb-16 md:pt-12 md:pb-16 px-6 md:pl-5 md:pr-10 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
+    <section id="whats-new" className="pt-10 pb-16 md:pt-12 md:pb-16 px-6 md:px-12 bg-amber-50/40 border-y border-amber-200/60 scroll-mt-32">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-baseline gap-3 mb-3">
           <span className="text-xs uppercase tracking-[0.25em] text-amber-700 font-medium">
@@ -16652,7 +16654,7 @@ function SiteToolsOverview() {
   }
 
   return (
-    <section className="py-16 px-6 md:pl-5 md:pr-10 bg-stone-100 border-y border-stone-300">
+    <section className="py-16 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
         <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
           What this site does
@@ -16686,7 +16688,7 @@ function SiteToolsOverview() {
 
 function CountryGuidesSection() {
   return (
-    <section id="country-guides" className="py-20 px-6 md:pl-5 md:pr-10 bg-white border-y border-stone-300 scroll-mt-24">
+    <section id="country-guides" className="py-20 px-6 md:px-12 bg-white border-y border-stone-300 scroll-mt-24">
       <div className="max-w-5xl mx-auto">
         <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">
           Country pet guides

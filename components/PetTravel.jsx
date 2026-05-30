@@ -263,10 +263,10 @@ const AIRLINES = [
     destinationAllowed: { uk: "no", us: "yes", eu: "no", india: "no", canada: "no", uae: "no", caribbean: "no", mexico: "no", "south-america": "no", "central-america": "no", japan: "yes", korea: "yes" },
     fee: "$35 inter-island / $100 mainland–Hawaii (down from $125 for flights departing Jan 2, 2026 onwards)",
     weight: "25 lb combined (pet + carrier) — most generous in U.S.",
-    carrier: "Soft: 17 × 11 × 9.5 in (or 17 × 12.5 × 8.5 in per Chewy variant)",
+    carrier: "Soft-sided: max 17 × 11 × 9.5 in (43 × 28 × 24 cm) per Hawaiian's own page",
     notes: "Cabin works both directions — but Hawaii is the only rabies-free state in the US, so entering with a pet (cabin or cargo) requires Direct Airport Release prep started 4+ months before, including an FAVN rabies titer test 30+ days before travel. Without DAR prep, your pet is subject to up to 120 days of quarantine at Hawaii Animal Quarantine. Cabin not accepted on routes to/from JFK, BOS, AUS, SLC, or PPG. Acquired by Alaska Air Group in October 2024 — pet bookings now part of the joint network.",
     intl: "No (in-cabin)",
-    verified: "May 2026 — audited clean against Hawaiian Airlines' own help page (hawaiianair.custhelp.com). CONFIRMED CURRENT: cabin fee $100 each way mainland–Hawaii for flights departing on/after 2 Jan 2026 (Hawaiian's own page: \"Effective October 14, 2025 — an updated fee of $100 USD/CAD each way per kennel/carrier\"), $35 inter-island; combined pet + carrier max 25 lb (11 kg); soft-sided carrier; NOT accepted on international flights or to/from PPG/JFK/BOS/AUS/SLC. Rule-C note: Hawaiian's own carrier max is 16 × 10 × 9.5 in (40×25×24 cm); the site's 17×11×9.5/Chewy-variant dims are Tier-2 and slightly larger — conservative, not misleading; consider tightening to Hawaiian's figure. Fee (the highest-stakes figure) is correct. No #22-pattern corrections.",
+    verified: "May 2026 — audited clean against Hawaiian Airlines' own help page (hawaiianair.custhelp.com). CONFIRMED CURRENT: cabin fee $100 each way mainland–Hawaii for flights departing on/after 2 Jan 2026 (Hawaiian's own page: \"Effective October 14, 2025 — an updated fee of $100 USD/CAD each way per kennel/carrier\"), $35 inter-island; combined pet + carrier max 25 lb (11 kg); soft-sided carrier; NOT accepted on international flights or to/from PPG/JFK/BOS/AUS/SLC. Rule-C carrier-dim check (re-verified 29 May 2026): Hawaiian's OWN current page now states the max carrier as 17 × 11 × 9.5 in (≈43 × 28 × 24 cm) — exactly the site's displayed figure. The older 16 × 10 × 9.5 in (40×25×24 cm) value that several Tier-2 aggregators still quote is STALE; the site's 17×11×9.5 is correct to Hawaiian's own page. The Chewy 17×12.5×8.5 variant is a third-party carrier-product spec, not Hawaiian's stated max — kept only as a parenthetical. Fee (the highest-stakes figure) is correct. No #22-pattern corrections; no dim change needed.",
     link: "https://hawaiianair.custhelp.com/app/answers/detail/a_id/659/~/pets-traveling-in-the-cabin",
   },
   {
@@ -346,7 +346,7 @@ const AIRLINES = [
     carrier: "Soft-sided only in cabin, max 17 × 10 × 9 in (43 × 25 × 23 cm), ventilated on 3 sides, leakproof. IATA-compliant hard crates required for cargo hold (10–32 kg pets).",
     notes: "IMPORTANT: Air India does not carry pets in cabin to or from the USA, Canada, Australia or the United Kingdom — per their own published policy, pets to/from these four countries can only travel as checked baggage or cargo on direct Air India flights, never in cabin. The UK is also restricted to LHR and LGW only (no pet service at all from Birmingham (BHX)). Two further rules narrow what's possible on the allowed cabin sectors: (1) Ultra Long Haul (ULH) flights have NO cabin pets even when the destination is otherwise eligible — Air India's longest sectors are excluded for pet welfare; (2) Air India does NOT accept pets from other airlines on connecting flights — pet connections only work Air India → Air India. If you're routing via Europe to reach the US/Canada/UK/Australia in cabin, you'll need a single non-Air-India through-ticket (Lufthansa end-to-end via Frankfurt, or Air France end-to-end via Paris). Book Air India cabin via customer support or city booking office at least 48 hours before departure (reduced from 72 hrs in 2026). Pet sits in last aisle row, economy only. Max 2 pets per flight, seated 5 rows apart. Wheelchair passengers and adults travelling with infants cannot carry pets in cabin (cargo only in such cases). Brachycephalic breeds allowed in cabin but not in cargo (welfare reasons).",
     intl: "Yes — India ↔ Europe (excl UK) / Asia in cabin. No service to USA/Canada/Australia. UK cargo-only at LHR/LGW.",
-    verified: "May 2026 — audited clean against Air India's own pages (airindia.com travelling-with-pets + pet-travel FAQs). CONFIRMED: cabin pet + carrier max 10 kg / 22 lb (genuinely generous vs the 8 kg norm); domesticated dogs/cats only; all breeds allowed in cabin, brachycephalic barred from cargo; 48h advance booking; 2 pets max in economy per flight, seated toward rear with adjoining seat blocked; relaunched \"Paws on Board\" 22 Jan 2026. Rule-C note: Air India's OWN cabin carrier max is 46×46×30 cm — LARGER than the site's 43×25×23 cm (Tier-2/BringFido figure); site is under-stating the allowance (conservative, won't mislead). India ↔ Europe-excl-UK / Asia cabin; NOT to USA/Canada/UK/Australia. No #22-pattern corrections.",
+    verified: "May 2026 — audited clean against Air India's own pages (airindia.com travelling-with-pets + pet-travel FAQs). CONFIRMED: cabin pet + carrier max 10 kg / 22 lb (genuinely generous vs the 8 kg norm); domesticated dogs/cats only; all breeds allowed in cabin, brachycephalic barred from cargo; 48h advance booking; 2 pets max in economy per flight, seated toward rear with adjoining seat blocked; relaunched \"Paws on Board\" 22 Jan 2026. Rule-C carrier-dim check (re-verified 29 May 2026): under the relaunched Paws on Board policy, Air India's stated cabin carrier max is 17 × 10 × 9 in (≈43 × 25 × 23 cm) — matching the site's displayed figure (multiple Dec 2025 / Jan 2026 reports of Air India's own relaunch confirm 17×10×9 in). The 46×46×30 cm value flagged in the earlier #60 note was the SUPERSEDED pre-relaunch figure tied to the old 7 kg limit; do NOT 'restore' it — the site is already correct to current policy. India ↔ Europe-excl-UK / Asia cabin; NOT to USA/Canada/UK/Australia. No #22-pattern corrections; no dim change needed.",
     link: "https://www.airindia.com/in/en/travel-information/travelling-with-pets.html",
   },
   {
@@ -3351,7 +3351,7 @@ const CA_HUBS_REGEX = /\b(yyz|toronto|yul|montreal|yvr|vancouver|yyc|calgary)\b/
 const EU_HUB_OPTIONS = [
   { code: "FRA", city: "Frankfurt (FRA)", carrier: "Lufthansa", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-11h", routeTimes: { JFK: "8h 40m", EWR: "8h 25m", MIA: "9h 55m", BOS: "8h 30m", ORD: "9h 5m", ATL: "9h 35m", IAH: "11h 10m", IAD: "9h 5m", DEN: "10h 10m", LAX: "11h 30m", DFW: "11h", AUS: "10h 50m", SEA: "10h 35m", RDU: "9h 25m", STL: "9h 45m", DTW: "8h 45m", SFO: "11h 15m" }, mctMinutes: 60 },
   { code: "CDG", city: "Paris (CDG)", carrier: "Air France", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h 30m", routeTimes: { JFK: "8h 15m", EWR: "8h 30m", MIA: "8h 55m", LAX: "11h 25m", ATL: "9h 25m", IAD: "8h 40m", SFO: "11h 50m", ORD: "9h", BOS: "7h 50m", IAH: "10h 25m", DTW: "8h 50m", DFW: "10h 50m", SEA: "10h 50m", PHX: "11h", RDU: "9h 5m", MCO: "9h 45m" }, mctMinutes: 75 },
-  { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h", routeTimes: { JFK: "8h 10m", EWR: "7h 50m", LAX: "11h", MIA: "9h 40m", ATL: "9h 40m", ORD: "9h 25m", BOS: "7h 45m", IAH: "10h 40m", IAD: "8h 20m", SFO: "10h 55m", LAS: "10h 50m", AUS: "10h 30m", PDX: "10h" }, mctMinutes: 50 },
+  { code: "AMS", city: "Amsterdam (AMS)", carrier: "KLM", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "8-11h", routeTimes: { JFK: "8h 10m", EWR: "7h 50m", LAX: "11h", MIA: "9h 40m", ATL: "9h 40m", ORD: "8h 55m", BOS: "7h 45m", IAH: "10h 40m", IAD: "8h 20m", SFO: "10h 55m", LAS: "10h 50m", AUS: "10h 30m", PDX: "10h" }, mctMinutes: 50 },
   { code: "MAD", city: "Madrid (MAD)", carrier: "Iberia", weight: "≤ 8 kg incl. carrier", posTime: "2-4h", transatlanticTime: "8-12h 30m", routeTimes: { JFK: "8h 15m", EWR: "8h 50m", BOS: "8h 5m", LAX: "11h 10m", ORD: "9h 55m", MIA: "10h 20m", DFW: "10h 35m", IAD: "9h 40m" }, mctMinutes: 75 },
   { code: "FCO", city: "Rome (FCO)", carrier: "ITA Airways", weight: "≤ 8 kg incl. carrier", posTime: "2-3h", transatlanticTime: "9-13h", routeTimes: { JFK: "9h 45m", MIA: "11h 25m", BOS: "9h 30m", LAX: "12h 45m", IAD: "9h", SFO: "12h 45m" }, mctMinutes: 75 },
   { code: "ZRH", city: "Zurich (ZRH)", carrier: "SWISS", weight: "≤ 8 kg incl. carrier", posTime: "1-3h", transatlanticTime: "8-12h", routeTimes: { JFK: "9h 10m", EWR: "8h 50m", IAD: "9h 35m", ORD: "10h 10m", LAX: "12h 20m", BOS: "8h 50m", SFO: "12h 15m", MIA: "10h 25m" }, mctMinutes: 50 },
@@ -7426,6 +7426,20 @@ const AIRPORT_CHECKLIST_OVERRIDE = {
   // Central America — PTY is transit-only on Copa itineraries, no entry checklist needed.
 };
 
+// Airports whose REGION-level checklist is correct in spirit but too generic
+// to be accurate for the specific country. Unlike AIRPORT_CHECKLIST_OVERRIDE
+// (consulted only when the region maps to null), this map takes PRECEDENCE over
+// the region map, because the region match would otherwise short-circuit it.
+// Case: Oslo (OSL) is region "europe", which would resolve the generic EU
+// checklist — but Norway has EEA-specific extras (OSL/Storskog-only entry, the
+// dogs-only Echinococcus tapeworm window + NOK 7,000 fine, non-listed-third-
+// country titer + 3-month wait, seven banned breeds). CHECKLIST_DATA.norway and
+// DIRECTIONAL_CHECKLISTS.norway carry the full content for BOTH directions, so
+// routing OSL to "norway" is safe for arrival AND departure. (Backlog #70-polish.)
+const AIRPORT_CHECKLIST_PRECEDENCE = {
+  OSL: "norway",
+};
+
 // ----- Item-level classification helpers for the merged route checklist -----
 
 // Per-region facts — used to rewrite generic "research this" / "confirm whether"
@@ -8286,14 +8300,26 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   const isDomesticAU = originRegion === "australia" && destRegion === "australia";
   const originId =
     (isDomesticAU ? "australia_domestic" : null) ||
+    AIRPORT_CHECKLIST_PRECEDENCE[airportOverrides.origin] ||
     REGION_TO_CHECKLIST_ID[originRegion] ||
     AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.origin] ||
     null;
   const destId =
     (isDomesticAU ? "australia_domestic" : null) ||
+    AIRPORT_CHECKLIST_PRECEDENCE[airportOverrides.dest] ||
     REGION_TO_CHECKLIST_ID[destRegion] ||
     AIRPORT_CHECKLIST_OVERRIDE[airportOverrides.dest] ||
     null;
+
+  // When a precedence override resolved a more SPECIFIC country than the region
+  // label implies (OSL is region "europe" but resolves to "norway"), the chapter
+  // titles ("Leaving X" / "Entering X") should name that country, not the generic
+  // region — otherwise the body says Norway while the heading says Europe.
+  const PRECEDENCE_LABEL = { norway: "Norway" };
+  const effOriginLabel =
+    (AIRPORT_CHECKLIST_PRECEDENCE[airportOverrides.origin] && PRECEDENCE_LABEL[originId]) || originLabel;
+  const effDestLabel =
+    (AIRPORT_CHECKLIST_PRECEDENCE[airportOverrides.dest] && PRECEDENCE_LABEL[destId]) || destLabel;
 
   // Resolve the directional (departing/arriving) checklist AND the base
   // checklist for each side. Merge them so we get BOTH the time-bound
@@ -8569,7 +8595,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
   // Origin chapter — time-bound items only (anytime already pulled out).
   if (originTimed.length > 0) {
     sections.push({
-      title: isDomesticAU ? `Your domestic Australia checklist` : `Leaving ${originLabel}`,
+      title: isDomesticAU ? `Your domestic Australia checklist` : `Leaving ${effOriginLabel}`,
       divider: true,
       items: [isDomesticAU ? `Everything you need for your domestic Virgin Australia cabin flight — no import paperwork or quarantine applies.` : `Time-bound steps for departure — earliest prep first.`],
     });
@@ -8624,9 +8650,24 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       if (destId === "bahamas") return `Import permit from the Bahamas Department of Agriculture (apply 6–8 weeks ahead), microchip, current rabies, health certificate from an accredited vet.`;
       if (destId === "jamaica") return `Strict 6+ month process — start very early. Microchip, rabies vaccine + titer, import permit from Jamaica's Veterinary Services Division. Internal parasite treatment within set window.`;
       if (destId === "dominican_republic") return `Health certificate within 10 days of travel, current rabies, microchip recommended. DR is on the CDC high-risk rabies list — US travellers must prepare US return paperwork BEFORE leaving the US.`;
+      // Norway (OSL) — region is "europe" but the rules have EEA-specific extras.
+      // Entry only via Oslo/Storskog; non-listed-third-country titer + 3-month
+      // wait; dogs-only Echinococcus tapeworm window. Tapeworm clause dropped for
+      // cats (exempt). Mirrors the dest checklist now routed to "norway".
+      if (destId === "norway") return petType === "cat"
+        ? `Entry only via Oslo (OSL) or Storskog. Microchip, rabies, EU Health Certificate; non-listed-origin titer + 3-month wait.`
+        : `Entry only via Oslo (OSL) or Storskog. Microchip, rabies, EU Health Certificate, non-listed-origin titer + 3-month wait, and the 24–120hr Echinococcus tapeworm window for dogs.`;
       // UK / Ireland — paperwork + tapeworm window + UK's no-cabin rule.
-      if (destRegion === "uk-out") return `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
-      if (destRegion === "ireland") return `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
+      // Tapeworm treatment is DOGS ONLY (cats/ferrets are exempt under the UK
+      // and EU schemes), so the tapeworm clause is suppressed for cat-only
+      // checklists rather than shown with a "for dogs" qualifier the cat owner
+      // doesn't need. Shown for dog and "both".
+      if (destRegion === "uk-out") return petType === "cat"
+        ? `Microchip, rabies, AHC — plus the no-cabin-into-UK constraint.`
+        : `Microchip, rabies, AHC, and the 24–120hr tapeworm window for dogs — plus the no-cabin-into-UK constraint.`;
+      if (destRegion === "ireland") return petType === "cat"
+        ? `Microchip, rabies, EU Health Certificate.`
+        : `Microchip, rabies, EU Health Certificate, and the 24–120hr tapeworm window for dogs.`;
       // India is CDC high-risk; the catch-all below handles that line.
       if (destFact && destFact.cdcHighRisk) return `Microchip, rabies, NOC from the Animal Quarantine Station, and CDC-high-risk paperwork for return to the US.`;
       // Strict-import destinations.
@@ -8654,7 +8695,7 @@ function buildRouteChecklist(originRegion, destRegion, originLabel, destLabel, p
       return `Entry requirements and paperwork for ${destLabel}.`;
     })();
     sections.push({
-      title: `Entering ${destLabel}`,
+      title: `Entering ${effDestLabel}`,
       divider: true,
       items: [destSubhead],
     });

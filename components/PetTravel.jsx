@@ -746,7 +746,7 @@ const NO_CABIN_AIRLINES = [
   },
   {
     name: "Icelandair",
-    detail: "No cabin pets on any route — service and assistance dogs only. As of November 2024, pets are no longer accepted as checked baggage either. The only option is cargo-only freighter aircraft operated by Icelandair Cargo (flying out of LAX and Liège, Belgium). Iceland itself requires 4 weeks quarantine for all pets entering the country.",
+    detail: "No cabin pets on any route — service and assistance dogs only. As of November 2024, pets are no longer accepted as checked baggage either. The only option is cargo-only freighter aircraft operated by Icelandair Cargo (flying out of LAX and Liège, Belgium). Iceland itself requires a mandatory 14-day quarantine for all pets entering the country.",
     link: "https://www.icelandair.com/support/special-assistance/animal-transportation/",
   },
 ];

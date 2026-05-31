@@ -11631,7 +11631,7 @@ function AirlineGrid() {
           </div>
           )
         ) : (
-        <div className="grid md:grid-cols-2 gap-px bg-stone-300 border border-stone-300">
+        <div className="grid md:grid-cols-2 gap-4">
           {filteredAirlines.map((a, i) => {
             const open = expanded === a.name;
             const allowsCabin = a.cabinStatus !== "no";
@@ -11642,7 +11642,7 @@ function AirlineGrid() {
             const isCompareSelected = compareSelected.has(a.name);
             const canSelectMore = compareSelected.size < COMPARE_MAX;
             return (
-              <div key={a.name} className="bg-stone-50 relative">
+              <div key={a.name} className="bg-stone-50 relative border border-stone-300">
                 {/* Compare checkbox — positioned absolutely so it doesn't
                     sit inside the expand button. Clicking it toggles the
                     airline in/out of the selection without expanding the
@@ -11669,17 +11669,24 @@ function AirlineGrid() {
                   <span>{isCompareSelected ? "Selected" : "Compare"}</span>
                 </label>
 
+                {/* Details/Close indicator — stacked directly under the Compare
+                    label in the top-right corner. Kept OUT of the name's flex
+                    row on purpose: when the airline name wraps to two lines on
+                    narrow screens, an items-baseline sibling floats up to the
+                    first line's baseline and reads as "mid-card". Anchoring it
+                    here keeps the name free to wrap and the indicator stable. */}
+                <span className="absolute top-12 right-3 z-10 text-[10px] uppercase tracking-widest text-stone-500 whitespace-nowrap pointer-events-none">
+                  {open ? "Close" : "Details"}
+                </span>
+
                 <button
                   onClick={() => setExpanded(open ? null : a.name)}
                   className="w-full text-left p-6 hover:bg-white transition-colors"
                 >
-                  <div className="flex items-baseline gap-3 mb-3 pr-24">
+                  <div className="mb-3 pr-24">
                     <h3 className="font-serif text-2xl text-stone-900">
                       {a.name}
                     </h3>
-                    <span className="text-xs uppercase tracking-widest text-stone-500 whitespace-nowrap">
-                      {open ? "Close" : "Details"}
-                    </span>
                   </div>
                   <div className="flex items-center gap-2 flex-wrap mb-3">
                     <span className={`inline-block px-2.5 py-1 text-xs uppercase tracking-widest font-medium border ${badgeStyle}`}>

@@ -16588,6 +16588,8 @@ function Footer() {
           <span>·</span>
           <span>Sources: CDC, USDA APHIS, IATA, individual airline policies</span>
           <span>·</span>
+          <a href="/about" className="hover:text-amber-500 transition-colors">About</a>
+          <span>·</span>
           <a href="/how-we-check" className="hover:text-amber-500 transition-colors">How we check</a>
           <span>·</span>
           <a href="/privacy" className="hover:text-amber-500 transition-colors">Privacy Policy</a>

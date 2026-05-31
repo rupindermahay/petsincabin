@@ -62,6 +62,7 @@ export default function JapanPetTravel() {
               <a href="#cabin-paths" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Three cabin pet paths</a>
               <a href="#jal-ana" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Why JAL/ANA won't work</a>
               <a href="#timeline" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The 7-month timeline</a>
+              <a href="#costs" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">What it costs</a>
               <a href="#favn" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">FAVN titer + 180-day wait</a>
               <a href="#advance-notification" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">AQS Advance Notification</a>
               <a href="#entry-ports" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">11 entry ports</a>
@@ -157,9 +158,81 @@ export default function JapanPetTravel() {
             </p>
           </section>
 
+          {/* What it costs */}
+          <section id="costs" className="mb-14 scroll-mt-24">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · What it actually costs</div>
+            <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
+              The realistic bill, line by line
+            </h2>
+            <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
+              Japan's process is long rather than expensive — if you do it in cabin and get the timing right.
+            </p>
+            <div className="space-y-4 font-serif text-stone-800 leading-relaxed">
+              <p>
+                The good news, if you're flying from the US west coast: doing this <strong>in cabin</strong> is genuinely affordable compared with the cargo-and-quarantine countries like Iceland or Australia. The cost is dominated by your own flight and your vet's rates, not by government fees. The numbers below are current as of May 2026; the £ figures are converted at roughly $1.35 to the pound and ¥155 to the dollar, so treat them as indicative.
+              </p>
+
+              <div className="overflow-x-auto -mx-2 px-2">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-stone-300 text-left">
+                      <th className="py-2 pr-3 font-sans font-semibold text-stone-700">Cost</th>
+                      <th className="py-2 px-2 font-sans font-semibold text-stone-700">≈ $</th>
+                      <th className="py-2 pl-2 font-sans font-semibold text-stone-700">≈ £</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-sans">
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">United cabin pet fee (each way, US ↔ Japan)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">$150</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£110</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Rabies (FAVN) titer — lab fee (KSU, direct)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~$90</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£65</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">FAVN all-in (lab + vet draw + shipping)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~$230</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£170</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Microchip, two rabies vaccines, vet exam</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~$200–450</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£150–335</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">USDA APHIS endorsement (Form A/C)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~$120–175</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£90–130</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">AQS Advance Notification</td>
+                      <td className="py-2 px-2 whitespace-nowrap">Free</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">Free</td>
+                    </tr>
+                    <tr className="border-b border-stone-300 font-semibold">
+                      <td className="py-2 pr-3">Realistic total in cabin (excl. your own airfare)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~$800–1,200</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~£600–900</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p>
+                <strong>The expensive way to do this is by accident.</strong> Two mistakes blow the budget. First, <strong>arriving before Day 180</strong>: your pet is detained at an AQS facility for the remaining days at about <strong>$25/day (~£19)</strong> plus transport and vet visits — a week early can mean several hundred dollars and a stressful start. Second, <strong>going cargo when you didn't need to</strong>: if you can't fly United in cabin and end up shipping your pet as cargo on JAL or ANA, budget roughly <strong>$400 (~£300)</strong> per cage cross-area international, or about <strong>¥6,000 (~$40 / ~£30)</strong> for an ANA domestic Japanese leg.
+              </p>
+              <p>
+                Everything on this list except your airfare is fixed and knowable in advance. The single biggest saving isn't a discount — it's getting the 180-day clock right the first time so you never pay for detention or a repeated titer.
+              </p>
+            </div>
+          </section>
+
           {/* FAVN */}
           <section id="favn" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · FAVN titer</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">05 · FAVN titer</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               The rabies antibody titer is the binding constraint
             </h2>
@@ -186,7 +259,7 @@ export default function JapanPetTravel() {
 
           {/* AQS Notification */}
           <section id="advance-notification" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">05 · AQS Advance Notification</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">06 · AQS Advance Notification</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               The 40-day deadline that's separate from the 180-day wait
             </h2>
@@ -213,7 +286,7 @@ export default function JapanPetTravel() {
 
           {/* Entry ports */}
           <section id="entry-ports" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">06 · Entry ports</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">07 · Entry ports</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Pets enter Japan only at 11 approved airports
             </h2>
@@ -250,7 +323,7 @@ export default function JapanPetTravel() {
 
           {/* Designated countries */}
           <section id="designated-countries" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">07 · Rabies-free origin shortcut</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">08 · Rabies-free origin shortcut</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Six "designated" countries skip the FAVN and 180-day wait
             </h2>

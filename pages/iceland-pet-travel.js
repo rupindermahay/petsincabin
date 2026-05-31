@@ -61,6 +61,7 @@ export default function IcelandPetTravel() {
             <div className="flex flex-wrap gap-2 text-sm">
               <a href="#reality-check" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Reality check</a>
               <a href="#quarantine" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">14-day quarantine</a>
+              <a href="#costs" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">What it costs</a>
               <a href="#approved-countries" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Approved countries</a>
               <a href="#paperwork" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Paperwork & timeline</a>
               <a href="#banned-breeds" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Banned breeds</a>
@@ -118,7 +119,95 @@ export default function IcelandPetTravel() {
                 During the 14 days, you can visit your pet at scheduled times, bring familiar bedding and food, and stay in contact with the facility staff. Pets must be picked up at the end of the quarantine period (typically the morning after day 14). The facility will not extend stays casually.
               </p>
               <p>
-                Costs vary by facility and animal size — budget roughly the equivalent of a moderate hotel stay per pet, plus admission and supervision fees. Get a written quote at the booking stage. Insurance during quarantine is generally the owner's responsibility.
+                Quarantine is the single biggest line in the budget. Both facilities currently charge <strong>220,000 ISK</strong> (about £1,330 / $1,790) for a dog's 14-day stay and roughly <strong>100,000–110,000 ISK</strong> (about £610–670 / $815–895) for a cat, with a booking/confirmation fee on top. That covers airport collection, food, housing, daily care, parasite treatment and vet checks during the stay. The full cost breakdown — permit, flights, vet work and quarantine together — is in the next section. Get a written quote at the booking stage; insurance during quarantine is generally the owner's responsibility.
+              </p>
+            </div>
+          </section>
+
+          <div className="h-px bg-stone-300 mb-12" />
+
+          {/* What it costs */}
+          <section id="costs" className="mb-14 scroll-mt-24">
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">03 · What it actually costs</div>
+            <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
+              The realistic bill, line by line.
+            </h2>
+            <p className="font-serif italic text-stone-600 text-lg mb-6 leading-snug">
+              No one publishes a single all-in number, so here's the honest one — built from each authority's own current figures.
+            </p>
+            <div className="space-y-4 font-serif text-stone-800 leading-relaxed">
+              <p>
+                Importing a dog to Iceland realistically lands somewhere around <strong>£2,500–4,000 / $3,400–5,400</strong> all in, depending on where you fly from, your vet's rates, and your pet's size. A cat sits lower, mostly because the quarantine fee is roughly half. The figures below are the current published rates as of May 2026 — converted at approximately 165 ISK to the pound, so treat the £/$ columns as indicative and confirm in the currency you'll actually pay.
+              </p>
+
+              <div className="overflow-x-auto -mx-2 px-2">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-stone-300 text-left">
+                      <th className="py-2 pr-3 font-sans font-semibold text-stone-700">Cost</th>
+                      <th className="py-2 px-2 font-sans font-semibold text-stone-700">Local (ISK)</th>
+                      <th className="py-2 px-2 font-sans font-semibold text-stone-700">≈ £</th>
+                      <th className="py-2 pl-2 font-sans font-semibold text-stone-700">≈ $</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-sans">
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">MAST import permit (per animal, minimum)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">40,648</td>
+                      <td className="py-2 px-2 whitespace-nowrap">£245</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">$330</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Quarantine — 14 days, dog</td>
+                      <td className="py-2 px-2 whitespace-nowrap">220,000</td>
+                      <td className="py-2 px-2 whitespace-nowrap">£1,330</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">$1,790</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Quarantine — 14 days, cat</td>
+                      <td className="py-2 px-2 whitespace-nowrap">100,000–110,000</td>
+                      <td className="py-2 px-2 whitespace-nowrap">£610–670</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">$815–895</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Booking/confirmation fee (Mósel)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~50,000</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~£305</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~$410</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Rabies (FAVN) titer test — lab fee</td>
+                      <td className="py-2 px-2 whitespace-nowrap">—</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~£65–130</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~$90–175</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Vaccines, parasite treatments, vet certificates</td>
+                      <td className="py-2 px-2 whitespace-nowrap">—</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~£200–500</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~$270–675</td>
+                    </tr>
+                    <tr className="border-b border-stone-200">
+                      <td className="py-2 pr-3">Icelandair cargo flight (varies by origin/size)</td>
+                      <td className="py-2 px-2 whitespace-nowrap">—</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~£500–1,200</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~$675–1,600</td>
+                    </tr>
+                    <tr className="border-b border-stone-300 font-semibold">
+                      <td className="py-2 pr-3">Realistic total — one dog</td>
+                      <td className="py-2 px-2 whitespace-nowrap">—</td>
+                      <td className="py-2 px-2 whitespace-nowrap">~£2,500–4,000</td>
+                      <td className="py-2 pl-2 whitespace-nowrap">~$3,400–5,400</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p>
+                The two big variables are the <strong>flight</strong> (cargo pricing depends on your departure airport, the crate size and the season) and your <strong>vet bill</strong> (rates vary widely by country). The fixed, non-negotiable parts are the permit and the quarantine stay — those you can budget for exactly. A second pet adds another permit and another quarantine fee, though some costs (a shared flight booking, vet visit) may be shared.
+              </p>
+              <p>
+                <strong>Watch the late-paperwork trap.</strong> MAST's permit fee is a <em>minimum</em> — it only applies if your documents are submitted correctly and on time. Incomplete or late paperwork is billed at an hourly rate on top, so the cheapest version of this process is the one where nothing is rushed.
               </p>
             </div>
           </section>
@@ -127,7 +216,7 @@ export default function IcelandPetTravel() {
 
           {/* Approved countries */}
           <section id="approved-countries" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">03 · Approved countries</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · Approved countries</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Your country of origin matters — a lot.
             </h2>
@@ -154,7 +243,7 @@ export default function IcelandPetTravel() {
 
           {/* Paperwork & timeline */}
           <section id="paperwork" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">04 · Paperwork & timeline</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">05 · Paperwork & timeline</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Six months out is the right start date.
             </h2>
@@ -169,7 +258,7 @@ export default function IcelandPetTravel() {
                 <strong>5–6 months before:</strong> Rabies vaccine (or booster). At least 30 days after the vaccine, take a FAVN rabies titer blood sample at an authorised laboratory; you need a result of ≥0.5 IU/ml. <strong>The pet may only be imported after 90 days have passed since the date of the satisfactory blood sample.</strong> This is the single longest clock in the whole process.
               </p>
               <p>
-                <strong>3 months before:</strong> Book your quarantine space at Mósel or Reykjanes. Confirm the admission day. Apply for the MAST import permit (the 2026 permit fee is around 39,633 ISK / ~£230 / ~$290 USD, covering paperwork and airport inspection).
+                <strong>3 months before:</strong> Book your quarantine space at Mósel or Reykjanes. Confirm the admission day. Apply for the MAST import permit (the current minimum permit fee is 40,648 ISK / ~£245 / ~$330, covering paperwork and airport inspection — see the <a href="#costs" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">full cost breakdown</a> above).
               </p>
               <p>
                 <strong>2 months before:</strong> Additional vaccinations — leptospirosis, canine distemper, infectious canine hepatitis, canine parvovirus, canine parainfluenza (for dogs); feline panleukopenia, calicivirus, herpesvirus (for cats). Must be administered at least 14 days before entry.
@@ -193,7 +282,7 @@ export default function IcelandPetTravel() {
 
           {/* Banned breeds */}
           <section id="banned-breeds" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">05 · Banned breeds</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">06 · Banned breeds</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               These dogs cannot enter Iceland. No appeal.
             </h2>
@@ -226,7 +315,7 @@ export default function IcelandPetTravel() {
 
           {/* Flights & entry port */}
           <section id="flights" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">06 · Flights & entry port</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">07 · Flights & entry port</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Keflavík (KEF) is the only door in.
             </h2>
@@ -253,7 +342,7 @@ export default function IcelandPetTravel() {
 
           {/* Flying out of Iceland */}
           <section id="flying-out" className="mb-14 scroll-mt-24">
-            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">07 · Flying out of Iceland</div>
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">08 · Flying out of Iceland</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               Easier going the other way — but still cargo.
             </h2>

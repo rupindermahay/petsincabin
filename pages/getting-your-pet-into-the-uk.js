@@ -51,18 +51,18 @@ export default function GettingYourPetIntoTheUK() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-sm px-4 py-3 mb-6">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">In this guide</div>
-            <div className="flex flex-col items-start md:flex-row md:flex-wrap gap-x-4 gap-y-1.5 text-sm">
-              <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
-              <a href="#compare" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>
-              <a href="#via-paris" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Paris</a>
-              <a href="#via-frankfurt" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Frankfurt</a>
-              <a href="#via-amsterdam" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Amsterdam</a>
-              <a href="#ferries" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Every approved ferry</a>
-              <a href="#pet-taxis" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Door-to-door pet taxis</a>
-              <a href="#qm2" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The ocean-liner option</a>
-              <a href="#paperwork" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Paperwork &amp; tapeworm</a>
-              <a href="#usda" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Leaving the US</a>
-              <a href="#ireland" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">A note on Ireland</a>
+            <div className="grid grid-cols-2 items-start gap-x-4 gap-y-1.5 md:flex md:flex-wrap text-sm">
+              <a href="#why" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
+              <a href="#compare" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>
+              <a href="#via-paris" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Paris</a>
+              <a href="#via-frankfurt" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Frankfurt</a>
+              <a href="#via-amsterdam" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Amsterdam</a>
+              <a href="#ferries" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Every approved ferry</a>
+              <a href="#pet-taxis" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Door-to-door pet taxis</a>
+              <a href="#qm2" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The ocean-liner option</a>
+              <a href="#paperwork" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Paperwork &amp; tapeworm</a>
+              <a href="#usda" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Leaving the US</a>
+              <a href="#ireland" className="block md:inline text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">A note on Ireland</a>
             </div>
           </div>
 

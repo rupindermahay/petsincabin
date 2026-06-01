@@ -49,9 +49,9 @@ export default function GettingYourPetIntoTheUK() {
             Getting your pet <span className="italic text-stone-600">into the UK from Europe</span>.
           </h1>
 
-          <div className="bg-white border border-stone-200 rounded-sm px-5 py-4 mb-6">
-            <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">In this guide</div>
-            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-stone-400">
+          <div className="bg-amber-50 border border-amber-200 rounded-sm px-4 py-3 mb-6">
+            <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">In this guide</div>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-stone-400">
               <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
               <span aria-hidden="true">·</span>
               <a href="#compare" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>

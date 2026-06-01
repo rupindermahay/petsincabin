@@ -3,13 +3,16 @@ import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 
 // ============================================================
-// ⏰ ETIHAD PROMO — EXPIRES 31 MAY 2026
+// ⏰ ETIHAD PROMO — EXPIRED 31 MAY 2026 (flipped to standard pricing on deploy 1 Jun 2026)
 // ------------------------------------------------------------
-// Auto-flip on 1 June 2026: ETIHAD_PROMO_ACTIVE is now date-driven, so the
-// promo references across the site automatically switch to standard pricing
-// without a manual edit. If Etihad publishes a NEW promo or changes the
-// standard rate, override ETIHAD_PROMO_OVERRIDE below — set it to true/false
-// to force one state, or leave as null for date-driven default.
+// ETIHAD_PROMO_ACTIVE is date-driven, but it evaluates at BUILD TIME, not in
+// the browser. The promo references across the site switch to standard pricing
+// only on the next Vercel deploy on or after 1 June 2026 — a redeploy is
+// required to make the flip visible; it is NOT automatic on an already-built
+// page. (Flip deploy was triggered 1 Jun 2026 — see DECISIONS_LOG #77.)
+// If Etihad publishes a NEW promo or changes the standard rate, override
+// ETIHAD_PROMO_OVERRIDE below — set it to true/false to force one state, or
+// leave as null for date-driven default.
 // ============================================================
 const ETIHAD_PROMO_OVERRIDE = null;  // null = date-driven; true/false = force
 const ETIHAD_PROMO_EXPIRY = new Date("2026-05-31T23:59:59Z");

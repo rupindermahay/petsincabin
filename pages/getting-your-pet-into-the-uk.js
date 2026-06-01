@@ -45,19 +45,11 @@ export default function GettingYourPetIntoTheUK() {
             The complete guide
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-5">
             Getting your pet <span className="italic text-stone-600">into the UK from Europe</span>.
           </h1>
 
-          <p className="font-serif text-lg text-stone-700 leading-relaxed mb-3">
-            You can't fly a pet into the UK in the cabin — so people fly to Europe and cross the Channel with the pet beside them. This page compares every route that works: costs, times, the lot.
-          </p>
-
-          <p className="font-sans text-xs italic text-stone-500 leading-relaxed mb-6">
-            Verified against the UK government's approved pet routes (gov.uk / APHA, May 2026), operator pet policies and DEFRA-licensed transporters. Rules and fares change — confirm before booking.
-          </p>
-
-          <div className="bg-white border border-stone-200 rounded-sm px-5 py-3 mb-5">
+          <div className="bg-white border border-stone-200 rounded-sm px-5 py-3 mb-6">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">In this guide</div>
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-sm">
               <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
@@ -73,6 +65,10 @@ export default function GettingYourPetIntoTheUK() {
               <a href="#ireland" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">A note on Ireland</a>
             </div>
           </div>
+
+          <p className="font-serif text-lg text-stone-700 leading-relaxed mb-6">
+            You can't fly a pet into the UK in the cabin — so people fly to Europe and cross the Channel with the pet beside them. This page compares every route that works: costs, times, the lot.
+          </p>
 
           <div className="h-px bg-stone-300 mb-6" />
 
@@ -461,7 +457,11 @@ export default function GettingYourPetIntoTheUK() {
             </div>
           </section>
 
-          <p className="font-sans text-xs text-stone-400 leading-relaxed border-t border-stone-200 pt-6">
+          <p className="font-sans text-xs italic text-stone-500 leading-relaxed border-t border-stone-200 pt-6 mb-3">
+            Verified against the UK government's approved pet routes (gov.uk / APHA, May 2026), operator pet policies and DEFRA-licensed transporters. Rules and fares change — confirm before booking.
+          </p>
+
+          <p className="font-sans text-xs text-stone-400 leading-relaxed">
             This guide is for planning purposes and is not veterinary, legal or border-control advice. Pet travel rules, ferry schedules, operator policies and fares change — always confirm the current requirements with the official UK government guidance and directly with your chosen carrier or transporter before booking and again before travelling. Last reviewed May 2026.
           </p>
         </main>

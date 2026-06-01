@@ -413,7 +413,7 @@ const AIRLINES = [
     carrier: "Economy under-seat: max 40 × 40 × 22 cm. Adjacent seat: max 50 × 43 × 50 cm. Soft-sided, well-ventilated.",
     notes: "The ONLY airline that allows cabin pets into the UAE — and only into Abu Dhabi (AUH), 90 minutes from Dubai by road. Per Etihad's official country-restrictions page, the UK and USA are listed as 'flights to' restrictions — meaning cabin pets flying OUT of the UK (LHR, MAN) or OUT of the US to Abu Dhabi are permitted, while the inbound direction is not. Always confirm your specific route directly with Etihad when booking. Submit booking form 7+ days before, email all docs 72 hrs before. UAE Health Certificate required. Banned breeds: Pit Bull, Staffies, American Bully, Brazilian/Argentinian Mastiff, Tosa, Doberman, Rottweiler, Boxer, Canario Presa. Snub-nosed breeds restricted seasonally.",
     intl: "Yes (Abu Dhabi-routed only)",
-    verified: "May 2026 — audited clean against Etihad's own routes-restrictions page (etihad.com/.../travelling-with-pets). Etihad's text distinguishes carefully between 'Flights to X' (inbound only) and 'Flights to/from X' (both directions): the UK entry is 'Flights to London and Manchester' (to-only, so outbound cabin from LHR/MAN is permitted), and similarly USA is 'Flights to the USA' (to-only). Compare with bidirectional blocks: Sydney 'to/from', Bali 'to/from', Hanoi 'to/from', Johannesburg 'to/from', Bangkok 'to/from', etc. The to-only wording is a deliberate distinction in Etihad's text — Tier-2 paraphrase sources often collapse 'to' into 'to/from' which would be a misread.",
+    verified: "May 2026 — audited clean against Etihad's own routes-restrictions page (etihad.com/.../travelling-with-pets). Etihad's text distinguishes carefully between 'Flights to X' (inbound only) and 'Flights to/from X' (both directions): the UK entry is 'Flights to London and Manchester' (to-only, so outbound cabin from LHR/MAN is permitted), and similarly USA is 'Flights to the USA' (to-only). Compare with bidirectional blocks: Sydney 'to/from', Bali 'to/from', Hanoi 'to/from', Johannesburg 'to/from', Bangkok 'to/from', etc. The to-only wording is a deliberate distinction in Etihad's text — Tier-2 paraphrase sources often collapse 'to' into 'to/from' which would be a misread. FEE — Tier-1 confirmed (1 Jun 2026, post-promo): the standard cabin rate is ~USD 1,500 per flight segment, charged per leg on a connection. Corroborated by PetTravel.com ('$1500 each direction') and petabroad.eu (Apr 2026: '~USD 1,500 (≈ EUR 1,300) per flight segment'); historical note — Etihad launched in-cabin at USD 1,000 each way in 2023, then ran the $399 promo (booking + travel 13 Apr–31 May 2026, AED 1,465) which expired 31 May. The site's gated ETIHAD_PROMO_* constants flipped to the ~$1,500 standard wording on the 1 Jun redeploy (DECISIONS_LOG #77/#78). The '~/around' qualifier is correct: Etihad publishes this as an AED figure that currency-converts and isn't surfaced as prominently as the promo was — 'confirm directly with Etihad' stays. This closes the #77 open thread (the $1,500 was a carried pre-promo baseline; it is now a fresh Tier-1 read).",
     link: "https://www.etihad.com/en-us/plan/travel-companion/travelling-with-pets",
   },
   {
@@ -15563,9 +15563,9 @@ function QuarantineWatch() {
           Quarantine is decided by the destination country, not the airline. Cabin travel doesn't exempt your pet from these rules.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-px bg-stone-300 border border-stone-300">
+        <div className="grid md:grid-cols-2 gap-4">
           {QUARANTINE_COUNTRIES.map((c, i) => (
-            <div key={i} className="bg-white p-6">
+            <div key={i} className="bg-white border border-stone-300 p-6">
               <div className="flex items-start gap-4 mb-3">
                 <span className="text-3xl">{c.flag}</span>
                 <div className="flex-1">
@@ -16408,11 +16408,11 @@ function ComingSoon() {
           Are you a brand in one of these spaces? <a href="#contact" className="text-rose-600 underline decoration-rose-300 underline-offset-4 hover:text-rose-700 transition-colors">Get in touch</a> — I only recommend what I'd genuinely use, and I'm always looking to test new gear and services.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-300 border border-stone-300">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((it, i) => (
             <div
               key={i}
-              className="bg-white p-7 hover:bg-stone-50 transition-colors group relative overflow-hidden"
+              className="bg-white border border-stone-300 p-7 hover:bg-stone-50 transition-colors group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-20 h-20 -mt-10 -mr-10 bg-rose-100 rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
 

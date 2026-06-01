@@ -76,6 +76,10 @@ export default function GettingYourPetIntoTheUK() {
             </div>
           </div>
 
+          <p className="font-sans text-xs italic text-stone-500 leading-relaxed mb-6">
+            Verified against the UK government's approved pet routes (gov.uk / APHA, May 2026), operator pet policies and DEFRA-licensed transporters. Rules and fares change — confirm before booking.
+          </p>
+
           <div className="h-px bg-stone-300 mb-6" />
 
           {/* Why no cabin route */}
@@ -463,11 +467,7 @@ export default function GettingYourPetIntoTheUK() {
             </div>
           </section>
 
-          <p className="font-sans text-xs italic text-stone-500 leading-relaxed border-t border-stone-200 pt-6 mb-3">
-            Verified against the UK government's approved pet routes (gov.uk / APHA, May 2026), operator pet policies and DEFRA-licensed transporters. Rules and fares change — confirm before booking.
-          </p>
-
-          <p className="font-sans text-xs text-stone-400 leading-relaxed">
+          <p className="font-sans text-xs text-stone-400 leading-relaxed border-t border-stone-200 pt-6">
             This guide is for planning purposes and is not veterinary, legal or border-control advice. Pet travel rules, ferry schedules, operator policies and fares change — always confirm the current requirements with the official UK government guidance and directly with your chosen carrier or transporter before booking and again before travelling. Last reviewed May 2026.
           </p>
         </main>

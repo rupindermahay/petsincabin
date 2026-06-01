@@ -45,14 +45,41 @@ export default function GettingYourPetIntoTheUK() {
             The complete guide
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-6">
+          <h1 className="font-serif text-4xl md:text-5xl leading-[1.05] text-stone-900 mb-5">
             Getting your pet <span className="italic text-stone-600">into the UK from Europe</span>.
           </h1>
+
+          <div className="bg-white border border-stone-200 rounded-sm px-5 py-4 mb-6">
+            <div className="text-xs uppercase tracking-widest text-stone-500 mb-2">In this guide</div>
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-stone-400">
+              <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
+              <span aria-hidden="true">·</span>
+              <a href="#compare" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>
+              <span aria-hidden="true">·</span>
+              <a href="#via-paris" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Paris</a>
+              <span aria-hidden="true">·</span>
+              <a href="#via-frankfurt" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Frankfurt</a>
+              <span aria-hidden="true">·</span>
+              <a href="#via-amsterdam" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Amsterdam</a>
+              <span aria-hidden="true">·</span>
+              <a href="#ferries" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Every approved ferry</a>
+              <span aria-hidden="true">·</span>
+              <a href="#pet-taxis" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Door-to-door pet taxis</a>
+              <span aria-hidden="true">·</span>
+              <a href="#qm2" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The ocean-liner option</a>
+              <span aria-hidden="true">·</span>
+              <a href="#paperwork" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Paperwork &amp; tapeworm</a>
+              <span aria-hidden="true">·</span>
+              <a href="#usda" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Leaving the US</a>
+              <span aria-hidden="true">·</span>
+              <a href="#ireland" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">A note on Ireland</a>
+            </div>
+          </div>
 
           <div className="h-px bg-stone-300 mb-6" />
 
           {/* Why no cabin route */}
-          <section id="why" className="mb-14 scroll-mt-24">
+          <section id="why" className="mb-10 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">01 · The one rule</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
               You cannot fly your pet into the UK in the cabin. Full stop.

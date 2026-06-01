@@ -51,7 +51,7 @@ export default function GettingYourPetIntoTheUK() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-sm px-4 py-3 mb-6">
             <div className="text-xs uppercase tracking-widest text-stone-500 mb-1.5">In this guide</div>
-            <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+            <div className="flex flex-col items-start md:flex-row md:flex-wrap gap-x-4 gap-y-1.5 text-sm">
               <a href="#why" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">The one rule</a>
               <a href="#compare" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Compare the routes</a>
               <a href="#via-paris" className="text-stone-700 hover:text-amber-700 underline decoration-stone-300 hover:decoration-amber-600 underline-offset-4">Via Paris</a>

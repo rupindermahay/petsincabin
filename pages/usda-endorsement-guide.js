@@ -286,10 +286,6 @@ export default function USDAEndorsementGuide() {
                 <strong>Timing tip from the clinics:</strong> the label is time-sensitive, so generate it <strong>the day before or the day of your pet's health-certificate appointment</strong> — not weeks ahead. That keeps the prepaid label valid and current when your vet submits everything together.
               </p>
             </div>
-
-            <div className="bg-amber-50 border-l-2 border-amber-500 p-4">
-              </p>
-            </div>
           </section>
 
           {/* Light touch on neighbours */}

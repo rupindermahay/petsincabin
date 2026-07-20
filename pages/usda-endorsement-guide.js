@@ -268,9 +268,26 @@ export default function USDAEndorsementGuide() {
               <li><strong>Keep your own copy of the tracking number.</strong> USDA will not look it up for you later.</li>
             </ol>
 
+            <h3 className="font-serif text-xl text-stone-900 mb-2 leading-snug">
+              Doing it on FedEx.com — the exact clicks
+            </h3>
+            <p className="font-serif text-stone-700 leading-relaxed mb-3">
+              Many US clinics that handle pet exports hand you a FedEx walkthrough, because there is one menu choice that trips people up. If you are using FedEx:
+            </p>
+            <ol className="font-serif text-stone-700 leading-relaxed mb-4 space-y-2 ml-5 list-decimal">
+              <li>Log in to your account at <strong>FedEx.com</strong> and, under the <strong>Ship</strong> tab, choose <strong>Create a Shipment</strong>.</li>
+              <li>In the shipment-type drop-down (it usually defaults to "Outbound shipment"), select <strong>"Return Shipment"</strong>. This is the step people miss — a return shipment is what lets the package come back to you rather than bill you as a new outbound parcel.</li>
+              <li>Put <strong>your own name and address in both the sender and recipient fields</strong>, as above — the label goes from you, to you.</li>
+              <li>Choose a fast, trackable speed (overnight/priority), and pay for the label as you create it so it comes out prepaid.</li>
+              <li>FedEx generates a PDF — print it or email it to yourself, then give it to your vet to upload to the USDA portal (or include the printed label if paper is being mailed).</li>
+            </ol>
+            <div className="bg-amber-50 border-l-2 border-amber-500 p-4 mb-4">
+              <p className="font-serif text-stone-700 leading-relaxed text-sm">
+                <strong>Timing tip from the clinics:</strong> the label is time-sensitive, so generate it <strong>the day before or the day of your pet's health-certificate appointment</strong> — not weeks ahead. That keeps the prepaid label valid and current when your vet submits everything together.
+              </p>
+            </div>
+
             <div className="bg-amber-50 border-l-2 border-amber-500 p-4">
-              <p className="font-serif text-stone-800 leading-relaxed text-sm">
-                <strong>That's it.</strong> Once the label is in the submission, USDA stamps your certificate, drops it in a package with your label on it, and it comes straight back to you — tracked.
               </p>
             </div>
           </section>
@@ -411,7 +428,7 @@ export default function USDAEndorsementGuide() {
           </section>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed border-t border-stone-200 pt-6">
-            This guide is for planning purposes and is not veterinary, legal or border-control advice. USDA endorsement rules, timelines, fees and country requirements change — always confirm the current requirements with a USDA-accredited veterinarian and the official USDA APHIS pet-travel website before you travel. Last reviewed May 2026.
+            This guide is for planning purposes and is not veterinary, legal or border-control advice. USDA endorsement rules, timelines, fees and country requirements change — always confirm the current requirements with a USDA-accredited veterinarian and the official USDA APHIS pet-travel website before you travel. Last reviewed June 2026.
           </p>
         </main>
       </div>

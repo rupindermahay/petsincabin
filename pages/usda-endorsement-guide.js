@@ -295,6 +295,18 @@ export default function USDAEndorsementGuide() {
               Two neighbours that catch people out
             </h2>
 
+            <div className="bg-amber-50 border-2 border-amber-500 p-5 mb-6 rounded-sm">
+              <p className="font-serif text-stone-900 leading-relaxed mb-2">
+                <strong>Going to the UK via Europe? Ask your vet for two certificates, not one.</strong>
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed mb-3">
+                UK entry needs a <strong>GB Health Certificate</strong>, USDA-endorsed for Great Britain — a separate form to the <strong>EU Animal Health Certificate</strong> you'll also need for the French, Dutch or German leg. When you book your vet appointment, ask specifically for both, USDA-endorsed at the same time. Le Shuttle's pet reception applies UK entry rules — not French entry rules — so an EU AHC alone (even one that names the UK as final destination via France) will not be accepted at the crossing.
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed">
+                If a phone call to USDA suggests one form covers both destinations, ask again — we have seen this misadvised in practice, and getting to Calais with the wrong paperwork is not a fun place to discover it.
+              </p>
+            </div>
+
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
               This guide is about endorsement, but two neighbouring steps cause trouble when people forget they connect.
             </p>
@@ -303,6 +315,18 @@ export default function USDAEndorsementGuide() {
               <li><strong>Tapeworm treatment (UK, dogs only).</strong> A dog entering the UK needs a vet-recorded tapeworm treatment in a narrow window — no less than 24 and no more than 120 hours before arrival. The UK allows this before or after the USDA endorsement, so it does not constrain your endorsement timing — but it is a separate appointment you must not forget.</li>
               <li><strong>The airline's own deadline.</strong> Airlines set their own document requirements, often earlier and stricter than the government rules. The USDA endorsement window and the airline's cut-off are two different clocks. Confirm directly with your carrier — being fine for the border but missing the airline's paperwork deadline still grounds you.</li>
             </ul>
+
+            <div className="bg-stone-100 border border-stone-300 p-5 mt-6 mb-2 rounded-sm">
+              <p className="font-serif text-stone-900 leading-relaxed mb-2">
+                <strong>If you land in France with only an EU AHC — the escape hatch.</strong>
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed mb-3">
+                A qualified EU vet can issue an <strong>EU Pet Passport</strong> on the spot to a non-EU-resident pet, provided rabies, microchip and tapeworm records check out. An EU Pet Passport is what Le Shuttle actually verifies at pet reception. Expect a fee in the €80–150 range (we paid €90 in July 2026). Pet taxi operators who regularly route to the UK often work with a partner vet who can do this same-day — it's a well-known backup for transatlantic pet moves that arrive in France with paperwork endorsed only for EU entry.
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed">
+                Treat this as a backup, not a plan. The intended path is still to leave the US with both the EU AHC and the GB Health Certificate USDA-endorsed together. The on-the-spot Pet Passport is what saves the crossing if the primary paperwork turns out to be EU-only.
+              </p>
+            </div>
           </section>
 
           {/* Horror stories */}
@@ -424,7 +448,7 @@ export default function USDAEndorsementGuide() {
           </section>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed border-t border-stone-200 pt-6">
-            This guide is for planning purposes and is not veterinary, legal or border-control advice. USDA endorsement rules, timelines, fees and country requirements change — always confirm the current requirements with a USDA-accredited veterinarian and the official USDA APHIS pet-travel website before you travel. Last reviewed June 2026.
+            This guide is for planning purposes and is not veterinary, legal or border-control advice. USDA endorsement rules, timelines, fees and country requirements change — always confirm the current requirements with a USDA-accredited veterinarian and the official USDA APHIS pet-travel website before you travel. Last reviewed July 2026.
           </p>
         </main>
       </div>

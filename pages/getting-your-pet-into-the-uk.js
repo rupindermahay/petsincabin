@@ -157,6 +157,21 @@ export default function GettingYourPetIntoTheUK() {
               Fly cabin to Paris CDG on Air France (8 kg pet + carrier), drive ~3 hours to Calais, cross via Eurotunnel Le Shuttle (Calais Coquelles → Folkestone, ~35 minutes, pet stays in the car) or a Calais–Dover ferry (DFDS, P&amp;O, Irish Ferries — ~90 minutes, vehicle stays on board). Most-used hub because the CDG–Calais leg is the shortest. Door-to-door pet taxis run this end to end.
             </p>
 
+            <div className="bg-amber-50 border-2 border-amber-500 p-5 mb-6 rounded-sm">
+              <p className="font-serif text-stone-900 leading-relaxed mb-2">
+                <strong>The single biggest paperwork trap on this route — read this before you book your USDA appointment.</strong>
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed mb-3">
+                Le Shuttle's pet reception at Calais applies UK entry rules, not French entry rules. That means an <strong>EU Animal Health Certificate</strong> alone — even one that names the UK as final destination via France — will not clear the crossing. UK entry needs a <strong>GB Health Certificate</strong>, USDA-endorsed for Great Britain, in addition to the EU AHC for the French leg. Ask your US vet specifically for both, USDA-endorsed together. If a phone call to USDA suggests one form covers both destinations, ask again — we have seen this misadvised in practice.
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed mb-3">
+                If you do land in France with only the EU AHC, the fix is an <strong>EU Pet Passport</strong> issued on the spot by a French vet — typically €80–150 (we paid €90 in July 2026), same-day, valid at Le Shuttle. Many door-to-door pet taxi operators arrange this through a partner vet — see the pet taxi section below.
+              </p>
+              <p className="font-sans text-sm text-stone-600 leading-relaxed italic">
+                Bring your own passport too — Le Shuttle checks driver and passenger IDs at pet reception alongside your pet's documents.
+              </p>
+            </div>
+
             <p className="font-serif text-stone-700 leading-relaxed">
               Premium variant: <strong>La Compagnie</strong>, an all-business-class boutique airline, flies Newark (EWR) → Paris Orly (ORY) and is the only carrier in the world pairing transatlantic cabin pets with business-class floor space (€200 each way, 8 kg). Round-trip fares ~$2,400–$3,000 — comparable to other carriers' standard business. From Orly the drive to Calais is roughly the same as from CDG. Sensible if you'd be booking business anyway, or if a quieter long-haul leg matters for your pet.
             </p>
@@ -257,6 +272,15 @@ export default function GettingYourPetIntoTheUK() {
             <div className="bg-amber-50 border-l-2 border-amber-400 p-4 mb-4">
               <p className="font-serif text-stone-700 leading-relaxed text-sm">
                 <strong>Check the licence.</strong> A transporter carrying pets commercially into the UK should hold a DEFRA authorisation. The UK government publishes a list of authorised long-journey transporters — ask an operator for their authorisation before booking. Not every business advertising "pet taxi" is licensed for cross-border animal transport.
+              </p>
+            </div>
+
+            <div className="bg-white border border-stone-200 rounded-sm p-4 mb-4">
+              <p className="font-serif text-stone-900 leading-relaxed text-sm mb-2">
+                <strong>An operator we can vouch for.</strong>
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed text-sm">
+                On Theo's July 2026 crossing we used <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">Pet Moves Abroad</a> — a family-run, DEFRA Type 2 authorised operator. Responsive from booking through to journey day, communicated throughout, and — critically — our driver Kawa checked our US-issued paperwork at pickup and spotted the EU-only-AHC problem before we left for the terminal. Their partner-vet arrangement in France meant an EU Pet Passport was issued on the spot, and the crossing itself was straightforward. If you're routing through France and want a door-to-door service that watches the paperwork as well as the driving, we recommend them.
               </p>
             </div>
 
@@ -458,7 +482,7 @@ export default function GettingYourPetIntoTheUK() {
           </section>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed border-t border-stone-200 pt-6">
-            This guide is for planning purposes and is not veterinary, legal or border-control advice. Pet travel rules, ferry schedules, operator policies and fares change — always confirm the current requirements with the official UK government guidance and directly with your chosen carrier or transporter before booking and again before travelling. Last reviewed May 2026.
+            This guide is for planning purposes and is not veterinary, legal or border-control advice. Pet travel rules, ferry schedules, operator policies and fares change — always confirm the current requirements with the official UK government guidance and directly with your chosen carrier or transporter before booking and again before travelling. Last reviewed July 2026.
           </p>
         </main>
       </div>

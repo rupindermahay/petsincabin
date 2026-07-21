@@ -172,6 +172,10 @@ export default function GettingYourPetIntoTheUK() {
               </p>
             </div>
 
+            <p className="font-serif italic text-stone-600 text-sm mb-6">
+              For the full first-person account of how this route actually plays out — including the paperwork trap that almost ended our own crossing at Calais and the €90 fix that saved it — read <a href="/#stories" className="text-amber-700 underline decoration-amber-300 underline-offset-2 hover:text-amber-800 transition-colors">Story 02 · Miami to London</a> on the homepage.
+            </p>
+
             <p className="font-serif text-stone-700 leading-relaxed">
               Premium variant: <strong>La Compagnie</strong>, an all-business-class boutique airline, flies Newark (EWR) → Paris Orly (ORY) and is the only carrier in the world pairing transatlantic cabin pets with business-class floor space (€200 each way, 8 kg). Round-trip fares ~$2,400–$3,000 — comparable to other carriers' standard business. From Orly the drive to Calais is roughly the same as from CDG. Sensible if you'd be booking business anyway, or if a quieter long-haul leg matters for your pet.
             </p>

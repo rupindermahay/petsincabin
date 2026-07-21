@@ -1,9 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 
-// Verified rule changes from airlines and regulators only — not
-// site housekeeping. The homepage "What's New" block surfaces the
-// most recent few of these; this page is the permanent archive.
+// Verified rule changes from airlines and regulators, plus occasional
+// significant site milestones (a new deep-dive guide, a published trip
+// story). The homepage "What's New" block surfaces the most recent few
+// of these; this page is the permanent archive. Keep the bar high — a
+// milestone earns a slot only if the site's factual coverage or a
+// reader's plan could change on the back of it.
 
 // ⏰ Etihad promo expiry — mirrors components/PetTravel.jsx lines 14-30.
 // IMPORTANT: this evaluates at module load — at Vercel build time for
@@ -33,6 +36,13 @@ const ETIHAD_UPDATE = ETIHAD_PROMO_ACTIVE
     };
 
 const RULE_CHANGES = [
+  {
+    date: "20 Jul 2026",
+    tag: "New story",
+    headline: "New story — Miami to London, with the same small dog",
+    body: "Story 02 in the From-the-desk series is now live: a first-person account of Theo's actual Miami → Paris → Le Shuttle → UK trip in July 2026. The trip surfaced a real-world paperwork trap that isn't obvious from published USDA/DEFRA guidance — a USDA-endorsed EU AHC listing the UK as final destination via France would have been rejected at Le Shuttle's pet reception at Calais, because Le Shuttle applies UK entry rules, not French entry rules. The fix, learned mid-journey from a pet taxi driver, was an EU Pet Passport issued on the spot by a French vet for €90. On the strength of this trip, the USDA endorsement guide (section 07) and the UK route guide (Via Paris section) have both been rewritten to warn readers upfront and document the €90 EU Pet Passport backup path. Read the full story on the homepage in the Stories section.",
+    source: "Site milestone — trip completed early July 2026, story published 20 July 2026",
+  },
   {
     date: "27 May 2026",
     tag: "La Compagnie",

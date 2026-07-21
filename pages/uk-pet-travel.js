@@ -182,6 +182,20 @@ export default function UKPetTravel() {
             </p>
           </Link>
 
+          {/* The trip story */}
+          <Link
+            href="/#stories"
+            className="block bg-stone-50 border border-stone-300 hover:border-amber-500 rounded-sm p-6 md:p-7 transition-colors group mb-12"
+          >
+            <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-2">The trip story</div>
+            <div className="font-serif text-xl md:text-2xl text-stone-900 group-hover:text-amber-800 transition-colors mb-2 leading-tight">
+              Miami to London, with the same small dog →
+            </div>
+            <p className="font-serif text-stone-700 leading-relaxed text-sm">
+              First-person account of Theo's actual July 2026 trip — the USDA paperwork trap that almost ended the crossing at Calais, the €90 EU Pet Passport backup that saved it, and the pet taxi driver who spotted the problem in time.
+            </p>
+          </Link>
+
           {/* CTA back to tools */}
           <div className="bg-stone-900 text-stone-100 rounded-sm p-8 text-center">
             <h2 className="font-serif text-2xl text-stone-50 mb-3">Map your own route</h2>

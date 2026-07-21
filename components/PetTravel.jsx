@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import Link from "next/link";
 import { TRAVEL_DAY_GUIDE } from "./travelDayGuide";
 import { PawPrint, Plane, FileCheck, AlertTriangle, ArrowRight, ArrowLeft, RotateCcw, Check, Info, Luggage, Stethoscope, ScrollText, Sparkles, Ship, Map as MapIcon, Train, Compass, Menu, X } from "lucide-react";
 

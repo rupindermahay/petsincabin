@@ -96,7 +96,7 @@ export default function USDAEndorsementGuide() {
             </div>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The 48-hour deadline people quote in fear is real — but it applies to a <em>different</em> situation, commercial movements, not the typical family flying with one pet. Most genuine delays trace back to two avoidable things: a paperwork error that bounces the certificate back for correction, and a return shipping label that was missing, wrong, or not prepaid. This guide is built to keep you clear of both.
+              Most genuine delays trace back to two avoidable things: a paperwork error that bounces the certificate back for correction, and a return shipping label that was missing, wrong, or not prepaid. This guide is built to keep you clear of both.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -194,33 +194,24 @@ export default function USDAEndorsementGuide() {
           <section id="deadline" className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">05 · The two deadlines</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Don't confuse the relaxed one with the strict one
+              Two clocks to plan around
             </h2>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The single biggest source of online panic is mixing up two deadlines that apply to two different situations.
+              Endorsement timing for a family pet is workable. Two clocks apply, and both leave real slack when you plan around them.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The relaxed one — non-commercial pet travel.</strong> The typical family flying with their own pet, not selling or transferring it. For the UK, once APHIS endorses the certificate your pet must <em>arrive</em> within 10 days — the EU works exactly the same way. The certificate is also valid for 30 days from your vet's signature. So the endorsement still has to be done before you fly, but the timing around it is workable: a certificate endorsed a few days before your flight is normal. The key is to leave enough time for USDA to process and return it — do not assume it is instant.
+              <strong>The 30-day clock — from your vet's signature.</strong> The health certificate is valid for 30 days from the day your accredited vet signs it. That sets the earliest reasonable point to have it written — sign it too early and it can expire before you fly.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>The 10-day clock — from USDA endorsement.</strong> Once APHIS endorses the certificate, your pet must <em>arrive</em> in the UK within 10 days. The EU works exactly the same way. So the endorsement still has to be done before you fly, but the timing around it is workable: a certificate endorsed a few days before your flight is normal. The key is to leave enough time for USDA to process and return it — do not assume it is instant.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
               <strong>One useful nuance for ferry routes.</strong> APHIS's own UK page adds that <em>"for pets traveling to the UK by sea, the 10 days is extended by the duration of sea travel."</em> So if you are flying into mainland Europe and crossing the Channel by ferry or Eurotunnel, that crossing time is added to your 10-day arrival window. A small but useful piece of slack if your route includes a sea leg into the UK.
             </p>
-
-            <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>The strict one — commercial movements.</strong> Here the certificate must be endorsed within 48 hours of <em>departing</em> the US. This is the deadline people quote in fear. It catches owners who do not realise their move counts as commercial, or who were issued the wrong certificate type.
-            </p>
-
-            <div className="bg-stone-900 text-stone-100 p-5 rounded-sm">
-              <p className="font-serif text-base leading-relaxed mb-2">
-                If anyone tells you "you have 48 hours" — ask one question first.
-              </p>
-              <p className="font-sans text-sm text-stone-300 leading-relaxed">
-                <em>Is my move commercial or non-commercial?</em> For most pet owners flying with their own pet, it is non-commercial, and the 48-hour rule simply does not apply. Your accredited vet will know your category. Getting this one distinction right removes most of the anxiety on its own.
-              </p>
-            </div>
           </section>
 
           {/* The prepaid return label */}
@@ -292,7 +283,7 @@ export default function USDAEndorsementGuide() {
           <section className="mb-14 scroll-mt-24">
             <div className="text-xs uppercase tracking-[0.25em] text-amber-700 mb-3">07 · The steps either side</div>
             <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-3 leading-tight">
-              Two neighbours that catch people out
+              What to get right around the endorsement
             </h2>
 
             <div className="bg-amber-50 border-2 border-amber-500 p-5 mb-6 rounded-sm">
@@ -308,12 +299,11 @@ export default function USDAEndorsementGuide() {
             </div>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              This guide is about endorsement, but two neighbouring steps cause trouble when people forget they connect.
+              One neighbouring appointment sits close enough to the endorsement to catch people out when they forget it exists.
             </p>
 
             <ul className="font-serif text-stone-700 leading-relaxed mb-2 space-y-3 ml-5 list-disc">
               <li><strong>Tapeworm treatment (UK, dogs only).</strong> A dog entering the UK needs a vet-recorded tapeworm treatment in a narrow window — no less than 24 and no more than 120 hours before arrival. The UK allows this before or after the USDA endorsement, so it does not constrain your endorsement timing — but it is a separate appointment you must not forget.</li>
-              <li><strong>The airline's own deadline.</strong> Airlines set their own document requirements, often earlier and stricter than the government rules. The USDA endorsement window and the airline's cut-off are two different clocks. Confirm directly with your carrier — being fine for the border but missing the airline's paperwork deadline still grounds you.</li>
             </ul>
 
             <div className="bg-stone-100 border border-stone-300 p-5 mt-6 mb-2 rounded-sm">
@@ -343,8 +333,7 @@ export default function USDAEndorsementGuide() {
               Real risks — take these seriously
             </h3>
             <ul className="font-serif text-stone-700 leading-relaxed mb-6 space-y-2 ml-5 list-disc">
-              <li><strong>Wrong certificate type.</strong> Being issued the wrong form, or a commercial certificate when you needed non-commercial. Fix: an accredited vet who has done your destination before.</li>
-              <li><strong>The 48-hour commercial trap.</strong> Genuinely tight — but only if your move is commercial. Fix: confirm your category early.</li>
+              <li><strong>Wrong certificate type.</strong> Being issued the wrong form for your destination — for example, an EU AHC when a UK-bound pet also needs a separately-endorsed GB Health Certificate (see the amber callout in section 07). Fix: an accredited vet who has done your destination before, and asking specifically for both certificates if UK is in your route.</li>
               <li><strong>Incomplete or incorrect paperwork.</strong> The number-one cause of "it didn't come back in time." An error sends the certificate back for correction, and <em>that</em> round trip eats the days — not USDA's review. Fix: let your vet check everything before submission.</li>
               <li><strong>Missing, wrong, or unpaid return label.</strong> No label, a label with the USDA address on it, or one that wasn't prepaid — any of these stalls the return. Fix: section 06, done carefully.</li>
             </ul>
@@ -353,7 +342,7 @@ export default function USDAEndorsementGuide() {
               Mostly noise — don't lose sleep
             </h3>
             <ul className="font-serif text-stone-700 leading-relaxed mb-6 space-y-2 ml-5 list-disc">
-              <li><strong>"Endorsed at the airport" / "came through close to the flight."</strong> For UK and EU non-commercial travel there is real slack — a 10-day-after-arrival window for the UK. Cutting it close is uncomfortable, but usually not the failure it looks like.</li>
+              <li><strong>"Endorsed at the airport" / "came through close to the flight."</strong> For UK and EU pet travel there is real slack — a 10-day-after-arrival window for the UK. Cutting it close is uncomfortable, but usually not the failure it looks like.</li>
               <li><strong>"USDA is so slow."</strong> APHIS's own notice says endorsements may take several business days, and most are completed just one or two days before travel — so it isn't instant. But the worst delays people post about usually involve a paperwork bounce-back or a courier leg, not USDA's review itself. Start early enough that "several business days" isn't a problem.</li>
             </ul>
 
@@ -379,7 +368,7 @@ export default function USDAEndorsementGuide() {
                 <li>☐ Vet confirmed as <strong>USDA-accredited</strong> — ideally experienced with your destination</li>
                 <li>☐ Microchip and rabies vaccination done <strong>in the right order</strong>, before the certificate</li>
                 <li>☐ Destination's <strong>colour-banner status</strong> checked — digital endorsement, or physical?</li>
-                <li>☐ Clear on <strong>non-commercial vs commercial</strong> — and therefore which deadline applies</li>
+                <li>☐ Clear on <strong>which certificates your destination needs</strong> — e.g. UK-via-Europe routes need both an EU AHC and a GB Health Certificate, USDA-endorsed together</li>
                 <li>☐ If physical: <strong>prepaid, trackable return label</strong> — your address in both fields, no USDA address, no card number on the label</li>
                 <li>☐ <strong>Printed paper hardcopy</strong> of the endorsed certificate ready to travel with the pet</li>
                 <li>☐ <strong>Airline's own document deadline</strong> confirmed directly with the carrier</li>

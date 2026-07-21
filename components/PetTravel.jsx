@@ -116,7 +116,7 @@ function airlineStringIsClean(airline) {
 // Update this date whenever the site content changes — it's shown in the
 // footer as "Updated on DD Month YYYY" so visitors know how current the
 // guidance is. Format: "DD Month YYYY".
-const LAST_UPDATED = "30 May 2026";
+const LAST_UPDATED = "20 July 2026";
 
 // ---------- DATA ----------
 
@@ -16155,6 +16155,25 @@ function Operators() {
             your own written quote — figures move with season and route.
           </p>
           <div className="space-y-3">
+            <div className="bg-white border-2 border-amber-500 rounded-sm p-4">
+              <div className="flex items-baseline gap-3 flex-wrap mb-1">
+                <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
+                   onClick={() => trackOut("pet-taxi", "Pet Moves Abroad")}
+                   className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
+                  Pet Moves Abroad →
+                </a>
+                <span className="text-[10px] uppercase tracking-widest bg-amber-600 text-white px-2 py-0.5 rounded-sm">We used them</span>
+              </div>
+              <p className="text-stone-600 text-sm leading-relaxed mt-1">
+                Family-run, DEFRA Type 2 authorised. Door-to-door pet transport across the UK and mainland Europe.
+              </p>
+              <p className="text-stone-700 text-sm leading-relaxed mt-2">
+                <strong>We used them for Theo's July 2026 crossing</strong> and would use them again without hesitation. Responsive from the initial booking through to journey day, communicated throughout, and — critically — our driver Kawa checked our US-issued paperwork at pickup and spotted an issue Le Shuttle would have refused. Their partner-vet arrangement in France meant an EU Pet Passport was issued on the spot before we set off.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
+                As a real example, our actual door-to-door bill for the July 2026 crossing (Chantilly hotel to home near Heathrow) was £730 for the pet taxi + £288 for the Eurotunnel Le Shuttle crossing (per car, not per person), for a total of £1,018. Prices change with distance, your pet and the season, so get your own written quote. See <a href="#stories" className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">Story 02</a> for the full account.
+              </p>
+            </div>
             <div className="bg-white border border-stone-200 rounded-sm p-4">
               <a href="https://www.elitepettaxi.com/" target="_blank" rel="noopener noreferrer"
                  onClick={() => trackOut("pet-taxi", "ElitePetTaxi")}
@@ -16171,23 +16190,6 @@ function Operators() {
                 distance, your pet and the season, so get your own.
               </p>
             </div>
-            <div className="bg-white border border-stone-200 rounded-sm p-4">
-              <a href="https://petmovesabroad.co.uk/" target="_blank" rel="noopener noreferrer"
-                 onClick={() => trackOut("pet-taxi", "PetMoves Abroad")}
-                 className="font-serif text-base text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2">
-                PetMoves Abroad →
-              </a>
-              <p className="text-stone-600 text-sm leading-relaxed mt-1">
-                Door-to-door pet transport across the UK and Europe.
-              </p>
-              <p className="text-stone-500 text-sm leading-relaxed mt-2 italic">
-                As a real example, when I enquired they quoted roughly £685 plus
-                the Channel crossing for the same door-to-door trip from the Paris
-                area into the UK. With the crossing around £300 at the time, that
-                came to about £985 one way. That was the quote at the time — prices
-                change with distance, your pet and the season, so get your own.
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -16196,6 +16198,7 @@ function Operators() {
 }
 function Stories() {
   const [open, setOpen] = useState(true);
+  const [open2, setOpen2] = useState(false);
 
   return (
     <section id="stories" className="py-20 px-6 md:px-12 bg-amber-50/40 border-y border-stone-300">
@@ -16205,6 +16208,243 @@ function Stories() {
           <span className="uppercase tracking-[0.25em] text-xs font-medium text-amber-700">From the desk · Stories</span>
           <div className="flex-1 h-px bg-stone-300" />
         </div>
+
+        <article className="mb-24 pb-16 border-b border-stone-300">
+          <div className="text-xs uppercase tracking-widest text-stone-500 mb-3 flex items-center gap-3 flex-wrap">
+            <span>Story 02 · A real trip · July 2026</span>
+            <span className="text-[10px] uppercase tracking-widest bg-amber-600 text-white px-2 py-0.5 rounded-sm">Latest</span>
+          </div>
+
+          <h2 className="font-serif text-5xl md:text-6xl text-stone-900 mb-6 leading-[1.05]">
+            Miami to London,<br />
+            <span className="italic text-stone-600">via Paris and Le Shuttle,</span> with the same small dog.
+          </h2>
+
+          <p className="font-serif italic text-stone-600 text-lg mb-12 max-w-2xl">
+            What I learned taking Theo back to the UK — the paperwork trap that nearly ended the trip at Calais, the pet taxi driver who saved us, and the €90 backup nobody warned me about.
+          </p>
+
+          <div className="font-serif text-lg text-stone-800 leading-[1.8] space-y-6">
+
+            <p>
+              Two years after Theo flew London to Miami, we were doing the reverse. Same small dog, opposite direction, and I thought I knew what I was doing. The paperwork was USDA-endorsed. My vet had called APHIS twice to check. The certificate said <em>"destination: United Kingdom via France."</em> Which, as we would find out at Calais, is not the same thing as UK-valid paperwork.
+            </p>
+
+            <p>
+              The route: Miami → Paris CDG on Air France in cabin, one night to break up the drive, then a pet taxi door-to-door from our Paris hotel to home near Heathrow. I deliberately picked Le Grand Pavillon in Chantilly — an hour outside Paris in the right direction of travel — rather than push straight from CDG to Le Shuttle in one go. It gave both of us a proper sleep, and gave the tapeworm treatment window a clean margin.
+            </p>
+
+            <p>
+              This trip taught me three things I now think anyone doing this route should know before they book. What USDA phone support tells your vet isn't always right. Le Shuttle checks the paperwork against UK entry rules, not French entry rules — those are different rules. And a French vet can issue an EU Pet Passport on the spot, for €90, to save the crossing when it's all gone wrong. Here's how the trip actually went.
+            </p>
+
+            {!open2 && (
+              <div className="pt-4">
+                <button
+                  onClick={() => setOpen2(true)}
+                  className="group inline-flex items-center gap-3 bg-stone-900 text-stone-50 px-6 py-3 hover:bg-amber-700 transition-colors"
+                >
+                  <span className="uppercase tracking-widest text-xs font-medium">Continue reading</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            )}
+
+            {open2 && (
+              <>
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The mistake I didn't know I was making</h3>
+
+                <p>
+                  My vet in Miami, guided by two phone calls to USDA APHIS, prepared a single certificate — an EU Animal Health Certificate listing the UK as final destination via France. I had done my own research; I knew UK and EU were technically separate. But when a USDA-accredited vet tells you they've been on the phone with the department and this is what APHIS is advising, who am I to argue? The certificate cost $588. It was ready, endorsed, and in my hand by the Friday before we flew. I felt organised.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The paperwork build-up in Miami</h3>
+
+                <p>
+                  The USDA appointment was 30 June. Before it, I had to create a prepaid FedEx return label — because USDA endorses the paperwork and posts it back; there's no walk-in-and-collect option (I've written a proper walkthrough of the return label in the <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">USDA endorsement guide</Link>). My vet dated the certificate for the day before our actual flight to give the courier some margin. Some forum posts say never do that; I did, and it worked. USDA endorsed it on the Thursday and the physical documents landed on my mat on Friday.
+                </p>
+
+                <p>
+                  The tapeworm treatment for a dog entering the UK has to be given within 24 to 120 hours of arrival, which for us meant it couldn't happen in Miami — it had to be done in France. That felt loose at the time, but as it turned out, the French vet who saved our crossing did the tapeworm treatment ($55) as part of the same visit.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Miami departure — easier than I feared</h3>
+
+                <p>
+                  Miami International has a proper pet relief area — grassy patches in the ground-level car park. Order matters: bag drop first, get your pet checked by the airline agent, <em>then</em> take your dog out for a pee, then security. The Air France agent didn't check the carrier's dimensions or weight, which surprised me — I'd measured, compressed and re-measured that carrier three times at home to be sure it complied. He looked at Theo, waved us through.
+                </p>
+
+                <p>
+                  Security was quiet. Carrier on the belt, Theo in my arms through the body scanner, brief hand-swab for residue, done. The walk to the gate was long enough that Theo got properly tired, which was exactly the state I wanted him in before the flight.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The seat trick that gave us the whole row</h3>
+
+                <p>
+                  My sister was travelling with me. We booked her the aisle, me the window, and left the middle seat open. On a full plane the middle gets filled last, and on a not-full plane it stays empty. <strong>Book the window and the aisle, fence off the middle.</strong> Our middle stayed empty for the whole seven hours.
+                </p>
+
+                <p>
+                  We also booked comfort seats — the extra-legroom row. If your airline lets pet owners sit in extra-legroom (some do, some ban it — check before booking), it's transformative for a long-haul night flight. More floor space for the carrier, more breathing room for you, and you're not contorting yourself around it for seven hours.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/theo-comfort-legroom.jpg" alt="Theo's carrier tucked into the extra floor space of a comfort seat" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Comfort seats + empty middle = actual room to be comfortable for seven hours.</figcaption>
+                </figure>
+
+                <p>
+                  At the gate, I asked whether cabin-pet passengers could board early. The staff said yes without hesitation. Ten minutes of quieter cabin time to get Theo settled before everyone else piled in.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The overnight flight — aligned to Theo's bedtime</h3>
+
+                <p>
+                  Night flights when your dog is a natural evening sleeper are a gift. I picked the overnight departure deliberately — it was Theo's normal bedtime, and I knew he wouldn't need a pee if he was asleep. He slept for most of the seven hours. I slept across two seats with my hand in the carrier so I could feel him breathing. Two small sips of water, no food. He didn't cry. I didn't panic.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/theo-nightflight-row.jpg" alt="Air France cabin at night, whole row to ourselves with blanket over the empty middle seat" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">The whole row, mid-flight. Theo's carrier under the seat in front, blanket over the empty middle.</figcaption>
+                </figure>
+
+                <figure className="my-8">
+                  <img src="/theo-carrier-lion.jpg" alt="Theo settled inside his carrier with his lion toy" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Theo with his lion — the toy that goes on every flight.</figcaption>
+                </figure>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Paris at dawn — the check that didn't happen</h3>
+
+                <p>
+                  We landed at CDG around 8am and headed for arrivals through automated e-gates. <em>Nobody checked Theo's paperwork.</em> Nobody asked to see the certificate that had cost $588. I've since heard this is more common than not — arrival-side pet checks at CDG are inconsistent, and much of the actual compliance load sits at the airline's departure gate. But it felt genuinely odd walking into France with an unopened folder of documents.
+                </p>
+
+                <p>
+                  <strong>I would not plan for this.</strong> If a check does happen and your paperwork is wrong, you are in real trouble. That morning we just walked out. It was a small piece of luck we didn't need — because a much bigger check was still ahead.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/theo-cdg-arrival.jpg" alt="Theo in his carrier stacked on the luggage cart at CDG arrivals, Air France 91 luggage tag visible" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Off Air France 91 at CDG. We didn't know yet.</figcaption>
+                </figure>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Le Grand Pavillon Chantilly — one night, on purpose</h3>
+
+                <p>
+                  Chantilly is an hour outside Paris in the right direction of travel — north-east, on the way to Calais rather than back into central Paris. Le Grand Pavillon is a proper château, pet-friendly, with grounds Theo could explore without meeting other dogs. We would have loved to do two nights to break the journey further, but the tapeworm treatment window meant we needed to keep moving. One night was the compromise, and it was the right one. Everyone slept flat, in beds, on land. <strong>If your route allows a stopover between CDG and Le Shuttle, take it.</strong>
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The Kawa moment — the pet taxi driver who saved the trip</h3>
+
+                <p>
+                  Kawa from <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> arrived at the hotel at midday. I had my documents folder ready. He asked to see it before we set off.
+                </p>
+
+                <p>
+                  Within thirty seconds, he told me the paperwork wouldn't work. Le Shuttle at Calais applies UK entry rules, and what I had was an EU AHC — not a UK-valid document. If I turned up at pet reception with that folder, they would refuse the crossing. He said it flatly, without drama, like someone who had seen this exact thing before.
+                </p>
+
+                <p>
+                  Pet Moves Abroad have an arrangement with a French vet who can issue an EU Pet Passport on the spot for exactly this situation. Kawa knew because he had seen it before. We took an hour's detour to the vet. Theo got a passport (€90) and his tapeworm treatment ($55, time and date stamped on the passport as required for the UK), and we were back on the road.
+                </p>
+
+                <p>
+                  I had known for months that an EU Pet Passport was <em>possible</em> for a non-EU-resident pet, issued in the EU. What I hadn't known was that door-to-door pet taxis for this route quietly make it happen all the time, because so many transatlantic pet travellers arrive with US paperwork that Le Shuttle won't accept.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/theo-eu-pet-passport.jpg" alt="Theo's EU Pet Passport, French edition, issued same-day by a French vet" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Theo's EU Pet Passport — issued same-day by a French vet, €90, and the reason we made the crossing.</figcaption>
+                </figure>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Le Shuttle pet reception — the check we were finally ready for</h3>
+
+                <p>
+                  The signage at Le Shuttle for the pet reception is clear once you're in the right lane. There's a dedicated drive-through booth marked PETS · Bienvenue, staffed and open 24 hours. The instructions are printed on the side: show your booking reference, present your pet's documents, scan the microchip. <strong>They also check the driver and passenger passports.</strong> Bring your own too.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/leshuttle-pet-reception.jpg" alt="Le Shuttle Pets Bienvenue reception booth at Calais Coquelles" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Le Shuttle's pet reception at Calais Coquelles — the actual check that Kawa knew was coming.</figcaption>
+                </figure>
+
+                <p>
+                  With the EU Pet Passport in hand the check took about three minutes. Microchip scan, page-by-page look at the passport, rabies date, tapeworm entry, done. The queues at the terminal were long — this was July, school holidays — but there are grassy pet-relief areas near the queuing lanes, so we jumped out with Theo whenever we needed to.
+                </p>
+
+                <figure className="my-8">
+                  <img src="/theo-calais-grass.jpg" alt="Theo standing on a patch of grass at Calais Coquelles with the Le Shuttle terminal in the background" className="w-full rounded-sm" />
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">One of many pet-relief patches near the queue at Calais.</figcaption>
+                </figure>
+
+                <p>
+                  Once through the pet check and border control you're waiting in your car for the shuttle to load, then 35 minutes through the tunnel, still in the car. Theo slept.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The refund</h3>
+
+                <p>
+                  When I got home I emailed my Miami vet with a factual summary of what had happened. She apologised properly, at length, and refunded the $588 within a week. I had already accepted the money was gone — so this took a real sting out of it. But it didn't undo the fact that we had come within one alert pet taxi driver of a trip-ending failure at the crossing.
+                </p>
+
+                <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">What I'd tell anyone doing this trip</h3>
+
+                <p className="font-medium text-stone-900">
+                  1. Ask your vet for two USDA-endorsed certificates, not one.
+                </p>
+                <p>
+                  UK entry needs a GB Health Certificate. EU transit needs an EU AHC. Ask for both, endorsed together. If your vet or USDA phone support tells you one certificate can cover both destinations, ask again. I've rewritten the <Link href="/usda-endorsement-guide" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">USDA endorsement guide</Link> and the <Link href="/getting-your-pet-into-the-uk" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">UK route guide</Link> on the strength of what happened to us.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  2. Book the aisle and the window; leave the middle open.
+                </p>
+                <p>
+                  With extra-legroom seats if the airline allows pets there and it's a long-haul night flight. This single choice gave us the space to actually be comfortable with Theo for seven hours.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  3. Time your departure to your dog's bedtime.
+                </p>
+                <p>
+                  Overnight flights when your dog naturally sleeps are transformative. Aligning the departure to his usual bedtime meant Theo slept through, didn't need to pee, and didn't cry.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  4. Break the drive between CDG and Le Shuttle.
+                </p>
+                <p>
+                  We chose Le Grand Pavillon in Chantilly — an hour outside Paris in the right direction. Any pet-friendly hotel between the airport and Calais will do. Don't try to do the whole route in one go if you don't have to.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  5. The €90 EU Pet Passport backup exists.
+                </p>
+                <p>
+                  French vets can issue an EU Pet Passport on the spot to a non-EU-resident pet with the right vaccination records. <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> — and probably most transatlantic-experienced pet taxis — know a vet who does this same-day. If you arrive in France with paperwork that turns out to be EU-only, this is the fix. It is not a plan, but it is a real backup.
+                </p>
+
+                <p className="font-medium text-stone-900">
+                  6. Bring your own passport.
+                </p>
+                <p>
+                  Le Shuttle checks driver and passenger IDs at pet reception, not just at the border booth.
+                </p>
+
+                <p className="italic text-stone-700 pt-4">
+                  Theo has now flown London to Montreal to Miami, and Miami to Paris. He has crossed the Channel by tunnel. He has slept through more time zones than most of the humans I know. If you are planning this trip and you are nervous, I promise you it is doable. The rules will trip you up if you're not paying attention. Pet taxi drivers who've done it fifty times are worth every pound. And a small dog with the right paperwork can get pretty much anywhere.
+                </p>
+
+                <div className="mt-12 pt-8 border-t border-stone-300">
+                  <p className="font-serif italic text-stone-600 mb-4">— Theo's Mum</p>
+                  <p className="text-stone-600 text-sm">
+                    Got a route or a story you want to share? <a href="#contact" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Get in touch</a>. I'm collecting real-world experiences from other pet mums and dads to add to this section.
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+        </article>
 
         <article>
           <div className="text-xs uppercase tracking-widest text-stone-500 mb-3">Story 01 · A real trip · May 2026</div>
@@ -16673,10 +16913,21 @@ const COUNTRY_GUIDES = [
 ];
 
 function WhatsNew() {
-  // Recent verified rule changes from airlines and regulators only — not
-  // site housekeeping. Order matters: most consequential first. Keep this
-  // short and pruned each time something material changes.
+  // Recent verified rule changes from airlines and regulators, plus
+  // occasional significant site milestones (a new deep-dive guide, a
+  // published trip story). Order matters: most consequential/recent
+  // first. Keep this short and pruned each time something material
+  // changes. On-screen subtitle already says "site updates" so this
+  // broader scope is consistent with what the reader is told.
   const ITEMS = [
+    {
+      date: "20 Jul 2026",
+      headline: "New story — Miami to London, with the same small dog",
+      body: "Story 02 in the From-the-desk series: a first-person account of Theo's actual Miami → Paris → Le Shuttle → UK trip in July 2026. Includes the USDA paperwork trap that almost ended the crossing at Calais, the €90 EU Pet Passport backup that saved it, and the pet taxi driver who spotted the problem in time. On the strength of this trip, the USDA endorsement guide and the UK route guide have both been rewritten.",
+      tag: "New story",
+      linkHref: "#stories",
+      linkLabel: "Read the story",
+    },
     {
       date: "27 May 2026",
       headline: "Edinburgh (EDI) and Glasgow (GLA) added as UK cabin-pet departure airports",
@@ -16741,6 +16992,15 @@ function WhatsNew() {
                 {item.headline}
               </h3>
               <p className="text-sm text-stone-700 leading-relaxed">{item.body}</p>
+              {item.linkHref && (
+                <a
+                  href={item.linkHref}
+                  className="inline-flex items-center gap-1.5 mt-3 text-xs uppercase tracking-widest text-amber-700 hover:text-amber-800 font-medium"
+                >
+                  <span>{item.linkLabel || "Read"}</span>
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              )}
             </div>
           ))}
         </div>

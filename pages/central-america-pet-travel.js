@@ -8,9 +8,45 @@ export default function CentralAmericaPetTravel() {
         <title>Flying with a Pet to/from Central America (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Central America is one of the easiest cabin pet regions to fly to or transit through. Copa Airlines via Panama City is the regional powerhouse — 10 kg cabin pets, brachycephalic-friendly, the key hub for deeper South America. Country-by-country entry rules for Panama, Costa Rica, Guatemala, El Salvador, Honduras, and Nicaragua."
+          content="Copa Airlines via Panama City carries 10 kg cabin pets and is brachycephalic-friendly. Entry rules for Panama, Costa Rica, Guatemala, El Salvador and Honduras."
         />
         <link rel="canonical" href="https://www.petsincabin.com/central-america-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Central America" />
+        <meta property="og:description" content="Copa Airlines via Panama City carries 10 kg cabin pets and is brachycephalic-friendly. Entry rules for Panama, Costa Rica, Guatemala, El Salvador and Honduras." />
+        <meta property="og:url" content="https://www.petsincabin.com/central-america-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Central America" />
+        <meta name="twitter:description" content="Copa Airlines via Panama City carries 10 kg cabin pets and is brachycephalic-friendly. Entry rules for Panama, Costa Rica, Guatemala, El Salvador and Honduras." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Central America",
+                "description": "Copa Airlines via Panama City carries 10 kg cabin pets and is brachycephalic-friendly. Entry rules for Panama, Costa Rica, Guatemala, El Salvador and Honduras.",
+                "url": "https://www.petsincabin.com/central-america-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

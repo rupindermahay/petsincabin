@@ -11,6 +11,42 @@ export default function IcelandPetTravel() {
           content="Bringing a dog or cat to Iceland — the realistic picture: the mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds and Keflavík-only entry."
         />
         <link rel="canonical" href="https://www.petsincabin.com/iceland-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying a Pet to Iceland" />
+        <meta property="og:description" content="Bringing a dog or cat to Iceland — the realistic picture: the mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds and Keflavík-only entry." />
+        <meta property="og:url" content="https://www.petsincabin.com/iceland-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying a Pet to Iceland" />
+        <meta name="twitter:description" content="Bringing a dog or cat to Iceland — the realistic picture: the mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds and Keflavík-only entry." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying a Pet to Iceland",
+                "description": "Bringing a dog or cat to Iceland — the realistic picture: the mandatory 14-day quarantine, MAST import permit, FAVN titer test, banned breeds and Keflavík-only entry.",
+                "url": "https://www.petsincabin.com/iceland-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

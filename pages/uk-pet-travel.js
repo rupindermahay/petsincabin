@@ -8,9 +8,45 @@ export default function UKPetTravel() {
         <title>Flying a Dog or Cat in Cabin to the UK: Why You Can't (and the Workarounds That Do) | Pets in Cabin</title>
         <meta
           name="description"
-          content="No airline flies pets in the cabin into the UK — it's a government rule, not an airline one. Here's why, plus the verified workaround routes (mainland EU hub + Eurotunnel, Channel and North Sea ferries, pet taxi) that get your dog or cat to Britain without the cargo hold."
+          content="No airline flies pets in the cabin into the UK — it's a government rule. The verified workarounds: an EU hub plus Eurotunnel, ferry, or pet taxi to Britain."
         />
         <link rel="canonical" href="https://www.petsincabin.com/uk-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying a Dog or Cat in Cabin to the UK" />
+        <meta property="og:description" content="No airline flies pets in the cabin into the UK — it's a government rule. The verified workarounds: an EU hub plus Eurotunnel, ferry, or pet taxi to Britain." />
+        <meta property="og:url" content="https://www.petsincabin.com/uk-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying a Dog or Cat in Cabin to the UK" />
+        <meta name="twitter:description" content="No airline flies pets in the cabin into the UK — it's a government rule. The verified workarounds: an EU hub plus Eurotunnel, ferry, or pet taxi to Britain." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying a Dog or Cat in Cabin to the UK",
+                "description": "No airline flies pets in the cabin into the UK — it's a government rule. The verified workarounds: an EU hub plus Eurotunnel, ferry, or pet taxi to Britain.",
+                "url": "https://www.petsincabin.com/uk-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

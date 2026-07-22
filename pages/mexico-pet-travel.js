@@ -8,9 +8,45 @@ export default function MexicoPetTravel() {
         <title>Flying with a Pet to/from Mexico (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to Mexico is one of the easiest international pet moves there is. No health certificate from the US or Canada, no quarantine, no titer test — just rabies vaccination, parasite treatment, and a SENASICA inspection on arrival. Plus the screwworm catch for dogs returning to the US."
+          content="Mexico is one of the easiest pet moves: no health certificate from the US or Canada, no quarantine, no titer — just rabies, parasite treatment and SENASICA on arrival."
         />
         <link rel="canonical" href="https://www.petsincabin.com/mexico-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Mexico" />
+        <meta property="og:description" content="Mexico is one of the easiest pet moves: no health certificate from the US or Canada, no quarantine, no titer — just rabies, parasite treatment and SENASICA on arrival." />
+        <meta property="og:url" content="https://www.petsincabin.com/mexico-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Mexico" />
+        <meta name="twitter:description" content="Mexico is one of the easiest pet moves: no health certificate from the US or Canada, no quarantine, no titer — just rabies, parasite treatment and SENASICA on arrival." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Mexico",
+                "description": "Mexico is one of the easiest pet moves: no health certificate from the US or Canada, no quarantine, no titer — just rabies, parasite treatment and SENASICA on arrival.",
+                "url": "https://www.petsincabin.com/mexico-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

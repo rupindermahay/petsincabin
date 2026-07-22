@@ -8,9 +8,45 @@ export default function IndiaPetTravel() {
         <title>Flying with a Pet to/from India: Complete Guide (2026) | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing your dog or cat to India, or leaving India with a pet? The full process — AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC high-risk paperwork for the US, and the 2-year residency rule. Updated for 2026."
+          content="Flying a dog or cat to or from India: the AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC paperwork for the US, and the 2-year rule."
         />
         <link rel="canonical" href="https://www.petsincabin.com/india-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from India" />
+        <meta property="og:description" content="Flying a dog or cat to or from India: the AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC paperwork for the US, and the 2-year rule." />
+        <meta property="og:url" content="https://www.petsincabin.com/india-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from India" />
+        <meta name="twitter:description" content="Flying a dog or cat to or from India: the AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC paperwork for the US, and the 2-year rule." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from India",
+                "description": "Flying a dog or cat to or from India: the AQCS NOC, six approved airports, Air India Paws on Board cabin pets, CDC paperwork for the US, and the 2-year rule.",
+                "url": "https://www.petsincabin.com/india-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

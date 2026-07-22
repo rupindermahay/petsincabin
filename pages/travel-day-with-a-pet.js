@@ -12,6 +12,42 @@ export default function TravelDayWithAPet() {
           content="The full walkthrough of an airport day flying with a dog or cat in the cabin — from the morning at home, through check-in, security, the gate, the flight, and arrival. Practical, honest, no fluff."
         />
         <link rel="canonical" href="https://www.petsincabin.com/travel-day-with-a-pet" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet: What to Expect at the Airport" />
+        <meta property="og:description" content="The full walkthrough of an airport day flying with a dog or cat in the cabin — from the morning at home, through check-in, security, the gate, the flight, and arrival. Practical, honest, no fluff." />
+        <meta property="og:url" content="https://www.petsincabin.com/travel-day-with-a-pet" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet: What to Expect at the Airport" />
+        <meta name="twitter:description" content="The full walkthrough of an airport day flying with a dog or cat in the cabin — from the morning at home, through check-in, security, the gate, the flight, and arrival. Practical, honest, no fluff." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet: What to Expect at the Airport",
+                "description": "The full walkthrough of an airport day flying with a dog or cat in the cabin — from the morning at home, through check-in, security, the gate, the flight, and arrival. Practical, honest, no fluff.",
+                "url": "https://www.petsincabin.com/travel-day-with-a-pet",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

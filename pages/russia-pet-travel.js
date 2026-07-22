@@ -8,9 +8,45 @@ export default function RussiaPetTravel() {
         <title>Flying with a Pet to/from Russia &amp; Ukraine (2026): The Honest Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Since February 2022 the obvious routes have been closed. Russian airspace is shut to Western carriers, so the cabin route in or out of Russia runs two legs via Istanbul, Dubai or Delhi on Aeroflot. Ukrainian airspace is closed entirely — there is no commercial flight, and the real route is overland through Poland. The complete, verified picture, including the EU re-entry titre rule and the Rosselkhoznadzor paperwork chain."
+          content="Russian airspace is shut to Western carriers, so the cabin route runs two legs via Istanbul, Dubai or Delhi on Aeroflot. Ukraine is overland through Poland."
         />
         <link rel="canonical" href="https://www.petsincabin.com/russia-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Russia &amp; Ukraine" />
+        <meta property="og:description" content="Russian airspace is shut to Western carriers, so the cabin route runs two legs via Istanbul, Dubai or Delhi on Aeroflot. Ukraine is overland through Poland." />
+        <meta property="og:url" content="https://www.petsincabin.com/russia-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Russia &amp; Ukraine" />
+        <meta name="twitter:description" content="Russian airspace is shut to Western carriers, so the cabin route runs two legs via Istanbul, Dubai or Delhi on Aeroflot. Ukraine is overland through Poland." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Russia & Ukraine",
+                "description": "Russian airspace is shut to Western carriers, so the cabin route runs two legs via Istanbul, Dubai or Delhi on Aeroflot. Ukraine is overland through Poland.",
+                "url": "https://www.petsincabin.com/russia-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

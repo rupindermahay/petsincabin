@@ -8,9 +8,45 @@ export default function CanadaPetTravel() {
         <title>Flying with a Pet to/from Canada (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to Canada, or flying out with a pet? The full picture — Air Canada cabin policy and Air Transat's cargo-only rule for UK/Ireland, the simple rabies-certificate paperwork (no titer, no quarantine), CBSA border inspection, and the cabin routes through Toronto, Montreal and Vancouver."
+          content="Flying a dog or cat to or from Canada: Air Canada cabin policy, Air Transat's cargo-only UK rule, the rabies certificate (no titer, no quarantine) and CBSA checks."
         />
         <link rel="canonical" href="https://www.petsincabin.com/canada-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Canada" />
+        <meta property="og:description" content="Flying a dog or cat to or from Canada: Air Canada cabin policy, Air Transat's cargo-only UK rule, the rabies certificate (no titer, no quarantine) and CBSA checks." />
+        <meta property="og:url" content="https://www.petsincabin.com/canada-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Canada" />
+        <meta name="twitter:description" content="Flying a dog or cat to or from Canada: Air Canada cabin policy, Air Transat's cargo-only UK rule, the rabies certificate (no titer, no quarantine) and CBSA checks." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Canada",
+                "description": "Flying a dog or cat to or from Canada: Air Canada cabin policy, Air Transat's cargo-only UK rule, the rabies certificate (no titer, no quarantine) and CBSA checks.",
+                "url": "https://www.petsincabin.com/canada-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

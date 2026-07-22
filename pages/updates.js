@@ -126,6 +126,17 @@ export default function Updates() {
           content="A timestamped archive of recent rule changes affecting pet travel — airlines, regulators, and routes. Updated as the rules change."
         />
         <link rel="canonical" href="https://www.petsincabin.com/updates" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Updates — Pet Travel Rule Changes" />
+        <meta property="og:description" content="A timestamped archive of recent rule changes affecting pet travel — airlines, regulators, and routes. Updated as the rules change." />
+        <meta property="og:url" content="https://www.petsincabin.com/updates" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Updates — Pet Travel Rule Changes" />
+        <meta name="twitter:description" content="A timestamped archive of recent rule changes affecting pet travel — airlines, regulators, and routes. Updated as the rules change." />
       </Head>
 
       <div className="min-h-screen" style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}>

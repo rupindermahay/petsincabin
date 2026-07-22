@@ -8,9 +8,45 @@ export default function SouthAmericaPetTravel() {
         <title>Flying with a Pet to/from South America (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="South America has two great cabin pet airlines (LATAM and Avianca) and five mostly-easy countries to enter — once you know each country's paperwork. Brazil, Argentina, Chile, Peru, Colombia rules explained, plus banned breeds, brachycephalic policies, and routing strategies."
+          content="LATAM and Avianca carry cabin pets across South America. Brazil, Argentina, Chile, Peru and Colombia entry rules, banned breeds and brachycephalic policies."
         />
         <link rel="canonical" href="https://www.petsincabin.com/south-america-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from South America" />
+        <meta property="og:description" content="LATAM and Avianca carry cabin pets across South America. Brazil, Argentina, Chile, Peru and Colombia entry rules, banned breeds and brachycephalic policies." />
+        <meta property="og:url" content="https://www.petsincabin.com/south-america-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from South America" />
+        <meta name="twitter:description" content="LATAM and Avianca carry cabin pets across South America. Brazil, Argentina, Chile, Peru and Colombia entry rules, banned breeds and brachycephalic policies." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from South America",
+                "description": "LATAM and Avianca carry cabin pets across South America. Brazil, Argentina, Chile, Peru and Colombia entry rules, banned breeds and brachycephalic policies.",
+                "url": "https://www.petsincabin.com/south-america-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

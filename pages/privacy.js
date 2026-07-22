@@ -12,6 +12,17 @@ export default function Privacy() {
             to the homepage. Without this it inherits nothing and Google may
             flag it as a duplicate. */}
         <link rel="canonical" href="https://www.petsincabin.com/privacy" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Privacy Policy" />
+        <meta property="og:description" content="Privacy policy for Pets in Cabin — what data we collect, why, and your rights." />
+        <meta property="og:url" content="https://www.petsincabin.com/privacy" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Privacy Policy" />
+        <meta name="twitter:description" content="Privacy policy for Pets in Cabin — what data we collect, why, and your rights." />
       </Head>
 
       <div

@@ -11,6 +11,42 @@ export default function USDAEndorsementGuide() {
           content="A plain-English guide to the USDA APHIS endorsement step for flying a pet out of the US — the deadlines that really apply, and the prepaid return label explained."
         />
         <link rel="canonical" href="https://www.petsincabin.com/usda-endorsement-guide" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="The USDA Endorsement Guide" />
+        <meta property="og:description" content="A plain-English guide to the USDA APHIS endorsement step for flying a pet out of the US — the deadlines that really apply, and the prepaid return label explained." />
+        <meta property="og:url" content="https://www.petsincabin.com/usda-endorsement-guide" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="The USDA Endorsement Guide" />
+        <meta name="twitter:description" content="A plain-English guide to the USDA APHIS endorsement step for flying a pet out of the US — the deadlines that really apply, and the prepaid return label explained." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "The USDA Endorsement Guide",
+                "description": "A plain-English guide to the USDA APHIS endorsement step for flying a pet out of the US — the deadlines that really apply, and the prepaid return label explained.",
+                "url": "https://www.petsincabin.com/usda-endorsement-guide",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

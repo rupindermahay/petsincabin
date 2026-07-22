@@ -8,6 +8,17 @@ export default function About() {
         <title>About — Pets in Cabin · By Theo's Mum</title>
         <meta name="description" content="The story behind Pets in Cabin — built by Theo's Mum after one too many 2am Google spirals trying to fly internationally with a small dog. A real guide for real pet parents." />
         <link rel="canonical" href="https://www.petsincabin.com/about" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="About Pets in Cabin" />
+        <meta property="og:description" content="The story behind Pets in Cabin — built by Theo's Mum after one too many 2am Google spirals trying to fly internationally with a small dog. A real guide for real pet parents." />
+        <meta property="og:url" content="https://www.petsincabin.com/about" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="About Pets in Cabin" />
+        <meta name="twitter:description" content="The story behind Pets in Cabin — built by Theo's Mum after one too many 2am Google spirals trying to fly internationally with a small dog. A real guide for real pet parents." />
       </Head>
 
       <div className="min-h-screen" style={{ backgroundColor: "#faf6ed", fontFamily: "'Inter', -apple-system, sans-serif" }}>

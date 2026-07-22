@@ -12,6 +12,42 @@ export default function GettingYourPetIntoTheUK() {
           content="No airline flies a pet in the cabin into the UK — so here's every route that works, compared: the Paris, Frankfurt and Amsterdam crossings, ferries, costs and times."
         />
         <link rel="canonical" href="https://www.petsincabin.com/getting-your-pet-into-the-uk" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Getting Your Pet Into the UK From Europe" />
+        <meta property="og:description" content="No airline flies a pet in the cabin into the UK — so here's every route that works, compared: the Paris, Frankfurt and Amsterdam crossings, ferries, costs and times." />
+        <meta property="og:url" content="https://www.petsincabin.com/getting-your-pet-into-the-uk" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Getting Your Pet Into the UK From Europe" />
+        <meta name="twitter:description" content="No airline flies a pet in the cabin into the UK — so here's every route that works, compared: the Paris, Frankfurt and Amsterdam crossings, ferries, costs and times." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Getting Your Pet Into the UK From Europe",
+                "description": "No airline flies a pet in the cabin into the UK — so here's every route that works, compared: the Paris, Frankfurt and Amsterdam crossings, ferries, costs and times.",
+                "url": "https://www.petsincabin.com/getting-your-pet-into-the-uk",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

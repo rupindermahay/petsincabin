@@ -8,9 +8,45 @@ export default function AustraliaPetTravel() {
         <title>Flying with a Pet to/from Australia (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat into Australia is the strictest pet-import process in the English-speaking world: cargo only, a DAFF import permit via BICON, a rabies titre test with a 180-day wait, and a minimum 10-day quarantine at Mickleham. Inside Australia it's different — Virgin Australia now flies small dogs and cats in the cabin on select domestic routes. The complete, verified picture of both."
+          content="Australia is cargo-only for pet import: a DAFF permit via BICON, rabies titre with a 180-day wait, and 10-day Mickleham quarantine. Plus Virgin's domestic cabin route."
         />
         <link rel="canonical" href="https://www.petsincabin.com/australia-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Australia" />
+        <meta property="og:description" content="Australia is cargo-only for pet import: a DAFF permit via BICON, rabies titre with a 180-day wait, and 10-day Mickleham quarantine. Plus Virgin's domestic cabin route." />
+        <meta property="og:url" content="https://www.petsincabin.com/australia-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Australia" />
+        <meta name="twitter:description" content="Australia is cargo-only for pet import: a DAFF permit via BICON, rabies titre with a 180-day wait, and 10-day Mickleham quarantine. Plus Virgin's domestic cabin route." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Australia",
+                "description": "Australia is cargo-only for pet import: a DAFF permit via BICON, rabies titre with a 180-day wait, and 10-day Mickleham quarantine. Plus Virgin's domestic cabin route.",
+                "url": "https://www.petsincabin.com/australia-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div
@@ -287,9 +323,9 @@ export default function AustraliaPetTravel() {
                 <div className="text-xs text-stone-600 leading-relaxed">The other cargo-only-on-arrival country — and the Paris workaround.</div>
               </Link>
 
-              <Link href="/uae-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
-                <div className="font-serif text-base text-stone-900 mb-1">UAE guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">Another strict-import destination — permit, titre and banned breeds.</div>
+              <Link href="/south-africa-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">South Africa guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">The same split — cargo-only internationally, cabin on domestic flights.</div>
               </Link>
             </div>
             <p className="text-xs text-stone-500 italic mt-6">

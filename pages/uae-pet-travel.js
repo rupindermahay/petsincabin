@@ -8,9 +8,45 @@ export default function UAEPetTravel() {
         <title>Flying with a Pet to/from the UAE (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to the UAE — Dubai or Abu Dhabi — takes real planning. Cabin pets in via Abu Dhabi on Etihad (some routes excluded); cargo in via Dubai. Plus the MOCCAE import permit, ISO microchip, full vaccinations, and a rabies titer test from high-risk countries. The complete, verified picture, including the banned breeds list."
+          content="Bringing a dog or cat to Dubai or Abu Dhabi: cabin in via Etihad, cargo via Dubai, plus the MOCCAE import permit, ISO microchip, rabies titer and banned breeds."
         />
         <link rel="canonical" href="https://www.petsincabin.com/uae-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from the UAE" />
+        <meta property="og:description" content="Bringing a dog or cat to Dubai or Abu Dhabi: cabin in via Etihad, cargo via Dubai, plus the MOCCAE import permit, ISO microchip, rabies titer and banned breeds." />
+        <meta property="og:url" content="https://www.petsincabin.com/uae-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from the UAE" />
+        <meta name="twitter:description" content="Bringing a dog or cat to Dubai or Abu Dhabi: cabin in via Etihad, cargo via Dubai, plus the MOCCAE import permit, ISO microchip, rabies titer and banned breeds." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from the UAE",
+                "description": "Bringing a dog or cat to Dubai or Abu Dhabi: cabin in via Etihad, cargo via Dubai, plus the MOCCAE import permit, ISO microchip, rabies titer and banned breeds.",
+                "url": "https://www.petsincabin.com/uae-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div
@@ -245,9 +281,9 @@ export default function UAEPetTravel() {
                 <div className="text-xs text-stone-600 leading-relaxed">Another strict-import destination — the AQCS permit process.</div>
               </Link>
 
-              <Link href="/japan-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
-                <div className="font-serif text-base text-stone-900 mb-1">Japan guide →</div>
-                <div className="text-xs text-stone-600 leading-relaxed">The strictest of all — a process measured in months.</div>
+              <Link href="/south-africa-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">
+                <div className="font-serif text-base text-stone-900 mb-1">South Africa guide →</div>
+                <div className="text-xs text-stone-600 leading-relaxed">Manifested cargo both ways — plus the State Vet import permit.</div>
               </Link>
 
               <Link href="/uk-pet-travel" className="block bg-stone-50 border border-stone-200 hover:border-amber-300 transition-colors p-4 rounded-sm">

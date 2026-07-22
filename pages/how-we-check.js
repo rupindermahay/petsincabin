@@ -8,9 +8,20 @@ export default function HowWeCheck() {
         <title>How We Check (2026): Our Sourcing &amp; Verification Method | Pets in Cabin</title>
         <meta
           name="description"
-          content="The whole point of Pets in Cabin is that the info is actually checked. Airline policies read straight from the airline's own page, rules from the CDC, USDA APHIS and each country's own authority — and where we can't be sure, we say so."
+          content="Airline policies read from the airline's own page; rules from the CDC, USDA APHIS and each country's own authority — and where we can't be sure, we say so."
         />
         <link rel="canonical" href="https://www.petsincabin.com/how-we-check" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="How We Check Our Sources" />
+        <meta property="og:description" content="Airline policies read from the airline's own page; rules from the CDC, USDA APHIS and each country's own authority — and where we can't be sure, we say so." />
+        <meta property="og:url" content="https://www.petsincabin.com/how-we-check" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="How We Check Our Sources" />
+        <meta name="twitter:description" content="Airline policies read from the airline's own page; rules from the CDC, USDA APHIS and each country's own authority — and where we can't be sure, we say so." />
       </Head>
 
       <div

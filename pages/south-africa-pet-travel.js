@@ -8,9 +8,45 @@ export default function SouthAfricaPetTravel() {
         <title>Flying with a Pet to/from South Africa (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Every pet entering or leaving South Africa internationally travels as manifested cargo — no cabin option on any airline. Inside the country, Lift carries small dogs in the cabin domestically. Plus the State Vet import permit, the new Animal Improvement permit for dogs, the microchip-then-vaccinate order, and when a rabies titre is (and isn't) needed. The complete, verified picture."
+          content="Pets enter and leave South Africa as manifested cargo — no cabin option. The State Vet import permit, Animal Improvement permit, and when a rabies titre is needed."
         />
         <link rel="canonical" href="https://www.petsincabin.com/south-africa-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from South Africa" />
+        <meta property="og:description" content="Pets enter and leave South Africa as manifested cargo — no cabin option. The State Vet import permit, Animal Improvement permit, and when a rabies titre is needed." />
+        <meta property="og:url" content="https://www.petsincabin.com/south-africa-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from South Africa" />
+        <meta name="twitter:description" content="Pets enter and leave South Africa as manifested cargo — no cabin option. The State Vet import permit, Animal Improvement permit, and when a rabies titre is needed." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from South Africa",
+                "description": "Pets enter and leave South Africa as manifested cargo — no cabin option. The State Vet import permit, Animal Improvement permit, and when a rabies titre is needed.",
+                "url": "https://www.petsincabin.com/south-africa-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

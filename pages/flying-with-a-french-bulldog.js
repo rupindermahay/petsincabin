@@ -8,9 +8,45 @@ export default function FlyingWithAFrenchBulldog() {
         <title>Flying with a French Bulldog (2026): The Honest Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Your Frenchie is too big for cabin, brachycephalic, and most airlines won't touch them. Here's what actually works in 2026 — cargo airlines that take snub-nosed dogs, the Queen Mary 2 transatlantic, K9 Jets pet charters, and what could kill your dog (sedation, summer cargo, the wrong airline). For Bulldogs, Pugs, Boston Terriers, Shih Tzus and other flat-faced breeds too."
+          content="Flying a French Bulldog in 2026: cargo airlines that accept snub-nosed dogs, the Queen Mary 2, pet charters — and the sedation and summer-cargo risks that kill."
         />
         <link rel="canonical" href="https://www.petsincabin.com/flying-with-a-french-bulldog" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a French Bulldog: The Honest Guide" />
+        <meta property="og:description" content="Flying a French Bulldog in 2026: cargo airlines that accept snub-nosed dogs, the Queen Mary 2, pet charters — and the sedation and summer-cargo risks that kill." />
+        <meta property="og:url" content="https://www.petsincabin.com/flying-with-a-french-bulldog" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a French Bulldog: The Honest Guide" />
+        <meta name="twitter:description" content="Flying a French Bulldog in 2026: cargo airlines that accept snub-nosed dogs, the Queen Mary 2, pet charters — and the sedation and summer-cargo risks that kill." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a French Bulldog: The Honest Guide",
+                "description": "Flying a French Bulldog in 2026: cargo airlines that accept snub-nosed dogs, the Queen Mary 2, pet charters — and the sedation and summer-cargo risks that kill.",
+                "url": "https://www.petsincabin.com/flying-with-a-french-bulldog",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

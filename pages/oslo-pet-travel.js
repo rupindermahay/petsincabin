@@ -8,9 +8,45 @@ export default function OsloPetTravel() {
         <title>Flying with a Pet to/from Oslo, Norway (2026): Complete Guide | Pets in Cabin</title>
         <meta
           name="description"
-          content="Bringing a dog or cat to Norway, or flying out of Oslo with a pet? The full picture — SAS and Norwegian cabin pet rules, Norway's tapeworm requirement, banned dog breeds, Storskog and Oslo-only entry, and EEA paperwork."
+          content="Flying a dog or cat to Norway or out of Oslo: SAS and Norwegian cabin rules, the tapeworm requirement, banned breeds, Oslo-only entry and EEA paperwork."
         />
         <link rel="canonical" href="https://www.petsincabin.com/oslo-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet to and from Oslo, Norway" />
+        <meta property="og:description" content="Flying a dog or cat to Norway or out of Oslo: SAS and Norwegian cabin rules, the tapeworm requirement, banned breeds, Oslo-only entry and EEA paperwork." />
+        <meta property="og:url" content="https://www.petsincabin.com/oslo-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet to and from Oslo, Norway" />
+        <meta name="twitter:description" content="Flying a dog or cat to Norway or out of Oslo: SAS and Norwegian cabin rules, the tapeworm requirement, banned breeds, Oslo-only entry and EEA paperwork." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet to and from Oslo, Norway",
+                "description": "Flying a dog or cat to Norway or out of Oslo: SAS and Norwegian cabin rules, the tapeworm requirement, banned breeds, Oslo-only entry and EEA paperwork.",
+                "url": "https://www.petsincabin.com/oslo-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

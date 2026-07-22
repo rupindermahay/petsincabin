@@ -8,9 +8,45 @@ export default function SeattlePetTravel() {
         <title>Flying with a Pet from Seattle (SEA): Complete Guide 2026 | Pets in Cabin</title>
         <meta
           name="description"
-          content="Flying a dog or cat from Seattle in cabin? The full picture — Alaska Airlines, Delta, the routes that work directly, and the best connections for India, Europe, UK, and Hawaii. Includes SEA airport pet relief area locations."
+          content="Flying a dog or cat from Seattle in cabin: Alaska Airlines, Delta, the direct routes, and connections for India, Europe, the UK and Hawaii. Plus SEA pet relief areas."
         />
         <link rel="canonical" href="https://www.petsincabin.com/seattle-pet-travel" />
+        {/* Per-page Open Graph. _document.js supplies site-wide defaults;
+            next/head dedupes by property, so these override them for this
+            page only. Without these every page shared the homepage's
+            OG identity — which Google was substituting for the page's own
+            meta description in search results. */}
+        <meta property="og:title" content="Flying with a Pet from Seattle (SEA)" />
+        <meta property="og:description" content="Flying a dog or cat from Seattle in cabin: Alaska Airlines, Delta, the direct routes, and connections for India, Europe, the UK and Hawaii. Plus SEA pet relief areas." />
+        <meta property="og:url" content="https://www.petsincabin.com/seattle-pet-travel" />
+        <meta property="og:type" content="article" />
+        <meta name="twitter:title" content="Flying with a Pet from Seattle (SEA)" />
+        <meta name="twitter:description" content="Flying a dog or cat from Seattle in cabin: Alaska Airlines, Delta, the direct routes, and connections for India, Europe, the UK and Hawaii. Plus SEA pet relief areas." />
+        {/* Article schema — signals this is a maintained guide with a
+            modification date, not a static page. dateModified must be
+            bumped when the page's content materially changes. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": "Flying with a Pet from Seattle (SEA)",
+                "description": "Flying a dog or cat from Seattle in cabin: Alaska Airlines, Delta, the direct routes, and connections for India, Europe, the UK and Hawaii. Plus SEA pet relief areas.",
+                "url": "https://www.petsincabin.com/seattle-pet-travel",
+                "author": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "publisher": {
+                  "@type": "Person",
+                  "name": "Theo's Mum"
+                },
+                "dateModified": "2026-07-22",
+                "isAccessibleForFree": true
+              })
+          }}
+        />
       </Head>
 
       <div

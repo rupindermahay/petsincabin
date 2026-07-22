@@ -8933,7 +8933,7 @@ function openChecklistPrintable(data) {
   <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
   <div class="container">
     <div class="brand">
-      <img src="https://petsincabin.com/logo.png" alt="Pets in Cabin" />
+      <img src="https://www.petsincabin.com/logo.png" alt="Pets in Cabin" />
       <div>
         <div class="brand-text">Pets in Cabin</div>
         <div class="brand-tag">Travel together, stay together</div>

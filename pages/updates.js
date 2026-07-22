@@ -68,7 +68,7 @@ const RULE_CHANGES = [
     date: "22 Apr 2026",
     tag: "EU",
     headline: "EU pet passport rules changed for non-EU residents",
-    body: "UK, US, Canadian and other non-EU residents can no longer use EU pet passports to enter the EU — even if the passport was issued before this date. You now need a fresh Animal Health Certificate (AHC) for every single trip. The AHC's validity was extended from 4 to 6 months at the same time.",
+    body: "EU pet passports may now only be issued to, and used by, owners whose main residence is in the EU. A GB resident can no longer use one to take a pet from Great Britain into the EU — even a passport issued before this date — and needs an Animal Health Certificate for each trip instead. The AHC's validity was extended from 4 to 6 months at the same time. Note the direction: Great Britain's own entry rules did NOT change, and an EU pet passport is still an accepted document for bringing a pet INTO GB.",
     source: "EU Commission travel-with-pets guidance",
   },
   ETIHAD_UPDATE,

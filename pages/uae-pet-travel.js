@@ -65,7 +65,7 @@ export default function UAEPetTravel() {
           </p>
 
           <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
-            Verified against MOCCAE (the UAE Ministry of Climate Change and Environment) and USDA APHIS guidance as of May 2026. UAE rules change and some details vary by source — confirm directly with MOCCAE before booking.
+            Verified against MOCCAE (the UAE Ministry of Climate Change and Environment) and USDA APHIS guidance as of July 2026. UAE rules change and some details vary by source — confirm directly with MOCCAE before booking.
           </p>
 
           <div className="h-px bg-stone-300 mb-12" />
@@ -105,7 +105,10 @@ export default function UAEPetTravel() {
 
             <div className="bg-amber-50 border-l-2 border-amber-400 p-4 mb-4">
               <p className="font-serif text-stone-700 leading-relaxed text-sm">
-                <strong>One detail to confirm directly:</strong> sources disagree on how long the import permit is valid. MOCCAE's own service pages state 90 days; USDA APHIS and UAE press guidance state 30 days. Because the figure differs between official sources, treat this as something to verify on the MOCCAE portal at the time you apply — and build in a comfortable margin so the permit is still valid on your travel date.
+                <strong>One detail to confirm directly:</strong> sources disagree on how long the import permit is valid. MOCCAE's own service directory states <strong>90 days</strong> and that a pet cannot be imported on an expired permit — that is the most authoritative figure available, and it is the one to plan against. But USDA APHIS and several relocation agents state 30 days, and MOCCAE's site has itself shown inconsistencies between sections, so the safe approach is to apply once you have a confirmed flight date rather than early. If you treat the window as 30 days you will never be caught out by the longer figure being wrong; if you rely on 90 and the section you're reading is stale, you can be. Verify on the portal at the time you apply.
+              </p>
+              <p className="font-serif text-stone-700 leading-relaxed text-sm mt-3">
+                <strong>The published fees</strong> on the same MOCCAE service listing: <strong>AED 200</strong> to request permission to import a cat or dog (per head), then a release fee at the port of entry — <strong>AED 500 per dog</strong> and <strong>AED 250 per cat</strong>. The release fee catches people out, because it falls due on arrival rather than at the permit stage.
               </p>
             </div>
 
@@ -229,7 +232,7 @@ export default function UAEPetTravel() {
           </div>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed mt-12 text-center">
-            Verified against MOCCAE (the UAE Ministry of Climate Change and Environment) and USDA APHIS published guidance as of May 2026. UAE import rules can change, some details — including import-permit validity — differ between official sources, and requirements depend on your pet's age, breed, species and country of origin. Always confirm the latest specifics directly with MOCCAE before travel.
+            Verified against MOCCAE (the UAE Ministry of Climate Change and Environment) and USDA APHIS published guidance as of July 2026. UAE import rules can change, some details — including import-permit validity — differ between official sources, and requirements depend on your pet's age, breed, species and country of origin. Always confirm the latest specifics directly with MOCCAE before travel.
           </p>
 
           {/* Related guides — cross-links to other country/topic pages */}

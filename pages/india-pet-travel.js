@@ -119,7 +119,11 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>Apply roughly 7 days before arrival</strong> — the NOC has a limited validity window so applying too early doesn't help. It can be submitted by email, fax, or in-person. Processing takes about 5 working days. The fee is Rs 1,000 per application.
+              <strong>Apply at least 7 working days before you fly</strong> — AQCS's own standard operating procedure sets that as the minimum for an advance NOC, and it is counted in working days before <em>embarkation</em>, not calendar days before arrival. Weekends and Indian public holidays therefore push the real start date back, so a week's notice is not enough. The NOC also has a limited validity window, so applying months early doesn't help either — aim for the window that clears the minimum with a few days in hand. Applications can be submitted online through the AQCS portal, and the fee is Rs 1,000 per application.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              If you can't attend in person, you may authorise a representative to obtain the NOC and present the pet for examination — AQCS provides a form for exactly this, which is what most relocation agents use on their clients' behalf.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
@@ -128,6 +132,10 @@ export default function IndiaPetTravel() {
 
             <p className="font-serif text-stone-700 leading-relaxed">
               An in-country representative is strongly recommended, especially at Delhi airport — there's a logistics step on arrival (taking the pet to the AQCS office at the airport for clinical examination before release) that benefits from someone who's done it before.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed">
+              <strong>Two things people don't budget for.</strong> Pets arriving under the baggage route are generally subject to a <strong>15-day quarantine period on arrival</strong> — not the immediate walk-out that "cabin pet" framing implies — and if the animal shows any clinical sign of disease at examination it can be held for observation regardless. Cats additionally have a species-specific <strong>seven-day influenza examination</strong> requirement. Neither is optional, and both need to be in your timeline and your budget before you book.
             </p>
           </section>
 
@@ -146,7 +154,11 @@ export default function IndiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              The DGFT licence process is its own thing — applications go to an Inter-Ministerial Committee that meets once a month. Plan for 6–8 weeks minimum. Apply at <a href="http://dgft.gov.in" className="text-amber-700 underline decoration-amber-300">dgft.gov.in</a>.
+              In practice AQCS sorts every case into one of three pathways, and your paperwork has to match one of them before an NOC will be issued: <strong>transfer of residence</strong> (the two-year route — and note that proof of the two years is not just a visa copy, but evidence you are actually moving, typically visa cancellation or other relocation proof); <strong>re-import</strong>, for a pet that previously left India, which requires the original AQCS health certificate issued when it was exported — without that document the case cannot be filed as a re-import at all; and <strong>short stay</strong>, which requires the DGFT licence in hand <em>before</em> the NOC application. Working out which pathway you are on is the first decision, because it determines everything downstream.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              The DGFT licence process is its own thing — applications go to an Inter-Ministerial Committee that meets once a month, and the application form is the <strong>ANF-2M</strong>. DGFT's own advice is to start the authorisation process <strong>at least two months before your travel date</strong>; USDA APHIS puts typical processing at about a month, so two months is the sensible planning figure rather than the floor. Apply online at <a href="https://dgft.gov.in" className="text-amber-700 underline decoration-amber-300">dgft.gov.in</a> under Services → Import Management System → Import Authorisation of Restricted Items. Be aware that short-duration or tourist imports are generally not permitted and are only granted case by case on justification — do not assume a holiday trip will clear.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -273,7 +285,7 @@ export default function IndiaPetTravel() {
           </div>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed mt-12 text-center">
-            Verified against AQCS, Air India Paws on Board guidelines, Lufthansa, CDC, and USDA APHIS as of May 2026. Government and airline policies change — always confirm specifics before travel.
+            Verified against AQCS, Air India Paws on Board guidelines, Lufthansa, CDC, and USDA APHIS as of July 2026. Government and airline policies change — always confirm specifics before travel.
           </p>
 
           {/* Related guides — cross-links to other country/topic pages */}

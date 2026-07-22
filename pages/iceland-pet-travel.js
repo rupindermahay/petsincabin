@@ -53,7 +53,7 @@ export default function IcelandPetTravel() {
           </p>
 
           <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
-            Verified against the Icelandic Food and Veterinary Authority (MAST) and US APHIS as of May 2026.
+            Verified against the Icelandic Food and Veterinary Authority (MAST) and US APHIS as of July 2026.
           </p>
 
           <div className="bg-white border border-stone-200 rounded-sm p-5 mb-12">
@@ -83,7 +83,7 @@ export default function IcelandPetTravel() {
             </p>
             <div className="space-y-4 font-serif text-stone-800 leading-relaxed">
               <p>
-                Pets cannot travel in the cabin to Iceland on any commercial airline. The only legal route is manifested cargo via Icelandair, and only into Keflavík (KEF) — the only approved port of entry for pets in the entire country.
+                Pets cannot travel in the cabin to Iceland on any commercial airline. The only legal route is manifested cargo via Icelandair Cargo, and only into Keflavík (KEF) — the only approved port of entry for pets in the entire country. Since November 2024 Icelandair has not carried pets on its passenger flights at all, not even as checked baggage: live animals move only on cargo-only freighter aircraft, which serve a far shorter list of origins than the passenger network. That single change is the biggest constraint on planning a move to Iceland — see section 07 before you fix any dates.
               </p>
               <p>
                 On arrival every dog and cat enters a <strong>government-approved quarantine facility for a minimum of 14 days</strong>. There are currently two facilities: Mósel and Reykjanes. You book and pay for your pet's stay in advance, and quarantine "intake days" only run on specific dates (typically monthly), so your travel date is dictated by the facility's calendar, not yours.
@@ -113,13 +113,13 @@ export default function IcelandPetTravel() {
                 The two approved quarantine facilities — <strong>Mósel</strong> (in the south, the larger one) and <strong>Reykjanes</strong> — are run privately under MAST oversight. You book a space directly with the facility well before applying for the import permit, because the permit application asks for your confirmed quarantine booking.
               </p>
               <p>
-                Pets can only arrive on a "quarantine admission day" — typically once a month, decided by the facility. The Keflavík airport admission window is <strong>05:00 to 17:00 on those days</strong>; if your flight lands outside that window, you need pre-arranged approval from MAST (apply by 16:00 the Wednesday before your intended admission day) and pay extra inspection costs.
+                Pets can only arrive on a "quarantine admission day", set by the facility — MAST describes intakes as running at roughly three-week intervals, with each group staying together in isolation for the 14 days, so check the station's published dates rather than assuming a monthly rhythm. The approved Keflavík arrival window is <strong>06:00 to 17:00 on those days</strong>; if your flight lands outside it you must arrange it with the quarantine station in advance, and pets cannot stay overnight at the airport. Weekend arrivals are not approved at all, because the stations run on an all-in, all-out basis.
               </p>
               <p>
                 During the 14 days, you can visit your pet at scheduled times, bring familiar bedding and food, and stay in contact with the facility staff. Pets must be picked up at the end of the quarantine period (typically the morning after day 14). The facility will not extend stays casually.
               </p>
               <p>
-                Quarantine is the single biggest line in the budget. Both facilities currently charge <strong>220,000 ISK</strong> (about £1,330 / $1,790) for a dog's 14-day stay and roughly <strong>100,000–110,000 ISK</strong> (about £610–670 / $815–895) for a cat, with a booking/confirmation fee on top. That covers airport collection, food, housing, daily care, parasite treatment and vet checks during the stay. The full cost breakdown — permit, flights, vet work and quarantine together — is in the next section. Get a written quote at the booking stage; insurance during quarantine is generally the owner's responsibility.
+                Quarantine is the single biggest line in the budget. Both facilities currently charge <strong>220,000 ISK</strong> (about £1,330 / $1,790) for a dog's 14-day stay and roughly <strong>100,000–110,000 ISK</strong> (about £610–670 / $815–895) for a cat, with a booking/confirmation fee on top — Mósel publishes that as <strong>50,000 ISK</strong> (about £305), and it's itemised in the cost table below. That covers airport collection, food, housing, daily care, parasite treatment and vet checks during the stay. The full cost breakdown — permit, flights, vet work and quarantine together — is in the next section. Get a written quote at the booking stage; insurance during quarantine is generally the owner's responsibility.
               </p>
             </div>
           </section>
@@ -137,7 +137,7 @@ export default function IcelandPetTravel() {
             </p>
             <div className="space-y-4 font-serif text-stone-800 leading-relaxed">
               <p>
-                Importing a dog to Iceland realistically lands somewhere around <strong>£2,500–4,000 / $3,400–5,400</strong> all in, depending on where you fly from, your vet's rates, and your pet's size. A cat sits lower, mostly because the quarantine fee is roughly half. The figures below are the current published rates as of May 2026 — converted at approximately 165 ISK to the pound, so treat the £/$ columns as indicative and confirm in the currency you'll actually pay.
+                Importing a dog to Iceland realistically lands somewhere around <strong>£2,500–4,000 / $3,400–5,400</strong> all in, depending on where you fly from, your vet's rates, and your pet's size. A cat sits lower, mostly because the quarantine fee is roughly half. The figures below are the current published rates as of July 2026 — converted at approximately 165 ISK to the pound, so treat the £/$ columns as indicative and confirm in the currency you'll actually pay.
               </p>
 
               <div className="overflow-x-auto -mx-2 px-2">
@@ -188,7 +188,7 @@ export default function IcelandPetTravel() {
                       <td className="py-2 pl-2 whitespace-nowrap">~$270–675</td>
                     </tr>
                     <tr className="border-b border-stone-200">
-                      <td className="py-2 pr-3">Icelandair cargo flight (varies by origin/size)</td>
+                      <td className="py-2 pr-3">Freighter shipment + agent (varies by origin/size)</td>
                       <td className="py-2 px-2 whitespace-nowrap">—</td>
                       <td className="py-2 px-2 whitespace-nowrap">~£500–1,200</td>
                       <td className="py-2 pl-2 whitespace-nowrap">~$675–1,600</td>
@@ -327,7 +327,10 @@ export default function IcelandPetTravel() {
                 Iceland has multiple airports but only Keflavík (KEF) is approved for pet imports. Domestic airports — including Reykjavík city airport (RKV) — cannot clear an imported pet under any circumstances.
               </p>
               <p>
-                Pets travel as <strong>manifested cargo</strong>, not as checked baggage and not in the cabin. Icelandair is the primary carrier; Icelandair Cargo handles the booking. Some other carriers serve Keflavík but they typically route pet bookings through Icelandair Cargo too.
+                Pets travel as <strong>manifested cargo</strong>, not as checked baggage and not in the cabin. Icelandair Cargo handles the booking — but note what changed in November 2024: pets are no longer carried in the hold of Icelandair's passenger flights, so you cannot simply book your pet onto the same aircraft you're flying on. Live animals move on <strong>cargo-only freighter aircraft</strong>, and Icelandair Cargo's freighter operation runs between Keflavík, Liège (Belgium) and New York.
+              </p>
+              <p>
+                The practical consequence is that your pet's routing may look nothing like your own. Most owners position the pet to a freighter origin and fly separately. Icelandair Cargo assists directly with outbound shipments from Iceland, but transports <em>into</em> or through Iceland must be handled by a licensed agent — which is why most inbound moves go through a pet shipper rather than being booked by the owner. Confirm the current freighter schedule and the agent requirement with Icelandair Cargo before committing to a quarantine intake date, because the intake calendar and the freighter calendar both have to line up.
               </p>
               <p>
                 Crates must meet IATA Live Animals Regulations (LAR). Order early — IATA-compliant crates take time to source, and your pet should be carrier-trained for at least 2 weeks before the flight to reduce stress.
@@ -357,7 +360,7 @@ export default function IcelandPetTravel() {
                 <strong>To the EU/EEA:</strong> EU Animal Health Certificate or EU Pet Passport (Iceland is part of the EEA, so the EU pet movement framework applies). Microchip + rabies + tapeworm treatment for dogs going to the UK, Ireland, Malta, Finland, or Norway.
               </p>
               <p>
-                <strong>To the UK:</strong> No cabin pets allowed into the UK on any airline — that's a UK government rule, not an Iceland one. Cargo via Icelandair, or fly to Paris/Amsterdam first and cross by Eurotunnel.
+                <strong>To the UK:</strong> No cabin pets allowed into the UK on any airline — that's a UK government rule, not an Iceland one. Cargo via Icelandair Cargo's freighter service, or fly to Paris/Amsterdam first and cross by Eurotunnel. MAST charges an export endorsement fee for the paperwork on the way out — currently 13,211 ISK for a UK-bound pet (minimum fee, on the same submit-on-time basis as the import permit).
               </p>
               <p>
                 <strong>To the US:</strong> CDC Dog Import Form for dogs (Iceland is on the CDC's low-risk list — no extra titer required). Vet "fit to fly" health certificate. Six US airports accept dogs (LAX, ATL, MIA, JFK, PHL, IAD).

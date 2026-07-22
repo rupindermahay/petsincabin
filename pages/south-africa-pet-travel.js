@@ -70,7 +70,7 @@ export default function SouthAfricaPetTravel() {
           </p>
 
           <p className="font-serif italic text-stone-600 leading-relaxed mb-12">
-            Verified against South Africa's Department of Agriculture (DALRRD) veterinary import procedures, USDA APHIS guidance, and South African pet-relocation specialists as of May 2026. Because international travel is cargo-only, exact crate specs, timings and costs vary by airline and route — confirm every detail with the airline's cargo division or a professional relocation agent before you commit to dates.
+            Verified against South Africa's Department of Agriculture (DALRRD) veterinary import procedures, USDA APHIS guidance, and South African pet-relocation specialists as of July 2026. Because international travel is cargo-only, exact crate specs, timings and costs vary by airline and route — confirm every detail with the airline's cargo division or a professional relocation agent before you commit to dates.
           </p>
 
           <div className="h-px bg-stone-300 mb-12" />
@@ -218,6 +218,10 @@ export default function SouthAfricaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
+              <strong>Budget for a second fare.</strong> The dog doesn't fly as an add-on fee — Lift blocks the window seat beside you and charges the dog's booking at <strong>the same fare the accompanying adult paid, less taxes</strong>, so a cabin dog roughly doubles the ticket cost on that leg. The carrier is a soft-sided bag no larger than 55 × 35 × 28 cm, it goes under the seat in front and stays there, and the dog is not allowed out of it at any point — including in the terminal. You book by submitting the request form rather than buying the seat yourself; Lift confirms availability and completes the booking for you.
+            </p>
+
+            <p className="font-serif text-stone-700 leading-relaxed mb-4">
               For dogs over 7 kg, for cats, or on other domestic routes, the options are FlySafair's climate-controlled PetLounge cargo service, or SAA/Airlink checked baggage on domestic flights. So the cabin really is possible inside the country — just on Lift's dog-friendly flights specifically.
             </p>
 
@@ -241,7 +245,7 @@ export default function SouthAfricaPetTravel() {
           </div>
 
           <p className="font-sans text-xs text-stone-400 leading-relaxed mt-12 text-center">
-            Verified against South Africa's Department of Agriculture (DALRRD) veterinary import procedures, USDA APHIS guidance and South African pet-relocation specialists as of May 2026. Because international pet travel to and from South Africa is cargo-only, exact crate specs, booking processes, timings and costs vary by airline and route — and permit requirements (including the Animal Improvement permit for dogs) change. Always confirm the latest specifics with the State Veterinary authority, the airline's cargo division, or a professional relocation agent before travel.
+            Verified against South Africa's Department of Agriculture (DALRRD) veterinary import procedures, USDA APHIS guidance and South African pet-relocation specialists as of July 2026. Because international pet travel to and from South Africa is cargo-only, exact crate specs, booking processes, timings and costs vary by airline and route — and permit requirements (including the Animal Improvement permit for dogs) change. Always confirm the latest specifics with the State Veterinary authority, the airline's cargo division, or a professional relocation agent before travel.
           </p>
 
           {/* Related guides — cross-links to other country/topic pages */}

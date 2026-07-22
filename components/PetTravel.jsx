@@ -15853,6 +15853,17 @@ function Tips() {
   );
 }
 
+// Outbound-click analytics helper. MODULE SCOPE ON PURPOSE (Decision #88, chat 24):
+// this was previously duplicated as an identical local const inside both Gear() and
+// Operators(). Stories() needs it too — Story 02 links out to Pet Moves Abroad twice —
+// and a component-local copy isn't reachable from there. Do NOT move this back inside a
+// component or re-duplicate it; every consumer calls this single definition.
+const trackOut = (kind, name) => {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
+  }
+};
+
 function TravelDay() {
   // Build a TRAVEL_DAY_GUIDE-shaped object for the printable helper —
   // each stage becomes a section, each point becomes a checklist item.
@@ -15937,12 +15948,6 @@ function TravelDay() {
 }
 
 function Gear() {
-  const trackOut = (kind, name) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
-    }
-  };
-
   return (
     <section id="gear" className="py-20 px-6 md:px-12 bg-stone-100 border-y border-stone-300">
       <div className="max-w-5xl mx-auto">
@@ -16019,6 +16024,26 @@ function Gear() {
               See it on Amazon →
             </a>
           </div>
+
+          <div className="bg-white border border-stone-200 rounded-sm p-5">
+            <div className="font-serif text-lg text-stone-900 mb-1">Calming aids — worth trying, worth testing first</div>
+            <p className="text-stone-600 text-sm leading-relaxed mb-3">
+              Theo takes <strong>Zesty Paws Calming Bites</strong> — hemp seed powder,
+              valerian root, chamomile and L-theanine — given about an hour before the
+              flight. A <strong>pheromone calming spray</strong> on the carrier's interior
+              about fifteen minutes before travel is the other thing worth having. These
+              are species-specific: the dog ones and the cat ones aren't interchangeable,
+              and it goes on the carrier, never on the pet. Test either one at home well
+              before you travel, so you know how your pet reacts before you're at 38,000
+              feet. Talk to your vet first — especially if your pet is older, on
+              medication, or has any existing health condition.
+            </p>
+            <a href="https://zestypaws.com/products/calming-soft-chews-for-dogs" target="_blank" rel="noopener noreferrer"
+               onClick={() => trackOut("gear", "zesty-paws-calming-bites")}
+               className="text-amber-700 underline decoration-amber-300 hover:decoration-amber-600 underline-offset-2 text-sm">
+              Zesty Paws Calming Bites →
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -16026,12 +16051,6 @@ function Gear() {
 }
 
 function Operators() {
-  const trackOut = (kind, name) => {
-    if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "outbound_click", { link_kind: kind, link_name: name });
-    }
-  };
-
   return (
     <section id="operators" className="py-20 px-6 md:px-12">
       <div className="max-w-5xl mx-auto">
@@ -16338,7 +16357,7 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The Kawa moment — the pet taxi driver who saved the trip</h3>
 
                 <p>
-                  Kawa from <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> arrived at the hotel at midday. I had my documents folder ready. He asked to see it before we set off.
+                  Kawa from <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" onClick={() => trackOut("pet-taxi", "Pet Moves Abroad — Story 02 (Kawa)")} className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> arrived at the hotel at midday. I had my documents folder ready. He asked to see it before we set off.
                 </p>
 
                 <p>
@@ -16422,7 +16441,7 @@ function Stories() {
                   5. The €90 EU Pet Passport backup exists.
                 </p>
                 <p>
-                  French vets can issue an EU Pet Passport on the spot to a non-EU-resident pet with the right vaccination records. <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> — and probably most transatlantic-experienced pet taxis — know a vet who does this same-day. If you arrive in France with paperwork that turns out to be EU-only, this is the fix. It is not a plan, but it is a real backup.
+                  French vets can issue an EU Pet Passport on the spot to a non-EU-resident pet with the right vaccination records. <a href="https://petmovesabroad.co.uk" target="_blank" rel="noopener noreferrer" onClick={() => trackOut("pet-taxi", "Pet Moves Abroad — Story 02 (lessons)")} className="text-amber-700 underline decoration-amber-300 underline-offset-4 hover:text-amber-800 transition-colors">Pet Moves Abroad</a> — and probably most transatlantic-experienced pet taxis — know a vet who does this same-day. If you arrive in France with paperwork that turns out to be EU-only, this is the fix. It is not a plan, but it is a real backup.
                 </p>
 
                 <p className="font-medium text-stone-900">

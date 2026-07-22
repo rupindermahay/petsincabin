@@ -520,7 +520,7 @@ const AIRLINES = [
     tags: [],
     cabin: "Cabin ✓ — small dogs and cats, domestic Australia only",
     cabinStatus: "conditional",
-    direction: "Cabin allowed: small dogs and cats (under 8 kg incl. carrier) on Virgin Australia's Pets in Cabin domestic flights only — launched Oct 2025 between Melbourne (MEL) and the Gold Coast (OOL) and Sunshine Coast (MCY), expanding to Adelaide (ADL) and Launceston (LST) during 2026. Cabin NOT allowed: any international route — Pets in Cabin is DOMESTIC Australia only. There is no cabin pet option flying INTO Australia from overseas on any airline; international pets arrive as manifested cargo with quarantine (see the Australia tab in Difficult Destinations).",
+    direction: "Cabin allowed: small dogs and cats (under 8 kg incl. carrier) on Virgin Australia's Pets in Cabin domestic flights only — launched Oct 2025 between Melbourne (MEL) and the Gold Coast (OOL) and Sunshine Coast (MCY), with Adelaide (ADL) added 23 June 2026 on ADL↔MEL and ADL↔OOL. Launceston (LST) is flagged as the next city but has no on-sale date yet. Cabin NOT allowed: any international route — Pets in Cabin is DOMESTIC Australia only. There is no cabin pet option flying INTO Australia from overseas on any airline; international pets arrive as manifested cargo with quarantine (see the Australia tab in Difficult Destinations).",
     originAllowed: {},
     destinationAllowed: {},
     fee: "$149 per pet per flight (introductory), or 18,600 Velocity Points per sector — additional to your own fare.",
@@ -528,7 +528,7 @@ const AIRLINES = [
     carrier: "Approved soft-sided carrier, max 44 × 26 × 28 cm. Pet stays inside for the whole flight and in the terminal (no airport lounges or food areas).",
     notes: "Australia's first in-cabin pet service — and it's DOMESTIC-only, so it does not create any cabin route into or out of Australia internationally. Small dogs and cats only (note: cats are not yet accepted on the Melbourne–Gold Coast route — dogs only there). Max 4 pets per flight, seated in designated window rows (18A/18F/20A/20F). Bookings cannot be made online — call the Virgin Australia Guest Contact Centre on 13 67 89, and book early as pet seats are capped. Brachycephalic (snub-nosed) breeds are welcomed but flagged for welfare — confirm when booking. Larger pets and all international Australian travel continue via cargo (e.g. Jetpets). For getting a pet INTO Australia from abroad, see the Australia tab in Difficult Destinations — that's cargo + quarantine regardless of this service.",
     intl: "No — domestic Australia only",
-    verified: "May 2026 — audited clean against Virgin Australia's own pages (virginaustralia.com Pets in Cabin + newsroom) and corroborating 2026 coverage. Pets in Cabin launched 16 Oct 2025 (MEL↔Gold Coast / Sunshine Coast), trial extended to 30 June 2026, intended ongoing, Adelaide + Launceston expansion announced for after Easter 2026. CONFIRMED: $149/flight or 18,600 Velocity Points, 8 kg incl. carrier, soft carrier 44×26×28 cm, dogs+cats (cats not yet on MEL–Gold Coast), 4 pets/flight, window-row seating, phone-only booking. DOMESTIC-only — does NOT change the international cabin-into-Australia rule (still cargo + quarantine). Added this session (chat 12) after the AKL→Australia FB question surfaced that the site had no Virgin Australia coverage and overstated 'no cabin on any flight'.",
+    verified: "July 2026 (chat 24 accuracy sweep) — re-verified against Virgin Australia's own Pets in Cabin page + newsroom and June 2026 coverage. UPDATE: Adelaide went LIVE 23 June 2026 (first flight VA218 ADL→MEL), covering ADL↔MEL and ADL↔Gold Coast both directions — the site previously said 'announced for after Easter 2026, confirm on-sale', which was stale once the routes went bookable. Booking windows: ADL↔MEL to 31 Jan 2027, all other Pets in Cabin routes to 30 Sept 2026. ~1,500 pets flown since Oct 2025 launch; trial extended past 30 June 2026 and Virgin intends to make it a standard offering from 2027, subject to final airport approvals. Launceston still has NO on-sale date — kept as not-bookable. CONFIRMED unchanged: $149/flight or 18,600 Velocity Points, 8 kg incl. carrier, soft carrier 44×26×28 cm, dogs+cats (cats not yet on MEL–Gold Coast), 4 pets/flight, window-row seating, phone-only booking. DOMESTIC-only — does NOT change the international cabin-into-Australia rule (still cargo + quarantine). Originally added chat 12 after the AKL→Australia FB question.",
     link: "https://www.virginaustralia.com/au/en/travel-info/specific-travel/pets/pets-in-cabin/",
   },
   {
@@ -996,12 +996,17 @@ const DIRECT_ROUTES = [
 
   // ═══════ AUSTRALIA DOMESTIC (Virgin Australia Pets in Cabin) ═══════
   // Domestic-AU cabin only. International into/out of Australia is cargo + quarantine
-  // on every airline (see Australia in Difficult Destinations). ADL/LST announced for
-  // after Easter 2026 — not added as live routes until on-sale.
+  // on every airline (see Australia in Difficult Destinations). ADL went live 23 June
+  // 2026 and is a routable hub. LST is flagged as next but has no on-sale date —
+  // not added as a live route until it does (Rule A: don't claim service that isn't live).
   { from: "Melbourne (MEL)", to: "Gold Coast (OOL)", duration: "2h 15m", note: "Virgin Australia. ✓ Cabin — DOGS ONLY on this route currently (cats not yet accepted MEL–Gold Coast), under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book via Virgin's Guest Contact Centre (13 67 89), not online — 4 pets/flight, window rows. No cabin pet option flying INTO Australia from overseas (cargo + quarantine).", tags: ["australia"] },
   { from: "Gold Coast (OOL)", to: "Melbourne (MEL)", duration: "2h 15m", note: "Virgin Australia. ✓ Cabin — dogs only on this route currently (no cats yet), under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows.", tags: ["australia"] },
   { from: "Melbourne (MEL)", to: "Sunshine Coast (MCY)", duration: "2h 20m", note: "Virgin Australia. ✓ Cabin — small dogs AND cats under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book via Virgin's Guest Contact Centre (13 67 89), 4 pets/flight, designated window rows. No cabin pet option flying INTO Australia from overseas (cargo + quarantine).", tags: ["australia"] },
-  { from: "Sunshine Coast (MCY)", to: "Melbourne (MEL)", duration: "2h 20m", note: "Virgin Australia. ✓ Cabin — dogs and cats under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Adelaide and Launceston routes announced for after Easter 2026 — confirm on-sale before booking.", tags: ["australia"] },
+  { from: "Sunshine Coast (MCY)", to: "Melbourne (MEL)", duration: "2h 20m", note: "Virgin Australia. ✓ Cabin — dogs and cats under 8 kg incl. carrier, $149/flight. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Bookable for travel to 30 Sept 2026.", tags: ["australia"] },
+  { from: "Adelaide (ADL)", to: "Melbourne (MEL)", duration: "1h 25m", note: "Virgin Australia. ✓ Cabin — small dogs and cats under 8 kg incl. carrier, $149/flight. Launched 23 June 2026, the third city on the Pets in Cabin network. Domestic Australia only. Book via Virgin's Guest Contact Centre (13 67 89), not online — 4 pets/flight, designated window rows. Bookable for travel to 31 Jan 2027 — the longest booking window on the network. No cabin pet option flying INTO Australia from overseas (cargo + quarantine).", tags: ["australia"] },
+  { from: "Melbourne (MEL)", to: "Adelaide (ADL)", duration: "1h 25m", note: "Virgin Australia. ✓ Cabin — small dogs and cats under 8 kg incl. carrier, $149/flight. Launched 23 June 2026. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Bookable for travel to 31 Jan 2027.", tags: ["australia"] },
+  { from: "Adelaide (ADL)", to: "Gold Coast (OOL)", duration: "2h 25m", note: "Virgin Australia. ✓ Cabin — small dogs and cats under 8 kg incl. carrier, $149/flight. Launched 23 June 2026 alongside the Adelaide–Melbourne route. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Bookable for travel to 30 Sept 2026.", tags: ["australia"] },
+  { from: "Gold Coast (OOL)", to: "Adelaide (ADL)", duration: "2h 25m", note: "Virgin Australia. ✓ Cabin — small dogs and cats under 8 kg incl. carrier, $149/flight. Launched 23 June 2026. Domestic Australia only. Book by phone (13 67 89), 4 pets/flight, window rows. Bookable for travel to 30 Sept 2026.", tags: ["australia"] },
 
   // ═══════ FROM DELHI ═══════
   { from: "Delhi (DEL)", to: "Istanbul (IST)", duration: "7h 30m", note: "Turkish Airlines. ✓ Cabin (under 8 kg). Connect at IST for onward cabin to Europe / USA.", tags: ["india", "europe"] },
@@ -2045,14 +2050,18 @@ const REGION_HUBS = {
   "russia": ["Moscow (SVO)"],
   // Australia added May 2026 (chat 12): DOMESTIC cabin pets only, via Virgin
   // Australia's Pets in Cabin service (launched Oct 2025). MEL is the network
-  // anchor; OOL (Gold Coast) and MCY (Sunshine Coast) are the live routes.
-  // Adelaide (ADL) and Launceston (LST) are ANNOUNCED for after Easter 2026 but
-  // not yet on-sale (pending airport approvals) — included as upcoming, flagged
-  // in route notes, NOT asserted as bookable today (Rule A: don't claim service
-  // that isn't live). CRITICAL: this is domestic-AU cabin ONLY. There is NO
-  // cabin pet route into or out of Australia internationally on any airline —
-  // international is cargo + quarantine (see Australia in DIFFICULT_DESTINATIONS).
-  "australia": ["Melbourne (MEL)", "Gold Coast (OOL)", "Sunshine Coast (MCY)"],
+  // anchor; OOL (Gold Coast) and MCY (Sunshine Coast) were the original routes.
+  // Adelaide (ADL) went LIVE on 23 June 2026 (chat 24) — ADL↔MEL and ADL↔OOL are
+  // bookable now, so ADL is listed here as a routable domestic hub and has real
+  // DIRECT_ROUTES entries. NOTE: ADL's AIRPORTS cabinOut/cabinIn stay FALSE like
+  // every other AU airport — those flags govern INTERNATIONAL capability and also
+  // gate the "no cabin into/out of Australia" warning. Do not flip them to true.
+  // Launceston (LST) is still only flagged as "next" with no on-sale date — it is
+  // NOT in this hub list and has no routes (Rule A: don't claim service that isn't
+  // live). CRITICAL: this is domestic-AU cabin ONLY. There is NO cabin pet route
+  // into or out of Australia internationally on any airline — international is
+  // cargo + quarantine (see Australia in DIFFICULT_DESTINATIONS).
+  "australia": ["Melbourne (MEL)", "Gold Coast (OOL)", "Sunshine Coast (MCY)", "Adelaide (ADL)"],
 };
 
 const REGION_LABELS_SHORT = {
@@ -2270,11 +2279,11 @@ const AIRPORTS = [
   // airline (cargo + quarantine — see Australia in DIFFICULT_DESTINATIONS). The
   // domestic Virgin cabin reality lives in the notes + ROUTES + the australia
   // FALLBACK_STRATEGIES handlers. Same modelling as South Africa.
-  { code: "MEL", city: "Melbourne", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia's Pets in Cabin anchor — small dogs and cats (under 8 kg incl. carrier) fly in cabin DOMESTICALLY from Melbourne to the Gold Coast and Sunshine Coast (Adelaide and Launceston announced for after Easter 2026). No international cabin pet option in or out of Australia on any airline — international travel is cargo with mandatory quarantine. Book via Virgin's Guest Contact Centre (13 67 89), not online." },
+  { code: "MEL", city: "Melbourne", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia's Pets in Cabin anchor — small dogs and cats (under 8 kg incl. carrier) fly in cabin DOMESTICALLY from Melbourne to the Gold Coast, Sunshine Coast and Adelaide (Adelaide added 23 June 2026; Launceston flagged as next but not yet on-sale). No international cabin pet option in or out of Australia on any airline — international travel is cargo with mandatory quarantine. Book via Virgin's Guest Contact Centre (13 67 89), not online." },
   { code: "OOL", city: "Gold Coast", region: "australia", cabinOut: false, cabinIn: false, note: "Domestic cabin pets via Virgin Australia (Melbourne ↔ Gold Coast) — note: DOGS ONLY on the MEL–Gold Coast route currently (cats not yet accepted there). Under 8 kg incl. carrier. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
   { code: "MCY", city: "Sunshine Coast", region: "australia", cabinOut: false, cabinIn: false, note: "Domestic cabin pets via Virgin Australia (Melbourne ↔ Sunshine Coast), dogs and cats under 8 kg incl. carrier. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
-  { code: "ADL", city: "Adelaide", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia announced Pets in Cabin service to/from Adelaide for after Easter 2026 (pending final airport approvals) — confirm it's on-sale before relying on it. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
-  { code: "LST", city: "Launceston", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia announced Pets in Cabin service to/from Launceston for after Easter 2026 (pending final airport approvals) — confirm it's on-sale before relying on it. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
+  { code: "ADL", city: "Adelaide", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia's Pets in Cabin service launched from Adelaide on 23 June 2026 — small dogs and cats under 8 kg incl. carrier fly in cabin DOMESTICALLY to Melbourne and the Gold Coast, both directions. Adelaide–Melbourne is bookable furthest ahead (to 31 Jan 2027); Adelaide–Gold Coast to 30 Sept 2026. Book via Virgin's Guest Contact Centre (13 67 89), not online. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
+  { code: "LST", city: "Launceston", region: "australia", cabinOut: false, cabinIn: false, note: "Virgin Australia has flagged Launceston as the next city to join Pets in Cabin after Adelaide, but no on-sale date has been announced and the route is not yet bookable — confirm directly with Virgin before relying on it. No international cabin pet option in or out of Australia — international is cargo + quarantine." },
   // South America — LATAM and Avianca are the primary cabin pet carriers (both 10kg combined limit, brachycephalic excluded from cargo). Aeromexico provides Mexico ↔ SA connections.
   { code: "GRU", city: "São Paulo Guarulhos", region: "south-america", cabinOut: true, cabinIn: true, note: "São Paulo Guarulhos (GRU) is South America's largest hub. LATAM is the primary cabin pet carrier (10 kg combined). Brazil's entry rules are relatively lenient: rabies vaccine 21+ days old, USDA-endorsed health certificate within 10 days, no microchip or titer required for most origin countries." },
   { code: "EZE", city: "Buenos Aires Ezeiza", region: "south-america", cabinOut: true, cabinIn: true, note: "Buenos Aires Ezeiza (EZE) is Argentina's main international airport. LATAM and Aerolineas Argentinas serve cabin pets. Argentina requires ISO microchip, rabies vaccine, SENASA-endorsed health certificate, and import permit." },
@@ -3644,7 +3653,7 @@ const FALLBACK_STRATEGIES = {
     legs: [
       { route: `Australia → ${d}`, time: "varies — long-haul", airline: "⚠ Cargo only — no cabin option out of Australia internationally" },
     ],
-    note: `No airline flies cabin pets out of Australia internationally — your pet travels as manifested cargo via an IATA-registered pet shipper, and the destination country's import paperwork must be in order first. (Virgin Australia's cabin pet service is DOMESTIC-only — Melbourne ↔ Gold Coast / Sunshine Coast, with Adelaide and Launceston announced for after Easter 2026 — so it can carry your pet on an Australian leg in cabin, but not on the international sector.)`,
+    note: `No airline flies cabin pets out of Australia internationally — your pet travels as manifested cargo via an IATA-registered pet shipper, and the destination country's import paperwork must be in order first. (Virgin Australia's cabin pet service is DOMESTIC-only — Melbourne ↔ Gold Coast / Sunshine Coast / Adelaide — so it can carry your pet on an Australian leg in cabin, but not on the international sector.)`,
   }),
   // Generic cabin-direct fallback — for region pairs where a direct cabin
   // flight genuinely exists (US/Canada/Europe/UAE/India transatlantic and
@@ -5210,7 +5219,7 @@ const CHECKLIST_DATA = {
         items: [
           "This covers flying your pet in the CABIN on a DOMESTIC Australian flight with Virgin Australia (e.g. Melbourne ↔ Gold Coast / Sunshine Coast). No microchip, rabies titer, import permit or quarantine is involved — that's all for INTERNATIONAL travel, not domestic hops.",
           "If you're flying your pet INTO Australia from overseas, this is the wrong checklist — there is no cabin option on any airline; international arrival is cargo + mandatory quarantine. See the Australia tab in Difficult Destinations for the import permit, rabies titer (≥180 days), and Mickleham quarantine steps.",
-          "Adelaide and Launceston routes were announced for after Easter 2026 — confirm they're on-sale with Virgin before relying on them.",
+          "Adelaide joined the Pets in Cabin network on 23 June 2026 (Adelaide ↔ Melbourne and Adelaide ↔ Gold Coast). Launceston has been flagged as next but has no on-sale date — confirm with Virgin before relying on it.",
         ],
       },
       {
@@ -11751,7 +11760,7 @@ function AirlineGrid() {
                       <div className="flex items-start gap-2 text-sm text-stone-600">
                         <Info className="w-4 h-4 text-stone-400 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
                         <span>
-                          <strong className="text-stone-800">Domestic Australia only.</strong> Small dogs and cats under 8&nbsp;kg, in cabin, on Virgin Australia's Pets in Cabin routes (MEL ↔ Gold Coast · Sunshine Coast, expanding to Adelaide &amp; Launceston in 2026). There is <strong className="text-stone-800">no cabin option flying into Australia from overseas</strong> on any airline — international pets arrive as cargo with quarantine.
+                          <strong className="text-stone-800">Domestic Australia only.</strong> Small dogs and cats under 8&nbsp;kg, in cabin, on Virgin Australia's Pets in Cabin routes (MEL ↔ Gold Coast · Sunshine Coast · Adelaide). There is <strong className="text-stone-800">no cabin option flying into Australia from overseas</strong> on any airline — international pets arrive as cargo with quarantine.
                         </span>
                       </div>
                     </div>

@@ -16232,7 +16232,7 @@ function Stories() {
             </p>
 
             <p>
-              The route: Miami → Paris CDG on Air France in cabin, one night to break up the drive, then a pet taxi door-to-door from our Paris hotel to home near Heathrow. I deliberately picked Le Grand Pavillon in Chantilly — an hour outside Paris in the right direction of travel — rather than push straight from CDG to Le Shuttle in one go. It gave both of us a proper sleep, and gave the tapeworm treatment window a clean margin.
+              The route: Miami → Paris CDG on Air France in cabin, one night to break up the drive, then a pet taxi door-to-door from our Paris hotel to home near Heathrow. I deliberately picked Le Grand Pavillon in Chantilly — an hour outside Paris in the right direction of travel — rather than push straight from CDG to Le Shuttle in one go. It gave both of us a proper sleep, and still kept us comfortably inside the UK tapeworm window that had started ticking back in Miami.
             </p>
 
             <p>
@@ -16266,13 +16266,13 @@ function Stories() {
                 </p>
 
                 <p>
-                  The tapeworm treatment for a dog entering the UK has to be given within 24 to 120 hours of arrival, which for us meant it couldn't happen in Miami — it had to be done in France. That felt loose at the time, but as it turned out, the French vet who saved our crossing did the tapeworm treatment ($55) as part of the same visit.
+                  The tapeworm treatment for a dog entering the UK has to be given within 24 to 120 hours of arrival. My vet in Miami gave it the day before we flew ($55), timed so we were still comfortably inside that window at the UK crossing — with room to spare for delays. It's a tight bit of arithmetic to get right, but doing it at home meant one less thing to arrange on the road.
                 </p>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Miami departure — easier than I feared</h3>
 
                 <p>
-                  Miami International has a proper pet relief area — grassy patches in the ground-level car park. Order matters: bag drop first, get your pet checked by the airline agent, <em>then</em> take your dog out for a pee, then security. The Air France agent didn't check the carrier's dimensions or weight, which surprised me — I'd measured, compressed and re-measured that carrier three times at home to be sure it complied. He looked at Theo, waved us through.
+                  There are grassy patches in the ground-level car park at Miami International — not a designated pet-relief area, just real grass, but Theo knows the difference between that and the artificial turf they put in pet-relief zones, and he'll only actually go on the real thing. There's also a proper pet-relief room past security, though I knew Theo wouldn't use it. Order matters: bag drop first, get your pet checked by the airline agent, <em>then</em> take your dog out for a pee, then security. The Air France agent didn't check the carrier's dimensions or weight, which surprised me — I'd measured, compressed and re-measured that carrier three times at home to be sure it complied. She barely looked at Theo at all — he was in my arms, then on the floor, and she paid him no real attention — but she took her time working through the paperwork before waving us on.
                 </p>
 
                 <p>
@@ -16282,16 +16282,16 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The seat trick that gave us the whole row</h3>
 
                 <p>
-                  My sister was travelling with me. We booked her the aisle, me the window, and left the middle seat open. On a full plane the middle gets filled last, and on a not-full plane it stays empty. <strong>Book the window and the aisle, fence off the middle.</strong> Our middle stayed empty for the whole seven hours.
+                  My sister was travelling with me. We booked her the aisle, me the window, and left the middle seat open. On a full plane the middle gets filled last, and on a not-full plane it stays empty. <strong>Book the window and the aisle, fence off the middle.</strong> Our middle stayed empty for the whole nine hours.
                 </p>
 
                 <p>
-                  We also booked comfort seats — the extra-legroom row. If your airline lets pet owners sit in extra-legroom (some do, some ban it — check before booking), it's transformative for a long-haul night flight. More floor space for the carrier, more breathing room for you, and you're not contorting yourself around it for seven hours.
+                  We also booked comfort seats — the extra-legroom row. If your airline lets pet owners sit in extra-legroom (some do, some ban it — check before booking), it's transformative for a long-haul night flight. More floor space for the carrier, more breathing room for you, and you're not contorting yourself around it for nine hours.
                 </p>
 
                 <figure className="my-8">
                   <img src="/theo-comfort-legroom.jpg" alt="Theo's carrier tucked into the extra floor space of a comfort seat" className="w-full rounded-sm" />
-                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Comfort seats + empty middle = actual room to be comfortable for seven hours.</figcaption>
+                  <figcaption className="font-sans text-xs italic text-stone-500 mt-3 text-center">Comfort seats + empty middle = actual room to be comfortable for nine hours.</figcaption>
                 </figure>
 
                 <p>
@@ -16301,7 +16301,7 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The overnight flight — aligned to Theo's bedtime</h3>
 
                 <p>
-                  Night flights when your dog is a natural evening sleeper are a gift. I picked the overnight departure deliberately — it was Theo's normal bedtime, and I knew he wouldn't need a pee if he was asleep. He slept for most of the seven hours. I slept across two seats with my hand in the carrier so I could feel him breathing. Two small sips of water, no food. He didn't cry. I didn't panic.
+                  Night flights when your dog is a natural evening sleeper are a gift. I picked the overnight departure deliberately — it was Theo's normal bedtime, and I knew he wouldn't need a pee if he was asleep. He slept for most of the nine hours. I slept across two seats with my hand in the carrier so I could feel him breathing. Two small sips of water, no food. He didn't cry. I didn't panic.
                 </p>
 
                 <figure className="my-8">
@@ -16332,7 +16332,7 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Le Grand Pavillon Chantilly — one night, on purpose</h3>
 
                 <p>
-                  Chantilly is an hour outside Paris in the right direction of travel — north-east, on the way to Calais rather than back into central Paris. Le Grand Pavillon is a proper château, pet-friendly, with grounds Theo could explore without meeting other dogs. We would have loved to do two nights to break the journey further, but the tapeworm treatment window meant we needed to keep moving. One night was the compromise, and it was the right one. Everyone slept flat, in beds, on land. <strong>If your route allows a stopover between CDG and Le Shuttle, take it.</strong>
+                  Chantilly is an hour outside Paris in the right direction of travel — north-east, on the way to Calais rather than back into central Paris. Le Grand Pavillon is a proper château, pet-friendly, with grounds Theo could explore without meeting other dogs. We would have loved to do two nights to break the journey further, but the UK tapeworm window — already running since Theo's treatment in Miami — meant we needed to keep moving. One night was the compromise, and it was the right one. Everyone slept flat, in beds, on land. <strong>If your route allows a stopover between CDG and Le Shuttle, take it.</strong>
                 </p>
 
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">The Kawa moment — the pet taxi driver who saved the trip</h3>
@@ -16346,7 +16346,7 @@ function Stories() {
                 </p>
 
                 <p>
-                  Pet Moves Abroad have an arrangement with a French vet who can issue an EU Pet Passport on the spot for exactly this situation. Kawa knew because he had seen it before. We took an hour's detour to the vet. Theo got a passport (€90) and his tapeworm treatment ($55, time and date stamped on the passport as required for the UK), and we were back on the road.
+                  Pet Moves Abroad have an arrangement with a French vet who can issue an EU Pet Passport on the spot for exactly this situation. Kawa knew because he had seen it before. We took an hour's detour to the vet. Theo got his passport (€90) — the tapeworm was already done and recorded from Miami, so this visit was purely to get a UK-valid document into my hands — and we were back on the road.
                 </p>
 
                 <p>
@@ -16361,7 +16361,7 @@ function Stories() {
                 <h3 className="font-serif text-3xl text-stone-900 mt-12 mb-4">Le Shuttle pet reception — the check we were finally ready for</h3>
 
                 <p>
-                  The signage at Le Shuttle for the pet reception is clear once you're in the right lane. There's a dedicated drive-through booth marked PETS · Bienvenue, staffed and open 24 hours. The instructions are printed on the side: show your booking reference, present your pet's documents, scan the microchip. <strong>They also check the driver and passenger passports.</strong> Bring your own too.
+                  The signage at Le Shuttle for the pet reception is clear once you're in the right lane. There's a dedicated drive-through booth marked PETS · Bienvenue, staffed and open 24 hours. The instructions are printed on the side: show your booking reference, present your pet's documents, scan the microchip. The pet booth is only about the pet — they didn't look at our passports here. <strong>Your own passports get checked at the border control just after, so have them ready for that.</strong>
                 </p>
 
                 <figure className="my-8">
@@ -16401,7 +16401,7 @@ function Stories() {
                   2. Book the aisle and the window; leave the middle open.
                 </p>
                 <p>
-                  With extra-legroom seats if the airline allows pets there and it's a long-haul night flight. This single choice gave us the space to actually be comfortable with Theo for seven hours.
+                  With extra-legroom seats if the airline allows pets there and it's a long-haul night flight. This single choice gave us the space to actually be comfortable with Theo for nine hours.
                 </p>
 
                 <p className="font-medium text-stone-900">
@@ -16429,7 +16429,7 @@ function Stories() {
                   6. Bring your own passport.
                 </p>
                 <p>
-                  Le Shuttle checks driver and passenger IDs at pet reception, not just at the border booth.
+                  The pet reception booth only deals with the pet — your own passports are checked at the border control immediately after, not at the pet booth. Have them out and ready for that step.
                 </p>
 
                 <p className="italic text-stone-700 pt-4">

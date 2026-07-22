@@ -7,8 +7,14 @@ export default function Document() {
         <meta charSet="utf-8" />
         <meta name="google-site-verification" content="1bi6cDCuTHmlc1CJUSk4Z24beCQjICPtH_LlJUwv5Zg" />
 
-        {/* Primary SEO */}
-        <meta name="description" content="Travelling with pets? A real-world guide to flying with your dog or cat in the cabin. Pets in cabin policies for every major airline, country paperwork, cabin routes and the workarounds that actually work — for the UK, USA, Europe, India, Canada, the UAE and beyond. By Theo's Mum, who's flown it." />
+        {/* Primary SEO
+            ⚠️ NO site-wide <meta name="description"> here. All 23 pages set
+            their own via next/head, and _document.js renders AFTER the
+            page's Head — so a description here would render last and
+            override every page's own description (Decision #93f). That is
+            the likeliest reason Google was showing homepage copy as the
+            search snippet on interior pages. Keywords/author/robots below
+            are genuinely site-wide and are not duplicated by any page. */}
         <meta name="keywords" content="travelling with pets, travel with pets, pet flight, flying with animals, pets in cabin, pet in cabin, fly with dog in cabin, fly with cat in cabin, airline pet policy, pet travel guide, fly pet to UK, fly pet to USA, fly pet to India, pet to Europe, Dubai pet import, pet to Canada, in-cabin pet, dog flight, cat flight, pet relocation, pet quarantine countries" />
         <meta name="author" content="Theo's Mum" />
         <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -25,17 +31,26 @@ export default function Document() {
         <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
         {/* Open Graph (for Facebook, LinkedIn, WhatsApp shares) */}
+        {/* Open Graph — site-wide constants ONLY.
+            ⚠️ og:title, og:description, og:url and og:type are deliberately
+            NOT here. Every page sets its own via next/head (Decision #93).
+            next/head does NOT dedupe property-based tags without a `key`,
+            and _document.js renders AFTER the page's Head in the output
+            stream — so any og:* tag defined here would render LAST and
+            override the page's own. That is exactly the bug #93f fixed:
+            og:url resolved to the homepage on all 23 pages.
+            Only genuinely site-wide values belong here. */}
         <meta property="og:site_name" content="Pets in Cabin" />
-        <meta property="og:title" content="Travelling with Pets: Flying With Your Dog or Cat in the Cabin" />
-        <meta property="og:description" content="A real-world guide to flying with your dog or cat in the cabin. Pets in cabin policies for every major airline, country paperwork, and the workarounds that actually work — UK, USA, Europe, India, Canada and beyond. By Theo's Mum, who's done it." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.petsincabin.com" />
         <meta property="og:locale" content="en_GB" />
 
         {/* Twitter Card */}
+        {/* Twitter Card — card TYPE only.
+            ⚠️ twitter:title and twitter:description are deliberately NOT
+            here. Every page sets its own (Decision #93). Same reasoning as
+            the Open Graph block above: _document.js renders after the
+            page's Head, so anything duplicated here wins over the page's
+            own value. */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Travelling with Pets: Flying With Your Dog or Cat in the Cabin" />
-        <meta name="twitter:description" content="Airline pet policies, country paperwork, and the workarounds that actually work — by Theo's Mum, who's flown it." />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />

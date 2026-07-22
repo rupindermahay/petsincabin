@@ -119,7 +119,7 @@ export default function JapanPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              <strong>If cargo is acceptable</strong>, JAL and ANA's cargo handling is generally well-regarded — pressurised, temperature-controlled holds, careful loading. ANA charges around $400 per cage cross-area international, $250 within Asia, JPY 6,000 domestic (from May 19, 2026). JAL is similar pricing.
+              <strong>If cargo is acceptable</strong>, JAL and ANA's cargo handling is generally well-regarded — pressurised, temperature-controlled holds, careful loading. ANA charges around $400 per cage cross-area international, $250 within Asia, and JPY 6,000 for Japan domestic sectors (raised from JPY 5,000 in May 2026; some routes are JPY 4,000). JAL is similar pricing.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">

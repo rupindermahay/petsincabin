@@ -201,7 +201,7 @@ export default function RussiaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Ukraine's situation is different from Russia's, and it deserves to be said plainly: this is a country at war, and many of the people moving pets across its borders are leaving rather than arriving. Civilian flights stopped on 24 February 2022, when the full-scale Russian invasion began, and every Ukrainian airport has stayed closed to commercial traffic since. The European aviation regulator's conflict-zone advisory keeps Ukrainian airspace off-limits to airlines, currently extended to at least 31 July 2026. A Ukrainian government working group began planning a phased reopening in March 2026, but no flights have resumed, and nobody is putting a date on it.
+              Ukraine's situation is different from Russia's, and it deserves to be said plainly: this is a country at war, and many of the people moving pets across its borders are leaving rather than arriving. Civilian flights stopped on 24 February 2022, when the full-scale Russian invasion began, and every Ukrainian airport has stayed closed to commercial traffic since. The European aviation regulator's conflict-zone advisory keeps Ukrainian airspace off-limits to airlines, and has been rolled forward repeatedly since 2022 — the current extension runs to 31 July 2026, and further extensions have followed every time so far. A Ukrainian government working group began planning a phased reopening in March 2026, but no flights have resumed, and nobody is putting a date on it.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">

@@ -171,7 +171,7 @@ export default function AustraliaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              Quarantine can be extended — to 30 days, or longer — if the identity check wasn't completed before the blood draw, if paperwork doesn't reconcile, or if the pet shows signs of illness on arrival. Visits are not permitted during the stay. Costs are billed by DAFF and run to several thousand Australian dollars for the standard stay, more for extensions or veterinary care.
+              Quarantine can be extended — to 30 days, or longer — if the identity check wasn't completed before the blood draw, if paperwork doesn't reconcile, or if the pet shows signs of illness on arrival. Visits are not permitted during the stay. Costs are billed by DAFF: AUD $1,877 for the standard 10-day stay, around $2,937 if it becomes a 30-day one, plus any veterinary care (see the cost breakdown below).
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -194,7 +194,7 @@ export default function AustraliaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              A good shipper coordinates the whole chain: crate sizing and acclimation, the cargo booking, the paperwork sequence, the BICON permit timing, the Mickleham booking and the customs clearance at both ends. They do hundreds of these a year and know exactly what each origin country's export side needs. Expect shipper fees in the range of US$1,500–$4,000 on top of the cargo cost, plus the DAFF permit (around AUD $600) and quarantine (roughly AUD $2,500–$3,500 for the standard stay).
+              A good shipper coordinates the whole chain: crate sizing and acclimation, the cargo booking, the paperwork sequence, the BICON permit timing, the Mickleham booking and the customs clearance at both ends. They do hundreds of these a year and know exactly what each origin country's export side needs. Expect shipper fees in the range of US$1,500–$4,000 on top of the cargo cost, plus the DAFF import permit (around AUD $600 for one dog). Quarantine itself is charged by DAFF on a cost-recovery basis: the standard 10-day stay comes to <strong>AUD $1,877</strong> — a $269 reservation charge, a $1,078 importation charge, and $530 accommodation at $53 a day. If your pet ends up on the 30-day stay, the accommodation rises to $1,590 and the total to roughly AUD $2,937. Extra vet care, out-of-hours collection and any non-compliance fees are charged on top.
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
@@ -221,7 +221,7 @@ export default function AustraliaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed">
-              New Zealand's own import rules are also changing: a new Import Health Standard phases in from mid-2026. If New Zealand is part of your plan in either direction, check the current MPI requirements before relying on anything here.
+              New Zealand's own import rules have now changed. MPI's new Import Health Standard for cats and dogs came into force on <strong>1 July 2026</strong>, with a nine-month transition: until <strong>1 April 2027</strong> a pet can be prepared under either the old 2021 standard or the new 2026 one. Two dates matter if New Zealand is part of your plan. From <strong>1 October 2026</strong>, pets being prepared under the new standard need an official pre-export identity check before their rabies titre test and clinical exam. And because the new standard requires that ID check <strong>at least six months before export</strong>, anyone planning a move that lands after April 2027 is effectively working to the new rules already. Check the current MPI requirements directly before relying on anything here.
             </p>
           </section>
 
@@ -236,7 +236,7 @@ export default function AustraliaPetTravel() {
             </p>
 
             <p className="font-serif text-stone-700 leading-relaxed mb-4">
-              In October 2025 Virgin Australia launched Pets in Cabin — the first time any airline has carried pets in the cabin on Australian flights. Small dogs and cats up to 8 kg including the carrier travel under the seat in designated window rows, with a limit of four pets per flight. It began on Melbourne ↔ Gold Coast and Melbourne ↔ Sunshine Coast, and after carrying its 1,000th pet the airline confirmed in early 2026 that the service will continue on an ongoing basis, with Adelaide and Launceston announced to follow after the Easter period (subject to final airport approvals — confirm an on-sale date before relying on those two).
+              In October 2025 Virgin Australia launched Pets in Cabin — the first time any airline has carried pets in the cabin on Australian flights. Small dogs and cats up to 8 kg including the carrier travel under the seat in designated window rows, with a limit of four pets per flight. It began on Melbourne ↔ Gold Coast and Melbourne ↔ Sunshine Coast, and after carrying its 1,000th pet the airline confirmed in early 2026 that the service would continue on an ongoing basis. <strong>Adelaide joined the network on 23 June 2026</strong>, adding Adelaide ↔ Melbourne and Adelaide ↔ Gold Coast in both directions — around 1,500 pets had flown by then. Adelaide ↔ Melbourne is bookable furthest ahead, to 31 January 2027; the other routes are open to 30 September 2026. Launceston has been flagged as the next city to join, but no on-sale date has been announced — confirm directly with Virgin before planning around it.
             </p>
 
             <div className="bg-amber-50 border-l-2 border-amber-400 p-4 mb-4">
